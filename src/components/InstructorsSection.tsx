@@ -4,9 +4,20 @@ import { Instagram, Twitter, Linkedin, ExternalLink } from 'lucide-react';
 
 const instructors = [
   {
-    name: "Sophia Martinez",
-    title: "Vocal Technique Director",
-    bio: "Grammy-winning soprano with 15+ years of teaching experience at Juilliard and the Royal Academy of Music.",
+    name: "Andreas Aroditis",
+    title: "Founder & Artistic Director",
+    bio: "Internationally acclaimed vocal coach with extensive experience in opera and musical theatre, dedicated to bringing out authentic performances and technical excellence.",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
+    socials: {
+      twitter: "#",
+      instagram: "#",
+      linkedin: "#"
+    }
+  },
+  {
+    name: "Carolyn Michelle-Smith",
+    title: "Acting Coach",
+    bio: "Award-winning actress and coach specializing in authentic performance techniques and theatrical expression for vocalists across multiple genres.",
     image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1964&q=80",
     socials: {
       twitter: "#",
@@ -15,20 +26,9 @@ const instructors = [
     }
   },
   {
-    name: "James Wilson",
-    title: "Performance Coach",
-    bio: "West End performer and director specializing in stage presence, movement, and authentic performance techniques.",
-    image: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2148&q=80",
-    socials: {
-      twitter: "#",
-      instagram: "#",
-      linkedin: "#"
-    }
-  },
-  {
-    name: "Elena Chen",
-    title: "Music Theory & Composition",
-    bio: "Renowned composer and educator with expertise in contemporary vocal composition and arrangement.",
+    name: "Olivia Brererton",
+    title: "Vocal Coach",
+    bio: "Renowned vocal technician with expertise in classical and contemporary vocal training, focusing on healthy technique and expressive performance.",
     image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
     socials: {
       twitter: "#",
@@ -37,10 +37,10 @@ const instructors = [
     }
   },
   {
-    name: "David Okafor",
-    title: "Vocal Health Specialist",
-    bio: "Leading ENT consultant and voice researcher specializing in vocal health and rehabilitation for performers.",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
+    name: "Aris Antoniades",
+    title: "Composer",
+    bio: "Celebrated composer and musical director with credits across film, theatre, and concert stages, specializing in creating bespoke works for vocal performers.",
+    image: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
     socials: {
       twitter: "#",
       instagram: "#",
