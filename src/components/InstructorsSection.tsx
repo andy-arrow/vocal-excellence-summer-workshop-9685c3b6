@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { Instagram, Twitter, Linkedin, ExternalLink } from 'lucide-react';
 
@@ -7,8 +6,8 @@ const instructors = [
     name: "Andreas Aroditis",
     title: "Founder & Artistic Director",
     bio: "Internationally acclaimed vocal coach with extensive experience in opera and musical theatre, dedicated to bringing out authentic performances and technical excellence.",
-    // Still using placeholder for Andreas as no image was provided
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
+    // Using the uploaded image
+    image: "public/lovable-uploads/5a4b7bc3-bc7e-42cc-b5bf-fd69555887e3.png",
     socials: {
       twitter: "#",
       instagram: "#",
