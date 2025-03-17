@@ -7,7 +7,7 @@ const instructors = [
     name: "Andreas Aroditis",
     title: "Founder & Artistic Director",
     bio: "Internationally acclaimed vocal coach with extensive experience in opera and musical theatre, dedicated to bringing out authentic performances and technical excellence.",
-    // Placeholder image maintained as I couldn't find a confirmed image of this person
+    // Still using placeholder for Andreas as no image was provided
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
     socials: {
       twitter: "#",
@@ -19,8 +19,8 @@ const instructors = [
     name: "Carolyn Michelle-Smith",
     title: "Acting Coach",
     bio: "Award-winning actress and coach specializing in authentic performance techniques and theatrical expression for vocalists across multiple genres.",
-    // Placeholder image maintained as I couldn't find a confirmed image of this person
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1964&q=80",
+    // Using the uploaded image
+    image: "public/lovable-uploads/5f2b13ba-7279-45da-86e2-af6b9c336634.png",
     socials: {
       twitter: "#",
       instagram: "#",
@@ -31,8 +31,8 @@ const instructors = [
     name: "Olivia Brererton",
     title: "Vocal Coach",
     bio: "Renowned vocal technician with expertise in classical and contemporary vocal training, focusing on healthy technique and expressive performance.",
-    // Placeholder image maintained as I couldn't find a confirmed image of this person
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
+    // Using the uploaded image
+    image: "public/lovable-uploads/29cad38e-a84c-40f7-9ddb-3c11c159ea6d.png",
     socials: {
       twitter: "#",
       instagram: "#",
@@ -43,8 +43,8 @@ const instructors = [
     name: "Aris Antoniades",
     title: "Composer",
     bio: "Celebrated composer and musical director with credits across film, theatre, and concert stages, specializing in creating bespoke works for vocal performers.",
-    // Placeholder image maintained as I couldn't find a confirmed image of this person
-    image: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
+    // Using the uploaded image
+    image: "public/lovable-uploads/23077377-fca0-46d4-b7c8-83c2a2edcb19.png",
     socials: {
       twitter: "#",
       instagram: "#",
