@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Mail, Phone, MapPin, Instagram, Twitter, Facebook, Youtube } from 'lucide-react';
 
@@ -85,8 +84,8 @@ const Footer = () => {
               </li>
               <li className="flex items-center">
                 <Mail className="w-5 h-5 mr-3 text-apple-blue shrink-0" />
-                <a href="mailto:info@vocalexcellence.com" className="text-white/70 hover:text-white transition-colors text-sm">
-                  info@vocalexcellence.com
+                <a href="mailto:info@vocalexcellence.academy" className="text-white/70 hover:text-white transition-colors text-sm">
+                  info@vocalexcellence.academy
                 </a>
               </li>
               <li className="flex items-center">

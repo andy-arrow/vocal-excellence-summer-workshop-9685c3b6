@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { Calendar, Clock, MapPin, DollarSign } from 'lucide-react';
 
