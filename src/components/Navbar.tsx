@@ -63,14 +63,14 @@ const Navbar = () => {
         "fixed top-0 left-0 w-full z-50 transition-all duration-300",
         scrolled 
           ? "py-2 bg-white/90 backdrop-blur-md shadow-sm" 
-          : "py-4 bg-transparent"
+          : "py-3 bg-transparent"
       )}
     >
-      <div className="container mx-auto px-6 flex justify-between items-center">
+      <div className="max-w-6xl mx-auto px-6 flex justify-between items-center">
         <a 
           href="#home" 
           className={cn(
-            "flex items-center space-x-2 transition-colors",
+            "flex items-center transition-colors",
             scrolled ? "text-apple-dark hover:text-apple-blue" : "text-white hover:text-white/80"
           )}
           onClick={(e) => {
@@ -78,20 +78,20 @@ const Navbar = () => {
             scrollToSection('#home');
           }}
         >
-          <span className="text-xl md:text-2xl font-sans font-semibold">Vocal Excellence</span>
+          <span className="text-base font-sans font-medium">Vocal Excellence</span>
         </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-6">
+        <nav className="hidden md:flex items-center space-x-5">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
               className={cn(
-                "nav-link text-sm",
+                "text-xs font-medium transition-colors",
                 scrolled 
                   ? (activeSection === link.href.replace('#', '') ? "text-apple-blue" : "text-apple-dark hover:text-apple-blue") 
-                  : (activeSection === link.href.replace('#', '') ? "text-white font-medium" : "text-white hover:text-white/80"),
+                  : "text-white hover:text-white/80"
               )}
               onClick={(e) => {
                 e.preventDefault();
@@ -103,7 +103,7 @@ const Navbar = () => {
           ))}
           <a 
             href="#apply" 
-            className="ml-4 primary-button text-sm"
+            className="ml-3 primary-button text-xs py-2 px-4"
             onClick={(e) => {
               e.preventDefault();
               scrollToSection('#apply');
@@ -133,14 +133,14 @@ const Navbar = () => {
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         )}
       >
-        <div className="flex flex-col space-y-4">
+        <div className="flex flex-col space-y-6">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
               className={cn(
-                "text-lg py-2 border-b border-apple-gray-light hover:text-apple-blue transition-colors",
-                activeSection === link.href.replace('#', '') && "text-apple-blue font-medium"
+                "text-base py-1 hover:text-apple-blue transition-colors",
+                activeSection === link.href.replace('#', '') ? "text-apple-blue font-medium" : "text-apple-dark"
               )}
               onClick={(e) => {
                 e.preventDefault();
@@ -152,7 +152,7 @@ const Navbar = () => {
           ))}
           <a 
             href="#apply" 
-            className="mt-4 primary-button text-center"
+            className="mt-2 primary-button text-center"
             onClick={(e) => {
               e.preventDefault();
               scrollToSection('#apply');

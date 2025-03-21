@@ -59,23 +59,23 @@ const HeroSection = () => {
             backgroundSize: 'cover'
           }}
         >
-          <div className="hero-overlay"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/50"></div>
         </div>
       </div>
       
       {/* Hero Content */}
-      <div className="hero-content relative z-10 text-center px-6 transition-all duration-500 ease-out">
+      <div className="hero-content relative z-10 text-center px-6 transition-all duration-500 ease-out max-w-4xl mx-auto">
         <div className="animate-fade-in">
-          <span className="inline-block mb-4 py-1 px-4 rounded-full bg-white/10 backdrop-blur-md text-white/90 text-sm font-medium">
+          <span className="inline-block mb-3 py-1 px-4 rounded-full bg-white/10 backdrop-blur-md text-white/90 text-xs font-medium tracking-wide">
             Summer Programme 2025
           </span>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-sans font-bold text-white mb-6 tracking-tight">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-sans font-semibold text-white mb-4 tracking-tight leading-tight">
             Vocal Excellence Academy
           </h1>
-          <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-8 font-light leading-relaxed">
+          <p className="text-base md:text-xl text-white/80 max-w-2xl mx-auto mb-8 font-light leading-relaxed">
             Unleash your vocal brilliance this summer in an immersive, transformative programme led by world-class instructors
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a 
               href="#apply" 
               className="primary-button"
@@ -109,8 +109,8 @@ const HeroSection = () => {
       {/* Scroll Down Indicator */}
       <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 cursor-pointer animate-bounce" onClick={scrollToAbout}>
         <div className="flex flex-col items-center">
-          <span className="text-white/80 text-sm mb-2">Discover</span>
-          <ChevronDown className="text-white/80 animate-float" size={20} />
+          <span className="text-white/60 text-xs font-light mb-1">Discover</span>
+          <ChevronDown className="text-white/60" size={18} />
         </div>
       </div>
     </section>
