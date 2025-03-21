@@ -69,7 +69,10 @@ const Navbar = () => {
       <div className="container mx-auto px-6 flex justify-between items-center">
         <a 
           href="#home" 
-          className="flex items-center space-x-2 text-apple-dark hover:text-apple-blue transition-colors"
+          className={cn(
+            "flex items-center space-x-2 transition-colors",
+            scrolled ? "text-apple-dark hover:text-apple-blue" : "text-white hover:text-white/80"
+          )}
           onClick={(e) => {
             e.preventDefault();
             scrollToSection('#home');
@@ -86,7 +89,9 @@ const Navbar = () => {
               href={link.href}
               className={cn(
                 "nav-link text-sm",
-                activeSection === link.href.replace('#', '') && "active"
+                scrolled 
+                  ? (activeSection === link.href.replace('#', '') ? "text-apple-blue" : "text-apple-dark hover:text-apple-blue") 
+                  : (activeSection === link.href.replace('#', '') ? "text-white font-medium" : "text-white hover:text-white/80"),
               )}
               onClick={(e) => {
                 e.preventDefault();
@@ -110,7 +115,10 @@ const Navbar = () => {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-apple-dark"
+          className={cn(
+            "md:hidden",
+            scrolled ? "text-apple-dark" : "text-white"
+          )}
           onClick={toggleMenu}
           aria-label="Toggle menu"
         >

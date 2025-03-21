@@ -52,9 +52,11 @@ const HeroSection = () => {
       {/* Hero Background */}
       <div className="hero-bg absolute inset-0 w-full h-full bg-apple-dark transition-transform duration-500 ease-out">
         <div 
-          className="absolute inset-0 bg-center bg-cover"
+          className="absolute inset-0 bg-center bg-cover bg-no-repeat"
           style={{ 
             backgroundImage: `url('/lovable-uploads/6fe8392e-8aba-4eeb-afd2-49b7bafc73bb.png')`,
+            backgroundPosition: 'center center',
+            backgroundSize: 'cover'
           }}
         >
           <div className="hero-overlay"></div>
