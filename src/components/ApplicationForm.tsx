@@ -41,8 +41,10 @@ const applicationSchema = z.object({
   heardAboutUs: z.string().min(1, { message: 'Please tell us how you heard about us' }),
   scholarshipInterest: z.boolean().default(false),
   specialNeeds: z.string().optional(),
-  termsAgreed: z.literal(true, {
-    errorMap: () => ({ message: 'You must agree to the terms and conditions' }),
+  termsAgreed: z.boolean({
+    required_error: 'You must agree to the terms and conditions',
+  }).refine((val) => val === true, {
+    message: 'You must agree to the terms and conditions',
   }),
 });
 
