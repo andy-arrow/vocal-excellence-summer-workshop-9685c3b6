@@ -54,7 +54,7 @@ const HeroSection = () => {
         <div 
           className="absolute inset-0 bg-center bg-cover"
           style={{ 
-            backgroundImage: `url('https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80')`,
+            backgroundImage: `url('https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80')`,
           }}
         >
           <div className="hero-overlay"></div>
@@ -65,7 +65,7 @@ const HeroSection = () => {
       <div className="hero-content relative z-10 text-center px-6 transition-all duration-500 ease-out">
         <div className="animate-fade-in">
           <span className="inline-block mb-4 py-1 px-4 rounded-full bg-white/10 backdrop-blur-md text-white/90 text-sm font-medium">
-            Summer Programme 2024
+            Summer Programme 2025
           </span>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-sans font-bold text-white mb-6 tracking-tight">
             Vocal Excellence Academy
