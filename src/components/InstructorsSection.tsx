@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef } from 'react';
-import { Instagram, Twitter, Linkedin, ExternalLink } from 'lucide-react';
+import { Instagram, Twitter, Linkedin, ArrowRight } from 'lucide-react';
 
 const instructors = [
   {
@@ -74,7 +74,7 @@ const InstructorsSection = () => {
   }, []);
 
   return (
-    <section id="instructors" ref={sectionRef} className="section-container bg-sand-light">
+    <section id="instructors" ref={sectionRef} className="section-container bg-apple-light">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 
@@ -99,15 +99,15 @@ const InstructorsSection = () => {
               className="reveal-on-scroll overflow-hidden group"
               style={{ transitionDelay: `${index * 100}ms` }}
             >
-              <div className="relative overflow-hidden rounded-lg shadow-lg mb-4 aspect-[3/4]">
+              <div className="relative overflow-hidden rounded-2xl shadow-md mb-5 aspect-[3/4]">
                 <img 
                   src={instructor.image} 
                   alt={instructor.name} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                  <div className="p-4 text-white">
-                    <div className="flex space-x-3 mb-2">
+                <div className="absolute inset-0 bg-gradient-to-t from-apple-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                  <div className="p-5 text-white">
+                    <div className="flex space-x-4 mb-3">
                       {instructor.socials.twitter && (
                         <a href={instructor.socials.twitter} className="text-white/80 hover:text-white transition-colors">
                           <Twitter size={18} />
@@ -129,14 +129,14 @@ const InstructorsSection = () => {
                       className="inline-flex items-center text-sm text-white/90 hover:text-white transition-colors"
                     >
                       <span className="mr-1">Full Biography</span>
-                      <ExternalLink size={14} />
+                      <ArrowRight size={14} />
                     </a>
                   </div>
                 </div>
               </div>
-              <h3 className="text-xl font-playfair font-semibold text-navy-dark">{instructor.name}</h3>
-              <p className="text-burgundy mb-2">{instructor.title}</p>
-              <p className="text-gray-600 text-sm">{instructor.bio}</p>
+              <h3 className="text-xl font-sans font-medium text-apple-dark">{instructor.name}</h3>
+              <p className="text-apple-blue mb-2">{instructor.title}</p>
+              <p className="text-apple-gray text-sm">{instructor.bio}</p>
             </div>
           ))}
         </div>
@@ -145,12 +145,12 @@ const InstructorsSection = () => {
           ref={(el) => (elementsRef.current[6] = el)} 
           className="mt-16 text-center reveal-on-scroll"
         >
-          <p className="text-gray-700 mb-6">
+          <p className="text-apple-gray mb-6">
             In addition to our core faculty, the programme features guest masterclasses from international performing artists and industry professionals.
           </p>
-          <a href="#" className="inline-flex items-center text-burgundy hover:text-burgundy-light transition-colors">
+          <a href="#" className="inline-flex items-center text-apple-blue hover:text-apple-blue-light transition-colors">
             <span className="mr-1">View All Faculty & Guest Artists</span>
-            <ExternalLink size={16} />
+            <ArrowRight size={16} />
           </a>
         </div>
       </div>

@@ -4,12 +4,12 @@ import { Mail, Phone, MapPin, Instagram, Twitter, Facebook, Youtube } from 'luci
 
 const Footer = () => {
   return (
-    <footer className="bg-navy-dark text-white">
-      <div className="max-w-6xl mx-auto py-12 px-4 md:px-8">
-        <div className="grid md:grid-cols-4 gap-8">
+    <footer className="bg-apple-dark text-white">
+      <div className="max-w-6xl mx-auto py-16 px-6 md:px-8">
+        <div className="grid md:grid-cols-4 gap-10">
           <div className="md:col-span-1">
-            <h3 className="font-playfair text-2xl font-semibold mb-4">Vocal Excellence</h3>
-            <p className="text-white/70 mb-6">
+            <h3 className="font-sans text-2xl font-semibold mb-4">Vocal Excellence</h3>
+            <p className="text-white/70 mb-6 text-sm leading-relaxed">
               Transforming passionate singers into confident performers through immersive, expert-led training.
             </p>
             <div className="flex space-x-4">
@@ -29,69 +29,69 @@ const Footer = () => {
           </div>
           
           <div className="md:col-span-1">
-            <h4 className="font-playfair text-lg font-semibold mb-4">Quick Links</h4>
+            <h4 className="font-sans text-sm font-semibold mb-4 text-white/50 uppercase tracking-wider">Quick Links</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#home" className="text-white/70 hover:text-white transition-colors">Home</a>
+                <a href="#home" className="text-white/70 hover:text-white transition-colors text-sm">Home</a>
               </li>
               <li>
-                <a href="#about" className="text-white/70 hover:text-white transition-colors">About the Programme</a>
+                <a href="#about" className="text-white/70 hover:text-white transition-colors text-sm">About the Programme</a>
               </li>
               <li>
-                <a href="#curriculum" className="text-white/70 hover:text-white transition-colors">Curriculum & Schedule</a>
+                <a href="#curriculum" className="text-white/70 hover:text-white transition-colors text-sm">Curriculum & Schedule</a>
               </li>
               <li>
-                <a href="#instructors" className="text-white/70 hover:text-white transition-colors">Instructors</a>
+                <a href="#instructors" className="text-white/70 hover:text-white transition-colors text-sm">Instructors</a>
               </li>
               <li>
-                <a href="#testimonials" className="text-white/70 hover:text-white transition-colors">Testimonials</a>
+                <a href="#testimonials" className="text-white/70 hover:text-white transition-colors text-sm">Testimonials</a>
               </li>
               <li>
-                <a href="#apply" className="text-white/70 hover:text-white transition-colors">Apply Now</a>
+                <a href="#apply" className="text-white/70 hover:text-white transition-colors text-sm">Apply Now</a>
               </li>
             </ul>
           </div>
           
           <div className="md:col-span-1">
-            <h4 className="font-playfair text-lg font-semibold mb-4">Resources</h4>
+            <h4 className="font-sans text-sm font-semibold mb-4 text-white/50 uppercase tracking-wider">Resources</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-white/70 hover:text-white transition-colors">FAQ</a>
+                <a href="#" className="text-white/70 hover:text-white transition-colors text-sm">FAQ</a>
               </li>
               <li>
-                <a href="#" className="text-white/70 hover:text-white transition-colors">Privacy Policy</a>
+                <a href="#" className="text-white/70 hover:text-white transition-colors text-sm">Privacy Policy</a>
               </li>
               <li>
-                <a href="#" className="text-white/70 hover:text-white transition-colors">Terms of Service</a>
+                <a href="#" className="text-white/70 hover:text-white transition-colors text-sm">Terms of Service</a>
               </li>
               <li>
-                <a href="#" className="text-white/70 hover:text-white transition-colors">Student Resources</a>
+                <a href="#" className="text-white/70 hover:text-white transition-colors text-sm">Student Resources</a>
               </li>
               <li>
-                <a href="#" className="text-white/70 hover:text-white transition-colors">Scholarships</a>
+                <a href="#" className="text-white/70 hover:text-white transition-colors text-sm">Scholarships</a>
               </li>
               <li>
-                <a href="#" className="text-white/70 hover:text-white transition-colors">Blog</a>
+                <a href="#" className="text-white/70 hover:text-white transition-colors text-sm">Blog</a>
               </li>
             </ul>
           </div>
           
           <div className="md:col-span-1">
-            <h4 className="font-playfair text-lg font-semibold mb-4">Contact Us</h4>
+            <h4 className="font-sans text-sm font-semibold mb-4 text-white/50 uppercase tracking-wider">Contact Us</h4>
             <ul className="space-y-3">
               <li className="flex items-start">
-                <MapPin className="w-5 h-5 mr-3 text-burgundy-light shrink-0 mt-0.5" />
-                <span className="text-white/70">Royal Conservatory Building, 123 Music Lane, London, UK</span>
+                <MapPin className="w-5 h-5 mr-3 text-apple-blue shrink-0 mt-0.5" />
+                <span className="text-white/70 text-sm">Royal Conservatory Building, 123 Music Lane, London, UK</span>
               </li>
               <li className="flex items-center">
-                <Mail className="w-5 h-5 mr-3 text-burgundy-light shrink-0" />
-                <a href="mailto:info@vocalexcellence.com" className="text-white/70 hover:text-white transition-colors">
+                <Mail className="w-5 h-5 mr-3 text-apple-blue shrink-0" />
+                <a href="mailto:info@vocalexcellence.com" className="text-white/70 hover:text-white transition-colors text-sm">
                   info@vocalexcellence.com
                 </a>
               </li>
               <li className="flex items-center">
-                <Phone className="w-5 h-5 mr-3 text-burgundy-light shrink-0" />
-                <a href="tel:+441234567890" className="text-white/70 hover:text-white transition-colors">
+                <Phone className="w-5 h-5 mr-3 text-apple-blue shrink-0" />
+                <a href="tel:+441234567890" className="text-white/70 hover:text-white transition-colors text-sm">
                   +44 (0) 123 456 7890
                 </a>
               </li>
@@ -99,7 +99,7 @@ const Footer = () => {
           </div>
         </div>
         
-        <div className="mt-12 pt-8 border-t border-white/20 text-white/50 text-sm text-center">
+        <div className="mt-16 pt-8 border-t border-white/10 text-white/50 text-xs text-center">
           <p>&copy; {new Date().getFullYear()} Vocal Excellence Academy. All rights reserved.</p>
         </div>
       </div>

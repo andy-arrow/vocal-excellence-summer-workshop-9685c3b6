@@ -7,35 +7,35 @@
 
 @layer base {
   :root {
-    --background: 33 30% 95%;
-    --foreground: 222 47% 11%;
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 240 10% 3.9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover-foreground: 240 10% 3.9%;
 
-    --primary: 342 40% 32%;
-    --primary-foreground: 33 30% 95%;
+    --primary: 209 100% 40%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 215 40% 17%;
-    --secondary-foreground: 33 30% 95%;
+    --secondary: 240 10% 3.9%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 33 20% 90%;
-    --muted-foreground: 215 10% 40%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
 
-    --accent: 33 40% 70%;
-    --accent-foreground: 342 40% 32%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 215 32% 80%;
-    --input: 215 32% 80%;
-    --ring: 342 40% 32%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5% 26%;
@@ -48,33 +48,33 @@
   }
 
   .dark {
-    --background: 222 47% 11%;
-    --foreground: 33 30% 95%;
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
 
-    --card: 222 47% 11%;
-    --card-foreground: 33 30% 95%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 222 47% 11%;
-    --popover-foreground: 33 30% 95%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 342 40% 40%;
-    --primary-foreground: 33 30% 95%;
+    --primary: 209 100% 40%;
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 215 40% 25%;
-    --secondary-foreground: 33 30% 95%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 217 33% 18%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
 
-    --accent: 33 40% 30%;
-    --accent-foreground: 33 30% 95%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
 
     --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 217 33% 18%;
-    --input: 217 33% 18%;
-    --ring: 342 40% 40%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
   }
 }
 
@@ -84,54 +84,56 @@
   }
 
   body {
-    @apply bg-background text-foreground font-inter;
+    @apply bg-background text-foreground font-sans;
     font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-playfair;
+    @apply font-sans font-semibold tracking-tight;
   }
 }
 
 @layer components {
   .hero-overlay {
-    @apply absolute inset-0 bg-gradient-to-b from-navy/60 to-burgundy/40;
+    @apply absolute inset-0 bg-gradient-to-b from-apple-dark/60 to-apple-blue/40;
   }
 
   .section-title {
-    @apply text-4xl md:text-5xl font-playfair font-semibold mb-6 text-navy-dark;
+    @apply text-4xl md:text-5xl font-sans font-semibold mb-6 text-apple-dark;
   }
 
   .section-subtitle {
-    @apply text-xl md:text-2xl font-playfair italic mb-12 text-burgundy;
+    @apply text-xl md:text-2xl font-sans italic mb-12 text-apple-blue;
   }
 
   .section-container {
-    @apply py-20 px-4 md:px-8 max-w-7xl mx-auto;
+    @apply py-24 px-6 md:px-8 max-w-7xl mx-auto;
   }
 
   .glass-card {
-    @apply rounded-xl bg-white/80 backdrop-blur-sm border border-white/20 shadow-lg;
+    @apply rounded-2xl bg-white/90 backdrop-blur-md border border-white/20 shadow-md;
   }
 
   .nav-link {
-    @apply relative px-3 py-2 text-foreground hover:text-burgundy transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-burgundy after:transition-all after:duration-300 hover:after:w-full;
+    @apply relative px-3 py-2 text-foreground hover:text-apple-blue transition-colors duration-300;
   }
 
   .nav-link.active {
-    @apply text-burgundy after:w-full;
+    @apply text-apple-blue;
   }
 
   .primary-button {
-    @apply px-6 py-3 bg-burgundy text-white rounded-md shadow-md transition-all duration-300 hover:bg-burgundy-light hover:shadow-lg transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-burgundy focus:ring-opacity-50;
+    @apply px-6 py-3 bg-apple-blue text-white rounded-full shadow-sm transition-all duration-300 hover:bg-apple-blue-light transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-apple-blue focus:ring-opacity-50;
   }
 
   .secondary-button {
-    @apply px-6 py-3 bg-transparent border-2 border-burgundy text-burgundy rounded-md transition-all duration-300 hover:bg-burgundy/10 focus:outline-none focus:ring-2 focus:ring-burgundy focus:ring-opacity-50;
+    @apply px-6 py-3 bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-full transition-all duration-300 hover:bg-white/20 focus:outline-none;
   }
 
   .scale-on-hover {
-    @apply transition-transform duration-300 hover:scale-105;
+    @apply transition-transform duration-300 hover:scale-[1.03];
   }
 
   .reveal-on-scroll {
@@ -145,17 +147,17 @@
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-sand-light;
+  @apply bg-apple-light;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-burgundy/50 rounded-full;
+  @apply bg-apple-gray/50 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-burgundy;
+  @apply bg-apple-gray;
 }

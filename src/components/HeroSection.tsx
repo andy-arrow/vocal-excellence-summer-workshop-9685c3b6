@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef } from 'react';
-import { ArrowDown } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -50,7 +50,7 @@ const HeroSection = () => {
       className="relative h-screen flex items-center justify-center overflow-hidden"
     >
       {/* Hero Background */}
-      <div className="hero-bg absolute inset-0 w-full h-full bg-navy-dark transition-transform duration-500 ease-out">
+      <div className="hero-bg absolute inset-0 w-full h-full bg-apple-dark transition-transform duration-500 ease-out">
         <div 
           className="absolute inset-0 bg-center bg-cover"
           style={{ 
@@ -62,15 +62,15 @@ const HeroSection = () => {
       </div>
       
       {/* Hero Content */}
-      <div className="hero-content relative z-10 text-center px-4 transition-all duration-500 ease-out">
+      <div className="hero-content relative z-10 text-center px-6 transition-all duration-500 ease-out">
         <div className="animate-fade-in">
-          <span className="inline-block mb-4 py-1 px-3 rounded-full bg-white/20 backdrop-blur-sm text-white/90 text-sm font-medium">
+          <span className="inline-block mb-4 py-1 px-4 rounded-full bg-white/10 backdrop-blur-md text-white/90 text-sm font-medium">
             Summer Programme 2024
           </span>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-playfair font-bold text-white mb-6 tracking-tight">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-sans font-bold text-white mb-6 tracking-tight">
             Vocal Excellence Academy
           </h1>
-          <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-8 font-light">
+          <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-8 font-light leading-relaxed">
             Unleash your vocal brilliance this summer in an immersive, transformative programme led by world-class instructors
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -92,13 +92,13 @@ const HeroSection = () => {
             </a>
             <a 
               href="#about" 
-              className="secondary-button bg-white/10 backdrop-blur-sm border-white/50 text-white hover:bg-white/20"
+              className="secondary-button"
               onClick={(e) => {
                 e.preventDefault();
                 scrollToAbout();
               }}
             >
-              Discover More
+              Learn More
             </a>
           </div>
         </div>
@@ -107,8 +107,8 @@ const HeroSection = () => {
       {/* Scroll Down Indicator */}
       <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 cursor-pointer animate-bounce" onClick={scrollToAbout}>
         <div className="flex flex-col items-center">
-          <span className="text-white/80 text-sm mb-2">Scroll Down</span>
-          <ArrowDown className="text-white/80 animate-float" size={20} />
+          <span className="text-white/80 text-sm mb-2">Discover</span>
+          <ChevronDown className="text-white/80 animate-float" size={20} />
         </div>
       </div>
     </section>

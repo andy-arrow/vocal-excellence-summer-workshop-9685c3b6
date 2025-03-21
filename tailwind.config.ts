@@ -20,6 +20,8 @@ export default {
 		},
 		extend: {
 			fontFamily: {
+				sans: ['-apple-system', 'BlinkMacSystemFont', 'San Francisco', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'sans-serif'],
+				display: ['-apple-system', 'BlinkMacSystemFont', 'San Francisco', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'sans-serif'],
 				playfair: ['"Playfair Display"', 'serif'],
 				inter: ['Inter', 'sans-serif'],
 			},
@@ -67,20 +69,31 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Custom colors
+				// Apple-inspired colors
+				apple: {
+					light: '#F5F5F7',
+					DEFAULT: '#1D1D1F',
+					dark: '#000000',
+					blue: '#0066CC',
+					'blue-light': '#147CE5',
+					gray: '#86868B',
+					'gray-light': '#E8E8ED',
+					silver: '#F5F5F7'
+				},
+				// Custom existing colors
 				sand: {
-					light: '#F5F0E8',
+					light: '#F5F5F7', // Replaced with Apple light gray
 					DEFAULT: '#E5D6C1',
 					dark: '#C7B9A5',
 				},
 				burgundy: {
 					light: '#9E4F57',
-					DEFAULT: '#722F37',
+					DEFAULT: '#0066CC', // Replaced with Apple blue
 					dark: '#51222A',
 				},
 				navy: {
 					light: '#2A3D56',
-					DEFAULT: '#1A2A40',
+					DEFAULT: '#1D1D1F', // Replaced with Apple dark
 					dark: '#0E1825',
 				},
 			},
@@ -130,7 +143,7 @@ export default {
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-				'hero-pattern': 'linear-gradient(rgba(26, 42, 64, 0.7), rgba(114, 47, 55, 0.5))',
+				'hero-pattern': 'linear-gradient(rgba(29, 29, 31, 0.7), rgba(0, 102, 204, 0.5))', // Updated colors
 			}
 		}
 	},

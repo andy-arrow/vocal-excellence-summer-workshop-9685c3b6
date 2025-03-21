@@ -62,30 +62,30 @@ const Navbar = () => {
       className={cn(
         "fixed top-0 left-0 w-full z-50 transition-all duration-300",
         scrolled 
-          ? "py-3 bg-white/90 backdrop-blur-md shadow-md" 
-          : "py-5 bg-transparent"
+          ? "py-2 bg-white/90 backdrop-blur-md shadow-sm" 
+          : "py-4 bg-transparent"
       )}
     >
-      <div className="container mx-auto px-4 flex justify-between items-center">
+      <div className="container mx-auto px-6 flex justify-between items-center">
         <a 
           href="#home" 
-          className="flex items-center space-x-2 text-burgundy hover:text-burgundy-light transition-colors"
+          className="flex items-center space-x-2 text-apple-dark hover:text-apple-blue transition-colors"
           onClick={(e) => {
             e.preventDefault();
             scrollToSection('#home');
           }}
         >
-          <span className="text-xl md:text-2xl font-playfair font-bold">Vocal Excellence</span>
+          <span className="text-xl md:text-2xl font-sans font-semibold">Vocal Excellence</span>
         </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-1">
+        <nav className="hidden md:flex items-center space-x-6">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
               className={cn(
-                "nav-link",
+                "nav-link text-sm",
                 activeSection === link.href.replace('#', '') && "active"
               )}
               onClick={(e) => {
@@ -98,7 +98,7 @@ const Navbar = () => {
           ))}
           <a 
             href="#apply" 
-            className="ml-4 primary-button"
+            className="ml-4 primary-button text-sm"
             onClick={(e) => {
               e.preventDefault();
               scrollToSection('#apply');
@@ -110,7 +110,7 @@ const Navbar = () => {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-burgundy"
+          className="md:hidden text-apple-dark"
           onClick={toggleMenu}
           aria-label="Toggle menu"
         >
@@ -121,7 +121,7 @@ const Navbar = () => {
       {/* Mobile Navigation */}
       <nav
         className={cn(
-          "fixed inset-0 bg-white z-40 pt-20 pb-6 px-4 flex flex-col transform transition-transform duration-300 ease-in-out md:hidden",
+          "fixed inset-0 bg-white z-40 pt-20 pb-6 px-6 flex flex-col transform transition-transform duration-300 ease-in-out md:hidden",
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         )}
       >
@@ -131,8 +131,8 @@ const Navbar = () => {
               key={link.name}
               href={link.href}
               className={cn(
-                "text-lg py-2 border-b border-sand hover:text-burgundy transition-colors",
-                activeSection === link.href.replace('#', '') && "text-burgundy font-medium"
+                "text-lg py-2 border-b border-apple-gray-light hover:text-apple-blue transition-colors",
+                activeSection === link.href.replace('#', '') && "text-apple-blue font-medium"
               )}
               onClick={(e) => {
                 e.preventDefault();
