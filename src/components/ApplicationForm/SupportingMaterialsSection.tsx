@@ -10,28 +10,37 @@ const SupportingMaterialsSection = () => {
       
       <div className="space-y-6">
         <div>
-          <FormLabel className="block mb-2">Audition Recordings</FormLabel>
+          <FormLabel className="block mb-2">Repertoire Recordings</FormLabel>
           <p className="text-sm text-apple-dark/70 mb-3">
-            Upload two contrasting pieces (3-5 minutes each) in MP3 or WAV format.
+            Upload two contrasting pieces that demonstrate your vocal range and technical proficiency (5 minutes max each) in MP3 or WAV format.
           </p>
           <Input type="file" accept=".mp3,.wav" className="mb-3" />
           <Input type="file" accept=".mp3,.wav" />
         </div>
         
         <div>
-          <FormLabel className="block mb-2">Musical CV/Resume</FormLabel>
+          <FormLabel className="block mb-2">Curriculum Vitae/Resume</FormLabel>
           <p className="text-sm text-apple-dark/70 mb-3">
-            Upload in PDF format (max 2MB).
+            Upload your CV highlighting your performance history, education, and vocal training (PDF format, max 2MB).
           </p>
           <Input type="file" accept=".pdf" />
         </div>
         
         <div>
-          <FormLabel className="block mb-2">Recommendation Letter</FormLabel>
+          <FormLabel className="block mb-2">Recommendation Letters</FormLabel>
           <p className="text-sm text-apple-dark/70 mb-3">
-            Upload in PDF format (max 2MB). If your recommender prefers to send directly, they can email it to admissions@vocalexcellence.com
+            Upload two letters from vocal teachers or music professionals who can speak to your abilities and potential (PDF format, max 2MB each).
           </p>
+          <Input type="file" accept=".pdf" className="mb-3" />
           <Input type="file" accept=".pdf" />
+        </div>
+        
+        <div>
+          <FormLabel className="block mb-2">Headshot (Optional)</FormLabel>
+          <p className="text-sm text-apple-dark/70 mb-3">
+            Professional headshot for our records (JPEG or PNG format, max 2MB).
+          </p>
+          <Input type="file" accept=".jpg,.jpeg,.png" />
         </div>
       </div>
     </div>

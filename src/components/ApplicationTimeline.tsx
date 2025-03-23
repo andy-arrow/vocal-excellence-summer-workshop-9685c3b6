@@ -44,46 +44,46 @@ const ApplicationTimeline = () => {
             Application Timeline
           </h2>
           <p className="text-lg font-sans mb-10 text-apple-blue/90 font-normal max-w-2xl mx-auto">
-            Key dates and deadlines for the 2025 Summer Programme application process
+            Key dates and deadlines for the 2025 Summer Voice Programme
           </p>
         </div>
 
         <div className="mt-10">
           <TimelineItem 
-            date="January 15, 2025"
+            date="December 1, 2024"
             title="Applications Open"
-            description="Online application portal opens. Early submissions are encouraged as applications are reviewed on a rolling basis."
+            description="Online application portal opens. Early submissions are encouraged to allow ample time for processing your materials."
             isActive={true}
           />
           
           <TimelineItem 
-            date="April 1, 2025"
+            date="February 15, 2025"
             title="Application Deadline"
-            description="Final date to submit your complete application package, including all supporting materials."
+            description="Final date to submit your complete application package, including all supporting materials and recordings."
           />
           
           <TimelineItem 
-            date="April 15 - May 15, 2025"
-            title="Audition Reviews & Interviews"
-            description="Our faculty reviews application materials. Selected candidates may be invited for an online interview or additional audition."
+            date="March 1-31, 2025"
+            title="Application Review"
+            description="Our faculty panel reviews all application materials. Selected candidates may be contacted for additional information."
           />
           
           <TimelineItem 
-            date="May 20, 2025"
+            date="April 10, 2025"
             title="Acceptance Notifications"
             description="All applicants will be notified of their application status via email."
           />
           
           <TimelineItem 
-            date="June 1, 2025"
+            date="May 1, 2025"
             title="Enrollment Confirmation"
             description="Accepted students must confirm their participation and submit a non-refundable deposit to secure their place."
           />
           
           <TimelineItem 
-            date="June 15, 2025"
+            date="July 5, 2025"
             title="Programme Begins"
-            description="Welcome ceremony and orientation for all participants at our London campus."
+            description="Welcome orientation and first sessions at our campus facilities."
             isLast={true}
           />
         </div>
@@ -93,19 +93,19 @@ const ApplicationTimeline = () => {
           <ul className="space-y-2 text-sm text-apple-dark/80">
             <li className="flex items-start gap-2">
               <span className="text-apple-blue font-bold">•</span>
-              <span>Applications are reviewed on a rolling basis. Early submission may increase your chances of acceptance.</span>
+              <span>All materials must be received by the application deadline. Incomplete applications cannot be considered.</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-apple-blue font-bold">•</span>
-              <span>All supporting materials must be submitted by the application deadline. Incomplete applications will not be considered.</span>
+              <span>Financial aid applications are due at the same time as the program application (February 15, 2025).</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-apple-blue font-bold">•</span>
-              <span>Scholarship applications have the same deadline as the programme application (April 1, 2025).</span>
+              <span>International applicants should apply early to allow ample time for visa processing if accepted.</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-apple-blue font-bold">•</span>
-              <span>Late applications may be considered if places remain available, but priority is given to those who apply before the deadline.</span>
+              <span>All participants must be available for the entire programme duration (July 5-31, 2025).</span>
             </li>
           </ul>
         </div>

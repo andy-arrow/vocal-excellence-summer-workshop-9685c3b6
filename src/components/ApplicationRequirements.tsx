@@ -25,45 +25,45 @@ const ApplicationRequirements = () => {
             Programme Requirements
           </h2>
           <p className="text-lg md:text-xl font-sans mb-10 text-apple-blue/90 font-normal max-w-2xl mx-auto">
-            To ensure all participants benefit fully from our intensive programme, we look for the following qualifications.
+            The Summer Voice Programme is designed for advanced vocal students and emerging professional singers.
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
           <RequirementCard 
             icon={Music}
-            title="Vocal Proficiency"
-            description="Applicants should have at least 2 years of vocal training or equivalent experience. All voice types and genres are welcome."
+            title="Advanced Vocal Proficiency"
+            description="Applicants should be advanced singers, typically at the conservatory level or early-career professionals. All voice types and backgrounds are welcome."
           />
           
           <RequirementCard 
             icon={BookOpen}
-            title="Music Theory Knowledge"
-            description="Basic understanding of music theory is required. Applicants should be able to read musical notation and understand fundamental concepts."
+            title="Music Theory & Sight-Reading"
+            description="Strong music theory foundation and ability to sight-read are required, as the program involves intensive score study and ensemble work."
           />
           
           <RequirementCard 
             icon={Calendar}
-            title="Availability"
-            description="Full attendance for the entire programme duration (June 15 - July 30, 2025) is mandatory. Participants must commit to all classes and performances."
+            title="Full Programme Commitment"
+            description="Full attendance for the entire programme duration (July 5-31, 2025) is mandatory, including all classes, coachings, and performances."
           />
           
           <RequirementCard 
             icon={Award}
             title="Performance Experience"
-            description="Previous performance experience (recitals, choirs, musicals, etc.) is highly recommended but not mandatory for all applicants."
+            description="Previous solo performance experience in recitals, operas, or other public vocal performances is required."
           />
           
           <RequirementCard 
             icon={Heart}
-            title="Passion & Dedication"
-            description="We look for students who demonstrate genuine passion for vocal arts and commitment to developing their craft."
+            title="Artistic Commitment"
+            description="We seek artists who demonstrate exceptional commitment to vocal artistry and a clear vision for their development and career goals."
           />
           
           <RequirementCard 
             icon={Globe}
             title="Language Proficiency"
-            description="Classes will be conducted in English. Non-native speakers should have sufficient proficiency to follow instruction and participate fully."
+            description="Classes are conducted in English. Some familiarity with singing in Italian, German, and French is beneficial but not required."
           />
         </div>
 
@@ -73,31 +73,31 @@ const ApplicationRequirements = () => {
             <div className="flex items-start gap-3">
               <Check className="text-apple-blue mt-1 shrink-0" size={18} />
               <p className="text-apple-dark/80">
-                <span className="font-medium">Audition Recording</span>: Two contrasting pieces (3-5 minutes each) showcasing your range and technical ability
+                <span className="font-medium">Repertoire Recordings</span>: Two contrasting pieces that demonstrate your vocal range and technical proficiency (5 minutes max each)
               </p>
             </div>
             <div className="flex items-start gap-3">
               <Check className="text-apple-blue mt-1 shrink-0" size={18} />
               <p className="text-apple-dark/80">
-                <span className="font-medium">Personal Statement</span>: 500-word essay explaining your musical background, goals, and why you want to join the programme
+                <span className="font-medium">Statement of Purpose</span>: Describing your artistic goals and what you hope to achieve during the programme
               </p>
             </div>
             <div className="flex items-start gap-3">
               <Check className="text-apple-blue mt-1 shrink-0" size={18} />
               <p className="text-apple-dark/80">
-                <span className="font-medium">Recommendation Letter</span>: One letter from a vocal instructor, music teacher, or mentor familiar with your abilities
+                <span className="font-medium">Recommendation Letters</span>: Two letters from vocal teachers or music professionals familiar with your abilities
               </p>
             </div>
             <div className="flex items-start gap-3">
               <Check className="text-apple-blue mt-1 shrink-0" size={18} />
               <p className="text-apple-dark/80">
-                <span className="font-medium">Music CV/Resume</span>: A document outlining your musical education, performances, and relevant experience
+                <span className="font-medium">Curriculum Vitae</span>: Detailing your performance history, education, and vocal training
               </p>
             </div>
             <div className="flex items-start gap-3">
               <Check className="text-apple-blue mt-1 shrink-0" size={18} />
               <p className="text-apple-dark/80">
-                <span className="font-medium">Application Form</span>: Complete personal information, contact details, and programme-specific questions
+                <span className="font-medium">Repertoire List</span>: A list of works currently in your repertoire, organized by language and genre
               </p>
             </div>
           </div>

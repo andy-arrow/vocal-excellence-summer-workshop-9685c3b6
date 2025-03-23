@@ -26,10 +26,10 @@ const ProgrammeApplicationSection = () => {
           name="reasonForApplying"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Why do you want to join this programme?</FormLabel>
+              <FormLabel>Statement of Purpose</FormLabel>
               <FormControl>
                 <Textarea 
-                  placeholder="Please explain your interest in the programme and what you hope to achieve"
+                  placeholder="Please explain your artistic goals, what you hope to achieve during the programme, and how this experience will contribute to your development as a vocalist"
                   className="min-h-[150px]"
                   {...field}
                 />
@@ -44,9 +44,9 @@ const ProgrammeApplicationSection = () => {
           name="heardAboutUs"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>How did you hear about us?</FormLabel>
+              <FormLabel>How did you hear about the Summer Voice Programme?</FormLabel>
               <FormControl>
-                <Input placeholder="Social media, website, referral, etc." {...field} />
+                <Input placeholder="Faculty recommendation, website, social media, alumni, etc." {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -66,7 +66,7 @@ const ProgrammeApplicationSection = () => {
               </FormControl>
               <div className="space-y-1 leading-none">
                 <FormLabel>
-                  I would like to be considered for a scholarship (separate application required)
+                  I wish to be considered for financial aid (additional documentation will be required)
                 </FormLabel>
               </div>
             </FormItem>
@@ -78,10 +78,10 @@ const ProgrammeApplicationSection = () => {
           name="specialNeeds"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Special Accommodations or Accessibility Needs (Optional)</FormLabel>
+              <FormLabel>Accessibility Needs or Special Accommodations (Optional)</FormLabel>
               <FormControl>
                 <Textarea 
-                  placeholder="Please let us know if you have any specific requirements"
+                  placeholder="Please inform us of any accessibility requirements or accommodations you may need during the programme"
                   className="min-h-[100px]"
                   {...field}
                 />
