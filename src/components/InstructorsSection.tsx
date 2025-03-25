@@ -7,7 +7,7 @@ const instructors = [
     name: "Andreas Aroditis",
     title: "Founder & Artistic Director",
     bio: "Internationally acclaimed vocal coach with extensive experience in opera and musical theatre, dedicated to bringing out authentic performances and technical excellence.",
-    image: "/lovable-uploads/5a4b7bc3-bc7e-42cc-b5bf-fd69555887e3.png",
+    image: "/lovable-uploads/e0f8da04-eb2f-4b36-8abb-00346d1c76be.png",
     socials: {
       twitter: "#",
       instagram: "#",
