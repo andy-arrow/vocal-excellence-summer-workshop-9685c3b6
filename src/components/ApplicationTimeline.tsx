@@ -81,7 +81,7 @@ const ApplicationTimeline = () => {
           />
           
           <TimelineItem 
-            date="July 5, 2025"
+            date="July 14, 2025"
             title="Programme Begins"
             description="Welcome orientation and first sessions at our campus facilities."
             isLast={true}
@@ -105,7 +105,7 @@ const ApplicationTimeline = () => {
             </li>
             <li className="flex items-start gap-2">
               <span className="text-apple-blue font-bold">•</span>
-              <span>All participants must be available for the entire programme duration (July 5-31, 2025).</span>
+              <span>All participants must be available for the entire programme duration (July 14-18, 2025).</span>
             </li>
           </ul>
         </div>

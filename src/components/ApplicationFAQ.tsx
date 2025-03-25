@@ -102,7 +102,7 @@ const ApplicationFAQ = () => {
               What is the daily schedule like during the programme?
             </AccordionTrigger>
             <AccordionContent className="text-apple-dark/80 pb-6">
-              <p className="mb-2">The programme runs Monday through Saturday, with Sundays off. A typical day includes:</p>
+              <p className="mb-2">The programme runs Monday through Friday from July 14-18, 2025. A typical day includes:</p>
               <ul className="list-disc pl-5 space-y-1">
                 <li>9:00-10:30 AM: Vocal technique/group warm-up</li>
                 <li>10:45-12:15 PM: Repertoire study or individual lessons</li>
@@ -110,7 +110,7 @@ const ApplicationFAQ = () => {
                 <li>1:30-3:00 PM: Masterclass or music theory/history</li>
                 <li>3:15-5:00 PM: Performance practice or ensemble rehearsal</li>
                 <li>5:00-7:00 PM: Personal practice time</li>
-                <li>Evening activities (concerts, social events, etc.) occur 2-3 times per week</li>
+                <li>Evening activities (concerts, social events, etc.) occur 2-3 times during the week</li>
               </ul>
             </AccordionContent>
           </AccordionItem>

@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react';
 import { Calendar, Clock, MapPin, DollarSign } from 'lucide-react';
 
@@ -60,7 +61,7 @@ const CTASection = () => {
             >
               <div className="flex items-center text-white/80">
                 <Calendar className="w-5 h-5 mr-3 text-burgundy-light" />
-                <span>Programme Dates: June 15 - July 30, 2025</span>
+                <span>Programme Dates: July 14 - July 18, 2025</span>
               </div>
               <div className="flex items-center text-white/80">
                 <Clock className="w-5 h-5 mr-3 text-burgundy-light" />
