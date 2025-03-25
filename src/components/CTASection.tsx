@@ -45,12 +45,12 @@ const CTASection = () => {
               className="reveal-on-scroll mb-8"
             >
               <h2 className="text-4xl md:text-5xl font-playfair font-semibold mb-6 text-white">
-                Secure Your Place Today
+                Apply for Summer 2025
               </h2>
               <p className="text-xl text-white/80 mb-8">
-                Limited spots available for our intensive summer programme. Apply now to avoid disappointment.
+                Space is extremely limited to ensure personalized attention. Only 20 participants will be accepted for the 2025 programme.
               </p>
-              <a href="#" className="primary-button bg-white text-burgundy hover:bg-sand hover:text-burgundy-dark">
+              <a href="/apply" className="primary-button bg-white text-burgundy hover:bg-sand hover:text-burgundy-dark">
                 Begin Your Application
               </a>
             </div>
@@ -69,11 +69,11 @@ const CTASection = () => {
               </div>
               <div className="flex items-center text-white/80">
                 <MapPin className="w-5 h-5 mr-3 text-burgundy-light" />
-                <span>Location: London, UK (with optional online components)</span>
+                <span>Location: London, UK (Royal Academy of Music)</span>
               </div>
               <div className="flex items-center text-white/80">
                 <DollarSign className="w-5 h-5 mr-3 text-burgundy-light" />
-                <span>Scholarships and payment plans available</span>
+                <span>Tuition: £1,250 (Early application discount available)</span>
               </div>
             </div>
           </div>

@@ -92,17 +92,17 @@ const InstructorsSection = () => {
             ref={(el) => (elementsRef.current[0] = el)} 
             className="section-title reveal-on-scroll"
           >
-            World-Class Instructors
+            World-Class Faculty
           </h2>
           <p 
             ref={(el) => (elementsRef.current[1] = el)} 
             className="section-subtitle reveal-on-scroll"
           >
-            Learn from industry-leading vocal professionals
+            Learn from industry-leading vocal professionals with international performance careers
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {instructors.map((instructor, index) => (
             <div 
               key={index}
@@ -153,11 +153,11 @@ const InstructorsSection = () => {
         </div>
 
         <div 
-          ref={(el) => (elementsRef.current[6] = el)} 
+          ref={(el) => (elementsRef.current[7] = el)} 
           className="mt-16 text-center reveal-on-scroll"
         >
           <p className="text-apple-gray mb-6">
-            In addition to our core faculty, the programme features guest masterclasses from international performing artists and industry professionals.
+            During the intensive, you'll also have the opportunity to work with guest artists and industry professionals in specialized workshops and masterclasses.
           </p>
           <a href="#" className="inline-flex items-center text-apple-blue hover:text-apple-blue-light transition-colors">
             <span className="mr-1">View All Faculty & Guest Artists</span>

@@ -67,13 +67,13 @@ const HeroSection = () => {
       <div className="hero-content relative z-10 text-center px-6 transition-all duration-500 ease-out max-w-4xl mx-auto">
         <div className="animate-fade-in">
           <span className="inline-block mb-3 py-1 px-4 rounded-full bg-white/10 backdrop-blur-md text-white/90 text-xs font-medium tracking-wide">
-            Summer Programme 2025
+            Summer Programme • July 14-18, 2025
           </span>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-sans font-semibold text-white mb-4 tracking-tight leading-tight">
             Vocal Excellence Academy
           </h1>
           <p className="text-base md:text-xl text-white/80 max-w-2xl mx-auto mb-8 font-light leading-relaxed">
-            Unleash your vocal brilliance this summer in an immersive, transformative programme led by world-class instructors
+            A transformative 5-day vocal intensive for advancing singers, featuring masterclasses, private coaching, and performance opportunities with world-class faculty
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a 

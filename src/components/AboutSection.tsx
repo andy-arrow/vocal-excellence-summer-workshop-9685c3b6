@@ -15,8 +15,8 @@ const features = [
   },
   {
     icon: <Users className="w-6 h-6 text-apple-blue" />,
-    title: "Professional Network",
-    description: "Connect with fellow emerging artists and industry professionals in a collaborative and supportive environment."
+    title: "Collaborative Environment",
+    description: "Connect with fellow singers in a supportive atmosphere that encourages artistic growth and musical collaboration."
   },
   {
     icon: <Award className="w-6 h-6 text-apple-blue" />,
@@ -63,7 +63,7 @@ const AboutSection = () => {
             ref={(el) => (elementsRef.current[1] = el)} 
             className="section-subtitle reveal-on-scroll"
           >
-            An immersive experience for advanced singers
+            An intensive vocal experience in the heart of London
           </p>
         </div>
 
@@ -74,13 +74,13 @@ const AboutSection = () => {
           >
             <h3 className="text-2xl font-sans font-semibold mb-4 text-apple-dark">Elevate Your Artistry</h3>
             <p className="text-apple-gray mb-6 leading-relaxed">
-              The Summer Voice Programme is a prestigious three-week intensive designed for advanced vocal students and emerging professional singers seeking to refine their craft and advance their careers.
+              The Vocal Excellence Academy Summer Programme is an intensive 5-day vocal training experience designed for serious singers looking to transform their technique and performance skills under the guidance of world-class faculty.
             </p>
             <p className="text-apple-gray mb-6 leading-relaxed">
-              Immerse yourself in an environment of artistic excellence where you'll receive specialized individual attention from our distinguished faculty of internationally renowned vocalists, coaches, and directors.
+              Located in the vibrant cultural center of London, our programme offers a supportive yet challenging environment where participants receive personalized attention and feedback to address their specific vocal needs.
             </p>
             <p className="text-apple-gray leading-relaxed">
-              Each participant works closely with faculty in private voice lessons, coaching sessions, and masterclasses focused on vocal technique, repertoire development, language proficiency, and performance practice. The programme culminates in public recitals showcasing each artist's growth.
+              With a curriculum that balances technical development, artistic expression, and performance practice, you'll experience noticeable growth in just five days. Our small group format ensures you receive ample individual attention while building connections with like-minded artists.
             </p>
           </div>
 
