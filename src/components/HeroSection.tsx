@@ -10,7 +10,6 @@ const HeroSection = () => {
       if (!heroRef.current) return;
       const scrollPosition = window.scrollY;
       const opacity = 1 - scrollPosition / 700;
-      const scale = 1 + scrollPosition * 0.0005;
       const translateY = scrollPosition * 0.3;
 
       // Apply parallax effect to hero content
@@ -19,12 +18,6 @@ const HeroSection = () => {
         if (heroContent) {
           heroContent.style.opacity = Math.max(0.2, opacity).toString();
           heroContent.style.transform = `translateY(${translateY}px)`;
-        }
-
-        // Apply scale effect to background
-        const heroBg = heroRef.current.querySelector('.hero-bg') as HTMLElement;
-        if (heroBg) {
-          heroBg.style.transform = `scale(${scale})`;
         }
       }
     };
@@ -47,38 +40,26 @@ const HeroSection = () => {
     <section 
       id="home" 
       ref={heroRef}
-      className="relative h-screen flex items-center justify-center overflow-hidden"
+      className="relative h-screen flex items-center justify-center overflow-hidden bg-white"
     >
       {/* Hero Background */}
-      <div className="hero-bg absolute inset-0 w-full h-full bg-apple-dark transition-transform duration-500 ease-out">
-        <div 
-          className="absolute inset-0 bg-center bg-cover bg-no-repeat"
-          style={{ 
-            backgroundImage: `url('/lovable-uploads/6fe8392e-8aba-4eeb-afd2-49b7bafc73bb.png')`,
-            backgroundPosition: 'center center',
-            backgroundSize: 'cover'
-          }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/50"></div>
-        </div>
+      <div className="absolute inset-0 w-full h-full bg-white">
+        <div className="absolute inset-0 bg-gradient-to-r from-white to-gray-100 opacity-50"></div>
       </div>
       
       {/* Hero Content */}
       <div className="hero-content relative z-10 text-center px-6 transition-all duration-500 ease-out max-w-4xl mx-auto">
         <div className="animate-fade-in">
-          <span className="inline-block mb-3 py-1 px-4 rounded-full bg-white/10 backdrop-blur-md text-white/90 text-xs font-medium tracking-wide">
-            Summer Programme • July 14-18, 2025
-          </span>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-sans font-semibold text-white mb-4 tracking-tight leading-tight">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-light text-gray-800 mb-6 tracking-tight leading-tight">
             Vocal Excellence Academy
           </h1>
-          <p className="text-base md:text-xl text-white/80 max-w-2xl mx-auto mb-8 font-light leading-relaxed">
+          <p className="text-base md:text-xl text-gray-600 max-w-2xl mx-auto mb-10 font-light leading-relaxed">
             A transformative 5-day vocal intensive for advancing singers, featuring masterclasses, private coaching, and performance opportunities with world-class faculty
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <div className="flex flex-col sm:flex-row gap-5 justify-center">
             <a 
               href="#apply" 
-              className="primary-button"
+              className="px-8 py-3 border border-gray-800 text-gray-800 rounded-none text-sm font-light tracking-wider uppercase hover:bg-gray-800 hover:text-white transition-colors duration-300"
               onClick={(e) => {
                 e.preventDefault();
                 const applySection = document.getElementById('apply');
@@ -94,7 +75,7 @@ const HeroSection = () => {
             </a>
             <a 
               href="#about" 
-              className="secondary-button"
+              className="px-8 py-3 border border-gray-300 text-gray-600 rounded-none text-sm font-light tracking-wider uppercase hover:bg-gray-100 transition-colors duration-300"
               onClick={(e) => {
                 e.preventDefault();
                 scrollToAbout();
@@ -109,8 +90,8 @@ const HeroSection = () => {
       {/* Scroll Down Indicator */}
       <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 cursor-pointer animate-bounce" onClick={scrollToAbout}>
         <div className="flex flex-col items-center">
-          <span className="text-white/60 text-xs font-light mb-1">Discover</span>
-          <ChevronDown className="text-white/60" size={18} />
+          <span className="text-gray-500 text-xs font-light mb-1">Discover</span>
+          <ChevronDown className="text-gray-500" size={18} />
         </div>
       </div>
     </section>

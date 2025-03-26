@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -20,10 +19,10 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['-apple-system', 'BlinkMacSystemFont', 'San Francisco', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'sans-serif'],
-				display: ['-apple-system', 'BlinkMacSystemFont', 'San Francisco', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'sans-serif'],
-				playfair: ['"Playfair Display"', 'serif'],
+				sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'sans-serif'],
+				serif: ['"Playfair Display"', 'Georgia', 'Times New Roman', 'serif'],
 				inter: ['Inter', 'sans-serif'],
+				playfair: ['"Playfair Display"', 'serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',

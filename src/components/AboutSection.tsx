@@ -4,24 +4,24 @@ import { Music, Mic, Users, Award } from 'lucide-react';
 
 const features = [
   {
-    icon: <Mic className="w-6 h-6 text-apple-blue" />,
+    icon: <Mic className="w-5 h-5 text-gray-700" />,
     title: "Expert Faculty",
-    description: "Study with internationally renowned vocal pedagogues, coaches, and performing artists from leading conservatories and opera houses."
+    description: "Study with internationally renowned vocal pedagogues and performing artists."
   },
   {
-    icon: <Music className="w-6 h-6 text-apple-blue" />,
+    icon: <Music className="w-5 h-5 text-gray-700" />,
     title: "Performance Focus",
-    description: "Develop your artistry through masterclasses, one-on-one coaching, and culminating performances showcasing your growth."
+    description: "Develop your artistry through masterclasses and culminating performances."
   },
   {
-    icon: <Users className="w-6 h-6 text-apple-blue" />,
+    icon: <Users className="w-5 h-5 text-gray-700" />,
     title: "Collaborative Environment",
-    description: "Connect with fellow singers in a supportive atmosphere that encourages artistic growth and musical collaboration."
+    description: "Connect with fellow singers in a supportive atmosphere for artistic growth."
   },
   {
-    icon: <Award className="w-6 h-6 text-apple-blue" />,
+    icon: <Award className="w-5 h-5 text-gray-700" />,
     title: "Career Development",
-    description: "Gain valuable insights into the professional world of vocal performance through workshops and industry panels."
+    description: "Gain valuable insights into the professional world of vocal performance."
   }
 ];
 
@@ -50,67 +50,58 @@ const AboutSection = () => {
   }, []);
 
   return (
-    <section id="about" ref={sectionRef} className="section-container bg-white">
-      <div className="max-w-6xl mx-auto">
+    <section id="about" ref={sectionRef} className="py-20 bg-white">
+      <div className="max-w-6xl mx-auto px-6 md:px-10">
         <div className="text-center mb-16">
           <h2 
             ref={(el) => (elementsRef.current[0] = el)} 
-            className="section-title reveal-on-scroll"
+            className="text-3xl md:text-4xl font-serif font-light mb-4 text-gray-800 reveal-on-scroll"
           >
             About The Programme
           </h2>
+          <div className="w-20 h-px bg-gray-300 mx-auto mb-6"></div>
           <p 
             ref={(el) => (elementsRef.current[1] = el)} 
-            className="section-subtitle reveal-on-scroll"
+            className="text-lg md:text-xl font-sans mb-10 text-gray-600 font-light max-w-3xl mx-auto reveal-on-scroll"
           >
-            An intensive vocal experience in the heart of London
+            An intensive vocal experience with world-class faculty
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-16 items-center">
+        <div className="grid md:grid-cols-2 gap-16 items-start">
           <div 
             ref={(el) => (elementsRef.current[2] = el)} 
-            className="reveal-on-scroll"
+            className="reveal-on-scroll space-y-6"
           >
-            <h3 className="text-2xl font-sans font-semibold mb-4 text-apple-dark">Elevate Your Artistry</h3>
-            <p className="text-apple-gray mb-6 leading-relaxed">
+            <p className="text-gray-600 leading-relaxed">
               The Vocal Excellence Academy Summer Programme is an intensive 5-day vocal training experience designed for serious singers looking to transform their technique and performance skills under the guidance of world-class faculty.
             </p>
-            <p className="text-apple-gray mb-6 leading-relaxed">
-              Located in the vibrant cultural center of London, our programme offers a supportive yet challenging environment where participants receive personalized attention and feedback to address their specific vocal needs.
-            </p>
-            <p className="text-apple-gray leading-relaxed">
+            <p className="text-gray-600 leading-relaxed">
               With a curriculum that balances technical development, artistic expression, and performance practice, you'll experience noticeable growth in just five days. Our small group format ensures you receive ample individual attention while building connections with like-minded artists.
             </p>
-          </div>
-
-          <div 
-            ref={(el) => (elementsRef.current[3] = el)} 
-            className="reveal-on-scroll"
-          >
-            <div className="relative">
-              <img 
-                src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" 
-                alt="Vocal masterclass session" 
-                className="w-full h-auto rounded-xl shadow-sm object-cover aspect-video"
-              />
+            <div className="pt-4">
+              <a href="#curriculum" className="text-sm uppercase tracking-wider font-light border-b border-gray-400 pb-1 inline-block hover:border-gray-800 transition-colors">
+                View Our Curriculum
+              </a>
             </div>
           </div>
-        </div>
 
-        <div className="mt-20 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {features.map((feature, index) => (
-            <div 
-              key={index}
-              ref={(el) => (elementsRef.current[4 + index] = el)} 
-              className="p-6 reveal-on-scroll scale-on-hover border-0 rounded-xl bg-apple-light"
-              style={{ transitionDelay: `${index * 100}ms` }}
-            >
-              <div className="mb-4">{feature.icon}</div>
-              <h3 className="text-lg font-sans font-medium mb-2 text-apple-dark">{feature.title}</h3>
-              <p className="text-apple-gray text-sm leading-relaxed">{feature.description}</p>
-            </div>
-          ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {features.map((feature, index) => (
+              <div 
+                key={index}
+                ref={(el) => (elementsRef.current[4 + index] = el)} 
+                className="reveal-on-scroll border-t border-gray-200 pt-4"
+                style={{ transitionDelay: `${index * 100}ms` }}
+              >
+                <div className="flex items-center mb-3">
+                  <div className="mr-3">{feature.icon}</div>
+                  <h3 className="text-base font-medium text-gray-800">{feature.title}</h3>
+                </div>
+                <p className="text-gray-600 text-sm leading-relaxed pl-8">{feature.description}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

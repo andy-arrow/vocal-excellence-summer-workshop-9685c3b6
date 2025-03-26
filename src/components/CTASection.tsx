@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef } from 'react';
-import { Calendar, Clock, MapPin, DollarSign } from 'lucide-react';
+import { Calendar, MapPin, DollarSign } from 'lucide-react';
 
 const CTASection = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -27,30 +27,22 @@ const CTASection = () => {
   }, []);
 
   return (
-    <section id="apply" ref={sectionRef} className="relative py-20 overflow-hidden">
-      <div 
-        className="absolute inset-0 z-0 bg-center bg-cover"
-        style={{ 
-          backgroundImage: `url('https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80')`,
-        }}
-      >
-        <div className="absolute inset-0 bg-navy-dark/90"></div>
-      </div>
-      
-      <div className="max-w-6xl mx-auto px-4 md:px-8 relative z-10">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+    <section id="apply" ref={sectionRef} className="py-20 bg-gray-50">
+      <div className="max-w-6xl mx-auto px-6 md:px-10">
+        <div className="grid md:grid-cols-2 gap-12 items-start">
           <div>
             <div 
               ref={(el) => (elementsRef.current[0] = el)} 
               className="reveal-on-scroll mb-8"
             >
-              <h2 className="text-4xl md:text-5xl font-playfair font-semibold mb-6 text-white">
+              <h2 className="text-3xl md:text-4xl font-serif font-light mb-6 text-gray-800">
                 Apply for Summer 2025
               </h2>
-              <p className="text-xl text-white/80 mb-8">
+              <div className="w-20 h-px bg-gray-300 mb-6"></div>
+              <p className="text-gray-600 mb-8 leading-relaxed">
                 Space is extremely limited to ensure personalized attention. Only 20 participants will be accepted for the 2025 programme.
               </p>
-              <a href="/apply" className="primary-button bg-white text-burgundy hover:bg-sand hover:text-burgundy-dark">
+              <a href="/apply" className="px-8 py-3 border border-gray-800 text-gray-800 rounded-none text-sm font-light tracking-wider uppercase hover:bg-gray-800 hover:text-white transition-colors duration-300 inline-block">
                 Begin Your Application
               </a>
             </div>
@@ -59,21 +51,17 @@ const CTASection = () => {
               ref={(el) => (elementsRef.current[1] = el)} 
               className="space-y-4 reveal-on-scroll"
             >
-              <div className="flex items-center text-white/80">
-                <Calendar className="w-5 h-5 mr-3 text-burgundy-light" />
-                <span>Programme Dates: July 14 - July 18, 2025</span>
+              <div className="flex items-center text-gray-600">
+                <Calendar className="w-5 h-5 mr-4 text-gray-500" />
+                <span className="font-light">Programme Dates: July 14 - July 18, 2025</span>
               </div>
-              <div className="flex items-center text-white/80">
-                <Clock className="w-5 h-5 mr-3 text-burgundy-light" />
-                <span>Application Deadline: April 1, 2025</span>
+              <div className="flex items-center text-gray-600">
+                <MapPin className="w-5 h-5 mr-4 text-gray-500" />
+                <span className="font-light">Location: London, UK (Royal Academy of Music)</span>
               </div>
-              <div className="flex items-center text-white/80">
-                <MapPin className="w-5 h-5 mr-3 text-burgundy-light" />
-                <span>Location: London, UK (Royal Academy of Music)</span>
-              </div>
-              <div className="flex items-center text-white/80">
-                <DollarSign className="w-5 h-5 mr-3 text-burgundy-light" />
-                <span>Tuition: £1,250 (Early application discount available)</span>
+              <div className="flex items-center text-gray-600">
+                <DollarSign className="w-5 h-5 mr-4 text-gray-500" />
+                <span className="font-light">Tuition: £1,250 (Early application discount available)</span>
               </div>
             </div>
           </div>
@@ -82,40 +70,40 @@ const CTASection = () => {
             ref={(el) => (elementsRef.current[2] = el)} 
             className="reveal-on-scroll"
           >
-            <div className="glass-card p-8 bg-white/95">
-              <h3 className="text-2xl font-playfair font-semibold mb-6 text-navy-dark">
+            <div className="border border-gray-200 p-8 bg-white">
+              <h3 className="text-2xl font-serif font-light mb-6 text-gray-800">
                 Request Information
               </h3>
-              <form className="space-y-4">
+              <form className="space-y-5">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="name" className="block text-sm font-light text-gray-700 mb-1">
                     Full Name
                   </label>
                   <input 
                     type="text" 
                     id="name" 
-                    className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-burgundy focus:border-transparent"
+                    className="w-full border border-gray-300 px-4 py-2 rounded-none focus:outline-none focus:ring-1 focus:ring-gray-800"
                     placeholder="Your name"
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="email" className="block text-sm font-light text-gray-700 mb-1">
                     Email Address
                   </label>
                   <input 
                     type="email" 
                     id="email" 
-                    className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-burgundy focus:border-transparent"
+                    className="w-full border border-gray-300 px-4 py-2 rounded-none focus:outline-none focus:ring-1 focus:ring-gray-800"
                     placeholder="Your email"
                   />
                 </div>
                 <div>
-                  <label htmlFor="vocal_type" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="vocal_type" className="block text-sm font-light text-gray-700 mb-1">
                     Vocal Type/Range
                   </label>
                   <select 
                     id="vocal_type" 
-                    className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-burgundy focus:border-transparent"
+                    className="w-full border border-gray-300 px-4 py-2 rounded-none focus:outline-none focus:ring-1 focus:ring-gray-800"
                   >
                     <option value="">Select your vocal type</option>
                     <option value="soprano">Soprano</option>
@@ -128,34 +116,19 @@ const CTASection = () => {
                   </select>
                 </div>
                 <div>
-                  <label htmlFor="experience" className="block text-sm font-medium text-gray-700 mb-1">
-                    Level of Experience
-                  </label>
-                  <select 
-                    id="experience" 
-                    className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-burgundy focus:border-transparent"
-                  >
-                    <option value="">Select your experience level</option>
-                    <option value="beginner">Beginner (0-2 years)</option>
-                    <option value="intermediate">Intermediate (3-5 years)</option>
-                    <option value="advanced">Advanced (6+ years)</option>
-                    <option value="professional">Professional</option>
-                  </select>
-                </div>
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="message" className="block text-sm font-light text-gray-700 mb-1">
                     Questions or Comments (Optional)
                   </label>
                   <textarea 
                     id="message" 
                     rows={4} 
-                    className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-burgundy focus:border-transparent"
+                    className="w-full border border-gray-300 px-4 py-2 rounded-none focus:outline-none focus:ring-1 focus:ring-gray-800"
                     placeholder="Any specific questions about the programme?"
                   ></textarea>
                 </div>
                 <button 
                   type="submit" 
-                  className="w-full primary-button bg-burgundy text-white"
+                  className="w-full px-8 py-3 border border-gray-800 text-gray-800 rounded-none text-sm font-light tracking-wider uppercase hover:bg-gray-800 hover:text-white transition-colors duration-300"
                 >
                   Request Information
                 </button>
