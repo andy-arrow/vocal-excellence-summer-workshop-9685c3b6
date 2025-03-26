@@ -51,13 +51,13 @@ const ApplicationForm = () => {
   };
 
   return (
-    <section id="application-form" className="py-20 bg-white">
+    <section id="application-form" className="py-16 md:py-20">
       <div className="max-w-4xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-sans font-semibold mb-4 text-apple-dark tracking-tight">
-            Application Form
+        <div className="text-center mb-10">
+          <h2 className="text-2xl md:text-3xl font-serif font-light mb-4 text-gray-800">
+            Submit Your Application
           </h2>
-          <p className="text-lg font-sans mb-10 text-apple-blue/90 font-normal max-w-2xl mx-auto">
+          <p className="text-gray-600 font-light max-w-2xl mx-auto">
             Complete all required fields below. You can save your progress and return to finish later.
           </p>
         </div>
@@ -81,8 +81,8 @@ const ApplicationForm = () => {
                     />
                   </FormControl>
                   <div className="space-y-1 leading-none">
-                    <FormLabel>
-                      I agree to the <a href="#" className="text-apple-blue underline">Terms and Conditions</a> and <a href="#" className="text-apple-blue underline">Privacy Policy</a>. I confirm that all information provided is accurate and complete.
+                    <FormLabel className="font-light text-gray-700">
+                      I agree to the <a href="#" className="text-gray-800 underline">Terms and Conditions</a> and <a href="#" className="text-gray-800 underline">Privacy Policy</a>. I confirm that all information provided is accurate and complete.
                     </FormLabel>
                     <FormMessage />
                   </div>
@@ -91,9 +91,9 @@ const ApplicationForm = () => {
             />
             
             <div className="flex justify-center pt-4">
-              <Button type="submit" className="primary-button py-6 px-8 text-base">
+              <button type="submit" className="px-8 py-3 border border-gray-800 text-gray-800 rounded-none text-sm font-light tracking-wider uppercase hover:bg-gray-800 hover:text-white transition-colors duration-300">
                 Submit Application
-              </Button>
+              </button>
             </div>
           </form>
         </Form>

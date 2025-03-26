@@ -19,7 +19,7 @@ const Application = () => {
       
       <div className="min-h-screen bg-white flex flex-col">
         <Navbar />
-        <main className="flex-grow">
+        <main className="flex-grow pt-16">
           <ApplicationHero />
           <ApplicationRequirements />
           <ApplicationTimeline />
