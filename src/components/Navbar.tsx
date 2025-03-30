@@ -127,16 +127,16 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile Navigation */}
+      {/* Mobile Navigation - Updated with black background and white text */}
       <nav
         className={cn(
-          "fixed inset-0 bg-white z-40 pt-20 pb-6 px-6 flex flex-col transform transition-transform duration-300 ease-in-out md:hidden",
+          "fixed inset-0 bg-black text-white z-40 pt-20 pb-6 px-6 flex flex-col transform transition-transform duration-300 ease-in-out md:hidden",
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         )}
       >
         {/* Exit Button - Added for mobile nav */}
         <button
-          className="absolute top-6 right-6 bg-black text-white p-2 rounded-sm"
+          className="absolute top-6 right-6 bg-black text-white p-2 border border-white/20 rounded-sm"
           onClick={() => setIsMenuOpen(false)}
           aria-label="Close menu"
         >
@@ -149,8 +149,8 @@ const Navbar = () => {
               key={link.name}
               to={link.path}
               className={cn(
-                "text-base py-1 hover:text-apple-blue transition-colors",
-                activeSection === link.href.replace('#', '') && isHomePage ? "text-apple-blue font-medium" : "text-apple-dark"
+                "text-base py-1 text-white/90 hover:text-white transition-colors",
+                activeSection === link.href.replace('#', '') && isHomePage ? "text-white font-medium" : ""
               )}
               onClick={(e) => {
                 if (isHomePage) {
@@ -165,7 +165,7 @@ const Navbar = () => {
           ))}
           <Link 
             to="/apply" 
-            className="mt-2 primary-button text-center"
+            className="mt-2 border border-white text-white hover:bg-white hover:text-black transition-colors py-3 px-6 text-center text-sm font-medium tracking-wider uppercase"
             onClick={() => setIsMenuOpen(false)}
           >
             Apply Now
