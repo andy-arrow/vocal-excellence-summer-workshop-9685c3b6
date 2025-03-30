@@ -57,7 +57,7 @@ const CTASection = () => {
               </div>
               <div className="flex items-center text-gray-600">
                 <MapPin className="w-5 h-5 mr-4 text-gray-500" />
-                <span className="font-light">Location: Limassol, Cyprus (Plevis Hall)</span>
+                <span className="font-light">Location: Limassol, Cyprus (Plevsis Hall)</span>
               </div>
               <div className="flex items-center text-gray-600">
                 <DollarSign className="w-5 h-5 mr-4 text-gray-500" />
