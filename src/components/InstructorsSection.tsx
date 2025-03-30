@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react';
 import { Instagram, Twitter, Linkedin, ArrowRight } from 'lucide-react';
 
@@ -118,17 +119,17 @@ const InstructorsSection = () => {
                   <div className="p-5 text-white">
                     <div className="flex space-x-4 mb-3">
                       {instructor.socials.twitter && (
-                        <a href={instructor.socials.twitter} className="text-white/80 hover:text-white transition-colors">
+                        <a href={instructor.socials.twitter} target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white transition-colors">
                           <Twitter size={18} />
                         </a>
                       )}
                       {instructor.socials.instagram && (
-                        <a href={instructor.socials.instagram} className="text-white/80 hover:text-white transition-colors">
+                        <a href={instructor.socials.instagram} target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white transition-colors">
                           <Instagram size={18} />
                         </a>
                       )}
                       {instructor.socials.linkedin && (
-                        <a href={instructor.socials.linkedin} className="text-white/80 hover:text-white transition-colors">
+                        <a href={instructor.socials.linkedin} target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white transition-colors">
                           <Linkedin size={18} />
                         </a>
                       )}
