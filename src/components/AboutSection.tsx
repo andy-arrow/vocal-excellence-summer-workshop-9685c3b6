@@ -79,11 +79,7 @@ const AboutSection = () => {
             <p className="text-gray-600 leading-relaxed">
               With a curriculum that balances technical development, artistic expression, and performance practice, you'll experience noticeable growth in just five days. Our small group format ensures you receive ample individual attention while building connections with like-minded artists.
             </p>
-            <div className="pt-4">
-              <a href="#curriculum" className="text-sm uppercase tracking-wider font-light border-b border-gray-400 pb-1 inline-block hover:border-gray-800 transition-colors">
-                View Our Curriculum
-              </a>
-            </div>
+            {/* View Our Curriculum link has been removed */}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
