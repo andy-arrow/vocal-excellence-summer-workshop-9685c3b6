@@ -25,10 +25,10 @@ const instructors = [
     }
   },
   {
-    name: "Olivia Brererton",
+    name: "Kate Batter",
     title: "Vocal Coach",
-    bio: "Renowned vocal technician with expertise in classical and contemporary vocal training, focusing on healthy technique and expressive performance.",
-    image: "/lovable-uploads/29cad38e-a84c-40f7-9ddb-3c11c159ea6d.png",
+    bio: "West End performer with credits in The Phantom of the Opera and The Sound of Music. Passionate vocal coach with over 20 years of teaching experience, holding a 1st Class BA (Hons) in Acting from Birmingham Royal Conservatoire and MA in Musical Theatre from Royal Academy of Music.",
+    image: "/lovable-uploads/e26c0944-dc77-4d19-8059-c61e7800b8d1.png",
     socials: {
       twitter: "#",
       instagram: "#",
