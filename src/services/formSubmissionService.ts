@@ -6,6 +6,8 @@
  * In a production environment, replace the example URL with your actual API endpoint.
  */
 
+import { ApplicationFormValues } from "@/components/ApplicationForm/schema";
+
 interface ContactFormData {
   name: string;
   email: string;
@@ -13,7 +15,8 @@ interface ContactFormData {
   message?: string;
 }
 
-interface ApplicationFormData {
+// Update this interface to match ApplicationFormValues to fix the type error
+export interface ApplicationFormData {
   firstName: string;
   lastName: string;
   email: string;
@@ -62,7 +65,7 @@ export const submitContactForm = async (data: ContactFormData): Promise<Response
 /**
  * Submits application form data to the server
  */
-export const submitApplicationForm = async (data: ApplicationFormData): Promise<Response> => {
+export const submitApplicationForm = async (data: ApplicationFormValues): Promise<Response> => {
   // Real API call
   return fetch(SUBMISSION_API_URL, {
     method: "POST",
