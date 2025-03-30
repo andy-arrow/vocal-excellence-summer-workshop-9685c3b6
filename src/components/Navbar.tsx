@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -15,7 +14,6 @@ const navLinks = [
   { name: 'About', href: '#about', path: '/' },
   { name: 'Curriculum', href: '#curriculum', path: '/' },
   { name: 'Instructors', href: '#instructors', path: '/' },
-  { name: 'Testimonials', href: '#testimonials', path: '/' },
   { name: 'FAQ', href: '#faq', path: '/' },
   { name: 'Contact', href: '#contact', path: '/' },
 ];
