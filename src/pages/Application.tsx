@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -10,6 +10,11 @@ import ApplicationTimeline from '@/components/ApplicationTimeline';
 import ApplicationFAQ from '@/components/ApplicationFAQ';
 
 const Application = () => {
+  useEffect(() => {
+    // Ensure the page scrolls to the top when component mounts
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <Helmet>

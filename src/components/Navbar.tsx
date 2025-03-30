@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   Sheet,
   SheetContent,
@@ -25,6 +25,7 @@ const Navbar = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const isHomePage = location.pathname === '/';
 
   useEffect(() => {
@@ -65,6 +66,13 @@ const Navbar = () => {
         });
       }
     }
+    setOpen(false);
+  };
+
+  const handleApplyNowClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate('/apply');
+    window.scrollTo(0, 0);
     setOpen(false);
   };
 
@@ -110,12 +118,13 @@ const Navbar = () => {
               {link.name}
             </Link>
           ))}
-          <Link 
-            to="/apply" 
+          <a 
+            href="/apply" 
+            onClick={handleApplyNowClick}
             className="ml-3 primary-button text-xs py-2 px-4"
           >
             Apply Now
-          </Link>
+          </a>
         </nav>
 
         {/* Mobile Menu - Using Sheet component for improved reliability */}
@@ -157,12 +166,13 @@ const Navbar = () => {
                 </SheetClose>
               ))}
               <SheetClose asChild>
-                <Link 
-                  to="/apply" 
+                <a 
+                  href="/apply"
+                  onClick={handleApplyNowClick}
                   className="mt-2 border border-white text-white hover:bg-white hover:text-black transition-colors py-3 px-6 text-center text-sm font-medium tracking-wider uppercase"
                 >
                   Apply Now
-                </Link>
+                </a>
               </SheetClose>
             </div>
           </SheetContent>

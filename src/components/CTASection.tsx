@@ -2,8 +2,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Calendar, MapPin, DollarSign } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { useNavigate } from 'react-router-dom';
 
 const CTASection = () => {
+  const navigate = useNavigate();
   const sectionRef = useRef<HTMLElement>(null);
   const elementsRef = useRef<(HTMLElement | null)[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -99,6 +101,12 @@ const CTASection = () => {
     }
   };
 
+  const handleApplyClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate('/apply');
+    window.scrollTo(0, 0);
+  };
+
   return (
     <section id="apply" ref={sectionRef} className="py-20 bg-gray-50">
       <div className="max-w-6xl mx-auto px-6 md:px-10">
@@ -115,7 +123,7 @@ const CTASection = () => {
               <p className="text-gray-600 mb-8 leading-relaxed">
                 Space is extremely limited to ensure personalized attention. Only 20 participants will be accepted for the 2025 programme.
               </p>
-              <a href="/apply" className="px-8 py-3 border border-gray-800 text-gray-800 rounded-none text-sm font-light tracking-wider uppercase hover:bg-gray-800 hover:text-white transition-colors duration-300 inline-block">
+              <a href="/apply" onClick={handleApplyClick} className="px-8 py-3 border border-gray-800 text-gray-800 rounded-none text-sm font-light tracking-wider uppercase hover:bg-gray-800 hover:text-white transition-colors duration-300 inline-block">
                 Begin Your Application
               </a>
             </div>
