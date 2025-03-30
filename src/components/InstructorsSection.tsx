@@ -6,7 +6,7 @@ const instructors = [
   {
     name: "Andreas Aroditis",
     title: "Founder & Artistic Director",
-    bio: "Praised as an \"amazingly adept and versatile performer\" by Opera Today and recognized by The New York Times, Andreas has performed worldwide from Avery Fisher Hall to Carnegie Hall. He holds a Master's degree from The Juilliard School on full scholarship and has been mentored by legends like Plácido Domingo and Sherrill Milnes. As a vocal instructor at University of Nicosia and European University Cyprus, his students have won international awards and been accepted into leading universities worldwide.",
+    bio: "Acclaimed vocalist Andreas Aroditis has earned recognition from The New York Times and Opera Today for his versatile performances at prestigious international venues. A Juilliard graduate with numerous lead roles in opera and musical theater, he has collaborated with respected artists and orchestras. Locally, he has premiered works with the Cyprus Symphony Orchestra and the TrakArt Pops Orchestra. Mentored by legends such as Plácido Domingo and Sherill Millnes, he now shapes future performers as an Instructor at the University of Nicosia and the European University while maintaining a private studio in Limassol.",
     image: "/lovable-uploads/e0f8da04-eb2f-4b36-8abb-00346d1c76be.png",
     socials: {
       instagram: "https://www.instagram.com/andreasaroditis/",
