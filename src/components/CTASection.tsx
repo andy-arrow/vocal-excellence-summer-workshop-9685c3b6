@@ -57,11 +57,11 @@ const CTASection = () => {
               </div>
               <div className="flex items-center text-gray-600">
                 <MapPin className="w-5 h-5 mr-4 text-gray-500" />
-                <span className="font-light">Location: London, UK (Royal Academy of Music)</span>
+                <span className="font-light">Location: Limassol, Cyprus (Plevis Hall)</span>
               </div>
               <div className="flex items-center text-gray-600">
                 <DollarSign className="w-5 h-5 mr-4 text-gray-500" />
-                <span className="font-light">Tuition: £1,250 (Early application discount available)</span>
+                <span className="font-light">Tuition: €500 (Early application discount available)</span>
               </div>
             </div>
           </div>
