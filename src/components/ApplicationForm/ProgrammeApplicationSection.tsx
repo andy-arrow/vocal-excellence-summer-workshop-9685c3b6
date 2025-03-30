@@ -26,7 +26,7 @@ const ProgrammeApplicationSection = () => {
           name="reasonForApplying"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Statement of Purpose</FormLabel>
+              <FormLabel>Statement of Purpose <span className="text-red-500">*</span></FormLabel>
               <FormControl>
                 <Textarea 
                   placeholder="Please explain your artistic goals, what you hope to achieve during the programme, and how this experience will contribute to your development as a vocalist"
@@ -44,7 +44,7 @@ const ProgrammeApplicationSection = () => {
           name="heardAboutUs"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>How did you hear about the Summer Voice Programme?</FormLabel>
+              <FormLabel>How did you hear about the Summer Voice Programme? <span className="text-red-500">*</span></FormLabel>
               <FormControl>
                 <Input placeholder="Faculty recommendation, website, social media, alumni, etc." {...field} />
               </FormControl>
@@ -68,6 +68,11 @@ const ProgrammeApplicationSection = () => {
                 <FormLabel>
                   I wish to be considered for financial aid (additional documentation will be required)
                 </FormLabel>
+                {field.value && (
+                  <p className="text-sm text-gray-600 mt-2">
+                    If selected, we will contact you with further instructions on how to complete the financial aid application.
+                  </p>
+                )}
               </div>
             </FormItem>
           )}

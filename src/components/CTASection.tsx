@@ -1,10 +1,18 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Calendar, MapPin, DollarSign } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
 
 const CTASection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const elementsRef = useRef<(HTMLElement | null)[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    vocal_type: '',
+    message: ''
+  });
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -25,6 +33,71 @@ const CTASection = () => {
       currentElements.forEach((el) => observer.unobserve(el));
     };
   }, []);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { id, value } = e.target;
+    setFormData(prev => ({ ...prev, [id]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Validation
+    if (!formData.name.trim()) {
+      toast({
+        title: "Missing information",
+        description: "Please provide your name",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    if (!formData.email.trim() || !/^\S+@\S+\.\S+$/.test(formData.email)) {
+      toast({
+        title: "Invalid email",
+        description: "Please provide a valid email address",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    if (!formData.vocal_type) {
+      toast({
+        title: "Missing information",
+        description: "Please select your vocal type",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    setIsSubmitting(true);
+    
+    try {
+      // In a real production environment, this would be an API call
+      // For now, we'll simulate the API call with a timeout
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      setFormData({
+        name: '',
+        email: '',
+        vocal_type: '',
+        message: ''
+      });
+      
+      toast({
+        title: "Information request submitted",
+        description: "Thank you for your interest. Our team will contact you shortly."
+      });
+    } catch (error) {
+      toast({
+        title: "Submission failed",
+        description: "There was an error submitting your request. Please try again later.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <section id="apply" ref={sectionRef} className="py-20 bg-gray-50">
@@ -74,36 +147,45 @@ const CTASection = () => {
               <h3 className="text-2xl font-serif font-light mb-6 text-gray-800">
                 Request Information
               </h3>
-              <form className="space-y-5">
+              <form className="space-y-5" onSubmit={handleSubmit}>
                 <div>
                   <label htmlFor="name" className="block text-sm font-light text-gray-700 mb-1">
-                    Full Name
+                    Full Name <span className="text-red-500">*</span>
                   </label>
                   <input 
                     type="text" 
                     id="name" 
                     className="w-full border border-gray-300 px-4 py-2 rounded-none focus:outline-none focus:ring-1 focus:ring-gray-800"
                     placeholder="Your name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
                   />
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-sm font-light text-gray-700 mb-1">
-                    Email Address
+                    Email Address <span className="text-red-500">*</span>
                   </label>
                   <input 
                     type="email" 
                     id="email" 
                     className="w-full border border-gray-300 px-4 py-2 rounded-none focus:outline-none focus:ring-1 focus:ring-gray-800"
                     placeholder="Your email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
                   />
                 </div>
                 <div>
                   <label htmlFor="vocal_type" className="block text-sm font-light text-gray-700 mb-1">
-                    Vocal Type/Range
+                    Vocal Type/Range <span className="text-red-500">*</span>
                   </label>
                   <select 
                     id="vocal_type" 
                     className="w-full border border-gray-300 px-4 py-2 rounded-none focus:outline-none focus:ring-1 focus:ring-gray-800"
+                    value={formData.vocal_type}
+                    onChange={handleInputChange}
+                    required
                   >
                     <option value="">Select your vocal type</option>
                     <option value="soprano">Soprano</option>
@@ -124,13 +206,16 @@ const CTASection = () => {
                     rows={4} 
                     className="w-full border border-gray-300 px-4 py-2 rounded-none focus:outline-none focus:ring-1 focus:ring-gray-800"
                     placeholder="Any specific questions about the programme?"
+                    value={formData.message}
+                    onChange={handleInputChange}
                   ></textarea>
                 </div>
                 <button 
                   type="submit" 
-                  className="w-full px-8 py-3 border border-gray-800 text-gray-800 rounded-none text-sm font-light tracking-wider uppercase hover:bg-gray-800 hover:text-white transition-colors duration-300"
+                  className="w-full px-8 py-3 border border-gray-800 text-gray-800 rounded-none text-sm font-light tracking-wider uppercase hover:bg-gray-800 hover:text-white transition-colors duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
+                  disabled={isSubmitting}
                 >
-                  Request Information
+                  {isSubmitting ? 'Submitting...' : 'Request Information'}
                 </button>
               </form>
             </div>
