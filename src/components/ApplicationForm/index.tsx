@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -49,12 +48,10 @@ const ApplicationForm = () => {
   const onSubmit = async (values: ApplicationFormValues) => {
     setIsSubmitting(true);
     try {
-      // Make a real API call to submit the application form
       const response = await submitApplicationForm(values);
       
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => null);
-        throw new Error(errorData?.message || 'Server responded with an error');
+      if (!response.success) {
+        throw new Error(response.error?.message || 'Error submitting application');
       }
       
       toast({

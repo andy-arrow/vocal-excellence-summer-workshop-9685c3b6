@@ -2,11 +2,11 @@
 /**
  * Form Submission Service
  * 
- * This service handles sending form data to a real endpoint.
- * In a production environment, replace the example URL with your actual API endpoint.
+ * This service handles sending form data to Supabase.
  */
 
 import { ApplicationFormValues } from "@/components/ApplicationForm/schema";
+import { createClient } from '@supabase/supabase-js';
 
 interface ContactFormData {
   name: string;
@@ -15,67 +15,59 @@ interface ContactFormData {
   message?: string;
 }
 
-// Update this interface to match ApplicationFormValues to fix the type error
-export interface ApplicationFormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  dateOfBirth: string;
-  nationality: string;
-  address: string;
-  city: string;
-  country: string;
-  postalCode: string;
-  vocalRange: string;
-  yearsOfExperience: string;
-  musicalBackground: string;
-  teacherName?: string;
-  teacherEmail?: string;
-  performanceExperience: string;
-  reasonForApplying: string;
-  heardAboutUs: string;
-  scholarshipInterest: boolean;
-  specialNeeds?: string;
-  termsAgreed: boolean;
-}
+// Create a Supabase client
+const supabaseUrl = 'https://your-project-url.supabase.co';
+const supabaseAnonKey = 'your-anon-key';
 
-// Replace this URL with your actual backend API endpoint
-const SUBMISSION_API_URL = "https://api.veasummer.com/submissions";
-const CONTACT_API_URL = "https://api.veasummer.com/contact";
+// Initialize the Supabase client
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 /**
- * Submits contact form data to the server
+ * Submits contact form data to Supabase
  */
-export const submitContactForm = async (data: ContactFormData): Promise<Response> => {
-  // Real API call
-  return fetch(CONTACT_API_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
+export const submitContactForm = async (data: ContactFormData): Promise<any> => {
+  try {
+    // Add timestamp and source information
+    const formData = {
       ...data,
       timestamp: new Date().toISOString(),
       source: window.location.href,
-    }),
-  });
+    };
+
+    // Insert data into the 'contact_submissions' table
+    const { data: response, error } = await supabase
+      .from('contact_submissions')
+      .insert([formData]);
+
+    if (error) throw error;
+    return { success: true, data: response };
+  } catch (error) {
+    console.error("Error submitting contact form:", error);
+    return { success: false, error };
+  }
 };
 
 /**
- * Submits application form data to the server
+ * Submits application form data to Supabase
  */
-export const submitApplicationForm = async (data: ApplicationFormValues): Promise<Response> => {
-  // Real API call
-  return fetch(SUBMISSION_API_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
+export const submitApplicationForm = async (data: ApplicationFormValues): Promise<any> => {
+  try {
+    // Add timestamp and source information
+    const formData = {
       ...data,
       timestamp: new Date().toISOString(),
       source: window.location.href,
-    }),
-  });
+    };
+
+    // Insert data into the 'application_submissions' table
+    const { data: response, error } = await supabase
+      .from('application_submissions')
+      .insert([formData]);
+
+    if (error) throw error;
+    return { success: true, data: response };
+  } catch (error) {
+    console.error("Error submitting application form:", error);
+    return { success: false, error };
+  }
 };
