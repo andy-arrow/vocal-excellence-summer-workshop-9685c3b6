@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -497,7 +496,7 @@ const ApplicationForm = () => {
                 <div>
                   <FormLabel className="block mb-2">Recommendation Letter</FormLabel>
                   <p className="text-sm text-apple-dark/70 mb-3">
-                    Upload in PDF format (max 2MB). If your recommender prefers to send directly, they can email it to admissions@vocalexcellence.com
+                    Upload in PDF format (max 2MB). If your recommender prefers to send directly, they can email it to info@veasummer.com
                   </p>
                   <Input type="file" accept=".pdf" />
                 </div>

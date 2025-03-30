@@ -94,6 +94,7 @@ const SupportingMaterialsSection = () => {
           <FormLabel className="block mb-2">Recommendation Letters <span className="text-red-500">*</span></FormLabel>
           <p className="text-sm text-apple-dark/70 mb-3">
             Upload two letters from vocal teachers or music professionals who can speak to your abilities and potential (PDF format, max 2MB each).
+            If your recommender prefers to send directly, they can email it to info@veasummer.com
           </p>
           <div className="mb-3">
             <Input 
