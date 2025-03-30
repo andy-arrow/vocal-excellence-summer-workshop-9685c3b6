@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Calendar, Clock, Book, Mic, Users, Theater, Monitor } from 'lucide-react';
+import { Calendar, Clock, Book, Mic, Users, Theater } from 'lucide-react';
 
 const modules = [
   {
@@ -45,17 +45,6 @@ const modules = [
       "Collaborative performance",
       "Chamber music approaches"
     ]
-  },
-  {
-    title: "Digital Presence & Recording",
-    description: "Learn essential skills for recording, online performance, and building your digital presence.",
-    icon: <Monitor className="w-8 h-8 text-burgundy" />,
-    highlights: [
-      "Recording studio techniques",
-      "Online performance platforms",
-      "Digital portfolio development",
-      "Social media strategy"
-    ]
   }
 ];
 
@@ -63,7 +52,7 @@ const scheduleData = [
   { day: "Monday", activities: ["Morning: Technique Workshop", "Afternoon: Individual Coaching", "Evening: Practice Sessions"] },
   { day: "Tuesday", activities: ["Morning: Repertoire Study", "Afternoon: Repertoire Study", "Evening: Guest Lecture"] },
   { day: "Wednesday", activities: ["Morning: Ensemble Work", "Afternoon: Performance Class", "Evening: Masterclass"] },
-  { day: "Thursday", activities: ["Morning: Technique Workshop", "Afternoon: Recording Session", "Evening: Wellness Session"] },
+  { day: "Thursday", activities: ["Morning: Technique Workshop", "Afternoon: Individual Coaching", "Evening: Wellness Session"] },
   { day: "Friday", activities: ["Morning: Masterclass", "Afternoon: Performance Preparation", "Evening: Weekly Showcase"] },
   { day: "Weekends", activities: ["Optional excursions", "Practice time", "Special workshops"] }
 ];
@@ -140,7 +129,7 @@ const CurriculumSection = () => {
 
         {/* Modules Tab Content */}
         <div className={`${activeTab === 'modules' ? 'block' : 'hidden'}`}>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
             {modules.map((module, index) => (
               <div 
                 key={index}
@@ -167,7 +156,7 @@ const CurriculumSection = () => {
         {/* Schedule Tab Content */}
         <div className={`${activeTab === 'schedule' ? 'block' : 'hidden'}`}>
           <div 
-            ref={(el) => (elementsRef.current[8] = el)} 
+            ref={(el) => (elementsRef.current[7] = el)} 
             className="reveal-on-scroll glass-card p-8 mb-8"
           >
             <div className="flex items-center gap-3 mb-6">
@@ -186,7 +175,7 @@ const CurriculumSection = () => {
             {scheduleData.map((day, index) => (
               <div 
                 key={index}
-                ref={(el) => (elementsRef.current[9 + index] = el)} 
+                ref={(el) => (elementsRef.current[8 + index] = el)} 
                 className="glass-card p-6 reveal-on-scroll transform transition-all duration-300 hover:shadow-xl"
                 style={{ transitionDelay: `${(index % 3) * 100}ms` }}
               >
