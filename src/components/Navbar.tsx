@@ -49,6 +49,19 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isHomePage]);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMenuOpen]);
+
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const scrollToSection = (sectionId: string) => {
@@ -130,20 +143,20 @@ const Navbar = () => {
       {/* Mobile Navigation - Updated with black background and white text */}
       <nav
         className={cn(
-          "fixed inset-0 bg-black text-white z-40 pt-20 pb-6 px-6 flex flex-col transform transition-transform duration-300 ease-in-out md:hidden",
+          "fixed inset-0 bg-black text-white z-[60] transform transition-transform duration-300 ease-in-out md:hidden overflow-y-auto",
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         )}
       >
         {/* Exit Button - Added for mobile nav */}
         <button
-          className="absolute top-6 right-6 bg-black text-white p-2 border border-white/20 rounded-sm"
+          className="absolute top-6 right-6 bg-black text-white p-2 border border-white/20 rounded-sm z-[70]"
           onClick={() => setIsMenuOpen(false)}
           aria-label="Close menu"
         >
           <X size={20} />
         </button>
         
-        <div className="flex flex-col space-y-6">
+        <div className="flex flex-col space-y-6 pt-20 pb-6 px-6">
           {navLinks.map((link) => (
             <Link
               key={link.name}
