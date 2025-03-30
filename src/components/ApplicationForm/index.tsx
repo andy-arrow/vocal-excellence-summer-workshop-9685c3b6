@@ -13,6 +13,7 @@ import SupportingMaterialsSection from './SupportingMaterialsSection';
 import TermsAndConditionsSection from './TermsAndConditionsSection';
 import SubmitButton from './SubmitButton';
 import SubmissionSuccessMessage from './SubmissionSuccessMessage';
+import { submitApplicationForm } from '@/services/formSubmissionService';
 
 const ApplicationForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -48,13 +49,14 @@ const ApplicationForm = () => {
   const onSubmit = async (values: ApplicationFormValues) => {
     setIsSubmitting(true);
     try {
-      // In production, this would be an API call to submit the form
-      console.log('Submitting application form:', values);
+      // Make a real API call to submit the application form
+      const response = await submitApplicationForm(values);
       
-      // Simulate network request
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => null);
+        throw new Error(errorData?.message || 'Server responded with an error');
+      }
       
-      // Show success message
       toast({
         title: "Application Submitted Successfully",
         description: "Your application has been received. You'll receive a confirmation email shortly.",
@@ -66,7 +68,7 @@ const ApplicationForm = () => {
       console.error('Error submitting application:', error);
       toast({
         title: "Submission Error",
-        description: "There was a problem submitting your application. Please try again.",
+        description: "There was a problem submitting your application. Please try again or contact us directly.",
         variant: "destructive"
       });
     } finally {

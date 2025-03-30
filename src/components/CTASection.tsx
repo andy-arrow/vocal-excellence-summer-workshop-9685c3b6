@@ -1,8 +1,8 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { Calendar, MapPin, DollarSign } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
+import { submitContactForm } from '@/services/formSubmissionService';
 
 const CTASection = () => {
   const navigate = useNavigate();
@@ -75,9 +75,12 @@ const CTASection = () => {
     setIsSubmitting(true);
     
     try {
-      // In a real production environment, this would be an API call
-      // For now, we'll simulate the API call with a timeout
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Make a real API call to submit the form data
+      const response = await submitContactForm(formData);
+      
+      if (!response.ok) {
+        throw new Error('Server responded with an error');
+      }
       
       setFormData({
         name: '',
@@ -91,9 +94,10 @@ const CTASection = () => {
         description: "Thank you for your interest. Our team will contact you shortly."
       });
     } catch (error) {
+      console.error('Submission error:', error);
       toast({
         title: "Submission failed",
-        description: "There was an error submitting your request. Please try again later.",
+        description: "There was an error submitting your request. Please try again later or contact us directly.",
         variant: "destructive"
       });
     } finally {
