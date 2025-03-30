@@ -2,11 +2,10 @@
 /**
  * Form Submission Service
  * 
- * This service handles sending form data to Supabase.
+ * This service handles storing form data locally using localStorage.
  */
 
 import { ApplicationFormValues } from "@/components/ApplicationForm/schema";
-import { createClient } from '@supabase/supabase-js';
 
 interface ContactFormData {
   name: string;
@@ -15,32 +14,30 @@ interface ContactFormData {
   message?: string;
 }
 
-// Create a Supabase client
-const supabaseUrl = 'https://your-project-url.supabase.co';
-const supabaseAnonKey = 'your-anon-key';
-
-// Initialize the Supabase client
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
 /**
- * Submits contact form data to Supabase
+ * Submits contact form data to localStorage
  */
 export const submitContactForm = async (data: ContactFormData): Promise<any> => {
   try {
     // Add timestamp and source information
     const formData = {
       ...data,
+      id: `contact_${Date.now()}`,
       timestamp: new Date().toISOString(),
       source: window.location.href,
     };
 
-    // Insert data into the 'contact_submissions' table
-    const { data: response, error } = await supabase
-      .from('contact_submissions')
-      .insert([formData]);
-
-    if (error) throw error;
-    return { success: true, data: response };
+    // Get existing submissions or initialize empty array
+    const existingSubmissions = JSON.parse(localStorage.getItem('contact_submissions') || '[]');
+    
+    // Add new submission
+    const updatedSubmissions = [...existingSubmissions, formData];
+    
+    // Save to localStorage
+    localStorage.setItem('contact_submissions', JSON.stringify(updatedSubmissions));
+    
+    console.log('Contact form submitted:', formData);
+    return { success: true, data: formData };
   } catch (error) {
     console.error("Error submitting contact form:", error);
     return { success: false, error };
@@ -48,24 +45,29 @@ export const submitContactForm = async (data: ContactFormData): Promise<any> => 
 };
 
 /**
- * Submits application form data to Supabase
+ * Submits application form data to localStorage
  */
 export const submitApplicationForm = async (data: ApplicationFormValues): Promise<any> => {
   try {
     // Add timestamp and source information
     const formData = {
       ...data,
+      id: `application_${Date.now()}`,
       timestamp: new Date().toISOString(),
       source: window.location.href,
     };
 
-    // Insert data into the 'application_submissions' table
-    const { data: response, error } = await supabase
-      .from('application_submissions')
-      .insert([formData]);
-
-    if (error) throw error;
-    return { success: true, data: response };
+    // Get existing submissions or initialize empty array
+    const existingSubmissions = JSON.parse(localStorage.getItem('application_submissions') || '[]');
+    
+    // Add new submission
+    const updatedSubmissions = [...existingSubmissions, formData];
+    
+    // Save to localStorage
+    localStorage.setItem('application_submissions', JSON.stringify(updatedSubmissions));
+    
+    console.log('Application form submitted:', formData);
+    return { success: true, data: formData };
   } catch (error) {
     console.error("Error submitting application form:", error);
     return { success: false, error };
