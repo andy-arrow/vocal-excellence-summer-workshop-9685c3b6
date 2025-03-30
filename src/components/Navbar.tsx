@@ -134,6 +134,15 @@ const Navbar = () => {
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         )}
       >
+        {/* Exit Button - Added for mobile nav */}
+        <button
+          className="absolute top-6 right-6 bg-black text-white p-2 rounded-sm"
+          onClick={() => setIsMenuOpen(false)}
+          aria-label="Close menu"
+        >
+          <X size={20} />
+        </button>
+        
         <div className="flex flex-col space-y-6">
           {navLinks.map((link) => (
             <Link
