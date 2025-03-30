@@ -87,8 +87,8 @@ const HeroSection = () => {
         </div>
       </div>
       
-      {/* Scroll Down Indicator */}
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 cursor-pointer animate-bounce" onClick={scrollToAbout}>
+      {/* Scroll Down Indicator - Updated for better centering */}
+      <div className="absolute bottom-10 left-0 right-0 mx-auto w-max cursor-pointer animate-bounce" onClick={scrollToAbout}>
         <div className="flex flex-col items-center">
           <span className="text-gray-500 text-xs font-light mb-1">Discover</span>
           <ChevronDown className="text-gray-500" size={18} />
