@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { Instagram, Twitter, Linkedin, ArrowRight } from 'lucide-react';
 
@@ -9,9 +8,8 @@ const instructors = [
     bio: "Internationally acclaimed vocal coach with extensive experience in opera and musical theatre, dedicated to bringing out authentic performances and technical excellence.",
     image: "/lovable-uploads/e0f8da04-eb2f-4b36-8abb-00346d1c76be.png",
     socials: {
-      twitter: "#",
-      instagram: "#",
-      linkedin: "#"
+      instagram: "https://www.instagram.com/andreasaroditis/",
+      linkedin: "https://www.linkedin.com/in/andreasaroditis/"
     }
   },
   {
