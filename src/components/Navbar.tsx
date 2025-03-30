@@ -136,13 +136,7 @@ const Navbar = () => {
             side="right"
             className="bg-black text-white w-full sm:max-w-md p-0 flex flex-col"
           >
-            <div className="flex justify-end p-4">
-              <SheetClose className="text-white hover:text-white/80">
-                <X size={24} />
-                <span className="sr-only">Close menu</span>
-              </SheetClose>
-            </div>
-            <div className="flex flex-col space-y-6 pt-4 pb-6 px-6">
+            <div className="flex flex-col space-y-6 pt-6 pb-6 px-6">
               {navLinks.map((link) => (
                 <SheetClose asChild key={link.name}>
                   <Link
