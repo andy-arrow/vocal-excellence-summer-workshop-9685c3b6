@@ -3,6 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Link, useLocation } from 'react-router-dom';
+import { 
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetClose
+} from "@/components/ui/sheet";
 
 const navLinks = [
   { name: 'Home', href: '#home', path: '/' },
@@ -15,9 +21,9 @@ const navLinks = [
 ];
 
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [open, setOpen] = useState(false);
   const location = useLocation();
   const isHomePage = location.pathname === '/';
 
@@ -49,21 +55,6 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isHomePage]);
 
-  // Lock body scroll when mobile menu is open
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isMenuOpen]);
-
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
   const scrollToSection = (sectionId: string) => {
     if (isHomePage) {
       const section = document.getElementById(sectionId.replace('#', ''));
@@ -74,7 +65,7 @@ const Navbar = () => {
         });
       }
     }
-    setIsMenuOpen(false);
+    setOpen(false);
   };
 
   return (
@@ -127,64 +118,62 @@ const Navbar = () => {
           </Link>
         </nav>
 
-        {/* Mobile Menu Button */}
-        <button
-          className={cn(
-            "md:hidden",
-            scrolled ? "text-apple-dark" : "text-white"
-          )}
-          onClick={toggleMenu}
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
-
-      {/* Mobile Navigation - Updated with black background and white text */}
-      <nav
-        className={cn(
-          "fixed inset-0 bg-black text-white z-[60] transform transition-transform duration-300 ease-in-out md:hidden overflow-y-auto",
-          isMenuOpen ? "translate-x-0" : "translate-x-full"
-        )}
-      >
-        {/* Exit Button - Added for mobile nav */}
-        <button
-          className="absolute top-6 right-6 bg-black text-white p-2 border border-white/20 rounded-sm z-[70]"
-          onClick={() => setIsMenuOpen(false)}
-          aria-label="Close menu"
-        >
-          <X size={20} />
-        </button>
-        
-        <div className="flex flex-col space-y-6 pt-20 pb-6 px-6">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              to={link.path}
+        {/* Mobile Menu - Using Sheet component for improved reliability */}
+        <Sheet open={open} onOpenChange={setOpen}>
+          <SheetTrigger asChild>
+            <button
               className={cn(
-                "text-base py-1 text-white/90 hover:text-white transition-colors",
-                activeSection === link.href.replace('#', '') && isHomePage ? "text-white font-medium" : ""
+                "md:hidden p-2 rounded-md",
+                scrolled ? "text-apple-dark" : "text-white"
               )}
-              onClick={(e) => {
-                if (isHomePage) {
-                  e.preventDefault();
-                  scrollToSection(link.href);
-                }
-                setIsMenuOpen(false);
-              }}
+              aria-label="Toggle menu"
             >
-              {link.name}
-            </Link>
-          ))}
-          <Link 
-            to="/apply" 
-            className="mt-2 border border-white text-white hover:bg-white hover:text-black transition-colors py-3 px-6 text-center text-sm font-medium tracking-wider uppercase"
-            onClick={() => setIsMenuOpen(false)}
+              <Menu size={24} />
+              <span className="sr-only">Open menu</span>
+            </button>
+          </SheetTrigger>
+          <SheetContent
+            side="right"
+            className="bg-black text-white w-full sm:max-w-md p-0 flex flex-col"
           >
-            Apply Now
-          </Link>
-        </div>
-      </nav>
+            <div className="flex justify-end p-4">
+              <SheetClose className="text-white hover:text-white/80">
+                <X size={24} />
+                <span className="sr-only">Close menu</span>
+              </SheetClose>
+            </div>
+            <div className="flex flex-col space-y-6 pt-4 pb-6 px-6">
+              {navLinks.map((link) => (
+                <SheetClose asChild key={link.name}>
+                  <Link
+                    to={link.path}
+                    className={cn(
+                      "text-base py-2 text-white/90 hover:text-white transition-colors",
+                      activeSection === link.href.replace('#', '') && isHomePage ? "text-white font-medium" : ""
+                    )}
+                    onClick={(e) => {
+                      if (isHomePage) {
+                        e.preventDefault();
+                        scrollToSection(link.href);
+                      }
+                    }}
+                  >
+                    {link.name}
+                  </Link>
+                </SheetClose>
+              ))}
+              <SheetClose asChild>
+                <Link 
+                  to="/apply" 
+                  className="mt-2 border border-white text-white hover:bg-white hover:text-black transition-colors py-3 px-6 text-center text-sm font-medium tracking-wider uppercase"
+                >
+                  Apply Now
+                </Link>
+              </SheetClose>
+            </div>
+          </SheetContent>
+        </Sheet>
+      </div>
     </header>
   );
 };
