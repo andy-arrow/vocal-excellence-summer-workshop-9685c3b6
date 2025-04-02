@@ -1,5 +1,6 @@
+
 import React, { useEffect, useRef, useState } from 'react';
-import { Calendar, MapPin, DollarSign } from 'lucide-react';
+import { Calendar, MapPin, BadgeEuro } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
 import { submitContactForm } from '@/services/formSubmissionService';
@@ -145,7 +146,7 @@ const CTASection = () => {
                 <span className="font-light">Location: Limassol, Cyprus</span>
               </div>
               <div className="flex items-center text-gray-600">
-                <DollarSign className="w-5 h-5 mr-4 text-gray-500" />
+                <BadgeEuro className="w-5 h-5 mr-4 text-gray-500" />
                 <span className="font-light">Tuition: €500 (Early application discount available)</span>
               </div>
             </div>
