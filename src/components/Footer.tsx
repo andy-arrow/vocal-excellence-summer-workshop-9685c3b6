@@ -81,18 +81,18 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start">
                 <MapPin className="w-5 h-5 mr-3 text-apple-blue shrink-0 mt-0.5" />
-                <span className="text-white/70 text-sm">Royal Conservatory Building, 123 Music Lane, London, UK</span>
+                <span className="text-white/70 text-sm">Nafpliou 12, Pentadromos, 3025, Limassol, Cyprus</span>
               </li>
               <li className="flex items-center">
                 <Mail className="w-5 h-5 mr-3 text-apple-blue shrink-0" />
-                <a href="mailto:info@vocalexcellence.workshop" className="text-white/70 hover:text-white transition-colors text-sm">
-                  info@vocalexcellence.workshop
+                <a href="mailto:info@veasummer.com" className="text-white/70 hover:text-white transition-colors text-sm">
+                  info@veasummer.com
                 </a>
               </li>
               <li className="flex items-center">
                 <Phone className="w-5 h-5 mr-3 text-apple-blue shrink-0" />
-                <a href="tel:+441234567890" className="text-white/70 hover:text-white transition-colors text-sm">
-                  +44 (0) 123 456 7890
+                <a href="tel:+35725775885" className="text-white/70 hover:text-white transition-colors text-sm">
+                  +357 25 775 885
                 </a>
               </li>
             </ul>
