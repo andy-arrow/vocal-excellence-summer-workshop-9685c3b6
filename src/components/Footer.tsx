@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Mail, Phone, MapPin, Instagram, Twitter, Facebook, Youtube } from 'lucide-react';
 
@@ -84,8 +85,8 @@ const Footer = () => {
               </li>
               <li className="flex items-center">
                 <Mail className="w-5 h-5 mr-3 text-apple-blue shrink-0" />
-                <a href="mailto:info@vocalexcellence.academy" className="text-white/70 hover:text-white transition-colors text-sm">
-                  info@vocalexcellence.academy
+                <a href="mailto:info@vocalexcellence.workshop" className="text-white/70 hover:text-white transition-colors text-sm">
+                  info@vocalexcellence.workshop
                 </a>
               </li>
               <li className="flex items-center">
@@ -99,7 +100,7 @@ const Footer = () => {
         </div>
         
         <div className="mt-16 pt-8 border-t border-white/10 text-white/50 text-xs text-center">
-          <p>&copy; {new Date().getFullYear()} Vocal Excellence Academy. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Vocal Excellence Summer Workshop. All rights reserved.</p>
         </div>
       </div>
     </footer>

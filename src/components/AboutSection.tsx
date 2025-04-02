@@ -74,7 +74,7 @@ const AboutSection = () => {
             className="reveal-on-scroll space-y-6"
           >
             <p className="text-gray-600 leading-relaxed">
-              The Vocal Excellence Academy Summer Programme is an intensive 5-day vocal training experience designed for serious singers looking to transform their technique and performance skills under the guidance of world-class faculty.
+              The Vocal Excellence Summer Workshop Summer Programme is an intensive 5-day vocal training experience designed for serious singers looking to transform their technique and performance skills under the guidance of world-class faculty.
             </p>
             <p className="text-gray-600 leading-relaxed">
               With a curriculum that balances technical development, artistic expression, and performance practice, you'll experience noticeable growth in just five days. Our small group format ensures you receive ample individual attention while building connections with like-minded artists.

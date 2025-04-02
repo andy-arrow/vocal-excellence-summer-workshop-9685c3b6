@@ -51,7 +51,7 @@ const HeroSection = () => {
       <div className="hero-content relative z-10 text-center px-6 transition-all duration-500 ease-out max-w-4xl mx-auto">
         <div className="animate-fade-in">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-light text-gray-800 mb-6 tracking-tight leading-tight">
-            Vocal Excellence Academy
+            Vocal Excellence Summer Workshop
           </h1>
           <p className="text-base md:text-xl text-gray-600 max-w-2xl mx-auto mb-10 font-light leading-relaxed">
             A transformative 5-day vocal intensive for advancing singers, featuring masterclasses, private coaching, and performance opportunities with world-class faculty

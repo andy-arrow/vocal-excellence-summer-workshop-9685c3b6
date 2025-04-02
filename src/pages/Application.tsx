@@ -18,8 +18,8 @@ const Application = () => {
   return (
     <>
       <Helmet>
-        <title>Apply - Vocal Excellence Academy</title>
-        <meta name="description" content="Apply to join the Vocal Excellence Academy summer programme. Submit your application and begin your vocal journey with world-class instructors." />
+        <title>Apply - Vocal Excellence Summer Workshop</title>
+        <meta name="description" content="Apply to join the Vocal Excellence Summer Workshop summer programme. Submit your application and begin your vocal journey with world-class instructors." />
       </Helmet>
       
       <div className="min-h-screen bg-white flex flex-col">
