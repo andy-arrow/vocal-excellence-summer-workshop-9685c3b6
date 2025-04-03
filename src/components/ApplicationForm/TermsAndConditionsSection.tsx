@@ -28,7 +28,7 @@ const TermsAndConditionsSection = () => {
           </FormControl>
           <div className="space-y-1 leading-none">
             <FormLabel className="font-light text-gray-700">
-              I agree to the <a href="/terms" className="text-gray-800 underline">Terms and Conditions</a> and <a href="/privacy" className="text-gray-800 underline">Privacy Policy</a>. I confirm that all information provided is accurate and complete.
+              I confirm that all information provided is accurate and complete.
             </FormLabel>
             <FormMessage />
           </div>

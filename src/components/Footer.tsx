@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <footer className="bg-apple-dark text-white">
       <div className="max-w-6xl mx-auto py-16 px-6 md:px-8">
-        <div className="grid md:grid-cols-4 gap-10">
+        <div className="grid md:grid-cols-3 gap-10">
           <div className="md:col-span-1">
             <h3 className="font-sans text-2xl font-semibold mb-4">Vocal Excellence</h3>
             <p className="text-white/70 mb-6 text-sm leading-relaxed">
@@ -44,34 +44,7 @@ const Footer = () => {
                 <a href="#instructors" className="text-white/70 hover:text-white transition-colors text-sm">Instructors</a>
               </li>
               <li>
-                <a href="#testimonials" className="text-white/70 hover:text-white transition-colors text-sm">Testimonials</a>
-              </li>
-              <li>
                 <a href="#apply" className="text-white/70 hover:text-white transition-colors text-sm">Apply Now</a>
-              </li>
-            </ul>
-          </div>
-          
-          <div className="md:col-span-1">
-            <h4 className="font-sans text-sm font-semibold mb-4 text-white/50 uppercase tracking-wider">Resources</h4>
-            <ul className="space-y-2">
-              <li>
-                <a href="#" className="text-white/70 hover:text-white transition-colors text-sm">FAQ</a>
-              </li>
-              <li>
-                <a href="#" className="text-white/70 hover:text-white transition-colors text-sm">Privacy Policy</a>
-              </li>
-              <li>
-                <a href="#" className="text-white/70 hover:text-white transition-colors text-sm">Terms of Service</a>
-              </li>
-              <li>
-                <a href="#" className="text-white/70 hover:text-white transition-colors text-sm">Student Resources</a>
-              </li>
-              <li>
-                <a href="#" className="text-white/70 hover:text-white transition-colors text-sm">Scholarships</a>
-              </li>
-              <li>
-                <a href="#" className="text-white/70 hover:text-white transition-colors text-sm">Blog</a>
               </li>
             </ul>
           </div>
