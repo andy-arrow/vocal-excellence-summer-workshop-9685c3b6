@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { Instagram, Twitter, Linkedin, ArrowRight } from 'lucide-react';
 
@@ -19,9 +18,8 @@ const instructors = [
     bio: "Award-winning actress and coach specializing in authentic performance techniques and theatrical expression for vocalists across multiple genres.",
     image: "/lovable-uploads/5f2b13ba-7279-45da-86e2-af6b9c336634.png",
     socials: {
-      twitter: "#",
-      instagram: "#",
-      linkedin: "#"
+      instagram: "https://www.instagram.com/carolynmichellesmith",
+      linkedin: "https://www.linkedin.com/in/carolynmichellesmith"
     }
   },
   {
