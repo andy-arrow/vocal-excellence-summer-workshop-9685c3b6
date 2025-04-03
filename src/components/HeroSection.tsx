@@ -56,34 +56,6 @@ const HeroSection = () => {
           <p className="text-base md:text-xl text-gray-600 max-w-2xl mx-auto mb-10 font-light leading-relaxed">
             A transformative 5-day vocal intensive for advancing singers, featuring masterclasses, private coaching, and performance opportunities with world-class faculty
           </p>
-          <div className="flex flex-col sm:flex-row gap-5 justify-center">
-            <a 
-              href="#apply" 
-              className="px-8 py-3 border border-gray-800 text-gray-800 rounded-none text-sm font-light tracking-wider uppercase hover:bg-gray-800 hover:text-white transition-colors duration-300"
-              onClick={(e) => {
-                e.preventDefault();
-                const applySection = document.getElementById('apply');
-                if (applySection) {
-                  window.scrollTo({
-                    top: applySection.offsetTop - 80,
-                    behavior: 'smooth',
-                  });
-                }
-              }}
-            >
-              Apply Now
-            </a>
-            <a 
-              href="#about" 
-              className="px-8 py-3 border border-gray-300 text-gray-600 rounded-none text-sm font-light tracking-wider uppercase hover:bg-gray-100 transition-colors duration-300"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToAbout();
-              }}
-            >
-              Learn More
-            </a>
-          </div>
         </div>
       </div>
       
