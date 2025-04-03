@@ -18,8 +18,8 @@ const instructors = [
     bio: "Award-winning actress and coach specializing in authentic performance techniques and theatrical expression for vocalists across multiple genres.",
     image: "/lovable-uploads/5f2b13ba-7279-45da-86e2-af6b9c336634.png",
     socials: {
-      instagram: "https://www.instagram.com/carolynmichellesmith",
-      linkedin: "https://www.linkedin.com/in/carolynmichellesmith"
+      instagram: "https://www.instagram.com/that_carolynmichelle?igsh=MWluZGpwb2pqMm4yeQ==",
+      linkedin: "https://www.linkedin.com/in/carolyn-michelle-smith-12435451?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
     }
   },
   {
