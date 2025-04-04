@@ -16,7 +16,7 @@ const instructors = [
   {
     name: "Carolyn Michelle-Smith",
     title: "Acting Coach",
-    bio: "Award-winning actress and coach specializing in authentic performance techniques and theatrical expression for vocalists across multiple genres.",
+    bio: "Carolyn Michelle-Smith is an actress, producer, and educator known for her roles in House of Cards, Luke Cage, Russian Doll, and The Chi. A Juilliard graduate, she has performed on Broadway (Romeo and Juliet) and with renowned theater companies. She is also a Visiting Lecturer at Cornell University and Co-Director of Lena Waithe's Hillman Grad Mentorship Lab, empowering BIPOC creatives. Carolyn develops original content inspired by her heritage and operates AspireHigher Coaching Services to mentor actors. Her entrepreneurial artistry focuses on elevating diverse voices in Hollywood through acting, producing, and education.",
     image: "/lovable-uploads/5f2b13ba-7279-45da-86e2-af6b9c336634.png",
     socials: {
       instagram: "https://www.instagram.com/that_carolynmichelle?igsh=MWluZGpwb2pqMm4yeQ==",
@@ -26,7 +26,7 @@ const instructors = [
   {
     name: "Kate Batter",
     title: "Vocal Coach",
-    bio: "West End performer with credits in The Phantom of the Opera and The Sound of Music. Passionate vocal coach with over 20 years of teaching experience, holding a 1st Class BA (Hons) in Acting from Birmingham Royal Conservatoire and MA in Musical Theatre from Royal Academy of Music.",
+    bio: "Kate Batter is a highly experienced vocal coach, performer, and founder of Sing Wimbledon. With over 20 years of teaching experience, she specializes in vocal technique, musicality, and acting through song, working with beginners and professionals alike. A graduate of the Royal Birmingham Conservatoire and Royal Academy of Music, Kate has performed in West End productions (The Sound of Music, The Phantom of the Opera) and TV shows (Top Boy, Call the Midwife). Based in Cambridge, she offers private lessons, masterclasses, and drama school audition prep. As Musical Director of Sing Space Choir, she champions vocal excellence and confidence-building.",
     image: "/lovable-uploads/e26c0944-dc77-4d19-8059-c61e7800b8d1.png",
     socials: {
       instagram: "#",
@@ -36,7 +36,7 @@ const instructors = [
   {
     name: "Aris Antoniades",
     title: "Composer",
-    bio: "Celebrated composer and musical director with credits across film, theatre, and concert stages, specializing in creating bespoke works for vocal performers.",
+    bio: "Praised for his ability to immerse audiences in \"a world of sound\" (The National Herald, NYC), Aris Antoniades is a Cypriot composer, arranger, and music director whose work spans symphonic, jazz, theatrical, and cinematic mediums. Collaborating with icons like Grammy nominee Bobby Sanabria and platinum artist Alkistis Protopsalti, his creations range from orchestral works like Chiaroscuro to Afro-Cuban jazz arrangements. As Artistic Director of the TrakArt Pops Orchestra, Antoniades continues to shape Cyprus's musical landscape while pursuing a Ph.D. His music blends emotional depth with structural clarity, resonating globally across genres and cultures.",
     image: "/lovable-uploads/23077377-fca0-46d4-b7c8-83c2a2edcb19.png",
     socials: {
       instagram: "#",
@@ -114,12 +114,12 @@ const InstructorsSection = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-rose-900/80 via-rose-800/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
                   <div className="p-5 text-white">
                     <div className="flex space-x-4 mb-3">
-                      {instructor.socials.instagram && (
+                      {instructor.socials.instagram && instructor.socials.instagram !== "#" && (
                         <a href={instructor.socials.instagram} target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white transition-colors">
                           <Instagram size={18} />
                         </a>
                       )}
-                      {instructor.socials.linkedin && (
+                      {instructor.socials.linkedin && instructor.socials.linkedin !== "#" && (
                         <a href={instructor.socials.linkedin} target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white transition-colors">
                           <Linkedin size={18} />
                         </a>
@@ -137,7 +137,11 @@ const InstructorsSection = () => {
               </div>
               <h3 className="text-xl font-serif font-medium text-gray-800">{instructor.name}</h3>
               <p className="text-rose-500 mb-2 font-light">{instructor.title}</p>
-              <p className="text-gray-600 text-sm">{instructor.bio}</p>
+              <p className="text-gray-600 text-sm line-clamp-4 mb-2">{instructor.bio}</p>
+              <button className="text-rose-500 text-sm hover:text-rose-600 transition-colors" 
+                      onClick={() => window.alert(`${instructor.name}'s full biography:\n\n${instructor.bio}`)}>
+                Read more
+              </button>
             </div>
           ))}
         </div>
