@@ -1,7 +1,6 @@
 
 import React, { useEffect, useRef } from 'react';
 import { ChevronDown } from 'lucide-react';
-import { Button } from "@/components/ui/button";
 
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -70,17 +69,6 @@ const HeroSection = () => {
           <p className="text-base md:text-xl text-white/70 max-w-2xl mx-auto mb-10 font-light leading-relaxed">
             A transformative 5-day vocal intensive for advancing singers, featuring masterclasses, private coaching, and performance opportunities with world-class faculty
           </p>
-          
-          <Button 
-            asChild
-            variant="default"
-            className="px-8 py-6 h-auto bg-white text-slate-900 hover:bg-white/90 hover:text-slate-800 rounded-sm transition-all"
-            size="lg"
-          >
-            <a href="#apply">
-              <span className="tracking-wider text-sm font-medium">APPLY NOW</span>
-            </a>
-          </Button>
         </div>
       </div>
       
