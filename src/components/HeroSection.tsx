@@ -41,13 +41,15 @@ const HeroSection = () => {
       id="home" 
       ref={heroRef}
       className="relative h-screen flex items-center justify-center overflow-hidden"
-      style={{
-        backgroundImage: "url('/lovable-uploads/c8b342ef-7fbe-46f8-a1a6-241020c585bd.png')",
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
-      }}
     >
+      {/* Hero Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: "url('/lovable-uploads/c8b342ef-7fbe-46f8-a1a6-241020c585bd.png')"
+        }}
+      ></div>
+      
       {/* Hero Overlay */}
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
       
