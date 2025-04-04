@@ -4,22 +4,22 @@ import { Music, Mic, Users, Award } from 'lucide-react';
 
 const features = [
   {
-    icon: <Mic className="w-5 h-5 text-gray-700" />,
+    icon: <Mic className="w-5 h-5 text-rose-500" />,
     title: "Expert Faculty",
     description: "Study with internationally renowned vocal pedagogues and performing artists."
   },
   {
-    icon: <Music className="w-5 h-5 text-gray-700" />,
+    icon: <Music className="w-5 h-5 text-rose-500" />,
     title: "Performance Focus",
     description: "Develop your artistry through masterclasses and culminating performances."
   },
   {
-    icon: <Users className="w-5 h-5 text-gray-700" />,
+    icon: <Users className="w-5 h-5 text-rose-500" />,
     title: "Collaborative Environment",
     description: "Connect with fellow singers in a supportive atmosphere for artistic growth."
   },
   {
-    icon: <Award className="w-5 h-5 text-gray-700" />,
+    icon: <Award className="w-5 h-5 text-rose-500" />,
     title: "Career Development",
     description: "Gain valuable insights into the professional world of vocal performance."
   }
@@ -50,19 +50,18 @@ const AboutSection = () => {
   }, []);
 
   return (
-    <section id="about" ref={sectionRef} className="py-20 bg-white">
+    <section id="about" ref={sectionRef} className="py-20 music-pattern-bg">
       <div className="max-w-6xl mx-auto px-6 md:px-10">
         <div className="text-center mb-16">
           <h2 
             ref={(el) => (elementsRef.current[0] = el)} 
-            className="text-3xl md:text-4xl font-serif font-light mb-4 text-gray-800 reveal-on-scroll"
+            className="section-title reveal-on-scroll"
           >
             About The Programme
           </h2>
-          <div className="w-20 h-px bg-gray-300 mx-auto mb-6"></div>
           <p 
             ref={(el) => (elementsRef.current[1] = el)} 
-            className="text-lg md:text-xl font-sans mb-10 text-gray-600 font-light max-w-3xl mx-auto reveal-on-scroll"
+            className="section-subtitle reveal-on-scroll"
           >
             An intensive vocal experience with world-class faculty
           </p>
@@ -74,12 +73,14 @@ const AboutSection = () => {
             className="reveal-on-scroll space-y-6"
           >
             <p className="text-gray-600 leading-relaxed">
-              The Vocal Excellence Summer Workshop Summer Programme is an intensive 5-day vocal training experience designed for serious singers looking to transform their technique and performance skills under the guidance of world-class faculty.
+              The Vocal Excellence Summer Workshop is an intensive 5-day vocal training experience designed for serious singers looking to transform their technique and performance skills under the guidance of world-class faculty.
             </p>
             <p className="text-gray-600 leading-relaxed">
               With a curriculum that balances technical development, artistic expression, and performance practice, you'll experience noticeable growth in just five days. Our small group format ensures you receive ample individual attention while building connections with like-minded artists.
             </p>
-            {/* View Our Curriculum link has been removed */}
+            <blockquote className="decorative-quote pl-6 border-l-2 border-rose-200 my-8">
+              "Finding your authentic voice is a journey of technical mastery and artistic discovery."
+            </blockquote>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -87,14 +88,14 @@ const AboutSection = () => {
               <div 
                 key={index}
                 ref={(el) => (elementsRef.current[4 + index] = el)} 
-                className="reveal-on-scroll border-t border-gray-200 pt-4"
+                className="reveal-on-scroll glass-card p-5 shadow-md hover:shadow-lg transition-all duration-300"
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
-                <div className="flex items-center mb-3">
-                  <div className="mr-3">{feature.icon}</div>
-                  <h3 className="text-base font-medium text-gray-800">{feature.title}</h3>
+                <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-rose-100 mb-4">
+                  {feature.icon}
                 </div>
-                <p className="text-gray-600 text-sm leading-relaxed pl-8">{feature.description}</p>
+                <h3 className="text-lg font-medium text-gray-800 mb-2">{feature.title}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">{feature.description}</p>
               </div>
             ))}
           </div>

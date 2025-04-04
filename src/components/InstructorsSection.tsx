@@ -1,5 +1,6 @@
+
 import React, { useEffect, useRef } from 'react';
-import { Instagram, Twitter, Linkedin, ArrowRight } from 'lucide-react';
+import { Instagram, Linkedin, ArrowRight } from 'lucide-react';
 
 const instructors = [
   {
@@ -28,7 +29,6 @@ const instructors = [
     bio: "West End performer with credits in The Phantom of the Opera and The Sound of Music. Passionate vocal coach with over 20 years of teaching experience, holding a 1st Class BA (Hons) in Acting from Birmingham Royal Conservatoire and MA in Musical Theatre from Royal Academy of Music.",
     image: "/lovable-uploads/e26c0944-dc77-4d19-8059-c61e7800b8d1.png",
     socials: {
-      twitter: "#",
       instagram: "#",
       linkedin: "#"
     }
@@ -39,7 +39,6 @@ const instructors = [
     bio: "Celebrated composer and musical director with credits across film, theatre, and concert stages, specializing in creating bespoke works for vocal performers.",
     image: "/lovable-uploads/23077377-fca0-46d4-b7c8-83c2a2edcb19.png",
     socials: {
-      twitter: "#",
       instagram: "#",
       linkedin: "#"
     }
@@ -50,7 +49,6 @@ const instructors = [
     bio: "Choir Conductor and Musicologist who graduated at the top of her master's class from the prestigious Sorbonne University. She directs choirs at three Paris conservatoires, combining classical and contemporary approaches while bridging Cypriot and French musical traditions.",
     image: "/lovable-uploads/4e6da0c3-c667-4dd8-94e4-78ab459e4c18.png",
     socials: {
-      twitter: "#",
       instagram: "#",
       linkedin: "#"
     }
@@ -82,7 +80,7 @@ const InstructorsSection = () => {
   }, []);
 
   return (
-    <section id="instructors" ref={sectionRef} className="section-container bg-apple-light">
+    <section id="instructors" ref={sectionRef} className="section-container bg-gradient-to-b from-rose-50 to-white">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 
@@ -104,23 +102,18 @@ const InstructorsSection = () => {
             <div 
               key={index}
               ref={(el) => (elementsRef.current[2 + index] = el)} 
-              className="reveal-on-scroll overflow-hidden group"
+              className="reveal-on-scroll overflow-hidden group scale-on-hover"
               style={{ transitionDelay: `${index * 100}ms` }}
             >
-              <div className="relative overflow-hidden rounded-2xl shadow-md mb-5 aspect-[3/4]">
+              <div className="relative overflow-hidden rounded-2xl shadow-md mb-5 aspect-[3/4] border border-rose-100">
                 <img 
                   src={instructor.image} 
                   alt={instructor.name} 
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-apple-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                <div className="absolute inset-0 bg-gradient-to-t from-rose-900/80 via-rose-800/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
                   <div className="p-5 text-white">
                     <div className="flex space-x-4 mb-3">
-                      {instructor.socials.twitter && (
-                        <a href={instructor.socials.twitter} target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white transition-colors">
-                          <Twitter size={18} />
-                        </a>
-                      )}
                       {instructor.socials.instagram && (
                         <a href={instructor.socials.instagram} target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white transition-colors">
                           <Instagram size={18} />
@@ -142,9 +135,9 @@ const InstructorsSection = () => {
                   </div>
                 </div>
               </div>
-              <h3 className="text-xl font-sans font-medium text-apple-dark">{instructor.name}</h3>
-              <p className="text-apple-blue mb-2">{instructor.title}</p>
-              <p className="text-apple-gray text-sm">{instructor.bio}</p>
+              <h3 className="text-xl font-serif font-medium text-gray-800">{instructor.name}</h3>
+              <p className="text-rose-500 mb-2 font-light">{instructor.title}</p>
+              <p className="text-gray-600 text-sm">{instructor.bio}</p>
             </div>
           ))}
         </div>
@@ -153,10 +146,10 @@ const InstructorsSection = () => {
           ref={(el) => (elementsRef.current[7] = el)} 
           className="mt-16 text-center reveal-on-scroll"
         >
-          <p className="text-apple-gray mb-6">
+          <p className="text-gray-600 mb-6">
             During the intensive, you'll also have the opportunity to work with guest artists and industry professionals in specialized workshops and masterclasses.
           </p>
-          <a href="#" className="inline-flex items-center text-apple-blue hover:text-apple-blue-light transition-colors">
+          <a href="#" className="inline-flex items-center text-rose-500 hover:text-rose-600 transition-colors">
             <span className="mr-1">View All Faculty & Guest Artists</span>
             <ArrowRight size={16} />
           </a>
