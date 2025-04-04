@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { Mail, Phone, MapPin, Instagram, Twitter, Facebook, Youtube } from 'lucide-react';
+import { Mail, Phone, MapPin, Instagram, Twitter, Facebook, Youtube, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -45,6 +46,12 @@ const Footer = () => {
               </li>
               <li>
                 <a href="#apply" className="text-white/70 hover:text-white transition-colors text-sm">Apply Now</a>
+              </li>
+              <li>
+                <Link to="/cancellation-policy" className="text-white/70 hover:text-white transition-colors text-sm flex items-center">
+                  Cancellation Policy
+                  <ArrowRight className="ml-1" size={14} />
+                </Link>
               </li>
             </ul>
           </div>
