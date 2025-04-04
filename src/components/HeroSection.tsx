@@ -36,35 +36,16 @@ const HeroSection = () => {
     }
   };
 
-  // Log the image URL to check what's being loaded
-  console.log("Attempting to load image from:", "/lovable-uploads/c8b342ef-7fbe-46f8-a1a6-241020c585bd.png");
-
   return (
     <section 
       id="home" 
       ref={heroRef}
       className="relative h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Hero Background Image - improved implementation with fallback */}
-      <div className="absolute inset-0">
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat h-full w-full"
-          style={{
-            backgroundImage: "url('/lovable-uploads/c8b342ef-7fbe-46f8-a1a6-241020c585bd.png')"
-          }}
-        >
-          {/* Fallback image as direct element to check if the path is accessible */}
-          <img 
-            src="/lovable-uploads/c8b342ef-7fbe-46f8-a1a6-241020c585bd.png" 
-            alt="Background" 
-            className="hidden" 
-            onError={(e) => {
-              console.error("Image failed to load:", e);
-              e.currentTarget.style.display = 'none';
-            }}
-            onLoad={() => console.log("Image loaded successfully")}
-          />
-        </div>
+      {/* Hero Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-rose-100/20 to-rose-50/10">
+        {/* Using a solid background color with a gradient overlay instead of problematic image */}
+        <div className="absolute inset-0 bg-rose-900/10"></div>
       </div>
       
       {/* Hero Overlay */}
