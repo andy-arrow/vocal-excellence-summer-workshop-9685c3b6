@@ -1,6 +1,7 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Instagram, Linkedin, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const instructors = [
   {
@@ -58,6 +59,7 @@ const instructors = [
 const InstructorsSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const elementsRef = useRef<(HTMLElement | null)[]>([]);
+  const [expandedBios, setExpandedBios] = useState<Record<number, boolean>>({});
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -78,6 +80,13 @@ const InstructorsSection = () => {
       currentElements.forEach((el) => observer.unobserve(el));
     };
   }, []);
+
+  const toggleBio = (index: number) => {
+    setExpandedBios(prev => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
+  };
 
   return (
     <section id="instructors" ref={sectionRef} className="section-container bg-gradient-to-b from-rose-50 to-white">
@@ -125,23 +134,44 @@ const InstructorsSection = () => {
                         </a>
                       )}
                     </div>
-                    <a 
-                      href="#" 
-                      className="inline-flex items-center text-sm text-white/90 hover:text-white transition-colors"
+                    <Button
+                      variant="link"
+                      className="text-white p-0 hover:text-white/90"
+                      onClick={() => toggleBio(index)}
                     >
                       <span className="mr-1">Full Biography</span>
                       <ArrowRight size={14} />
-                    </a>
+                    </Button>
                   </div>
                 </div>
               </div>
               <h3 className="text-xl font-serif font-medium text-gray-800">{instructor.name}</h3>
               <p className="text-rose-500 mb-2 font-light">{instructor.title}</p>
-              <p className="text-gray-600 text-sm line-clamp-4 mb-2">{instructor.bio}</p>
-              <button className="text-rose-500 text-sm hover:text-rose-600 transition-colors" 
-                      onClick={() => window.alert(`${instructor.name}'s full biography:\n\n${instructor.bio}`)}>
-                Read more
-              </button>
+              <div className="text-gray-600 text-sm">
+                {expandedBios[index] ? (
+                  <>
+                    <p className="mb-2">{instructor.bio}</p>
+                    <Button 
+                      variant="link" 
+                      className="text-rose-500 hover:text-rose-600 p-0 h-auto transition-colors"
+                      onClick={() => toggleBio(index)}
+                    >
+                      Read less
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <p className="line-clamp-4 mb-2">{instructor.bio}</p>
+                    <Button 
+                      variant="link" 
+                      className="text-rose-500 hover:text-rose-600 p-0 h-auto transition-colors"
+                      onClick={() => toggleBio(index)}
+                    >
+                      Read more
+                    </Button>
+                  </>
+                )}
+              </div>
             </div>
           ))}
         </div>
