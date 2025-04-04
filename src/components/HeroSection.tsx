@@ -40,8 +40,17 @@ const HeroSection = () => {
     <section 
       id="home" 
       ref={heroRef}
-      className="relative h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-rose-50 to-white"
+      className="relative h-screen flex items-center justify-center overflow-hidden"
+      style={{
+        backgroundImage: "url('/lovable-uploads/c8b342ef-7fbe-46f8-a1a6-241020c585bd.png')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
     >
+      {/* Hero Overlay */}
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+      
       {/* Decorative Music Notes */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/4 left-1/4 animate-float" style={{ animationDelay: '0s' }}>
@@ -61,12 +70,12 @@ const HeroSection = () => {
       {/* Hero Content */}
       <div className="hero-content relative z-10 text-center px-6 transition-all duration-500 ease-out max-w-4xl mx-auto">
         <div className="animate-fade-in">
-          <span className="uppercase tracking-widest text-xs text-rose-500 font-medium mb-4 inline-block">July 14-18, 2025 • Limassol, Cyprus</span>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-light text-gray-800 mb-6 tracking-tight leading-tight">
+          <span className="uppercase tracking-widest text-xs text-rose-300 font-medium mb-4 inline-block">July 14-18, 2025 • Limassol, Cyprus</span>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-light text-white mb-6 tracking-tight leading-tight">
             Vocal Excellence <br/> Summer Workshop
           </h1>
           <div className="w-20 h-px bg-rose-300 mx-auto mb-6"></div>
-          <p className="text-base md:text-xl text-gray-600 max-w-2xl mx-auto mb-10 font-light leading-relaxed">
+          <p className="text-base md:text-xl text-gray-200 max-w-2xl mx-auto mb-10 font-light leading-relaxed">
             A transformative 5-day vocal intensive for advancing singers, featuring masterclasses, private coaching, and performance opportunities with world-class faculty
           </p>
           <a href="#apply" className="primary-button inline-block">Apply Now</a>
@@ -76,8 +85,8 @@ const HeroSection = () => {
       {/* Scroll Down Indicator */}
       <div className="absolute bottom-10 left-0 right-0 mx-auto w-max cursor-pointer animate-bounce" onClick={scrollToAbout}>
         <div className="flex flex-col items-center">
-          <span className="text-rose-400 text-xs font-light mb-1">Discover</span>
-          <ChevronDown className="text-rose-400" size={18} />
+          <span className="text-rose-300 text-xs font-light mb-1">Discover</span>
+          <ChevronDown className="text-rose-300" size={18} />
         </div>
       </div>
     </section>
