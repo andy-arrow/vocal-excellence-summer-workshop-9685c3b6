@@ -152,7 +152,7 @@ const ApplicationForm = () => {
           variants={sectionVariants}
         >
           <h2 className="text-3xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-400 via-violet-400 to-indigo-400 font-outfit">
-            Ready to Rock the Stage?
+            Ready to Join the Workshop?
           </h2>
           <p className="text-lg text-violet-100 max-w-2xl mx-auto opacity-90 leading-relaxed">
             Your vocal journey starts here! Complete the form below in just a few steps. Let's discover your unique voice together.

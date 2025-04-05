@@ -14,16 +14,16 @@ const Footer = () => {
               Transforming passionate singers into confident performers through immersive, expert-led training.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-white/70 hover:text-white transition-colors" aria-label="Instagram">
+              <a href="https://instagram.com/vocalexcellence" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-white transition-colors" aria-label="Instagram">
                 <Instagram size={20} />
               </a>
-              <a href="#" className="text-white/70 hover:text-white transition-colors" aria-label="Twitter">
+              <a href="https://twitter.com/vocalexcellence" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-white transition-colors" aria-label="Twitter">
                 <Twitter size={20} />
               </a>
-              <a href="#" className="text-white/70 hover:text-white transition-colors" aria-label="Facebook">
+              <a href="https://facebook.com/vocalexcellence" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-white transition-colors" aria-label="Facebook">
                 <Facebook size={20} />
               </a>
-              <a href="#" className="text-white/70 hover:text-white transition-colors" aria-label="YouTube">
+              <a href="https://youtube.com/vocalexcellence" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-white transition-colors" aria-label="YouTube">
                 <Youtube size={20} />
               </a>
             </div>
@@ -33,19 +33,19 @@ const Footer = () => {
             <h4 className="font-sans text-sm font-semibold mb-4 text-white/50 uppercase tracking-wider">Quick Links</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#home" className="text-white/70 hover:text-white transition-colors text-sm">Home</a>
+                <Link to="/" className="text-white/70 hover:text-white transition-colors text-sm">Home</Link>
               </li>
               <li>
-                <a href="#about" className="text-white/70 hover:text-white transition-colors text-sm">About the Programme</a>
+                <a href="/#about" className="text-white/70 hover:text-white transition-colors text-sm">About the Programme</a>
               </li>
               <li>
-                <a href="#curriculum" className="text-white/70 hover:text-white transition-colors text-sm">Curriculum & Schedule</a>
+                <a href="/#curriculum" className="text-white/70 hover:text-white transition-colors text-sm">Curriculum & Schedule</a>
               </li>
               <li>
-                <a href="#instructors" className="text-white/70 hover:text-white transition-colors text-sm">Instructors</a>
+                <a href="/#instructors" className="text-white/70 hover:text-white transition-colors text-sm">Instructors</a>
               </li>
               <li>
-                <a href="#apply" className="text-white/70 hover:text-white transition-colors text-sm">Apply Now</a>
+                <Link to="/apply" className="text-white/70 hover:text-white transition-colors text-sm">Apply Now</Link>
               </li>
               <li>
                 <Link to="/cancellation-policy" className="text-white/70 hover:text-white transition-colors text-sm flex items-center">
@@ -65,8 +65,8 @@ const Footer = () => {
               </li>
               <li className="flex items-center">
                 <Mail className="w-5 h-5 mr-3 text-apple-blue shrink-0" />
-                <a href="mailto:info@veasummer.com" className="text-white/70 hover:text-white transition-colors text-sm">
-                  info@veasummer.com
+                <a href="mailto:info@vocalexcellence.com" className="text-white/70 hover:text-white transition-colors text-sm">
+                  info@vocalexcellence.com
                 </a>
               </li>
               <li className="flex items-center">

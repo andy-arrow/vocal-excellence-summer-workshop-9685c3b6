@@ -9,7 +9,7 @@ import ApplicationHero from '@/components/ApplicationHero';
 import ApplicationRequirements from '@/components/ApplicationRequirements';
 import ApplicationTimeline from '@/components/ApplicationTimeline';
 import ApplicationFAQ from '@/components/ApplicationFAQ';
-import { ArrowUp } from 'lucide-react';
+import ScrollToTopButton from '@/components/ScrollToTopButton';
 
 const fadeIn = {
   hidden: { opacity: 0, y: 30 },
@@ -35,13 +35,6 @@ const Application = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-  
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  };
   
   return (
     <div>
@@ -103,21 +96,7 @@ const Application = () => {
           </motion.section>
         </main>
         
-        {/* Scroll to top button */}
-        {showScrollToTop && (
-          <motion.button
-            onClick={scrollToTop}
-            className="fixed bottom-8 right-8 z-50 bg-gradient-to-r from-fuchsia-600 to-violet-600 hover:from-fuchsia-500 hover:to-violet-500 text-white p-3 rounded-full shadow-lg shadow-fuchsia-900/30"
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.5 }}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            aria-label="Scroll to top"
-          >
-            <ArrowUp size={20} />
-          </motion.button>
-        )}
+        <ScrollToTopButton visible={showScrollToTop} />
         
         <Footer />
       </motion.div>

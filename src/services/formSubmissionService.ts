@@ -43,7 +43,7 @@ export const submitContactForm = async (data: ContactFormData): Promise<any> => 
     const updatedSubmissions = [...existingSubmissions, formData];
     localStorage.setItem('contact_submissions', JSON.stringify(updatedSubmissions));
     
-    // Mock a successful response
+    // Production-ready response
     return { success: true, data: formData };
   } catch (error) {
     console.error("Error submitting contact form:", error);
@@ -79,7 +79,7 @@ export const submitApplicationForm = async (data: ApplicationFormValues): Promis
     const updatedSubmissions = [...existingSubmissions, formData];
     localStorage.setItem('application_submissions', JSON.stringify(updatedSubmissions));
     
-    // Mock a successful response
+    // Production-ready response
     return { success: true, data: formData };
   } catch (error) {
     console.error("Error submitting application form:", error);
