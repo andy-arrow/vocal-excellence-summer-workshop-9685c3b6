@@ -267,14 +267,14 @@
   @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-secondary to-accent;
 }
 
-/* Focus sections for ADHD-friendly design */
-.focus-section {
+/* Enhanced learning section */
+.enhanced-section {
   @apply p-6 md:p-8 rounded-2xl border-2 border-primary/10 bg-gradient-to-br from-white to-primary/5;
   position: relative;
   overflow: hidden;
 }
 
-.focus-section::after {
+.enhanced-section::after {
   content: '';
   position: absolute;
   top: 0;
