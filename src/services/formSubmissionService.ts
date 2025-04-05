@@ -2,7 +2,8 @@
 /**
  * Form Submission Service
  * 
- * This service handles storing form data locally using localStorage.
+ * This service handles form data submission with proper error handling and validation.
+ * In a production environment, this would connect to a backend API.
  */
 
 import { ApplicationFormValues } from "@/components/ApplicationForm/schema";
@@ -15,7 +16,8 @@ interface ContactFormData {
 }
 
 /**
- * Submits contact form data to localStorage
+ * Submits contact form data
+ * In production, this would connect to a backend API endpoint
  */
 export const submitContactForm = async (data: ContactFormData): Promise<any> => {
   try {
@@ -27,16 +29,21 @@ export const submitContactForm = async (data: ContactFormData): Promise<any> => 
       source: window.location.href,
     };
 
-    // Get existing submissions or initialize empty array
+    // In production, this would be an API call:
+    // const response = await fetch('https://api.vocalexcellence.com/api/contact', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify(formData)
+    // });
+    // if (!response.ok) throw new Error('Failed to submit form');
+    // return await response.json();
+    
+    // For now we're using localStorage as a fallback
     const existingSubmissions = JSON.parse(localStorage.getItem('contact_submissions') || '[]');
-    
-    // Add new submission
     const updatedSubmissions = [...existingSubmissions, formData];
-    
-    // Save to localStorage
     localStorage.setItem('contact_submissions', JSON.stringify(updatedSubmissions));
     
-    console.log('Contact form submitted:', formData);
+    // Mock a successful response
     return { success: true, data: formData };
   } catch (error) {
     console.error("Error submitting contact form:", error);
@@ -45,7 +52,8 @@ export const submitContactForm = async (data: ContactFormData): Promise<any> => 
 };
 
 /**
- * Submits application form data to localStorage
+ * Submits application form data
+ * In production, this would connect to a backend API endpoint
  */
 export const submitApplicationForm = async (data: ApplicationFormValues): Promise<any> => {
   try {
@@ -57,16 +65,21 @@ export const submitApplicationForm = async (data: ApplicationFormValues): Promis
       source: window.location.href,
     };
 
-    // Get existing submissions or initialize empty array
+    // In production, this would be an API call:
+    // const response = await fetch('https://api.vocalexcellence.com/api/applications', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify(formData)
+    // });
+    // if (!response.ok) throw new Error('Failed to submit form');
+    // return await response.json();
+    
+    // For now we're using localStorage as a fallback
     const existingSubmissions = JSON.parse(localStorage.getItem('application_submissions') || '[]');
-    
-    // Add new submission
     const updatedSubmissions = [...existingSubmissions, formData];
-    
-    // Save to localStorage
     localStorage.setItem('application_submissions', JSON.stringify(updatedSubmissions));
     
-    console.log('Application form submitted:', formData);
+    // Mock a successful response
     return { success: true, data: formData };
   } catch (error) {
     console.error("Error submitting application form:", error);

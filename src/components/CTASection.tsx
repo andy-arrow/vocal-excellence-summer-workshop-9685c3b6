@@ -76,11 +76,10 @@ const CTASection = () => {
     setIsSubmitting(true);
     
     try {
-      // Make a real API call to submit the form data
       const response = await submitContactForm(formData);
       
-      if (!response.ok) {
-        throw new Error('Server responded with an error');
+      if (!response.success) {
+        throw new Error('Failed to submit form');
       }
       
       setFormData({
@@ -173,6 +172,7 @@ const CTASection = () => {
                     value={formData.name}
                     onChange={handleInputChange}
                     required
+                    disabled={isSubmitting}
                   />
                 </div>
                 <div>
@@ -187,6 +187,7 @@ const CTASection = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
+                    disabled={isSubmitting}
                   />
                 </div>
                 <div>
@@ -199,6 +200,7 @@ const CTASection = () => {
                     value={formData.vocal_type}
                     onChange={handleInputChange}
                     required
+                    disabled={isSubmitting}
                   >
                     <option value="">Select your vocal type</option>
                     <option value="soprano">Soprano</option>
@@ -221,6 +223,7 @@ const CTASection = () => {
                     placeholder="Any specific questions about the programme?"
                     value={formData.message}
                     onChange={handleInputChange}
+                    disabled={isSubmitting}
                   ></textarea>
                 </div>
                 <button 

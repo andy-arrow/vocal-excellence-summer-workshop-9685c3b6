@@ -7,21 +7,12 @@ import {
 } from "@/components/ui/dialog";
 import { X } from 'lucide-react';
 
+// Updating gallery images to only include confirmed uploaded images
 const galleryImages = [
   // Masterclasses category
   {
     src: "/lovable-uploads/e26c0944-dc77-4d19-8059-c61e7800b8d1.png",
     alt: "Masterclass with professional vocal coach",
-    category: "classes"
-  },
-  {
-    src: "/lovable-uploads/vocal-masterclass-1.jpg",
-    alt: "Group vocal technique workshop",
-    category: "classes"
-  },
-  {
-    src: "/lovable-uploads/vocal-masterclass-2.jpg",
-    alt: "One-on-one vocal instruction",
     category: "classes"
   },
   {
@@ -41,36 +32,11 @@ const galleryImages = [
     alt: "Final showcase performance",
     category: "performance"
   },
-  {
-    src: "/lovable-uploads/vocal-performance-1.jpg",
-    alt: "Solo recital performance",
-    category: "performance"
-  },
-  {
-    src: "/lovable-uploads/vocal-performance-2.jpg",
-    alt: "Opera ensemble rehearsal",
-    category: "performance"
-  },
   
   // Coaching category
   {
     src: "/lovable-uploads/e0f8da04-eb2f-4b36-8abb-00346d1c76be.png",
     alt: "Individual coaching session",
-    category: "coaching"
-  },
-  {
-    src: "/lovable-uploads/vocal-coaching-1.jpg",
-    alt: "Posture and breathing technique coaching",
-    category: "coaching"
-  },
-  {
-    src: "/lovable-uploads/vocal-coaching-2.jpg",
-    alt: "Repertoire selection coaching session",
-    category: "coaching"
-  },
-  {
-    src: "/lovable-uploads/vocal-coaching-3.jpg",
-    alt: "Performance anxiety coaching workshop",
     category: "coaching"
   }
 ];
