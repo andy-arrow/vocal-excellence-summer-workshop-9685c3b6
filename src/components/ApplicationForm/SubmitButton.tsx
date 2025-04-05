@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Loader2, Sparkles } from 'lucide-react';
+import { Loader2, Sparkles, Music } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface SubmitButtonProps {
@@ -21,30 +21,34 @@ const SubmitButton = ({ isSubmitting }: SubmitButtonProps) => {
       <Button 
         type="submit" 
         disabled={isSubmitting}
-        className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white font-bold py-6 px-12 rounded-xl text-lg relative overflow-hidden group"
+        className="bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-700 hover:to-fuchsia-700 text-white font-bold py-6 px-12 rounded-xl text-lg relative overflow-hidden group"
       >
-        <span className="relative z-10 flex items-center">
+        <span className="relative z-10 flex items-center gap-3">
           {isSubmitting ? (
             <>
-              <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-              Submitting...
+              <Loader2 className="w-5 h-5 animate-spin" />
+              <span>Submitting...</span>
             </>
           ) : (
             <>
-              Submit Application
-              <Sparkles className="w-5 h-5 ml-2 group-hover:animate-pulse-slow" />
+              <Music className="w-5 h-5 group-hover:animate-bounce" />
+              <span>Submit Application</span>
+              <Sparkles className="w-5 h-5 group-hover:animate-pulse-slow" />
             </>
           )}
         </span>
         
-        {/* Background animation */}
-        <span className="absolute bottom-0 left-0 w-full h-1 bg-white opacity-20 group-hover:opacity-30 transition-opacity"></span>
+        {/* Enhanced background animation */}
+        <span className="absolute bottom-0 left-0 w-full h-1 bg-white opacity-25 group-hover:opacity-40 transition-opacity"></span>
         
         {!isSubmitting && (
           <>
-            <span className="absolute top-0 left-0 w-full h-full bg-white/5 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></span>
+            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-violet-600/10 to-fuchsia-600/10 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
             <span className="absolute -top-10 -right-10 w-20 h-20 rounded-full bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></span>
             <span className="absolute -bottom-10 -left-10 w-20 h-20 rounded-full bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity delay-100"></span>
+            
+            {/* Added subtle pulse effect */}
+            <span className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity"></span>
           </>
         )}
       </Button>
