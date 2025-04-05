@@ -35,7 +35,7 @@ const ApplicationFAQ = () => {
       items: [
         {
           question: "Are there scholarships available?",
-          answer: "Absolutely! We offer several scholarships specifically for neurodivergent artists. Check the 'Scholarship' box on your application form and we'll send you details about the simple application process."
+          answer: "Absolutely! We offer several scholarships for talented young artists. Check the 'Scholarship' box on your application form and we'll send you details about the simple application process."
         },
         {
           question: "Can I pay in installments?",
@@ -52,8 +52,8 @@ const ApplicationFAQ = () => {
           answer: "You'll prepare 3-5 pieces in different styles that match your voice and interests. We cover pop, rock, musical theater, R&B, and more! You're welcome to bring songs you're already working on."
         },
         {
-          question: "How is the program structured for people with ADHD?",
-          answer: "Our program features short, focused sessions (30-45 minutes) with frequent breaks, physical movement incorporated into vocal training, visual learning aids, and immediate feedback. We also offer quiet spaces if you need a sensory break."
+          question: "How is the program structured for young artists?",
+          answer: "Our program features dynamic learning sessions with expert feedback, hands-on vocal training, visual learning aids, and collaborative performance opportunities. We balance focused practice with creative exploration to keep everyone engaged and inspired."
         }
       ]
     },

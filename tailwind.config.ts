@@ -58,7 +58,7 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				// Vibrant color palette for ADHD-friendly design
+				// Vibrant color palette for youth-friendly design
 				energy: {
 					purple: '#7C3AED',
 					pink: '#EC4899',
