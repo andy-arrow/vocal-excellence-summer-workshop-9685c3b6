@@ -4,17 +4,22 @@ import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 interface SpinnerProps {
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   className?: string;
-  color?: 'primary' | 'secondary' | 'accent' | 'white';
+  color?: 'primary' | 'secondary' | 'accent' | 'white' | 'success' | 'warning' | 'error';
+  thickness?: number;
+  speed?: number;
 }
 
 const Spinner = ({
   size = 'md',
   className,
-  color = 'primary'
+  color = 'primary',
+  thickness = 4,
+  speed = 1.5
 }: SpinnerProps) => {
   const sizeClass = {
+    xs: 'w-3 h-3',
     sm: 'w-4 h-4',
     md: 'w-6 h-6',
     lg: 'w-8 h-8',
@@ -26,12 +31,15 @@ const Spinner = ({
     secondary: 'text-violet-600',
     accent: 'text-indigo-600',
     white: 'text-white',
+    success: 'text-green-600',
+    warning: 'text-amber-600',
+    error: 'text-rose-600',
   }[color];
 
   const spinTransition = {
     repeat: Infinity,
     ease: "linear",
-    duration: 1.5,
+    duration: speed,
   };
 
   return (
@@ -58,7 +66,7 @@ const Spinner = ({
             cy="12"
             r="10"
             stroke="currentColor"
-            strokeWidth="4"
+            strokeWidth={thickness}
           ></circle>
           <path
             className="opacity-75"
@@ -77,6 +85,9 @@ const Spinner = ({
             'bg-violet-500/30': color === 'secondary',
             'bg-indigo-500/30': color === 'accent',
             'bg-white/30': color === 'white',
+            'bg-green-500/30': color === 'success',
+            'bg-amber-500/30': color === 'warning',
+            'bg-rose-500/30': color === 'error',
           }
         )}
         animate={{

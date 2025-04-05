@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Mic, Sparkles, Star, Stars } from 'lucide-react';
+import { Mic, Sparkles, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Spinner from '@/components/ui/spinner';
 
@@ -33,7 +33,7 @@ const SubmitButton = ({ isSubmitting }: SubmitButtonProps) => {
           <span className="relative z-10 flex items-center gap-3">
             {isSubmitting ? (
               <>
-                <Spinner size="sm" color="white" />
+                <Spinner size="sm" color="white" speed={1} />
                 <span className="font-outfit tracking-wide">Submitting...</span>
               </>
             ) : (
@@ -158,11 +158,12 @@ const SubmitButton = ({ isSubmitting }: SubmitButtonProps) => {
           )}
         </Button>
         
-        {/* Button shadow and glow effects */}
+        {/* Enhanced button shadow and glow effects */}
         <MotionDiv
           className="absolute -inset-1 rounded-xl bg-gradient-to-r from-fuchsia-600/30 to-violet-600/30 blur-lg opacity-0 group-hover:opacity-100 -z-10"
           animate={{
-            opacity: [0, 0.5, 0]
+            opacity: [0, 0.5, 0],
+            scale: [0.95, 1.05, 0.95]
           }}
           transition={{ duration: 2, repeat: Infinity }}
         />
