@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Music, Mic, Users, Award, Play, Pause, Volume2, Sparkles, Star, MoveHorizontal } from 'lucide-react';
+import { Music, Mic, Users, Award, Sparkles, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
@@ -28,26 +28,11 @@ const features = [
   }
 ];
 
-const audioSamples = [
-  {
-    title: "Vocal Warm-Up",
-    description: "Quick 5-minute energy boost for your voice",
-    file: "/lovable-uploads/vocal-warmup-sample.mp3",
-  },
-  {
-    title: "Master Class Clip",
-    description: "Hear a coach fixing breath support issues instantly",
-    file: "/lovable-uploads/masterclass-highlight.mp3",
-  }
-];
-
 const MotionDiv = motion.div;
 
 const AboutSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const elementsRef = useRef<(HTMLElement | null)[]>([]);
-  const [activeAudioIndex, setActiveAudioIndex] = useState<number | null>(null);
-  const audioRefs = useRef<(HTMLAudioElement | null)[]>([]);
   const [hasReducedMotion, setHasReducedMotion] = useState(false);
   
   useEffect(() => {
@@ -71,41 +56,8 @@ const AboutSection = () => {
 
     return () => {
       currentElements.forEach((el) => observer.unobserve(el));
-      
-      // Clean up audio players when component unmounts
-      audioRefs.current.forEach(audio => {
-        if (audio) {
-          audio.pause();
-        }
-      });
     };
   }, []);
-
-  const toggleAudioPlay = (index: number) => {
-    const audio = audioRefs.current[index];
-    
-    if (!audio) return;
-    
-    // If this is the currently playing audio
-    if (activeAudioIndex === index) {
-      if (audio.paused) {
-        audio.play();
-      } else {
-        audio.pause();
-      }
-      return;
-    }
-    
-    // Stop any currently playing audio
-    if (activeAudioIndex !== null && audioRefs.current[activeAudioIndex]) {
-      audioRefs.current[activeAudioIndex]?.pause();
-    }
-    
-    // Play the new audio
-    setActiveAudioIndex(index);
-    audio.currentTime = 0;
-    audio.play();
-  };
 
   return (
     <section id="about" ref={sectionRef} className="py-24 noise-bg bg-gradient-to-b from-white to-primary/5">
@@ -127,7 +79,7 @@ const AboutSection = () => {
             ref={(el) => (elementsRef.current[1] = el)} 
             className="section-subtitle reveal-on-scroll"
           >
-            A high-energy vocal experience designed for your hyperactive creativity
+            A high-energy vocal experience designed for your creative expression
           </p>
         </div>
 
@@ -145,8 +97,8 @@ const AboutSection = () => {
               <ul className="space-y-2">
                 {[
                   "Find your unique vocal style",
-                  "Master techniques that work with your ADHD, not against it",
-                  "Connect with coaches who understand your creative energy",
+                  "Master techniques that enhance your natural abilities",
+                  "Connect with coaches who understand your creative vision",
                   "Perform on stage in our final showcase"
                 ].map((item, i) => (
                   <li key={i} className="flex items-start">
@@ -164,82 +116,8 @@ const AboutSection = () => {
             </div>
             
             <blockquote className="decorative-quote pl-6 border-l-2 border-secondary/50 my-8">
-              "Your voice is your superpower. Your ADHD is your creative edge. Together, they're unstoppable."
+              "Your voice is your superpower. Your creativity is your edge. Together, they're unstoppable."
             </blockquote>
-            
-            {/* Audio Sample Players */}
-            <div className="space-y-4 mt-8">
-              <div className="flex items-center justify-between">
-                <h4 className="text-lg font-semibold text-primary flex items-center">
-                  <Volume2 className="mr-2 w-4 h-4" /> Hear Our Energy
-                </h4>
-                <span className="text-xs text-primary/60 flex items-center">
-                  <MoveHorizontal className="mr-1 w-3 h-3" /> Swipe to explore
-                </span>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 overflow-x-auto pb-3 no-scrollbar">
-                {audioSamples.map((sample, index) => (
-                  <div 
-                    key={index} 
-                    className={cn(
-                      "vibrant-card p-4 cursor-pointer transition-all duration-300 group",
-                      "hover:shadow-xl min-w-[250px]"
-                    )}
-                    onClick={() => toggleAudioPlay(index)}
-                  >
-                    <div className="flex items-center mb-3">
-                      <div 
-                        className={cn(
-                          "w-12 h-12 rounded-full flex items-center justify-center mr-3",
-                          activeAudioIndex === index && !audioRefs.current[index]?.paused
-                            ? "bg-secondary/20 text-secondary"
-                            : "bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors"
-                        )}
-                      >
-                        {activeAudioIndex === index && !audioRefs.current[index]?.paused 
-                          ? <Pause size={20} /> 
-                          : <Play size={20} />
-                        }
-                      </div>
-                      <div>
-                        <h5 className="text-sm font-bold">{sample.title}</h5>
-                        <p className="text-xs text-foreground/60">{sample.description}</p>
-                      </div>
-                    </div>
-                    
-                    {/* Audio wave visualization */}
-                    <div className={cn(
-                      "h-3 flex items-end space-x-0.5 mt-4",
-                      hasReducedMotion ? "opacity-50" : ""
-                    )}>
-                      {Array.from({ length: 16 }).map((_, i) => (
-                        <div 
-                          key={i}
-                          className={cn(
-                            "w-1 rounded-full",
-                            activeAudioIndex === index && !audioRefs.current[index]?.paused && !hasReducedMotion
-                              ? "bg-secondary animate-soundwave"
-                              : "bg-primary/30 group-hover:bg-primary/40 h-1"
-                          )}
-                          style={{ 
-                            height: `${Math.max(2, Math.sin(i / 2) * 8)}px`,
-                            animationDelay: `${i * 0.05}s`
-                          }}
-                        ></div>
-                      ))}
-                    </div>
-                    
-                    <audio 
-                      ref={el => audioRefs.current[index] = el}
-                      src={sample.file}
-                      onEnded={() => setActiveAudioIndex(null)}
-                      preload="metadata"
-                      className="hidden"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:col-span-3">
@@ -285,13 +163,13 @@ const AboutSection = () => {
                   <span className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white">
                     <Sparkles className="w-5 h-5" />
                   </span>
-                  <h3 className="text-xl font-bold ml-3">Ready to crush it?</h3>
+                  <h3 className="text-xl font-bold ml-3">Ready to find your voice?</h3>
                 </div>
                 
                 <p className="text-foreground/80 mb-6">
-                  Our coaches get it - traditional voice lessons can feel boring and constraining. 
-                  We've designed this program specifically for active minds that crave movement,
-                  variation and quick results.
+                  Our coaches understand that traditional voice lessons can feel constraining. 
+                  We've designed this program specifically for young artists who crave movement,
+                  variation, and quick results.
                 </p>
                 
                 <Button className="bg-primary hover:bg-primary/80 text-white rounded-xl">

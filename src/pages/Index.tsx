@@ -7,7 +7,6 @@ import AboutSection from '@/components/AboutSection';
 import CurriculumSection from '@/components/CurriculumSection';
 import InstructorsSection from '@/components/InstructorsSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
-import GallerySection from '@/components/GallerySection';
 import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
 import ScrollToTopButton from '@/components/ScrollToTopButton';
@@ -91,15 +90,6 @@ const Index = () => {
         viewport={{ once: true, amount: 0.1 }}
       >
         <AboutSection />
-      </motion.div>
-      
-      <motion.div 
-        variants={sectionVariants}
-        initial="initial" 
-        whileInView="animate"
-        viewport={{ once: true, amount: 0.1 }}
-      >
-        <GallerySection />
       </motion.div>
       
       <motion.div 
