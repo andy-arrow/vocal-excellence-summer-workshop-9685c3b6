@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
 import { toast } from '@/hooks/use-toast';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronLeft, ChevronRight, Sparkles, CheckCircle2, Hourglass } from 'lucide-react';
 
 import { applicationSchema, ApplicationFormValues } from './schema';
 import PersonalInfoSection from './PersonalInfoSection';
@@ -21,7 +22,7 @@ const formVariants = {
   visible: { 
     opacity: 1,
     transition: {
-      staggerChildren: 0.1
+      staggerChildren: 0.15
     }
   }
 };
@@ -76,7 +77,7 @@ const ApplicationForm = () => {
     
     try {
       // Add a small delay to show the animation
-      await new Promise(resolve => setTimeout(resolve, 800));
+      await new Promise(resolve => setTimeout(resolve, 1200));
       
       const response = await submitApplicationForm(values);
       
@@ -87,7 +88,7 @@ const ApplicationForm = () => {
       toast({
         title: "Application Submitted Successfully! 🎉",
         description: "Your application has been received. You'll receive a confirmation email shortly.",
-        className: "bg-green-600 text-white border-green-700",
+        className: "bg-gradient-to-r from-green-600 to-emerald-600 text-white border-green-700",
       });
       
       setIsSubmitted(true);
@@ -110,15 +111,35 @@ const ApplicationForm = () => {
   }
 
   const sections = [
-    { title: "Personal Info", component: <PersonalInfoSection /> },
-    { title: "Musical Background", component: <MusicalBackgroundSection /> },
-    { title: "Programme Application", component: <ProgrammeApplicationSection /> },
-    { title: "Supporting Materials", component: <SupportingMaterialsSection /> },
-    { title: "Terms & Conditions", component: <TermsAndConditionsSection /> },
+    { 
+      title: "Personal Info", 
+      component: <PersonalInfoSection />,
+      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-fuchsia-500/20 p-2 rounded-full"><Sparkles size={18} className="text-fuchsia-500" /></motion.div>
+    },
+    { 
+      title: "Musical Background", 
+      component: <MusicalBackgroundSection />,
+      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-violet-500/20 p-2 rounded-full"><Hourglass size={18} className="text-violet-500" /></motion.div>
+    },
+    { 
+      title: "Programme", 
+      component: <ProgrammeApplicationSection />,
+      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-indigo-500/20 p-2 rounded-full"><CheckCircle2 size={18} className="text-indigo-500" /></motion.div>
+    },
+    { 
+      title: "Materials", 
+      component: <SupportingMaterialsSection />,
+      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-purple-500/20 p-2 rounded-full"><CheckCircle2 size={18} className="text-purple-500" /></motion.div>
+    },
+    { 
+      title: "Terms", 
+      component: <TermsAndConditionsSection />,
+      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-pink-500/20 p-2 rounded-full"><CheckCircle2 size={18} className="text-pink-500" /></motion.div>
+    },
   ];
 
   return (
-    <section id="application-form" className="py-16 md:py-24">
+    <section id="application-form" className="py-16 md:py-24 bg-gradient-to-b from-slate-900 to-violet-950">
       <motion.div 
         className="max-w-4xl mx-auto px-6"
         variants={formVariants}
@@ -130,31 +151,82 @@ const ApplicationForm = () => {
           className="text-center mb-12"
           variants={sectionVariants}
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-violet-500 to-indigo-500">
-            Apply Now
+          <h2 className="text-3xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-400 via-violet-400 to-indigo-400 font-outfit">
+            Ready to Rock the Stage?
           </h2>
-          <p className="text-lg text-violet-100 max-w-2xl mx-auto opacity-90">
-            Elevate your vocal skills this summer. Complete the form below to reserve your spot!
+          <p className="text-lg text-violet-100 max-w-2xl mx-auto opacity-90 leading-relaxed">
+            Your vocal journey starts here! Complete the form below in just a few steps. Let's discover your unique voice together.
           </p>
         </motion.div>
 
-        {/* Progress Indicators */}
+        {/* Progress visualization */}
         <motion.div 
-          className="flex justify-center mb-12 overflow-x-auto pb-2 gap-2 md:gap-4"
+          className="mb-10"
+          variants={sectionVariants}
+        >
+          <div className="relative">
+            <div className="h-2 bg-violet-900/40 rounded-full overflow-hidden">
+              <motion.div 
+                className="h-full bg-gradient-to-r from-fuchsia-500 to-violet-500 rounded-full"
+                initial={{ width: '0%' }}
+                animate={{ width: `${(activeSection / (sections.length - 1)) * 100}%` }}
+                transition={{ duration: 0.5 }}
+              />
+            </div>
+            
+            {/* Progress Points */}
+            <div className="flex justify-between mt-1">
+              {sections.map((section, index) => (
+                <motion.button
+                  key={index}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setActiveSection(index)}
+                  className="relative flex flex-col items-center mt-1"
+                >
+                  <motion.div
+                    className={`w-5 h-5 rounded-full flex items-center justify-center
+                    ${index <= activeSection ? 'bg-gradient-to-r from-fuchsia-500 to-violet-500' : 'bg-violet-800'}`}
+                    initial={false}
+                    animate={index <= activeSection ? 
+                      { scale: [1, 1.2, 1], boxShadow: ['0 0 0 rgba(167, 139, 250, 0)', '0 0 15px rgba(167, 139, 250, 0.7)', '0 0 0 rgba(167, 139, 250, 0)'] } : 
+                      {}
+                    }
+                    transition={{ duration: 0.5 }}
+                  >
+                    {index < activeSection && (
+                      <CheckCircle2 size={12} className="text-white" />
+                    )}
+                  </motion.div>
+                  <span className={`text-xs mt-2 font-medium hidden md:block
+                    ${index <= activeSection ? 'text-violet-300' : 'text-violet-500'}`}>
+                    {section.title}
+                  </span>
+                </motion.button>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Section selector for mobile */}
+        <motion.div 
+          className="flex md:hidden justify-center mb-8 overflow-x-auto pb-2 gap-2"
           variants={sectionVariants}
         >
           {sections.map((section, index) => (
-            <button
+            <motion.button
               key={index}
+              whileTap={{ scale: 0.95 }}
               onClick={() => setActiveSection(index)}
-              className={`px-4 py-2 rounded-lg transition-all duration-300 text-sm md:text-base whitespace-nowrap ${
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 text-sm whitespace-nowrap ${
                 activeSection === index
-                  ? "bg-violet-600 text-white font-medium"
+                  ? "bg-gradient-to-r from-fuchsia-600 to-violet-600 text-white font-medium"
                   : "bg-violet-900/40 text-violet-200 hover:bg-violet-800/60"
               }`}
             >
-              {section.title}
-            </button>
+              {section.icon}
+              <span>{section.title}</span>
+            </motion.button>
           ))}
         </motion.div>
 
@@ -172,27 +244,35 @@ const ApplicationForm = () => {
                 {sections[activeSection].component}
                 
                 <div className="flex justify-between mt-8 pt-4 border-t border-violet-500/20">
-                  <button
+                  <motion.button
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
                     type="button"
                     onClick={() => setActiveSection(prev => Math.max(0, prev - 1))}
                     disabled={activeSection === 0}
-                    className={`px-4 py-2 rounded-lg transition-all duration-300 ${
+                    className={`px-4 py-2 rounded-lg transition-all duration-300 flex items-center gap-2 ${
                       activeSection === 0
                         ? "bg-slate-800/50 text-slate-500 cursor-not-allowed"
                         : "bg-slate-800 text-white hover:bg-slate-700"
                     }`}
+                    aria-label="Previous section"
                   >
-                    Previous
-                  </button>
+                    <ChevronLeft size={18} />
+                    <span>Previous</span>
+                  </motion.button>
                   
                   {activeSection < sections.length - 1 ? (
-                    <button
+                    <motion.button
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
                       type="button"
                       onClick={() => setActiveSection(prev => Math.min(sections.length - 1, prev + 1))}
-                      className="px-4 py-2 rounded-lg bg-violet-600 text-white hover:bg-violet-500 transition-all duration-300"
+                      className="px-4 py-2 rounded-lg bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white hover:from-violet-500 hover:to-fuchsia-500 transition-all duration-300 flex items-center gap-2"
+                      aria-label="Next section"
                     >
-                      Continue
-                    </button>
+                      <span>Continue</span>
+                      <ChevronRight size={18} />
+                    </motion.button>
                   ) : (
                     <SubmitButton isSubmitting={isSubmitting} />
                   )}
@@ -201,6 +281,16 @@ const ApplicationForm = () => {
             </AnimatePresence>
           </form>
         </Form>
+
+        {/* Extra help text */}
+        <motion.div 
+          className="text-center mt-8 text-sm text-violet-300/70"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+        >
+          <p>Need help? Email us at <a href="mailto:help@vocalexcellence.com" className="text-fuchsia-400 hover:text-fuchsia-300 underline underline-offset-4">help@vocalexcellence.com</a></p>
+        </motion.div>
       </motion.div>
     </section>
   );

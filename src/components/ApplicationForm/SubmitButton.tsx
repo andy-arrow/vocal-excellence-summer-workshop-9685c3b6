@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Loader2, Sparkles, Music } from 'lucide-react';
+import { Loader2, Sparkles, Music, Mic } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface SubmitButtonProps {
@@ -21,34 +21,54 @@ const SubmitButton = ({ isSubmitting }: SubmitButtonProps) => {
       <Button 
         type="submit" 
         disabled={isSubmitting}
-        className="bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-700 hover:to-fuchsia-700 text-white font-bold py-6 px-12 rounded-xl text-lg relative overflow-hidden group"
+        className="bg-gradient-to-r from-fuchsia-600 to-violet-600 hover:from-fuchsia-700 hover:to-violet-700 text-white font-bold py-6 px-12 rounded-xl text-lg relative overflow-hidden group"
+        aria-label={isSubmitting ? "Submitting application" : "Submit application"}
       >
         <span className="relative z-10 flex items-center gap-3">
           {isSubmitting ? (
             <>
               <Loader2 className="w-5 h-5 animate-spin" />
-              <span>Submitting...</span>
+              <span className="font-outfit tracking-wide">Submitting...</span>
             </>
           ) : (
             <>
-              <Music className="w-5 h-5 group-hover:animate-bounce" />
-              <span>Submit Application</span>
+              <Mic className="w-5 h-5 group-hover:animate-bounce" />
+              <span className="font-outfit tracking-wide">Submit Application</span>
               <Sparkles className="w-5 h-5 group-hover:animate-pulse-slow" />
             </>
           )}
         </span>
-        
-        {/* Enhanced background animation */}
-        <span className="absolute bottom-0 left-0 w-full h-1 bg-white opacity-25 group-hover:opacity-40 transition-opacity"></span>
-        
+
+        {/* Enhanced interactive background elements */}
         {!isSubmitting && (
           <>
-            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-violet-600/10 to-fuchsia-600/10 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
-            <span className="absolute -top-10 -right-10 w-20 h-20 rounded-full bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></span>
-            <span className="absolute -bottom-10 -left-10 w-20 h-20 rounded-full bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity delay-100"></span>
-            
-            {/* Added subtle pulse effect */}
+            {/* Background pulse */}
             <span className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity"></span>
+            
+            {/* Animated border */}
+            <span className="absolute inset-0 border-2 border-white/10 rounded-xl scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300"></span>
+            
+            {/* Decorative elements */}
+            <span className="absolute -right-3 -top-3 w-16 h-16 bg-gradient-to-br from-pink-400 to-purple-500 rounded-full blur-xl opacity-0 group-hover:opacity-30 transition-opacity"></span>
+            <span className="absolute -left-3 -bottom-3 w-16 h-16 bg-gradient-to-br from-indigo-400 to-cyan-400 rounded-full blur-xl opacity-0 group-hover:opacity-30 transition-opacity"></span>
+            
+            {/* Music note animations */}
+            <MotionDiv 
+              className="absolute -right-4 -top-4 text-white/20 text-2xl"
+              initial={{ opacity: 0, y: 0 }}
+              animate={{ opacity: [0, 1, 0], y: -20 }}
+              transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+            >
+              ♪
+            </MotionDiv>
+            <MotionDiv 
+              className="absolute -left-4 -top-2 text-white/20 text-xl"
+              initial={{ opacity: 0, y: 0 }}
+              animate={{ opacity: [0, 1, 0], y: -15 }}
+              transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 0.5, delay: 0.5 }}
+            >
+              ♫
+            </MotionDiv>
           </>
         )}
       </Button>
