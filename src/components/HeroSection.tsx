@@ -142,13 +142,13 @@ const HeroSection = () => {
         </>
       )}
       
-      {/* Fallback and static background */}
+      {/* Hero background image - updated to show singers at masterclass */}
       <div className={cn(
         "absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900",
         isVideoLoaded && !hasReducedMotion ? "opacity-0" : "opacity-100",
         "transition-opacity duration-1000 z-0"
       )}>
-        <div className="absolute inset-0 bg-[url('/lovable-uploads/cyprus-coast-waves.jpg')] bg-cover bg-center opacity-30 mix-blend-overlay"></div>
+        <div className="absolute inset-0 bg-[url('/lovable-uploads/masterclass-singers.jpg')] bg-cover bg-center opacity-30 mix-blend-overlay"></div>
       </div>
       
       {/* Refined hero content */}

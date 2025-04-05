@@ -8,30 +8,70 @@ import {
 import { X } from 'lucide-react';
 
 const galleryImages = [
+  // Masterclasses category
   {
     src: "/lovable-uploads/e26c0944-dc77-4d19-8059-c61e7800b8d1.png",
     alt: "Masterclass with professional vocal coach",
     category: "classes"
   },
   {
-    src: "/lovable-uploads/ac92b4d5-5fab-4149-b45b-6f3e43b3ec2d.png",
-    alt: "Ensemble performance session",
-    category: "performance"
+    src: "/lovable-uploads/vocal-masterclass-1.jpg",
+    alt: "Group vocal technique workshop",
+    category: "classes"
   },
   {
-    src: "/lovable-uploads/e0f8da04-eb2f-4b36-8abb-00346d1c76be.png",
-    alt: "Individual coaching session",
-    category: "coaching"
+    src: "/lovable-uploads/vocal-masterclass-2.jpg",
+    alt: "One-on-one vocal instruction",
+    category: "classes"
   },
   {
     src: "/lovable-uploads/23077377-fca0-46d4-b7c8-83c2a2edcb19.png",
     alt: "Group warm-up exercises in studio",
     category: "classes"
   },
+  
+  // Performance category
+  {
+    src: "/lovable-uploads/ac92b4d5-5fab-4149-b45b-6f3e43b3ec2d.png",
+    alt: "Ensemble performance session",
+    category: "performance"
+  },
   {
     src: "/lovable-uploads/5f2b13ba-7279-45da-86e2-af6b9c336634.png",
     alt: "Final showcase performance",
     category: "performance"
+  },
+  {
+    src: "/lovable-uploads/vocal-performance-1.jpg",
+    alt: "Solo recital performance",
+    category: "performance"
+  },
+  {
+    src: "/lovable-uploads/vocal-performance-2.jpg",
+    alt: "Opera ensemble rehearsal",
+    category: "performance"
+  },
+  
+  // Coaching category
+  {
+    src: "/lovable-uploads/e0f8da04-eb2f-4b36-8abb-00346d1c76be.png",
+    alt: "Individual coaching session",
+    category: "coaching"
+  },
+  {
+    src: "/lovable-uploads/vocal-coaching-1.jpg",
+    alt: "Posture and breathing technique coaching",
+    category: "coaching"
+  },
+  {
+    src: "/lovable-uploads/vocal-coaching-2.jpg",
+    alt: "Repertoire selection coaching session",
+    category: "coaching"
+  },
+  {
+    src: "/lovable-uploads/vocal-coaching-3.jpg",
+    alt: "Performance anxiety coaching workshop",
+    category: "coaching"
   }
 ];
 
