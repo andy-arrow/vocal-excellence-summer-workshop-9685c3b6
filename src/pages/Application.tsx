@@ -9,9 +9,10 @@ import ApplicationHero from '@/components/ApplicationHero';
 import ApplicationRequirements from '@/components/ApplicationRequirements';
 import ApplicationTimeline from '@/components/ApplicationTimeline';
 import ApplicationFAQ from '@/components/ApplicationFAQ';
+import { ArrowUp } from 'lucide-react';
 
 const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 30 },
   visible: { 
     opacity: 1, 
     y: 0,
@@ -19,32 +20,43 @@ const fadeIn = {
   }
 };
 
-const staggerChildren = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2
-    }
-  }
-};
-
 const Application = () => {
+  const [showScrollToTop, setShowScrollToTop] = React.useState(false);
+  
   useEffect(() => {
     // Ensure the page scrolls to the top when component mounts
     window.scrollTo(0, 0);
+    
+    // Scroll to top button visibility
+    const handleScroll = () => {
+      setShowScrollToTop(window.scrollY > 500);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
+  
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+  
   return (
     <AnimatePresence>
       <Helmet>
-        <title>Find Your Voice | Vocal Excellence Summer Workshop</title>
-        <meta name="description" content="Join our vocal excellence summer program designed for passionate singers. Apply now to discover your true vocal potential with world-class instructors." />
-        <meta name="keywords" content="vocal training, singing program, voice coaching, summer workshop, singing application" />
+        <title>Apply Now | Vocal Excellence Summer Workshop</title>
+        <meta name="description" content="Apply now for the Vocal Excellence Summer Workshop and discover your true potential with world-class vocal coaching. Limited spots available." />
+        <meta name="keywords" content="vocal training application, singing workshop application, voice coaching program, summer singing program, singing application" />
+        <meta property="og:title" content="Apply Now | Vocal Excellence Summer Workshop" />
+        <meta property="og:description" content="Join our transformative vocal program this summer. Apply now to secure your spot!" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
       
       <motion.div 
-        className="min-h-screen bg-gradient-to-b from-slate-950 to-violet-950 flex flex-col"
+        className="min-h-screen bg-slate-950 flex flex-col"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -52,44 +64,63 @@ const Application = () => {
         <Navbar />
         
         <main className="flex-grow pt-16">
-          <motion.div 
-            variants={staggerChildren}
-            initial="hidden" 
-            animate="visible"
+          <ApplicationHero />
+          
+          <motion.section
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeIn}
           >
-            <motion.div variants={fadeIn}>
-              <ApplicationHero />
-            </motion.div>
-            
-            <motion.div 
-              variants={fadeIn}
-              viewport={{ once: true, amount: 0.2 }}
-            >
-              <ApplicationRequirements />
-            </motion.div>
-            
-            <motion.div 
-              variants={fadeIn}
-              viewport={{ once: true, amount: 0.2 }}
-            >
-              <ApplicationTimeline />
-            </motion.div>
-            
-            <motion.div 
-              variants={fadeIn}
-              viewport={{ once: true, amount: 0.2 }}
-            >
-              <ApplicationForm />
-            </motion.div>
-            
-            <motion.div 
-              variants={fadeIn}
-              viewport={{ once: true, amount: 0.2 }}
-            >
-              <ApplicationFAQ />
-            </motion.div>
-          </motion.div>
+            <ApplicationRequirements />
+          </motion.section>
+          
+          <motion.section
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeIn}
+          >
+            <ApplicationTimeline />
+          </motion.section>
+          
+          <motion.section
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeIn}
+          >
+            <ApplicationForm />
+          </motion.section>
+          
+          <motion.section
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeIn}
+          >
+            <ApplicationFAQ />
+          </motion.section>
         </main>
+        
+        {/* Scroll to top button */}
+        <AnimatePresence>
+          {showScrollToTop && (
+            <motion.button
+              onClick={scrollToTop}
+              className="fixed bottom-8 right-8 z-50 bg-gradient-to-r from-fuchsia-600 to-violet-600 hover:from-fuchsia-500 hover:to-violet-500 text-white p-3 rounded-full shadow-lg shadow-fuchsia-900/30"
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.5 }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              aria-label="Scroll to top"
+            >
+              <ArrowUp size={20} />
+            </motion.button>
+          )}
+        </AnimatePresence>
+        
         <Footer />
       </motion.div>
     </AnimatePresence>
