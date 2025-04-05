@@ -14,7 +14,7 @@ const Navbar = () => {
 
   return (
     <motion.nav
-      className="bg-apple-dark fixed top-0 left-0 w-full z-50"
+      className="bg-slate-900 fixed top-0 left-0 w-full z-50 shadow-lg"
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
@@ -26,22 +26,26 @@ const Navbar = () => {
 
         {/* Mobile Menu Button */}
         <div className="md:hidden">
-          <button onClick={toggleMenu} className="text-white focus:outline-none">
-            {isMenuOpen ? <X size={30} /> : <Menu size={30} />}
+          <button 
+            onClick={toggleMenu} 
+            className="text-white focus:outline-none p-2 rounded-full hover:bg-white/10 transition-colors"
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
 
         <div className="hidden md:flex items-center space-x-8">
-          <Link to="/" className="text-white/80 hover:text-white transition-colors">
+          <Link to="/" className="text-white/90 hover:text-white transition-colors">
             Home
           </Link>
-          <a href="/#about" className="text-white/80 hover:text-white transition-colors">
+          <a href="/#about" className="text-white/90 hover:text-white transition-colors">
             About
           </a>
-          <a href="/#curriculum" className="text-white/80 hover:text-white transition-colors">
+          <a href="/#curriculum" className="text-white/90 hover:text-white transition-colors">
             Curriculum
           </a>
-          <a href="/#instructors" className="text-white/80 hover:text-white transition-colors">
+          <a href="/#instructors" className="text-white/90 hover:text-white transition-colors">
             Instructors
           </a>
           <Link to="/apply" className="primary-button">
@@ -53,25 +57,25 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <motion.div
-          className="bg-apple-dark md:hidden p-4"
+          className="bg-slate-900 md:hidden p-4 shadow-lg"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.3 }}
         >
-          <Link to="/" className="block py-2 text-white/80 hover:text-white transition-colors" onClick={toggleMenu}>
+          <Link to="/" className="block py-3 text-white/90 hover:text-white transition-colors" onClick={toggleMenu}>
             Home
           </Link>
-          <a href="/#about" className="block py-2 text-white/80 hover:text-white transition-colors" onClick={toggleMenu}>
+          <a href="/#about" className="block py-3 text-white/90 hover:text-white transition-colors" onClick={toggleMenu}>
             About
           </a>
-          <a href="/#curriculum" className="block py-2 text-white/80 hover:text-white transition-colors" onClick={toggleMenu}>
+          <a href="/#curriculum" className="block py-3 text-white/90 hover:text-white transition-colors" onClick={toggleMenu}>
             Curriculum
           </a>
-          <a href="/#instructors" className="block py-2 text-white/80 hover:text-white transition-colors" onClick={toggleMenu}>
+          <a href="/#instructors" className="block py-3 text-white/90 hover:text-white transition-colors" onClick={toggleMenu}>
             Instructors
           </a>
-          <Link to="/apply" className="block py-2 primary-button text-center" onClick={toggleMenu}>
+          <Link to="/apply" className="block py-3 mt-2 primary-button w-full text-center" onClick={toggleMenu}>
             Apply Now
           </Link>
         </motion.div>

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer className="bg-apple-dark text-white">
+    <footer className="bg-slate-900 text-white shadow-lg">
       <div className="max-w-6xl mx-auto py-16 px-6 md:px-8">
         <div className="grid md:grid-cols-3 gap-10">
           <div className="md:col-span-1">
@@ -60,17 +60,17 @@ const Footer = () => {
             <h4 className="font-sans text-sm font-semibold mb-4 text-white/50 uppercase tracking-wider">Contact Us</h4>
             <ul className="space-y-3">
               <li className="flex items-start">
-                <MapPin className="w-5 h-5 mr-3 text-apple-blue shrink-0 mt-0.5" />
+                <MapPin className="w-5 h-5 mr-3 text-blue-400 shrink-0 mt-0.5" />
                 <span className="text-white/70 text-sm">Nafpliou 12, Pentadromos, 3025, Limassol, Cyprus</span>
               </li>
               <li className="flex items-center">
-                <Mail className="w-5 h-5 mr-3 text-apple-blue shrink-0" />
+                <Mail className="w-5 h-5 mr-3 text-blue-400 shrink-0" />
                 <a href="mailto:info@vocalexcellence.com" className="text-white/70 hover:text-white transition-colors text-sm">
                   info@vocalexcellence.com
                 </a>
               </li>
               <li className="flex items-center">
-                <Phone className="w-5 h-5 mr-3 text-apple-blue shrink-0" />
+                <Phone className="w-5 h-5 mr-3 text-blue-400 shrink-0" />
                 <a href="tel:+35725775885" className="text-white/70 hover:text-white transition-colors text-sm">
                   +357 25 775 885
                 </a>

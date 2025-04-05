@@ -1,9 +1,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Volume2, VolumeX, ChevronDown, Sparkles, Music } from 'lucide-react';
-import { Button } from "@/components/ui/button";
+import { Volume2, VolumeX, Sparkles, Music } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -60,16 +58,6 @@ const HeroSection = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [hasReducedMotion]);
-
-  const scrollToAbout = () => {
-    const aboutSection = document.getElementById('about');
-    if (aboutSection) {
-      window.scrollTo({
-        top: aboutSection.offsetTop - 80,
-        behavior: 'smooth',
-      });
-    }
-  };
 
   // Handle video loaded state
   const handleVideoLoad = () => {
@@ -168,26 +156,14 @@ const HeroSection = () => {
             <span className="gradient-text">Voice</span>
           </h1>
           
-          <p className="text-lg md:text-2xl text-white/90 max-w-2xl mx-auto mb-6 font-light">
+          <p className="text-lg md:text-2xl text-white/90 max-w-2xl mx-auto font-light">
             An electrifying 5-day vocal experience designed for young singers who want to break boundaries and unleash their true potential
           </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/apply" className="relative group overflow-hidden">
-              <span className="absolute inset-0 bg-energy-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></span>
-              <Button size="lg" className="bg-energy-purple hover:bg-energy-purple/90 text-white border-0 rounded-xl px-8 py-6 text-base relative z-10">
-                Apply Now <Sparkles className="ml-2 w-4 h-4" />
-              </Button>
-            </Link>
-            <Button onClick={scrollToAbout} variant="outline" size="lg" className="border-2 border-white/30 text-white hover:bg-white/10 rounded-xl px-8 py-6 text-base backdrop-blur-sm">
-              Learn More <Music className="ml-2 w-4 h-4" />
-            </Button>
-          </div>
         </div>
       </div>
       
       {/* Animated scroll indicator */}
-      <div className="absolute bottom-12 left-0 right-0 mx-auto w-max cursor-pointer z-20" onClick={scrollToAbout}>
+      <div className="absolute bottom-12 left-0 right-0 mx-auto w-max cursor-pointer z-20">
         <div className="flex flex-col items-center">
           <span className="text-white/90 text-xs uppercase tracking-widest mb-2 font-medium">Discover</span>
           <div className="flex items-center justify-center h-12 space-x-1 animate-bounce-light">
@@ -201,7 +177,7 @@ const HeroSection = () => {
               </>
             ) : (
               <div className="p-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/30">
-                <ChevronDown className="text-white" size={20} />
+                <Music className="text-white" size={20} />
               </div>
             )}
           </div>
