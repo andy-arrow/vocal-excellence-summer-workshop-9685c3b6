@@ -1,6 +1,5 @@
-
 import React, { useEffect, useRef, useState } from 'react';
-import { Calendar, Clock, Book, Mic, Users, Theatre, Music, Sparkles } from 'lucide-react';
+import { Calendar, Clock, Book, Mic, Users, Theater, Music, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const modules = [
@@ -19,7 +18,7 @@ const modules = [
   {
     title: "Performance Mastery",
     description: "Develop compelling stage presence, emotional connection, and authentic performance skills.",
-    icon: <Theatre className="w-8 h-8 text-amber-500" />,
+    icon: <Theater className="w-8 h-8 text-amber-500" />,
     highlights: [
       "Dynamic stage presence and movement",
       "Emotional connectivity to text and music",
