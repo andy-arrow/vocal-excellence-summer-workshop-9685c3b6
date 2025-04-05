@@ -1,8 +1,9 @@
 
 import React, { useEffect, useRef, useState } from 'react';
-import { ChevronDown, VolumeX, Volume2 } from 'lucide-react';
+import { Volume2, VolumeX, ChevronDown, Sparkles, Music } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { cn } from '@/lib/utils';
+import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -80,7 +81,7 @@ const HeroSection = () => {
       id="home" 
       ref={heroRef}
       className={cn(
-        "relative h-screen flex items-center justify-center overflow-hidden",
+        "relative h-screen flex items-center justify-center overflow-hidden bg-black",
         hasReducedMotion ? "reduced-motion" : ""
       )}
     >
@@ -97,7 +98,7 @@ const HeroSection = () => {
           onClick={toggleReducedMotion}
           className={cn(
             "p-2 backdrop-blur-sm rounded-full text-white transition-colors text-xs",
-            hasReducedMotion ? "bg-white/30" : "bg-white/10 hover:bg-white/20"
+            hasReducedMotion ? "bg-energy-purple/50" : "bg-white/10 hover:bg-white/20"
           )}
           aria-label={hasReducedMotion ? "Enable animations" : "Reduce animations"}
         >
@@ -105,9 +106,9 @@ const HeroSection = () => {
         </button>
       </div>
       
-      {/* Video background */}
+      {/* Video background with vibrant overlay */}
       <div className={cn(
-        "absolute inset-0 overflow-hidden bg-slate-900",
+        "absolute inset-0 overflow-hidden bg-black",
         isVideoLoaded && !hasReducedMotion ? "opacity-100" : "opacity-0",
         "transition-opacity duration-1000"
       )}>
@@ -119,7 +120,7 @@ const HeroSection = () => {
           playsInline
           onCanPlay={handleVideoLoad}
           className={cn(
-            "absolute min-w-full min-h-full object-cover",
+            "absolute min-w-full min-h-full object-cover opacity-80",
             hasReducedMotion ? "hidden" : "block"
           )}
         >
@@ -128,67 +129,79 @@ const HeroSection = () => {
         </video>
       </div>
       
-      {/* Gradient overlay for video */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-900/90 via-slate-800/70 to-slate-900/90 z-10"></div>
+      {/* Vibrant gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-energy-purple/90 via-energy-pink/70 to-energy-cyan/80 mix-blend-overlay z-10"></div>
+      <div className="absolute inset-0 bg-black/40 z-10"></div>
 
       {/* Animated musical notes (only shown when reduced motion is off) */}
       {!hasReducedMotion && (
         <>
-          <div className="musical-note absolute top-[15%] left-[10%] text-white/10 text-5xl animate-float z-10">♪</div>
-          <div className="musical-note absolute top-[25%] right-[15%] text-white/10 text-6xl animate-float animation-delay-700 z-10">♩</div>
-          <div className="musical-note absolute bottom-[35%] left-[20%] text-white/10 text-4xl animate-float animation-delay-1500 z-10">♫</div>
-          <div className="musical-note absolute bottom-[25%] right-[25%] text-white/10 text-7xl animate-float animation-delay-2000 z-10">𝄞</div>
-          <div className="musical-note absolute top-[40%] left-[30%] text-white/10 text-5xl animate-float animation-delay-1000 z-10">♬</div>
+          <div className="musical-note absolute top-[15%] left-[10%] text-white/20 text-5xl animate-float z-10">♪</div>
+          <div className="musical-note absolute top-[25%] right-[15%] text-white/20 text-6xl animate-float animation-delay-700 z-10">♩</div>
+          <div className="musical-note absolute bottom-[35%] left-[20%] text-white/20 text-4xl animate-float animation-delay-1500 z-10">♫</div>
+          <div className="musical-note absolute bottom-[25%] right-[25%] text-white/20 text-7xl animate-float animation-delay-2000 z-10">𝄞</div>
+          <div className="musical-note absolute top-[40%] left-[30%] text-white/20 text-5xl animate-float animation-delay-1000 z-10">♬</div>
         </>
       )}
       
       {/* Hero background image - updated to show singers at masterclass */}
       <div className={cn(
-        "absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900",
+        "absolute inset-0 bg-black",
         isVideoLoaded && !hasReducedMotion ? "opacity-0" : "opacity-100",
         "transition-opacity duration-1000 z-0"
       )}>
-        <div className="absolute inset-0 bg-[url('/lovable-uploads/masterclass-singers.jpg')] bg-cover bg-center opacity-30 mix-blend-overlay"></div>
+        <div className="absolute inset-0 bg-[url('/lovable-uploads/masterclass-singers.jpg')] bg-cover bg-center opacity-40 mix-blend-overlay"></div>
       </div>
       
-      {/* Refined hero content */}
+      {/* Dynamic hero content */}
       <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-4xl mx-auto">
-        <div className="space-y-8">
-          <div className="inline-block py-1.5 px-4 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 mb-2">
-            <span className="uppercase tracking-wider text-xs font-medium text-white/80">July 14-18, 2025 • Limassol, Cyprus</span>
+        <div className="space-y-6">
+          <div className="inline-block py-2 px-4 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-2">
+            <span className="uppercase tracking-widest text-xs font-medium text-white flex items-center">
+              <Sparkles size={14} className="mr-2 text-energy-yellow" />
+              <span>July 14-18, 2025 • Limassol, Cyprus</span>
+            </span>
           </div>
           
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-light text-white tracking-tight leading-tight">
-            Vocal Excellence <br className="hidden sm:block"/> 
-            <span className="mt-2 block text-white/80">Let Your Voice Soar</span>
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-outfit font-bold text-white tracking-tight leading-tight">
+            <span className="block">Find Your</span> 
+            <span className="gradient-text">Voice</span>
           </h1>
           
-          <div className="w-16 h-px bg-white/20 mx-auto"></div>
-          
-          <p className="text-base md:text-xl text-white/70 max-w-2xl mx-auto mb-10 font-light leading-relaxed animate-pulse-slow">
-            Transform your singing technique and performance in five days of immersive masterclasses with world-class faculty
+          <p className="text-lg md:text-2xl text-white/90 max-w-2xl mx-auto mb-6 font-light">
+            An electrifying 5-day vocal experience designed for young singers who want to break boundaries and unleash their true potential
           </p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to="/apply" className="relative group overflow-hidden">
+              <span className="absolute inset-0 bg-energy-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></span>
+              <Button size="lg" className="bg-energy-purple hover:bg-energy-purple/90 text-white border-0 rounded-xl px-8 py-6 text-base relative z-10">
+                Apply Now <Sparkles className="ml-2 w-4 h-4" />
+              </Button>
+            </Link>
+            <Button onClick={scrollToAbout} variant="outline" size="lg" className="border-2 border-white/30 text-white hover:bg-white/10 rounded-xl px-8 py-6 text-base backdrop-blur-sm">
+              Learn More <Music className="ml-2 w-4 h-4" />
+            </Button>
+          </div>
         </div>
       </div>
       
-      {/* Sound wave styled scroll indicator */}
+      {/* Animated scroll indicator */}
       <div className="absolute bottom-12 left-0 right-0 mx-auto w-max cursor-pointer z-20" onClick={scrollToAbout}>
         <div className="flex flex-col items-center">
-          <span className="text-white/60 text-xs uppercase tracking-wider mb-2 font-light">Discover</span>
-          <div className="flex items-center justify-center h-8 space-x-1">
+          <span className="text-white/90 text-xs uppercase tracking-widest mb-2 font-medium">Discover</span>
+          <div className="flex items-center justify-center h-12 space-x-1 animate-bounce-light">
             {!hasReducedMotion ? (
               <>
-                <span className="inline-block w-0.5 h-3 bg-white/40 animate-soundwave"></span>
-                <span className="inline-block w-0.5 h-4 bg-white/50 animate-soundwave animation-delay-100"></span>
-                <span className="inline-block w-0.5 h-6 bg-white/60 animate-soundwave animation-delay-200"></span>
-                <span className="inline-block w-0.5 h-8 bg-white/70 animate-soundwave animation-delay-300"></span>
-                <span className="inline-block w-0.5 h-6 bg-white/60 animate-soundwave animation-delay-200"></span>
-                <span className="inline-block w-0.5 h-4 bg-white/50 animate-soundwave animation-delay-100"></span>
-                <span className="inline-block w-0.5 h-3 bg-white/40 animate-soundwave"></span>
+                <span className="inline-block w-1 h-4 bg-energy-pink rounded-full"></span>
+                <span className="inline-block w-1 h-6 bg-energy-purple rounded-full"></span>
+                <span className="inline-block w-1 h-8 bg-energy-cyan rounded-full"></span>
+                <span className="inline-block w-1 h-6 bg-energy-purple rounded-full"></span>
+                <span className="inline-block w-1 h-4 bg-energy-pink rounded-full"></span>
               </>
             ) : (
-              <div className="p-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/15">
-                <ChevronDown className="text-white/70" size={16} />
+              <div className="p-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/30">
+                <ChevronDown className="text-white" size={20} />
               </div>
             )}
           </div>

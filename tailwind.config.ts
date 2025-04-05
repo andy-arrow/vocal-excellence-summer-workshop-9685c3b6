@@ -20,10 +20,9 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'sans-serif'],
-				serif: ['"Playfair Display"', 'Georgia', 'Times New Roman', 'serif'],
-				inter: ['Inter', 'sans-serif'],
-				playfair: ['"Playfair Display"', 'serif'],
+				sans: ['Poppins', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'sans-serif'],
+				outfit: ['Outfit', 'sans-serif'],
+				poppins: ['Poppins', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -59,50 +58,13 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
-				},
-				// Summer-inspired colors
-				summer: {
-					sunrise: '#FF9E7A', // Soft orange/peach for sunrise
-					sky: '#0EA5E9',     // Vibrant sky blue
-					ocean: '#0C4A6E',   // Deep ocean blue
-					sand: '#FDE1D3',    // Soft sand color
-					gold: '#F59E0B',    // Golden sunset
-				},
-				// Apple-inspired colors
-				apple: {
-					light: '#F5F5F7',
-					DEFAULT: '#1D1D1F',
-					dark: '#000000',
-					blue: '#0066CC',
-					'blue-light': '#147CE5',
-					gray: '#86868B',
-					'gray-light': '#E8E8ED',
-					silver: '#F5F5F7'
-				},
-				// Custom existing colors
-				sand: {
-					light: '#F5F5F7', // Replaced with Apple light gray
-					DEFAULT: '#E5D6C1',
-					dark: '#C7B9A5',
-				},
-				burgundy: {
-					light: '#9E4F57',
-					DEFAULT: '#0066CC', // Replaced with Apple blue
-					dark: '#51222A',
-				},
-				navy: {
-					light: '#2A3D56',
-					DEFAULT: '#1D1D1F', // Replaced with Apple dark
-					dark: '#0E1825',
+				// Vibrant color palette for ADHD-friendly design
+				energy: {
+					purple: '#7C3AED',
+					pink: '#EC4899',
+					cyan: '#06B6D4',
+					yellow: '#FBBF24',
+					green: '#10B981',
 				},
 			},
 			borderRadius: {
@@ -155,6 +117,10 @@ export default {
 					'0%, 100%': { transform: 'translateX(0)' },
 					'25%': { transform: 'translateX(1px)' },
 					'75%': { transform: 'translateX(-1px)' }
+				},
+				'bounce-light': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-5px)' }
 				}
 			},
 			animation: {
@@ -168,13 +134,14 @@ export default {
 				'progress': 'progress 15s ease-in-out infinite',
 				'soundwave': 'soundwave 1s ease-in-out infinite',
 				'pulse-slow': 'pulse-slow 3s ease-in-out infinite',
-				'vibrato': 'vibrato 0.15s ease-in-out infinite'
+				'vibrato': 'vibrato 0.15s ease-in-out infinite',
+				'bounce-light': 'bounce-light 2s ease-in-out infinite'
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-				'hero-pattern': 'linear-gradient(rgba(29, 29, 31, 0.7), rgba(0, 102, 204, 0.5))', // Updated colors
-				'summer-gradient': 'linear-gradient(180deg, #FF9E7A 0%, #FEC6A1 100%)', // Sunrise gradient
-				'ocean-gradient': 'linear-gradient(180deg, #0EA5E9 0%, #0C4A6E 100%)' // Ocean gradient
+				'hero-pattern': 'linear-gradient(rgba(124, 58, 237, 0.7), rgba(236, 72, 153, 0.6))',
+				'energy-gradient': 'linear-gradient(135deg, #7C3AED 0%, #EC4899 50%, #06B6D4 100%)',
+				'subtle-noise': "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E\")",
 			}
 		}
 	},

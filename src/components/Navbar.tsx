@@ -1,5 +1,6 @@
+
 import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Music, Sparkles, Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
@@ -8,14 +9,14 @@ import {
   SheetTrigger,
   SheetClose
 } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 
 const navLinks = [
   { name: 'Home', href: '#home', path: '/' },
   { name: 'About', href: '#about', path: '/' },
-  { name: 'Curriculum', href: '#curriculum', path: '/' },
-  { name: 'Instructors', href: '#instructors', path: '/' },
-  { name: 'FAQ', href: '#faq', path: '/' },
-  { name: 'Contact', href: '#contact', path: '/' },
+  { name: 'Program', href: '#curriculum', path: '/' },
+  { name: 'Coaches', href: '#instructors', path: '/' },
+  { name: 'FAQs', href: '#faq', path: '/' },
 ];
 
 const Navbar = () => {
@@ -79,19 +80,28 @@ const Navbar = () => {
       className={cn(
         "fixed top-0 left-0 w-full z-50 transition-all duration-300",
         scrolled 
-          ? "py-2 bg-white/90 backdrop-blur-md shadow-sm" 
+          ? "py-2 bg-background/80 backdrop-blur-lg shadow-sm" 
           : "py-3 bg-transparent"
       )}
     >
-      <div className="max-w-6xl mx-auto px-6 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         <Link 
           to="/" 
           className={cn(
-            "flex items-center transition-colors",
-            scrolled ? "text-apple-dark hover:text-apple-blue" : "text-white hover:text-white/80"
+            "flex items-center gap-2 transition-colors",
+            scrolled ? "text-primary hover:text-secondary" : "text-white hover:text-white/80"
           )}
         >
-          <span className="text-base font-sans font-medium">Vocal Excellence</span>
+          <Music className={cn(
+            "w-7 h-7",
+            scrolled ? "text-primary" : "text-white"
+          )} />
+          <span className="text-lg font-outfit font-bold">VocalCrush</span>
+          <Star className={cn(
+            "w-4 h-4",
+            scrolled ? "text-secondary" : "text-energy-yellow",
+            "animate-pulse-slow"
+          )} />
         </Link>
 
         {/* Desktop Navigation */}
@@ -107,31 +117,41 @@ const Navbar = () => {
                 }
               }}
               className={cn(
-                "text-xs font-medium transition-colors",
+                "text-sm font-medium transition-all duration-300 px-2 py-1 relative",
                 scrolled 
-                  ? (activeSection === link.href.replace('#', '') && isHomePage ? "text-apple-blue" : "text-apple-dark hover:text-apple-blue") 
-                  : "text-white hover:text-white/80"
+                  ? (activeSection === link.href.replace('#', '') && isHomePage 
+                    ? "text-secondary" 
+                    : "text-foreground hover:text-secondary") 
+                  : "text-white hover:text-white/80",
+                activeSection === link.href.replace('#', '') && isHomePage 
+                  ? "after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:rounded-full"
+                  : ""
               )}
             >
               {link.name}
             </Link>
           ))}
-          <a 
-            href="/apply" 
+          <Button 
             onClick={handleApplyNowClick}
-            className="ml-3 primary-button text-xs py-2 px-4"
+            className={cn(
+              "rounded-xl text-white",
+              scrolled 
+                ? "bg-primary hover:bg-primary/80" 
+                : "bg-white/20 backdrop-blur-sm hover:bg-white/30 border border-white/20"
+            )}
+            size="sm"
           >
-            Apply Now
-          </a>
+            Apply Now <Sparkles className="ml-1 w-3 h-3" />
+          </Button>
         </nav>
 
-        {/* Mobile Menu - Using Sheet component for improved reliability */}
+        {/* Mobile Menu */}
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
             <button
               className={cn(
                 "md:hidden p-2 rounded-md",
-                scrolled ? "text-apple-dark" : "text-white"
+                scrolled ? "text-primary" : "text-white"
               )}
               aria-label="Toggle menu"
             >
@@ -141,16 +161,17 @@ const Navbar = () => {
           </SheetTrigger>
           <SheetContent
             side="right"
-            className="bg-black text-white w-full sm:max-w-md p-0 flex flex-col"
+            className="bg-gradient-to-br from-energy-purple to-energy-pink text-white w-full sm:max-w-md p-0 flex flex-col border-none"
           >
-            <div className="flex flex-col space-y-6 pt-6 pb-6 px-6">
+            <div className="absolute inset-0 bg-subtle-noise opacity-10 pointer-events-none"></div>
+            <div className="flex flex-col space-y-6 pt-12 pb-6 px-6 relative z-10">
               {navLinks.map((link) => (
                 <SheetClose asChild key={link.name}>
                   <Link
                     to={link.path}
                     className={cn(
-                      "text-base py-2 text-white/90 hover:text-white transition-colors",
-                      activeSection === link.href.replace('#', '') && isHomePage ? "text-white font-medium" : ""
+                      "text-lg py-2 text-white hover:text-white/80 transition-colors flex items-center font-medium",
+                      activeSection === link.href.replace('#', '') && isHomePage ? "text-white font-bold" : ""
                     )}
                     onClick={(e) => {
                       if (isHomePage) {
@@ -159,19 +180,24 @@ const Navbar = () => {
                       }
                     }}
                   >
+                    <span className="w-8 h-8 flex items-center justify-center bg-white/10 rounded-lg mr-3">
+                      <Music className="w-4 h-4" />
+                    </span>
                     {link.name}
                   </Link>
                 </SheetClose>
               ))}
-              <SheetClose asChild>
-                <a 
-                  href="/apply"
-                  onClick={handleApplyNowClick}
-                  className="mt-2 border border-white text-white hover:bg-white hover:text-black transition-colors py-3 px-6 text-center text-sm font-medium tracking-wider uppercase"
-                >
-                  Apply Now
-                </a>
-              </SheetClose>
+              <div className="pt-6">
+                <SheetClose asChild>
+                  <Button
+                    onClick={handleApplyNowClick}
+                    className="w-full bg-white text-energy-purple hover:bg-white/90 rounded-xl py-6"
+                    size="lg"
+                  >
+                    Apply Now <Sparkles className="ml-2" />
+                  </Button>
+                </SheetClose>
+              </div>
             </div>
           </SheetContent>
         </Sheet>
