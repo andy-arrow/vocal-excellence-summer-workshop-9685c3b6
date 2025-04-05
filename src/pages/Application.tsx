@@ -1,7 +1,7 @@
 
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ApplicationForm from '@/components/ApplicationForm';
@@ -44,7 +44,7 @@ const Application = () => {
   };
   
   return (
-    <AnimatePresence>
+    <div>
       <Helmet>
         <title>Apply Now | Vocal Excellence Summer Workshop</title>
         <meta name="description" content="Apply now for the Vocal Excellence Summer Workshop and discover your true potential with world-class vocal coaching. Limited spots available." />
@@ -104,26 +104,24 @@ const Application = () => {
         </main>
         
         {/* Scroll to top button */}
-        <AnimatePresence>
-          {showScrollToTop && (
-            <motion.button
-              onClick={scrollToTop}
-              className="fixed bottom-8 right-8 z-50 bg-gradient-to-r from-fuchsia-600 to-violet-600 hover:from-fuchsia-500 hover:to-violet-500 text-white p-3 rounded-full shadow-lg shadow-fuchsia-900/30"
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.5 }}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              aria-label="Scroll to top"
-            >
-              <ArrowUp size={20} />
-            </motion.button>
-          )}
-        </AnimatePresence>
+        {showScrollToTop && (
+          <motion.button
+            onClick={scrollToTop}
+            className="fixed bottom-8 right-8 z-50 bg-gradient-to-r from-fuchsia-600 to-violet-600 hover:from-fuchsia-500 hover:to-violet-500 text-white p-3 rounded-full shadow-lg shadow-fuchsia-900/30"
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.5 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            aria-label="Scroll to top"
+          >
+            <ArrowUp size={20} />
+          </motion.button>
+        )}
         
         <Footer />
       </motion.div>
-    </AnimatePresence>
+    </div>
   );
 };
 

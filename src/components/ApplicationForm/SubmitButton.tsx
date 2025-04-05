@@ -1,8 +1,9 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Loader2, Sparkles, Music, Mic, Star, Stars } from 'lucide-react';
+import { Mic, Sparkles, Star, Stars } from 'lucide-react';
 import { motion } from 'framer-motion';
+import Spinner from '@/components/ui/spinner';
 
 interface SubmitButtonProps {
   isSubmitting: boolean;
@@ -32,12 +33,7 @@ const SubmitButton = ({ isSubmitting }: SubmitButtonProps) => {
           <span className="relative z-10 flex items-center gap-3">
             {isSubmitting ? (
               <>
-                <MotionDiv
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                >
-                  <Loader2 className="w-5 h-5" />
-                </MotionDiv>
+                <Spinner size="sm" color="white" />
                 <span className="font-outfit tracking-wide">Submitting...</span>
               </>
             ) : (
