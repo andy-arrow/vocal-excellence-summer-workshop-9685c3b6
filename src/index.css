@@ -35,7 +35,7 @@
     --input: 20 15% 90%;
     --ring: 345 70% 50%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
   }
 
   body {
@@ -130,6 +130,53 @@
   .decorative-quote {
     @apply text-2xl md:text-3xl font-serif italic text-rose-600/80 leading-relaxed;
   }
+
+  /* Music-themed animations */
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .animate-pulse-slow {
+    animation: pulseSlow 3s ease-in-out infinite;
+  }
+
+  .animate-soundwave {
+    animation: soundwave 1.2s ease-in-out infinite;
+  }
+
+  .animation-delay-100 {
+    animation-delay: 0.1s;
+  }
+
+  .animation-delay-200 {
+    animation-delay: 0.2s;
+  }
+
+  .animation-delay-300 {
+    animation-delay: 0.3s;
+  }
+
+  .animation-delay-700 {
+    animation-delay: 0.7s;
+  }
+
+  .animation-delay-1000 {
+    animation-delay: 1s;
+  }
+
+  .animation-delay-1500 {
+    animation-delay: 1.5s;
+  }
+
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+
+  /* Reduced motion settings */
+  .reduced-motion * {
+    animation: none !important;
+    transition: background-color 0.3s ease, color 0.3s ease, opacity 0.3s ease !important;
+  }
 }
 
 /* Custom scrollbar */
@@ -161,6 +208,15 @@
   }
 }
 
+@keyframes pulseSlow {
+  0%, 100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
 .animate-fade-in {
   animation: fadeIn 1s ease-out forwards;
 }
@@ -168,15 +224,21 @@
 /* Music note animation */
 @keyframes float {
   0%, 100% {
-    transform: translateY(0);
+    transform: translateY(0) rotate(0deg);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-10px) rotate(5deg);
   }
 }
 
-.animate-float {
-  animation: float 4s ease-in-out infinite;
+/* Sound wave animation */
+@keyframes soundwave {
+  0%, 100% {
+    transform: scaleY(0.5);
+  }
+  50% {
+    transform: scaleY(1);
+  }
 }
 
 /* Background pattern for sections */

@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -68,6 +69,14 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
+				// Summer-inspired colors
+				summer: {
+					sunrise: '#FF9E7A', // Soft orange/peach for sunrise
+					sky: '#0EA5E9',     // Vibrant sky blue
+					ocean: '#0C4A6E',   // Deep ocean blue
+					sand: '#FDE1D3',    // Soft sand color
+					gold: '#F59E0B',    // Golden sunset
+				},
 				// Apple-inspired colors
 				apple: {
 					light: '#F5F5F7',
@@ -129,6 +138,23 @@ export default {
 				'float': {
 					'0%, 100%': { transform: 'translateY(0)' },
 					'50%': { transform: 'translateY(-10px)' }
+				},
+				'progress': {
+					'0%': { width: '0%' },
+					'100%': { width: '100%' }
+				},
+				'soundwave': {
+					'0%, 100%': { transform: 'scaleY(0.4)' },
+					'50%': { transform: 'scaleY(1)' }
+				},
+				'pulse-slow': {
+					'0%, 100%': { opacity: '0.8' },
+					'50%': { opacity: '1' }
+				},
+				'vibrato': {
+					'0%, 100%': { transform: 'translateX(0)' },
+					'25%': { transform: 'translateX(1px)' },
+					'75%': { transform: 'translateX(-1px)' }
 				}
 			},
 			animation: {
@@ -138,11 +164,17 @@ export default {
 				'fade-in-left': 'fade-in-left 0.6s ease-out',
 				'fade-in-right': 'fade-in-right 0.6s ease-out',
 				'scale-in': 'scale-in 0.5s ease-out',
-				'float': 'float 3s ease-in-out infinite'
+				'float': 'float 3s ease-in-out infinite',
+				'progress': 'progress 15s ease-in-out infinite',
+				'soundwave': 'soundwave 1s ease-in-out infinite',
+				'pulse-slow': 'pulse-slow 3s ease-in-out infinite',
+				'vibrato': 'vibrato 0.15s ease-in-out infinite'
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
 				'hero-pattern': 'linear-gradient(rgba(29, 29, 31, 0.7), rgba(0, 102, 204, 0.5))', // Updated colors
+				'summer-gradient': 'linear-gradient(180deg, #FF9E7A 0%, #FEC6A1 100%)', // Sunrise gradient
+				'ocean-gradient': 'linear-gradient(180deg, #0EA5E9 0%, #0C4A6E 100%)' // Ocean gradient
 			}
 		}
 	},
