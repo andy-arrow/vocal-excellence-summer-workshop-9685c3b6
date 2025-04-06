@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Mic, Sparkles, Star } from 'lucide-react';
+import { Mic, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Spinner from '@/components/ui/spinner';
 
@@ -38,25 +38,9 @@ const SubmitButton = ({ isSubmitting }: SubmitButtonProps) => {
               </>
             ) : (
               <>
-                <MotionDiv
-                  animate={{ 
-                    y: [0, -5, 0],
-                    rotate: [-5, 5, -5]
-                  }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  <Mic className="w-5 h-5" />
-                </MotionDiv>
-                <span className="font-outfit tracking-wide">Submit Application</span>
-                <MotionDiv
-                  animate={{ 
-                    scale: [1, 1.2, 1],
-                    rotate: [0, 5, 0]
-                  }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  <Sparkles className="w-5 h-5" />
-                </MotionDiv>
+                <Mic className="w-5 h-5" />
+                <span className="font-outfit tracking-wide">Submit Your Application</span>
+                <Sparkles className="w-5 h-5" />
               </>
             )}
           </span>
@@ -80,7 +64,7 @@ const SubmitButton = ({ isSubmitting }: SubmitButtonProps) => {
                 transition={{ duration: 2, repeat: Infinity }}
               />
               
-              {/* Sparkle effects */}
+              {/* Glow effects */}
               <MotionDiv 
                 className="absolute -right-3 -top-3 w-16 h-16 bg-gradient-to-br from-fuchsia-400/30 to-violet-500/30 rounded-full blur-xl opacity-0 group-hover:opacity-100"
                 animate={{ 
@@ -98,62 +82,6 @@ const SubmitButton = ({ isSubmitting }: SubmitButtonProps) => {
                 }}
                 transition={{ duration: 3, repeat: Infinity, delay: 1 }}
               />
-              
-              {/* Flying stars animation */}
-              <MotionDiv 
-                className="absolute top-0 left-0 text-white/10 text-xs"
-                animate={{ 
-                  y: [-10, -30],
-                  x: [0, -20],
-                  opacity: [0, 1, 0],
-                  rotate: [0, 180]
-                }}
-                transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
-              >
-                <Star size={12} />
-              </MotionDiv>
-              
-              <MotionDiv 
-                className="absolute bottom-0 right-0 text-white/10 text-xs"
-                animate={{ 
-                  y: [10, 30],
-                  x: [0, 20],
-                  opacity: [0, 1, 0],
-                  rotate: [0, 180]
-                }}
-                transition={{ duration: 2, repeat: Infinity, repeatDelay: 0.5, delay: 0.5 }}
-              >
-                <Star size={12} />
-              </MotionDiv>
-              
-              {/* Music notes animation */}
-              <MotionDiv 
-                className="absolute -right-2 top-1/2 text-white/20 text-2xl"
-                initial={{ opacity: 0, x: 0, y: 0 }}
-                animate={{ 
-                  opacity: [0, 1, 0],
-                  y: [-10, -30],
-                  x: [0, 10],
-                  rotate: [0, 10]
-                }}
-                transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
-              >
-                ♪
-              </MotionDiv>
-              
-              <MotionDiv 
-                className="absolute -left-2 top-1/3 text-white/20 text-xl"
-                initial={{ opacity: 0, x: 0, y: 0 }}
-                animate={{ 
-                  opacity: [0, 1, 0],
-                  y: [0, -20],
-                  x: [0, -10],
-                  rotate: [0, -10]
-                }}
-                transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 0.7, delay: 0.2 }}
-              >
-                ♫
-              </MotionDiv>
             </>
           )}
         </Button>

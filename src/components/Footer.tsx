@@ -36,13 +36,13 @@ const Footer = () => {
                 <Link to="/" className="text-white/70 hover:text-white transition-colors text-sm">Home</Link>
               </li>
               <li>
-                <a href="/#about" className="text-white/70 hover:text-white transition-colors text-sm">About the Programme</a>
+                <Link to="/#about" className="text-white/70 hover:text-white transition-colors text-sm">About the Programme</Link>
               </li>
               <li>
-                <a href="/#curriculum" className="text-white/70 hover:text-white transition-colors text-sm">Curriculum & Schedule</a>
+                <Link to="/#curriculum" className="text-white/70 hover:text-white transition-colors text-sm">Curriculum & Schedule</Link>
               </li>
               <li>
-                <a href="/#instructors" className="text-white/70 hover:text-white transition-colors text-sm">Instructors</a>
+                <Link to="/#instructors" className="text-white/70 hover:text-white transition-colors text-sm">Instructors</Link>
               </li>
               <li>
                 <Link to="/apply" className="text-white/70 hover:text-white transition-colors text-sm">Apply Now</Link>

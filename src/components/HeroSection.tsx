@@ -1,29 +1,14 @@
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Volume2, VolumeX, Sparkles, Music } from 'lucide-react';
+import { Music } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
-  const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [hasReducedMotion, setHasReducedMotion] = useState(false);
   
-  // Toggle audio mute state
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !isMuted;
-      setIsMuted(!isMuted);
-    }
-  };
-
-  // Toggle reduced motion preference
-  const toggleReducedMotion = () => {
-    setHasReducedMotion(!hasReducedMotion);
-    localStorage.setItem('reduced-motion', (!hasReducedMotion).toString());
-  };
-
   useEffect(() => {
     // Check for reduced motion preference from localStorage
     const savedPreference = localStorage.getItem('reduced-motion') === 'true';
@@ -73,27 +58,6 @@ const HeroSection = () => {
         hasReducedMotion ? "reduced-motion" : ""
       )}
     >
-      {/* Accessibility controls */}
-      <div className="absolute top-4 right-4 z-50 flex space-x-3">
-        <button 
-          onClick={toggleMute}
-          className="p-2 bg-white/10 backdrop-blur-sm rounded-full text-white hover:bg-white/20 transition-colors"
-          aria-label={isMuted ? "Unmute background audio" : "Mute background audio"}
-        >
-          {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
-        </button>
-        <button 
-          onClick={toggleReducedMotion}
-          className={cn(
-            "p-2 backdrop-blur-sm rounded-full text-white transition-colors text-xs",
-            hasReducedMotion ? "bg-energy-purple/50" : "bg-white/10 hover:bg-white/20"
-          )}
-          aria-label={hasReducedMotion ? "Enable animations" : "Reduce animations"}
-        >
-          {hasReducedMotion ? "Motion: Off" : "Motion: On"}
-        </button>
-      </div>
-      
       {/* Video background with vibrant overlay */}
       <div className={cn(
         "absolute inset-0 overflow-hidden bg-black",
@@ -104,7 +68,7 @@ const HeroSection = () => {
           ref={videoRef}
           autoPlay 
           loop 
-          muted={isMuted}
+          muted
           playsInline
           onCanPlay={handleVideoLoad}
           className={cn(
@@ -141,31 +105,40 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-[url('/lovable-uploads/masterclass-singers.jpg')] bg-cover bg-center opacity-40 mix-blend-overlay"></div>
       </div>
       
-      {/* Dynamic hero content */}
+      {/* Dynamic hero content with more persuasive messaging */}
       <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-4xl mx-auto">
         <div className="space-y-6">
           <div className="inline-block py-2 px-4 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-2">
-            <span className="uppercase tracking-widest text-xs font-medium text-white flex items-center">
-              <Sparkles size={14} className="mr-2 text-energy-yellow" />
-              <span>July 14-18, 2025 • Limassol, Cyprus</span>
+            <span className="uppercase tracking-widest text-xs font-medium text-white flex items-center justify-center">
+              <span className="mr-1 text-energy-yellow font-bold">EXCLUSIVE:</span> July 14-18, 2025 • Limassol, Cyprus
             </span>
           </div>
           
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-outfit font-bold text-white tracking-tight leading-tight">
-            <span className="block">Find Your</span> 
-            <span className="gradient-text">Voice</span>
+            <span className="block">Unlock Your</span> 
+            <span className="gradient-text">Vocal Potential</span>
           </h1>
           
           <p className="text-lg md:text-2xl text-white/90 max-w-2xl mx-auto font-light">
-            An electrifying 5-day vocal experience designed for young singers who want to break boundaries and unleash their true potential
+            Join the transformative 5-day vocal experience that has launched careers and transformed passionate singers into confident performers
           </p>
+
+          <div className="pt-6">
+            <a 
+              href="/apply" 
+              className="primary-button inline-block text-lg px-8 py-4 transition-all hover:scale-105 hover:shadow-glow"
+            >
+              Apply Now — Only 20 Spots Available
+            </a>
+            <p className="text-white/70 text-sm mt-3">Applications close May 15, 2025</p>
+          </div>
         </div>
       </div>
       
       {/* Animated scroll indicator */}
       <div className="absolute bottom-12 left-0 right-0 mx-auto w-max cursor-pointer z-20">
         <div className="flex flex-col items-center">
-          <span className="text-white/90 text-xs uppercase tracking-widest mb-2 font-medium">Discover</span>
+          <span className="text-white/90 text-xs uppercase tracking-widest mb-2 font-medium">Discover What Awaits</span>
           <div className="flex items-center justify-center h-12 space-x-1 animate-bounce-light">
             {!hasReducedMotion ? (
               <>

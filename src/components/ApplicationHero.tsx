@@ -23,16 +23,6 @@ const itemVariants = {
   }
 };
 
-const floatAnimation = {
-  y: [-5, 5, -5],
-  transition: {
-    duration: 6,
-    repeat: Infinity,
-    repeatType: "loop" as const,
-    ease: "easeInOut"
-  }
-};
-
 const pulseAnimation = {
   scale: [1, 1.05, 1],
   opacity: [0.9, 1, 0.9],
@@ -112,10 +102,14 @@ const ApplicationHero = () => {
           animate="visible"
         >
           <motion.div variants={itemVariants}>
+            <div className="inline-block px-4 py-1 rounded-full bg-violet-900/50 text-violet-200 text-sm font-medium mb-6 border border-violet-500/30">
+              Career-Defining Opportunity
+            </div>
+            
             <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-fuchsia-300 to-violet-300 font-outfit tracking-tighter">
-              Your Voice, <br className="md:hidden" />
+              Your Journey to <br className="md:hidden" />
               <span className="relative inline-block">
-                Our Stage
+                Vocal Excellence
                 <motion.span 
                   className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-fuchsia-500 to-violet-500"
                   initial={{ width: 0 }}
@@ -129,7 +123,7 @@ const ApplicationHero = () => {
               className="text-xl md:text-2xl text-violet-100/90 max-w-3xl mx-auto leading-relaxed font-light"
               variants={itemVariants}
             >
-              Apply now to join our exclusive summer vocal excellence program. Transform your talent with world-class mentorship in beautiful Cyprus.
+              Join our exclusive 5-day masterclass where world-class mentors will transform your voice and launch your career to new heights.
             </motion.p>
           </motion.div>
           
@@ -137,6 +131,12 @@ const ApplicationHero = () => {
             className="flex flex-col items-center gap-5"
             variants={itemVariants}
           >
+            <div className="bg-white/5 backdrop-blur-lg p-4 rounded-lg border border-white/10 mb-6 max-w-xl">
+              <p className="text-violet-100 font-medium">
+                <span className="text-fuchsia-300">95% of past participants</span> report significant improvement in their vocal technique and performance confidence after just 5 days
+              </p>
+            </div>
+            
             <motion.button
               onClick={scrollToForm}
               className="gradient-button text-lg px-8 py-4 rounded-lg transition-all duration-500 font-medium relative overflow-hidden group"
@@ -159,8 +159,11 @@ const ApplicationHero = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.2, duration: 1 }}
-              className="text-violet-300/80 text-sm"
+              className="flex items-center gap-2 text-violet-300/80 text-sm"
             >
+              <span className="inline-block px-2 py-0.5 bg-violet-900/50 rounded-full text-xs font-semibold text-violet-200">
+                Limited Capacity
+              </span>
               Only 20 spots available for Summer 2025
             </motion.div>
           </motion.div>
@@ -175,13 +178,13 @@ const ApplicationHero = () => {
               whileHover={{ y: -5, boxShadow: "0 10px 30px -10px rgba(139, 92, 246, 0.3)" }}
               transition={{ duration: 0.3 }}
             >
-              <div className="flex items-center gap-3 mb-2">
+              <div className="flex items-center gap-3 mb-3">
                 <div className="bg-fuchsia-500/20 p-2 rounded-full">
                   <MusicIcon size={20} className="text-fuchsia-400" />
                 </div>
-                <h3 className="font-semibold text-white">Expert Coaching</h3>
+                <h3 className="font-semibold text-white">Elite Coaching</h3>
               </div>
-              <p className="text-violet-100/70 text-sm">Learn from world-renowned vocal instructors with decades of performance experience</p>
+              <p className="text-violet-100/70 text-sm">Learn directly from internationally acclaimed vocal instructors with decades of stage experience</p>
             </motion.div>
             
             <motion.div 
@@ -189,13 +192,13 @@ const ApplicationHero = () => {
               whileHover={{ y: -5, boxShadow: "0 10px 30px -10px rgba(139, 92, 246, 0.3)" }}
               transition={{ duration: 0.3 }}
             >
-              <div className="flex items-center gap-3 mb-2">
+              <div className="flex items-center gap-3 mb-3">
                 <div className="bg-violet-500/20 p-2 rounded-full">
                   <Award size={20} className="text-violet-400" />
                 </div>
                 <h3 className="font-semibold text-white">Final Showcase</h3>
               </div>
-              <p className="text-violet-100/70 text-sm">Perform at our professional concert venue with industry professionals in attendance</p>
+              <p className="text-violet-100/70 text-sm">Perform at our prestigious concert venue with industry professionals and talent scouts in attendance</p>
             </motion.div>
             
             <motion.div 
@@ -203,13 +206,13 @@ const ApplicationHero = () => {
               whileHover={{ y: -5, boxShadow: "0 10px 30px -10px rgba(139, 92, 246, 0.3)" }}
               transition={{ duration: 0.3 }}
             >
-              <div className="flex items-center gap-3 mb-2">
+              <div className="flex items-center gap-3 mb-3">
                 <div className="bg-indigo-500/20 p-2 rounded-full">
                   <Clock size={20} className="text-indigo-400" />
                 </div>
-                <h3 className="font-semibold text-white">5 Intensive Days</h3>
+                <h3 className="font-semibold text-white">Immersive Learning</h3>
               </div>
-              <p className="text-violet-100/70 text-sm">Immerse yourself in technique, performance, and musicality from July 14-18, 2025</p>
+              <p className="text-violet-100/70 text-sm">5 days of intensive technique, performance practice, and industry mentorship from July 14-18, 2025</p>
             </motion.div>
           </motion.div>
         </motion.div>
@@ -227,7 +230,7 @@ const ApplicationHero = () => {
           >
             <ChevronDown className="text-white/60 h-6 w-6" />
           </motion.div>
-          <span className="text-xs text-white/60 mt-2">Scroll to learn more</span>
+          <span className="text-xs text-white/60 mt-2">Complete Your Application Below</span>
         </motion.div>
       </div>
       

@@ -120,33 +120,43 @@ const CTASection = () => {
               ref={(el) => (elementsRef.current[0] = el)} 
               className="reveal-on-scroll mb-8"
             >
-              <h2 className="text-3xl md:text-4xl font-serif font-light mb-6 text-gray-800">
-                Apply for Summer 2025
+              <div className="inline-block px-4 py-1 rounded-full bg-rose-100 text-rose-700 text-xs font-bold uppercase tracking-wider mb-4">
+                Limited Enrollment
+              </div>
+              <h2 className="text-3xl md:text-5xl font-serif font-light mb-6 text-gray-800">
+                Secure Your Spot for <span className="text-rose-600 font-semibold">Summer 2025</span>
               </h2>
               <div className="w-20 h-px bg-rose-300 mb-6"></div>
-              <p className="text-gray-600 mb-8 leading-relaxed">
-                Space is extremely limited to ensure personalized attention. Only 20 participants will be accepted for the 2025 Vocal Excellence Summer Programme.
+              <p className="text-gray-600 mb-5 leading-relaxed text-lg">
+                <strong className="text-rose-700">Only 20 participants</strong> will be selected to ensure personalized coaching and maximum growth during this career-defining week.
               </p>
-              <a href="/apply" onClick={handleApplyClick} className="primary-button inline-block">
-                Begin Your Application
+              <p className="text-gray-600 mb-8 leading-relaxed">
+                Early applicants receive priority consideration and may qualify for our exclusive early enrollment discount.
+              </p>
+              <a href="/apply" onClick={handleApplyClick} className="primary-button inline-block relative group overflow-hidden">
+                <span className="relative z-10 font-medium tracking-wide">Begin Your Application</span>
+                <span className="absolute inset-0 bg-gradient-to-r from-rose-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
               </a>
             </div>
 
             <div 
               ref={(el) => (elementsRef.current[1] = el)} 
-              className="space-y-4 reveal-on-scroll"
+              className="space-y-5 reveal-on-scroll p-6 bg-white shadow-lg rounded-lg border border-rose-100"
             >
-              <div className="flex items-center text-gray-600">
-                <Calendar className="w-5 h-5 mr-4 text-rose-400" />
-                <span className="font-light">Programme Dates: July 14 - July 18, 2025</span>
+              <div className="flex items-center text-gray-700">
+                <Calendar className="w-5 h-5 mr-4 text-rose-500" />
+                <span className="font-medium">Programme Dates: July 14 - July 18, 2025</span>
               </div>
-              <div className="flex items-center text-gray-600">
-                <MapPin className="w-5 h-5 mr-4 text-rose-400" />
-                <span className="font-light">Location: Limassol, Cyprus</span>
+              <div className="flex items-center text-gray-700">
+                <MapPin className="w-5 h-5 mr-4 text-rose-500" />
+                <span className="font-medium">Location: Limassol, Cyprus</span>
               </div>
-              <div className="flex items-center text-gray-600">
-                <BadgeEuro className="w-5 h-5 mr-4 text-rose-400" />
-                <span className="font-light">Tuition: €500 (Early application discount available)</span>
+              <div className="flex items-center text-gray-700">
+                <BadgeEuro className="w-5 h-5 mr-4 text-rose-500" />
+                <div>
+                  <span className="font-medium">Tuition: €500</span>
+                  <p className="text-sm text-rose-600 mt-1">Early application discount: Save €75 when you apply before April 30</p>
+                </div>
               </div>
             </div>
           </div>
@@ -155,19 +165,23 @@ const CTASection = () => {
             ref={(el) => (elementsRef.current[2] = el)} 
             className="reveal-on-scroll"
           >
-            <div className="glass-card p-8 border border-rose-100">
-              <h3 className="text-2xl font-serif font-light mb-6 text-gray-800">
-                Request Information
+            <div className="glass-card p-8 border border-rose-200 shadow-xl rounded-lg">
+              <h3 className="text-2xl font-serif mb-6 text-gray-800 flex items-center">
+                <span className="bg-rose-100 text-rose-700 w-8 h-8 inline-flex items-center justify-center rounded-full mr-3 text-sm">1</span>
+                <span>Request Information</span>
               </h3>
+              <p className="text-gray-600 mb-6">
+                Complete this form to receive detailed programme information, scholarship opportunities, and application tips from our team.
+              </p>
               <form className="space-y-5" onSubmit={handleSubmit}>
                 <div>
-                  <label htmlFor="name" className="block text-sm font-light text-gray-700 mb-1">
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                     Full Name <span className="text-rose-500">*</span>
                   </label>
                   <input 
                     type="text" 
                     id="name" 
-                    className="w-full border border-rose-100 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-300"
+                    className="w-full border border-rose-200 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-300 transition-all"
                     placeholder="Your name"
                     value={formData.name}
                     onChange={handleInputChange}
@@ -176,13 +190,13 @@ const CTASection = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-light text-gray-700 mb-1">
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                     Email Address <span className="text-rose-500">*</span>
                   </label>
                   <input 
                     type="email" 
                     id="email" 
-                    className="w-full border border-rose-100 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-300"
+                    className="w-full border border-rose-200 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-300 transition-all"
                     placeholder="Your email"
                     value={formData.email}
                     onChange={handleInputChange}
@@ -191,12 +205,12 @@ const CTASection = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="vocal_type" className="block text-sm font-light text-gray-700 mb-1">
+                  <label htmlFor="vocal_type" className="block text-sm font-medium text-gray-700 mb-1">
                     Vocal Type/Range <span className="text-rose-500">*</span>
                   </label>
                   <select 
                     id="vocal_type" 
-                    className="w-full border border-rose-100 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-300"
+                    className="w-full border border-rose-200 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-300 transition-all"
                     value={formData.vocal_type}
                     onChange={handleInputChange}
                     required
@@ -213,13 +227,13 @@ const CTASection = () => {
                   </select>
                 </div>
                 <div>
-                  <label htmlFor="message" className="block text-sm font-light text-gray-700 mb-1">
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
                     Questions or Comments (Optional)
                   </label>
                   <textarea 
                     id="message" 
                     rows={4} 
-                    className="w-full border border-rose-100 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-300"
+                    className="w-full border border-rose-200 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-300 transition-all"
                     placeholder="Any specific questions about the programme?"
                     value={formData.message}
                     onChange={handleInputChange}
@@ -228,11 +242,17 @@ const CTASection = () => {
                 </div>
                 <button 
                   type="submit" 
-                  className="w-full primary-button disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="w-full primary-button disabled:opacity-70 disabled:cursor-not-allowed relative overflow-hidden group"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? 'Submitting...' : 'Request Information'}
+                  <span className="relative z-10">
+                    {isSubmitting ? 'Submitting...' : 'Get Exclusive Programme Details'}
+                  </span>
+                  <span className="absolute inset-0 bg-gradient-to-r from-rose-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
                 </button>
+                <p className="text-center text-xs text-gray-500 mt-2">
+                  We respect your privacy and will never share your information.
+                </p>
               </form>
             </div>
           </div>
