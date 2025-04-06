@@ -1,0 +1,36 @@
+
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { LogIn, LogOut, User } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
+
+const AuthButtons = () => {
+  const { user, signOut } = useAuth();
+
+  if (user) {
+    return (
+      <div className="flex items-center gap-4">
+        <Link to="/admin" className="text-white/90 hover:text-white transition-colors flex items-center gap-1">
+          <User size={16} />
+          <span className="hidden md:inline">Admin</span>
+        </Link>
+        <button
+          onClick={() => signOut()}
+          className="flex items-center gap-1 text-white/90 hover:text-white transition-colors"
+        >
+          <LogOut size={16} />
+          <span className="hidden md:inline">Logout</span>
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <Link to="/auth" className="text-white/90 hover:text-white transition-colors flex items-center gap-1">
+      <LogIn size={16} />
+      <span>Login</span>
+    </Link>
+  );
+};
+
+export default AuthButtons;

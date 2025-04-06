@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
+import AuthButtons from './AuthButtons';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -51,6 +52,7 @@ const Navbar = () => {
           <Link to="/apply" className="primary-button">
             Apply Now
           </Link>
+          <AuthButtons />
         </div>
       </div>
 
@@ -78,6 +80,9 @@ const Navbar = () => {
           <Link to="/apply" className="block py-3 mt-2 primary-button w-full text-center" onClick={toggleMenu}>
             Apply Now
           </Link>
+          <div className="py-3 border-t border-white/10 mt-3 flex">
+            <AuthButtons />
+          </div>
         </motion.div>
       )}
     </motion.nav>
