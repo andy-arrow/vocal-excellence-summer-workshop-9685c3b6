@@ -46,9 +46,29 @@ export const submitContactForm = async (data: ContactFormData): Promise<any> => 
  */
 export const submitApplicationForm = async (data: ApplicationFormValues): Promise<any> => {
   try {
-    // Add timestamp and source information
+    // Transform form data to match database column names (all lowercase)
     const formData = {
-      ...data,
+      firstname: data.firstName,
+      lastname: data.lastName,
+      email: data.email,
+      phone: data.phone,
+      dateofbirth: data.dateOfBirth,
+      nationality: data.nationality,
+      address: data.address,
+      city: data.city,
+      country: data.country,
+      postalcode: data.postalCode,
+      vocalrange: data.vocalRange,
+      yearsofexperience: data.yearsOfExperience,
+      musicalbackground: data.musicalBackground,
+      teachername: data.teacherName,
+      teacheremail: data.teacherEmail,
+      performanceexperience: data.performanceExperience,
+      reasonforapplying: data.reasonForApplying,
+      heardaboutus: data.heardAboutUs,
+      scholarshipinterest: data.scholarshipInterest,
+      specialneeds: data.specialNeeds,
+      termsagreed: data.termsAgreed,
       timestamp: new Date().toISOString(),
       source: window.location.href,
     };
