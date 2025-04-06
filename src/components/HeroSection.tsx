@@ -1,6 +1,5 @@
-
 import React, { useEffect, useRef, useState } from 'react';
-import { Music, MusicNote, ArrowDown } from 'lucide-react';
+import { Music, ArrowDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -13,11 +12,9 @@ const HeroSection = () => {
   const navigate = useNavigate();
   
   useEffect(() => {
-    // Check for reduced motion preference from localStorage
     const savedPreference = localStorage.getItem('reduced-motion') === 'true';
     setHasReducedMotion(savedPreference);
 
-    // Check for user preference in OS settings
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     if (mediaQuery.matches && !localStorage.getItem('reduced-motion')) {
       setHasReducedMotion(true);
@@ -29,7 +26,6 @@ const HeroSection = () => {
       const opacity = 1 - scrollPosition / 700;
       const translateY = scrollPosition * 0.3;
 
-      // Apply parallax effect to hero content
       if (heroRef.current) {
         const heroContent = heroRef.current.querySelector('.hero-content') as HTMLElement;
         if (heroContent) {
@@ -38,7 +34,6 @@ const HeroSection = () => {
         }
       }
 
-      // Animate musical notes based on scroll (when motion is enabled)
       if (!hasReducedMotion) {
         const notes = document.querySelectorAll('.musical-note');
         notes.forEach((note, index) => {
@@ -53,7 +48,6 @@ const HeroSection = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [hasReducedMotion]);
 
-  // Handle video loaded state
   const handleVideoLoad = () => {
     setIsVideoLoaded(true);
   };
@@ -74,7 +68,6 @@ const HeroSection = () => {
         hasReducedMotion ? "reduced-motion" : ""
       )}
     >
-      {/* Video background with vibrant overlay */}
       <div className={cn(
         "absolute inset-0 overflow-hidden bg-black",
         isVideoLoaded && !hasReducedMotion ? "opacity-100" : "opacity-0",
@@ -97,11 +90,9 @@ const HeroSection = () => {
         </video>
       </div>
       
-      {/* Vibrant gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-energy-purple/90 via-energy-pink/70 to-energy-cyan/80 mix-blend-overlay z-10"></div>
       <div className="absolute inset-0 bg-black/40 z-10"></div>
 
-      {/* Animated musical notes (only shown when reduced motion is off) */}
       {!hasReducedMotion && (
         <>
           <motion.div 
@@ -191,7 +182,6 @@ const HeroSection = () => {
         </>
       )}
       
-      {/* Hero background image - updated to show singers at masterclass */}
       <div className={cn(
         "absolute inset-0 bg-black",
         isVideoLoaded && !hasReducedMotion ? "opacity-0" : "opacity-100",
@@ -200,7 +190,6 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-[url('/lovable-uploads/masterclass-singers.jpg')] bg-cover bg-center opacity-40 mix-blend-overlay"></div>
       </div>
       
-      {/* Dynamic hero content with more persuasive messaging */}
       <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-4xl mx-auto">
         <motion.div 
           className="space-y-6"
@@ -266,7 +255,6 @@ const HeroSection = () => {
         </motion.div>
       </div>
       
-      {/* Enhanced scroll indicator with better contrast and visibility */}
       <motion.button 
         onClick={scrollToDiscoverSection}
         className="absolute bottom-12 left-0 right-0 mx-auto w-max cursor-pointer z-20 group"
