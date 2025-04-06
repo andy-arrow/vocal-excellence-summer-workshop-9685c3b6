@@ -102,10 +102,6 @@ const ApplicationHero = () => {
           animate="visible"
         >
           <motion.div variants={itemVariants}>
-            <div className="inline-block px-4 py-1 rounded-full bg-violet-900/50 text-violet-200 text-sm font-medium mb-6 border border-violet-500/30">
-              Career-Defining Opportunity
-            </div>
-            
             <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-fuchsia-300 to-violet-300 font-outfit tracking-tighter">
               Your Journey to <br className="md:hidden" />
               <span className="relative inline-block">
@@ -131,12 +127,6 @@ const ApplicationHero = () => {
             className="flex flex-col items-center gap-5"
             variants={itemVariants}
           >
-            <div className="bg-white/5 backdrop-blur-lg p-4 rounded-lg border border-white/10 mb-6 max-w-xl">
-              <p className="text-violet-100 font-medium">
-                <span className="text-fuchsia-300">95% of past participants</span> report significant improvement in their vocal technique and performance confidence after just 5 days
-              </p>
-            </div>
-            
             <motion.button
               onClick={scrollToForm}
               className="gradient-button text-lg px-8 py-4 rounded-lg transition-all duration-500 font-medium relative overflow-hidden group"
