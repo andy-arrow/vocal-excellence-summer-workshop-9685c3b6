@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Session, User, AuthChangeEvent } from '@supabase/supabase-js';
@@ -39,7 +38,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setIsLoading(false);
 
         // Send welcome email when a user signs up
-        if (event === 'SIGNED_UP' && session?.user) {
+        if (event.toLowerCase() === 'signed_up' && session?.user) {
           try {
             await supabase.functions.invoke('send-email', {
               body: {
