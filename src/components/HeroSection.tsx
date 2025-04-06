@@ -1,8 +1,9 @@
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Music } from 'lucide-react';
+import { Music, MusicNote, ArrowDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -15,6 +16,12 @@ const HeroSection = () => {
     // Check for reduced motion preference from localStorage
     const savedPreference = localStorage.getItem('reduced-motion') === 'true';
     setHasReducedMotion(savedPreference);
+
+    // Check for user preference in OS settings
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (mediaQuery.matches && !localStorage.getItem('reduced-motion')) {
+      setHasReducedMotion(true);
+    }
 
     const handleScroll = () => {
       if (!heroRef.current) return;
@@ -97,11 +104,90 @@ const HeroSection = () => {
       {/* Animated musical notes (only shown when reduced motion is off) */}
       {!hasReducedMotion && (
         <>
-          <div className="musical-note absolute top-[15%] left-[10%] text-white/20 text-5xl animate-float z-10">♪</div>
-          <div className="musical-note absolute top-[25%] right-[15%] text-white/20 text-6xl animate-float animation-delay-700 z-10">♩</div>
-          <div className="musical-note absolute bottom-[35%] left-[20%] text-white/20 text-4xl animate-float animation-delay-1500 z-10">♫</div>
-          <div className="musical-note absolute bottom-[25%] right-[25%] text-white/20 text-7xl animate-float animation-delay-2000 z-10">𝄞</div>
-          <div className="musical-note absolute top-[40%] left-[30%] text-white/20 text-5xl animate-float animation-delay-1000 z-10">♬</div>
+          <motion.div 
+            className="musical-note absolute top-[15%] left-[10%] text-white/20 text-5xl z-10"
+            animate={{
+              y: [0, -15, 0],
+              rotate: [0, 5, 0],
+              opacity: [0.2, 0.4, 0.2]
+            }}
+            transition={{ 
+              duration: 4,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut"
+            }}
+          >
+            ♪
+          </motion.div>
+          <motion.div 
+            className="musical-note absolute top-[25%] right-[15%] text-white/20 text-6xl z-10"
+            animate={{
+              y: [0, -20, 0],
+              rotate: [0, -5, 0],
+              opacity: [0.2, 0.5, 0.2]
+            }}
+            transition={{ 
+              duration: 5,
+              delay: 0.7,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut"
+            }}
+          >
+            ♩
+          </motion.div>
+          <motion.div 
+            className="musical-note absolute bottom-[35%] left-[20%] text-white/20 text-4xl z-10"
+            animate={{
+              y: [0, -10, 0],
+              rotate: [0, 8, 0],
+              opacity: [0.2, 0.4, 0.2]
+            }}
+            transition={{ 
+              duration: 3.5,
+              delay: 1.5,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut"
+            }}
+          >
+            ♫
+          </motion.div>
+          <motion.div 
+            className="musical-note absolute bottom-[25%] right-[25%] text-white/20 text-7xl z-10"
+            animate={{
+              y: [0, -25, 0],
+              rotate: [0, -8, 0],
+              opacity: [0.2, 0.5, 0.2]
+            }}
+            transition={{ 
+              duration: 6,
+              delay: 2,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut"
+            }}
+          >
+            𝄞
+          </motion.div>
+          <motion.div 
+            className="musical-note absolute top-[40%] left-[30%] text-white/20 text-5xl z-10"
+            animate={{
+              y: [0, -15, 0],
+              rotate: [0, 10, 0],
+              opacity: [0.2, 0.4, 0.2]
+            }}
+            transition={{ 
+              duration: 4.5,
+              delay: 1,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut"
+            }}
+          >
+            ♬
+          </motion.div>
         </>
       )}
       
@@ -116,61 +202,128 @@ const HeroSection = () => {
       
       {/* Dynamic hero content with more persuasive messaging */}
       <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-4xl mx-auto">
-        <div className="space-y-6">
-          <div className="inline-block py-2 px-4 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-2">
+        <motion.div 
+          className="space-y-6"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        >
+          <motion.div 
+            className="inline-block py-2 px-4 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-2"
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+          >
             <span className="uppercase tracking-widest text-xs font-medium text-white flex items-center justify-center">
-              <span className="mr-1 text-energy-yellow font-bold">EXCLUSIVE:</span> July 14-18, 2025 • Limassol, Cyprus
+              <span className="mr-1 text-energy-yellow font-bold animate-pulse-slow">EXCLUSIVE:</span> July 14-18, 2025 • Limassol, Cyprus
             </span>
-          </div>
+          </motion.div>
           
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-outfit font-bold text-white tracking-tight leading-tight">
+          <motion.h1 
+            className="text-5xl md:text-7xl lg:text-8xl font-outfit font-bold text-white tracking-tight leading-tight"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.7 }}
+          >
             <span className="block">Unlock Your</span> 
             <span className="gradient-text">Vocal Potential</span>
-          </h1>
+          </motion.h1>
           
-          <p className="text-lg md:text-2xl text-white/90 max-w-2xl mx-auto font-light">
+          <motion.p 
+            className="text-lg md:text-2xl text-white/90 max-w-2xl mx-auto font-light"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.9 }}
+          >
             Join the transformative 5-day vocal experience that has launched careers and transformed passionate singers into confident performers
-          </p>
+          </motion.p>
 
-          <div className="pt-6">
-            <a 
+          <motion.div 
+            className="pt-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.1 }}
+          >
+            <motion.a 
               href="/apply" 
-              className="primary-button inline-block text-lg px-8 py-4 transition-all hover:scale-105 hover:shadow-glow"
+              className="primary-button inline-block text-lg px-8 py-4 transition-all"
+              whileHover={{ scale: 1.05, boxShadow: "0 0 25px 5px rgba(124, 58, 237, 0.5)" }}
+              whileTap={{ scale: 0.98 }}
             >
               Apply Now — Only 20 Spots Available
-            </a>
-            <p className="text-white/70 text-sm mt-3">Applications close May 15, 2025</p>
-          </div>
-        </div>
+            </motion.a>
+            <motion.div
+              className="flex items-center justify-center mt-4 space-x-1"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.3, duration: 0.5 }}
+            >
+              <div className="w-2 h-2 rounded-full bg-energy-pink animate-pulse-slow"></div>
+              <p className="text-white/80 text-sm">Applications close <span className="font-semibold text-white">May 15, 2025</span></p>
+              <div className="w-2 h-2 rounded-full bg-energy-pink animate-pulse-slow"></div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
       </div>
       
       {/* Enhanced scroll indicator with better contrast and visibility */}
-      <button 
+      <motion.button 
         onClick={scrollToDiscoverSection}
         className="absolute bottom-12 left-0 right-0 mx-auto w-max cursor-pointer z-20 group"
         aria-label="Scroll to discover what awaits"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.5, duration: 0.8 }}
       >
         <div className="flex flex-col items-center">
-          <span className="text-white text-sm uppercase tracking-widest mb-2 font-medium group-hover:text-energy-yellow transition-colors">
+          <motion.span 
+            className="text-white text-sm uppercase tracking-widest mb-2 font-medium group-hover:text-energy-yellow transition-colors"
+            animate={{ y: [0, -5, 0] }}
+            transition={{ duration: 2, repeat: Infinity, repeatType: "loop" }}
+          >
             Discover What Awaits
-          </span>
-          <div className="flex items-center justify-center h-12 space-x-1 animate-bounce-light">
+          </motion.span>
+          <motion.div 
+            className="flex items-center justify-center h-12 space-x-1"
+            animate={{ y: [0, 5, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, repeatType: "loop" }}
+          >
             {!hasReducedMotion ? (
               <div className="flex space-x-1">
-                <span className="inline-block w-1 h-4 bg-energy-pink rounded-full group-hover:h-6 transition-all"></span>
-                <span className="inline-block w-1 h-6 bg-energy-purple rounded-full group-hover:h-8 transition-all"></span>
-                <span className="inline-block w-1 h-8 bg-energy-cyan rounded-full group-hover:h-10 transition-all"></span>
-                <span className="inline-block w-1 h-6 bg-energy-purple rounded-full group-hover:h-8 transition-all"></span>
-                <span className="inline-block w-1 h-4 bg-energy-pink rounded-full group-hover:h-6 transition-all"></span>
+                <motion.span 
+                  className="inline-block w-1 h-4 bg-energy-pink rounded-full"
+                  animate={{ height: ["1rem", "1.5rem", "1rem"] }}
+                  transition={{ duration: 1, repeat: Infinity, delay: 0 }}
+                ></motion.span>
+                <motion.span 
+                  className="inline-block w-1 h-6 bg-energy-purple rounded-full"
+                  animate={{ height: ["1.5rem", "2rem", "1.5rem"] }}
+                  transition={{ duration: 1, repeat: Infinity, delay: 0.1 }}
+                ></motion.span>
+                <motion.span 
+                  className="inline-block w-1 h-8 bg-energy-cyan rounded-full"
+                  animate={{ height: ["2rem", "2.5rem", "2rem"] }}
+                  transition={{ duration: 1, repeat: Infinity, delay: 0.2 }}
+                ></motion.span>
+                <motion.span 
+                  className="inline-block w-1 h-6 bg-energy-purple rounded-full"
+                  animate={{ height: ["1.5rem", "2rem", "1.5rem"] }}
+                  transition={{ duration: 1, repeat: Infinity, delay: 0.3 }}
+                ></motion.span>
+                <motion.span 
+                  className="inline-block w-1 h-4 bg-energy-pink rounded-full"
+                  animate={{ height: ["1rem", "1.5rem", "1rem"] }}
+                  transition={{ duration: 1, repeat: Infinity, delay: 0.4 }}
+                ></motion.span>
               </div>
             ) : (
               <div className="p-2 rounded-full bg-white/30 backdrop-blur-sm border border-white/40 group-hover:bg-white/40 transition-all">
-                <Music className="text-white" size={20} />
+                <ArrowDown className="text-white" size={20} />
               </div>
             )}
-          </div>
+          </motion.div>
         </div>
-      </button>
+      </motion.button>
     </section>
   );
 };

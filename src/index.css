@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
@@ -155,6 +154,10 @@
     animation-delay: 0.3s;
   }
 
+  .animation-delay-500 {
+    animation-delay: 0.5s;
+  }
+
   .animation-delay-700 {
     animation-delay: 0.7s;
   }
@@ -242,35 +245,25 @@
 
 /* Enhanced shadow glow effect */
 .hover\:shadow-glow:hover {
-  box-shadow: 0 0 20px 2px rgba(124, 58, 237, 0.6), 0 0 30px 5px rgba(236, 72, 153, 0.4);
+  box-shadow: 0 0 25px 5px rgba(124, 58, 237, 0.6), 0 0 35px 10px rgba(236, 72, 153, 0.4);
   transition: box-shadow 0.3s ease-out;
 }
 
 /* Enhanced primary button with better hover effect */
 .primary-button {
   @apply px-6 py-3 bg-primary text-white rounded-xl text-sm font-medium tracking-wide uppercase transition-all duration-300 shadow-lg shadow-primary/20;
-  /* Enhanced hover effect */
-  background-image: linear-gradient(135deg, var(--tw-gradient-from), var(--tw-gradient-via), var(--tw-gradient-to));
-  background-size: 150% 150%;
+  background-size: 200% 100%;
   background-position: 0% 0%;
-  animation: subtleGradientShift 8s ease infinite;
 }
 
 .primary-button:hover {
-  @apply transform -translate-y-1 shadow-xl shadow-primary/30;
-  background-position: 100% 100%;
+  @apply shadow-xl shadow-primary/30;
+  background-position: 100% 0%;
+  transform: translateY(-2px);
 }
 
-@keyframes subtleGradientShift {
-  0% {
-    background-position: 0% 0%;
-  }
-  50% {
-    background-position: 100% 100%;
-  }
-  100% {
-    background-position: 0% 0%;
-  }
+.primary-button:active {
+  transform: translateY(0px);
 }
 
 /* Focus styles for accessibility */
@@ -297,7 +290,8 @@
 }
 
 .gradient-text {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-secondary to-accent;
+  @apply bg-clip-text text-transparent bg-gradient-to-br from-energy-purple via-energy-pink to-energy-cyan font-bold;
+  text-shadow: 0 0 30px rgba(124, 58, 237, 0.3);
 }
 
 /* Enhanced learning section */
@@ -365,4 +359,21 @@
 .task-checkbox.checked::after {
   content: '✓';
   @apply text-white text-xs font-bold;
+}
+
+/* Subtle animation for the progress bar */
+@keyframes progress-pulse {
+  0% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.7;
+  }
+}
+
+.animate-progress-pulse {
+  animation: progress-pulse 3s ease-in-out infinite;
 }

@@ -36,6 +36,7 @@ const sectionVariants = {
 const Index = () => {
   const [showScrollToTop, setShowScrollToTop] = React.useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
   
   useEffect(() => {
     // Scroll to top when component mounts
@@ -57,11 +58,24 @@ const Index = () => {
     
     revealElements.forEach((el) => revealObserver.observe(el));
     
-    // Scroll to top button visibility and scroll tracking
+    // Active section detection and scroll to top button visibility
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
       setShowScrollToTop(scrollPosition > 500);
       setHasScrolled(scrollPosition > 100);
+      
+      // Determine active section for nav highlighting
+      const sections = ['home', 'about', 'timeline', 'curriculum', 'instructors', 'apply'];
+      const currentSection = sections.find(section => {
+        const element = document.getElementById(section);
+        if (!element) return false;
+        const rect = element.getBoundingClientRect();
+        return rect.top <= 100 && rect.bottom >= 100;
+      });
+      
+      if (currentSection) {
+        setActiveSection(currentSection);
+      }
     };
     
     window.addEventListener('scroll', handleScroll);
@@ -74,16 +88,16 @@ const Index = () => {
 
   return (
     <motion.div 
-      className="min-h-screen bg-white overflow-hidden"
+      className="min-h-screen overflow-hidden"
       variants={pageVariants}
       initial="initial"
       animate="animate"
       exit="exit"
     >
-      <Navbar />
+      <Navbar activeSection={activeSection} />
       
       {/* Hero Section */}
-      <motion.div variants={sectionVariants}>
+      <motion.div variants={sectionVariants} id="home">
         <HeroSection />
       </motion.div>
       
@@ -101,45 +115,53 @@ const Index = () => {
       
       {/* Timeline Section - Highlighting May 15 deadline */}
       <motion.div 
+        id="timeline"
         variants={sectionVariants}
         initial="initial" 
         whileInView="animate"
         viewport={{ once: true, amount: 0.1 }}
+        className="scroll-mt-16"
       >
         <ApplicationTimeline />
       </motion.div>
       
       {/* Curriculum Section */}
       <motion.div 
+        id="curriculum"
         variants={sectionVariants}
         initial="initial" 
         whileInView="animate"
         viewport={{ once: true, amount: 0.1 }}
+        className="scroll-mt-16"
       >
         <CurriculumSection />
       </motion.div>
       
       {/* Instructors Section */}
       <motion.div 
+        id="instructors"
         variants={sectionVariants}
         initial="initial" 
         whileInView="animate"
         viewport={{ once: true, amount: 0.1 }}
+        className="scroll-mt-16"
       >
         <InstructorsSection />
       </motion.div>
       
       {/* CTA Section */}
       <motion.div 
+        id="apply"
         variants={sectionVariants}
         initial="initial" 
         whileInView="animate"
         viewport={{ once: true, amount: 0.1 }}
+        className="scroll-mt-16"
       >
         <CTASection />
       </motion.div>
       
-      {/* Add a progress indicator for visual feedback */}
+      {/* Progress indicator for visual feedback */}
       <div className="fixed top-0 left-0 w-full h-1 z-50">
         <motion.div 
           className="h-full bg-gradient-to-r from-energy-purple via-energy-pink to-energy-cyan"
