@@ -2,6 +2,8 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import AlertBanner from '@/components/AlertBanner';
 import { trackError } from '@/utils/monitoring';
+import { Button } from '@/components/ui/button';
+import { RefreshCw } from 'lucide-react';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -33,6 +35,10 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     });
   }
 
+  resetErrorBoundary = () => {
+    this.setState({ hasError: false, error: null });
+  };
+
   render() {
     if (this.state.hasError) {
       if (this.props.fallback) {
@@ -40,13 +46,23 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
       }
       
       return (
-        <div className="p-4">
+        <div className="p-6 max-w-xl mx-auto my-8 rounded-2xl bg-white/90 backdrop-blur shadow-lg border border-gray-100">
           <AlertBanner
             title="Something went wrong"
             message="We've been notified about this issue and are working to fix it."
             type="error"
-            onClose={() => this.setState({ hasError: false, error: null })}
+            className="mb-6"
           />
+          
+          <div className="flex justify-center">
+            <Button 
+              onClick={this.resetErrorBoundary}
+              className="flex items-center gap-2"
+            >
+              <RefreshCw size={16} />
+              Try Again
+            </Button>
+          </div>
         </div>
       );
     }
