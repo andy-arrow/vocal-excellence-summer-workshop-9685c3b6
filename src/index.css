@@ -240,6 +240,39 @@
   }
 }
 
+/* Enhanced shadow glow effect */
+.hover\:shadow-glow:hover {
+  box-shadow: 0 0 20px 2px rgba(124, 58, 237, 0.6), 0 0 30px 5px rgba(236, 72, 153, 0.4);
+  transition: box-shadow 0.3s ease-out;
+}
+
+/* Enhanced primary button with better hover effect */
+.primary-button {
+  @apply px-6 py-3 bg-primary text-white rounded-xl text-sm font-medium tracking-wide uppercase transition-all duration-300 shadow-lg shadow-primary/20;
+  /* Enhanced hover effect */
+  background-image: linear-gradient(135deg, var(--tw-gradient-from), var(--tw-gradient-via), var(--tw-gradient-to));
+  background-size: 150% 150%;
+  background-position: 0% 0%;
+  animation: subtleGradientShift 8s ease infinite;
+}
+
+.primary-button:hover {
+  @apply transform -translate-y-1 shadow-xl shadow-primary/30;
+  background-position: 100% 100%;
+}
+
+@keyframes subtleGradientShift {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
 /* Focus styles for accessibility */
 *:focus-visible {
   @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background rounded-sm;

@@ -2,12 +2,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Music } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useNavigate } from 'react-router-dom';
 
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [hasReducedMotion, setHasReducedMotion] = useState(false);
+  const navigate = useNavigate();
   
   useEffect(() => {
     // Check for reduced motion preference from localStorage
@@ -47,6 +49,13 @@ const HeroSection = () => {
   // Handle video loaded state
   const handleVideoLoad = () => {
     setIsVideoLoaded(true);
+  };
+
+  const scrollToDiscoverSection = () => {
+    const aboutSection = document.getElementById('about');
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -135,27 +144,33 @@ const HeroSection = () => {
         </div>
       </div>
       
-      {/* Animated scroll indicator */}
-      <div className="absolute bottom-12 left-0 right-0 mx-auto w-max cursor-pointer z-20">
+      {/* Enhanced scroll indicator with better contrast and visibility */}
+      <button 
+        onClick={scrollToDiscoverSection}
+        className="absolute bottom-12 left-0 right-0 mx-auto w-max cursor-pointer z-20 group"
+        aria-label="Scroll to discover what awaits"
+      >
         <div className="flex flex-col items-center">
-          <span className="text-white/90 text-xs uppercase tracking-widest mb-2 font-medium">Discover What Awaits</span>
+          <span className="text-white text-sm uppercase tracking-widest mb-2 font-medium group-hover:text-energy-yellow transition-colors">
+            Discover What Awaits
+          </span>
           <div className="flex items-center justify-center h-12 space-x-1 animate-bounce-light">
             {!hasReducedMotion ? (
-              <>
-                <span className="inline-block w-1 h-4 bg-energy-pink rounded-full"></span>
-                <span className="inline-block w-1 h-6 bg-energy-purple rounded-full"></span>
-                <span className="inline-block w-1 h-8 bg-energy-cyan rounded-full"></span>
-                <span className="inline-block w-1 h-6 bg-energy-purple rounded-full"></span>
-                <span className="inline-block w-1 h-4 bg-energy-pink rounded-full"></span>
-              </>
+              <div className="flex space-x-1">
+                <span className="inline-block w-1 h-4 bg-energy-pink rounded-full group-hover:h-6 transition-all"></span>
+                <span className="inline-block w-1 h-6 bg-energy-purple rounded-full group-hover:h-8 transition-all"></span>
+                <span className="inline-block w-1 h-8 bg-energy-cyan rounded-full group-hover:h-10 transition-all"></span>
+                <span className="inline-block w-1 h-6 bg-energy-purple rounded-full group-hover:h-8 transition-all"></span>
+                <span className="inline-block w-1 h-4 bg-energy-pink rounded-full group-hover:h-6 transition-all"></span>
+              </div>
             ) : (
-              <div className="p-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/30">
+              <div className="p-2 rounded-full bg-white/30 backdrop-blur-sm border border-white/40 group-hover:bg-white/40 transition-all">
                 <Music className="text-white" size={20} />
               </div>
             )}
           </div>
         </div>
-      </div>
+      </button>
     </section>
   );
 };

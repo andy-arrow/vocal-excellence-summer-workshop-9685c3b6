@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Calendar, MapPin, BadgeEuro } from 'lucide-react';
+import { Calendar, MapPin, BadgeEuro, Clock } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
 import { submitContactForm } from '@/services/formSubmissionService';
@@ -156,6 +156,13 @@ const CTASection = () => {
                 <div>
                   <span className="font-medium">Tuition: €500</span>
                   <p className="text-sm text-rose-600 mt-1">Early application discount: Save €75 when you apply before April 30</p>
+                </div>
+              </div>
+              <div className="flex items-center text-gray-700 pt-2 mt-2 border-t border-rose-100">
+                <Clock className="w-5 h-5 mr-4 text-rose-500" />
+                <div>
+                  <span className="font-medium">Application Deadline: May 15, 2025</span>
+                  <p className="text-sm text-rose-600 mt-1">Mark your calendar — applications close in less than 2 months</p>
                 </div>
               </div>
             </div>

@@ -9,6 +9,7 @@ import InstructorsSection from '@/components/InstructorsSection';
 import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
 import ScrollToTopButton from '@/components/ScrollToTopButton';
+import ApplicationTimeline from '@/components/ApplicationTimeline';
 
 // Animation variants
 const pageVariants = {
@@ -34,6 +35,7 @@ const sectionVariants = {
 
 const Index = () => {
   const [showScrollToTop, setShowScrollToTop] = React.useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
   
   useEffect(() => {
     // Scroll to top when component mounts
@@ -55,9 +57,11 @@ const Index = () => {
     
     revealElements.forEach((el) => revealObserver.observe(el));
     
-    // Scroll to top button visibility
+    // Scroll to top button visibility and scroll tracking
     const handleScroll = () => {
-      setShowScrollToTop(window.scrollY > 500);
+      const scrollPosition = window.scrollY;
+      setShowScrollToTop(scrollPosition > 500);
+      setHasScrolled(scrollPosition > 100);
     };
     
     window.addEventListener('scroll', handleScroll);
@@ -78,19 +82,34 @@ const Index = () => {
     >
       <Navbar />
       
+      {/* Hero Section */}
       <motion.div variants={sectionVariants}>
         <HeroSection />
       </motion.div>
       
+      {/* About Section - this is what "awaits" */}
+      <motion.div 
+        id="about"
+        variants={sectionVariants}
+        initial="initial" 
+        whileInView="animate"
+        viewport={{ once: true, amount: 0.1 }}
+        className="scroll-mt-16"
+      >
+        <AboutSection />
+      </motion.div>
+      
+      {/* Timeline Section - Highlighting May 15 deadline */}
       <motion.div 
         variants={sectionVariants}
         initial="initial" 
         whileInView="animate"
         viewport={{ once: true, amount: 0.1 }}
       >
-        <AboutSection />
+        <ApplicationTimeline />
       </motion.div>
       
+      {/* Curriculum Section */}
       <motion.div 
         variants={sectionVariants}
         initial="initial" 
@@ -100,6 +119,7 @@ const Index = () => {
         <CurriculumSection />
       </motion.div>
       
+      {/* Instructors Section */}
       <motion.div 
         variants={sectionVariants}
         initial="initial" 
@@ -109,6 +129,7 @@ const Index = () => {
         <InstructorsSection />
       </motion.div>
       
+      {/* CTA Section */}
       <motion.div 
         variants={sectionVariants}
         initial="initial" 
@@ -118,7 +139,20 @@ const Index = () => {
         <CTASection />
       </motion.div>
       
-      {/* Use the ScrollToTopButton component */}
+      {/* Add a progress indicator for visual feedback */}
+      <div className="fixed top-0 left-0 w-full h-1 z-50">
+        <motion.div 
+          className="h-full bg-gradient-to-r from-energy-purple via-energy-pink to-energy-cyan"
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: hasScrolled ? 1 : 0 }}
+          style={{ 
+            transformOrigin: "0% 50%",
+            transition: "transform 0.3s ease-out"
+          }}
+        />
+      </div>
+      
+      {/* ScrollToTopButton with improved styling */}
       <ScrollToTopButton visible={showScrollToTop} />
       
       <Footer />

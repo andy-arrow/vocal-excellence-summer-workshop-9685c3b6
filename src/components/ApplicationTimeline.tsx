@@ -14,9 +14,10 @@ const timelineItems = [
   {
     date: "May 15, 2025",
     title: "Application Deadline",
-    description: "All materials must be submitted by this date.",
+    description: "All applications must be submitted by this date.",
     icon: <Clock className="text-violet-400" />,
-    status: "upcoming"
+    status: "upcoming",
+    highlight: true
   },
   {
     date: "June 1, 2025",
@@ -97,17 +98,17 @@ const ApplicationTimeline = () => {
             >
               <div className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center`}>
                 {/* Timeline dot */}
-                <div className="absolute left-0 md:left-1/2 w-10 h-10 bg-slate-800 rounded-full border-4 border-violet-500/30 flex items-center justify-center md:transform md:-translate-x-1/2 z-10">
+                <div className={`absolute left-0 md:left-1/2 w-10 h-10 ${item.highlight ? 'bg-fuchsia-900' : 'bg-slate-800'} rounded-full border-4 ${item.highlight ? 'border-fuchsia-500/70' : 'border-violet-500/30'} flex items-center justify-center md:transform md:-translate-x-1/2 z-10 ${item.highlight ? 'shadow-lg shadow-fuchsia-500/30' : ''}`}>
                   {item.icon}
                 </div>
                 
                 {/* Content card - alternating sides on desktop */}
                 <div className={`w-full md:w-5/12 ${index % 2 === 0 ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8'} pl-16 md:pl-0`}>
                   <motion.div 
-                    className="bg-slate-800/50 backdrop-blur-sm border border-violet-500/10 rounded-xl p-6 hover:bg-slate-800/80 transition-colors duration-300"
+                    className={`${item.highlight ? 'bg-fuchsia-900/30 border-fuchsia-500/30' : 'bg-slate-800/50 border-violet-500/10'} backdrop-blur-sm rounded-xl p-6 hover:bg-slate-800/80 transition-colors duration-300 border`}
                     whileHover={{ y: -5, transition: { duration: 0.2 } }}
                   >
-                    <span className="block text-fuchsia-400 text-sm font-semibold mb-2">{item.date}</span>
+                    <span className={`block ${item.highlight ? 'text-fuchsia-300 font-bold' : 'text-fuchsia-400'} text-sm font-semibold mb-2`}>{item.date}</span>
                     <h3 className="text-xl font-semibold text-white mb-2 flex items-center gap-2">
                       {item.title}
                       {item.status === 'active' && (
@@ -115,8 +116,13 @@ const ApplicationTimeline = () => {
                           Current
                         </span>
                       )}
+                      {item.highlight && (
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-fuchsia-500/20 text-fuchsia-300">
+                          Important
+                        </span>
+                      )}
                     </h3>
-                    <p className="text-violet-100/70">{item.description}</p>
+                    <p className={`${item.highlight ? 'text-fuchsia-100/80' : 'text-violet-100/70'}`}>{item.description}</p>
                   </motion.div>
                 </div>
               </div>
@@ -140,6 +146,7 @@ const ApplicationTimeline = () => {
             <span>Apply Now</span>
             <ChevronRight size={18} />
           </motion.a>
+          <p className="mt-4 text-fuchsia-200 font-medium">Applications close May 15, 2025</p>
         </motion.div>
       </div>
     </section>
