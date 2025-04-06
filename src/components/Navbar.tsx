@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Menu, X, Music } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import AuthButtons from './AuthButtons';
 import { cn } from '@/lib/utils';
@@ -34,11 +34,10 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = '' }) => {
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link to="/" className="text-white font-sans text-xl font-semibold flex items-center gap-2">
-          <div className="h-8 w-8 rounded-full bg-gradient-to-br from-energy-purple to-energy-pink flex items-center justify-center">
-            <Music size={16} className="text-white" />
-          </div>
-          <span className="hidden sm:block">Vocal Excellence</span>
+        <Link to="/" className="text-white font-sans text-xl font-semibold flex items-center">
+          <span className="bg-gradient-to-r from-energy-purple to-energy-pink bg-clip-text text-transparent">
+            Vocal Excellence Summer Programme
+          </span>
         </Link>
 
         {/* Mobile Menu Button */}
