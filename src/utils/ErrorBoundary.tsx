@@ -29,10 +29,16 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    // Log the error to our monitoring service
-    trackError('error', error, {
+    // Collect additional context for error reporting
+    const errorContext = {
       componentStack: errorInfo.componentStack,
-    });
+      url: window.location.href,
+      userAgent: navigator.userAgent,
+      timestamp: new Date().toISOString()
+    };
+
+    // Log the error to our monitoring service
+    trackError('component_error', error, errorContext);
   }
 
   resetErrorBoundary = () => {

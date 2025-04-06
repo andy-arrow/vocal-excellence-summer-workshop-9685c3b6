@@ -7,6 +7,7 @@
 
 import { ApplicationFormValues } from "@/components/ApplicationForm/schema";
 import { supabase } from "@/integrations/supabase/client";
+import { trackError } from "@/utils/monitoring";
 
 interface ContactFormData {
   name: string;
@@ -32,7 +33,13 @@ export const submitContactForm = async (data: ContactFormData): Promise<any> => 
       .insert([formData])
       .select();
 
-    if (error) throw error;
+    if (error) {
+      trackError('form_submission', error, {
+        formType: 'contact',
+        email: data.email
+      });
+      throw error;
+    }
     
     return { success: true, data: result };
   } catch (error) {
@@ -42,10 +49,48 @@ export const submitContactForm = async (data: ContactFormData): Promise<any> => 
 };
 
 /**
+ * Rate limit check for form submissions
+ * Prevents abuse by limiting submissions from the same IP
+ */
+const checkRateLimit = async (email: string): Promise<boolean> => {
+  try {
+    const twentyFourHoursAgo = new Date();
+    twentyFourHoursAgo.setHours(twentyFourHoursAgo.getHours() - 24);
+    
+    const { count, error } = await supabase
+      .from('applications')
+      .select('*', { count: 'exact', head: true })
+      .eq('email', email)
+      .gte('timestamp', twentyFourHoursAgo.toISOString());
+      
+    if (error) throw error;
+    
+    // Limit to 2 submissions per 24 hours per email
+    return count !== null && count < 2;
+  } catch (error) {
+    console.error("Rate limit check error:", error);
+    // In case of error, allow the submission to proceed
+    return true;
+  }
+};
+
+/**
  * Submits application form data to Supabase
  */
 export const submitApplicationForm = async (data: ApplicationFormValues): Promise<any> => {
   try {
+    // Check rate limiting
+    const isWithinRateLimit = await checkRateLimit(data.email);
+    
+    if (!isWithinRateLimit) {
+      return { 
+        success: false, 
+        error: { 
+          message: "Maximum submission limit reached. Please try again later."
+        }
+      };
+    }
+
     // Transform form data to match database column names (all lowercase)
     const formData = {
       firstname: data.firstName,
@@ -78,7 +123,13 @@ export const submitApplicationForm = async (data: ApplicationFormValues): Promis
       .insert([formData])
       .select();
 
-    if (error) throw error;
+    if (error) {
+      trackError('form_submission', error, {
+        formType: 'application',
+        email: data.email
+      });
+      throw error;
+    }
     
     return { success: true, data: result };
   } catch (error) {

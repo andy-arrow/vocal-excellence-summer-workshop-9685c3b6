@@ -187,7 +187,7 @@ const SubmissionSuccessMessage = () => {
                   <h3 className="text-xl font-medium text-white">What's Next</h3>
                 </div>
                 <p className="text-slate-300">
-                  Our selection committee will review your application within 2 weeks. Shortlisted candidates will be invited for a brief online interview and audition.
+                  Our selection committee will review your application within 10 business days. Shortlisted candidates will be invited for a brief online interview and audition.
                 </p>
               </motion.div>
             </motion.div>
@@ -198,20 +198,20 @@ const SubmissionSuccessMessage = () => {
             >
               <h3 className="text-xl font-medium text-white mb-4 flex items-center gap-2">
                 <Star className="text-yellow-500" />
-                <span>Tips While You Wait</span>
+                <span>Preparation Tips</span>
               </h3>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
                   <div className="bg-green-500/10 p-1.5 rounded-full mt-0.5">
                     <Check size={14} className="text-green-500" />
                   </div>
-                  <span className="text-slate-300">Continue practicing your audition pieces to keep improving your technique</span>
+                  <span className="text-slate-300">Continue practicing your audition pieces to refine your technique</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="bg-green-500/10 p-1.5 rounded-full mt-0.5">
                     <Check size={14} className="text-green-500" />
                   </div>
-                  <span className="text-slate-300">Explore our preparatory materials for accepted students in your email</span>
+                  <span className="text-slate-300">Review the preparation materials in your confirmation email</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="bg-green-500/10 p-1.5 rounded-full mt-0.5">
@@ -238,9 +238,9 @@ const SubmissionSuccessMessage = () => {
                   asChild
                   className="bg-slate-800 hover:bg-slate-700 text-white px-6 py-2 rounded-lg"
                 >
-                  <a href="#" onClick={(e) => e.preventDefault()}>
-                    <Download size={16} className="mr-2" />
-                    <span>Save Confirmation</span>
+                  <a href="mailto:applications@vocalexcellence.org" target="_blank" rel="noopener noreferrer">
+                    <Mail size={16} className="mr-2" />
+                    <span>Contact Admissions</span>
                   </a>
                 </Button>
               </div>
@@ -249,8 +249,9 @@ const SubmissionSuccessMessage = () => {
                 <p className="text-center text-slate-400 mb-4">Share your excitement!</p>
                 <div className="flex justify-center gap-4">
                   <motion.a 
-                    href="#"
-                    onClick={(e) => e.preventDefault()} 
+                    href="https://twitter.com/intent/tweet?text=I%20just%20applied%20to%20the%20Vocal%20Excellence%20Summer%20Workshop%202025!%20%23VocalExcellence%20%23MusicEducation"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="bg-[#1DA1F2]/10 hover:bg-[#1DA1F2]/20 p-3 rounded-full text-[#1DA1F2]"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
@@ -259,8 +260,9 @@ const SubmissionSuccessMessage = () => {
                     <span className="sr-only">Share on Twitter</span>
                   </motion.a>
                   <motion.a 
-                    href="#"
-                    onClick={(e) => e.preventDefault()} 
+                    href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fvocalexcellence.org"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="bg-[#4267B2]/10 hover:bg-[#4267B2]/20 p-3 rounded-full text-[#4267B2]"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
@@ -269,8 +271,9 @@ const SubmissionSuccessMessage = () => {
                     <span className="sr-only">Share on Facebook</span>
                   </motion.a>
                   <motion.a 
-                    href="#"
-                    onClick={(e) => e.preventDefault()} 
+                    href="https://www.instagram.com/vocalexcellence"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="bg-[#C13584]/10 hover:bg-[#C13584]/20 p-3 rounded-full text-[#C13584]"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}

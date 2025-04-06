@@ -1,7 +1,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { Calendar, MapPin, BadgeEuro, Clock } from 'lucide-react';
-import { toast } from '@/hooks/use-toast';
+import { toast } from '@/components/ui/use-toast';
 import { useNavigate } from 'react-router-dom';
 import { submitContactForm } from '@/services/formSubmissionService';
 
@@ -10,6 +10,8 @@ const CTASection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const elementsRef = useRef<(HTMLElement | null)[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [lastSubmitTime, setLastSubmitTime] = useState<number | null>(null);
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -32,6 +34,12 @@ const CTASection = () => {
     const currentElements = elementsRef.current.filter(Boolean) as HTMLElement[];
     currentElements.forEach((el) => observer.observe(el));
 
+    // Check if there was a previous submission timestamp in localStorage
+    const savedSubmitTime = localStorage.getItem('lastInfoRequestTime');
+    if (savedSubmitTime) {
+      setLastSubmitTime(parseInt(savedSubmitTime, 10));
+    }
+
     return () => {
       currentElements.forEach((el) => observer.unobserve(el));
     };
@@ -40,6 +48,16 @@ const CTASection = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { id, value } = e.target;
     setFormData(prev => ({ ...prev, [id]: value }));
+  };
+
+  const checkRateLimit = (): boolean => {
+    if (!lastSubmitTime) return true;
+    
+    const now = Date.now();
+    const hoursSinceLastSubmit = (now - lastSubmitTime) / (1000 * 60 * 60);
+    
+    // Limit to one submission per 4 hours
+    return hoursSinceLastSubmit > 4;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -72,6 +90,16 @@ const CTASection = () => {
       });
       return;
     }
+
+    // Check rate limiting
+    if (!checkRateLimit()) {
+      toast({
+        title: "Request limit reached",
+        description: "Please wait before submitting another information request",
+        variant: "destructive"
+      });
+      return;
+    }
     
     setIsSubmitting(true);
     
@@ -81,6 +109,11 @@ const CTASection = () => {
       if (!response.success) {
         throw new Error('Failed to submit form');
       }
+      
+      // Store submission time
+      const now = Date.now();
+      localStorage.setItem('lastInfoRequestTime', now.toString());
+      setLastSubmitTime(now);
       
       setFormData({
         name: '',
@@ -250,10 +283,10 @@ const CTASection = () => {
                 <button 
                   type="submit" 
                   className="w-full primary-button disabled:opacity-70 disabled:cursor-not-allowed relative overflow-hidden group"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || (lastSubmitTime !== null && !checkRateLimit())}
                 >
                   <span className="relative z-10">
-                    {isSubmitting ? 'Submitting...' : 'Get Exclusive Programme Details'}
+                    {isSubmitting ? 'Submitting...' : 'Get Programme Details'}
                   </span>
                   <span className="absolute inset-0 bg-gradient-to-r from-rose-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
                 </button>
