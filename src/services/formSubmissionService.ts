@@ -3,10 +3,10 @@
  * Form Submission Service
  * 
  * This service handles form data submission with proper error handling and validation.
- * In a production environment, this would connect to a backend API.
  */
 
 import { ApplicationFormValues } from "@/components/ApplicationForm/schema";
+import { supabase } from "@/integrations/supabase/client";
 
 interface ContactFormData {
   name: string;
@@ -16,35 +16,25 @@ interface ContactFormData {
 }
 
 /**
- * Submits contact form data
- * In production, this would connect to a backend API endpoint
+ * Submits contact form data to Supabase
  */
 export const submitContactForm = async (data: ContactFormData): Promise<any> => {
   try {
     // Add timestamp and source information
     const formData = {
       ...data,
-      id: `contact_${Date.now()}`,
       timestamp: new Date().toISOString(),
       source: window.location.href,
     };
 
-    // In production, this would be an API call:
-    // const response = await fetch('https://api.vocalexcellence.com/api/contact', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(formData)
-    // });
-    // if (!response.ok) throw new Error('Failed to submit form');
-    // return await response.json();
+    const { data: result, error } = await supabase
+      .from('contact_submissions')
+      .insert([formData])
+      .select();
+
+    if (error) throw error;
     
-    // For now we're using localStorage as a fallback
-    const existingSubmissions = JSON.parse(localStorage.getItem('contact_submissions') || '[]');
-    const updatedSubmissions = [...existingSubmissions, formData];
-    localStorage.setItem('contact_submissions', JSON.stringify(updatedSubmissions));
-    
-    // Production-ready response
-    return { success: true, data: formData };
+    return { success: true, data: result };
   } catch (error) {
     console.error("Error submitting contact form:", error);
     return { success: false, error };
@@ -52,35 +42,25 @@ export const submitContactForm = async (data: ContactFormData): Promise<any> => 
 };
 
 /**
- * Submits application form data
- * In production, this would connect to a backend API endpoint
+ * Submits application form data to Supabase
  */
 export const submitApplicationForm = async (data: ApplicationFormValues): Promise<any> => {
   try {
     // Add timestamp and source information
     const formData = {
       ...data,
-      id: `application_${Date.now()}`,
       timestamp: new Date().toISOString(),
       source: window.location.href,
     };
 
-    // In production, this would be an API call:
-    // const response = await fetch('https://api.vocalexcellence.com/api/applications', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(formData)
-    // });
-    // if (!response.ok) throw new Error('Failed to submit form');
-    // return await response.json();
+    const { data: result, error } = await supabase
+      .from('applications')
+      .insert([formData])
+      .select();
+
+    if (error) throw error;
     
-    // For now we're using localStorage as a fallback
-    const existingSubmissions = JSON.parse(localStorage.getItem('application_submissions') || '[]');
-    const updatedSubmissions = [...existingSubmissions, formData];
-    localStorage.setItem('application_submissions', JSON.stringify(updatedSubmissions));
-    
-    // Production-ready response
-    return { success: true, data: formData };
+    return { success: true, data: result };
   } catch (error) {
     console.error("Error submitting application form:", error);
     return { success: false, error };
