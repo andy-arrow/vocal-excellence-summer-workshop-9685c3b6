@@ -27,7 +27,7 @@ const SubmitButton = ({ isSubmitting }: SubmitButtonProps) => {
         <Button 
           type="submit" 
           disabled={isSubmitting}
-          className="bg-gradient-to-r from-fuchsia-600 to-violet-600 hover:from-fuchsia-500 hover:to-violet-500 text-white font-bold py-6 px-14 rounded-xl text-lg relative overflow-hidden group"
+          className="bg-gradient-to-r from-fuchsia-600 to-violet-600 hover:from-fuchsia-500 hover:to-violet-500 text-white font-bold py-6 px-14 rounded-xl text-lg relative overflow-hidden group focus:ring-2 focus:ring-violet-400 focus:ring-offset-2"
           aria-label={isSubmitting ? "Submitting application" : "Submit application"}
         >
           <span className="relative z-10 flex items-center gap-3">
