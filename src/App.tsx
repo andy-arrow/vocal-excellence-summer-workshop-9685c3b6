@@ -3,6 +3,7 @@ import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster } from "@/components/ui/toaster";
 import Index from "./pages/Index";
 import Application from "./pages/Application";
 import CancellationPolicy from "./pages/CancellationPolicy";
@@ -36,6 +37,7 @@ const App = () => {
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
+            <Toaster />
           </AuthProvider>
         </BrowserRouter>
       </TooltipProvider>
