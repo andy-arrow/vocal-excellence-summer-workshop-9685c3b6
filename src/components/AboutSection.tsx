@@ -65,7 +65,7 @@ const AboutSection = () => {
         <div className="text-center mb-16">
           <span className="inline-flex items-center bg-primary/10 text-primary rounded-full py-1 px-3 text-sm font-medium mb-4">
             <Star className="mr-1 w-4 h-4 text-energy-yellow" />
-            About The Program
+            About The Programme
           </span>
           <h2 
             ref={(el) => (elementsRef.current[0] = el)} 
@@ -91,7 +91,7 @@ const AboutSection = () => {
             <div className="focus-section space-y-4">
               <h3 className="text-2xl font-bold text-primary">Unlock Your Authentic Voice</h3>
               <p className="text-foreground/80 leading-relaxed">
-                <span className="font-semibold text-secondary">VocalCrush</span> isn't your typical boring workshop. 
+                <span className="font-semibold text-secondary">Vocal Excellence</span> isn't your typical boring workshop. 
                 It's an <span className="font-semibold text-primary">energy-packed</span> five-day vocal transformation where you'll:
               </p>
               <ul className="space-y-2">

@@ -125,7 +125,7 @@ const CTASection = () => {
               </h2>
               <div className="w-20 h-px bg-rose-300 mb-6"></div>
               <p className="text-gray-600 mb-8 leading-relaxed">
-                Space is extremely limited to ensure personalized attention. Only 20 participants will be accepted for the 2025 programme.
+                Space is extremely limited to ensure personalized attention. Only 20 participants will be accepted for the 2025 Vocal Excellence Summer Programme.
               </p>
               <a href="/apply" onClick={handleApplyClick} className="primary-button inline-block">
                 Begin Your Application

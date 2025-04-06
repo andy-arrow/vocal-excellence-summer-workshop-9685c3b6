@@ -9,7 +9,7 @@ const Footer = () => {
       <div className="max-w-6xl mx-auto py-16 px-6 md:px-8">
         <div className="grid md:grid-cols-3 gap-10">
           <div className="md:col-span-1">
-            <h3 className="font-sans text-2xl font-semibold mb-4">Vocal Excellence</h3>
+            <h3 className="font-sans text-2xl font-semibold mb-4">Vocal Excellence Summer Programme</h3>
             <p className="text-white/70 mb-6 text-sm leading-relaxed">
               Transforming passionate singers into confident performers through immersive, expert-led training.
             </p>
@@ -80,7 +80,7 @@ const Footer = () => {
         </div>
         
         <div className="mt-16 pt-8 border-t border-white/10 text-white/50 text-xs text-center">
-          <p>&copy; {new Date().getFullYear()} Vocal Excellence Summer Workshop. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Vocal Excellence Summer Programme. All rights reserved.</p>
         </div>
       </div>
     </footer>
