@@ -9,7 +9,117 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      applications: {
+        Row: {
+          address: string
+          city: string
+          country: string
+          dateofbirth: string
+          email: string
+          firstname: string
+          heardaboutus: string
+          id: string
+          lastname: string
+          musicalbackground: string
+          nationality: string
+          performanceexperience: string
+          phone: string
+          postalcode: string
+          reasonforapplying: string
+          scholarshipinterest: boolean | null
+          source: string | null
+          specialneeds: string | null
+          teacheremail: string | null
+          teachername: string | null
+          termsagreed: boolean
+          timestamp: string
+          vocalrange: string
+          yearsofexperience: string
+        }
+        Insert: {
+          address: string
+          city: string
+          country: string
+          dateofbirth: string
+          email: string
+          firstname: string
+          heardaboutus: string
+          id?: string
+          lastname: string
+          musicalbackground: string
+          nationality: string
+          performanceexperience: string
+          phone: string
+          postalcode: string
+          reasonforapplying: string
+          scholarshipinterest?: boolean | null
+          source?: string | null
+          specialneeds?: string | null
+          teacheremail?: string | null
+          teachername?: string | null
+          termsagreed: boolean
+          timestamp?: string
+          vocalrange: string
+          yearsofexperience: string
+        }
+        Update: {
+          address?: string
+          city?: string
+          country?: string
+          dateofbirth?: string
+          email?: string
+          firstname?: string
+          heardaboutus?: string
+          id?: string
+          lastname?: string
+          musicalbackground?: string
+          nationality?: string
+          performanceexperience?: string
+          phone?: string
+          postalcode?: string
+          reasonforapplying?: string
+          scholarshipinterest?: boolean | null
+          source?: string | null
+          specialneeds?: string | null
+          teacheremail?: string | null
+          teachername?: string | null
+          termsagreed?: boolean
+          timestamp?: string
+          vocalrange?: string
+          yearsofexperience?: string
+        }
+        Relationships: []
+      }
+      contact_submissions: {
+        Row: {
+          email: string
+          id: string
+          message: string | null
+          name: string
+          source: string | null
+          timestamp: string
+          vocal_type: string
+        }
+        Insert: {
+          email: string
+          id?: string
+          message?: string | null
+          name: string
+          source?: string | null
+          timestamp?: string
+          vocal_type: string
+        }
+        Update: {
+          email?: string
+          id?: string
+          message?: string | null
+          name?: string
+          source?: string | null
+          timestamp?: string
+          vocal_type?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
