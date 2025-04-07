@@ -3,7 +3,7 @@
  * Monitoring utility for tracking application events and errors
  */
 
-type EventType = 'auth' | 'api' | 'user_action' | 'error';
+type EventType = 'auth' | 'api' | 'user_action' | 'error' | 'form_submission' | 'component_error';
 type EventSeverity = 'info' | 'warning' | 'error' | 'critical';
 
 interface EventPayload {
