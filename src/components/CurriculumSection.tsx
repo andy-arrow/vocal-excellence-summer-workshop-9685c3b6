@@ -158,6 +158,7 @@ const CurriculumSection = () => {
   const elementsRef = useRef<(HTMLElement | null)[]>([]);
   const [hasReducedMotion, setHasReducedMotion] = useState(false);
   const [highlightedDay, setHighlightedDay] = useState<number | null>(null);
+  const [expandedDay, setExpandedDay] = useState<string | null>(null);
   
   useEffect(() => {
     // Check for reduced motion preference
@@ -184,7 +185,7 @@ const CurriculumSection = () => {
   }, []);
 
   return (
-    <section id="curriculum" ref={sectionRef} className="py-20 px-6">
+    <section id="curriculum" ref={sectionRef} className="py-20 px-6 bg-white">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 
@@ -212,25 +213,25 @@ const CurriculumSection = () => {
             onValueChange={(value) => setActiveTab(value)}
           >
             <div className="flex justify-center">
-              <TabsList className="glass-card bg-transparent shadow-md">
+              <TabsList className="glass-card bg-white/80 shadow-md border border-gray-100">
                 <TabsTrigger 
                   value="modules"
-                  className="data-[state=active]:bg-white data-[state=active]:text-rose-600"
+                  className="data-[state=active]:bg-primary data-[state=active]:text-white"
                 >
                   <Music size={16} className="mr-2" />
                   Program Modules
                   {activeTab === 'modules' && !hasReducedMotion && (
-                    <span className="text-rose-400 animate-float ml-1">♪</span>
+                    <span className="text-white animate-float ml-1">♪</span>
                   )}
                 </TabsTrigger>
                 <TabsTrigger 
                   value="schedule"
-                  className="data-[state=active]:bg-white data-[state=active]:text-rose-600"
+                  className="data-[state=active]:bg-primary data-[state=active]:text-white"
                 >
                   <Calendar size={16} className="mr-2" />
                   Daily Schedule
                   {activeTab === 'schedule' && !hasReducedMotion && (
-                    <span className="text-rose-400 animate-float ml-1">♫</span>
+                    <span className="text-white animate-float ml-1">♫</span>
                   )}
                 </TabsTrigger>
               </TabsList>
@@ -245,7 +246,7 @@ const CurriculumSection = () => {
                     ref={(el) => (elementsRef.current[3 + index] = el)} 
                     className={cn(
                       "glass-card reveal-on-scroll transform transition-all duration-300",
-                      "hover:shadow-xl hover:-translate-y-1 group"
+                      "hover:shadow-xl hover:-translate-y-1 group bg-white border border-gray-100"
                     )}
                     style={{ transitionDelay: `${(index % 3) * 100}ms` }}
                   >
@@ -287,7 +288,7 @@ const CurriculumSection = () => {
             <TabsContent value="schedule" className="mt-6">
               <Card 
                 ref={(el) => (elementsRef.current[7] = el)} 
-                className="reveal-on-scroll glass-card mb-8"
+                className="reveal-on-scroll glass-card mb-8 bg-white border border-gray-100"
               >
                 <CardHeader className="flex flex-row items-center gap-3">
                   <Clock className="w-6 h-6 text-rose-500" />
@@ -305,24 +306,25 @@ const CurriculumSection = () => {
                     "relative h-2 bg-gray-100 rounded-full my-8 overflow-hidden",
                     "before:content-[''] before:absolute before:h-full before:bg-rose-400 before:left-0 before:rounded-full",
                     !hasReducedMotion && "before:animate-progress"
-                  )}></div>
+                  )} style={{ width: '100%' }}></div>
                 </CardContent>
               </Card>
 
-              <Accordion type="single" collapsible className="mb-8">
+              <div className="space-y-4 mb-8">
                 {scheduleData.map((day, index) => (
-                  <AccordionItem 
+                  <div
                     key={index}
-                    value={`day-${index}`}
                     className={cn(
-                      "glass-card mb-4 overflow-hidden border-0",
-                      "data-[state=open]:shadow-md"
+                      "glass-card overflow-hidden border border-gray-100 rounded-lg bg-white shadow-sm",
+                      "hover:shadow-md transition-all duration-300",
+                      expandedDay === day.day ? "shadow-md" : ""
                     )}
+                    onMouseEnter={() => setHighlightedDay(index)}
+                    onMouseLeave={() => setHighlightedDay(null)}
                   >
-                    <AccordionTrigger 
-                      className="px-6 py-4 hover:no-underline"
-                      onMouseEnter={() => setHighlightedDay(index)}
-                      onMouseLeave={() => setHighlightedDay(null)}
+                    <div
+                      className="px-6 py-4 cursor-pointer flex items-center justify-between"
+                      onClick={() => setExpandedDay(expandedDay === day.day ? null : day.day)}
                     >
                       <div className="flex flex-col items-start text-left">
                         <div className="flex items-center">
@@ -335,22 +337,32 @@ const CurriculumSection = () => {
                           {day.theme}
                         </div>
                       </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="px-6 pb-4">
-                      <ul className="space-y-3 mt-2">
-                        {day.activities.map((activity, idx) => (
-                          <li key={idx} className="flex items-start">
-                            <span className="text-rose-500 mr-2 mt-0.5">•</span>
-                            <span className="text-gray-700">{activity}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
+                      <div className="text-rose-500">
+                        {expandedDay === day.day ? (
+                          <span className="text-xl">−</span>
+                        ) : (
+                          <span className="text-xl">+</span>
+                        )}
+                      </div>
+                    </div>
+                    
+                    {expandedDay === day.day && (
+                      <div className="px-6 pb-4 pt-2 animate-fade-in">
+                        <ul className="space-y-3">
+                          {day.activities.map((activity, idx) => (
+                            <li key={idx} className="flex items-start">
+                              <span className="text-rose-500 mr-2 mt-0.5">•</span>
+                              <span className="text-gray-700">{activity}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
                 ))}
-              </Accordion>
+              </div>
 
-              <Card className="glass-card">
+              <Card className="glass-card bg-white border border-gray-100">
                 <CardHeader>
                   <CardTitle className="text-xl font-serif font-medium text-gray-800">
                     Key Logistics & Notes
