@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Calendar, Clock, Book, Mic, Users, Theater, Music, Sparkles, ChevronDown, ChevronUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 import { 
   Collapsible,
@@ -157,6 +158,7 @@ const CurriculumSection = () => {
   const elementsRef = useRef<(HTMLElement | null)[]>([]);
   const [hasReducedMotion, setHasReducedMotion] = useState(false);
   const [expandedDay, setExpandedDay] = useState<string | null>(null);
+  const isMobile = useIsMobile();
   
   useEffect(() => {
     // Check for reduced motion preference
@@ -183,9 +185,9 @@ const CurriculumSection = () => {
   }, []);
 
   return (
-    <section id="curriculum" ref={sectionRef} className="py-20 px-6 bg-white">
+    <section id="curriculum" ref={sectionRef} className="py-16 md:py-20 px-4 md:px-6 bg-white">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
+        <div className="text-center mb-12 md:mb-16">
           <h2 
             ref={(el) => (elementsRef.current[0] = el)} 
             className="section-title reveal-on-scroll"
@@ -200,38 +202,42 @@ const CurriculumSection = () => {
           </p>
         </div>
 
-        {/* Tabs with music-themed indicators */}
+        {/* Tabs with music-themed indicators - improved for mobile */}
         <div 
           ref={(el) => (elementsRef.current[2] = el)} 
-          className="flex justify-center mb-10 reveal-on-scroll"
+          className="flex justify-center mb-8 md:mb-10 reveal-on-scroll"
         >
           <Tabs 
             defaultValue="modules" 
             className="w-full" 
             onValueChange={(value) => setActiveTab(value)}
           >
-            <div className="flex justify-center mb-6">
-              <TabsList className="shadow-md">
-                <TabsTrigger value="modules">
-                  <Music size={16} className="mr-2" />
-                  Program Modules
-                  {activeTab === 'modules' && !hasReducedMotion && (
-                    <span className="text-primary-foreground animate-float ml-1.5">♪</span>
-                  )}
+            <div className="flex justify-center mb-4 md:mb-6">
+              <TabsList className="shadow-md w-full max-w-xs md:max-w-sm lg:max-w-md">
+                <TabsTrigger value="modules" className="flex-1">
+                  <div className="flex items-center justify-center">
+                    <Music size={isMobile ? 14 : 16} className="mr-1 md:mr-2" />
+                    <span className="whitespace-nowrap text-xs md:text-sm">Program Modules</span>
+                    {activeTab === 'modules' && !hasReducedMotion && (
+                      <span className="text-primary-foreground animate-float ml-1">♪</span>
+                    )}
+                  </div>
                 </TabsTrigger>
-                <TabsTrigger value="schedule">
-                  <Calendar size={16} className="mr-2" />
-                  Daily Schedule
-                  {activeTab === 'schedule' && !hasReducedMotion && (
-                    <span className="text-primary-foreground animate-float ml-1.5">♫</span>
-                  )}
+                <TabsTrigger value="schedule" className="flex-1">
+                  <div className="flex items-center justify-center">
+                    <Calendar size={isMobile ? 14 : 16} className="mr-1 md:mr-2" />
+                    <span className="whitespace-nowrap text-xs md:text-sm">Daily Schedule</span>
+                    {activeTab === 'schedule' && !hasReducedMotion && (
+                      <span className="text-primary-foreground animate-float ml-1">♫</span>
+                    )}
+                  </div>
                 </TabsTrigger>
               </TabsList>
             </div>
 
-            {/* Modules Tab Content */}
-            <TabsContent value="modules" className="mt-6">
-              <div className="grid md:grid-cols-2 gap-6">
+            {/* Modules Tab Content - improved grid for mobile */}
+            <TabsContent value="modules" className="mt-0">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
                 {modules.map((module, index) => (
                   <Card 
                     key={index}
@@ -242,9 +248,9 @@ const CurriculumSection = () => {
                     )}
                     style={{ transitionDelay: `${(index % 3) * 100}ms` }}
                   >
-                    <CardHeader>
+                    <CardHeader className="pb-3">
                       <div className={cn(
-                        "mb-4 w-16 h-16 rounded-full flex items-center justify-center",
+                        "mb-3 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center",
                         module.iconBg
                       )}>
                         {module.icon}
@@ -254,19 +260,19 @@ const CurriculumSection = () => {
                           </span>
                         )}
                       </div>
-                      <CardTitle className="text-xl font-serif font-medium text-gray-800 group-hover:text-rose-600 transition-colors">
+                      <CardTitle className="text-lg md:text-xl font-serif font-medium text-gray-800 group-hover:text-rose-600 transition-colors">
                         {module.title}
                       </CardTitle>
-                      <CardDescription className="text-gray-600 font-light">
+                      <CardDescription className="text-gray-600 font-light text-sm md:text-base">
                         {module.description}
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <ul className="space-y-2.5">
+                      <ul className="space-y-2 text-sm md:text-base">
                         {module.highlights.map((highlight, idx) => (
                           <li key={idx} className="flex items-start">
                             <span className="text-rose-500 mr-2 mt-0.5">♪</span>
-                            <span className="text-gray-700 text-sm">{highlight}</span>
+                            <span className="text-gray-700">{highlight}</span>
                           </li>
                         ))}
                       </ul>
@@ -276,25 +282,25 @@ const CurriculumSection = () => {
               </div>
             </TabsContent>
 
-            {/* Schedule Tab Content */}
-            <TabsContent value="schedule" className="mt-6">
+            {/* Schedule Tab Content - improved positioning and spacing for mobile */}
+            <TabsContent value="schedule" className="mt-0">
               <Card 
                 ref={(el) => (elementsRef.current[7] = el)} 
-                className="reveal-on-scroll mb-8 bg-white border border-gray-100 shadow-sm"
+                className="reveal-on-scroll mb-6 bg-white border border-gray-100 shadow-sm"
               >
-                <CardHeader className="flex flex-row items-center gap-3">
-                  <Clock className="w-6 h-6 text-rose-500" />
-                  <CardTitle className="text-xl font-serif font-medium text-gray-800">
+                <CardHeader className="flex flex-row items-center gap-3 pb-3">
+                  <Clock className="w-5 h-5 md:w-6 md:h-6 text-rose-500" />
+                  <CardTitle className="text-lg md:text-xl font-serif font-medium text-gray-800">
                     Your Daily Rhythm
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-700 mb-6">
+                  <p className="text-gray-700 mb-4 md:mb-6 text-sm md:text-base">
                     Each day at Vocal Excellence has its own rhythm and focus, creating a comprehensive experience that builds your vocal abilities sequentially. The program structure balances intensive learning with adequate rest periods for vocal recovery.
                   </p>
                   
                   {/* Visual timeline */}
-                  <div className="relative h-2.5 bg-gray-100 rounded-full my-8 overflow-hidden">
+                  <div className="relative h-2 md:h-2.5 bg-gray-100 rounded-full my-4 md:my-6 overflow-hidden">
                     <div 
                       className={cn(
                         "absolute h-full bg-gradient-to-r from-rose-400 to-rose-500 left-0 rounded-full",
@@ -306,7 +312,7 @@ const CurriculumSection = () => {
                 </CardContent>
               </Card>
 
-              <div className="space-y-4 mb-8">
+              <div className="space-y-3 md:space-y-4 mb-6 md:mb-8">
                 {scheduleData.map((day, index) => (
                   <Collapsible
                     key={index}
@@ -314,24 +320,24 @@ const CurriculumSection = () => {
                     onOpenChange={() => setExpandedDay(expandedDay === day.day ? null : day.day)}
                     className="border border-gray-100 rounded-lg bg-white shadow-sm hover:shadow-md transition-all duration-300"
                   >
-                    <CollapsibleTrigger className="w-full px-6 py-4 flex items-center justify-between">
+                    <CollapsibleTrigger className="w-full px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
                       <div className="flex flex-col items-start text-left">
-                        <h3 className="text-lg font-medium text-rose-600">{day.day}</h3>
-                        <div className="rounded bg-rose-50 px-2 py-1 text-xs text-rose-700 inline-block mt-1">
+                        <h3 className="text-base md:text-lg font-medium text-rose-600">{day.day}</h3>
+                        <div className="rounded bg-rose-50 px-1.5 md:px-2 py-0.5 md:py-1 text-xs text-rose-700 inline-block mt-0.5 md:mt-1">
                           {day.theme}
                         </div>
                       </div>
-                      <div className="text-rose-500">
+                      <div className="text-rose-500 flex-shrink-0">
                         {expandedDay === day.day ? (
-                          <ChevronUp size={20} />
+                          <ChevronUp size={isMobile ? 18 : 20} />
                         ) : (
-                          <ChevronDown size={20} />
+                          <ChevronDown size={isMobile ? 18 : 20} />
                         )}
                       </div>
                     </CollapsibleTrigger>
                     
-                    <CollapsibleContent className="px-6 pb-4 pt-2 animate-accordion-down">
-                      <ul className="space-y-3">
+                    <CollapsibleContent className="px-4 md:px-6 pb-4 pt-1 md:pt-2 animate-accordion-down">
+                      <ul className="space-y-2 md:space-y-3 text-sm md:text-base">
                         {day.activities.map((activity, idx) => (
                           <li key={idx} className="flex items-start">
                             <span className="text-rose-500 mr-2 mt-0.5 flex-shrink-0">•</span>
@@ -345,16 +351,16 @@ const CurriculumSection = () => {
               </div>
 
               <Card className="bg-white border border-gray-100 shadow-sm">
-                <CardHeader>
-                  <CardTitle className="text-xl font-serif font-medium text-gray-800">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-lg md:text-xl font-serif font-medium text-gray-800">
                     Key Logistics & Notes
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <ul className="space-y-3">
+                  <ul className="space-y-2 md:space-y-3 text-sm md:text-base">
                     {logisticsData.map((item, index) => (
                       <li key={index} className="flex items-start">
-                        <span className="text-rose-500 mr-2.5 mt-0.5 flex-shrink-0">•</span>
+                        <span className="text-rose-500 mr-2 mt-0.5 flex-shrink-0">•</span>
                         <span className="text-gray-700">{item}</span>
                       </li>
                     ))}
