@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { Music, ArrowDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -224,7 +225,7 @@ const HeroSection = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.9 }}
           >
-            Join the transformative 5-day vocal experience that has launched careers and transformed passionate singers into confident performers
+            A transformative 5-day vocal intensive for advancing singers, featuring masterclasses, private coaching, and performance opportunities with world-class faculty
           </motion.p>
 
           <motion.div 
