@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown, MusicIcon, Award, Clock } from 'lucide-react';
@@ -105,7 +104,7 @@ const ApplicationHero = () => {
             <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-fuchsia-300 to-violet-300 font-outfit tracking-tighter">
               Your Journey to <br className="md:hidden" />
               <span className="relative inline-block">
-                Vocal Excellence
+                Vocal Mastery
                 <motion.span 
                   className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-fuchsia-500 to-violet-500"
                   initial={{ width: 0 }}
@@ -119,7 +118,7 @@ const ApplicationHero = () => {
               className="text-xl md:text-2xl text-violet-100/90 max-w-3xl mx-auto leading-relaxed font-light"
               variants={itemVariants}
             >
-              Join our exclusive 5-day masterclass where world-class mentors will transform your voice and launch your career to new heights.
+              Join our exclusive 5-day Workshop where world-class mentors will transform your voice and launch your technique to new heights.
             </motion.p>
           </motion.div>
           
@@ -158,7 +157,6 @@ const ApplicationHero = () => {
             </motion.div>
           </motion.div>
           
-          {/* Key features */}
           <motion.div 
             className="grid md:grid-cols-3 gap-6 pt-8"
             variants={itemVariants}
@@ -207,7 +205,6 @@ const ApplicationHero = () => {
           </motion.div>
         </motion.div>
         
-        {/* Scroll down indicator */}
         <motion.div 
           className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
           initial={{ opacity: 0 }}
@@ -224,7 +221,6 @@ const ApplicationHero = () => {
         </motion.div>
       </div>
       
-      {/* Decorative bottom wave */}
       <div className="absolute bottom-0 left-0 right-0">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" className="w-full">
           <path 
