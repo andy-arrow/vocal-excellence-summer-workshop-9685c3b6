@@ -1,14 +1,13 @@
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Calendar, Clock, Book, Mic, Users, Theater, Music, Sparkles } from 'lucide-react';
+import { Calendar, Clock, Book, Mic, Users, Theater, Music, Sparkles, ChevronDown, ChevronUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 import { 
-  Accordion, 
-  AccordionContent, 
-  AccordionItem, 
-  AccordionTrigger 
-} from "@/components/ui/accordion";
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger
+} from "@/components/ui/collapsible";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { 
   Card, 
@@ -157,7 +156,6 @@ const CurriculumSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const elementsRef = useRef<(HTMLElement | null)[]>([]);
   const [hasReducedMotion, setHasReducedMotion] = useState(false);
-  const [highlightedDay, setHighlightedDay] = useState<number | null>(null);
   const [expandedDay, setExpandedDay] = useState<string | null>(null);
   
   useEffect(() => {
@@ -212,26 +210,20 @@ const CurriculumSection = () => {
             className="w-full" 
             onValueChange={(value) => setActiveTab(value)}
           >
-            <div className="flex justify-center">
-              <TabsList className="glass-card bg-white/80 shadow-md border border-gray-100">
-                <TabsTrigger 
-                  value="modules"
-                  className="data-[state=active]:bg-primary data-[state=active]:text-white"
-                >
+            <div className="flex justify-center mb-6">
+              <TabsList className="shadow-md">
+                <TabsTrigger value="modules">
                   <Music size={16} className="mr-2" />
                   Program Modules
                   {activeTab === 'modules' && !hasReducedMotion && (
-                    <span className="text-white animate-float ml-1">♪</span>
+                    <span className="text-primary-foreground animate-float ml-1.5">♪</span>
                   )}
                 </TabsTrigger>
-                <TabsTrigger 
-                  value="schedule"
-                  className="data-[state=active]:bg-primary data-[state=active]:text-white"
-                >
+                <TabsTrigger value="schedule">
                   <Calendar size={16} className="mr-2" />
                   Daily Schedule
                   {activeTab === 'schedule' && !hasReducedMotion && (
-                    <span className="text-white animate-float ml-1">♫</span>
+                    <span className="text-primary-foreground animate-float ml-1.5">♫</span>
                   )}
                 </TabsTrigger>
               </TabsList>
@@ -245,7 +237,7 @@ const CurriculumSection = () => {
                     key={index}
                     ref={(el) => (elementsRef.current[3 + index] = el)} 
                     className={cn(
-                      "glass-card reveal-on-scroll transform transition-all duration-300",
+                      "reveal-on-scroll transform transition-all duration-300",
                       "hover:shadow-xl hover:-translate-y-1 group bg-white border border-gray-100"
                     )}
                     style={{ transitionDelay: `${(index % 3) * 100}ms` }}
@@ -288,7 +280,7 @@ const CurriculumSection = () => {
             <TabsContent value="schedule" className="mt-6">
               <Card 
                 ref={(el) => (elementsRef.current[7] = el)} 
-                className="reveal-on-scroll glass-card mb-8 bg-white border border-gray-100"
+                className="reveal-on-scroll mb-8 bg-white border border-gray-100 shadow-sm"
               >
                 <CardHeader className="flex flex-row items-center gap-3">
                   <Clock className="w-6 h-6 text-rose-500" />
@@ -297,72 +289,62 @@ const CurriculumSection = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-700 mb-4">
+                  <p className="text-gray-700 mb-6">
                     Each day at Vocal Excellence has its own rhythm and focus, creating a comprehensive experience that builds your vocal abilities sequentially. The program structure balances intensive learning with adequate rest periods for vocal recovery.
                   </p>
                   
                   {/* Visual timeline */}
-                  <div className={cn(
-                    "relative h-2 bg-gray-100 rounded-full my-8 overflow-hidden",
-                    "before:content-[''] before:absolute before:h-full before:bg-rose-400 before:left-0 before:rounded-full",
-                    !hasReducedMotion && "before:animate-progress"
-                  )} style={{ width: '100%' }}></div>
+                  <div className="relative h-2.5 bg-gray-100 rounded-full my-8 overflow-hidden">
+                    <div 
+                      className={cn(
+                        "absolute h-full bg-gradient-to-r from-rose-400 to-rose-500 left-0 rounded-full",
+                        !hasReducedMotion && "animate-progress"
+                      )} 
+                      style={{ width: '100%' }}
+                    ></div>
+                  </div>
                 </CardContent>
               </Card>
 
               <div className="space-y-4 mb-8">
                 {scheduleData.map((day, index) => (
-                  <div
+                  <Collapsible
                     key={index}
-                    className={cn(
-                      "glass-card overflow-hidden border border-gray-100 rounded-lg bg-white shadow-sm",
-                      "hover:shadow-md transition-all duration-300",
-                      expandedDay === day.day ? "shadow-md" : ""
-                    )}
-                    onMouseEnter={() => setHighlightedDay(index)}
-                    onMouseLeave={() => setHighlightedDay(null)}
+                    open={expandedDay === day.day}
+                    onOpenChange={() => setExpandedDay(expandedDay === day.day ? null : day.day)}
+                    className="border border-gray-100 rounded-lg bg-white shadow-sm hover:shadow-md transition-all duration-300"
                   >
-                    <div
-                      className="px-6 py-4 cursor-pointer flex items-center justify-between"
-                      onClick={() => setExpandedDay(expandedDay === day.day ? null : day.day)}
-                    >
+                    <CollapsibleTrigger className="w-full px-6 py-4 flex items-center justify-between">
                       <div className="flex flex-col items-start text-left">
-                        <div className="flex items-center">
-                          <h3 className="text-lg font-medium text-rose-600">{day.day}</h3>
-                          {!hasReducedMotion && highlightedDay === index && (
-                            <Sparkles size={16} className="text-amber-400 animate-pulse ml-2" />
-                          )}
-                        </div>
+                        <h3 className="text-lg font-medium text-rose-600">{day.day}</h3>
                         <div className="rounded bg-rose-50 px-2 py-1 text-xs text-rose-700 inline-block mt-1">
                           {day.theme}
                         </div>
                       </div>
                       <div className="text-rose-500">
                         {expandedDay === day.day ? (
-                          <span className="text-xl">−</span>
+                          <ChevronUp size={20} />
                         ) : (
-                          <span className="text-xl">+</span>
+                          <ChevronDown size={20} />
                         )}
                       </div>
-                    </div>
+                    </CollapsibleTrigger>
                     
-                    {expandedDay === day.day && (
-                      <div className="px-6 pb-4 pt-2 animate-fade-in">
-                        <ul className="space-y-3">
-                          {day.activities.map((activity, idx) => (
-                            <li key={idx} className="flex items-start">
-                              <span className="text-rose-500 mr-2 mt-0.5">•</span>
-                              <span className="text-gray-700">{activity}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
+                    <CollapsibleContent className="px-6 pb-4 pt-2 animate-accordion-down">
+                      <ul className="space-y-3">
+                        {day.activities.map((activity, idx) => (
+                          <li key={idx} className="flex items-start">
+                            <span className="text-rose-500 mr-2 mt-0.5 flex-shrink-0">•</span>
+                            <span className="text-gray-700">{activity}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </CollapsibleContent>
+                  </Collapsible>
                 ))}
               </div>
 
-              <Card className="glass-card bg-white border border-gray-100">
+              <Card className="bg-white border border-gray-100 shadow-sm">
                 <CardHeader>
                   <CardTitle className="text-xl font-serif font-medium text-gray-800">
                     Key Logistics & Notes
@@ -372,7 +354,7 @@ const CurriculumSection = () => {
                   <ul className="space-y-3">
                     {logisticsData.map((item, index) => (
                       <li key={index} className="flex items-start">
-                        <span className="text-rose-500 mr-2 mt-0.5">•</span>
+                        <span className="text-rose-500 mr-2.5 mt-0.5 flex-shrink-0">•</span>
                         <span className="text-gray-700">{item}</span>
                       </li>
                     ))}
