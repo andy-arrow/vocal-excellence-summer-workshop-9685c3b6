@@ -101,14 +101,10 @@ const ApplicationHero = () => {
           animate="visible"
         >
           <motion.div variants={itemVariants}>
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight font-outfit tracking-tighter text-white">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-fuchsia-300 to-violet-300">
-                Your Journey to 
-                <br className="md:hidden" />
-                <span className="relative inline-block">
-                  {" Vocal Mastery"}
-                </span>
-              </span>
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight font-outfit tracking-tighter">
+              <span className="text-white">Your Journey to</span>
+              <br className="hidden md:block" />
+              <span className="text-fuchsia-300">Vocal Mastery</span>
               <motion.span 
                 className="block h-1 w-64 mx-auto mt-2 bg-gradient-to-r from-fuchsia-500 to-violet-500"
                 initial={{ width: 0, opacity: 0 }}
