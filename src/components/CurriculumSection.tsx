@@ -242,7 +242,12 @@ const CurriculumSection = () => {
             </div>
 
             {/* Modules Tab Content - improved spacing for mobile */}
-            <TabsContent value="modules" className="-mt-1 lg:mt-0">
+            <TabsContent 
+              value="modules" 
+              className="-mt-1 lg:mt-0"
+              key="modules-content"
+              style={{ minHeight: '200px' }}
+            >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3">
                 {modules.map((module, index) => (
                   <Card 
@@ -289,7 +294,12 @@ const CurriculumSection = () => {
             </TabsContent>
 
             {/* Schedule Tab Content - improved spacing and positioning */}
-            <TabsContent value="schedule" className="-mt-1 lg:mt-0">
+            <TabsContent 
+              value="schedule" 
+              className="-mt-1 lg:mt-0" 
+              key="schedule-content"
+              style={{ minHeight: '200px' }}
+            >
               <Card 
                 ref={(el) => (elementsRef.current[7] = el)} 
                 className="reveal-on-scroll mb-2 bg-white border border-gray-100 shadow-sm"
