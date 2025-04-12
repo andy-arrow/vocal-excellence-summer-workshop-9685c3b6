@@ -1,5 +1,4 @@
-
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Calendar, Clock, Book, Mic, Users, Theater, Music, Sparkles, ChevronDown, ChevronUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -152,20 +151,15 @@ const logisticsData = [
   "Materials: Bring a notebook, water bottle, and performance scores daily."
 ];
 
-// Create components for tab content to avoid render issues
-const ModulesContent = React.memo(() => {
-  const hasReducedMotion = localStorage.getItem('reduced-motion') === 'true';
-  
+function ModulesContent() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
       {modules.map((module, index) => (
         <Card 
           key={`module-${index}`}
           className={cn(
-            "reveal-on-scroll transform transition-all duration-300",
-            "hover:shadow-lg hover:-translate-y-1 group bg-white border border-gray-100"
+            "hover:shadow-lg hover:-translate-y-1 group bg-white border border-gray-100 transition-all duration-300"
           )}
-          style={{ transitionDelay: `${(index % 3) * 100}ms` }}
         >
           <CardHeader className="pb-2 pt-4 md:pt-5">
             <div className={cn(
@@ -173,11 +167,6 @@ const ModulesContent = React.memo(() => {
               module.iconBg
             )}>
               {module.icon}
-              {!hasReducedMotion && (
-                <span className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity text-xs scale-75">
-                  <span className="animate-float">♪</span>
-                </span>
-              )}
             </div>
             <CardTitle className="text-lg md:text-xl font-serif font-medium text-gray-800 group-hover:text-rose-600 transition-colors">
               {module.title}
@@ -200,12 +189,10 @@ const ModulesContent = React.memo(() => {
       ))}
     </div>
   );
-});
+}
 
-// ScheduleContent component with its own state management
-const ScheduleContent = React.memo(() => {
+function ScheduleContent() {
   const [expandedDay, setExpandedDay] = useState<string | null>(null);
-  const hasReducedMotion = localStorage.getItem('reduced-motion') === 'true';
   const isMobile = useIsMobile();
   
   return (
@@ -224,10 +211,7 @@ const ScheduleContent = React.memo(() => {
           
           <div className="relative h-2 bg-gray-100 rounded-full my-4 overflow-hidden">
             <div 
-              className={cn(
-                "absolute h-full bg-gradient-to-r from-rose-400 to-rose-500 left-0 rounded-full",
-                !hasReducedMotion && "animate-progress"
-              )} 
+              className="absolute h-full bg-gradient-to-r from-rose-400 to-rose-500 left-0 rounded-full" 
               style={{ width: '100%' }}
             ></div>
           </div>
@@ -291,102 +275,55 @@ const ScheduleContent = React.memo(() => {
       </Card>
     </>
   );
-});
+}
 
 const CurriculumSection = () => {
   const [activeTab, setActiveTab] = useState('modules');
-  const sectionRef = useRef<HTMLElement>(null);
-  const elementsRef = useRef<(HTMLElement | null)[]>([]);
-  const [hasReducedMotion, setHasReducedMotion] = useState(false);
   const isMobile = useIsMobile();
   
-  // Set up intersection observer for animations
-  useEffect(() => {
-    const savedPreference = localStorage.getItem('reduced-motion') === 'true';
-    setHasReducedMotion(savedPreference);
-    
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('revealed');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const currentElements = elementsRef.current.filter(Boolean) as HTMLElement[];
-    currentElements.forEach((el) => observer.observe(el));
-
-    return () => {
-      currentElements.forEach((el) => observer.unobserve(el));
-    };
-  }, []);
-
   const handleTabChange = (value: string) => {
     console.log('Tab changed to:', value);
     setActiveTab(value);
   };
 
+  const ModulesTab = React.useMemo(() => <ModulesContent />, []);
+  const ScheduleTab = React.useMemo(() => <ScheduleContent />, []);
+
   return (
-    <section id="curriculum" ref={sectionRef} className="py-12 md:py-16 px-3 md:px-6 bg-white">
+    <section id="curriculum" className="py-12 md:py-16 px-3 md:px-6 bg-white">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-6 md:mb-8">
-          <h2 
-            ref={(el) => (elementsRef.current[0] = el)} 
-            className="section-title reveal-on-scroll"
-          >
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
             Your Summer Crescendo
           </h2>
-          <p 
-            ref={(el) => (elementsRef.current[1] = el)} 
-            className="section-subtitle reveal-on-scroll"
-          >
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             A daily rhythm designed to elevate your vocal artistry
           </p>
         </div>
 
-        <div 
-          ref={(el) => (elementsRef.current[2] = el)} 
-          className="flex justify-center mb-4 reveal-on-scroll"
-        >
-          <Tabs 
-            defaultValue="modules" 
-            value={activeTab}
-            onValueChange={handleTabChange}
-            className="w-full" 
-          >
+        <div className="mb-4">
+          <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
             <div className="flex justify-center mb-4">
               <TabsList className="shadow-md max-w-md bg-gray-50">
                 <TabsTrigger value="modules">
                   <div className="flex items-center justify-center space-x-2">
                     <Music size={isMobile ? 16 : 18} />
                     <span className="font-medium">Program Modules</span>
-                    {activeTab === 'modules' && !hasReducedMotion && (
-                      <span className="text-primary-foreground animate-float ml-1">♪</span>
-                    )}
                   </div>
                 </TabsTrigger>
                 <TabsTrigger value="schedule">
                   <div className="flex items-center justify-center space-x-2">
                     <Calendar size={isMobile ? 16 : 18} />
                     <span className="font-medium">Daily Schedule</span>
-                    {activeTab === 'schedule' && !hasReducedMotion && (
-                      <span className="text-primary-foreground animate-float ml-1">♫</span>
-                    )}
                   </div>
                 </TabsTrigger>
               </TabsList>
             </div>
 
-            <TabsContent value="modules">
-              <ModulesContent />
-            </TabsContent>
-
-            <TabsContent value="schedule">
-              <ScheduleContent />
-            </TabsContent>
+            <div className="tab-content">
+              {activeTab === 'modules' && ModulesTab}
+              {activeTab === 'schedule' && ScheduleTab}
+            </div>
           </Tabs>
         </div>
       </div>
