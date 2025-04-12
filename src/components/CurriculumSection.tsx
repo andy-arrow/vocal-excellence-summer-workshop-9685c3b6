@@ -185,9 +185,9 @@ const CurriculumSection = () => {
   }, []);
 
   return (
-    <section id="curriculum" ref={sectionRef} className="py-16 md:py-20 px-4 md:px-6 bg-white">
+    <section id="curriculum" ref={sectionRef} className="py-12 md:py-16 px-3 md:px-6 bg-white">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-6 md:mb-8">
+        <div className="text-center mb-4 md:mb-6">
           <h2 
             ref={(el) => (elementsRef.current[0] = el)} 
             className="section-title reveal-on-scroll"
@@ -236,21 +236,21 @@ const CurriculumSection = () => {
             </div>
 
             {/* Modules Tab Content - improved spacing for mobile */}
-            <TabsContent value="modules" className="mt-1 lg:mt-2">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+            <TabsContent value="modules" className="-mt-1 lg:mt-0">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3">
                 {modules.map((module, index) => (
                   <Card 
                     key={index}
                     ref={(el) => (elementsRef.current[3 + index] = el)} 
                     className={cn(
                       "reveal-on-scroll transform transition-all duration-300",
-                      "hover:shadow-xl hover:-translate-y-1 group bg-white border border-gray-100"
+                      "hover:shadow-lg hover:-translate-y-1 group bg-white border border-gray-100"
                     )}
                     style={{ transitionDelay: `${(index % 3) * 100}ms` }}
                   >
-                    <CardHeader className="pb-1 pt-4 md:pb-2 md:pt-5">
+                    <CardHeader className="pb-0 pt-3 md:pb-1 md:pt-4">
                       <div className={cn(
-                        "mb-2 w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center",
+                        "mb-2 w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center",
                         module.iconBg
                       )}>
                         {module.icon}
@@ -260,18 +260,18 @@ const CurriculumSection = () => {
                           </span>
                         )}
                       </div>
-                      <CardTitle className="text-lg md:text-xl font-serif font-medium text-gray-800 group-hover:text-rose-600 transition-colors">
+                      <CardTitle className="text-base md:text-lg font-serif font-medium text-gray-800 group-hover:text-rose-600 transition-colors">
                         {module.title}
                       </CardTitle>
-                      <CardDescription className="text-gray-600 font-light text-sm md:text-base">
+                      <CardDescription className="text-gray-600 font-light text-xs md:text-sm">
                         {module.description}
                       </CardDescription>
                     </CardHeader>
-                    <CardContent className="pt-0 pb-4">
-                      <ul className="space-y-1 text-sm md:text-base">
+                    <CardContent className="pt-0 pb-3">
+                      <ul className="space-y-1 text-xs md:text-sm">
                         {module.highlights.map((highlight, idx) => (
                           <li key={idx} className="flex items-start">
-                            <span className="text-rose-500 mr-2 mt-0.5">♪</span>
+                            <span className="text-rose-500 mr-1 mt-0.5">♪</span>
                             <span className="text-gray-700">{highlight}</span>
                           </li>
                         ))}
@@ -283,13 +283,13 @@ const CurriculumSection = () => {
             </TabsContent>
 
             {/* Schedule Tab Content - improved spacing and positioning */}
-            <TabsContent value="schedule" className="mt-1 lg:mt-2">
+            <TabsContent value="schedule" className="-mt-1 lg:mt-0">
               <Card 
                 ref={(el) => (elementsRef.current[7] = el)} 
-                className="reveal-on-scroll mb-3 bg-white border border-gray-100 shadow-sm"
+                className="reveal-on-scroll mb-2 bg-white border border-gray-100 shadow-sm"
               >
-                <CardHeader className="flex flex-row items-center gap-2 pb-1 pt-3">
-                  <Clock className="w-5 h-5 text-rose-500" />
+                <CardHeader className="flex flex-row items-center gap-2 pb-0 pt-2 md:pt-3">
+                  <Clock className="w-4 h-4 md:w-5 md:h-5 text-rose-500" />
                   <CardTitle className="text-base md:text-lg font-serif font-medium text-gray-800">
                     Your Daily Rhythm
                   </CardTitle>
@@ -300,7 +300,7 @@ const CurriculumSection = () => {
                   </p>
                   
                   {/* Visual timeline - reduced margin */}
-                  <div className="relative h-1.5 md:h-2 bg-gray-100 rounded-full my-1 md:my-2 overflow-hidden">
+                  <div className="relative h-1 md:h-1.5 bg-gray-100 rounded-full my-1 overflow-hidden">
                     <div 
                       className={cn(
                         "absolute h-full bg-gradient-to-r from-rose-400 to-rose-500 left-0 rounded-full",
@@ -312,7 +312,7 @@ const CurriculumSection = () => {
                 </CardContent>
               </Card>
 
-              <div className="space-y-2 mb-3">
+              <div className="space-y-1.5 mb-2">
                 {scheduleData.map((day, index) => (
                   <Collapsible
                     key={index}
@@ -320,10 +320,10 @@ const CurriculumSection = () => {
                     onOpenChange={() => setExpandedDay(expandedDay === day.day ? null : day.day)}
                     className="border border-gray-100 rounded-lg bg-white shadow-sm hover:shadow-md transition-all duration-300"
                   >
-                    <CollapsibleTrigger className="w-full px-3 md:px-4 py-2 md:py-2.5 flex items-center justify-between">
+                    <CollapsibleTrigger className="w-full px-2 md:px-3 py-1.5 md:py-2 flex items-center justify-between">
                       <div className="flex flex-col items-start text-left">
                         <h3 className="text-sm md:text-base font-medium text-rose-600">{day.day}</h3>
-                        <div className="rounded bg-rose-50 px-1.5 py-0.5 text-xs text-rose-700 inline-block">
+                        <div className="rounded bg-rose-50 px-1 py-0.5 text-xs text-rose-700 inline-block">
                           {day.theme}
                         </div>
                       </div>
@@ -336,11 +336,11 @@ const CurriculumSection = () => {
                       </div>
                     </CollapsibleTrigger>
                     
-                    <CollapsibleContent className="px-3 md:px-4 pb-2 pt-1 animate-accordion-down">
-                      <ul className="space-y-1 text-xs md:text-sm">
+                    <CollapsibleContent className="px-2 md:px-3 pb-2 pt-0 animate-accordion-down">
+                      <ul className="space-y-0.5 text-xs">
                         {day.activities.map((activity, idx) => (
                           <li key={idx} className="flex items-start">
-                            <span className="text-rose-500 mr-2 mt-0.5 flex-shrink-0">•</span>
+                            <span className="text-rose-500 mr-1 mt-0.5 flex-shrink-0">•</span>
                             <span className="text-gray-700">{activity}</span>
                           </li>
                         ))}
@@ -351,16 +351,16 @@ const CurriculumSection = () => {
               </div>
 
               <Card className="bg-white border border-gray-100 shadow-sm">
-                <CardHeader className="pb-1 pt-3">
+                <CardHeader className="pb-0 pt-2 md:pt-3">
                   <CardTitle className="text-base md:text-lg font-serif font-medium text-gray-800">
                     Key Logistics & Notes
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="pt-0 pb-3">
-                  <ul className="space-y-1 text-xs md:text-sm">
+                <CardContent className="pt-0 pb-2">
+                  <ul className="space-y-0.5 text-xs">
                     {logisticsData.map((item, index) => (
                       <li key={index} className="flex items-start">
-                        <span className="text-rose-500 mr-2 mt-0.5 flex-shrink-0">•</span>
+                        <span className="text-rose-500 mr-1 mt-0.5 flex-shrink-0">•</span>
                         <span className="text-gray-700">{item}</span>
                       </li>
                     ))}
