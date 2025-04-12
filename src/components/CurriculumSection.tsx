@@ -215,7 +215,7 @@ const CurriculumSection = () => {
             onValueChange={handleTabChange}
             className="w-full" 
           >
-            <div className="flex justify-center mb-2">
+            <div className="flex justify-center mb-4">
               <TabsList className="shadow-md max-w-md bg-gray-50">
                 <TabsTrigger value="modules">
                   <div className="flex items-center justify-center space-x-2">
@@ -241,8 +241,7 @@ const CurriculumSection = () => {
             <TabsContent 
               value="modules" 
               className="mt-0"
-              key="modules-content"
-              style={{ minHeight: '300px' }}
+              tabIndex={0}
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
                 {modules.map((module, index) => (
@@ -292,8 +291,7 @@ const CurriculumSection = () => {
             <TabsContent 
               value="schedule" 
               className="mt-0" 
-              key="schedule-content"
-              style={{ minHeight: '300px' }}
+              tabIndex={0}
             >
               <Card 
                 ref={(el) => (elementsRef.current[7] = el)} 
