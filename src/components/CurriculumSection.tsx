@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { Calendar, Clock, Book, Mic, Users, Theater, Music, Sparkles, ChevronDown, ChevronUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -161,7 +160,6 @@ const CurriculumSection = () => {
   const isMobile = useIsMobile();
   
   useEffect(() => {
-    // Check for reduced motion preference
     const savedPreference = localStorage.getItem('reduced-motion') === 'true';
     setHasReducedMotion(savedPreference);
     
@@ -192,7 +190,7 @@ const CurriculumSection = () => {
   return (
     <section id="curriculum" ref={sectionRef} className="py-12 md:py-16 px-3 md:px-6 bg-white">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-4 md:mb-6">
+        <div className="text-center mb-6 md:mb-8">
           <h2 
             ref={(el) => (elementsRef.current[0] = el)} 
             className="section-title reveal-on-scroll"
@@ -207,10 +205,9 @@ const CurriculumSection = () => {
           </p>
         </div>
 
-        {/* Tabs with music-themed indicators - improved spacing and layout */}
         <div 
           ref={(el) => (elementsRef.current[2] = el)} 
-          className="flex justify-center mb-0 reveal-on-scroll"
+          className="flex justify-center mb-4 reveal-on-scroll"
         >
           <Tabs 
             defaultValue="modules" 
@@ -218,21 +215,21 @@ const CurriculumSection = () => {
             onValueChange={handleTabChange}
             className="w-full" 
           >
-            <div className="flex justify-center mb-0">
-              <TabsList className="shadow-md max-w-md">
+            <div className="flex justify-center mb-2">
+              <TabsList className="shadow-md max-w-md bg-gray-50">
                 <TabsTrigger value="modules">
-                  <div className="flex items-center justify-center space-x-1">
-                    <Music size={isMobile ? 14 : 16} />
-                    <span className="text-xs md:text-sm">Program Modules</span>
+                  <div className="flex items-center justify-center space-x-2">
+                    <Music size={isMobile ? 16 : 18} />
+                    <span className="font-medium">Program Modules</span>
                     {activeTab === 'modules' && !hasReducedMotion && (
                       <span className="text-primary-foreground animate-float ml-1">♪</span>
                     )}
                   </div>
                 </TabsTrigger>
                 <TabsTrigger value="schedule">
-                  <div className="flex items-center justify-center space-x-1">
-                    <Calendar size={isMobile ? 14 : 16} />
-                    <span className="text-xs md:text-sm">Daily Schedule</span>
+                  <div className="flex items-center justify-center space-x-2">
+                    <Calendar size={isMobile ? 16 : 18} />
+                    <span className="font-medium">Daily Schedule</span>
                     {activeTab === 'schedule' && !hasReducedMotion && (
                       <span className="text-primary-foreground animate-float ml-1">♫</span>
                     )}
@@ -241,14 +238,13 @@ const CurriculumSection = () => {
               </TabsList>
             </div>
 
-            {/* Modules Tab Content - improved spacing for mobile */}
             <TabsContent 
               value="modules" 
-              className="-mt-1 lg:mt-0"
+              className="mt-0"
               key="modules-content"
-              style={{ minHeight: '200px' }}
+              style={{ minHeight: '300px' }}
             >
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
                 {modules.map((module, index) => (
                   <Card 
                     key={index}
@@ -259,9 +255,9 @@ const CurriculumSection = () => {
                     )}
                     style={{ transitionDelay: `${(index % 3) * 100}ms` }}
                   >
-                    <CardHeader className="pb-0 pt-3 md:pb-1 md:pt-4">
+                    <CardHeader className="pb-2 pt-4 md:pt-5">
                       <div className={cn(
-                        "mb-2 w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center",
+                        "mb-3 w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center",
                         module.iconBg
                       )}>
                         {module.icon}
@@ -271,18 +267,18 @@ const CurriculumSection = () => {
                           </span>
                         )}
                       </div>
-                      <CardTitle className="text-base md:text-lg font-serif font-medium text-gray-800 group-hover:text-rose-600 transition-colors">
+                      <CardTitle className="text-lg md:text-xl font-serif font-medium text-gray-800 group-hover:text-rose-600 transition-colors">
                         {module.title}
                       </CardTitle>
-                      <CardDescription className="text-gray-600 font-light text-xs md:text-sm">
+                      <CardDescription className="text-gray-600 font-light text-sm md:text-base mt-1">
                         {module.description}
                       </CardDescription>
                     </CardHeader>
-                    <CardContent className="pt-0 pb-3">
-                      <ul className="space-y-1 text-xs md:text-sm">
+                    <CardContent className="pt-2 pb-4">
+                      <ul className="space-y-2 text-sm md:text-base">
                         {module.highlights.map((highlight, idx) => (
                           <li key={idx} className="flex items-start">
-                            <span className="text-rose-500 mr-1 mt-0.5">♪</span>
+                            <span className="text-rose-500 mr-2 mt-1 flex-shrink-0">♪</span>
                             <span className="text-gray-700">{highlight}</span>
                           </li>
                         ))}
@@ -293,30 +289,28 @@ const CurriculumSection = () => {
               </div>
             </TabsContent>
 
-            {/* Schedule Tab Content - improved spacing and positioning */}
             <TabsContent 
               value="schedule" 
-              className="-mt-1 lg:mt-0" 
+              className="mt-0" 
               key="schedule-content"
-              style={{ minHeight: '200px' }}
+              style={{ minHeight: '300px' }}
             >
               <Card 
                 ref={(el) => (elementsRef.current[7] = el)} 
-                className="reveal-on-scroll mb-2 bg-white border border-gray-100 shadow-sm"
+                className="reveal-on-scroll mb-4 bg-white border border-gray-100 shadow-sm"
               >
-                <CardHeader className="flex flex-row items-center gap-2 pb-0 pt-2 md:pt-3">
-                  <Clock className="w-4 h-4 md:w-5 md:h-5 text-rose-500" />
-                  <CardTitle className="text-base md:text-lg font-serif font-medium text-gray-800">
+                <CardHeader className="flex flex-row items-center gap-3 pb-2 pt-4">
+                  <Clock className="w-5 h-5 md:w-6 md:h-6 text-rose-500" />
+                  <CardTitle className="text-lg md:text-xl font-serif font-medium text-gray-800">
                     Your Daily Rhythm
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="pt-0 pb-2">
-                  <p className="text-gray-700 mb-2 text-xs md:text-sm">
+                <CardContent className="pt-0 pb-4">
+                  <p className="text-gray-700 mb-3 text-sm md:text-base">
                     Each day at Vocal Excellence has its own rhythm and focus, creating a comprehensive experience that builds your vocal abilities sequentially. The program structure balances intensive learning with adequate rest periods for vocal recovery.
                   </p>
                   
-                  {/* Visual timeline - reduced margin */}
-                  <div className="relative h-1 md:h-1.5 bg-gray-100 rounded-full my-1 overflow-hidden">
+                  <div className="relative h-2 bg-gray-100 rounded-full my-4 overflow-hidden">
                     <div 
                       className={cn(
                         "absolute h-full bg-gradient-to-r from-rose-400 to-rose-500 left-0 rounded-full",
@@ -328,7 +322,7 @@ const CurriculumSection = () => {
                 </CardContent>
               </Card>
 
-              <div className="space-y-1.5 mb-2">
+              <div className="space-y-3 mb-4">
                 {scheduleData.map((day, index) => (
                   <Collapsible
                     key={index}
@@ -336,27 +330,27 @@ const CurriculumSection = () => {
                     onOpenChange={() => setExpandedDay(expandedDay === day.day ? null : day.day)}
                     className="border border-gray-100 rounded-lg bg-white shadow-sm hover:shadow-md transition-all duration-300"
                   >
-                    <CollapsibleTrigger className="w-full px-2 md:px-3 py-1.5 md:py-2 flex items-center justify-between">
+                    <CollapsibleTrigger className="w-full px-4 py-3 flex items-center justify-between">
                       <div className="flex flex-col items-start text-left">
-                        <h3 className="text-sm md:text-base font-medium text-rose-600">{day.day}</h3>
-                        <div className="rounded bg-rose-50 px-1 py-0.5 text-xs text-rose-700 inline-block">
+                        <h3 className="text-base md:text-lg font-medium text-rose-600">{day.day}</h3>
+                        <div className="rounded bg-rose-50 px-2 py-1 text-sm text-rose-700 inline-block mt-1">
                           {day.theme}
                         </div>
                       </div>
                       <div className="text-rose-500 flex-shrink-0">
                         {expandedDay === day.day ? (
-                          <ChevronUp size={isMobile ? 16 : 18} />
+                          <ChevronUp size={isMobile ? 18 : 20} />
                         ) : (
-                          <ChevronDown size={isMobile ? 16 : 18} />
+                          <ChevronDown size={isMobile ? 18 : 20} />
                         )}
                       </div>
                     </CollapsibleTrigger>
                     
-                    <CollapsibleContent className="px-2 md:px-3 pb-2 pt-0 animate-accordion-down">
-                      <ul className="space-y-0.5 text-xs">
+                    <CollapsibleContent className="px-4 pb-3 pt-1 animate-accordion-down">
+                      <ul className="space-y-2 text-sm">
                         {day.activities.map((activity, idx) => (
                           <li key={idx} className="flex items-start">
-                            <span className="text-rose-500 mr-1 mt-0.5 flex-shrink-0">•</span>
+                            <span className="text-rose-500 mr-2 mt-1 flex-shrink-0">•</span>
                             <span className="text-gray-700">{activity}</span>
                           </li>
                         ))}
@@ -367,16 +361,16 @@ const CurriculumSection = () => {
               </div>
 
               <Card className="bg-white border border-gray-100 shadow-sm">
-                <CardHeader className="pb-0 pt-2 md:pt-3">
-                  <CardTitle className="text-base md:text-lg font-serif font-medium text-gray-800">
+                <CardHeader className="pb-2 pt-4">
+                  <CardTitle className="text-lg md:text-xl font-serif font-medium text-gray-800">
                     Key Logistics & Notes
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="pt-0 pb-2">
-                  <ul className="space-y-0.5 text-xs">
+                <CardContent className="pt-0 pb-4">
+                  <ul className="space-y-2 text-sm md:text-base">
                     {logisticsData.map((item, index) => (
                       <li key={index} className="flex items-start">
-                        <span className="text-rose-500 mr-1 mt-0.5 flex-shrink-0">•</span>
+                        <span className="text-rose-500 mr-2 mt-1 flex-shrink-0">•</span>
                         <span className="text-gray-700">{item}</span>
                       </li>
                     ))}
