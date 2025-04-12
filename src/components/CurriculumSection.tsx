@@ -152,49 +152,15 @@ const logisticsData = [
   "Materials: Bring a notebook, water bottle, and performance scores daily."
 ];
 
-const CurriculumSection = () => {
-  const [activeTab, setActiveTab] = useState('modules');
-  const sectionRef = useRef<HTMLElement>(null);
-  const elementsRef = useRef<(HTMLElement | null)[]>([]);
-  const [hasReducedMotion, setHasReducedMotion] = useState(false);
-  const [expandedDay, setExpandedDay] = useState<string | null>(null);
-  const isMobile = useIsMobile();
+// Create components for tab content to avoid render issues
+const ModulesContent = React.memo(() => {
+  const hasReducedMotion = localStorage.getItem('reduced-motion') === 'true';
   
-  useEffect(() => {
-    const savedPreference = localStorage.getItem('reduced-motion') === 'true';
-    setHasReducedMotion(savedPreference);
-    
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('revealed');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const currentElements = elementsRef.current.filter(Boolean) as HTMLElement[];
-    currentElements.forEach((el) => observer.observe(el));
-
-    return () => {
-      currentElements.forEach((el) => observer.unobserve(el));
-    };
-  }, []);
-
-  const handleTabChange = (value: string) => {
-    console.log('Tab changed to:', value);
-    setActiveTab(value);
-  };
-
-  // Using a memoized render for the modules content to prevent re-rendering issues
-  const renderModulesContent = React.useMemo(() => (
+  return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
       {modules.map((module, index) => (
         <Card 
-          key={index}
-          ref={(el) => (elementsRef.current[3 + index] = el)} 
+          key={`module-${index}`}
           className={cn(
             "reveal-on-scroll transform transition-all duration-300",
             "hover:shadow-lg hover:-translate-y-1 group bg-white border border-gray-100"
@@ -223,7 +189,7 @@ const CurriculumSection = () => {
           <CardContent className="pt-2 pb-4">
             <ul className="space-y-2 text-sm md:text-base">
               {module.highlights.map((highlight, idx) => (
-                <li key={idx} className="flex items-start">
+                <li key={`highlight-${index}-${idx}`} className="flex items-start">
                   <span className="text-rose-500 mr-2 mt-1 flex-shrink-0">♪</span>
                   <span className="text-gray-700">{highlight}</span>
                 </li>
@@ -233,15 +199,18 @@ const CurriculumSection = () => {
         </Card>
       ))}
     </div>
-  ), [hasReducedMotion]);
+  );
+});
 
-  // Using a memoized render for the schedule content to prevent re-rendering issues
-  const renderScheduleContent = React.useMemo(() => (
+// ScheduleContent component with its own state management
+const ScheduleContent = React.memo(() => {
+  const [expandedDay, setExpandedDay] = useState<string | null>(null);
+  const hasReducedMotion = localStorage.getItem('reduced-motion') === 'true';
+  const isMobile = useIsMobile();
+  
+  return (
     <>
-      <Card 
-        ref={(el) => (elementsRef.current[7] = el)} 
-        className="reveal-on-scroll mb-4 bg-white border border-gray-100 shadow-sm"
-      >
+      <Card className="mb-4 bg-white border border-gray-100 shadow-sm">
         <CardHeader className="flex flex-row items-center gap-3 pb-2 pt-4">
           <Clock className="w-5 h-5 md:w-6 md:h-6 text-rose-500" />
           <CardTitle className="text-lg md:text-xl font-serif font-medium text-gray-800">
@@ -268,7 +237,7 @@ const CurriculumSection = () => {
       <div className="space-y-3 mb-4">
         {scheduleData.map((day, index) => (
           <Collapsible
-            key={index}
+            key={`day-${index}`}
             open={expandedDay === day.day}
             onOpenChange={() => setExpandedDay(expandedDay === day.day ? null : day.day)}
             className="border border-gray-100 rounded-lg bg-white shadow-sm hover:shadow-md transition-all duration-300"
@@ -289,10 +258,10 @@ const CurriculumSection = () => {
               </div>
             </CollapsibleTrigger>
             
-            <CollapsibleContent className="px-4 pb-3 pt-1 animate-accordion-down">
+            <CollapsibleContent className="px-4 pb-3 pt-1">
               <ul className="space-y-2 text-sm">
                 {day.activities.map((activity, idx) => (
-                  <li key={idx} className="flex items-start">
+                  <li key={`activity-${index}-${idx}`} className="flex items-start">
                     <span className="text-rose-500 mr-2 mt-1 flex-shrink-0">•</span>
                     <span className="text-gray-700">{activity}</span>
                   </li>
@@ -312,7 +281,7 @@ const CurriculumSection = () => {
         <CardContent className="pt-0 pb-4">
           <ul className="space-y-2 text-sm md:text-base">
             {logisticsData.map((item, index) => (
-              <li key={index} className="flex items-start">
+              <li key={`logistics-${index}`} className="flex items-start">
                 <span className="text-rose-500 mr-2 mt-1 flex-shrink-0">•</span>
                 <span className="text-gray-700">{item}</span>
               </li>
@@ -321,7 +290,44 @@ const CurriculumSection = () => {
         </CardContent>
       </Card>
     </>
-  ), [expandedDay, hasReducedMotion, isMobile]);
+  );
+});
+
+const CurriculumSection = () => {
+  const [activeTab, setActiveTab] = useState('modules');
+  const sectionRef = useRef<HTMLElement>(null);
+  const elementsRef = useRef<(HTMLElement | null)[]>([]);
+  const [hasReducedMotion, setHasReducedMotion] = useState(false);
+  const isMobile = useIsMobile();
+  
+  // Set up intersection observer for animations
+  useEffect(() => {
+    const savedPreference = localStorage.getItem('reduced-motion') === 'true';
+    setHasReducedMotion(savedPreference);
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const currentElements = elementsRef.current.filter(Boolean) as HTMLElement[];
+    currentElements.forEach((el) => observer.observe(el));
+
+    return () => {
+      currentElements.forEach((el) => observer.unobserve(el));
+    };
+  }, []);
+
+  const handleTabChange = (value: string) => {
+    console.log('Tab changed to:', value);
+    setActiveTab(value);
+  };
 
   return (
     <section id="curriculum" ref={sectionRef} className="py-12 md:py-16 px-3 md:px-6 bg-white">
@@ -374,12 +380,12 @@ const CurriculumSection = () => {
               </TabsList>
             </div>
 
-            <TabsContent value="modules" className="mt-0 block">
-              {renderModulesContent}
+            <TabsContent value="modules">
+              <ModulesContent />
             </TabsContent>
 
-            <TabsContent value="schedule" className="mt-0 block">
-              {renderScheduleContent}
+            <TabsContent value="schedule">
+              <ScheduleContent />
             </TabsContent>
           </Tabs>
         </div>
