@@ -187,7 +187,7 @@ const CurriculumSection = () => {
   return (
     <section id="curriculum" ref={sectionRef} className="py-16 md:py-20 px-4 md:px-6 bg-white">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-8 md:mb-10">
+        <div className="text-center mb-6 md:mb-8">
           <h2 
             ref={(el) => (elementsRef.current[0] = el)} 
             className="section-title reveal-on-scroll"
@@ -202,10 +202,10 @@ const CurriculumSection = () => {
           </p>
         </div>
 
-        {/* Tabs with music-themed indicators - improved for mobile */}
+        {/* Tabs with music-themed indicators - improved spacing and layout */}
         <div 
           ref={(el) => (elementsRef.current[2] = el)} 
-          className="flex justify-center mb-4 reveal-on-scroll"
+          className="flex justify-center mb-0 reveal-on-scroll"
         >
           <Tabs 
             defaultValue="modules" 
@@ -235,9 +235,9 @@ const CurriculumSection = () => {
               </TabsList>
             </div>
 
-            {/* Modules Tab Content - improved grid for mobile */}
-            <TabsContent value="modules" className="mt-2">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+            {/* Modules Tab Content - improved spacing for mobile */}
+            <TabsContent value="modules" className="mt-1 lg:mt-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
                 {modules.map((module, index) => (
                   <Card 
                     key={index}
@@ -248,9 +248,9 @@ const CurriculumSection = () => {
                     )}
                     style={{ transitionDelay: `${(index % 3) * 100}ms` }}
                   >
-                    <CardHeader className="pb-2">
+                    <CardHeader className="pb-1 pt-4 md:pb-2 md:pt-5">
                       <div className={cn(
-                        "mb-2 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center",
+                        "mb-2 w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center",
                         module.iconBg
                       )}>
                         {module.icon}
@@ -267,8 +267,8 @@ const CurriculumSection = () => {
                         {module.description}
                       </CardDescription>
                     </CardHeader>
-                    <CardContent className="pt-0">
-                      <ul className="space-y-1.5 text-sm md:text-base">
+                    <CardContent className="pt-0 pb-4">
+                      <ul className="space-y-1 text-sm md:text-base">
                         {module.highlights.map((highlight, idx) => (
                           <li key={idx} className="flex items-start">
                             <span className="text-rose-500 mr-2 mt-0.5">♪</span>
@@ -282,25 +282,25 @@ const CurriculumSection = () => {
               </div>
             </TabsContent>
 
-            {/* Schedule Tab Content - improved positioning and spacing for mobile */}
-            <TabsContent value="schedule" className="mt-2">
+            {/* Schedule Tab Content - improved spacing and positioning */}
+            <TabsContent value="schedule" className="mt-1 lg:mt-2">
               <Card 
                 ref={(el) => (elementsRef.current[7] = el)} 
-                className="reveal-on-scroll mb-4 bg-white border border-gray-100 shadow-sm"
+                className="reveal-on-scroll mb-3 bg-white border border-gray-100 shadow-sm"
               >
-                <CardHeader className="flex flex-row items-center gap-3 pb-2">
-                  <Clock className="w-5 h-5 md:w-6 md:h-6 text-rose-500" />
-                  <CardTitle className="text-lg md:text-xl font-serif font-medium text-gray-800">
+                <CardHeader className="flex flex-row items-center gap-2 pb-1 pt-3">
+                  <Clock className="w-5 h-5 text-rose-500" />
+                  <CardTitle className="text-base md:text-lg font-serif font-medium text-gray-800">
                     Your Daily Rhythm
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="pt-0 pb-3">
-                  <p className="text-gray-700 mb-3 text-sm md:text-base">
+                <CardContent className="pt-0 pb-2">
+                  <p className="text-gray-700 mb-2 text-xs md:text-sm">
                     Each day at Vocal Excellence has its own rhythm and focus, creating a comprehensive experience that builds your vocal abilities sequentially. The program structure balances intensive learning with adequate rest periods for vocal recovery.
                   </p>
                   
-                  {/* Visual timeline */}
-                  <div className="relative h-2 md:h-2.5 bg-gray-100 rounded-full my-2 md:my-3 overflow-hidden">
+                  {/* Visual timeline - reduced margin */}
+                  <div className="relative h-1.5 md:h-2 bg-gray-100 rounded-full my-1 md:my-2 overflow-hidden">
                     <div 
                       className={cn(
                         "absolute h-full bg-gradient-to-r from-rose-400 to-rose-500 left-0 rounded-full",
@@ -312,7 +312,7 @@ const CurriculumSection = () => {
                 </CardContent>
               </Card>
 
-              <div className="space-y-2 md:space-y-3 mb-4 md:mb-5">
+              <div className="space-y-2 mb-3">
                 {scheduleData.map((day, index) => (
                   <Collapsible
                     key={index}
@@ -320,24 +320,24 @@ const CurriculumSection = () => {
                     onOpenChange={() => setExpandedDay(expandedDay === day.day ? null : day.day)}
                     className="border border-gray-100 rounded-lg bg-white shadow-sm hover:shadow-md transition-all duration-300"
                   >
-                    <CollapsibleTrigger className="w-full px-3 md:px-5 py-2.5 md:py-3.5 flex items-center justify-between">
+                    <CollapsibleTrigger className="w-full px-3 md:px-4 py-2 md:py-2.5 flex items-center justify-between">
                       <div className="flex flex-col items-start text-left">
-                        <h3 className="text-base md:text-lg font-medium text-rose-600">{day.day}</h3>
-                        <div className="rounded bg-rose-50 px-1.5 md:px-2 py-0.5 text-xs text-rose-700 inline-block mt-0.5">
+                        <h3 className="text-sm md:text-base font-medium text-rose-600">{day.day}</h3>
+                        <div className="rounded bg-rose-50 px-1.5 py-0.5 text-xs text-rose-700 inline-block">
                           {day.theme}
                         </div>
                       </div>
                       <div className="text-rose-500 flex-shrink-0">
                         {expandedDay === day.day ? (
-                          <ChevronUp size={isMobile ? 18 : 20} />
+                          <ChevronUp size={isMobile ? 16 : 18} />
                         ) : (
-                          <ChevronDown size={isMobile ? 18 : 20} />
+                          <ChevronDown size={isMobile ? 16 : 18} />
                         )}
                       </div>
                     </CollapsibleTrigger>
                     
-                    <CollapsibleContent className="px-3 md:px-5 pb-3 pt-1 animate-accordion-down">
-                      <ul className="space-y-1.5 md:space-y-2 text-xs md:text-sm">
+                    <CollapsibleContent className="px-3 md:px-4 pb-2 pt-1 animate-accordion-down">
+                      <ul className="space-y-1 text-xs md:text-sm">
                         {day.activities.map((activity, idx) => (
                           <li key={idx} className="flex items-start">
                             <span className="text-rose-500 mr-2 mt-0.5 flex-shrink-0">•</span>
@@ -351,13 +351,13 @@ const CurriculumSection = () => {
               </div>
 
               <Card className="bg-white border border-gray-100 shadow-sm">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-lg md:text-xl font-serif font-medium text-gray-800">
+                <CardHeader className="pb-1 pt-3">
+                  <CardTitle className="text-base md:text-lg font-serif font-medium text-gray-800">
                     Key Logistics & Notes
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="pt-0">
-                  <ul className="space-y-1.5 md:space-y-2 text-sm md:text-base">
+                <CardContent className="pt-0 pb-3">
+                  <ul className="space-y-1 text-xs md:text-sm">
                     {logisticsData.map((item, index) => (
                       <li key={index} className="flex items-start">
                         <span className="text-rose-500 mr-2 mt-0.5 flex-shrink-0">•</span>
