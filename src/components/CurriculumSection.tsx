@@ -184,6 +184,11 @@ const CurriculumSection = () => {
     };
   }, []);
 
+  const handleTabChange = (value: string) => {
+    console.log('Tab changed to:', value);
+    setActiveTab(value);
+  };
+
   return (
     <section id="curriculum" ref={sectionRef} className="py-12 md:py-16 px-3 md:px-6 bg-white">
       <div className="max-w-6xl mx-auto">
@@ -209,8 +214,9 @@ const CurriculumSection = () => {
         >
           <Tabs 
             defaultValue="modules" 
+            value={activeTab}
+            onValueChange={handleTabChange}
             className="w-full" 
-            onValueChange={(value) => setActiveTab(value)}
           >
             <div className="flex justify-center mb-0">
               <TabsList className="shadow-md max-w-md">
