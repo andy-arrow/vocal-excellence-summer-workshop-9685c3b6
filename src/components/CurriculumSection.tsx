@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { Calendar, Clock, Book, Mic, Users, Theater, Music, Sparkles, ChevronDown, ChevronUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -241,6 +242,7 @@ const CurriculumSection = () => {
             <TabsContent 
               value="modules" 
               className="mt-0 block"
+              key="modules-content"
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
                 {modules.map((module, index) => (
@@ -290,6 +292,7 @@ const CurriculumSection = () => {
             <TabsContent 
               value="schedule" 
               className="mt-0 block" 
+              key="schedule-content"
             >
               <Card 
                 ref={(el) => (elementsRef.current[7] = el)} 
