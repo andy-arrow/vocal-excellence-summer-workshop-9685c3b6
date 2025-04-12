@@ -205,28 +205,28 @@ const CurriculumSection = () => {
         {/* Tabs with music-themed indicators - improved for mobile */}
         <div 
           ref={(el) => (elementsRef.current[2] = el)} 
-          className="flex justify-center mb-8 md:mb-10 reveal-on-scroll"
+          className="flex justify-center mb-4 md:mb-6 reveal-on-scroll"
         >
           <Tabs 
             defaultValue="modules" 
             className="w-full" 
             onValueChange={(value) => setActiveTab(value)}
           >
-            <div className="flex justify-center mb-4 md:mb-6">
-              <TabsList className="shadow-md w-full max-w-xs md:max-w-sm lg:max-w-md">
-                <TabsTrigger value="modules" className="flex-1">
-                  <div className="flex items-center justify-center">
-                    <Music size={isMobile ? 14 : 16} className="mr-1 md:mr-2" />
-                    <span className="whitespace-nowrap text-xs md:text-sm">Program Modules</span>
+            <div className="flex justify-center mb-0">
+              <TabsList className="shadow-md max-w-md">
+                <TabsTrigger value="modules">
+                  <div className="flex items-center justify-center space-x-1">
+                    <Music size={isMobile ? 14 : 16} />
+                    <span className="text-xs md:text-sm">Program Modules</span>
                     {activeTab === 'modules' && !hasReducedMotion && (
                       <span className="text-primary-foreground animate-float ml-1">♪</span>
                     )}
                   </div>
                 </TabsTrigger>
-                <TabsTrigger value="schedule" className="flex-1">
-                  <div className="flex items-center justify-center">
-                    <Calendar size={isMobile ? 14 : 16} className="mr-1 md:mr-2" />
-                    <span className="whitespace-nowrap text-xs md:text-sm">Daily Schedule</span>
+                <TabsTrigger value="schedule">
+                  <div className="flex items-center justify-center space-x-1">
+                    <Calendar size={isMobile ? 14 : 16} />
+                    <span className="text-xs md:text-sm">Daily Schedule</span>
                     {activeTab === 'schedule' && !hasReducedMotion && (
                       <span className="text-primary-foreground animate-float ml-1">♫</span>
                     )}
@@ -236,7 +236,7 @@ const CurriculumSection = () => {
             </div>
 
             {/* Modules Tab Content - improved grid for mobile */}
-            <TabsContent value="modules" className="mt-0">
+            <TabsContent value="modules" className="mt-4 md:mt-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
                 {modules.map((module, index) => (
                   <Card 
@@ -283,7 +283,7 @@ const CurriculumSection = () => {
             </TabsContent>
 
             {/* Schedule Tab Content - improved positioning and spacing for mobile */}
-            <TabsContent value="schedule" className="mt-0">
+            <TabsContent value="schedule" className="mt-4 md:mt-6">
               <Card 
                 ref={(el) => (elementsRef.current[7] = el)} 
                 className="reveal-on-scroll mb-6 bg-white border border-gray-100 shadow-sm"
@@ -336,7 +336,7 @@ const CurriculumSection = () => {
                       </div>
                     </CollapsibleTrigger>
                     
-                    <CollapsibleContent className="px-4 md:px-6 pb-4 pt-1 md:pt-2 animate-accordion-down">
+                    <CollapsibleContent className="px-4 md:px-6 pb-4 pt-2 animate-accordion-down">
                       <ul className="space-y-2 md:space-y-3 text-sm md:text-base">
                         {day.activities.map((activity, idx) => (
                           <li key={idx} className="flex items-start">
