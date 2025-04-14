@@ -22,7 +22,7 @@ export const SocialLoginButtons = () => {
         console.error('Google Login Error:', error.message);
         trackEvent('auth', 'error', {
           message: 'Google Login Failed',
-          details: error.message
+          details: { error: error.message }
         });
         
         toast({
@@ -32,14 +32,15 @@ export const SocialLoginButtons = () => {
         });
       } else {
         trackEvent('auth', 'info', {
-          message: 'Google Login Initiated'
+          message: 'Google Login Initiated',
+          details: {} // Empty object instead of missing parameter
         });
       }
     } catch (err) {
       console.error('Unexpected Google Login Error:', err);
       trackEvent('auth', 'error', {
         message: 'Unexpected Google Login Error',
-        details: String(err)
+        details: { error: String(err) }
       });
       
       toast({
