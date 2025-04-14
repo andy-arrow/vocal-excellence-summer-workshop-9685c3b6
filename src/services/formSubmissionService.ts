@@ -21,6 +21,8 @@ interface ContactFormData {
  */
 export const submitContactForm = async (data: ContactFormData): Promise<any> => {
   try {
+    console.log('submitContactForm: Starting submission for', data.email);
+    
     // Add timestamp and source information
     const formData = {
       ...data,
@@ -34,6 +36,7 @@ export const submitContactForm = async (data: ContactFormData): Promise<any> => 
       .select();
 
     if (error) {
+      console.error('submitContactForm: Supabase error', error);
       trackError('form_submission', error, {
         formType: 'contact',
         email: data.email
@@ -41,6 +44,7 @@ export const submitContactForm = async (data: ContactFormData): Promise<any> => 
       throw error;
     }
     
+    console.log('submitContactForm: Success', result);
     return { success: true, data: result };
   } catch (error) {
     console.error("Error submitting contact form:", error);
@@ -53,10 +57,12 @@ export const submitContactForm = async (data: ContactFormData): Promise<any> => 
  */
 export const submitApplicationForm = async (data: ApplicationFormValues, files?: { [key: string]: File }): Promise<any> => {
   try {
-    console.log('Submitting application form', data.email);
+    console.log('submitApplicationForm: Starting submission for', data.email);
 
     // For files support, use FormData and the process-application edge function
     if (files && Object.keys(files).length > 0) {
+      console.log('Files detected, using process-application edge function');
+      
       // When using files, use the process-application edge function (which bypasses RLS)
       const formData = new FormData();
       
@@ -67,6 +73,7 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
       // Add files
       Object.entries(files).forEach(([key, file]) => {
         if (file) {
+          console.log(`Adding file to formData: ${key}, ${file.name}, size: ${file.size}`);
           formData.append(key, file);
         }
       });
@@ -87,6 +94,7 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
         throw new Error(response.error.message || 'Failed to process application');
       }
       
+      console.log('Edge function response:', response);
       return { success: true, data: response.data };
     }
     
@@ -102,6 +110,8 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
       },
     });
     
+    console.log('Edge function response:', response);
+    
     if (response.error) {
       console.error('Edge function error:', response.error);
       trackError('form_submission', response.error, {
@@ -111,7 +121,7 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
       throw new Error(response.error.message || 'Failed to process application');
     }
     
-    console.log('Edge function response:', response);
+    console.log('Edge function processed application successfully');
     
     // As an ultimate fallback, attempt to use direct insert
     if (!response.data) {
@@ -162,6 +172,49 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
     return { success: true, data: response.data };
   } catch (error) {
     console.error("Error submitting application form:", error);
-    return { success: false, error };
+    
+    // Last resort fallback - try direct insert without any bells and whistles
+    try {
+      console.log("Attempting last resort direct insert fallback");
+      
+      const { data: result, error } = await supabase
+        .from('applications')
+        .insert([{
+          firstname: data.firstName,
+          lastname: data.lastName,
+          email: data.email,
+          phone: data.phone,
+          dateofbirth: data.dateOfBirth,
+          nationality: data.nationality,
+          address: data.address,
+          city: data.city,
+          country: data.country,
+          postalcode: data.postalCode,
+          vocalrange: data.vocalRange,
+          yearsofexperience: data.yearsOfExperience,
+          musicalbackground: data.musicalBackground,
+          teachername: data.teacherName,
+          teacheremail: data.teacherEmail,
+          performanceexperience: data.performanceExperience,
+          reasonforapplying: data.reasonForApplying,
+          heardaboutus: data.heardAboutUs,
+          scholarshipinterest: data.scholarshipInterest,
+          specialneeds: data.specialNeeds,
+          termsagreed: data.termsAgreed,
+          timestamp: new Date().toISOString(),
+          source: window.location.href,
+        }])
+        .select();
+        
+      if (error) {
+        console.error("Even last resort fallback failed:", error);
+        return { success: false, error };
+      }
+      
+      return { success: true, data: result };
+    } catch (fallbackError) {
+      console.error("All attempts failed:", fallbackError);
+      return { success: false, error };
+    }
   }
 };

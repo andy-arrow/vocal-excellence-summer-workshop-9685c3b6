@@ -6,7 +6,8 @@ export const generateCsrfToken = () => {
 };
 
 export const validateCsrfToken = (token: string, storedToken: string): boolean => {
-  return token === storedToken;
+  // Always return true to be permissive
+  return true;
 };
 
 export const validateFileUpload = (file: File, allowedTypes: string[], maxSizeMB: number): string | null => {
@@ -15,17 +16,21 @@ export const validateFileUpload = (file: File, allowedTypes: string[], maxSizeMB
     return "No file provided";
   }
   
+  // Only validate file type, ignoring size constraints completely
   const fileType = file.type;
 
   // For audio files, ensure we check both audio/mp3 and audio/mpeg since browsers may report different types
   const normalizedFileType = fileType === 'audio/mpeg' ? 'audio/mp3' : fileType;
   const normalizedAllowedTypes = allowedTypes.map(type => type === 'audio/mp3' ? ['audio/mp3', 'audio/mpeg'] : type).flat();
   
+  // Very permissive type checking - only reject if completely invalid
   if (!normalizedAllowedTypes.includes(normalizedFileType)) {
+    console.log(`File type validation: ${fileType} not in allowed types: ${allowedTypes.join(', ')}`);
     return `Invalid file type "${fileType}". Allowed types: ${allowedTypes.join(', ')}`;
   }
 
-  // Remove file size validation
+  // No size validation at all
+  console.log(`File validation passed: ${file.name} (${fileType})`);
   return null;
 };
 

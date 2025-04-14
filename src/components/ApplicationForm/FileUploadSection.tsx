@@ -31,6 +31,7 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      console.log(`FileUploadSection: Processing file ${file.name} of type ${file.type} and size ${file.size} bytes`);
       await handleFileUpload(file);
     }
     e.target.value = '';

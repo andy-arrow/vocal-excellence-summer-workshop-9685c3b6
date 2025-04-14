@@ -9,6 +9,7 @@ const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
     "authorization, x-client-info, apikey, content-type, x-csrf-token",
+  "Access-Control-Allow-Methods": "POST, GET, OPTIONS"
 };
 
 serve(async (req) => {
@@ -18,6 +19,8 @@ serve(async (req) => {
   }
 
   try {
+    console.log("Process-application: Function invoked");
+    
     // Parse the request body
     let formData;
     let applicationData;
@@ -28,22 +31,40 @@ serve(async (req) => {
     const contentType = req.headers.get("content-type") || "";
     
     if (contentType.includes("multipart/form-data")) {
-      // Parse form data
-      formData = await req.formData();
-      applicationData = JSON.parse(formData.get("applicationData") as string);
-      source = formData.get("source") as string || "website";
-      
-      // Optional CSRF validation - making this optional
-      const csrfToken = req.headers.get("x-csrf-token");
-      const formCsrfToken = formData.get("csrfToken");
-      
-      // We're not checking CSRF anymore to be permissive
+      console.log("Process-application: Processing multipart/form-data request");
+      try {
+        // Parse form data
+        formData = await req.formData();
+        const appDataStr = formData.get("applicationData");
+        console.log("applicationData as string:", appDataStr);
+        
+        if (typeof appDataStr === 'string') {
+          applicationData = JSON.parse(appDataStr);
+        } else {
+          throw new Error("Invalid applicationData format");
+        }
+        
+        source = formData.get("source") as string || "website";
+        
+        // CSRF validation is skipped intentionally for permissiveness
+      } catch (formError) {
+        console.error("Form data parsing error:", formError);
+        throw new Error(`Failed to parse form data: ${formError.message}`);
+      }
     } else {
-      // Parse JSON data
-      const json = await req.json();
-      applicationData = JSON.parse(json.applicationData);
-      source = json.source || "website";
-      directInsert = json.directInsert || false;
+      console.log("Process-application: Processing JSON request");
+      try {
+        // Parse JSON data
+        const json = await req.json();
+        applicationData = typeof json.applicationData === 'string' 
+          ? JSON.parse(json.applicationData) 
+          : json.applicationData;
+        source = json.source || "website";
+        directInsert = json.directInsert || false;
+      } catch (jsonError) {
+        console.error("JSON parsing error:", jsonError);
+        throw new Error(`Failed to parse JSON: ${jsonError.message}`);
+      }
     }
 
     const applicantEmail = applicationData.email;
@@ -56,9 +77,12 @@ serve(async (req) => {
     let audioFile1, audioFile2, cvFile, recommendationFile;
     
     if (formData) {
+      console.log("Checking for uploaded files");
+      
       // Check for audio files
       if (formData.has("audioFile1")) {
         audioFile1 = formData.get("audioFile1") as File;
+        console.log("Found audioFile1:", audioFile1.name, audioFile1.size);
         files.push({
           name: "audioFile1",
           file: audioFile1,
@@ -68,6 +92,7 @@ serve(async (req) => {
       
       if (formData.has("audioFile2")) {
         audioFile2 = formData.get("audioFile2") as File;
+        console.log("Found audioFile2:", audioFile2.name, audioFile2.size);
         files.push({
           name: "audioFile2",
           file: audioFile2,
@@ -78,6 +103,7 @@ serve(async (req) => {
       // Check for CV file
       if (formData.has("cvFile")) {
         cvFile = formData.get("cvFile") as File;
+        console.log("Found cvFile:", cvFile.name, cvFile.size);
         files.push({
           name: "cvFile",
           file: cvFile,
@@ -88,12 +114,15 @@ serve(async (req) => {
       // Check for recommendation letter
       if (formData.has("recommendationFile")) {
         recommendationFile = formData.get("recommendationFile") as File;
+        console.log("Found recommendationFile:", recommendationFile.name, recommendationFile.size);
         files.push({
           name: "recommendationFile",
           file: recommendationFile,
           type: "document"
         });
       }
+      
+      console.log(`Total files found: ${files.length}`);
     }
 
     // 1. Store application data in Supabase
@@ -124,7 +153,7 @@ serve(async (req) => {
       source: source,
     };
     
-    console.log("Inserting application data:", { 
+    console.log("Inserting application data for:", { 
       name: formData.firstname + " " + formData.lastname,
       email: formData.email
     });
@@ -140,62 +169,87 @@ serve(async (req) => {
     }
 
     const applicationId = applicationRecord[0].id;
-    console.log("Application ID:", applicationId);
+    console.log("Application saved with ID:", applicationId);
     
     // 2. Upload files to Supabase Storage if we have any
     const uploadedFiles = [];
     const fileAttachments = [];
     
     if (files.length > 0) {
-      // Create the bucket if it doesn't exist
-      const { data: bucketData, error: bucketError } = await supabase.storage
-        .getBucket('application_materials');
+      console.log(`Processing ${files.length} files for upload`);
       
-      if (bucketError && bucketError.message.includes('not found')) {
-        await supabase.storage.createBucket('application_materials', {
-          public: true, // Make bucket public to ensure maximum permissiveness
-        });
+      // Create the bucket if it doesn't exist
+      try {
+        const { data: bucketData, error: bucketError } = await supabase.storage
+          .getBucket('application_materials');
+        
+        if (bucketError) {
+          console.log("Bucket does not exist, creating:", bucketError);
+          await supabase.storage.createBucket('application_materials', {
+            public: true, // Make bucket public to ensure maximum permissiveness
+          });
+        } else {
+          console.log("Bucket exists:", bucketData);
+        }
+      } catch (bucketError) {
+        console.error("Error checking/creating bucket:", bucketError);
+        // Continue even if bucket check fails
       }
       
       // Upload each file
       for (const fileObj of files) {
-        if (!fileObj.file) continue;
+        if (!fileObj.file) {
+          console.log(`Skipping empty file: ${fileObj.name}`);
+          continue;
+        }
         
-        const fileExt = fileObj.file.name.split('.').pop();
-        const filePath = `${applicationId}/${fileObj.name}.${fileExt}`;
-        
-        // Convert File to ArrayBuffer for upload
-        const arrayBuffer = await fileObj.file.arrayBuffer();
-        
-        const { data: uploadData, error: uploadError } = await supabase.storage
-          .from('application_materials')
-          .upload(filePath, arrayBuffer, {
-            contentType: fileObj.file.type,
-            upsert: true // Set to true to allow overwriting
-          });
-        
-        if (uploadError) {
-          console.error(`Error uploading ${fileObj.name}:`, uploadError);
-          // Continue with the process even if a file upload fails
-        } else {
-          uploadedFiles.push({
-            name: fileObj.name,
-            path: filePath,
-            type: fileObj.type
-          });
+        try {
+          const fileExt = fileObj.file.name.split('.').pop();
+          const filePath = `${applicationId}/${fileObj.name}.${fileExt}`;
           
-          // Create file attachment for email
-          const fileContent = new Uint8Array(arrayBuffer);
-          fileAttachments.push({
-            filename: fileObj.file.name,
-            content: fileContent
-          });
+          console.log(`Uploading ${fileObj.name} to ${filePath}`);
+          
+          // Convert File to ArrayBuffer for upload
+          const arrayBuffer = await fileObj.file.arrayBuffer();
+          
+          const { data: uploadData, error: uploadError } = await supabase.storage
+            .from('application_materials')
+            .upload(filePath, arrayBuffer, {
+              contentType: fileObj.file.type,
+              upsert: true // Set to true to allow overwriting
+            });
+          
+          if (uploadError) {
+            console.error(`Error uploading ${fileObj.name}:`, uploadError);
+            // Continue with the process even if a file upload fails
+          } else {
+            console.log(`Successfully uploaded ${fileObj.name} to ${filePath}`);
+            uploadedFiles.push({
+              name: fileObj.name,
+              path: filePath,
+              type: fileObj.type
+            });
+            
+            // Create file attachment for email
+            const fileContent = new Uint8Array(arrayBuffer);
+            fileAttachments.push({
+              filename: fileObj.file.name,
+              content: fileContent
+            });
+          }
+        } catch (fileError) {
+          console.error(`Error processing file ${fileObj.name}:`, fileError);
+          // Continue with next file
         }
       }
+      
+      console.log(`Successfully uploaded ${uploadedFiles.length} files out of ${files.length}`);
     }
     
-    // 3. Send emails using Resend
+    // 3. Send emails using Resend - but continue the process even if email sending fails
     try {
+      console.log("Attempting to send email notifications");
+      
       // A. Admin notification with all application details and attachments
       const adminEmailHtml = getDetailedAdminNotificationTemplate(applicationData);
       
@@ -207,6 +261,8 @@ serve(async (req) => {
         attachments: fileAttachments,
       });
       
+      console.log("Admin notification email sent successfully");
+      
       // B. Confirmation email to the applicant
       const applicantEmailHtml = getApplicationConfirmationTemplate(applicationData.firstName);
       
@@ -217,7 +273,7 @@ serve(async (req) => {
         html: applicantEmailHtml
       });
       
-      console.log("Email notifications sent successfully");
+      console.log("Applicant confirmation email sent successfully");
     } catch (emailError) {
       console.error("Error sending email notifications:", emailError);
       // Don't throw here, we still want to return success for the submission
