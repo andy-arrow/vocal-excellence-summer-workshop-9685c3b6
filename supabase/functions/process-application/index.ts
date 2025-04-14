@@ -232,41 +232,73 @@ serve(async (req) => {
     }
 
     // Send email notifications
+    let emailError = null;
     try {
-      const emailHandler = new EmailHandler(Deno.env.get("RESEND_API_KEY") || "");
+      // Check if RESEND_API_KEY is set
+      const resendApiKey = Deno.env.get("RESEND_API_KEY");
+      if (!resendApiKey) {
+        console.error("RESEND_API_KEY not set in environment");
+        throw new Error("RESEND_API_KEY not configured");
+      }
+      
+      console.log("Initializing EmailHandler with API key");
+      const emailHandler = new EmailHandler(resendApiKey);
       
       // Create file attachments for email
-      const fileAttachments = uploadedFiles.length > 0 
-        ? await Promise.all(uploadedFiles.map(async (file) => {
-            try {
-              const formData = await req.formData();
-              const fileContent = formData.get(file.name) as File;
-              return {
-                filename: fileContent.name,
-                content: new Uint8Array(await fileContent.arrayBuffer())
-              };
-            } catch (error) {
-              console.error("Error creating file attachment:", error);
-              return null;
-            }
-          }).filter(Boolean))
-        : [];
+      let fileAttachments = [];
+      if (uploadedFiles.length > 0) {
+        try {
+          console.log("Creating file attachments for email");
+          const formData = await req.formData();
+          
+          fileAttachments = await Promise.all(
+            uploadedFiles.map(async (file: any) => {
+              try {
+                const fileContent = formData.get(file.name);
+                if (fileContent instanceof File) {
+                  console.log(`Creating attachment for ${file.name}: ${fileContent.name}`);
+                  return {
+                    filename: fileContent.name,
+                    content: new Uint8Array(await fileContent.arrayBuffer())
+                  };
+                }
+                return null;
+              } catch (error) {
+                console.error("Error creating file attachment:", error);
+                return null;
+              }
+            })
+          );
+          
+          fileAttachments = fileAttachments.filter(Boolean);
+          console.log(`Created ${fileAttachments.length} attachments for email`);
+        } catch (attachmentError) {
+          console.error("Error creating email attachments:", attachmentError);
+          fileAttachments = [];
+        }
+      }
 
+      // Send emails
       await emailHandler.sendNotifications(applicationData, fileAttachments);
       console.log("Email notifications sent successfully");
     } catch (emailError) {
       console.error("Error sending email notifications:", emailError);
-      // Continue despite email errors
+      // Store the error but continue - we don't want to fail the whole request
+      emailError = {
+        message: emailError.message,
+        stack: emailError.stack
+      };
     }
 
     const response: SuccessResponse = {
       success: true,
       message: "Application processed successfully",
       applicationId,
-      uploadedFiles: uploadedFiles.length > 0 ? uploadedFiles : undefined
+      uploadedFiles: uploadedFiles.length > 0 ? uploadedFiles : undefined,
+      emailStatus: emailError ? { error: emailError } : { success: true }
     };
 
-    console.log("Returning success response:", response);
+    console.log("Returning success response");
     return new Response(JSON.stringify(response), {
       status: 200,
       headers: { ...corsHeaders, "Content-Type": "application/json" }

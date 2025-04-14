@@ -1,7 +1,7 @@
-
 import { supabase } from "@/integrations/supabase/client";
 import { trackError } from "@/utils/monitoring";
 import { ApplicationFormValues } from "@/components/ApplicationForm/schema";
+import { toast } from '@/hooks/use-toast';
 
 export const submitApplicationForm = async (data: ApplicationFormValues, files?: { [key: string]: File }): Promise<any> => {
   try {
@@ -89,6 +89,11 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
     }
 
     console.log('Application saved successfully:', result);
+    const applicationId = result[0].id;
+
+    // Try to send emails directly if process-application fails
+    let emailSent = false;
+    let fileProcessingSuccess = false;
 
     // Handle file processing if files exist
     if (files && Object.keys(files).length > 0 && Object.values(files).some(f => f !== null)) {
@@ -96,7 +101,7 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
       try {
         const formData = new FormData();
         formData.append('applicationData', JSON.stringify(data));
-        formData.append('applicationId', result[0].id);
+        formData.append('applicationId', applicationId);
         
         // Log all files being added to FormData
         Object.entries(files).forEach(([key, file]) => {
@@ -121,16 +126,23 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
         
         if (response.error) {
           console.error('File processing error:', response.error);
-          trackError('component_error', response.error, {
-            formType: 'application',
-            email: data.email
-          });
-          
-          return { 
-            success: true, 
-            data: result[0],
-            fileError: response.error.message
-          };
+          // If process-application fails, we'll try to send emails directly
+          await sendEmailsDirectly(data, applicationId);
+          emailSent = true;
+        } else {
+          // Check if emails were sent successfully
+          if (response.data && response.data.emailStatus) {
+            if (response.data.emailStatus.error) {
+              console.error('Email error from process-application:', response.data.emailStatus.error);
+              // Try sending emails directly as a fallback
+              await sendEmailsDirectly(data, applicationId);
+              emailSent = true;
+            } else {
+              // Emails were sent successfully by process-application
+              emailSent = true;
+            }
+          }
+          fileProcessingSuccess = true;
         }
       } catch (fileError) {
         console.error('Error processing files:', fileError);
@@ -138,6 +150,10 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
           formType: 'application',
           email: data.email
         });
+        
+        // Try sending emails directly as a fallback
+        await sendEmailsDirectly(data, applicationId);
+        emailSent = true;
         
         return { 
           success: true, 
@@ -147,9 +163,17 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
       }
     } else {
       console.log('No files to process with application');
+      // No files, so send emails directly
+      await sendEmailsDirectly(data, applicationId);
+      emailSent = true;
     }
     
-    return { success: true, data: result[0] };
+    return { 
+      success: true, 
+      data: result[0], 
+      emailSent, 
+      fileProcessingSuccess 
+    };
     
   } catch (error: any) {
     console.error("Unhandled error submitting application form:", error);
@@ -163,6 +187,42 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
     };
   }
 };
+
+async function sendEmailsDirectly(data: ApplicationFormValues, applicationId: string) {
+  try {
+    console.log('Attempting to send emails directly via send-email function');
+    
+    // Send admin notification
+    const adminResponse = await supabase.functions.invoke('send-email', {
+      body: {
+        type: 'admin_notification',
+        applicantData: data,
+        applicationId: applicationId
+      },
+    });
+    
+    console.log('Admin notification sent directly:', adminResponse);
+    
+    // Send applicant confirmation
+    const applicantResponse = await supabase.functions.invoke('send-email', {
+      body: {
+        type: 'application_confirmation',
+        name: data.firstName,
+        email: data.email
+      },
+    });
+    
+    console.log('Applicant confirmation sent directly:', applicantResponse);
+    
+    return {
+      admin: adminResponse,
+      applicant: applicantResponse
+    };
+  } catch (error) {
+    console.error('Error sending emails directly:', error);
+    throw error;
+  }
+}
 
 export const submitContactForm = async (data: {
   name: string;

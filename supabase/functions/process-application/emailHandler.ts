@@ -1,11 +1,12 @@
 import { Resend } from "npm:resend@2.0.0";
-import { ApplicationData, ProcessedFile } from "./types.ts";
+import { ApplicationData } from "./types.ts";
 
 export class EmailHandler {
   private resend: Resend;
 
   constructor(apiKey: string) {
     this.resend = new Resend(apiKey);
+    console.log("EmailHandler initialized");
   }
 
   async sendNotifications(
@@ -14,6 +15,14 @@ export class EmailHandler {
   ) {
     try {
       console.log("Sending email notifications");
+      
+      if (!this.resend) {
+        throw new Error("Resend client not initialized");
+      }
+      
+      // Log RESEND_API_KEY value (masked) to verify it's set
+      const apiKey = Deno.env.get("RESEND_API_KEY") || "";
+      console.log("RESEND_API_KEY available:", apiKey ? "Yes (masked)" : "No");
       
       // Send admin notification
       await this.sendAdminNotification(applicationData, fileAttachments);
@@ -32,26 +41,49 @@ export class EmailHandler {
     applicationData: ApplicationData,
     fileAttachments: { filename: string; content: Uint8Array }[]
   ) {
-    const adminEmailHtml = this.getDetailedAdminNotificationTemplate(applicationData);
-    
-    await this.resend.emails.send({
-      from: "Vocal Excellence <noreply@vocalexcellence.org>",
-      to: ["aroditis.andreas@gmail.com"],
-      subject: "**Vocal Excellence** New Application Submission",
-      html: adminEmailHtml,
-      attachments: fileAttachments,
-    });
+    try {
+      console.log("Preparing admin notification email");
+      const adminEmailHtml = this.getDetailedAdminNotificationTemplate(applicationData);
+      
+      console.log("Sending admin email to: aroditis.andreas@gmail.com");
+      console.log("File attachments:", fileAttachments.map(f => f.filename).join(", ") || "None");
+      
+      const result = await this.resend.emails.send({
+        from: "Vocal Excellence <noreply@vocalexcellence.org>",
+        to: ["aroditis.andreas@gmail.com"],
+        subject: "**Vocal Excellence** New Application Submission",
+        html: adminEmailHtml,
+        attachments: fileAttachments,
+      });
+      
+      console.log("Admin email send result:", result);
+      return result;
+    } catch (error) {
+      console.error("Error sending admin notification email:", error);
+      throw error;
+    }
   }
 
   private async sendApplicantConfirmation(applicationData: ApplicationData) {
-    const applicantEmailHtml = this.getApplicationConfirmationTemplate(applicationData.firstName);
-    
-    await this.resend.emails.send({
-      from: "Vocal Excellence <noreply@vocalexcellence.org>",
-      to: [applicationData.email],
-      subject: "Application Received - Vocal Excellence Summer Programme",
-      html: applicantEmailHtml
-    });
+    try {
+      console.log("Preparing applicant confirmation email");
+      const applicantEmailHtml = this.getApplicationConfirmationTemplate(applicationData.firstName);
+      
+      console.log("Sending confirmation email to:", applicationData.email);
+      
+      const result = await this.resend.emails.send({
+        from: "Vocal Excellence <noreply@vocalexcellence.org>",
+        to: [applicationData.email],
+        subject: "Application Received - Vocal Excellence Summer Programme",
+        html: applicantEmailHtml
+      });
+      
+      console.log("Applicant email send result:", result);
+      return result;
+    } catch (error) {
+      console.error("Error sending applicant confirmation email:", error);
+      throw error;
+    }
   }
 
   private getDetailedAdminNotificationTemplate(applicationData: ApplicationData): string {

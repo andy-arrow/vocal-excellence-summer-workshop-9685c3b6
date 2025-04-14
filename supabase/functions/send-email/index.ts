@@ -2,7 +2,14 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 import { supabase } from "./supabaseClient.ts";
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+// Initialize Resend with API key
+const resendApiKey = Deno.env.get("RESEND_API_KEY");
+if (!resendApiKey) {
+  console.error("RESEND_API_KEY environment variable is not set");
+}
+const resend = new Resend(resendApiKey);
+
+console.log("Send-email function loaded, Resend initialized:", !!resend);
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -20,13 +27,32 @@ interface ApplicationEmailRequest {
 }
 
 serve(async (req) => {
+  console.log("Send-email function invoked");
+  
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
+    console.log("Handling OPTIONS preflight request");
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { type, email, name, applicantData, applicationId, actionUrl } = await req.json() as ApplicationEmailRequest;
+    // Check if Resend API key is set
+    if (!resendApiKey) {
+      throw new Error("RESEND_API_KEY not configured");
+    }
+    
+    // Parse request body
+    const body = await req.json();
+    console.log("Request body:", JSON.stringify(body, null, 2));
+    
+    const { type, email, name, applicantData, applicationId, actionUrl } = body as ApplicationEmailRequest;
+    
+    if (!type) {
+      throw new Error("Email type is required");
+    }
+    
+    console.log(`Sending ${type} email`);
+    
     let subject, htmlContent;
     let toEmail = email || "";
     let attachments = [];
@@ -63,7 +89,9 @@ serve(async (req) => {
           // If we have an applicationId, attempt to retrieve file attachments
           if (applicationId) {
             try {
+              console.log("Retrieving attachments for application:", applicationId);
               attachments = await getApplicationAttachments(applicationId);
+              console.log(`Retrieved ${attachments.length} attachments`);
             } catch (attachmentError) {
               console.error("Error getting application attachments:", attachmentError);
             }
@@ -77,6 +105,9 @@ serve(async (req) => {
       default:
         throw new Error("Invalid email template type");
     }
+
+    console.log(`Sending email to ${toEmail} with subject "${subject}"`);
+    console.log(`With ${attachments.length} attachments`);
 
     const emailResponse = await resend.emails.send({
       from: "Vocal Excellence <noreply@vocalexcellence.org>",
@@ -98,7 +129,7 @@ serve(async (req) => {
   } catch (error) {
     console.error("Error sending email:", error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: error.message, stack: error.stack }),
       {
         status: 500,
         headers: { "Content-Type": "application/json", ...corsHeaders },
@@ -121,38 +152,48 @@ async function getApplicationAttachments(applicationId: string) {
       return [];
     }
 
+    console.log(`Found ${data.length} files for application ${applicationId}`);
+
     // Get each file and convert to base64 for attachment
     const attachmentPromises = data.map(async (file) => {
-      const { data: fileData, error: fileError } = await supabase
-        .storage
-        .from('application_files')
-        .download(`${applicationId}/${file.name}`);
+      try {
+        const { data: fileData, error: fileError } = await supabase
+          .storage
+          .from('application_files')
+          .download(`${applicationId}/${file.name}`);
 
-      if (fileError || !fileData) {
-        console.error("Error downloading file:", fileError);
+        if (fileError || !fileData) {
+          console.error("Error downloading file:", fileError);
+          return null;
+        }
+
+        console.log(`Downloaded file: ${file.name}, size: ${fileData.size} bytes`);
+
+        // Convert to base64
+        const buffer = await fileData.arrayBuffer();
+        const base64 = btoa(
+          new Uint8Array(buffer).reduce(
+            (data, byte) => data + String.fromCharCode(byte),
+            ''
+          )
+        );
+
+        return {
+          filename: file.name,
+          content: base64,
+        };
+      } catch (error) {
+        console.error(`Error processing file ${file.name}:`, error);
         return null;
       }
-
-      // Convert to base64
-      const buffer = await fileData.arrayBuffer();
-      const base64 = btoa(
-        new Uint8Array(buffer).reduce(
-          (data, byte) => data + String.fromCharCode(byte),
-          ''
-        )
-      );
-
-      return {
-        filename: file.name,
-        content: base64,
-      };
     });
 
     const attachments = (await Promise.all(attachmentPromises)).filter(Boolean);
+    console.log(`Successfully processed ${attachments.length} attachments`);
     return attachments;
   } catch (error) {
     console.error("Error processing attachments:", error);
-    return [];
+    throw error;
   }
 }
 
