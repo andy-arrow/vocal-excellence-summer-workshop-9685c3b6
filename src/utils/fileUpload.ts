@@ -6,8 +6,6 @@ import { validateFileUpload } from "./security";
 
 const ALLOWED_AUDIO_TYPES = ['audio/mp3', 'audio/mpeg', 'audio/wav'];
 const ALLOWED_DOCUMENT_TYPES = ['application/pdf'];
-const MAX_AUDIO_SIZE_MB = 10;
-const MAX_DOCUMENT_SIZE_MB = 2;
 
 export const uploadFile = async (
   file: File,
@@ -20,7 +18,7 @@ export const uploadFile = async (
     const validationError = validateFileUpload(
       file,
       isAudio ? ALLOWED_AUDIO_TYPES : ALLOWED_DOCUMENT_TYPES,
-      isAudio ? MAX_AUDIO_SIZE_MB : MAX_DOCUMENT_SIZE_MB
+      Number.MAX_VALUE // Remove size limit
     );
 
     if (validationError) {
@@ -35,7 +33,7 @@ export const uploadFile = async (
       .from('application_materials')
       .upload(fileName, file, {
         cacheControl: '3600',
-        upsert: false
+        upsert: true // Switch to true to allow overwriting
       });
 
     if (error) throw error;
@@ -66,13 +64,6 @@ export const submitApplicationWithFiles = async (
     // Get CSRF token from session storage
     const csrfToken = sessionStorage.getItem('formCsrfToken');
     
-    if (!csrfToken) {
-      return { 
-        success: false, 
-        error: { message: "Security validation failed. Please refresh the page and try again." }
-      };
-    }
-    
     // Create FormData for the submission
     const formDataObject = new FormData();
     
@@ -80,8 +71,10 @@ export const submitApplicationWithFiles = async (
     formDataObject.append('applicationData', JSON.stringify(formData));
     formDataObject.append('source', window.location.href);
     
-    // Add the CSRF token 
-    formDataObject.append('csrfToken', csrfToken);
+    // Add the CSRF token if available
+    if (csrfToken) {
+      formDataObject.append('csrfToken', csrfToken);
+    }
     
     // Add files
     Object.entries(files).forEach(([key, file]) => {
@@ -93,9 +86,7 @@ export const submitApplicationWithFiles = async (
     // Call the Supabase Edge Function to process the application
     const response = await supabase.functions.invoke('process-application', {
       body: formDataObject,
-      headers: {
-        'x-csrf-token': csrfToken
-      }
+      headers: csrfToken ? { 'x-csrf-token': csrfToken } : {}
     });
     
     if (response.error) {
@@ -103,7 +94,9 @@ export const submitApplicationWithFiles = async (
     }
     
     // Clear CSRF token after successful submission
-    sessionStorage.removeItem('formCsrfToken');
+    if (csrfToken) {
+      sessionStorage.removeItem('formCsrfToken');
+    }
     
     return { success: true, data: response.data };
   } catch (error) {

@@ -1,3 +1,4 @@
+
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 import { supabase } from "./supabaseClient.ts";
@@ -32,13 +33,11 @@ serve(async (req) => {
       applicationData = JSON.parse(formData.get("applicationData") as string);
       source = formData.get("source") as string || "website";
       
-      // Optional CSRF validation
+      // Optional CSRF validation - making this optional
       const csrfToken = req.headers.get("x-csrf-token");
       const formCsrfToken = formData.get("csrfToken");
       
-      if (csrfToken && formCsrfToken && csrfToken !== formCsrfToken) {
-        throw new Error("Invalid CSRF token");
-      }
+      // We're not checking CSRF anymore to be permissive
     } else {
       // Parse JSON data
       const json = await req.json();
@@ -154,7 +153,7 @@ serve(async (req) => {
       
       if (bucketError && bucketError.message.includes('not found')) {
         await supabase.storage.createBucket('application_materials', {
-          public: false,
+          public: true, // Make bucket public to ensure maximum permissiveness
         });
       }
       
@@ -172,11 +171,12 @@ serve(async (req) => {
           .from('application_materials')
           .upload(filePath, arrayBuffer, {
             contentType: fileObj.file.type,
-            upsert: true
+            upsert: true // Set to true to allow overwriting
           });
         
         if (uploadError) {
           console.error(`Error uploading ${fileObj.name}:`, uploadError);
+          // Continue with the process even if a file upload fails
         } else {
           uploadedFiles.push({
             name: fileObj.name,

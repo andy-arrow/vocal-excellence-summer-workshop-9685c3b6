@@ -45,7 +45,7 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
           {required && <span className="text-rose-400">*</span>}
         </FormLabel>
         <span className="text-xs text-slate-400">
-          {acceptedFormats}, max 10MB
+          {acceptedFormats}
         </span>
       </div>
       <p className="text-sm text-slate-300 mb-4">{description}</p>
