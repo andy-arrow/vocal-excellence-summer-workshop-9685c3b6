@@ -3,10 +3,10 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Upload, CheckCircle, AlertCircle, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { FileUploadState } from '@/hooks/useFileUpload';
+import { UploadState } from '@/hooks/useFileUpload';
 
 interface UploadStatusProps {
-  uploadState: FileUploadState;
+  uploadState: UploadState;
   onRemove: () => void;
 }
 
