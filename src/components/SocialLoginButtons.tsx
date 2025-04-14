@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
-import { Mail } from 'lucide-react';  // Changed back to Mail since Google isn't available
+import { Mail } from 'lucide-react';  // Using Mail icon since Google isn't available
 import { useToast } from '@/hooks/use-toast';
 import { trackEvent } from '@/utils/monitoring';
 
