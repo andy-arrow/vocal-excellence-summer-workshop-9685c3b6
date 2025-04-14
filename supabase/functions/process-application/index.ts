@@ -1,20 +1,22 @@
+
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 import { supabase } from "./supabaseClient.ts";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
+// Updated CORS headers to be more permissive
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type, x-csrf-token",
-  "Access-Control-Allow-Methods": "POST, GET, OPTIONS"
+  "Access-Control-Allow-Headers": "*",
+  "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+  "Access-Control-Max-Age": "86400"
 };
 
 serve(async (req) => {
-  console.log("Process-application function invoked");
+  console.log("Process-application function invoked with method:", req.method);
   
-  // Handle CORS preflight requests
+  // Handle CORS preflight requests - this is critical!
   if (req.method === "OPTIONS") {
     console.log("Handling OPTIONS preflight request");
     return new Response(null, { 
@@ -305,7 +307,9 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({
         success: false,
-        error: error.message
+        error: error.message,
+        stack: error.stack,
+        details: JSON.stringify(error)
       }),
       {
         status: 500,

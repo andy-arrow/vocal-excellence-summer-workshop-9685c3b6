@@ -1,3 +1,4 @@
+
 /**
  * Form Submission Service
  * 
@@ -90,14 +91,31 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
             formType: 'application',
             email: data.email
           });
-          throw new Error(`Edge function error: ${response.error.message || 'Unknown error'}\nDetails: ${JSON.stringify(response.error)}`);
+          
+          const errorDetails = {
+            message: response.error.message || 'Edge function error occurred',
+            details: JSON.stringify(response.error),
+            code: response.error.code || 'EDGE_FUNCTION_ERROR',
+            timestamp: new Date().toISOString()
+          };
+          
+          throw Object.assign(new Error(errorDetails.message), errorDetails);
         }
         
         console.log('Edge function response:', response);
         return { success: true, data: response.data };
       } catch (functionError: any) {
         console.error('Edge function call failed:', functionError);
-        throw new Error(`Edge function call failed: ${functionError.message}\nStack: ${functionError.stack || 'No stack trace'}`);
+        
+        const errorInfo = {
+          message: `Edge function call failed: ${functionError.message || 'Unknown error'}`,
+          details: JSON.stringify(functionError),
+          stack: functionError.stack || 'No stack trace',
+          code: functionError.code || 'EDGE_FUNCTION_CALL_FAILED',
+          timestamp: new Date().toISOString()
+        };
+        
+        throw Object.assign(new Error(errorInfo.message), errorInfo);
       }
     }
     
@@ -115,67 +133,102 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
       
       if (response.error) {
         console.error('Edge function error:', response.error);
-        throw new Error(`Edge function error: ${response.error.message || 'Unknown error'}\nDetails: ${JSON.stringify(response.error)}`);
+        
+        const errorDetails = {
+          message: `Edge function error: ${response.error.message || 'Unknown error'}`,
+          details: JSON.stringify(response.error),
+          code: response.error.code || 'EDGE_FUNCTION_ERROR',
+          timestamp: new Date().toISOString()
+        };
+        
+        throw Object.assign(new Error(errorDetails.message), errorDetails);
       }
       
       return { success: true, data: response.data };
     } catch (functionError: any) {
       console.error('Edge function call failed:', functionError);
-      throw new Error(`Edge function call failed: ${functionError.message}\nStack: ${functionError.stack || 'No stack trace'}`);
+      
+      // Try direct database insert as a fallback
+      console.log('FALLBACK: Attempting direct database insert');
+      return await performDirectDatabaseInsert(data);
     }
-    
-    // Direct database insert as fallback
-    console.log('Attempting direct insert as fallback');
-    const { data: result, error } = await supabase
-      .from('applications')
-      .insert([{
-        firstname: data.firstName,
-        lastname: data.lastName,
-        email: data.email,
-        phone: data.phone,
-        dateofbirth: data.dateOfBirth,
-        nationality: data.nationality,
-        address: data.address,
-        city: data.city,
-        country: data.country,
-        postalcode: data.postalCode,
-        vocalrange: data.vocalRange,
-        yearsofexperience: data.yearsOfExperience,
-        musicalbackground: data.musicalBackground,
-        teachername: data.teacherName,
-        teacheremail: data.teacherEmail,
-        performanceexperience: data.performanceExperience,
-        reasonforapplying: data.reasonForApplying,
-        heardaboutus: data.heardAboutUs,
-        scholarshipinterest: data.scholarshipInterest,
-        specialneeds: data.specialNeeds,
-        termsagreed: data.termsAgreed,
-        timestamp: new Date().toISOString(),
-        source: window.location.href,
-      }])
-      .select();
-
-    if (error) {
-      console.error('Database insert error:', error);
-      trackError('form_submission', error, {
-        formType: 'application',
-        email: data.email
-      });
-      throw new Error(`Database insert error: ${error.message}\nDetails: ${JSON.stringify(error)}\nCode: ${error.code}`);
-    }
-    
-    return { success: true, data: result };
   } catch (error: any) {
     console.error("Error submitting application form:", error);
-    return { 
-      success: false, 
-      error: {
-        message: error.message || 'Unknown error occurred',
-        details: error.details || '',
-        stack: error.stack || '',
-        code: error.code || '',
-        timestamp: new Date().toISOString()
-      }
-    };
+    
+    // If all else fails, try direct database insert
+    try {
+      console.log('FINAL FALLBACK: Attempting direct database insert after all other methods failed');
+      return await performDirectDatabaseInsert(data);
+    } catch (fallbackError: any) {
+      console.error("Even fallback direct insert failed:", fallbackError);
+      
+      return { 
+        success: false, 
+        error: {
+          message: error.message || 'Unknown error occurred',
+          details: error.details || JSON.stringify(error),
+          stack: error.stack || 'No stack trace available',
+          code: error.code || 'SUBMISSION_FAILED',
+          timestamp: new Date().toISOString(),
+          fallbackError: fallbackError.message || 'Fallback also failed'
+        }
+      };
+    }
   }
 };
+
+/**
+ * Direct database insert as absolute fallback
+ */
+async function performDirectDatabaseInsert(data: ApplicationFormValues): Promise<any> {
+  console.log('performDirectDatabaseInsert: Starting direct database insert for', data.email);
+  
+  const { data: result, error } = await supabase
+    .from('applications')
+    .insert([{
+      firstname: data.firstName,
+      lastname: data.lastName,
+      email: data.email,
+      phone: data.phone,
+      dateofbirth: data.dateOfBirth,
+      nationality: data.nationality,
+      address: data.address,
+      city: data.city,
+      country: data.country,
+      postalcode: data.postalCode,
+      vocalrange: data.vocalRange,
+      yearsofexperience: data.yearsOfExperience,
+      musicalbackground: data.musicalBackground,
+      teachername: data.teacherName,
+      teacheremail: data.teacherEmail,
+      performanceexperience: data.performanceExperience,
+      reasonforapplying: data.reasonForApplying,
+      heardaboutus: data.heardAboutUs,
+      scholarshipinterest: data.scholarshipInterest,
+      specialneeds: data.specialNeeds,
+      termsagreed: data.termsAgreed,
+      timestamp: new Date().toISOString(),
+      source: window.location.href,
+    }])
+    .select();
+
+  if (error) {
+    console.error('Database insert error:', error);
+    trackError('form_submission', error, {
+      formType: 'application',
+      email: data.email
+    });
+    
+    const errorDetails = {
+      message: `Database insert error: ${error.message}`,
+      details: JSON.stringify(error),
+      code: error.code || 'DATABASE_INSERT_ERROR',
+      timestamp: new Date().toISOString()
+    };
+    
+    throw Object.assign(new Error(errorDetails.message), errorDetails);
+  }
+  
+  console.log('Direct database insert successful:', result);
+  return { success: true, data: result, method: 'direct_insert' };
+}
