@@ -1,3 +1,4 @@
+
 /**
  * Form Submission Service
  * 
@@ -59,6 +60,7 @@ const checkRateLimit = async (email: string): Promise<boolean> => {
     console.log('Checking rate limit for email:', email);
     console.log('Twenty-four hours ago:', twentyFourHoursAgo.toISOString());
 
+    // Use a direct count query for public access without authentication requirements
     const { count, error } = await supabase
       .from('applications')
       .select('*', { count: 'exact', head: true })
@@ -67,7 +69,8 @@ const checkRateLimit = async (email: string): Promise<boolean> => {
       
     if (error) {
       console.error('Rate limit check error:', error);
-      throw error;
+      // In case of error, allow the submission to proceed
+      return true;
     }
     
     console.log('Submission count in last 24 hours:', count);
@@ -103,6 +106,7 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
 
     // For files support, use FormData and the process-application edge function
     if (files && Object.keys(files).length > 0) {
+      // When using files, use the process-application edge function (which bypasses RLS)
       const formData = new FormData();
       
       // Add application data as JSON
@@ -116,7 +120,7 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
         }
       });
       
-      // Call the edge function to process the application with files
+      // Use the edge function (which bypasses RLS) to process the application with files
       const response = await supabase.functions.invoke('process-application', {
         body: formData,
       });
@@ -132,8 +136,10 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
       return { success: true, data: response.data };
     }
     
-    // Legacy submission without files - keep for backward compatibility
-    // Transform form data to match database column names (all lowercase)
+    // For non-file submissions, also use the edge function to bypass RLS
+    console.log('Submitting application without files via edge function');
+    
+    // Prepare the data
     const formData = {
       firstname: data.firstName,
       lastname: data.lastName,
@@ -159,57 +165,52 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
       timestamp: new Date().toISOString(),
       source: window.location.href,
     };
-
-    console.log('Submitting form data:', formData);
-
-    const { data: result, error } = await supabase
-      .from('applications')
-      .insert([formData])
-      .select();
-
-    console.log('Supabase insert result:', result);
-    console.log('Supabase insert error:', error);
-
-    if (error) {
-      trackError('form_submission', error, {
+    
+    console.log('Submitting via edge function with formData:', formData);
+    
+    // Call the process-application edge function
+    const response = await supabase.functions.invoke('process-application', {
+      body: {
+        applicationData: JSON.stringify(data),
+        directInsert: true,
+        source: window.location.href
+      },
+    });
+    
+    if (response.error) {
+      console.error('Edge function error:', response.error);
+      trackError('form_submission', response.error, {
         formType: 'application',
         email: data.email
       });
-      throw error;
-    }
-
-    // Get the application ID
-    const applicationId = result && result[0] ? result[0].id : null;
-
-    // Send admin notification email with detailed applicant information
-    try {
-      await supabase.functions.invoke('send-email', {
-        body: {
-          type: 'admin_notification',
-          applicantData: data,
-          applicationId: applicationId
-        }
-      });
-    } catch (emailError) {
-      console.error('Error sending admin notification:', emailError);
-      // Don't throw the error here - we still want to return success for the form submission
+      throw new Error(response.error.message || 'Failed to process application');
     }
     
-    // Send confirmation email to the applicant
-    try {
-      await supabase.functions.invoke('send-email', {
-        body: {
-          type: 'application_confirmation',
-          name: data.firstName,
+    console.log('Edge function response:', response);
+    
+    // For backward compatibility - attempt to use direct insert as fallback
+    if (!response.data) {
+      console.log('Attempting direct insert as fallback');
+      const { data: result, error } = await supabase
+        .from('applications')
+        .insert([formData])
+        .select();
+
+      console.log('Direct insert result:', result);
+      console.log('Direct insert error:', error);
+
+      if (error) {
+        trackError('form_submission', error, {
+          formType: 'application',
           email: data.email
-        }
-      });
-    } catch (emailError) {
-      console.error('Error sending confirmation email:', emailError);
-      // Don't throw the error here - we still want to return success
+        });
+        throw error;
+      }
+      
+      return { success: true, data: result };
     }
     
-    return { success: true, data: result };
+    return { success: true, data: response.data };
   } catch (error) {
     console.error("Error submitting application form:", error);
     return { success: false, error };

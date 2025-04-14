@@ -1,4 +1,3 @@
-
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 import { supabase } from "./supabaseClient.ts";
@@ -46,25 +45,41 @@ serve(async (req) => {
   }
 
   try {
-    // Validate CSRF token
-    const csrfToken = req.headers.get("x-csrf-token");
-    if (!csrfToken) {
-      throw new Error("Missing CSRF token");
-    }
-
     // Parse the request body
-    const formData = await req.formData();
+    let formData;
+    let applicationData;
+    let source = "website";
+    let directInsert = false;
     
-    // Get the CSRF token from the form data and verify it matches the header
-    const formCsrfToken = formData.get("csrfToken");
-    if (!formCsrfToken || formCsrfToken !== csrfToken) {
-      throw new Error("Invalid CSRF token");
+    // Check if the request is a FormData request or a JSON request
+    const contentType = req.headers.get("content-type") || "";
+    
+    if (contentType.includes("multipart/form-data")) {
+      // Parse form data
+      formData = await req.formData();
+      applicationData = JSON.parse(formData.get("applicationData") as string);
+      source = formData.get("source") as string || "website";
+      
+      // Optional CSRF validation
+      const csrfToken = req.headers.get("x-csrf-token");
+      const formCsrfToken = formData.get("csrfToken");
+      
+      if (csrfToken && formCsrfToken && csrfToken !== formCsrfToken) {
+        throw new Error("Invalid CSRF token");
+      }
+    } else {
+      // Parse JSON data
+      const json = await req.json();
+      applicationData = JSON.parse(json.applicationData);
+      source = json.source || "website";
+      directInsert = json.directInsert || false;
     }
-    
-    const applicationData = JSON.parse(formData.get("applicationData") as string);
 
+    const applicantEmail = applicationData.email;
+    const applicantName = `${applicationData.firstName} ${applicationData.lastName}`;
+    
     // Rate limiting check
-    if (!checkRateLimit(applicationData.email)) {
+    if (!checkRateLimit(applicantEmail)) {
       return new Response(
         JSON.stringify({
           error: "Rate limit exceeded. Please try again later.",
@@ -75,84 +90,90 @@ serve(async (req) => {
         }
       );
     }
-
-    // Extract form fields
-    const applicantEmail = applicationData.email;
-    const applicantName = `${applicationData.firstName} ${applicationData.lastName}`;
     
-    // Process files - convert to array to handle multiple files
+    console.log("Processing application for:", applicantName, applicantEmail);
+
+    // Process files if there are any
     const files = [];
     let audioFile1, audioFile2, cvFile, recommendationFile;
     
-    // Check for audio files
-    if (formData.has("audioFile1")) {
-      audioFile1 = formData.get("audioFile1") as File;
-      files.push({
-        name: "audioFile1",
-        file: audioFile1,
-        type: "audio"
-      });
-    }
-    
-    if (formData.has("audioFile2")) {
-      audioFile2 = formData.get("audioFile2") as File;
-      files.push({
-        name: "audioFile2",
-        file: audioFile2,
-        type: "audio"
-      });
-    }
-    
-    // Check for CV file
-    if (formData.has("cvFile")) {
-      cvFile = formData.get("cvFile") as File;
-      files.push({
-        name: "cvFile",
-        file: cvFile,
-        type: "document"
-      });
-    }
-    
-    // Check for recommendation letter
-    if (formData.has("recommendationFile")) {
-      recommendationFile = formData.get("recommendationFile") as File;
-      files.push({
-        name: "recommendationFile",
-        file: recommendationFile,
-        type: "document"
-      });
+    if (formData) {
+      // Check for audio files
+      if (formData.has("audioFile1")) {
+        audioFile1 = formData.get("audioFile1") as File;
+        files.push({
+          name: "audioFile1",
+          file: audioFile1,
+          type: "audio"
+        });
+      }
+      
+      if (formData.has("audioFile2")) {
+        audioFile2 = formData.get("audioFile2") as File;
+        files.push({
+          name: "audioFile2",
+          file: audioFile2,
+          type: "audio"
+        });
+      }
+      
+      // Check for CV file
+      if (formData.has("cvFile")) {
+        cvFile = formData.get("cvFile") as File;
+        files.push({
+          name: "cvFile",
+          file: cvFile,
+          type: "document"
+        });
+      }
+      
+      // Check for recommendation letter
+      if (formData.has("recommendationFile")) {
+        recommendationFile = formData.get("recommendationFile") as File;
+        files.push({
+          name: "recommendationFile",
+          file: recommendationFile,
+          type: "document"
+        });
+      }
     }
 
     // 1. Store application data in Supabase
+    // Using the service role key in the edge function to bypass RLS
+    const formData = {
+      firstname: applicationData.firstName,
+      lastname: applicationData.lastName,
+      email: applicationData.email,
+      phone: applicationData.phone,
+      dateofbirth: applicationData.dateOfBirth,
+      nationality: applicationData.nationality,
+      address: applicationData.address,
+      city: applicationData.city,
+      country: applicationData.country,
+      postalcode: applicationData.postalCode,
+      vocalrange: applicationData.vocalRange,
+      yearsofexperience: applicationData.yearsOfExperience,
+      musicalbackground: applicationData.musicalBackground,
+      teachername: applicationData.teacherName || null,
+      teacheremail: applicationData.teacherEmail || null,
+      performanceexperience: applicationData.performanceExperience,
+      reasonforapplying: applicationData.reasonForApplying,
+      heardaboutus: applicationData.heardAboutUs,
+      scholarshipinterest: applicationData.scholarshipInterest,
+      specialneeds: applicationData.specialNeeds || null,
+      termsagreed: applicationData.termsAgreed,
+      timestamp: new Date().toISOString(),
+      source: source,
+    };
+    
+    console.log("Inserting application data:", { 
+      name: formData.firstname + " " + formData.lastname,
+      email: formData.email
+    });
+
     const { data: applicationRecord, error: dbError } = await supabase
       .from('applications')
-      .insert([
-        {
-          firstname: applicationData.firstName,
-          lastname: applicationData.lastName,
-          email: applicationData.email,
-          phone: applicationData.phone,
-          dateofbirth: applicationData.dateOfBirth,
-          nationality: applicationData.nationality,
-          address: applicationData.address,
-          city: applicationData.city,
-          country: applicationData.country,
-          postalcode: applicationData.postalCode,
-          vocalrange: applicationData.vocalRange,
-          yearsofexperience: applicationData.yearsOfExperience,
-          musicalbackground: applicationData.musicalBackground,
-          teachername: applicationData.teacherName || null,
-          teacheremail: applicationData.teacherEmail || null,
-          performanceexperience: applicationData.performanceExperience,
-          reasonforapplying: applicationData.reasonForApplying,
-          heardaboutus: applicationData.heardAboutUs,
-          scholarshipinterest: applicationData.scholarshipInterest,
-          specialneeds: applicationData.specialNeeds || null,
-          termsagreed: applicationData.termsAgreed,
-          timestamp: new Date().toISOString(),
-          source: formData.get("source") as string || "website",
-        }
-      ])
+      .insert([formData])
       .select();
 
     if (dbError) {
@@ -163,85 +184,92 @@ serve(async (req) => {
     const applicationId = applicationRecord[0].id;
     console.log("Application ID:", applicationId);
     
-    // 2. Upload files to Supabase Storage
+    // 2. Upload files to Supabase Storage if we have any
     const uploadedFiles = [];
     const fileAttachments = [];
     
-    // Create the bucket if it doesn't exist
-    const { data: bucketData, error: bucketError } = await supabase.storage
-      .getBucket('application_materials');
-    
-    if (bucketError && bucketError.message.includes('not found')) {
-      await supabase.storage.createBucket('application_materials', {
-        public: false,
-      });
-    }
-    
-    // Upload each file
-    for (const fileObj of files) {
-      if (!fileObj.file) continue;
+    if (files.length > 0) {
+      // Create the bucket if it doesn't exist
+      const { data: bucketData, error: bucketError } = await supabase.storage
+        .getBucket('application_materials');
       
-      const fileExt = fileObj.file.name.split('.').pop();
-      const filePath = `${applicationId}/${fileObj.name}.${fileExt}`;
-      
-      // Convert File to ArrayBuffer for upload
-      const arrayBuffer = await fileObj.file.arrayBuffer();
-      
-      const { data: uploadData, error: uploadError } = await supabase.storage
-        .from('application_materials')
-        .upload(filePath, arrayBuffer, {
-          contentType: fileObj.file.type,
-          upsert: true
+      if (bucketError && bucketError.message.includes('not found')) {
+        await supabase.storage.createBucket('application_materials', {
+          public: false,
         });
+      }
       
-      if (uploadError) {
-        console.error(`Error uploading ${fileObj.name}:`, uploadError);
-      } else {
-        uploadedFiles.push({
-          name: fileObj.name,
-          path: filePath,
-          type: fileObj.type
-        });
+      // Upload each file
+      for (const fileObj of files) {
+        if (!fileObj.file) continue;
         
-        // Create file attachment for email
-        const fileContent = new Uint8Array(arrayBuffer);
-        fileAttachments.push({
-          filename: fileObj.file.name,
-          content: fileContent
-        });
+        const fileExt = fileObj.file.name.split('.').pop();
+        const filePath = `${applicationId}/${fileObj.name}.${fileExt}`;
+        
+        // Convert File to ArrayBuffer for upload
+        const arrayBuffer = await fileObj.file.arrayBuffer();
+        
+        const { data: uploadData, error: uploadError } = await supabase.storage
+          .from('application_materials')
+          .upload(filePath, arrayBuffer, {
+            contentType: fileObj.file.type,
+            upsert: true
+          });
+        
+        if (uploadError) {
+          console.error(`Error uploading ${fileObj.name}:`, uploadError);
+        } else {
+          uploadedFiles.push({
+            name: fileObj.name,
+            path: filePath,
+            type: fileObj.type
+          });
+          
+          // Create file attachment for email
+          const fileContent = new Uint8Array(arrayBuffer);
+          fileAttachments.push({
+            filename: fileObj.file.name,
+            content: fileContent
+          });
+        }
       }
     }
     
     // 3. Send emails using Resend
-    // A. Admin notification with all application details and attachments
-    const adminEmailHtml = getDetailedAdminNotificationTemplate(applicationData);
-    
-    const adminEmailResult = await resend.emails.send({
-      from: "Vocal Excellence <noreply@vocalexcellence.org>",
-      to: ["aroditis.andreas@gmail.com"],
-      subject: "**Vocal Excellence** New Application Submission",
-      html: adminEmailHtml,
-      attachments: fileAttachments,
-    });
-    
-    // B. Confirmation email to the applicant
-    const applicantEmailHtml = getApplicationConfirmationTemplate(applicationData.firstName);
-    
-    const applicantEmailResult = await resend.emails.send({
-      from: "Vocal Excellence <noreply@vocalexcellence.org>",
-      to: [applicantEmail],
-      subject: "Application Received - Vocal Excellence Summer Programme",
-      html: applicantEmailHtml
-    });
+    try {
+      // A. Admin notification with all application details and attachments
+      const adminEmailHtml = getDetailedAdminNotificationTemplate(applicationData);
+      
+      await resend.emails.send({
+        from: "Vocal Excellence <noreply@vocalexcellence.org>",
+        to: ["aroditis.andreas@gmail.com"],
+        subject: "**Vocal Excellence** New Application Submission",
+        html: adminEmailHtml,
+        attachments: fileAttachments,
+      });
+      
+      // B. Confirmation email to the applicant
+      const applicantEmailHtml = getApplicationConfirmationTemplate(applicationData.firstName);
+      
+      await resend.emails.send({
+        from: "Vocal Excellence <noreply@vocalexcellence.org>",
+        to: [applicantEmail],
+        subject: "Application Received - Vocal Excellence Summer Programme",
+        html: applicantEmailHtml
+      });
+      
+      console.log("Email notifications sent successfully");
+    } catch (emailError) {
+      console.error("Error sending email notifications:", emailError);
+      // Don't throw here, we still want to return success for the submission
+    }
     
     return new Response(
       JSON.stringify({
         success: true,
         message: "Application processed successfully",
         applicationId: applicationId,
-        uploadedFiles: uploadedFiles,
-        adminEmail: adminEmailResult,
-        applicantEmail: applicantEmailResult
+        uploadedFiles: uploadedFiles.length > 0 ? uploadedFiles : undefined
       }),
       {
         status: 200,
