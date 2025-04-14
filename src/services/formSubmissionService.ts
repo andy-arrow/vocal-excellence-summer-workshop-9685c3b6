@@ -37,7 +37,7 @@ export const submitContactForm = async (data: ContactFormData): Promise<any> => 
 
     if (error) {
       console.error('submitContactForm: Supabase error', error);
-      trackError('form_submission', error, {
+      trackError('component_error', error, {
         formType: 'contact',
         email: data.email
       });
@@ -91,7 +91,7 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
 
     if (insertError) {
       console.error('Database insertion error:', insertError);
-      trackError('form_submission', insertError, {
+      trackError('component_error', insertError, {
         formType: 'application',
         email: data.email
       });
@@ -122,7 +122,7 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
         if (response.error) {
           console.error('File processing error:', response.error);
           // Don't throw here - we've already saved the application data
-          trackError('component_error', response.error, {  // Changed from 'file_processing' to 'component_error'
+          trackError('component_error', response.error, {
             formType: 'application',
             email: data.email
           });
@@ -130,7 +130,7 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
       } catch (fileError) {
         console.error('Error processing files:', fileError);
         // Don't throw here - we've already saved the application data
-        trackError('component_error', fileError, {  // Changed from 'file_processing' to 'component_error'
+        trackError('component_error', fileError, {
           formType: 'application',
           email: data.email
         });
