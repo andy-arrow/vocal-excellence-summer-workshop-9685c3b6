@@ -3,18 +3,35 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
 import { Mail } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 export const SocialLoginButtons = () => {
-  const handleGoogleLogin = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/auth`
-      }
-    });
+  const { toast } = useToast();
 
-    if (error) {
-      console.error('Error logging in with Google:', error.message);
+  const handleGoogleLogin = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/auth`
+        }
+      });
+
+      if (error) {
+        console.error('Google Login Error:', error.message);
+        toast({
+          title: "Login Failed",
+          description: "Unable to login with Google. Please try again.",
+          variant: "destructive"
+        });
+      }
+    } catch (err) {
+      console.error('Unexpected Google Login Error:', err);
+      toast({
+        title: "Login Error",
+        description: "An unexpected error occurred. Please try again later.",
+        variant: "destructive"
+      });
     }
   };
 
