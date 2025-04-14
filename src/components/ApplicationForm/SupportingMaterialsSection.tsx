@@ -6,6 +6,7 @@ import { Music4, FileText, ScrollText } from 'lucide-react';
 import { FileUploadSection } from './FileUploadSection';
 import { UploadStatus } from './UploadStatus';
 
+// Declare global window interface extension
 declare global {
   interface Window {
     applicationFiles: {
