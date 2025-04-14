@@ -21,6 +21,7 @@ export interface ApplicationData {
   scholarshipInterest: boolean;
   specialNeeds?: string;
   termsAgreed: boolean;
+  [key: string]: any; // Allow for additional fields
 }
 
 export interface FileUpload {
@@ -47,4 +48,3 @@ export interface SuccessResponse {
   applicationId: string;
   uploadedFiles?: ProcessedFile[];
 }
-

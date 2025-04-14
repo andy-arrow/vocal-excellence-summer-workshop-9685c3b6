@@ -58,12 +58,15 @@ export const submitContactForm = async (data: ContactFormData): Promise<any> => 
 export const submitApplicationForm = async (data: ApplicationFormValues, files?: { [key: string]: File }): Promise<any> => {
   try {
     console.log('submitApplicationForm: Starting submission for', data.email);
+    console.log('Application data:', data);
+    if (files) {
+      console.log('Files attached:', Object.keys(files));
+    }
 
     // For files support, use FormData and the process-application edge function
     if (files && Object.keys(files).length > 0) {
-      console.log('Files detected, using process-application edge function');
+      console.log('Files detected, using process-application edge function with FormData');
       
-      // When using files, use the process-application edge function (which bypasses RLS)
       const formData = new FormData();
       
       // Add application data as JSON
@@ -78,12 +81,14 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
         }
       });
       
-      console.log('Calling process-application edge function with files');
+      console.log('Calling process-application edge function with FormData');
       
       try {
         const response = await supabase.functions.invoke('process-application', {
           body: formData,
         });
+        
+        console.log('Edge function response:', response);
         
         if (response.error) {
           console.error('Edge function error:', response.error);
@@ -102,7 +107,6 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
           throw Object.assign(new Error(errorDetails.message), errorDetails);
         }
         
-        console.log('Edge function response:', response);
         return { success: true, data: response.data };
       } catch (functionError: any) {
         console.error('Edge function call failed:', functionError);
@@ -119,20 +123,21 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
       }
     }
     
-    // For non-file submissions, try the edge function first
-    console.log('Submitting application without files via edge function');
+    // For non-file submissions, use JSON data with the edge function
+    console.log('Submitting application without files via edge function with JSON');
     
     try {
       const response = await supabase.functions.invoke('process-application', {
         body: {
-          applicationData: JSON.stringify(data),
-          directInsert: true,
+          applicationData: data,  // Send as direct object instead of string
           source: window.location.href
         },
       });
       
+      console.log('Edge function JSON response:', response);
+      
       if (response.error) {
-        console.error('Edge function error:', response.error);
+        console.error('Edge function error with JSON data:', response.error);
         
         const errorDetails = {
           message: `Edge function error: ${response.error.message || 'Unknown error'}`,
@@ -146,7 +151,7 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
       
       return { success: true, data: response.data };
     } catch (functionError: any) {
-      console.error('Edge function call failed:', functionError);
+      console.error('Edge function JSON call failed:', functionError);
       
       // Try direct database insert as a fallback
       console.log('FALLBACK: Attempting direct database insert');

@@ -14,6 +14,7 @@ const corsHeaders = {
 
 function handleError(error: Error, details?: any): ErrorResponse {
   console.error("Error processing application:", error);
+  console.error("Error details:", details || { stack: error.stack });
   return {
     success: false,
     error: error.message,
@@ -22,65 +23,105 @@ function handleError(error: Error, details?: any): ErrorResponse {
 }
 
 async function processFormData(formData: FormData): Promise<ApplicationData> {
-  const appDataStr = formData.get("applicationData");
-  console.log("applicationData as string:", appDataStr);
-  
-  if (typeof appDataStr !== 'string') {
-    throw new Error("Invalid applicationData format");
+  try {
+    const appDataStr = formData.get("applicationData");
+    console.log("Received form data with keys:", [...formData.keys()]);
+    console.log("applicationData as string:", appDataStr);
+    
+    if (typeof appDataStr !== 'string') {
+      console.error("Invalid applicationData format:", appDataStr);
+      throw new Error("Invalid applicationData format");
+    }
+    
+    try {
+      return JSON.parse(appDataStr);
+    } catch (parseError) {
+      console.error("Failed to parse applicationData JSON:", parseError);
+      throw new Error(`Failed to parse applicationData JSON: ${parseError.message}`);
+    }
+  } catch (error) {
+    console.error("Error in processFormData:", error);
+    throw error;
   }
-  
-  return JSON.parse(appDataStr);
 }
 
 async function processJsonData(request: Request): Promise<ApplicationData> {
-  const json = await request.json();
-  return typeof json.applicationData === 'string' 
-    ? JSON.parse(json.applicationData) 
-    : json.applicationData;
+  try {
+    const json = await request.json();
+    console.log("Received JSON data:", json);
+    
+    if (!json.applicationData) {
+      console.error("Missing applicationData in JSON request");
+      throw new Error("Missing applicationData in request");
+    }
+    
+    return typeof json.applicationData === 'string' 
+      ? JSON.parse(json.applicationData) 
+      : json.applicationData;
+  } catch (error) {
+    console.error("Error in processJsonData:", error);
+    throw error;
+  }
 }
 
 async function saveApplicationToDatabase(data: ApplicationData): Promise<string> {
-  const formData = {
-    firstname: data.firstName,
-    lastname: data.lastName,
-    email: data.email,
-    phone: data.phone,
-    dateofbirth: data.dateOfBirth,
-    nationality: data.nationality,
-    address: data.address,
-    city: data.city,
-    country: data.country,
-    postalcode: data.postalCode,
-    vocalrange: data.vocalRange,
-    yearsofexperience: data.yearsOfExperience,
-    musicalbackground: data.musicalBackground,
-    teachername: data.teacherName || null,
-    teacheremail: data.teacherEmail || null,
-    performanceexperience: data.performanceExperience,
-    reasonforapplying: data.reasonForApplying,
-    heardaboutus: data.heardAboutUs,
-    scholarshipinterest: data.scholarshipInterest,
-    specialneeds: data.specialNeeds || null,
-    termsagreed: data.termsAgreed,
-    timestamp: new Date().toISOString(),
-    source: "website",
-  };
+  try {
+    console.log("Attempting to save application to database for:", `${data.firstName} ${data.lastName}`);
+    
+    const formData = {
+      firstname: data.firstName,
+      lastname: data.lastName,
+      email: data.email,
+      phone: data.phone,
+      dateofbirth: data.dateOfBirth,
+      nationality: data.nationality,
+      address: data.address,
+      city: data.city,
+      country: data.country,
+      postalcode: data.postalCode,
+      vocalrange: data.vocalRange,
+      yearsofexperience: data.yearsOfExperience,
+      musicalbackground: data.musicalBackground,
+      teachername: data.teacherName || null,
+      teacheremail: data.teacherEmail || null,
+      performanceexperience: data.performanceExperience,
+      reasonforapplying: data.reasonForApplying,
+      heardaboutus: data.heardAboutUs,
+      scholarshipinterest: data.scholarshipInterest,
+      specialneeds: data.specialNeeds || null,
+      termsagreed: data.termsAgreed,
+      timestamp: new Date().toISOString(),
+      source: "website",
+    };
 
-  const { data: applicationRecord, error: dbError } = await supabase
-    .from('applications')
-    .insert([formData])
-    .select();
+    console.log("Prepared application data for database insertion:", formData);
 
-  if (dbError) {
-    console.error("Database error:", dbError);
-    throw new Error(`Failed to store application data: ${dbError.message}`);
+    const { data: applicationRecord, error: dbError } = await supabase
+      .from('applications')
+      .insert([formData])
+      .select();
+
+    if (dbError) {
+      console.error("Database error:", dbError);
+      throw new Error(`Failed to store application data: ${dbError.message}`);
+    }
+
+    if (!applicationRecord || applicationRecord.length === 0) {
+      console.error("No application record returned after insertion");
+      throw new Error("Failed to retrieve application record after insertion");
+    }
+
+    console.log("Application saved successfully with ID:", applicationRecord[0].id);
+    return applicationRecord[0].id;
+  } catch (error) {
+    console.error("Error in saveApplicationToDatabase:", error);
+    throw error;
   }
-
-  return applicationRecord[0].id;
 }
 
 serve(async (req) => {
   console.log("Process-application function invoked with method:", req.method);
+  console.log("Content-Type:", req.headers.get("content-type"));
   
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
@@ -91,44 +132,128 @@ serve(async (req) => {
     });
   }
 
+  if (req.method !== "POST") {
+    console.error("Invalid request method:", req.method);
+    return new Response(
+      JSON.stringify({ 
+        success: false, 
+        error: "Only POST requests are supported" 
+      }),
+      { 
+        status: 405, 
+        headers: { ...corsHeaders, "Content-Type": "application/json" } 
+      }
+    );
+  }
+
   try {
     // Parse request data
     const contentType = req.headers.get("content-type") || "";
-    const applicationData = contentType.includes("multipart/form-data")
-      ? await processFormData(await req.formData())
-      : await processJsonData(req);
+    console.log("Processing request with content type:", contentType);
+    
+    let applicationData: ApplicationData;
+    
+    try {
+      if (contentType.includes("multipart/form-data")) {
+        const formData = await req.formData();
+        applicationData = await processFormData(formData);
+      } else if (contentType.includes("application/json")) {
+        applicationData = await processJsonData(req);
+      } else {
+        throw new Error(`Unsupported content type: ${contentType}`);
+      }
+    } catch (parseError) {
+      console.error("Error parsing request data:", parseError);
+      return new Response(
+        JSON.stringify({ 
+          success: false, 
+          error: `Failed to parse request data: ${parseError.message}` 
+        }),
+        { 
+          status: 400, 
+          headers: { ...corsHeaders, "Content-Type": "application/json" } 
+        }
+      );
+    }
 
     console.log("Processing application for:", 
       `${applicationData.firstName} ${applicationData.lastName}`,
       applicationData.email
     );
 
+    // Validate required fields
+    const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'dateOfBirth'];
+    const missingFields = requiredFields.filter(field => !applicationData[field]);
+    
+    if (missingFields.length > 0) {
+      console.error("Missing required fields:", missingFields);
+      return new Response(
+        JSON.stringify({ 
+          success: false, 
+          error: `Missing required fields: ${missingFields.join(', ')}` 
+        }),
+        { 
+          status: 400, 
+          headers: { ...corsHeaders, "Content-Type": "application/json" } 
+        }
+      );
+    }
+
     // Save to database
-    const applicationId = await saveApplicationToDatabase(applicationData);
-    console.log("Application saved with ID:", applicationId);
+    let applicationId: string;
+    try {
+      applicationId = await saveApplicationToDatabase(applicationData);
+      console.log("Application saved with ID:", applicationId);
+    } catch (dbError) {
+      console.error("Database error:", dbError);
+      return new Response(
+        JSON.stringify({ 
+          success: false, 
+          error: `Database error: ${dbError.message}` 
+        }),
+        { 
+          status: 500, 
+          headers: { ...corsHeaders, "Content-Type": "application/json" } 
+        }
+      );
+    }
 
     // Process files if present
-    const uploadedFiles = contentType.includes("multipart/form-data")
-      ? await processFiles(await req.formData(), applicationId)
-      : [];
+    let uploadedFiles = [];
+    if (contentType.includes("multipart/form-data")) {
+      try {
+        const formData = await req.formData();
+        uploadedFiles = await processFiles(formData, applicationId);
+        console.log("Processed files:", uploadedFiles);
+      } catch (fileError) {
+        console.error("Error processing files:", fileError);
+        // Continue despite file errors - we've already saved the application
+      }
+    }
 
     // Send email notifications
-    const emailHandler = new EmailHandler(Deno.env.get("RESEND_API_KEY") || "");
-    
-    // Create file attachments for email
-    const fileAttachments = uploadedFiles.length > 0 
-      ? await Promise.all(uploadedFiles.map(async (file) => {
-          const formData = await req.formData();
-          const fileContent = formData.get(file.name) as File;
-          return {
-            filename: fileContent.name,
-            content: new Uint8Array(await fileContent.arrayBuffer())
-          };
-        }))
-      : [];
-
     try {
+      const emailHandler = new EmailHandler(Deno.env.get("RESEND_API_KEY") || "");
+      
+      // Create file attachments for email
+      const fileAttachments = uploadedFiles.length > 0 
+        ? await Promise.all(uploadedFiles.map(async (file) => {
+            try {
+              const formData = await req.formData();
+              const fileContent = formData.get(file.name) as File;
+              return {
+                filename: fileContent.name,
+                content: new Uint8Array(await fileContent.arrayBuffer())
+              };
+            } catch (error) {
+              console.error("Error creating file attachment:", error);
+              return null;
+            }
+          }).filter(Boolean))
+        : [];
+
       await emailHandler.sendNotifications(applicationData, fileAttachments);
+      console.log("Email notifications sent successfully");
     } catch (emailError) {
       console.error("Error sending email notifications:", emailError);
       // Continue despite email errors
@@ -141,12 +266,14 @@ serve(async (req) => {
       uploadedFiles: uploadedFiles.length > 0 ? uploadedFiles : undefined
     };
 
+    console.log("Returning success response:", response);
     return new Response(JSON.stringify(response), {
       status: 200,
       headers: { ...corsHeaders, "Content-Type": "application/json" }
     });
     
   } catch (error) {
+    console.error("Unhandled error in process-application function:", error);
     const errorResponse = handleError(error);
     return new Response(JSON.stringify(errorResponse), {
       status: 500,
@@ -154,4 +281,3 @@ serve(async (req) => {
     });
   }
 });
-
