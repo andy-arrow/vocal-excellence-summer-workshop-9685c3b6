@@ -80,96 +80,101 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
       
       console.log('Calling process-application edge function with files');
       
-      // Use the edge function to process the application with files
-      const response = await supabase.functions.invoke('process-application', {
-        body: formData,
-      });
-      
-      if (response.error) {
-        console.error('Edge function error:', response.error);
-        trackError('form_submission', response.error, {
-          formType: 'application',
-          email: data.email
+      try {
+        // Use the edge function to process the application with files
+        const response = await supabase.functions.invoke('process-application', {
+          body: formData,
         });
-        throw new Error(response.error.message || 'Failed to process application');
+        
+        if (response.error) {
+          console.error('Edge function error:', response.error);
+          trackError('form_submission', response.error, {
+            formType: 'application',
+            email: data.email
+          });
+          // Don't throw here, we'll try the direct insert fallback
+          console.log('Edge function failed, trying direct insert...');
+        } else {
+          console.log('Edge function response:', response);
+          return { success: true, data: response.data };
+        }
+      } catch (functionError) {
+        console.error('Edge function call failed:', functionError);
+        // Continue to fallback
+        console.log('Edge function call failed, trying direct insert...');
       }
+    } else {
+      // For non-file submissions, try the edge function first
+      console.log('Submitting application without files via edge function');
       
-      console.log('Edge function response:', response);
-      return { success: true, data: response.data };
+      try {
+        // Call the process-application edge function
+        const response = await supabase.functions.invoke('process-application', {
+          body: {
+            applicationData: JSON.stringify(data),
+            directInsert: true,
+            source: window.location.href
+          },
+        });
+        
+        console.log('Edge function response:', response);
+        
+        if (!response.error) {
+          console.log('Edge function processed application successfully');
+          return { success: true, data: response.data };
+        }
+        
+        console.error('Edge function error:', response.error);
+        // Continue to fallback
+      } catch (functionError) {
+        console.error('Edge function call failed:', functionError);
+        // Continue to fallback
+      }
     }
     
-    // For non-file submissions, also use the edge function to bypass RLS
-    console.log('Submitting application without files via edge function');
-    
-    // Call the process-application edge function
-    const response = await supabase.functions.invoke('process-application', {
-      body: {
-        applicationData: JSON.stringify(data),
-        directInsert: true,
-        source: window.location.href
-      },
-    });
-    
-    console.log('Edge function response:', response);
-    
-    if (response.error) {
-      console.error('Edge function error:', response.error);
-      trackError('form_submission', response.error, {
+    // Direct database insert as fallback
+    console.log('Attempting direct insert as fallback');
+    const { data: result, error } = await supabase
+      .from('applications')
+      .insert([{
+        firstname: data.firstName,
+        lastname: data.lastName,
+        email: data.email,
+        phone: data.phone,
+        dateofbirth: data.dateOfBirth,
+        nationality: data.nationality,
+        address: data.address,
+        city: data.city,
+        country: data.country,
+        postalcode: data.postalCode,
+        vocalrange: data.vocalRange,
+        yearsofexperience: data.yearsOfExperience,
+        musicalbackground: data.musicalBackground,
+        teachername: data.teacherName,
+        teacheremail: data.teacherEmail,
+        performanceexperience: data.performanceExperience,
+        reasonforapplying: data.reasonForApplying,
+        heardaboutus: data.heardAboutUs,
+        scholarshipinterest: data.scholarshipInterest,
+        specialneeds: data.specialNeeds,
+        termsagreed: data.termsAgreed,
+        timestamp: new Date().toISOString(),
+        source: window.location.href,
+      }])
+      .select();
+
+    console.log('Direct insert result:', result);
+    console.log('Direct insert error:', error);
+
+    if (error) {
+      trackError('form_submission', error, {
         formType: 'application',
         email: data.email
       });
-      throw new Error(response.error.message || 'Failed to process application');
+      throw error;
     }
     
-    console.log('Edge function processed application successfully');
-    
-    // As an ultimate fallback, attempt to use direct insert
-    if (!response.data) {
-      console.log('Attempting direct insert as fallback');
-      const { data: result, error } = await supabase
-        .from('applications')
-        .insert([{
-          firstname: data.firstName,
-          lastname: data.lastName,
-          email: data.email,
-          phone: data.phone,
-          dateofbirth: data.dateOfBirth,
-          nationality: data.nationality,
-          address: data.address,
-          city: data.city,
-          country: data.country,
-          postalcode: data.postalCode,
-          vocalrange: data.vocalRange,
-          yearsofexperience: data.yearsOfExperience,
-          musicalbackground: data.musicalBackground,
-          teachername: data.teacherName,
-          teacheremail: data.teacherEmail,
-          performanceexperience: data.performanceExperience,
-          reasonforapplying: data.reasonForApplying,
-          heardaboutus: data.heardAboutUs,
-          scholarshipinterest: data.scholarshipInterest,
-          specialneeds: data.specialNeeds,
-          termsagreed: data.termsAgreed,
-          timestamp: new Date().toISOString(),
-          source: window.location.href,
-        }])
-        .select();
-
-      console.log('Direct insert result:', result);
-      console.log('Direct insert error:', error);
-
-      if (error) {
-        trackError('form_submission', error, {
-          formType: 'application',
-          email: data.email
-        });
-        throw error;
-      }
-      
-      return { success: true, data: result };
-    }
-    
-    return { success: true, data: response.data };
+    return { success: true, data: result };
   } catch (error) {
     console.error("Error submitting application form:", error);
     
