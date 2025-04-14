@@ -9,13 +9,18 @@ export async function processFiles(
   const uploadedFiles: ProcessedFile[] = [];
   const files: FileUpload[] = [];
 
+  console.log("processFiles: Starting to process files for application ID:", applicationId);
+  console.log("All form data keys:", [...formData.keys()]);
+
   // Check for audio files
   const audioFiles = ['audioFile1', 'audioFile2'];
   for (const name of audioFiles) {
     const file = formData.get(name) as File;
-    if (file?.size > 0) {
-      console.log(`Found ${name}:`, file.name, file.size);
+    if (file && file.size > 0) {
+      console.log(`Found ${name}:`, file.name, file.size, file.type);
       files.push({ name, file, type: 'audio' });
+    } else {
+      console.log(`No ${name} found or file was empty`);
     }
   }
 
@@ -23,13 +28,20 @@ export async function processFiles(
   const docFiles = ['cvFile', 'recommendationFile'];
   for (const name of docFiles) {
     const file = formData.get(name) as File;
-    if (file?.size > 0) {
-      console.log(`Found ${name}:`, file.name, file.size);
+    if (file && file.size > 0) {
+      console.log(`Found ${name}:`, file.name, file.size, file.type);
       files.push({ name, file, type: 'document' });
+    } else {
+      console.log(`No ${name} found or file was empty`);
     }
   }
 
-  if (files.length === 0) return [];
+  if (files.length === 0) {
+    console.log("No valid files found to process");
+    return [];
+  }
+
+  console.log(`Found ${files.length} files to process:`, files.map(f => `${f.name}: ${f.file.name}`));
 
   // Ensure bucket exists
   try {
@@ -53,9 +65,11 @@ export async function processFiles(
       const fileExt = fileObj.file.name.split('.').pop();
       const filePath = `${applicationId}/${fileObj.name}.${fileExt}`;
       
-      console.log(`Uploading ${fileObj.name} to ${filePath}`);
+      console.log(`Uploading ${fileObj.name} to ${filePath} (${fileObj.file.size} bytes)`);
       
+      // Convert File to ArrayBuffer
       const arrayBuffer = await fileObj.file.arrayBuffer();
+      console.log(`Converted ${fileObj.name} to ArrayBuffer of length: ${arrayBuffer.byteLength}`);
       
       const { error: uploadError } = await supabase.storage
         .from('application_materials')
@@ -81,6 +95,6 @@ export async function processFiles(
     }
   }
 
+  console.log(`Successfully processed ${uploadedFiles.length} files`);
   return uploadedFiles;
 }
-

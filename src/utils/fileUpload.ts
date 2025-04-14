@@ -1,7 +1,7 @@
 
 import { supabase } from "@/integrations/supabase/client";
 import { ApplicationFormValues } from "@/components/ApplicationForm/schema";
-import { submitApplicationForm } from "@/services/formSubmissionService";
+import { toast } from '@/hooks/use-toast';
 import { validateFileUpload } from "./security";
 
 const ALLOWED_AUDIO_TYPES = ['audio/mp3', 'audio/mpeg', 'audio/wav'];
@@ -77,12 +77,12 @@ export const getFileUrl = (path: string): string => {
 export const submitApplicationWithFiles = async (
   formData: ApplicationFormValues,
   files: { [key: string]: File }
-): Promise<{ success: boolean; error?: any; data?: any }> => {
+): Promise<{ success: boolean; error?: any; data?: any; fileError?: string }> => {
   try {
     console.log('submitApplicationWithFiles: Starting submission with files for', formData.email);
-    console.log('Files to upload:', Object.keys(files).map(key => `${key}: ${files[key]?.name || 'null'}`));
+    console.log('Files to upload:', Object.keys(files).map(key => `${key}: ${files[key]?.name || 'null'} (${files[key]?.size || 0} bytes)`));
     
-    // Get CSRF token from session storage (not enforced)
+    // Get CSRF token if available
     const csrfToken = sessionStorage.getItem('formCsrfToken');
     
     // Create FormData for the submission
@@ -92,26 +92,34 @@ export const submitApplicationWithFiles = async (
     formDataObject.append('applicationData', JSON.stringify(formData));
     formDataObject.append('source', window.location.href);
     
-    // Add the CSRF token if available (not enforced)
+    // Add the CSRF token if available
     if (csrfToken) {
       formDataObject.append('csrfToken', csrfToken);
     }
     
-    // Add files
+    // Add files to FormData
     Object.entries(files).forEach(([key, file]) => {
-      if (file) {
+      if (file && file.size > 0) {
         console.log(`Adding file to formData: ${key}, ${file.name}, ${file.size} bytes`);
         formDataObject.append(key, file);
+      } else {
+        console.warn(`Skipping file ${key}: Invalid file object or zero size`);
       }
     });
     
-    // Create custom headers with minimal restrictions
+    // Log form data entries for debugging
+    console.log('FormData entries:');
+    for (const entry of formDataObject.entries()) {
+      console.log(entry[0], entry[1] instanceof File ? `File: ${(entry[1] as File).name} (${(entry[1] as File).size} bytes)` : entry[1]);
+    }
+    
+    // Create custom headers
     const headers: Record<string, string> = {};
     if (csrfToken) {
       headers['x-csrf-token'] = csrfToken;
     }
     
-    console.log('Calling process-application edge function');
+    console.log('Calling process-application edge function with files');
     
     // Call the Supabase Edge Function to process the application
     const response = await supabase.functions.invoke('process-application', {
@@ -131,19 +139,36 @@ export const submitApplicationWithFiles = async (
       sessionStorage.removeItem('formCsrfToken');
     }
 
-    console.log('Application submitted successfully!');
+    console.log('Application submitted successfully with files!');
     
     return { success: true, data: response.data };
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error submitting application with files:", error);
     
-    // Fallback mechanism if edge function fails
+    // Let's try the fallback mechanism
     try {
       console.log('Attempting direct form submission as fallback');
-      const result = await submitApplicationForm(formData);
-      if (result.success) {
-        return { success: true, data: result.data };
+      
+      // Add files directly to window.applicationFiles just in case it wasn't set
+      if (typeof window !== 'undefined') {
+        window.applicationFiles = window.applicationFiles || {};
+        Object.entries(files).forEach(([key, file]) => {
+          if (file) window.applicationFiles[key] = file;
+        });
       }
+      
+      const result = await import('@/services/formSubmissionService').then(module => {
+        return module.submitApplicationForm(formData);
+      });
+      
+      if (result.success) {
+        return { 
+          success: true, 
+          data: result.data,
+          fileError: 'Files were not processed through the edge function, but your application was submitted'
+        };
+      }
+      
       return { success: false, error };
     } catch (fallbackError) {
       console.error("Even fallback submission failed:", fallbackError);

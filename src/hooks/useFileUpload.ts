@@ -36,13 +36,14 @@ export const useFileUpload = (fileType: string) => {
       const validationError = validateFileUpload(
         file, 
         allowedTypes,
-        Number.MAX_VALUE
+        Number.MAX_VALUE // Remove size limit for testing
       );
       
       if (validationError) {
         throw new Error(validationError);
       }
       
+      // Simulate upload progress for better UX
       const interval = setInterval(() => {
         setUploadState(prev => {
           if (prev.progress >= 90) {
@@ -53,7 +54,9 @@ export const useFileUpload = (fileType: string) => {
         });
       }, 300);
       
+      // Store file in the global object for later submission
       if (typeof window !== 'undefined') {
+        // Create the object if it doesn't exist
         if (!window.applicationFiles) {
           window.applicationFiles = {
             audioFile1: null,
@@ -62,10 +65,16 @@ export const useFileUpload = (fileType: string) => {
             recommendationFile: null,
           };
         }
+        
+        // Store the file
         window.applicationFiles[fileType] = file;
-        console.log(`Set file in window.applicationFiles.${fileType}:`, file.name);
+        console.log(`useFileUpload: Stored file in window.applicationFiles.${fileType}:`, file.name, file.size, 'bytes');
+        console.log('Current applicationFiles state:', Object.keys(window.applicationFiles).map(key => 
+          `${key}: ${window.applicationFiles[key] ? window.applicationFiles[key].name : 'null'}`
+        ));
       }
       
+      // Simulate completion after progress
       setTimeout(() => {
         clearInterval(interval);
         setUploadState({
@@ -100,9 +109,10 @@ export const useFileUpload = (fileType: string) => {
   };
   
   const reset = () => {
+    // Remove the file from the global object when reset
     if (typeof window !== 'undefined' && window.applicationFiles) {
       window.applicationFiles[fileType] = null;
-      console.log(`Reset file in window.applicationFiles.${fileType}`);
+      console.log(`useFileUpload: Reset file in window.applicationFiles.${fileType}`);
     }
     
     setUploadState({

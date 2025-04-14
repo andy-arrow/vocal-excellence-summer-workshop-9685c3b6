@@ -33,23 +33,8 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
     if (file) {
       console.log(`FileUploadSection: Processing file ${file.name} of type ${file.type} and size ${file.size} bytes`);
       await handleFileUpload(file);
-      
-      // Ensure window.applicationFiles is initialized
-      if (typeof window !== 'undefined') {
-        if (!window.applicationFiles) {
-          window.applicationFiles = {
-            audioFile1: null,
-            audioFile2: null,
-            cvFile: null,
-            recommendationFile: null,
-          };
-        }
-        
-        // Store the file in the global object
-        window.applicationFiles[fileType] = file;
-        console.log(`Stored file in window.applicationFiles.${fileType}:`, file.name);
-      }
     }
+    // Reset the input value to allow uploading the same file again if needed
     e.target.value = '';
   };
   

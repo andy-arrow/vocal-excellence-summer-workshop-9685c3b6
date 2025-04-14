@@ -35,7 +35,7 @@ const SupportingMaterialsSection = () => {
         cvFile: null,
         recommendationFile: null,
       };
-      console.log('SupportingMaterialsSection: Initialized window.applicationFiles');
+      console.log('SupportingMaterialsSection: Initialized window.applicationFiles', window.applicationFiles);
     }
     
     // Cleanup on unmount

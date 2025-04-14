@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -16,7 +15,7 @@ import SupportingMaterialsSection from './SupportingMaterialsSection';
 import TermsAndConditionsSection from './TermsAndConditionsSection';
 import SubmitButton from './SubmitButton';
 import SubmissionSuccessMessage from './SubmissionSuccessMessage';
-import { submitApplicationForm } from '@/services/formSubmissionService';
+import { submitApplicationWithFiles } from '@/utils/fileUpload';
 
 const formVariants = {
   hidden: { opacity: 0 },
@@ -51,6 +50,13 @@ const ApplicationForm = () => {
     setCsrfToken(token);
     
     sessionStorage.setItem('formCsrfToken', token);
+    
+    if (typeof window !== 'undefined') {
+      console.log('ApplicationForm mount: applicationFiles state:', 
+        window.applicationFiles ? Object.keys(window.applicationFiles).map(key => 
+          `${key}: ${window.applicationFiles[key] ? window.applicationFiles[key].name : 'null'}`
+        ) : 'Not initialized');
+    }
   }, []);
   
   const form = useForm<ApplicationFormValues>({
@@ -82,33 +88,33 @@ const ApplicationForm = () => {
   });
 
   const onSubmit = useCallback(async (values: ApplicationFormValues) => {
+    console.log('Form submission started with values:', values);
     setIsSubmitting(true);
     
     try {
-      await new Promise(resolve => setTimeout(resolve, 1200));
-      
-      // Get files from window.applicationFiles global object
       const files: {[key: string]: File} = {};
-      let hasFiles = false;
       
       if (typeof window !== 'undefined' && window.applicationFiles) {
+        console.log('Application files before submission:', 
+          Object.keys(window.applicationFiles).map(key => 
+            `${key}: ${window.applicationFiles[key] ? `${window.applicationFiles[key].name} (${window.applicationFiles[key].size} bytes)` : 'null'}`
+          )
+        );
+        
         Object.entries(window.applicationFiles).forEach(([key, file]) => {
           if (file !== null) {
             files[key] = file;
-            hasFiles = true;
-            console.log(`Added file for submission: ${key}, ${file.name}, ${file.size} bytes`);
+            console.log(`Added ${key} for submission: ${file.name}, ${file.size} bytes`);
           }
         });
+      } else {
+        console.warn('window.applicationFiles is not initialized before submission');
       }
       
-      let response;
-      if (hasFiles) {
-        console.log('Submitting application with files:', Object.keys(files));
-        response = await submitApplicationForm(values, files);
-      } else {
-        console.log('Submitting application without files');
-        response = await submitApplicationForm(values);
-      }
+      const hasFiles = Object.keys(files).length > 0;
+      console.log(`Submitting form with ${hasFiles ? Object.keys(files).length : 'no'} files`);
+      
+      const response = await submitApplicationWithFiles(values, files);
       
       if (!response.success) {
         throw new Error(response.error?.message || 'Submission failed');
@@ -132,6 +138,14 @@ const ApplicationForm = () => {
       
       setIsSubmitted(true);
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+      if (typeof window !== 'undefined' && window.applicationFiles) {
+        Object.keys(window.applicationFiles).forEach(key => {
+          window.applicationFiles[key] = null;
+        });
+        console.log('Cleared applicationFiles after successful submission');
+      }
+      
     } catch (error: any) {
       console.error('Error submitting application:', error);
       

@@ -9,9 +9,9 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
     console.log('Received form data:', JSON.stringify(data, null, 2));
     
     if (files) {
-      console.log('Files received:', Object.keys(files).map(key => `${key}: ${files[key]?.name || 'null'}`));
+      console.log('Files received directly:', Object.keys(files).map(key => `${key}: ${files[key]?.name || 'null'} (${files[key]?.size || 0} bytes)`));
     } else {
-      console.log('No files received with submission');
+      console.log('No files received directly with submission');
       // Try to get files from window.applicationFiles if available
       if (typeof window !== 'undefined' && window.applicationFiles) {
         const appFiles: { [key: string]: File } = {};
@@ -34,6 +34,7 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
       }
     }
 
+    // Prepare form data for database
     const formData = {
       firstname: data.firstName,
       lastname: data.lastName,
@@ -60,8 +61,9 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
       source: window.location.href
     };
 
-    console.log('Prepared form data:', JSON.stringify(formData, null, 2));
+    console.log('Prepared form data for database:', JSON.stringify(formData, null, 2));
 
+    // Insert application data into database
     const { data: result, error } = await supabase
       .from('applications')
       .insert([formData])
@@ -88,6 +90,7 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
 
     console.log('Application saved successfully:', result);
 
+    // Handle file processing if files exist
     if (files && Object.keys(files).length > 0 && Object.values(files).some(f => f !== null)) {
       console.log('Processing files using edge function');
       try {
@@ -95,6 +98,7 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
         formData.append('applicationData', JSON.stringify(data));
         formData.append('applicationId', result[0].id);
         
+        // Log all files being added to FormData
         Object.entries(files).forEach(([key, file]) => {
           if (file) {
             console.log(`Adding file to formData: ${key}, ${file.name}, ${file.size} bytes`);
@@ -102,6 +106,13 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
           }
         });
         
+        // Log all form data entries for debugging
+        console.log('FormData entries before edge function call:');
+        for (const entry of formData.entries()) {
+          console.log(entry[0], entry[1] instanceof File ? `File: ${(entry[1] as File).name} (${(entry[1] as File).size} bytes)` : entry[1]);
+        }
+        
+        // Call edge function to process files
         const response = await supabase.functions.invoke('process-application', {
           body: formData,
         });
