@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate, Navigate, useSearchParams } from 'react-router-dom';
@@ -7,6 +6,7 @@ import { useToast } from '@/hooks/use-toast';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useAuth } from '@/contexts/AuthContext';
+import { SocialLoginButtons } from '@/components/SocialLoginButtons';
 import {
   Dialog,
   DialogContent,
@@ -33,14 +33,12 @@ const Auth = () => {
   const navigate = useNavigate();
   const { user, signIn, signUp, resetPassword, updatePassword } = useAuth();
   
-  // Check if we're returning from a password reset email
   useEffect(() => {
     if (searchParams.get('reset') === 'true') {
       setShowResetSuccessDialog(true);
     }
   }, [searchParams]);
 
-  // Redirect if already logged in
   if (user) {
     return <Navigate to="/admin" />;
   }
@@ -71,7 +69,6 @@ const Auth = () => {
         
         navigate('/admin');
       } else {
-        // Sign up
         if (password !== confirmPassword) {
           throw new Error("Passwords don't match");
         }
@@ -170,6 +167,15 @@ const Auth = () => {
     
     return (
       <form onSubmit={handleAuth} className="space-y-6">
+        <div className="space-y-2">
+          <SocialLoginButtons />
+          <div className="relative flex items-center py-2">
+            <div className="flex-grow border-t border-violet-500/20"></div>
+            <span className="flex-shrink mx-4 text-violet-300 text-sm">or continue with email</span>
+            <div className="flex-grow border-t border-violet-500/20"></div>
+          </div>
+        </div>
+
         <div className="space-y-4">
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-violet-100 mb-1">
@@ -291,7 +297,6 @@ const Auth = () => {
       </div>
       <Footer />
       
-      {/* Password Reset Dialog */}
       <Dialog open={showResetSuccessDialog} onOpenChange={setShowResetSuccessDialog}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
