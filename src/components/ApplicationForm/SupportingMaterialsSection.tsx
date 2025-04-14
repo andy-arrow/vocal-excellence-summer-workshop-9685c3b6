@@ -34,7 +34,7 @@ const SupportingMaterialsSection = () => {
         label="First Audition Recording"
         description="Upload your first piece (3-5 minutes) in MP3 or WAV format."
         icon={Music4}
-        fileType="audio1"
+        fileType="audioFile1"
         acceptedFormats=".mp3,.wav"
         required={true}
         iconColor="text-violet-400"
@@ -44,7 +44,7 @@ const SupportingMaterialsSection = () => {
         label="Second Audition Recording"
         description="Upload your second contrasting piece (3-5 minutes) in MP3 or WAV format."
         icon={Music4}
-        fileType="audio2"
+        fileType="audioFile2"
         acceptedFormats=".mp3,.wav"
         required={true}
         iconColor="text-violet-400"
@@ -54,7 +54,7 @@ const SupportingMaterialsSection = () => {
         label="CV/Resume"
         description="Upload your musical CV/Resume in PDF format."
         icon={FileText}
-        fileType="cv"
+        fileType="cvFile"
         acceptedFormats=".pdf"
         required={true}
         iconColor="text-fuchsia-400"
@@ -64,7 +64,7 @@ const SupportingMaterialsSection = () => {
         label="Recommendation Letter"
         description="Upload your recommendation letter in PDF format (optional)."
         icon={ScrollText}
-        fileType="recommendation"
+        fileType="recommendationFile"
         acceptedFormats=".pdf"
         required={false}
         iconColor="text-pink-400"

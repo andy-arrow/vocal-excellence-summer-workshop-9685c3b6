@@ -1,90 +1,117 @@
 
 import { useState } from 'react';
-import { uploadFile } from '@/utils/fileUpload';
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from '@/hooks/use-toast';
+import { validateFileUpload } from '@/utils/security';
 
-export interface FileUploadState {
+export interface UploadState {
+  file: File | null;
   status: 'idle' | 'uploading' | 'success' | 'error';
-  fileName: string;
   progress: number;
-  path?: string;
+  error: string | null;
 }
 
-export const useFileUpload = (fileType: string, maxSize: number = 10 * 1024 * 1024) => {
-  const [uploadState, setUploadState] = useState<FileUploadState>({
+const ALLOWED_AUDIO_TYPES = ['audio/mp3', 'audio/mpeg', 'audio/wav'];
+const ALLOWED_DOCUMENT_TYPES = ['application/pdf'];
+const MAX_AUDIO_SIZE_MB = 10;
+const MAX_DOCUMENT_SIZE_MB = 2;
+
+export const useFileUpload = (fileType: string) => {
+  const [uploadState, setUploadState] = useState<UploadState>({
+    file: null,
     status: 'idle',
-    fileName: '',
-    progress: 0
+    progress: 0,
+    error: null
   });
 
   const handleFileUpload = async (file: File) => {
-    if (!file) return;
-
-    // Check file size
-    if (file.size > maxSize) {
-      toast({
-        title: "File too large",
-        description: `Maximum file size is ${maxSize / (1024 * 1024)}MB. Your file is ${(file.size / (1024 * 1024)).toFixed(2)}MB`,
-        variant: "destructive"
-      });
-      return;
-    }
-
-    // Update upload state to show progress
+    // Reset the state
     setUploadState({
+      file,
       status: 'uploading',
-      fileName: file.name,
-      progress: 0
+      progress: 0,
+      error: null
     });
-
+    
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      // Determine file category for validation
+      const isAudio = fileType.includes('audio');
+      const allowedTypes = isAudio ? ALLOWED_AUDIO_TYPES : ALLOWED_DOCUMENT_TYPES;
+      const maxSizeMB = isAudio ? MAX_AUDIO_SIZE_MB : MAX_DOCUMENT_SIZE_MB;
       
-      if (!user) {
-        throw new Error('User not authenticated');
+      // Validate file type and size
+      const validationError = validateFileUpload(
+        file, 
+        allowedTypes, 
+        maxSizeMB
+      );
+      
+      if (validationError) {
+        throw new Error(validationError);
       }
-
-      const { path, error } = await uploadFile(file, user.id, fileType);
       
-      if (error) throw error;
-
-      setUploadState({
-        status: 'success',
-        fileName: file.name,
-        progress: 100,
-        path
-      });
-
-      toast({
-        title: "File uploaded successfully",
-        description: `${file.name} has been uploaded.`,
-        className: "bg-gradient-to-r from-green-600 to-emerald-600 text-white border-green-700",
-      });
-    } catch (error) {
-      console.error("Error uploading file:", error);
+      // Simulate upload progress
+      const interval = setInterval(() => {
+        setUploadState(prev => {
+          if (prev.progress >= 90) {
+            clearInterval(interval);
+            return prev;
+          }
+          return { ...prev, progress: prev.progress + 10 };
+        });
+      }, 300);
       
+      // Store the file in the global applicationFiles object
+      if (typeof window !== 'undefined') {
+        window.applicationFiles[fileType] = file;
+      }
+      
+      // Simulate upload completion
+      setTimeout(() => {
+        clearInterval(interval);
+        setUploadState({
+          file,
+          status: 'success',
+          progress: 100,
+          error: null
+        });
+        
+        toast({
+          title: "File uploaded successfully",
+          description: `${file.name} is ready to be submitted with your application.`,
+          className: "bg-green-600 text-white border-green-700",
+        });
+      }, 2000);
+      
+    } catch (error: any) {
       setUploadState({
+        file: null,
         status: 'error',
-        fileName: file.name,
-        progress: 0
+        progress: 0,
+        error: error.message
       });
-
+      
       toast({
-        title: "Upload failed",
-        description: "There was an error uploading your file. Please try again.",
-        variant: "destructive"
+        title: "Upload Failed",
+        description: error.message,
+        variant: "destructive",
+        className: "bg-rose-600 text-white border-rose-700",
       });
     }
   };
-
+  
   const reset = () => {
+    // Remove file from global applicationFiles
+    if (typeof window !== 'undefined' && window.applicationFiles) {
+      window.applicationFiles[fileType] = null;
+    }
+    
     setUploadState({
+      file: null,
       status: 'idle',
-      fileName: '',
-      progress: 0
+      progress: 0,
+      error: null
     });
   };
-
+  
   return { uploadState, handleFileUpload, reset };
 };

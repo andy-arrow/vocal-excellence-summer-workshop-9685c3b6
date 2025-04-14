@@ -1,11 +1,12 @@
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
 import { toast } from '@/hooks/use-toast';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Sparkles, CheckCircle2, Hourglass } from 'lucide-react';
+import { generateCsrfToken } from '@/utils/security';
 
 import { applicationSchema, ApplicationFormValues } from './schema';
 import PersonalInfoSection from './PersonalInfoSection';
@@ -44,6 +45,16 @@ const ApplicationForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [activeSection, setActiveSection] = useState(0);
+  const [csrfToken, setCsrfToken] = useState('');
+  
+  // Generate CSRF token on component mount
+  useEffect(() => {
+    const token = generateCsrfToken();
+    setCsrfToken(token);
+    
+    // Store token in sessionStorage for verification later
+    sessionStorage.setItem('formCsrfToken', token);
+  }, []);
   
   const form = useForm<ApplicationFormValues>({
     resolver: zodResolver(applicationSchema),
@@ -81,7 +92,7 @@ const ApplicationForm = () => {
       await new Promise(resolve => setTimeout(resolve, 1200));
       
       // Check if we have files to upload (set by the SupportingMaterialsSection component)
-      const files = (window as any).applicationFiles;
+      const files = window.applicationFiles;
       
       let response;
       
@@ -91,7 +102,7 @@ const ApplicationForm = () => {
           .filter(([_, file]) => file !== null)
           .reduce((acc, [key, file]) => ({ ...acc, [key]: file }), {});
         
-        // Submit with files
+        // Submit with files and CSRF token
         response = await submitApplicationWithFiles(values, filesToUpload);
       } else {
         // Submit without files
@@ -249,6 +260,9 @@ const ApplicationForm = () => {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
+            {/* Hidden CSRF token input */}
+            <input type="hidden" name="csrfToken" value={csrfToken} />
+            
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeSection}

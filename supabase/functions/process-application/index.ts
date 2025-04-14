@@ -1,3 +1,4 @@
+
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 import { supabase } from "./supabaseClient.ts";
@@ -53,6 +54,13 @@ serve(async (req) => {
 
     // Parse the request body
     const formData = await req.formData();
+    
+    // Get the CSRF token from the form data and verify it matches the header
+    const formCsrfToken = formData.get("csrfToken");
+    if (!formCsrfToken || formCsrfToken !== csrfToken) {
+      throw new Error("Invalid CSRF token");
+    }
+    
     const applicationData = JSON.parse(formData.get("applicationData") as string);
 
     // Rate limiting check
@@ -114,7 +122,7 @@ serve(async (req) => {
         type: "document"
       });
     }
-    
+
     // 1. Store application data in Supabase
     const { data: applicationRecord, error: dbError } = await supabase
       .from('applications')
