@@ -16,6 +16,7 @@ import TermsAndConditionsSection from './TermsAndConditionsSection';
 import SubmitButton from './SubmitButton';
 import SubmissionSuccessMessage from './SubmissionSuccessMessage';
 import { submitApplicationForm } from '@/services/formSubmissionService';
+import { submitApplicationWithFiles } from '@/utils/fileUpload';
 
 const formVariants = {
   hidden: { opacity: 0 },
@@ -79,7 +80,23 @@ const ApplicationForm = () => {
       // Add a small delay to show the animation
       await new Promise(resolve => setTimeout(resolve, 1200));
       
-      const response = await submitApplicationForm(values);
+      // Check if we have files to upload (set by the SupportingMaterialsSection component)
+      const files = (window as any).applicationFiles;
+      
+      let response;
+      
+      if (files && Object.values(files).some(f => f !== null)) {
+        // Filter out null values from files object
+        const filesToUpload = Object.entries(files)
+          .filter(([_, file]) => file !== null)
+          .reduce((acc, [key, file]) => ({ ...acc, [key]: file }), {});
+        
+        // Submit with files
+        response = await submitApplicationWithFiles(values, filesToUpload);
+      } else {
+        // Submit without files
+        response = await submitApplicationForm(values);
+      }
       
       if (!response.success) {
         throw new Error(response.error?.message || 'Error submitting application');

@@ -1,5 +1,7 @@
 
 import { supabase } from "@/integrations/supabase/client";
+import { ApplicationFormValues } from "@/components/ApplicationForm/schema";
+import { submitApplicationForm } from "@/services/formSubmissionService";
 
 export const uploadFile = async (
   file: File,
@@ -33,4 +35,20 @@ export const getFileUrl = (path: string): string => {
     .getPublicUrl(path);
     
   return data.publicUrl;
+};
+
+/**
+ * Submit application form with files
+ */
+export const submitApplicationWithFiles = async (
+  formData: ApplicationFormValues,
+  files: { [key: string]: File }
+): Promise<{ success: boolean; error?: any; data?: any }> => {
+  try {
+    const response = await submitApplicationForm(formData, files);
+    return response;
+  } catch (error) {
+    console.error("Error submitting application with files:", error);
+    return { success: false, error };
+  }
 };

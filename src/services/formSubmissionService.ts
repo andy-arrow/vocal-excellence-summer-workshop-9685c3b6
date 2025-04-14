@@ -1,4 +1,3 @@
-
 /**
  * Form Submission Service
  * 
@@ -77,7 +76,7 @@ const checkRateLimit = async (email: string): Promise<boolean> => {
 /**
  * Submits application form data to Supabase
  */
-export const submitApplicationForm = async (data: ApplicationFormValues): Promise<any> => {
+export const submitApplicationForm = async (data: ApplicationFormValues, files?: { [key: string]: File }): Promise<any> => {
   try {
     // Check rate limiting
     const isWithinRateLimit = await checkRateLimit(data.email);
@@ -91,6 +90,38 @@ export const submitApplicationForm = async (data: ApplicationFormValues): Promis
       };
     }
 
+    // For files support, use FormData and the process-application edge function
+    if (files && Object.keys(files).length > 0) {
+      const formData = new FormData();
+      
+      // Add application data as JSON
+      formData.append('applicationData', JSON.stringify(data));
+      formData.append('source', window.location.href);
+      
+      // Add files
+      Object.entries(files).forEach(([key, file]) => {
+        if (file) {
+          formData.append(key, file);
+        }
+      });
+      
+      // Call the edge function to process the application with files
+      const response = await supabase.functions.invoke('process-application', {
+        body: formData,
+      });
+      
+      if (response.error) {
+        trackError('form_submission', response.error, {
+          formType: 'application',
+          email: data.email
+        });
+        throw new Error(response.error.message || 'Failed to process application');
+      }
+      
+      return { success: true, data: response.data };
+    }
+    
+    // Legacy submission without files - keep for backward compatibility
     // Transform form data to match database column names (all lowercase)
     const formData = {
       firstname: data.firstName,
