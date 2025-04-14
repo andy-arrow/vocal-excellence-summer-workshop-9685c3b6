@@ -4,6 +4,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="
+      default-src 'self';
+      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.gpteng.co https://*.supabase.co;
+      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+      font-src 'self' https://fonts.gstatic.com;
+      img-src 'self' data: blob: https://*.supabase.co;
+      connect-src 'self' https://*.supabase.co wss://*.supabase.co;
+      frame-src 'self' https://*.supabase.co;
+      media-src 'self';
+      object-src 'none';
+      " />
     <title>Vocal Excellence Summer Programme | Summer 2025</title>
     <meta name="description" content="Transform your vocal abilities with our intensive summer programme led by world-class instructors. Unleash your vocal brilliance at the Vocal Excellence Summer Programme." />
     <meta name="author" content="Vocal Excellence Summer Programme" />
@@ -22,3 +33,4 @@
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
+
