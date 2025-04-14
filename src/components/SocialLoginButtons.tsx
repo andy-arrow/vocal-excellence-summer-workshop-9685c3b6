@@ -2,9 +2,9 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
-import { Google } from 'lucide-react';  // Changed from Mail to Google icon
+import { Mail } from 'lucide-react';  // Changed back to Mail since Google isn't available
 import { useToast } from '@/hooks/use-toast';
-import { trackEvent } from '@/utils/monitoring';  // Assuming you have a tracking utility
+import { trackEvent } from '@/utils/monitoring';
 
 export const SocialLoginButtons = () => {
   const { toast } = useToast();
@@ -57,7 +57,7 @@ export const SocialLoginButtons = () => {
         className="w-full flex items-center gap-2" 
         onClick={handleGoogleLogin}
       >
-        <Google className="h-5 w-5" />
+        <Mail className="h-5 w-5" />
         Continue with Google
       </Button>
     </div>
