@@ -1,5 +1,7 @@
+
 import { supabase } from "@/integrations/supabase/client";
 import { trackError } from "@/utils/monitoring";
+import { ApplicationFormValues } from "@/components/ApplicationForm/schema";
 
 export const submitApplicationForm = async (data: ApplicationFormValues, files?: { [key: string]: File }): Promise<any> => {
   try {
@@ -136,7 +138,7 @@ export const submitContactForm = async (data: {
     console.log('Prepared contact form data:', JSON.stringify(formData, null, 2));
 
     const { data: result, error } = await supabase
-      .from('contact_requests')
+      .from('contact_submissions')
       .insert([formData])
       .select();
 
