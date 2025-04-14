@@ -56,13 +56,21 @@ const checkRateLimit = async (email: string): Promise<boolean> => {
     const twentyFourHoursAgo = new Date();
     twentyFourHoursAgo.setHours(twentyFourHoursAgo.getHours() - 24);
     
+    console.log('Checking rate limit for email:', email);
+    console.log('Twenty-four hours ago:', twentyFourHoursAgo.toISOString());
+
     const { count, error } = await supabase
       .from('applications')
       .select('*', { count: 'exact', head: true })
       .eq('email', email)
       .gte('timestamp', twentyFourHoursAgo.toISOString());
       
-    if (error) throw error;
+    if (error) {
+      console.error('Rate limit check error:', error);
+      throw error;
+    }
+    
+    console.log('Submission count in last 24 hours:', count);
     
     // Limit to 2 submissions per 24 hours per email
     return count !== null && count < 2;
@@ -81,7 +89,10 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
     // Check rate limiting
     const isWithinRateLimit = await checkRateLimit(data.email);
     
+    console.log('Is within rate limit:', isWithinRateLimit);
+
     if (!isWithinRateLimit) {
+      console.warn('Rate limit exceeded for email:', data.email);
       return { 
         success: false, 
         error: { 
@@ -149,10 +160,15 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
       source: window.location.href,
     };
 
+    console.log('Submitting form data:', formData);
+
     const { data: result, error } = await supabase
       .from('applications')
       .insert([formData])
       .select();
+
+    console.log('Supabase insert result:', result);
+    console.log('Supabase insert error:', error);
 
     if (error) {
       trackError('form_submission', error, {
