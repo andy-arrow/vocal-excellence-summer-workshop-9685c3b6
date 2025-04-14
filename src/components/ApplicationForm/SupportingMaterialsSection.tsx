@@ -1,18 +1,20 @@
-
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { toast } from '@/hooks/use-toast';
 import { FileMusic, FileText, CheckCircle, Upload, AlertCircle, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
+import { uploadFile } from '@/utils/fileUpload';
+import { supabase } from "@/integrations/supabase/client";
 
-const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB for videos/PDFs
 
 interface FileUploadState {
   status: 'idle' | 'uploading' | 'success' | 'error';
   fileName: string;
   progress: number;
+  path?: string;
 }
 
 const SupportingMaterialsSection = () => {
@@ -25,7 +27,7 @@ const SupportingMaterialsSection = () => {
     headshot: { status: 'idle', fileName: '', progress: 0 } as FileUploadState
   });
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, fileType: keyof typeof fileUploads) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>, fileType: keyof typeof fileUploads) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -33,15 +35,14 @@ const SupportingMaterialsSection = () => {
     if (file.size > MAX_FILE_SIZE) {
       toast({
         title: "File too large",
-        description: `Maximum file size is 2MB. Your file is ${(file.size / (1024 * 1024)).toFixed(2)}MB`,
+        description: `Maximum file size is 10MB. Your file is ${(file.size / (1024 * 1024)).toFixed(2)}MB`,
         variant: "destructive"
       });
-      // Reset the input
       e.target.value = '';
       return;
     }
 
-    // Update the file upload state
+    // Update upload state to show progress
     setFileUploads(prev => ({
       ...prev,
       [fileType]: {
@@ -50,43 +51,58 @@ const SupportingMaterialsSection = () => {
         progress: 0
       }
     }));
-    
-    // Simulate upload progress
-    const interval = setInterval(() => {
-      setFileUploads(prev => {
-        const currentProgress = prev[fileType].progress;
-        if (currentProgress >= 100) {
-          clearInterval(interval);
-          
-          // Simulate a small delay before showing success
-          setTimeout(() => {
-            setFileUploads(prev => ({
-              ...prev,
-              [fileType]: {
-                ...prev[fileType],
-                status: 'success'
-              }
-            }));
-            
-            toast({
-              title: "File uploaded successfully",
-              description: `${file.name} has been uploaded.`,
-              className: "bg-gradient-to-r from-green-600 to-emerald-600 text-white border-green-700",
-            });
-          }, 500);
-          
-          return prev;
+
+    try {
+      // Get the current user
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        throw new Error('User not authenticated');
+      }
+
+      // Upload the file
+      const { path, error } = await uploadFile(file, user.id, fileType);
+      
+      if (error) throw error;
+
+      // Update state to show success
+      setFileUploads(prev => ({
+        ...prev,
+        [fileType]: {
+          status: 'success',
+          fileName: file.name,
+          progress: 100,
+          path
         }
-        
-        return {
-          ...prev,
-          [fileType]: {
-            ...prev[fileType],
-            progress: Math.min(currentProgress + Math.random() * 15, 100)
-          }
-        };
+      }));
+
+      toast({
+        title: "File uploaded successfully",
+        description: `${file.name} has been uploaded.`,
+        className: "bg-gradient-to-r from-green-600 to-emerald-600 text-white border-green-700",
       });
-    }, 200);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      
+      // Update state to show error
+      setFileUploads(prev => ({
+        ...prev,
+        [fileType]: {
+          status: 'error',
+          fileName: file.name,
+          progress: 0
+        }
+      }));
+
+      toast({
+        title: "Upload failed",
+        description: "There was an error uploading your file. Please try again.",
+        variant: "destructive"
+      });
+    }
+
+    // Reset the input
+    e.target.value = '';
   };
 
   const removeFile = (fileType: keyof typeof fileUploads) => {
@@ -195,10 +211,10 @@ const SupportingMaterialsSection = () => {
           <div className="flex items-center justify-between mb-2">
             <FormLabel className="text-white flex items-center gap-2">
               <FileMusic className="text-fuchsia-400" size={16} />
-              <span>Repertoire Recordings</span>
+              <span>Performance Recordings</span>
               <span className="text-rose-400">*</span>
             </FormLabel>
-            <span className="text-xs text-slate-400">MP3 or WAV, max 2MB each</span>
+            <span className="text-xs text-slate-400">MP3, WAV, or MP4, max 10MB each</span>
           </div>
           <p className="text-sm text-slate-300 mb-4">
             Upload two contrasting pieces that demonstrate your vocal range and technical proficiency (5 minutes max each).
@@ -212,7 +228,7 @@ const SupportingMaterialsSection = () => {
             >
               <Input 
                 type="file" 
-                accept=".mp3,.wav" 
+                accept=".mp3,.wav,.mp4" 
                 className={`file:mr-5 file:py-1 file:px-3 file:border-0 file:text-sm file:font-medium file:bg-violet-600 file:text-white hover:file:cursor-pointer hover:file:bg-violet-500 file:rounded
                   ${fileUploads.recording1.status !== 'idle' ? 'opacity-60 pointer-events-none' : ''}
                 `}
@@ -232,7 +248,7 @@ const SupportingMaterialsSection = () => {
             >
               <Input 
                 type="file" 
-                accept=".mp3,.wav" 
+                accept=".mp3,.wav,.mp4" 
                 className={`file:mr-5 file:py-1 file:px-3 file:border-0 file:text-sm file:font-medium file:bg-violet-600 file:text-white hover:file:cursor-pointer hover:file:bg-violet-500 file:rounded
                   ${fileUploads.recording2.status !== 'idle' ? 'opacity-60 pointer-events-none' : ''}
                 `}
@@ -252,7 +268,7 @@ const SupportingMaterialsSection = () => {
               <span>Curriculum Vitae/Resume</span>
               <span className="text-rose-400">*</span>
             </FormLabel>
-            <span className="text-xs text-slate-400">PDF format, max 2MB</span>
+            <span className="text-xs text-slate-400">PDF format, max 10MB</span>
           </div>
           <p className="text-sm text-slate-300 mb-4">
             Upload your CV highlighting your performance history, education, and vocal training.
@@ -284,7 +300,7 @@ const SupportingMaterialsSection = () => {
               <span>Recommendation Letters</span>
               <span className="text-rose-400">*</span>
             </FormLabel>
-            <span className="text-xs text-slate-400">PDF format, max 2MB each</span>
+            <span className="text-xs text-slate-400">PDF format, max 10MB each</span>
           </div>
           <p className="text-sm text-slate-300 mb-4">
             Upload two letters from vocal teachers or music professionals who can speak to your abilities and potential.
@@ -339,7 +355,7 @@ const SupportingMaterialsSection = () => {
               <span>Headshot</span>
               <span className="text-slate-400 text-xs ml-2">(Optional)</span>
             </FormLabel>
-            <span className="text-xs text-slate-400">JPEG or PNG, max 2MB</span>
+            <span className="text-xs text-slate-400">JPEG or PNG, max 10MB</span>
           </div>
           <p className="text-sm text-slate-300 mb-4">
             Professional headshot for our records. This may be used in program materials if you are selected.
