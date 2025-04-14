@@ -10,34 +10,6 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-csrf-token",
 };
 
-// Rate limiting using a simple in-memory store
-const rateLimitStore = new Map<string, { count: number; timestamp: number }>();
-const RATE_LIMIT_WINDOW = 24 * 60 * 60 * 1000; // 24 hours
-const MAX_REQUESTS = 2; // Maximum 2 submissions per 24 hours
-
-const checkRateLimit = (email: string): boolean => {
-  const now = Date.now();
-  const userLimit = rateLimitStore.get(email);
-
-  if (!userLimit) {
-    rateLimitStore.set(email, { count: 1, timestamp: now });
-    return true;
-  }
-
-  if (now - userLimit.timestamp > RATE_LIMIT_WINDOW) {
-    // Reset if window has passed
-    rateLimitStore.set(email, { count: 1, timestamp: now });
-    return true;
-  }
-
-  if (userLimit.count >= MAX_REQUESTS) {
-    return false;
-  }
-
-  userLimit.count++;
-  return true;
-};
-
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
@@ -77,19 +49,6 @@ serve(async (req) => {
 
     const applicantEmail = applicationData.email;
     const applicantName = `${applicationData.firstName} ${applicationData.lastName}`;
-    
-    // Rate limiting check
-    if (!checkRateLimit(applicantEmail)) {
-      return new Response(
-        JSON.stringify({
-          error: "Rate limit exceeded. Please try again later.",
-        }),
-        {
-          status: 429,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        }
-      );
-    }
     
     console.log("Processing application for:", applicantName, applicantEmail);
 
@@ -288,7 +247,7 @@ serve(async (req) => {
         error: error.message
       }),
       {
-        status: error.message.includes("Rate limit") ? 429 : 500,
+        status: 500,
         headers: {
           "Content-Type": "application/json",
           ...corsHeaders

@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { toast } from '@/hooks/use-toast';
 import { validateFileUpload } from '@/utils/security';
@@ -12,8 +11,6 @@ export interface UploadState {
 
 const ALLOWED_AUDIO_TYPES = ['audio/mp3', 'audio/mpeg', 'audio/wav'];
 const ALLOWED_DOCUMENT_TYPES = ['application/pdf'];
-const MAX_AUDIO_SIZE_MB = 10;
-const MAX_DOCUMENT_SIZE_MB = 2;
 
 export const useFileUpload = (fileType: string) => {
   const [uploadState, setUploadState] = useState<UploadState>({
@@ -24,7 +21,6 @@ export const useFileUpload = (fileType: string) => {
   });
 
   const handleFileUpload = async (file: File) => {
-    // Reset the state
     setUploadState({
       file,
       status: 'uploading',
@@ -33,23 +29,19 @@ export const useFileUpload = (fileType: string) => {
     });
     
     try {
-      // Determine file category for validation
       const isAudio = fileType.includes('audio');
       const allowedTypes = isAudio ? ALLOWED_AUDIO_TYPES : ALLOWED_DOCUMENT_TYPES;
-      const maxSizeMB = isAudio ? MAX_AUDIO_SIZE_MB : MAX_DOCUMENT_SIZE_MB;
       
-      // Validate file type and size
       const validationError = validateFileUpload(
         file, 
-        allowedTypes, 
-        maxSizeMB
+        allowedTypes,
+        Number.MAX_VALUE
       );
       
       if (validationError) {
         throw new Error(validationError);
       }
       
-      // Simulate upload progress
       const interval = setInterval(() => {
         setUploadState(prev => {
           if (prev.progress >= 90) {
@@ -60,12 +52,10 @@ export const useFileUpload = (fileType: string) => {
         });
       }, 300);
       
-      // Store the file in the global applicationFiles object
       if (typeof window !== 'undefined') {
         window.applicationFiles[fileType] = file;
       }
       
-      // Simulate upload completion
       setTimeout(() => {
         clearInterval(interval);
         setUploadState({
@@ -100,7 +90,6 @@ export const useFileUpload = (fileType: string) => {
   };
   
   const reset = () => {
-    // Remove file from global applicationFiles
     if (typeof window !== 'undefined' && window.applicationFiles) {
       window.applicationFiles[fileType] = null;
     }

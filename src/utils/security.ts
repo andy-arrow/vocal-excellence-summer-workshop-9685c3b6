@@ -16,7 +16,6 @@ export const validateFileUpload = (file: File, allowedTypes: string[], maxSizeMB
   }
   
   const fileType = file.type;
-  const fileSizeMB = file.size / (1024 * 1024);
 
   // For audio files, ensure we check both audio/mp3 and audio/mpeg since browsers may report different types
   const normalizedFileType = fileType === 'audio/mpeg' ? 'audio/mp3' : fileType;
@@ -26,10 +25,7 @@ export const validateFileUpload = (file: File, allowedTypes: string[], maxSizeMB
     return `Invalid file type "${fileType}". Allowed types: ${allowedTypes.join(', ')}`;
   }
 
-  if (fileSizeMB > maxSizeMB) {
-    return `File size (${fileSizeMB.toFixed(2)}MB) exceeds ${maxSizeMB}MB limit`;
-  }
-
+  // Remove file size validation
   return null;
 };
 
