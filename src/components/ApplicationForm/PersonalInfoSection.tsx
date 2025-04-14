@@ -15,8 +15,8 @@ const PersonalInfoSection = () => {
   const form = useFormContext<ApplicationFormValues>();
 
   return (
-    <div className="bg-apple-gray-light/20 p-8 rounded-xl">
-      <h3 className="text-xl font-semibold text-apple-dark mb-6">Personal Information</h3>
+    <div className="space-y-6">
+      <h3 className="text-xl font-semibold text-white mb-6">Personal Information</h3>
       
       <div className="grid sm:grid-cols-2 gap-6">
         <FormField
@@ -24,9 +24,15 @@ const PersonalInfoSection = () => {
           name="firstName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>First Name</FormLabel>
+              <FormLabel className="text-violet-100" htmlFor="firstName">First Name</FormLabel>
               <FormControl>
-                <Input placeholder="First name" {...field} />
+                <Input 
+                  {...field}
+                  id="firstName"
+                  placeholder="First name"
+                  autoComplete="given-name"
+                  aria-required="true"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -38,9 +44,15 @@ const PersonalInfoSection = () => {
           name="lastName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Last Name</FormLabel>
+              <FormLabel className="text-violet-100" htmlFor="lastName">Last Name</FormLabel>
               <FormControl>
-                <Input placeholder="Last name" {...field} />
+                <Input 
+                  {...field}
+                  id="lastName"
+                  placeholder="Last name"
+                  autoComplete="family-name"
+                  aria-required="true"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -52,9 +64,16 @@ const PersonalInfoSection = () => {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email Address</FormLabel>
+              <FormLabel className="text-violet-100" htmlFor="email">Email Address</FormLabel>
               <FormControl>
-                <Input type="email" placeholder="Your email" {...field} />
+                <Input 
+                  {...field}
+                  type="email"
+                  id="email"
+                  placeholder="Your email"
+                  autoComplete="email"
+                  aria-required="true"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -66,9 +85,16 @@ const PersonalInfoSection = () => {
           name="phone"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Phone Number</FormLabel>
+              <FormLabel className="text-violet-100" htmlFor="phone">Phone Number</FormLabel>
               <FormControl>
-                <Input placeholder="Your phone number" {...field} />
+                <Input 
+                  {...field}
+                  type="tel"
+                  id="phone"
+                  placeholder="Your phone number"
+                  autoComplete="tel"
+                  aria-required="true"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -80,9 +106,15 @@ const PersonalInfoSection = () => {
           name="dateOfBirth"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Date of Birth</FormLabel>
+              <FormLabel className="text-violet-100" htmlFor="dateOfBirth">Date of Birth</FormLabel>
               <FormControl>
-                <Input type="date" {...field} />
+                <Input 
+                  {...field}
+                  type="date"
+                  id="dateOfBirth"
+                  autoComplete="bday"
+                  aria-required="true"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -94,9 +126,15 @@ const PersonalInfoSection = () => {
           name="nationality"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nationality</FormLabel>
+              <FormLabel className="text-violet-100" htmlFor="nationality">Nationality</FormLabel>
               <FormControl>
-                <Input placeholder="Your nationality" {...field} />
+                <Input 
+                  {...field}
+                  id="nationality"
+                  placeholder="Your nationality"
+                  autoComplete="country-name"
+                  aria-required="true"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -110,9 +148,15 @@ const PersonalInfoSection = () => {
           name="address"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Address</FormLabel>
+              <FormLabel className="text-violet-100" htmlFor="address">Address</FormLabel>
               <FormControl>
-                <Input placeholder="Street address" {...field} />
+                <Input 
+                  {...field}
+                  id="address"
+                  placeholder="Street address"
+                  autoComplete="street-address"
+                  aria-required="true"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -126,9 +170,15 @@ const PersonalInfoSection = () => {
           name="city"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>City</FormLabel>
+              <FormLabel className="text-violet-100" htmlFor="city">City</FormLabel>
               <FormControl>
-                <Input placeholder="City" {...field} />
+                <Input 
+                  {...field}
+                  id="city"
+                  placeholder="City"
+                  autoComplete="address-level2"
+                  aria-required="true"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -140,9 +190,15 @@ const PersonalInfoSection = () => {
           name="country"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Country</FormLabel>
+              <FormLabel className="text-violet-100" htmlFor="country">Country</FormLabel>
               <FormControl>
-                <Input placeholder="Country" {...field} />
+                <Input 
+                  {...field}
+                  id="country"
+                  placeholder="Country"
+                  autoComplete="country"
+                  aria-required="true"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -154,9 +210,15 @@ const PersonalInfoSection = () => {
           name="postalCode"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Postal/Zip Code</FormLabel>
+              <FormLabel className="text-violet-100" htmlFor="postalCode">Postal/Zip Code</FormLabel>
               <FormControl>
-                <Input placeholder="Postal/Zip code" {...field} />
+                <Input 
+                  {...field}
+                  id="postalCode"
+                  placeholder="Postal/Zip code"
+                  autoComplete="postal-code"
+                  aria-required="true"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
