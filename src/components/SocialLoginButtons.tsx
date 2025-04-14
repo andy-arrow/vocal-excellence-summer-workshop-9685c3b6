@@ -2,8 +2,9 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
-import { Mail } from 'lucide-react';
+import { Google } from 'lucide-react';  // Changed from Mail to Google icon
 import { useToast } from '@/hooks/use-toast';
+import { trackEvent } from '@/utils/monitoring';  // Assuming you have a tracking utility
 
 export const SocialLoginButtons = () => {
   const { toast } = useToast();
@@ -19,14 +20,28 @@ export const SocialLoginButtons = () => {
 
       if (error) {
         console.error('Google Login Error:', error.message);
+        trackEvent('auth', 'error', {
+          message: 'Google Login Failed',
+          details: error.message
+        });
+        
         toast({
           title: "Login Failed",
           description: "Unable to login with Google. Please try again.",
           variant: "destructive"
         });
+      } else {
+        trackEvent('auth', 'info', {
+          message: 'Google Login Initiated'
+        });
       }
     } catch (err) {
       console.error('Unexpected Google Login Error:', err);
+      trackEvent('auth', 'error', {
+        message: 'Unexpected Google Login Error',
+        details: String(err)
+      });
+      
       toast({
         title: "Login Error",
         description: "An unexpected error occurred. Please try again later.",
@@ -42,7 +57,7 @@ export const SocialLoginButtons = () => {
         className="w-full flex items-center gap-2" 
         onClick={handleGoogleLogin}
       >
-        <Mail className="h-5 w-5" />
+        <Google className="h-5 w-5" />
         Continue with Google
       </Button>
     </div>
