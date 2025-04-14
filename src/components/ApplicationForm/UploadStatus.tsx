@@ -13,6 +13,9 @@ interface UploadStatusProps {
 export const UploadStatus: React.FC<UploadStatusProps> = ({ uploadState, onRemove }) => {
   if (uploadState.status === 'idle') return null;
 
+  // Get the file name from the file object if it exists
+  const fileName = uploadState.file?.name || 'File';
+
   if (uploadState.status === 'uploading') {
     return (
       <motion.div 
@@ -22,7 +25,7 @@ export const UploadStatus: React.FC<UploadStatusProps> = ({ uploadState, onRemov
       >
         <div className="flex-1 mr-3">
           <div className="flex justify-between text-xs text-slate-300 mb-1">
-            <span className="truncate max-w-[150px]">{uploadState.fileName}</span>
+            <span className="truncate max-w-[150px]">{fileName}</span>
             <span>{Math.round(uploadState.progress)}%</span>
           </div>
           <div className="h-1.5 bg-slate-700 rounded-full overflow-hidden">
@@ -51,7 +54,7 @@ export const UploadStatus: React.FC<UploadStatusProps> = ({ uploadState, onRemov
       >
         <div className="flex items-center">
           <CheckCircle size={16} className="text-green-500 mr-2" />
-          <span className="text-sm text-green-300 truncate max-w-[200px]">{uploadState.fileName}</span>
+          <span className="text-sm text-green-300 truncate max-w-[200px]">{fileName}</span>
         </div>
         <Button 
           variant="ghost" 
