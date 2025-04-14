@@ -1,4 +1,3 @@
-
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 
@@ -42,13 +41,17 @@ serve(async (req) => {
         subject = "Your Requested Information - Vocal Excellence Summer Programme";
         htmlContent = getInformationRequestTemplate(name);
         break;
+      case "admin_notification":
+        subject = "New Application Submission - Vocal Excellence Summer Programme";
+        htmlContent = getAdminNotificationTemplate(name, email);
+        break;
       default:
         throw new Error("Invalid email template type");
     }
 
     const emailResponse = await resend.emails.send({
       from: "Vocal Excellence <noreply@vocalexcellence.org>",
-      to: [email],
+      to: [type === "admin_notification" ? "aroditis.andreas@gmail.com" : email],
       subject: subject,
       html: htmlContent,
     });
@@ -464,6 +467,68 @@ function getInformationRequestTemplate(name: string) {
         <p>If you have any further questions, please don't hesitate to contact us at info@vocalexcellence.org.</p>
         
         <p>Best regards,<br>The Vocal Excellence Team</p>
+      </div>
+      <div class="footer">
+        <p>&copy; 2025 Vocal Excellence Summer Programme. All rights reserved.</p>
+        <p>Limassol, Cyprus</p>
+      </div>
+    </body>
+    </html>
+  `;
+}
+
+function getAdminNotificationTemplate(name: string, applicantEmail: string) {
+  return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <title>New Application Submission</title>
+      <style>
+        body { 
+          font-family: 'Helvetica', Arial, sans-serif;
+          line-height: 1.6;
+          color: #333;
+          max-width: 600px;
+          margin: 0 auto;
+          padding: 20px;
+        }
+        .header {
+          background: linear-gradient(to right, #4f46e5, #7c3aed);
+          color: white;
+          padding: 20px;
+          text-align: center;
+          border-radius: 8px 8px 0 0;
+        }
+        .content {
+          background-color: #f9fafb;
+          padding: 30px;
+          border-radius: 0 0 8px 8px;
+          border: 1px solid #e5e7eb;
+          border-top: none;
+        }
+        h1 { color: #4f46e5; margin-top: 0; }
+        .footer {
+          text-align: center;
+          margin-top: 20px;
+          font-size: 12px;
+          color: #6b7280;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="header">
+        <h2>New Application Submission</h2>
+      </div>
+      <div class="content">
+        <h1>New Application Received</h1>
+        <p>A new application has been submitted to the Vocal Excellence Summer Programme.</p>
+        <p><strong>Applicant Details:</strong></p>
+        <ul>
+          <li>Name: ${name}</li>
+          <li>Email: ${applicantEmail}</li>
+        </ul>
+        <p>Please log in to the admin dashboard to review the complete application.</p>
       </div>
       <div class="footer">
         <p>&copy; 2025 Vocal Excellence Summer Programme. All rights reserved.</p>

@@ -3,3 +3,4 @@ project_id = "aualmslyjnapymacktzg"
 
 [functions.send-email]
 verify_jwt = false
+

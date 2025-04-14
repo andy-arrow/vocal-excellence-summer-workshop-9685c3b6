@@ -1,4 +1,3 @@
-
 /**
  * Form Submission Service
  * 
@@ -129,6 +128,20 @@ export const submitApplicationForm = async (data: ApplicationFormValues): Promis
         email: data.email
       });
       throw error;
+    }
+
+    // Send admin notification email
+    try {
+      await supabase.functions.invoke('send-email', {
+        body: {
+          type: 'admin_notification',
+          name: `${data.firstName} ${data.lastName}`,
+          email: data.email
+        }
+      });
+    } catch (emailError) {
+      console.error('Error sending admin notification:', emailError);
+      // Don't throw the error here - we still want to return success for the form submission
     }
     
     return { success: true, data: result };
