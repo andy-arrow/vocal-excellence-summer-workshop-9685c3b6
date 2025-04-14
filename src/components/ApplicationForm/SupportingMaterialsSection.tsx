@@ -17,7 +17,7 @@ declare global {
 
 // Initialize global applicationFiles object
 if (typeof window !== 'undefined') {
-  window.applicationFiles = {
+  window.applicationFiles = window.applicationFiles || {
     audioFile1: null,
     audioFile2: null,
     cvFile: null,
@@ -26,6 +26,24 @@ if (typeof window !== 'undefined') {
 }
 
 const SupportingMaterialsSection = () => {
+  useEffect(() => {
+    // Ensure window.applicationFiles is initialized when this component mounts
+    if (typeof window !== 'undefined') {
+      window.applicationFiles = window.applicationFiles || {
+        audioFile1: null,
+        audioFile2: null,
+        cvFile: null,
+        recommendationFile: null,
+      };
+      console.log('SupportingMaterialsSection: Initialized window.applicationFiles');
+    }
+    
+    // Cleanup on unmount
+    return () => {
+      console.log('SupportingMaterialsSection: Component unmounted');
+    };
+  }, []);
+
   return (
     <div className="space-y-8">
       <h3 className="text-xl font-semibold text-violet-100 mb-4">Supporting Materials</h3>

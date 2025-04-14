@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -16,7 +17,6 @@ import TermsAndConditionsSection from './TermsAndConditionsSection';
 import SubmitButton from './SubmitButton';
 import SubmissionSuccessMessage from './SubmissionSuccessMessage';
 import { submitApplicationForm } from '@/services/formSubmissionService';
-import { submitApplicationWithFiles } from '@/utils/fileUpload';
 
 const formVariants = {
   hidden: { opacity: 0 },
@@ -87,12 +87,26 @@ const ApplicationForm = () => {
     try {
       await new Promise(resolve => setTimeout(resolve, 1200));
       
-      const files = window.applicationFiles;
-      let response;
+      // Get files from window.applicationFiles global object
+      const files: {[key: string]: File} = {};
+      let hasFiles = false;
       
-      if (files && Object.values(files).some(f => f !== null)) {
+      if (typeof window !== 'undefined' && window.applicationFiles) {
+        Object.entries(window.applicationFiles).forEach(([key, file]) => {
+          if (file !== null) {
+            files[key] = file;
+            hasFiles = true;
+            console.log(`Added file for submission: ${key}, ${file.name}, ${file.size} bytes`);
+          }
+        });
+      }
+      
+      let response;
+      if (hasFiles) {
+        console.log('Submitting application with files:', Object.keys(files));
         response = await submitApplicationForm(values, files);
       } else {
+        console.log('Submitting application without files');
         response = await submitApplicationForm(values);
       }
       
@@ -100,11 +114,21 @@ const ApplicationForm = () => {
         throw new Error(response.error?.message || 'Submission failed');
       }
       
-      toast({
-        title: "Application Submitted Successfully! 🎉",
-        description: "Your application has been received. You'll receive a confirmation email shortly.",
-        className: "bg-gradient-to-r from-green-600 to-emerald-600 text-white border-green-700",
-      });
+      if (response.fileError) {
+        console.warn('Application submitted but had file processing error:', response.fileError);
+        toast({
+          title: "Application Submitted with Warning",
+          description: `Your application data was saved, but we had trouble processing your files: ${response.fileError}. Our team will contact you for the files if needed.`,
+          className: "bg-amber-600 text-white border-amber-700",
+          duration: 8000,
+        });
+      } else {
+        toast({
+          title: "Application Submitted Successfully! 🎉",
+          description: "Your application has been received. You'll receive a confirmation email shortly.",
+          className: "bg-gradient-to-r from-green-600 to-emerald-600 text-white border-green-700",
+        });
+      }
       
       setIsSubmitted(true);
       window.scrollTo({ top: 0, behavior: 'smooth' });

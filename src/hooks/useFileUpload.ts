@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { toast } from '@/hooks/use-toast';
 import { validateFileUpload } from '@/utils/security';
@@ -53,7 +54,16 @@ export const useFileUpload = (fileType: string) => {
       }, 300);
       
       if (typeof window !== 'undefined') {
+        if (!window.applicationFiles) {
+          window.applicationFiles = {
+            audioFile1: null,
+            audioFile2: null,
+            cvFile: null,
+            recommendationFile: null,
+          };
+        }
         window.applicationFiles[fileType] = file;
+        console.log(`Set file in window.applicationFiles.${fileType}:`, file.name);
       }
       
       setTimeout(() => {
@@ -92,6 +102,7 @@ export const useFileUpload = (fileType: string) => {
   const reset = () => {
     if (typeof window !== 'undefined' && window.applicationFiles) {
       window.applicationFiles[fileType] = null;
+      console.log(`Reset file in window.applicationFiles.${fileType}`);
     }
     
     setUploadState({

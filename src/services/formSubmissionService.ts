@@ -10,6 +10,28 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
     
     if (files) {
       console.log('Files received:', Object.keys(files).map(key => `${key}: ${files[key]?.name || 'null'}`));
+    } else {
+      console.log('No files received with submission');
+      // Try to get files from window.applicationFiles if available
+      if (typeof window !== 'undefined' && window.applicationFiles) {
+        const appFiles: { [key: string]: File } = {};
+        let hasFiles = false;
+        
+        Object.entries(window.applicationFiles).forEach(([key, file]) => {
+          if (file) {
+            appFiles[key] = file;
+            hasFiles = true;
+            console.log(`Retrieved ${key} from window.applicationFiles: ${file.name} (${file.size} bytes)`);
+          }
+        });
+        
+        if (hasFiles) {
+          files = appFiles;
+          console.log('Using files from window.applicationFiles');
+        } else {
+          console.log('No files found in window.applicationFiles');
+        }
+      }
     }
 
     const formData = {
@@ -66,7 +88,7 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
 
     console.log('Application saved successfully:', result);
 
-    if (files && Object.keys(files).length > 0) {
+    if (files && Object.keys(files).length > 0 && Object.values(files).some(f => f !== null)) {
       console.log('Processing files using edge function');
       try {
         const formData = new FormData();
@@ -75,7 +97,7 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
         
         Object.entries(files).forEach(([key, file]) => {
           if (file) {
-            console.log(`Adding file to formData: ${key}, ${file.name}`);
+            console.log(`Adding file to formData: ${key}, ${file.name}, ${file.size} bytes`);
             formData.append(key, file);
           }
         });
@@ -92,6 +114,12 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
             formType: 'application',
             email: data.email
           });
+          
+          return { 
+            success: true, 
+            data: result[0],
+            fileError: response.error.message
+          };
         }
       } catch (fileError) {
         console.error('Error processing files:', fileError);
@@ -99,7 +127,15 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
           formType: 'application',
           email: data.email
         });
+        
+        return { 
+          success: true, 
+          data: result[0],
+          fileError: fileError.message || 'Error processing files'
+        };
       }
+    } else {
+      console.log('No files to process with application');
     }
     
     return { success: true, data: result[0] };
