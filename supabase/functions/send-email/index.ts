@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
+import { supabase } from "./supabaseClient.ts";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
@@ -9,6 +10,15 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
+interface ApplicationEmailRequest {
+  type: string;
+  name?: string;
+  email?: string;
+  applicantData?: any;
+  applicationId?: string;
+  actionUrl?: string;
+}
+
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
@@ -16,34 +26,53 @@ serve(async (req) => {
   }
 
   try {
-    const { type, email, name, actionUrl } = await req.json();
+    const { type, email, name, applicantData, applicationId, actionUrl } = await req.json() as ApplicationEmailRequest;
     let subject, htmlContent;
+    let toEmail = email || "";
+    let attachments = [];
 
     // Determine which template to use based on the type
     switch (type) {
       case "welcome":
         subject = "Welcome to Vocal Excellence Summer Programme";
-        htmlContent = getWelcomeEmailTemplate(name);
+        htmlContent = getWelcomeEmailTemplate(name || "");
         break;
       case "magic_link":
         subject = "Your Magic Link to Sign In";
-        htmlContent = getMagicLinkEmailTemplate(name, actionUrl);
+        htmlContent = getMagicLinkEmailTemplate(name || "", actionUrl || "");
         break;
       case "password_reset":
         subject = "Reset Your Password";
-        htmlContent = getPasswordResetEmailTemplate(name, actionUrl);
+        htmlContent = getPasswordResetEmailTemplate(name || "", actionUrl || "");
         break;
       case "application_confirmation":
         subject = "Application Received - Vocal Excellence Summer Programme";
-        htmlContent = getApplicationConfirmationTemplate(name);
+        htmlContent = getApplicationConfirmationTemplate(name || "");
+        toEmail = email || "";
         break;
       case "information_request":
         subject = "Your Requested Information - Vocal Excellence Summer Programme";
-        htmlContent = getInformationRequestTemplate(name);
+        htmlContent = getInformationRequestTemplate(name || "");
         break;
       case "admin_notification":
-        subject = "New Application Submission - Vocal Excellence Summer Programme";
-        htmlContent = getAdminNotificationTemplate(name, email);
+        if (applicantData) {
+          subject = "**Vocal Excellence** New Application Submission";
+          htmlContent = getDetailedAdminNotificationTemplate(applicantData);
+          toEmail = "aroditis.andreas@gmail.com";
+          
+          // If we have an applicationId, attempt to retrieve file attachments
+          if (applicationId) {
+            try {
+              attachments = await getApplicationAttachments(applicationId);
+            } catch (attachmentError) {
+              console.error("Error getting application attachments:", attachmentError);
+            }
+          }
+        } else {
+          subject = "New Application Submission - Vocal Excellence Summer Programme";
+          htmlContent = getSimpleAdminNotificationTemplate(name || "", email || "");
+          toEmail = "aroditis.andreas@gmail.com";
+        }
         break;
       default:
         throw new Error("Invalid email template type");
@@ -51,9 +80,10 @@ serve(async (req) => {
 
     const emailResponse = await resend.emails.send({
       from: "Vocal Excellence <noreply@vocalexcellence.org>",
-      to: [type === "admin_notification" ? "aroditis.andreas@gmail.com" : email],
+      to: [toEmail],
       subject: subject,
       html: htmlContent,
+      attachments: attachments,
     });
 
     console.log("Email sent successfully:", emailResponse);
@@ -76,6 +106,55 @@ serve(async (req) => {
     );
   }
 });
+
+// Helper function to retrieve application attachments from storage
+async function getApplicationAttachments(applicationId: string) {
+  try {
+    // Initialize Supabase client
+    const { data, error } = await supabase
+      .storage
+      .from('application_files')
+      .list(applicationId);
+
+    if (error) {
+      console.error("Error listing files:", error);
+      return [];
+    }
+
+    // Get each file and convert to base64 for attachment
+    const attachmentPromises = data.map(async (file) => {
+      const { data: fileData, error: fileError } = await supabase
+        .storage
+        .from('application_files')
+        .download(`${applicationId}/${file.name}`);
+
+      if (fileError || !fileData) {
+        console.error("Error downloading file:", fileError);
+        return null;
+      }
+
+      // Convert to base64
+      const buffer = await fileData.arrayBuffer();
+      const base64 = btoa(
+        new Uint8Array(buffer).reduce(
+          (data, byte) => data + String.fromCharCode(byte),
+          ''
+        )
+      );
+
+      return {
+        filename: file.name,
+        content: base64,
+      };
+    });
+
+    const attachments = (await Promise.all(attachmentPromises)).filter(Boolean);
+    return attachments;
+  } catch (error) {
+    console.error("Error processing attachments:", error);
+    return [];
+  }
+}
 
 // Email template functions
 function getWelcomeEmailTemplate(name: string) {
@@ -477,7 +556,7 @@ function getInformationRequestTemplate(name: string) {
   `;
 }
 
-function getAdminNotificationTemplate(name: string, applicantEmail: string) {
+function getSimpleAdminNotificationTemplate(name: string, applicantEmail: string) {
   return `
     <!DOCTYPE html>
     <html>
@@ -529,6 +608,179 @@ function getAdminNotificationTemplate(name: string, applicantEmail: string) {
           <li>Email: ${applicantEmail}</li>
         </ul>
         <p>Please log in to the admin dashboard to review the complete application.</p>
+      </div>
+      <div class="footer">
+        <p>&copy; 2025 Vocal Excellence Summer Programme. All rights reserved.</p>
+        <p>Limassol, Cyprus</p>
+      </div>
+    </body>
+    </html>
+  `;
+}
+
+function getDetailedAdminNotificationTemplate(applicantData: any) {
+  return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <title>**Vocal Excellence** New Application Submission</title>
+      <style>
+        body { 
+          font-family: 'Helvetica', Arial, sans-serif;
+          line-height: 1.6;
+          color: #333;
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 20px;
+        }
+        .header {
+          background: linear-gradient(to right, #4f46e5, #7c3aed);
+          color: white;
+          padding: 25px;
+          text-align: center;
+          border-radius: 8px 8px 0 0;
+        }
+        .content {
+          background-color: #f9fafb;
+          padding: 30px;
+          border-radius: 0 0 8px 8px;
+          border: 1px solid #e5e7eb;
+          border-top: none;
+        }
+        h1 { color: #4f46e5; margin-top: 0; font-size: 26px; }
+        h2 { color: #6d28d9; font-size: 22px; margin-top: 30px; }
+        .section {
+          margin-bottom: 25px;
+          padding: 20px;
+          background-color: white;
+          border-radius: 8px;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .field {
+          margin-bottom: 12px;
+          padding-bottom: 12px;
+          border-bottom: 1px solid #f3f4f6;
+        }
+        .field-label {
+          font-weight: bold;
+          color: #4f46e5;
+          display: block;
+          margin-bottom: 4px;
+        }
+        .field-value {
+          color: #374151;
+        }
+        .footer {
+          text-align: center;
+          margin-top: 20px;
+          font-size: 12px;
+          color: #6b7280;
+        }
+        .file-notice {
+          margin-top: 20px;
+          padding: 15px;
+          background-color: #f0f9ff;
+          border-left: 4px solid #38bdf8;
+          border-radius: 4px;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="header">
+        <h2>**Vocal Excellence** New Application Submission</h2>
+      </div>
+      <div class="content">
+        <h1>Complete Application Details</h1>
+        <p>A new application has been submitted to the Vocal Excellence Summer Programme with the following details:</p>
+        
+        <div class="section">
+          <h2>Personal Information</h2>
+          <div class="field">
+            <div class="field-label">Full Name</div>
+            <div class="field-value">${applicantData.firstName} ${applicantData.lastName}</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Email Address</div>
+            <div class="field-value">${applicantData.email}</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Phone Number</div>
+            <div class="field-value">${applicantData.phone}</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Date of Birth</div>
+            <div class="field-value">${applicantData.dateOfBirth}</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Nationality</div>
+            <div class="field-value">${applicantData.nationality}</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Address</div>
+            <div class="field-value">
+              ${applicantData.address}<br>
+              ${applicantData.city}, ${applicantData.country}<br>
+              ${applicantData.postalCode}
+            </div>
+          </div>
+        </div>
+        
+        <div class="section">
+          <h2>Musical Background</h2>
+          <div class="field">
+            <div class="field-label">Vocal Range</div>
+            <div class="field-value">${applicantData.vocalRange}</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Years of Experience</div>
+            <div class="field-value">${applicantData.yearsOfExperience}</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Musical Background</div>
+            <div class="field-value">${applicantData.musicalBackground}</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Teacher Information</div>
+            <div class="field-value">
+              ${applicantData.teacherName ? `Name: ${applicantData.teacherName}<br>` : ''}
+              ${applicantData.teacherEmail ? `Email: ${applicantData.teacherEmail}` : 'Not provided'}
+            </div>
+          </div>
+          <div class="field">
+            <div class="field-label">Performance Experience</div>
+            <div class="field-value">${applicantData.performanceExperience}</div>
+          </div>
+        </div>
+        
+        <div class="section">
+          <h2>Programme Application</h2>
+          <div class="field">
+            <div class="field-label">Reason for Applying</div>
+            <div class="field-value">${applicantData.reasonForApplying}</div>
+          </div>
+          <div class="field">
+            <div class="field-label">How They Heard About Us</div>
+            <div class="field-value">${applicantData.heardAboutUs}</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Scholarship Interest</div>
+            <div class="field-value">${applicantData.scholarshipInterest ? 'Yes' : 'No'}</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Special Needs or Accommodations</div>
+            <div class="field-value">${applicantData.specialNeeds || 'None specified'}</div>
+          </div>
+        </div>
+        
+        <div class="section">
+          <h2>Supporting Materials</h2>
+          <div class="file-notice">
+            <strong>Note:</strong> Supporting materials (audition recordings, CV, recommendation letter) 
+            are attached to this email. If you don't see the attachments, they may be available in your 
+            Supabase storage under the application files bucket.
+          </div>
+        </div>
       </div>
       <div class="footer">
         <p>&copy; 2025 Vocal Excellence Summer Programme. All rights reserved.</p>

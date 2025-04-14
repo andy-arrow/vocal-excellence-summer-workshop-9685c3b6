@@ -1,3 +1,4 @@
+
 /**
  * Form Submission Service
  * 
@@ -130,18 +131,35 @@ export const submitApplicationForm = async (data: ApplicationFormValues): Promis
       throw error;
     }
 
-    // Send admin notification email
+    // Get the application ID
+    const applicationId = result && result[0] ? result[0].id : null;
+
+    // Send admin notification email with detailed applicant information
     try {
       await supabase.functions.invoke('send-email', {
         body: {
           type: 'admin_notification',
-          name: `${data.firstName} ${data.lastName}`,
-          email: data.email
+          applicantData: data,
+          applicationId: applicationId
         }
       });
     } catch (emailError) {
       console.error('Error sending admin notification:', emailError);
       // Don't throw the error here - we still want to return success for the form submission
+    }
+    
+    // Send confirmation email to the applicant
+    try {
+      await supabase.functions.invoke('send-email', {
+        body: {
+          type: 'application_confirmation',
+          name: data.firstName,
+          email: data.email
+        }
+      });
+    } catch (emailError) {
+      console.error('Error sending confirmation email:', emailError);
+      // Don't throw the error here - we still want to return success
     }
     
     return { success: true, data: result };
