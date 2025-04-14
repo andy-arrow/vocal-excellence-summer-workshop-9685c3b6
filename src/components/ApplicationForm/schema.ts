@@ -1,11 +1,27 @@
-
 import * as z from 'zod';
+import { EMAIL_REGEX } from '@/utils/security';
 
 export const applicationSchema = z.object({
-  firstName: z.string().min(1, { message: 'First name is required' }),
-  lastName: z.string().min(1, { message: 'Last name is required' }),
-  email: z.string().email({ message: 'Please enter a valid email address' }),
-  phone: z.string().min(7, { message: 'Please enter a valid phone number' }),
+  firstName: z.string()
+    .min(2, { message: 'First name must be at least 2 characters long' })
+    .max(50, { message: 'First name must not exceed 50 characters' })
+    .regex(/^[a-zA-Z\s-']+$/, { message: 'First name can only contain letters, spaces, hyphens, and apostrophes' }),
+  
+  lastName: z.string()
+    .min(2, { message: 'Last name must be at least 2 characters long' })
+    .max(50, { message: 'Last name must not exceed 50 characters' })
+    .regex(/^[a-zA-Z\s-']+$/, { message: 'Last name can only contain letters, spaces, hyphens, and apostrophes' }),
+  
+  email: z.string()
+    .min(5, { message: 'Email is required' })
+    .max(100, { message: 'Email must not exceed 100 characters' })
+    .regex(EMAIL_REGEX, { message: 'Please enter a valid email address' }),
+  
+  phone: z.string()
+    .min(7, { message: 'Phone number must be at least 7 digits' })
+    .max(20, { message: 'Phone number must not exceed 20 characters' })
+    .regex(/^[+]?[\d\s-()]+$/, { message: 'Please enter a valid phone number' }),
+  
   dateOfBirth: z.string().min(1, { message: 'Date of birth is required' }),
   nationality: z.string().min(1, { message: 'Nationality is required' }),
   address: z.string().min(1, { message: 'Address is required' }),
@@ -24,11 +40,10 @@ export const applicationSchema = z.object({
   heardAboutUs: z.string().min(1, { message: 'Please tell us how you heard about us' }),
   scholarshipInterest: z.boolean().default(false),
   specialNeeds: z.string().optional(),
-  termsAgreed: z.boolean({
-    required_error: 'You must agree to the terms and conditions',
-  }).refine((val) => val === true, {
-    message: 'You must agree to the terms and conditions',
-  }),
+  termsAgreed: z.boolean()
+    .refine(val => val === true, {
+      message: 'You must agree to the terms and conditions',
+    }),
 });
 
 export type ApplicationFormValues = z.infer<typeof applicationSchema>;

@@ -1,4 +1,3 @@
-
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 import { supabase } from "./supabaseClient.ts";
@@ -8,21 +7,68 @@ const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type",
+    "authorization, x-client-info, apikey, content-type, x-csrf-token",
 };
 
-// Handle CORS preflight requests
+// Rate limiting using a simple in-memory store
+const rateLimitStore = new Map<string, { count: number; timestamp: number }>();
+const RATE_LIMIT_WINDOW = 24 * 60 * 60 * 1000; // 24 hours
+const MAX_REQUESTS = 2; // Maximum 2 submissions per 24 hours
+
+const checkRateLimit = (email: string): boolean => {
+  const now = Date.now();
+  const userLimit = rateLimitStore.get(email);
+
+  if (!userLimit) {
+    rateLimitStore.set(email, { count: 1, timestamp: now });
+    return true;
+  }
+
+  if (now - userLimit.timestamp > RATE_LIMIT_WINDOW) {
+    // Reset if window has passed
+    rateLimitStore.set(email, { count: 1, timestamp: now });
+    return true;
+  }
+
+  if (userLimit.count >= MAX_REQUESTS) {
+    return false;
+  }
+
+  userLimit.count++;
+  return true;
+};
+
 serve(async (req) => {
+  // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
+    // Validate CSRF token
+    const csrfToken = req.headers.get("x-csrf-token");
+    if (!csrfToken) {
+      throw new Error("Missing CSRF token");
+    }
+
     // Parse the request body
     const formData = await req.formData();
-    
-    // Extract form fields
     const applicationData = JSON.parse(formData.get("applicationData") as string);
+
+    // Rate limiting check
+    if (!checkRateLimit(applicationData.email)) {
+      return new Response(
+        JSON.stringify({
+          error: "Rate limit exceeded. Please try again later.",
+        }),
+        {
+          status: 429,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        }
+      );
+    }
+
+    // Extract form fields
     const applicantEmail = applicationData.email;
     const applicantName = `${applicationData.firstName} ${applicationData.lastName}`;
     
@@ -206,7 +252,7 @@ serve(async (req) => {
         error: error.message
       }),
       {
-        status: 500,
+        status: error.message.includes("Rate limit") ? 429 : 500,
         headers: {
           "Content-Type": "application/json",
           ...corsHeaders
