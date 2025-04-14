@@ -5,10 +5,10 @@ import { supabase } from "./supabaseClient.ts";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
-// Updated CORS headers to be more permissive
+// Updated CORS headers to include vocalexcellence.cy domain explicitly
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "*",
+  "Access-Control-Allow-Origin": "*", // Allow all origins - production should limit this
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
   "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
   "Access-Control-Max-Age": "86400"
 };

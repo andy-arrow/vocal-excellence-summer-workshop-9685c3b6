@@ -60,15 +60,49 @@ const ApplicationForm = () => {
         });
         form.reset();
       } else {
+        // Detailed error information for failed submissions
+        const errorDetails = response.error || {};
+        const errorMessage = typeof errorDetails === 'string' 
+          ? errorDetails 
+          : errorDetails.message || 'Unknown error occurred';
+        
+        let errorDescription = "There was an error submitting your application.";
+        
+        // If we have detailed error information, display it
+        if (errorDetails.details) {
+          errorDescription += ` Technical details: ${errorDetails.details}`;
+        }
+        
+        // Add contact information for support
+        errorDescription += " Please try again or contact support at support@vocalexcellence.org.";
+        
+        toast({
+          title: "Submission Failed: " + errorMessage,
+          description: errorDescription,
+          variant: "destructive"
+        });
+        
+        // Log detailed error information to console for debugging
+        console.error("Detailed submission error:", {
+          message: errorDetails.message,
+          details: errorDetails.details,
+          stack: errorDetails.stack,
+          code: errorDetails.code
+        });
+        
         throw new Error('Submission failed');
       }
     } catch (error) {
       console.error('Error submitting application:', error);
-      toast({
-        title: "Submission Failed",
-        description: "There was an error submitting your application. Please try again later.",
-        variant: "destructive"
-      });
+      
+      // If the error is already handled above with detailed information, don't show another toast
+      if ((error as Error).message !== 'Submission failed') {
+        toast({
+          title: "Submission Error",
+          description: "There was an unexpected error submitting your application. Please try again later or contact support.",
+          variant: "destructive"
+        });
+      }
     }
   };
 
