@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -47,12 +46,10 @@ const ApplicationForm = () => {
   const [activeSection, setActiveSection] = useState(0);
   const [csrfToken, setCsrfToken] = useState('');
   
-  // Generate CSRF token on component mount
   useEffect(() => {
     const token = generateCsrfToken();
     setCsrfToken(token);
     
-    // Store token in sessionStorage for verification later
     sessionStorage.setItem('formCsrfToken', token);
   }, []);
   
@@ -88,29 +85,19 @@ const ApplicationForm = () => {
     setIsSubmitting(true);
     
     try {
-      // Add a small delay to show the animation
       await new Promise(resolve => setTimeout(resolve, 1200));
       
-      // Check if we have files to upload (set by the SupportingMaterialsSection component)
       const files = window.applicationFiles;
-      
       let response;
       
       if (files && Object.values(files).some(f => f !== null)) {
-        // Filter out null values from files object
-        const filesToUpload = Object.entries(files)
-          .filter(([_, file]) => file !== null)
-          .reduce((acc, [key, file]) => ({ ...acc, [key]: file }), {});
-        
-        // Submit with files and CSRF token
-        response = await submitApplicationWithFiles(values, filesToUpload);
+        response = await submitApplicationForm(values, files);
       } else {
-        // Submit without files
         response = await submitApplicationForm(values);
       }
       
       if (!response.success) {
-        throw new Error(response.error?.message || 'Error submitting application');
+        throw new Error(response.error?.message || 'Submission failed');
       }
       
       toast({
@@ -121,13 +108,33 @@ const ApplicationForm = () => {
       
       setIsSubmitted(true);
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error submitting application:', error);
+      
+      const errorDetails = [];
+      if (error.message) errorDetails.push(`Error: ${error.message}`);
+      if (error.details) errorDetails.push(`Details: ${error.details}`);
+      if (error.code) errorDetails.push(`Error Code: ${error.code}`);
+      
       toast({
-        title: "Submission Error",
-        description: "There was a problem submitting your application. Please try again or contact us directly.",
+        title: "Application Submission Failed",
+        description: (
+          <div className="space-y-2">
+            <p className="font-medium text-red-200">We encountered an error while submitting your application:</p>
+            {errorDetails.map((detail, index) => (
+              <p key={index} className="text-sm opacity-90">{detail}</p>
+            ))}
+            <p className="text-sm mt-4">
+              Please try again or contact our support team at{' '}
+              <a href="mailto:support@vocalexcellence.com" className="underline">
+                support@vocalexcellence.com
+              </a>
+            </p>
+          </div>
+        ),
         variant: "destructive",
-        className: "bg-rose-600 text-white border-rose-700",
+        className: "bg-red-900 text-white border-red-700",
+        duration: 10000,
       });
     } finally {
       setIsSubmitting(false);
@@ -187,7 +194,6 @@ const ApplicationForm = () => {
           </p>
         </motion.div>
 
-        {/* Progress visualization */}
         <motion.div 
           className="mb-10"
           variants={sectionVariants}
@@ -202,7 +208,6 @@ const ApplicationForm = () => {
               />
             </div>
             
-            {/* Progress Points */}
             <div className="flex justify-between mt-1">
               {sections.map((section, index) => (
                 <motion.button
@@ -236,7 +241,6 @@ const ApplicationForm = () => {
           </div>
         </motion.div>
 
-        {/* Section selector for mobile */}
         <motion.div 
           className="flex md:hidden justify-center mb-8 overflow-x-auto pb-2 gap-2"
           variants={sectionVariants}
@@ -260,7 +264,6 @@ const ApplicationForm = () => {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
-            {/* Hidden CSRF token input */}
             <input type="hidden" name="csrfToken" value={csrfToken} />
             
             <AnimatePresence mode="wait">
@@ -313,7 +316,6 @@ const ApplicationForm = () => {
           </form>
         </Form>
 
-        {/* Extra help text */}
         <motion.div 
           className="text-center mt-8 text-sm text-violet-300/70"
           initial={{ opacity: 0 }}

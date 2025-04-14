@@ -1,4 +1,3 @@
-
 /**
  * Form Submission Service
  * 
@@ -81,7 +80,6 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
       console.log('Calling process-application edge function with files');
       
       try {
-        // Use the edge function to process the application with files
         const response = await supabase.functions.invoke('process-application', {
           body: formData,
         });
@@ -92,44 +90,38 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
             formType: 'application',
             email: data.email
           });
-          // Don't throw here, we'll try the direct insert fallback
-          console.log('Edge function failed, trying direct insert...');
-        } else {
-          console.log('Edge function response:', response);
-          return { success: true, data: response.data };
+          throw new Error(`Edge function error: ${response.error.message || 'Unknown error'}\nDetails: ${JSON.stringify(response.error)}`);
         }
-      } catch (functionError) {
-        console.error('Edge function call failed:', functionError);
-        // Continue to fallback
-        console.log('Edge function call failed, trying direct insert...');
-      }
-    } else {
-      // For non-file submissions, try the edge function first
-      console.log('Submitting application without files via edge function');
-      
-      try {
-        // Call the process-application edge function
-        const response = await supabase.functions.invoke('process-application', {
-          body: {
-            applicationData: JSON.stringify(data),
-            directInsert: true,
-            source: window.location.href
-          },
-        });
         
         console.log('Edge function response:', response);
-        
-        if (!response.error) {
-          console.log('Edge function processed application successfully');
-          return { success: true, data: response.data };
-        }
-        
-        console.error('Edge function error:', response.error);
-        // Continue to fallback
-      } catch (functionError) {
+        return { success: true, data: response.data };
+      } catch (functionError: any) {
         console.error('Edge function call failed:', functionError);
-        // Continue to fallback
+        throw new Error(`Edge function call failed: ${functionError.message}\nStack: ${functionError.stack || 'No stack trace'}`);
       }
+    }
+    
+    // For non-file submissions, try the edge function first
+    console.log('Submitting application without files via edge function');
+    
+    try {
+      const response = await supabase.functions.invoke('process-application', {
+        body: {
+          applicationData: JSON.stringify(data),
+          directInsert: true,
+          source: window.location.href
+        },
+      });
+      
+      if (response.error) {
+        console.error('Edge function error:', response.error);
+        throw new Error(`Edge function error: ${response.error.message || 'Unknown error'}\nDetails: ${JSON.stringify(response.error)}`);
+      }
+      
+      return { success: true, data: response.data };
+    } catch (functionError: any) {
+      console.error('Edge function call failed:', functionError);
+      throw new Error(`Edge function call failed: ${functionError.message}\nStack: ${functionError.stack || 'No stack trace'}`);
     }
     
     // Direct database insert as fallback
@@ -163,63 +155,27 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
       }])
       .select();
 
-    console.log('Direct insert result:', result);
-    console.log('Direct insert error:', error);
-
     if (error) {
+      console.error('Database insert error:', error);
       trackError('form_submission', error, {
         formType: 'application',
         email: data.email
       });
-      throw error;
+      throw new Error(`Database insert error: ${error.message}\nDetails: ${JSON.stringify(error)}\nCode: ${error.code}`);
     }
     
     return { success: true, data: result };
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error submitting application form:", error);
-    
-    // Last resort fallback - try direct insert without any bells and whistles
-    try {
-      console.log("Attempting last resort direct insert fallback");
-      
-      const { data: result, error } = await supabase
-        .from('applications')
-        .insert([{
-          firstname: data.firstName,
-          lastname: data.lastName,
-          email: data.email,
-          phone: data.phone,
-          dateofbirth: data.dateOfBirth,
-          nationality: data.nationality,
-          address: data.address,
-          city: data.city,
-          country: data.country,
-          postalcode: data.postalCode,
-          vocalrange: data.vocalRange,
-          yearsofexperience: data.yearsOfExperience,
-          musicalbackground: data.musicalBackground,
-          teachername: data.teacherName,
-          teacheremail: data.teacherEmail,
-          performanceexperience: data.performanceExperience,
-          reasonforapplying: data.reasonForApplying,
-          heardaboutus: data.heardAboutUs,
-          scholarshipinterest: data.scholarshipInterest,
-          specialneeds: data.specialNeeds,
-          termsagreed: data.termsAgreed,
-          timestamp: new Date().toISOString(),
-          source: window.location.href,
-        }])
-        .select();
-        
-      if (error) {
-        console.error("Even last resort fallback failed:", error);
-        return { success: false, error };
+    return { 
+      success: false, 
+      error: {
+        message: error.message || 'Unknown error occurred',
+        details: error.details || '',
+        stack: error.stack || '',
+        code: error.code || '',
+        timestamp: new Date().toISOString()
       }
-      
-      return { success: true, data: result };
-    } catch (fallbackError) {
-      console.error("All attempts failed:", fallbackError);
-      return { success: false, error };
-    }
+    };
   }
 };
