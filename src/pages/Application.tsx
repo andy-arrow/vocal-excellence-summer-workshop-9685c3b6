@@ -82,6 +82,7 @@ const Application = () => {
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeIn}
+            id="application-form-section"
           >
             <ApplicationForm />
           </motion.section>
