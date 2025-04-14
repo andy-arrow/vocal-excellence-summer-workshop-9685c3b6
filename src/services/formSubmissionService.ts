@@ -1,3 +1,4 @@
+
 /**
  * Form Submission Service
  * 
@@ -121,7 +122,7 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
         if (response.error) {
           console.error('File processing error:', response.error);
           // Don't throw here - we've already saved the application data
-          trackError('file_processing', response.error, {
+          trackError('component_error', response.error, {  // Changed from 'file_processing' to 'component_error'
             formType: 'application',
             email: data.email
           });
@@ -129,7 +130,7 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
       } catch (fileError) {
         console.error('Error processing files:', fileError);
         // Don't throw here - we've already saved the application data
-        trackError('file_processing', fileError, {
+        trackError('component_error', fileError, {  // Changed from 'file_processing' to 'component_error'
           formType: 'application',
           email: data.email
         });
