@@ -1,5 +1,3 @@
-
-import { ApplicationFormValues } from "@/components/ApplicationForm/schema";
 import { supabase } from "@/integrations/supabase/client";
 import { trackError } from "@/utils/monitoring";
 
@@ -8,12 +6,10 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
     console.log('submitApplicationForm: Starting submission for', data.email);
     console.log('Received form data:', JSON.stringify(data, null, 2));
     
-    // Detailed logging of files
     if (files) {
       console.log('Files received:', Object.keys(files).map(key => `${key}: ${files[key]?.name || 'null'}`));
     }
 
-    // Prepare data for database insertion
     const formData = {
       firstname: data.firstName,
       lastname: data.lastName,
@@ -42,7 +38,6 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
 
     console.log('Prepared form data:', JSON.stringify(formData, null, 2));
 
-    // Perform Supabase insert
     const { data: result, error } = await supabase
       .from('applications')
       .insert([formData])
@@ -50,7 +45,6 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
 
     console.log('Supabase insert result:', { result, error });
 
-    // Check for errors
     if (error) {
       console.error('Database insertion error:', error);
       trackError('component_error', error, {
@@ -70,7 +64,6 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
 
     console.log('Application saved successfully:', result);
 
-    // If files exist, use edge function to process them
     if (files && Object.keys(files).length > 0) {
       console.log('Processing files using edge function');
       try {
@@ -111,6 +104,67 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
     
   } catch (error: any) {
     console.error("Unhandled error submitting application form:", error);
+    return { 
+      success: false, 
+      error: {
+        message: error.message || 'Unknown error occurred',
+        details: error.details || JSON.stringify(error),
+        code: error.code || 'SUBMISSION_FAILED'
+      }
+    };
+  }
+};
+
+export const submitContactForm = async (data: {
+  name: string;
+  email: string;
+  vocal_type: string;
+  message?: string;
+}): Promise<any> => {
+  try {
+    console.log('submitContactForm: Starting submission for', data.email);
+    
+    const formData = {
+      name: data.name,
+      email: data.email,
+      vocal_type: data.vocal_type,
+      message: data.message || null,
+      timestamp: new Date().toISOString(),
+      source: window.location.href
+    };
+
+    console.log('Prepared contact form data:', JSON.stringify(formData, null, 2));
+
+    const { data: result, error } = await supabase
+      .from('contact_requests')
+      .insert([formData])
+      .select();
+
+    console.log('Supabase contact form insert result:', { result, error });
+
+    if (error) {
+      console.error('Database insertion error:', error);
+      trackError('component_error', error, {
+        formType: 'contact',
+        email: data.email
+      });
+      
+      return { 
+        success: false, 
+        error: {
+          message: error.message,
+          details: error.details,
+          code: error.code || 'SUBMISSION_FAILED'
+        }
+      };
+    }
+
+    console.log('Contact form saved successfully:', result);
+    
+    return { success: true, data: result[0] };
+    
+  } catch (error: any) {
+    console.error("Unhandled error submitting contact form:", error);
     return { 
       success: false, 
       error: {
