@@ -12,7 +12,7 @@ export class EmailHandler {
 
   async sendNotifications(
     applicationData: ApplicationData, 
-    fileAttachments: { filename: string; content: Uint8Array }[] = []
+    fileAttachments: { filename: string; content: Uint8Array; type: string }[] = []
   ) {
     try {
       console.log("Sending email notifications");
@@ -25,8 +25,16 @@ export class EmailHandler {
       const apiKey = Deno.env.get("RESEND_API_KEY") || "";
       console.log("RESEND_API_KEY available:", apiKey ? "Yes (masked)" : "No");
       
+      // Prepare attachments for email
+      const formattedAttachments = fileAttachments.map(attachment => ({
+        filename: attachment.filename,
+        content: attachment.content
+      }));
+      
+      console.log(`Prepared ${formattedAttachments.length} attachments for email`);
+      
       // Send admin notification
-      await this.sendAdminNotification(applicationData, fileAttachments);
+      await this.sendAdminNotification(applicationData, formattedAttachments);
       console.log("Admin notification email sent successfully");
       
       // Send applicant confirmation
@@ -40,21 +48,21 @@ export class EmailHandler {
 
   private async sendAdminNotification(
     applicationData: ApplicationData,
-    fileAttachments: { filename: string; content: Uint8Array }[]
+    attachments: { filename: string; content: Uint8Array }[]
   ) {
     try {
       console.log("Preparing admin notification email");
       const adminEmailHtml = this.getDetailedAdminNotificationTemplate(applicationData);
       
       console.log("Sending admin email to: aroditis.andreas@gmail.com");
-      console.log("File attachments:", fileAttachments.map(f => f.filename).join(", ") || "None");
+      console.log("File attachments:", attachments.map(f => f.filename).join(", ") || "None");
       
       const result = await this.resend.emails.send({
         from: "Vocal Excellence <onboarding@resend.dev>", // Changed to use Resend's default domain
         to: ["aroditis.andreas@gmail.com"],
         subject: "**Vocal Excellence** New Application Submission",
         html: adminEmailHtml,
-        attachments: fileAttachments,
+        attachments: attachments,
       });
       
       console.log("Admin email send result:", result);

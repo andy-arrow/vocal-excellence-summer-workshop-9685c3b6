@@ -43,16 +43,25 @@ export async function processFiles(
 
   console.log(`Found ${files.length} files to process:`, files.map(f => `${f.name}: ${f.file.name}`));
 
-  // Ensure bucket exists
+  // Ensure bucket exists by checking first
   try {
-    const { error: bucketError } = await supabase.storage
-      .getBucket('application_materials');
-
-    if (bucketError) {
+    const { data: buckets, error: bucketsError } = await supabase.storage
+      .listBuckets();
+    
+    console.log("Checking if bucket exists:", buckets);
+    
+    let bucketExists = false;
+    if (buckets) {
+      bucketExists = buckets.some(bucket => bucket.name === 'application_materials');
+    }
+    
+    if (!bucketExists) {
       console.log('Creating application_materials bucket');
       await supabase.storage.createBucket('application_materials', {
         public: true,
       });
+    } else {
+      console.log('application_materials bucket already exists');
     }
   } catch (error) {
     console.error('Error checking/creating bucket:', error);

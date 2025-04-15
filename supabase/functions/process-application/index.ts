@@ -147,6 +147,9 @@ serve(async (req) => {
   }
 
   try {
+    // Clone the request for processing files later
+    const reqClone = req.clone();
+    
     // Parse request data
     const contentType = req.headers.get("content-type") || "";
     console.log("Processing request with content type:", contentType);
@@ -220,11 +223,49 @@ serve(async (req) => {
 
     // Process files if present
     let uploadedFiles = [];
+    let fileAttachments = [];
+    
     if (contentType.includes("multipart/form-data")) {
       try {
-        const formData = await req.formData();
+        const formData = await reqClone.formData();
         uploadedFiles = await processFiles(formData, applicationId);
         console.log("Processed files:", uploadedFiles);
+        
+        // Create file attachments for email
+        if (uploadedFiles.length > 0) {
+          fileAttachments = await Promise.all(
+            uploadedFiles.map(async (file: any) => {
+              try {
+                const fileName = file.path.split('/').pop();
+                // Get file content from Supabase storage
+                const { data: fileData, error: fileError } = await supabase.storage
+                  .from('application_materials')
+                  .download(file.path);
+                
+                if (fileError || !fileData) {
+                  console.error(`Error downloading file ${file.path}:`, fileError);
+                  return null;
+                }
+                
+                // Convert blob to ArrayBuffer
+                const buffer = await fileData.arrayBuffer();
+                console.log(`Created attachment for ${file.name}: ${fileName} (${buffer.byteLength} bytes)`);
+                
+                return {
+                  filename: fileName,
+                  content: new Uint8Array(buffer),
+                  type: file.type.includes('audio') ? 'audio' : 'document'
+                };
+              } catch (error) {
+                console.error(`Error creating attachment for ${file.name}:`, error);
+                return null;
+              }
+            })
+          );
+          
+          fileAttachments = fileAttachments.filter(Boolean);
+          console.log(`Created ${fileAttachments.length} attachments for email`);
+        }
       } catch (fileError) {
         console.error("Error processing files:", fileError);
         // Continue despite file errors - we've already saved the application
@@ -244,43 +285,9 @@ serve(async (req) => {
       console.log("Initializing EmailHandler with API key");
       const emailHandler = new EmailHandler(resendApiKey);
       
-      // Create file attachments for email
-      let fileAttachments = [];
-      if (uploadedFiles.length > 0) {
-        try {
-          console.log("Creating file attachments for email");
-          const formData = await req.formData();
-          
-          fileAttachments = await Promise.all(
-            uploadedFiles.map(async (file: any) => {
-              try {
-                const fileContent = formData.get(file.name);
-                if (fileContent instanceof File) {
-                  console.log(`Creating attachment for ${file.name}: ${fileContent.name}`);
-                  return {
-                    filename: fileContent.name,
-                    content: new Uint8Array(await fileContent.arrayBuffer())
-                  };
-                }
-                return null;
-              } catch (error) {
-                console.error("Error creating file attachment:", error);
-                return null;
-              }
-            })
-          );
-          
-          fileAttachments = fileAttachments.filter(Boolean);
-          console.log(`Created ${fileAttachments.length} attachments for email`);
-        } catch (attachmentError) {
-          console.error("Error creating email attachments:", attachmentError);
-          fileAttachments = [];
-        }
-      }
-
-      // Send emails
+      // Send emails with attachments
       await emailHandler.sendNotifications(applicationData, fileAttachments);
-      console.log("Email notifications sent successfully");
+      console.log("Email notifications sent successfully with attachments");
     } catch (emailError) {
       console.error("Error sending email notifications:", emailError);
       // Store the error but continue - we don't want to fail the whole request
