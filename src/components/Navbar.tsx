@@ -18,6 +18,14 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = '' }) => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const scrollToSection = (sectionId: string) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setIsMenuOpen(false); // Close mobile menu if open
+    }
+  };
+
   const navLinks = [
     { href: '/', label: 'Home', id: 'home' },
     { href: '/#about', label: 'About', id: 'about' },
@@ -53,9 +61,9 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = '' }) => {
 
         <div className="hidden md:flex items-center space-x-6">
           {navLinks.map((link) => (
-            <a 
+            <button 
               key={link.id}
-              href={link.href} 
+              onClick={() => scrollToSection(link.id)} 
               className={cn(
                 "text-white/70 hover:text-white transition-colors relative py-2",
                 activeSection === link.id ? "text-white" : ""
@@ -71,7 +79,7 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = '' }) => {
                   transition={{ duration: 0.3 }}
                 />
               )}
-            </a>
+            </button>
           ))}
           <Link 
             to="/apply" 
@@ -93,20 +101,19 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection = '' }) => {
           transition={{ duration: 0.3 }}
         >
           {navLinks.map((link) => (
-            <a 
+            <button 
               key={link.id}
-              href={link.href} 
+              onClick={() => scrollToSection(link.id)}
               className={cn(
-                "block py-3 text-white/90 hover:text-white transition-colors",
+                "block py-3 text-white/90 hover:text-white transition-colors w-full text-left",
                 activeSection === link.id ? "text-white font-medium" : ""
               )} 
-              onClick={toggleMenu}
             >
               {link.label}
               {activeSection === link.id && (
                 <span className="ml-2 inline-block w-1 h-1 bg-energy-pink rounded-full" />
               )}
-            </a>
+            </button>
           ))}
           <Link 
             to="/apply" 
