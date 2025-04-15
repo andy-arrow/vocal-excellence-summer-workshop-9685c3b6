@@ -1,3 +1,4 @@
+
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 import { supabase } from "./supabaseClient.ts";
@@ -110,7 +111,7 @@ serve(async (req) => {
     console.log(`With ${attachments.length} attachments`);
 
     const emailResponse = await resend.emails.send({
-      from: "Vocal Excellence <noreply@vocalexcellence.org>",
+      from: "Vocal Excellence <onboarding@resend.dev>", // Changed to use Resend's default domain
       to: [toEmail],
       subject: subject,
       html: htmlContent,
