@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -60,7 +59,6 @@ const ApplicationForm = () => {
         });
         form.reset();
       } else {
-        // Detailed error information for failed submissions
         const errorDetails = response.error || {};
         const errorMessage = typeof errorDetails === 'string' 
           ? errorDetails 
@@ -68,12 +66,10 @@ const ApplicationForm = () => {
         
         let errorDescription = "There was an error submitting your application.";
         
-        // If we have detailed error information, display it
         if (errorDetails.details) {
           errorDescription += ` Technical details: ${errorDetails.details}`;
         }
         
-        // Add contact information for support
         errorDescription += " Please try again or contact support at support@vocalexcellence.org.";
         
         toast({
@@ -82,7 +78,6 @@ const ApplicationForm = () => {
           variant: "destructive"
         });
         
-        // Log detailed error information to console for debugging
         console.error("Detailed submission error:", {
           message: errorDetails.message,
           details: errorDetails.details,
@@ -95,7 +90,6 @@ const ApplicationForm = () => {
     } catch (error) {
       console.error('Error submitting application:', error);
       
-      // If the error is already handled above with detailed information, don't show another toast
       if ((error as Error).message !== 'Submission failed') {
         toast({
           title: "Submission Error",
@@ -518,7 +512,7 @@ const ApplicationForm = () => {
                   <div>
                     <FormLabel className="block mb-2">Recommendation Letter</FormLabel>
                     <p className="text-sm text-apple-dark/70 mb-3">
-                      Upload in PDF format (max 2MB). If your recommender prefers to send directly, they can email it to info@vocalexcellence.org
+                      Upload in PDF format (max 2MB). If your recommender prefers to send directly, they can email it to info@vocalexcellence.cy
                     </p>
                     <Input type="file" accept=".pdf" />
                   </div>
