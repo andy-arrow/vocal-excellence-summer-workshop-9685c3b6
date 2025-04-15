@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
-import { Mail } from 'lucide-react';  // Using Mail icon since Google isn't available
+import { Mail } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { trackEvent } from '@/utils/monitoring';
 
@@ -14,7 +14,11 @@ export const SocialLoginButtons = () => {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth`
+          redirectTo: `${window.location.origin}/auth`,
+          // Add a custom prompt to improve the login experience
+          queryParams: {
+            prompt: 'select_account'
+          }
         }
       });
 
@@ -33,7 +37,7 @@ export const SocialLoginButtons = () => {
       } else {
         trackEvent('auth', 'info', {
           message: 'Google Login Initiated',
-          details: {} // Empty object instead of missing parameter
+          details: {}
         });
       }
     } catch (err) {
