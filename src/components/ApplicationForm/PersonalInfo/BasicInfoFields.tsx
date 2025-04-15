@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { 
@@ -9,7 +8,15 @@ import {
   FormMessage 
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { ApplicationFormValues } from '../schema';
+import { countries, nationalities } from '@/data/countries';
 
 const BasicInfoFields = () => {
   const form = useFormContext<ApplicationFormValues>();
@@ -81,16 +88,21 @@ const BasicInfoFields = () => {
         name="nationality"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-violet-100" htmlFor="nationality">Nationality</FormLabel>
-            <FormControl>
-              <Input 
-                {...field}
-                id="nationality"
-                placeholder="Your nationality"
-                autoComplete="country-name"
-                aria-required="true"
-              />
-            </FormControl>
+            <FormLabel className="text-violet-100">Nationality</FormLabel>
+            <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select your nationality" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                {nationalities.map((nationality) => (
+                  <SelectItem key={nationality.value} value={nationality.value}>
+                    {nationality.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
             <FormMessage />
           </FormItem>
         )}
