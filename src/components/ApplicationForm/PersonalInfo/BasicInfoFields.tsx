@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { 
@@ -16,7 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ApplicationFormValues } from '../schema';
-import { countries, nationalities } from '@/data/countries';
+import { nationalities } from '@/data/countries';
 
 const BasicInfoFields = () => {
   const form = useFormContext<ApplicationFormValues>();
@@ -89,7 +90,7 @@ const BasicInfoFields = () => {
         render={({ field }) => (
           <FormItem>
             <FormLabel className="text-violet-100">Nationality</FormLabel>
-            <Select onValueChange={field.onChange} defaultValue={field.value}>
+            <Select onValueChange={field.onChange} value={field.value}>
               <FormControl>
                 <SelectTrigger>
                   <SelectValue placeholder="Select your nationality" />
