@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/toaster";
 import Index from "./pages/Index";
 import Application from "./pages/Application";
 import CancellationPolicy from "./pages/CancellationPolicy";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
