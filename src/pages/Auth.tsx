@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate, Navigate, useSearchParams } from 'react-router-dom';
@@ -100,11 +99,6 @@ const Auth = () => {
           throw new Error("Passwords don't match");
         }
         
-        // Check if email is in the authorized admin list for signup
-        if (!isAuthorizedAdmin(email)) {
-          throw new Error("You are not authorized to create an administrator account");
-        }
-        
         const { error } = await signUp(email, password);
         if (error) throw error;
         
@@ -141,7 +135,6 @@ const Auth = () => {
       await updatePassword(newPassword);
       setShowResetSuccessDialog(false);
       
-      // Check if user is admin before redirecting to admin page
       if (user && isAuthorizedAdmin(user.email)) {
         navigate('/admin');
       } else {
