@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -142,8 +141,55 @@ export default {
 				'hero-pattern': 'linear-gradient(rgba(124, 58, 237, 0.7), rgba(236, 72, 153, 0.6))',
 				'energy-gradient': 'linear-gradient(135deg, #7C3AED 0%, #EC4899 50%, #06B6D4 100%)',
 				'subtle-noise': "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E\")",
-			}
+			},
+			typography: {
+				DEFAULT: {
+					css: {
+						maxWidth: 'none',
+						color: '#1d1d1f',
+						lineHeight: '1.47059',
+						p: {
+							marginTop: '0.8em',
+							marginBottom: '0.8em',
+						},
+						a: {
+							color: '#06c',
+							textDecoration: 'none',
+							'&:hover': {
+								textDecoration: 'underline',
+							},
+						},
+						h1: {
+							fontWeight: '600',
+							letterSpacing: '-.009em',
+						},
+						h2: {
+							fontWeight: '600',
+							letterSpacing: '-.009em',
+							marginTop: '1.6em',
+							marginBottom: '0.8em',
+						},
+						h3: {
+							fontWeight: '600',
+							marginTop: '1.4em',
+							marginBottom: '0.6em',
+						},
+						ul: {
+							marginTop: '0.8em',
+							marginBottom: '0.8em',
+							paddingLeft: '1.4em',
+						},
+						li: {
+							marginTop: '0.3em',
+							marginBottom: '0.3em',
+						},
+					},
+				},
+			},
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [
+		require("tailwindcss-animate"),
+		require("@tailwindcss/typography"),
+	],
 } satisfies Config;

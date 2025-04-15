@@ -9,24 +9,35 @@ const PrivacyPolicy = () => {
     <div className="min-h-screen bg-white">
       <Navbar />
       <motion.div 
-        className="max-w-4xl mx-auto px-6 py-16 md:py-24"
+        className="max-w-[980px] mx-auto px-6 py-16 md:py-24"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h1 className="text-3xl md:text-4xl font-bold mb-8">Privacy Policy</h1>
-        <div className="prose prose-slate max-w-none">
-          <div className="mb-8 text-sm text-gray-600">
-            <p>Effective Date: April 15, 2025</p>
-            <p>Last Updated: April 15, 2025</p>
-            <p>Version: 1.0</p>
-          </div>
+        <h1 className="text-[40px] md:text-[56px] font-semibold mb-8 tracking-tight">Privacy Policy</h1>
+        <div className="text-sm text-gray-500 mb-16 space-y-1">
+          <p>Effective Date: April 15, 2025</p>
+          <p>Last Updated: April 15, 2025</p>
+          <p>Version: 1.0</p>
+        </div>
 
+        <div className="space-y-24">
           {sections.map((section, index) => (
-            <div key={index} className="mb-12">
-              <h2 className="text-2xl font-bold mb-4">{section.title}</h2>
-              <div dangerouslySetInnerHTML={{ __html: section.content }} />
-            </div>
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="scroll-mt-24"
+              id={section.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}
+            >
+              <h2 className="text-2xl md:text-3xl font-semibold mb-8 tracking-tight">{section.title}</h2>
+              <div 
+                className="prose prose-gray max-w-none text-[17px] leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: section.content }}
+              />
+            </motion.div>
           ))}
         </div>
       </motion.div>
