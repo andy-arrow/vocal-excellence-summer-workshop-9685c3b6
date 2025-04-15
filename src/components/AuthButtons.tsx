@@ -1,10 +1,11 @@
 
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { LogIn, LogOut, User } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 
-const AuthButtons = () => {
+// Memoize the component to prevent unnecessary re-renders
+const AuthButtons = memo(() => {
   const { user, signOut } = useAuth();
 
   if (user) {
@@ -31,6 +32,9 @@ const AuthButtons = () => {
       <span>Login</span>
     </Link>
   );
-};
+});
+
+// Add display name for better debugging
+AuthButtons.displayName = 'AuthButtons';
 
 export default AuthButtons;

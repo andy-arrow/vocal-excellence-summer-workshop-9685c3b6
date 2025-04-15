@@ -1,10 +1,12 @@
-import React from 'react';
+
+import React, { memo } from 'react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { trackEvent } from '@/utils/monitoring';
 
-export const SocialLoginButtons = () => {
+// Memoize the component to prevent unnecessary re-renders
+export const SocialLoginButtons = memo(() => {
   const { toast } = useToast();
 
   const handleGoogleLogin = async () => {
@@ -66,14 +68,17 @@ export const SocialLoginButtons = () => {
       </Button>
     </div>
   );
-};
+});
 
-// Google icon SVG component
-const GoogleIcon = ({ className }: { className?: string }) => (
+// Optimize SVG icon component with memoization
+const GoogleIcon = memo(({ className }: { className?: string }) => (
   <svg 
     className={className} 
     xmlns="http://www.w3.org/2000/svg" 
     viewBox="0 0 24 24"
+    width="24"
+    height="24"
+    aria-hidden="true"
   >
     <path 
       fill="#4285F4" 
@@ -92,4 +97,8 @@ const GoogleIcon = ({ className }: { className?: string }) => (
       d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" 
     />
   </svg>
-);
+));
+
+// Add display names for better debugging
+SocialLoginButtons.displayName = 'SocialLoginButtons';
+GoogleIcon.displayName = 'GoogleIcon';

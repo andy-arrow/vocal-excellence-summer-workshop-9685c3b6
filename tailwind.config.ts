@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -100,27 +101,10 @@ export default {
 					'0%, 100%': { transform: 'translateY(0)' },
 					'50%': { transform: 'translateY(-10px)' }
 				},
-				'progress': {
-					'0%': { width: '0%' },
-					'100%': { width: '100%' }
-				},
-				'soundwave': {
-					'0%, 100%': { transform: 'scaleY(0.4)' },
-					'50%': { transform: 'scaleY(1)' }
-				},
 				'pulse-slow': {
 					'0%, 100%': { opacity: '0.8' },
 					'50%': { opacity: '1' }
 				},
-				'vibrato': {
-					'0%, 100%': { transform: 'translateX(0)' },
-					'25%': { transform: 'translateX(1px)' },
-					'75%': { transform: 'translateX(-1px)' }
-				},
-				'bounce-light': {
-					'0%, 100%': { transform: 'translateY(0)' },
-					'50%': { transform: 'translateY(-5px)' }
-				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
@@ -130,17 +114,12 @@ export default {
 				'fade-in-right': 'fade-in-right 0.6s ease-out',
 				'scale-in': 'scale-in 0.5s ease-out',
 				'float': 'float 3s ease-in-out infinite',
-				'progress': 'progress 15s ease-in-out infinite',
-				'soundwave': 'soundwave 1s ease-in-out infinite',
 				'pulse-slow': 'pulse-slow 3s ease-in-out infinite',
-				'vibrato': 'vibrato 0.15s ease-in-out infinite',
-				'bounce-light': 'bounce-light 2s ease-in-out infinite'
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
 				'hero-pattern': 'linear-gradient(rgba(124, 58, 237, 0.7), rgba(236, 72, 153, 0.6))',
 				'energy-gradient': 'linear-gradient(135deg, #7C3AED 0%, #EC4899 50%, #06B6D4 100%)',
-				'subtle-noise': "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E\")",
 			},
 			typography: {
 				DEFAULT: {
@@ -188,8 +167,25 @@ export default {
 			},
 		}
 	},
+	// Safelist critical classes that might be dynamically used
+	safelist: [
+		'bg-energy-purple',
+		'bg-energy-pink',
+		'bg-energy-cyan',
+		'text-white',
+		'animate-fade-in',
+		'animate-scale-in',
+	],
 	plugins: [
 		require("tailwindcss-animate"),
 		require("@tailwindcss/typography"),
 	],
+	// Reduce variants to improve build time
+	variants: {
+		extend: {
+			opacity: ['active'],
+			scale: ['active', 'group-hover'],
+			translate: ['group-hover'],
+		},
+	},
 } satisfies Config;
