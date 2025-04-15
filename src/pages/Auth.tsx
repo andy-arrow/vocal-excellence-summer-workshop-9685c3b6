@@ -78,11 +78,6 @@ const Auth = () => {
         const isAdmin = isAuthorizedAdmin(data.user?.email);
         logAdminAccessAttempt(data.user?.email, isAdmin);
         
-        if (window.location.pathname === '/admin' && !isAdmin) {
-          setShowAdminWarning(true);
-          return;
-        }
-        
         toast({
           title: "Successfully signed in",
           description: "Welcome back!",
