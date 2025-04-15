@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Mail, Phone, MapPin, Instagram, Twitter, Facebook, Youtube } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -50,6 +49,11 @@ const Footer = () => {
               <li>
                 <Link to="/cancellation-policy" className="text-white/70 hover:text-white transition-colors text-sm">
                   Cancellation Policy
+                </Link>
+              </li>
+              <li>
+                <Link to="/privacy-policy" className="text-white/70 hover:text-white transition-colors text-sm">
+                  Privacy Policy
                 </Link>
               </li>
             </ul>
