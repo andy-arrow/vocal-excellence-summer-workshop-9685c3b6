@@ -19,6 +19,14 @@ import { Button } from '@/components/ui/button';
 import { submitApplicationForm } from '@/services/formSubmissionService';
 import { applicationSchema, type ApplicationFormValues } from './ApplicationForm/schema';
 import ErrorBoundary from '@/utils/ErrorBoundary';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { countries, nationalities } from '@/data/countries';
 
 const ApplicationForm = () => {
   const form = useForm<ApplicationFormValues>({
@@ -195,9 +203,23 @@ const ApplicationForm = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Nationality</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Your nationality" {...field} />
-                        </FormControl>
+                        <Select onValueChange={field.onChange} value={field.value || ""}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select your nationality" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {nationalities.map((nationality) => (
+                              <SelectItem 
+                                key={nationality.value} 
+                                value={nationality.value}
+                              >
+                                {nationality.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -241,9 +263,23 @@ const ApplicationForm = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Country</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Country" {...field} />
-                        </FormControl>
+                        <Select onValueChange={field.onChange} value={field.value || ""}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select your country" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {countries.map((country) => (
+                              <SelectItem 
+                                key={country.value} 
+                                value={country.value}
+                              >
+                                {country.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                         <FormMessage />
                       </FormItem>
                     )}
