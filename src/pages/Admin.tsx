@@ -8,45 +8,39 @@ import { useToast } from '@/hooks/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { LogOut, Inbox, Users, Loader2 } from 'lucide-react';
+import { LogOut, Inbox, Users, Loader2, Shield, AlertTriangle } from 'lucide-react';
+import { isAuthorizedAdmin, logAdminAccessAttempt } from '@/utils/accessControl';
+import { useAuth } from '@/contexts/AuthContext';
 
 const Admin = () => {
-  const [session, setSession] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [applications, setApplications] = useState<any[]>([]);
   const [contacts, setContacts] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState('applications');
   const { toast } = useToast();
+  const { user } = useAuth();
+
+  // Check if user is an authorized admin
+  const isAdmin = isAuthorizedAdmin(user?.email);
 
   useEffect(() => {
-    // Check if user is authenticated
-    const getSession = async () => {
-      const { data } = await supabase.auth.getSession();
-      setSession(data.session);
-      setLoading(false);
-      
-      if (data.session) {
+    if (user) {
+      // Log access attempt
+      logAdminAccessAttempt(user.email, isAdmin);
+
+      if (isAdmin) {
         fetchData();
+      } else {
+        toast({
+          title: 'Unauthorized Access',
+          description: 'You do not have permission to access the admin dashboard.',
+          variant: 'destructive'
+        });
       }
-    };
+    }
 
-    getSession();
-    
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        setSession(session);
-        setLoading(false);
-        
-        if (session) {
-          fetchData();
-        }
-      }
-    );
-
-    return () => {
-      authListener.subscription.unsubscribe();
-    };
-  }, []);
+    setLoading(false);
+  }, [user]);
   
   const fetchData = async () => {
     try {
@@ -99,8 +93,43 @@ const Admin = () => {
   }
   
   // Redirect if not logged in
-  if (!session) {
+  if (!user) {
     return <Navigate to="/auth" />;
+  }
+
+  // Show unauthorized message if not an admin
+  if (!isAdmin) {
+    return (
+      <>
+        <Navbar />
+        <div className="min-h-screen bg-slate-900 pt-24 pb-16">
+          <div className="max-w-md mx-auto px-4 sm:px-6">
+            <Card className="bg-red-950/40 border-red-500/30">
+              <CardHeader>
+                <div className="flex items-center justify-center space-x-2">
+                  <AlertTriangle className="h-6 w-6 text-red-400" />
+                  <CardTitle className="text-red-100">Access Denied</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent className="text-center space-y-4">
+                <p className="text-red-200">
+                  You are not authorized to access the administrator dashboard.
+                </p>
+                <p className="text-red-200">
+                  Only authorized administrators may access this area.
+                </p>
+                <div className="pt-4">
+                  <Button onClick={handleLogout} variant="destructive">
+                    <LogOut className="mr-2 h-4 w-4" /> Return to Login
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+        <Footer />
+      </>
+    );
   }
   
   const formatDate = (dateString: string) => {
@@ -113,7 +142,13 @@ const Admin = () => {
       <div className="min-h-screen bg-slate-900 pt-24 pb-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold text-white">Admin Dashboard</h1>
+            <div className="flex items-center">
+              <h1 className="text-3xl font-bold text-white">Admin Dashboard</h1>
+              <div className="ml-4 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                <Shield className="h-3 w-3 mr-1" />
+                Authorized Admin
+              </div>
+            </div>
             <Button 
               onClick={handleLogout} 
               variant="outline" 

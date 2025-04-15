@@ -1,12 +1,14 @@
+
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate, Navigate, useSearchParams } from 'react-router-dom';
-import { Eye, EyeOff, LogIn, UserPlus, RotateCcw } from 'lucide-react';
+import { Eye, EyeOff, LogIn, UserPlus, RotateCcw, AlertTriangle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useAuth } from '@/contexts/AuthContext';
 import { SocialLoginButtons } from '@/components/SocialLoginButtons';
+import { isAuthorizedAdmin, logAdminAccessAttempt } from '@/utils/accessControl';
 import {
   Dialog,
   DialogContent,
@@ -16,6 +18,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -28,6 +31,7 @@ const Auth = () => {
   const [searchParams] = useSearchParams();
   const [showResetSuccessDialog, setShowResetSuccessDialog] = useState(false);
   const [newPassword, setNewPassword] = useState('');
+  const [showAdminWarning, setShowAdminWarning] = useState(false);
   
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -37,10 +41,21 @@ const Auth = () => {
     if (searchParams.get('reset') === 'true') {
       setShowResetSuccessDialog(true);
     }
-  }, [searchParams]);
 
-  if (user) {
+    // Check if the current path indicates an admin access attempt
+    if (window.location.pathname === '/admin' && user && !isAuthorizedAdmin(user.email)) {
+      setShowAdminWarning(true);
+    }
+  }, [searchParams, user]);
+
+  // If user is already logged in and is an authorized admin, redirect to admin
+  if (user && isAuthorizedAdmin(user.email) && window.location.pathname === '/admin') {
     return <Navigate to="/admin" />;
+  }
+  
+  // If user is logged in but trying to access auth page, redirect to home
+  if (user && window.location.pathname === '/auth') {
+    return <Navigate to="/" />;
   }
 
   const handleAuth = async (e: React.FormEvent) => {
@@ -58,8 +73,16 @@ const Auth = () => {
         setIsResetPassword(false);
         setIsLogin(true);
       } else if (isLogin) {
-        const { error } = await signIn(email, password);
+        const { error, data } = await signIn(email, password);
         if (error) throw error;
+        
+        const isAdmin = isAuthorizedAdmin(data.user?.email);
+        logAdminAccessAttempt(data.user?.email, isAdmin);
+        
+        if (window.location.pathname === '/admin' && !isAdmin) {
+          setShowAdminWarning(true);
+          return;
+        }
         
         toast({
           title: "Successfully signed in",
@@ -67,10 +90,19 @@ const Auth = () => {
           className: "bg-green-700 text-white border-green-800",
         });
         
-        navigate('/admin');
+        if (window.location.pathname === '/admin' && isAdmin) {
+          navigate('/admin');
+        } else {
+          navigate('/');
+        }
       } else {
         if (password !== confirmPassword) {
           throw new Error("Passwords don't match");
+        }
+        
+        // Check if email is in the authorized admin list for signup
+        if (!isAuthorizedAdmin(email)) {
+          throw new Error("You are not authorized to create an administrator account");
         }
         
         const { error } = await signUp(email, password);
@@ -108,7 +140,13 @@ const Auth = () => {
     try {
       await updatePassword(newPassword);
       setShowResetSuccessDialog(false);
-      navigate('/admin');
+      
+      // Check if user is admin before redirecting to admin page
+      if (user && isAuthorizedAdmin(user.email)) {
+        navigate('/admin');
+      } else {
+        navigate('/');
+      }
     } catch (error: any) {
       toast({
         title: "Password Update Failed",
@@ -281,6 +319,17 @@ const Auth = () => {
       <Navbar />
       <div className="min-h-screen bg-gradient-to-b from-slate-900 to-violet-950 pt-24 pb-16">
         <div className="max-w-md mx-auto px-6 py-12">
+          {showAdminWarning && (
+            <Alert variant="destructive" className="mb-6">
+              <AlertTriangle className="h-4 w-4" />
+              <AlertTitle>Access Restricted</AlertTitle>
+              <AlertDescription>
+                Only authorized administrators can access the admin dashboard. 
+                If you believe this is an error, please contact the system administrator.
+              </AlertDescription>
+            </Alert>
+          )}
+          
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
