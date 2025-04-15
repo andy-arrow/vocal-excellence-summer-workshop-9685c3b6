@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
@@ -16,9 +15,8 @@ export const SocialLoginButtons = () => {
           redirectTo: `${window.location.origin}/auth`,
           queryParams: {
             // Force account selection each time
-            prompt: 'select_account',
-            // Suggest the domain to use (this helps with branding)
-            hd: 'vocalexcellence.com.cy'
+            prompt: 'select_account'
+            // Removed domain restriction (hd parameter)
           }
         }
       });
