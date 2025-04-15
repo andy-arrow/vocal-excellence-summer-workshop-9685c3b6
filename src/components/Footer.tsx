@@ -4,6 +4,13 @@ import { Mail, Phone, MapPin, Instagram, Twitter, Facebook, Youtube } from 'luci
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
+  const scrollToSection = (sectionId: string) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <footer className="bg-slate-900 text-white shadow-lg">
       <div className="max-w-6xl mx-auto py-16 px-6 md:px-8">
@@ -33,19 +40,41 @@ const Footer = () => {
             <h4 className="font-sans text-sm font-semibold mb-4 text-white/50 uppercase tracking-wider">Quick Links</h4>
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="text-white/70 hover:text-white transition-colors text-sm">Home</Link>
+                <button 
+                  onClick={() => scrollToSection('home')}
+                  className="text-white/70 hover:text-white transition-colors text-sm text-left"
+                >
+                  Home
+                </button>
               </li>
               <li>
-                <Link to="/#about" className="text-white/70 hover:text-white transition-colors text-sm">About the Programme</Link>
+                <button 
+                  onClick={() => scrollToSection('about')}
+                  className="text-white/70 hover:text-white transition-colors text-sm text-left"
+                >
+                  About the Programme
+                </button>
               </li>
               <li>
-                <Link to="/#curriculum" className="text-white/70 hover:text-white transition-colors text-sm">Curriculum & Schedule</Link>
+                <button 
+                  onClick={() => scrollToSection('curriculum')}
+                  className="text-white/70 hover:text-white transition-colors text-sm text-left"
+                >
+                  Curriculum & Schedule
+                </button>
               </li>
               <li>
-                <Link to="/#instructors" className="text-white/70 hover:text-white transition-colors text-sm">Instructors</Link>
+                <button 
+                  onClick={() => scrollToSection('instructors')}
+                  className="text-white/70 hover:text-white transition-colors text-sm text-left"
+                >
+                  Instructors
+                </button>
               </li>
               <li>
-                <Link to="/apply" className="text-white/70 hover:text-white transition-colors text-sm">Apply Now</Link>
+                <Link to="/apply" className="text-white/70 hover:text-white transition-colors text-sm">
+                  Apply Now
+                </Link>
               </li>
               <li>
                 <Link to="/cancellation-policy" className="text-white/70 hover:text-white transition-colors text-sm">
