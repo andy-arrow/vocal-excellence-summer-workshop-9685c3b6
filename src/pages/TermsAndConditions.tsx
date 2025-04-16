@@ -166,17 +166,14 @@ const TermsAndConditions = () => {
 
           <section id="eligibility">
             <h2>3. ELIGIBILITY</h2>
-            
           </section>
           
           <section id="application">
             <h2>4. APPLICATION AND SELECTION PROCESS</h2>
-            
           </section>
           
           <section id="cancellation">
             <h2>6. CANCELLATION AND REFUND POLICY</h2>
-            
           </section>
         </motion.div>
 
