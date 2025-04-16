@@ -1,21 +1,22 @@
+
 import React from 'react';
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import HomePage from '@/pages/HomePage';
-import ApplicationPage from '@/pages/ApplicationPage';
-import CancellationPolicy from '@/pages/CancellationPolicy';
-import TermsAndConditions from '@/pages/TermsAndConditions';
+import Index from './pages/Index';
+import Application from './pages/Application';
+import CancellationPolicy from './pages/CancellationPolicy';
+import TermsAndConditions from './pages/TermsAndConditions';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />,
+    element: <Index />,
   },
   {
     path: "/apply",
-    element: <ApplicationPage />,
+    element: <Application />,
   },
   {
     path: "/cancellation-policy",
