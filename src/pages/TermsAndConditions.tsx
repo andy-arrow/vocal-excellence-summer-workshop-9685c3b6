@@ -106,7 +106,6 @@ const TermsAndConditions = () => {
           transition={{ delay: 0.6 }}
           className="prose prose-gray max-w-none"
         >
-          {/* Keep existing sections content */}
           <section id="definitions">
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">1. DEFINITIONS</h2>
             <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm mb-6">
@@ -165,29 +164,21 @@ const TermsAndConditions = () => {
             </div>
           </section>
 
-          {/* Continue with the rest of the sections */}
-          <div dangerouslySetInnerHTML={{ 
-            __html: `
-              <section id="eligibility">
-                <h2>3. ELIGIBILITY</h2>
-                
-              </section>
-              
-              <section id="application">
-                <h2>4. APPLICATION AND SELECTION PROCESS</h2>
-                
-              </section>
-              
-              <section id="cancellation">
-                <h2>6. CANCELLATION AND REFUND POLICY</h2>
-                
-              </section>
-              
-              <!-- Rest of the terms and conditions sections -->
-            `
-          }} />
-
-        </div>
+          <section id="eligibility">
+            <h2>3. ELIGIBILITY</h2>
+            
+          </section>
+          
+          <section id="application">
+            <h2>4. APPLICATION AND SELECTION PROCESS</h2>
+            
+          </section>
+          
+          <section id="cancellation">
+            <h2>6. CANCELLATION AND REFUND POLICY</h2>
+            
+          </section>
+        </motion.div>
 
         {/* Footer CTA */}
         <motion.div 
