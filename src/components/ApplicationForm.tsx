@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -8,14 +9,14 @@ import { ChevronLeft, ChevronRight, Sparkles, CheckCircle2, Hourglass } from 'lu
 import { generateCsrfToken } from '@/utils/security';
 import { Link } from 'react-router-dom';
 
-import { applicationSchema, ApplicationFormValues } from './schema';
-import PersonalInfoSection from './PersonalInfoSection';
-import MusicalBackgroundSection from './MusicalBackgroundSection';
-import ProgrammeApplicationSection from './ProgrammeApplicationSection';
-import SupportingMaterialsSection from './SupportingMaterialsSection';
-import TermsAndConditionsSection from './TermsAndConditionsSection';
-import SubmitButton from './SubmitButton';
-import SubmissionSuccessMessage from './SubmissionSuccessMessage';
+import { applicationSchema, ApplicationFormValues } from '@/components/ApplicationForm/schema';
+import PersonalInfoSection from '@/components/ApplicationForm/PersonalInfoSection';
+import MusicalBackgroundSection from '@/components/ApplicationForm/MusicalBackgroundSection';
+import ProgrammeApplicationSection from '@/components/ApplicationForm/ProgrammeApplicationSection';
+import SupportingMaterialsSection from '@/components/ApplicationForm/SupportingMaterialsSection';
+import TermsAndConditionsSection from '@/components/ApplicationForm/TermsAndConditionsSection';
+import SubmitButton from '@/components/ApplicationForm/SubmitButton';
+import SubmissionSuccessMessage from '@/components/ApplicationForm/SubmissionSuccessMessage';
 import { submitApplicationWithFiles } from '@/utils/fileUpload';
 
 const formVariants = {
