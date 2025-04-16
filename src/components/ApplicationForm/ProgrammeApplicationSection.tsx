@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { 
@@ -14,22 +13,25 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { ApplicationFormValues } from './schema';
 
 const ProgrammeApplicationSection = () => {
-  const form = useFormContext<ApplicationFormValues>();
+  const { control } = useFormContext<ApplicationFormValues>();
 
   return (
     <div className="space-y-6">
-      <h3 className="text-xl font-semibold text-white mb-6">Programme Application</h3>
+      <h3 className="text-xl font-semibold text-violet-100 mb-4">Programme Application</h3>
       
       <FormField
-        control={form.control}
+        control={control}
         name="reasonForApplying"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-violet-100">Statement of Purpose <span className="text-red-500">*</span></FormLabel>
+            <FormLabel className="flex items-center gap-2">
+              Why do you want to join this programme?
+              <span className="text-red-400">*</span>
+            </FormLabel>
             <FormControl>
               <Textarea 
-                placeholder="Please explain your artistic goals, what you hope to achieve during the programme, and how this experience will contribute to your development as a vocalist"
-                className="min-h-[150px] bg-slate-800/50 border-violet-500/20 focus:border-violet-500/50 text-violet-50 placeholder:text-violet-400/50"
+                placeholder="Please explain your interest in the programme and what you hope to achieve (minimum 100 characters)"
+                className="min-h-[150px]"
                 {...field}
               />
             </FormControl>
@@ -39,17 +41,16 @@ const ProgrammeApplicationSection = () => {
       />
       
       <FormField
-        control={form.control}
+        control={control}
         name="heardAboutUs"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-violet-100">How did you hear about the Vocal Excellence Summer Workshop? <span className="text-red-500">*</span></FormLabel>
+            <FormLabel className="flex items-center gap-2">
+              How did you hear about us?
+              <span className="text-red-400">*</span>
+            </FormLabel>
             <FormControl>
-              <Input 
-                placeholder="Faculty recommendation, website, social media, alumni, etc." 
-                className="bg-slate-800/50 border-violet-500/20 focus:border-violet-500/50 text-violet-50 placeholder:text-violet-400/50"
-                {...field} 
-              />
+              <Input placeholder="Social media, website, referral, etc." {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>

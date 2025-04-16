@@ -40,13 +40,16 @@ export const applicationSchema = z.object({
   vocalRange: z.enum(['soprano', 'mezzo-soprano', 'alto', 'tenor', 'baritone', 'bass', 'other'], {
     required_error: 'Please select your vocal range',
   }),
-  yearsOfExperience: z.string().min(1, { message: 'Years of experience is required' }),
-  musicalBackground: z.string().min(50, { message: 'Please provide at least 50 characters' }),
+  yearsOfExperience: z.string().optional(),
+  musicalBackground: z.string().optional(),
   teacherName: z.string().optional(),
   teacherEmail: z.string().email({ message: 'Please enter a valid email' }).optional().or(z.literal('')),
-  performanceExperience: z.string().min(50, { message: 'Please provide at least 50 characters' }),
-  reasonForApplying: z.string().min(100, { message: 'Please provide at least 100 characters' }),
-  heardAboutUs: z.string().min(1, { message: 'Please tell us how you heard about us' }),
+  performanceExperience: z.string().optional(),
+  reasonForApplying: z.string()
+    .min(100, { message: 'Please provide at least 100 characters explaining why you want to join the programme' })
+    .max(2000, { message: 'Your explanation must not exceed 2000 characters' }),
+  heardAboutUs: z.string()
+    .min(1, { message: 'Please tell us how you heard about us' }),
   scholarshipInterest: z.boolean().default(false),
   specialNeeds: z.string().optional(),
   termsAgreed: z.boolean()

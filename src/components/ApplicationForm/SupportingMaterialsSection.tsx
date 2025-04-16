@@ -49,8 +49,8 @@ const SupportingMaterialsSection = () => {
       <h3 className="text-xl font-semibold text-violet-100 mb-4">Supporting Materials</h3>
       
       <FileUploadSection
-        label="First Audition Recording"
-        description="Upload your first piece (3-5 minutes) in MP3 or WAV format."
+        label="First Audition Recording (Required)"
+        description="Upload your first piece (3-5 minutes) in MP3 or WAV format. This is required for your application."
         icon={Music4}
         fileType="audioFile1"
         acceptedFormats=".mp3,.wav"
@@ -59,8 +59,8 @@ const SupportingMaterialsSection = () => {
       />
       
       <FileUploadSection
-        label="Second Audition Recording"
-        description="Upload your second contrasting piece (3-5 minutes) in MP3 or WAV format."
+        label="Second Audition Recording (Required)"
+        description="Upload your second contrasting piece (3-5 minutes) in MP3 or WAV format. This is required for your application."
         icon={Music4}
         fileType="audioFile2"
         acceptedFormats=".mp3,.wav"
@@ -69,8 +69,8 @@ const SupportingMaterialsSection = () => {
       />
       
       <FileUploadSection
-        label="CV/Resume"
-        description="Upload your musical CV/Resume in PDF format."
+        label="CV/Resume (Required)"
+        description="Upload your musical CV/Resume in PDF format. This is required for your application."
         icon={FileText}
         fileType="cvFile"
         acceptedFormats=".pdf"
@@ -79,8 +79,8 @@ const SupportingMaterialsSection = () => {
       />
       
       <FileUploadSection
-        label="Recommendation Letter"
-        description="Upload your recommendation letter in PDF format (optional)."
+        label="Recommendation Letter (Optional)"
+        description="Upload your recommendation letter in PDF format. This is optional and can be submitted later if needed."
         icon={ScrollText}
         fileType="recommendationFile"
         acceptedFormats=".pdf"
