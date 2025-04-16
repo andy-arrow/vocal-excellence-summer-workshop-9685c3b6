@@ -1,4 +1,3 @@
-
 import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
@@ -9,6 +8,7 @@ import { Toaster as Sonner } from '@/components/ui/sonner'
 import ErrorBoundary from '@/utils/ErrorBoundary'
 import { trackError } from '@/utils/monitoring'
 import Spinner from '@/components/ui/spinner'
+import { AuthProvider } from '@/contexts/AuthContext'
 
 // Preload critical resources
 const preloadResources = () => {
@@ -87,7 +87,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <ErrorBoundary>
       <Suspense fallback={<LoadingFallback />}>
-        <App />
+        <AuthProvider>
+          <App />
+        </AuthProvider>
       </Suspense>
       <Toaster />
       <Sonner position="top-right" closeButton />
