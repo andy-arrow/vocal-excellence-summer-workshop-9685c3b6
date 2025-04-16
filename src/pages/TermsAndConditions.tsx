@@ -4,6 +4,10 @@ import Footer from '@/components/Footer';
 import { Link } from 'react-router-dom';
 import { CalendarDays, FileText, CircleDollarSign, Scale, ChevronRight, Shield, BookOpen } from 'lucide-react';
 import { motion } from 'framer-motion';
+import DefSection from '@/components/Terms/DefSection';
+import AcceptanceSection from '@/components/Terms/AcceptanceSection';
+import ProgrammeChangesSection from '@/components/Terms/ProgrammeChangesSection';
+import ContactSection from '@/components/Terms/ContactSection';
 
 const TermsAndConditions = () => {
   return (
@@ -106,24 +110,40 @@ const TermsAndConditions = () => {
           transition={{ delay: 0.6 }}
           className="prose prose-gray max-w-none"
         >
-          <section id="definitions">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">1. DEFINITIONS</h2>
-            <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm mb-6">
-              <p className="mb-3">
-                <strong>"Programme"</strong> refers to the Vocal Excellence Summer Programme, a 5-day vocal workshop scheduled for July 14-18, 2025, in Limassol, Cyprus.
-              </p>
-              <p className="mb-3">
-                <strong>"Organizer"</strong> refers to Vocal Excellence Summer Programme and its staff, instructors, and representatives.
-              </p>
-              <p className="mb-3">
-                <strong>"Participant"</strong> refers to any individual who has applied for and been accepted to attend the Programme.
-              </p>
-              <p>
-                <strong>"Application"</strong> refers to the complete submission of all required materials and information to be considered for the Programme.
-              </p>
+          <DefSection />
+          <AcceptanceSection />
+          
+          <section id="eligibility" className="mt-8">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">3. ELIGIBILITY</h2>
+            <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm mb-6 space-y-4">
+              <p className="text-gray-600">3.1. The Programme is open to vocalists of all backgrounds who meet the minimum age requirement of 16 years as of July 14, 2025.</p>
+              <p className="text-gray-600">3.2. Participants under 18 years of age must provide signed parental/guardian consent forms before participating in the Programme.</p>
+              <p className="text-gray-600">3.3. The Organizer reserves the right to verify the eligibility of all applicants and to reject applications that do not meet the Programme requirements.</p>
             </div>
           </section>
-
+          
+          <section id="application" className="mt-8">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">4. APPLICATION AND SELECTION PROCESS</h2>
+            <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm mb-6 space-y-4">
+              <p className="text-gray-600">4.1. All applications must be submitted through the official application portal by May 15, 2025, 23:59 (Cyprus Time, GMT+3).</p>
+              <div>
+                <p className="text-gray-600 mb-2">4.2. A complete application must include:</p>
+                <ul className="list-disc pl-6 text-gray-600">
+                  <li>Personal information and contact details</li>
+                  <li>Musical background and experience information</li>
+                  <li>Two contrasting repertoire recordings (maximum 5 minutes each)</li>
+                  <li>Personal statement</li>
+                  <li>Supporting documents (CV/resume)</li>
+                  <li>Optional recommendation letter(s)</li>
+                </ul>
+              </div>
+              <p className="text-gray-600">4.3. Applications are reviewed on a rolling basis. Early application is encouraged as spaces are limited to 20 participants.</p>
+              <p className="text-gray-600">4.4. Selection is at the sole discretion of the Programme's artistic committee. The committee's decision is final and not subject to appeal.</p>
+              <p className="text-gray-600">4.5. All applicants will be notified of their acceptance status by June 1, 2025.</p>
+              <p className="text-gray-600">4.6. The Organizer reserves the right to request additional information or materials, including a virtual interview, as part of the selection process.</p>
+            </div>
+          </section>
+          
           <section id="payment-terms" className="mt-8">
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">5. PAYMENT TERMS</h2>
             <div className="bg-primary/5 rounded-lg p-6 mb-6">
@@ -163,18 +183,26 @@ const TermsAndConditions = () => {
               </div>
             </div>
           </section>
+          
+          <section id="cancellation" className="mt-8">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">6. CANCELLATION AND REFUND POLICY</h2>
+            <div className="bg-white rounded-lg p-6 border border-gray-100 shadow-sm mb-6 space-y-4">
+              <div>
+                <p className="text-gray-600 mb-2">6.1. Participant Cancellation:</p>
+                <ul className="list-disc pl-6 text-gray-600">
+                  <li>Cancellations made more than 30 days before the Programme start date (before June 14, 2025) will receive a 70% refund of the total Programme fee.</li>
+                  <li>Cancellations made between 15-30 days before the Programme start date (June 14-29, 2025) will receive a 50% refund of the total Programme fee.</li>
+                  <li>Cancellations made less than 15 days before the Programme start date (after June 29, 2025) will not be eligible for a refund.</li>
+                </ul>
+              </div>
+              <p className="text-gray-600">6.2. For participants on the installment plan, any refund will be calculated based on the total Programme fee, regardless of the amount paid at time of cancellation.</p>
+              <p className="text-gray-600">6.3. All cancellation requests must be submitted in writing to info@vocalexcellence.com.</p>
+              <p className="text-gray-600">6.4. Refunds will be processed within 30 days of the approved cancellation request.</p>
+            </div>
+          </section>
 
-          <section id="eligibility">
-            <h2>3. ELIGIBILITY</h2>
-          </section>
-          
-          <section id="application">
-            <h2>4. APPLICATION AND SELECTION PROCESS</h2>
-          </section>
-          
-          <section id="cancellation">
-            <h2>6. CANCELLATION AND REFUND POLICY</h2>
-          </section>
+          <ProgrammeChangesSection />
+          <ContactSection />
         </motion.div>
 
         {/* Footer CTA */}
