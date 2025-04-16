@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -100,7 +99,7 @@ const TermsAndConditionsSection = () => {
                 </FormControl>
                 <div className="space-y-1 leading-none">
                   <FormLabel className="text-foreground/80">
-                    I agree to the <Link to="/cancellation-policy" className="text-primary underline font-medium">Terms and Conditions</Link> and <Link to="/privacy-policy" className="text-primary underline font-medium">Privacy Policy</Link>. 
+                    I agree to the <Link to="/terms-and-conditions" className="text-primary underline font-medium">Terms and Conditions</Link> and <Link to="/privacy-policy" className="text-primary underline font-medium">Privacy Policy</Link>. 
                     <span className="block mt-1 text-sm">I confirm that all information I've provided is accurate and complete.</span>
                   </FormLabel>
                   <FormMessage />
