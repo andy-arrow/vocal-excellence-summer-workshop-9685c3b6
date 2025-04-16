@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { 
@@ -13,14 +14,14 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { ApplicationFormValues } from './schema';
 
 const ProgrammeApplicationSection = () => {
-  const { control } = useFormContext<ApplicationFormValues>();
+  const form = useFormContext<ApplicationFormValues>();
 
   return (
     <div className="space-y-6">
       <h3 className="text-xl font-semibold text-violet-100 mb-4">Programme Application</h3>
       
       <FormField
-        control={control}
+        control={form.control}
         name="reasonForApplying"
         render={({ field }) => (
           <FormItem>
@@ -41,7 +42,7 @@ const ProgrammeApplicationSection = () => {
       />
       
       <FormField
-        control={control}
+        control={form.control}
         name="heardAboutUs"
         render={({ field }) => (
           <FormItem>
