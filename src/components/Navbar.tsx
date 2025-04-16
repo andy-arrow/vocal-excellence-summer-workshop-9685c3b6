@@ -1,10 +1,15 @@
+
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { X, Menu } from 'lucide-react';
 import AuthButtons from '@/components/AuthButtons';
 import AuthButtonsPlaceholder from './AuthButtonsPlaceholder';
 
-const Navbar = () => {
+interface NavbarProps {
+  activeSection?: string;
+}
+
+const Navbar = ({ activeSection }: NavbarProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -22,7 +27,7 @@ const Navbar = () => {
           <NavLink
             to="/"
             className={({ isActive }) =>
-              `text-white/90 hover:text-white transition-colors ${isActive ? 'text-white' : ''}`
+              `text-white/90 hover:text-white transition-colors ${isActive || activeSection === 'home' ? 'text-white' : ''}`
             }
           >
             Home
@@ -38,7 +43,7 @@ const Navbar = () => {
           <NavLink
             to="/#about"
             className={({ isActive }) =>
-              `text-white/90 hover:text-white transition-colors ${isActive ? 'text-white' : ''}`
+              `text-white/90 hover:text-white transition-colors ${isActive || activeSection === 'about' ? 'text-white' : ''}`
             }
           >
             About
@@ -46,7 +51,7 @@ const Navbar = () => {
           <NavLink
             to="/#faq"
             className={({ isActive }) =>
-              `text-white/90 hover:text-white transition-colors ${isActive ? 'text-white' : ''}`
+              `text-white/90 hover:text-white transition-colors ${isActive || activeSection === 'faq' ? 'text-white' : ''}`
             }
           >
             FAQ
