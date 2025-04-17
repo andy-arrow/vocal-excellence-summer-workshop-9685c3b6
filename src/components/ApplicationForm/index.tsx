@@ -4,17 +4,18 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
 import { toast } from '@/hooks/use-toast';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Sparkles, CheckCircle2, Hourglass } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Sparkles, CheckCircle2, Hourglass, Calendar, Users } from 'lucide-react';
 import { generateCsrfToken } from '@/utils/security';
+import { Link } from 'react-router-dom';
 
-import { applicationSchema, ApplicationFormValues } from './schema';
-import PersonalInfoSection from './PersonalInfoSection';
-import MusicalBackgroundSection from './MusicalBackgroundSection';
-import ProgrammeApplicationSection from './ProgrammeApplicationSection';
-import SupportingMaterialsSection from './SupportingMaterialsSection';
-import TermsAndConditionsSection from './TermsAndConditionsSection';
-import SubmitButton from './SubmitButton';
-import SubmissionSuccessMessage from './SubmissionSuccessMessage';
+import { applicationSchema, ApplicationFormValues } from '@/components/ApplicationForm/schema';
+import PersonalInfoSection from '@/components/ApplicationForm/PersonalInfoSection';
+import MusicalBackgroundSection from '@/components/ApplicationForm/MusicalBackgroundSection';
+import ProgrammeApplicationSection from '@/components/ApplicationForm/ProgrammeApplicationSection';
+import SupportingMaterialsSection from '@/components/ApplicationForm/SupportingMaterialsSection';
+import TermsAndConditionsSection from '@/components/ApplicationForm/TermsAndConditionsSection';
+import SubmitButton from '@/components/ApplicationForm/SubmitButton';
+import SubmissionSuccessMessage from '@/components/ApplicationForm/SubmissionSuccessMessage';
 import { submitApplicationWithFiles } from '@/utils/fileUpload';
 
 const formVariants = {
@@ -212,7 +213,7 @@ const ApplicationForm = () => {
   ];
 
   return (
-    <section id="application-form" className="py-16 md:py-24 bg-gradient-to-b from-slate-900 to-violet-950">
+    <section id="application-form" className="py-24 md:py-32 bg-gradient-to-b from-slate-900 via-slate-900 to-violet-950/80">
       <motion.div 
         className="max-w-4xl mx-auto px-6"
         variants={formVariants}
@@ -221,83 +222,50 @@ const ApplicationForm = () => {
         viewport={{ once: true, amount: 0.1 }}
       >
         <motion.div 
-          className="text-center mb-12"
+          className="text-center mb-16 space-y-6"
           variants={sectionVariants}
         >
-          <h2 className="text-3xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-400 via-violet-400 to-indigo-400 font-outfit">
-            Ready to Join the Workshop?
+          <motion.span 
+            className="inline-block text-violet-300/80 text-sm tracking-wide uppercase mb-2"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+          >
+            Summer Workshop 2025
+          </motion.span>
+          
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light mb-6 tracking-tight text-white font-outfit">
+            Ready to Join the
+            <span className="block mt-2 bg-clip-text text-transparent bg-gradient-to-r from-violet-200 to-violet-400">
+              Workshop?
+            </span>
           </h2>
-          <p className="text-lg text-violet-100 max-w-2xl mx-auto opacity-90 leading-relaxed">
-            Your vocal journey starts here! Complete the form below in just a few steps. Let's discover your unique voice together.
-          </p>
-        </motion.div>
+          
+          <motion.p 
+            className="text-lg md:text-xl text-violet-200/90 max-w-2xl mx-auto leading-relaxed font-light tracking-wide"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+          >
+            Begin your transformative journey in vocal artistry. Complete your application below — every voice has a story to tell.
+          </motion.p>
 
-        <motion.div 
-          className="mb-10"
-          variants={sectionVariants}
-        >
-          <div className="relative">
-            <div className="h-2 bg-violet-900/40 rounded-full overflow-hidden">
-              <motion.div 
-                className="h-full bg-gradient-to-r from-fuchsia-500 to-violet-500 rounded-full"
-                initial={{ width: '0%' }}
-                animate={{ width: `${(activeSection / (sections.length - 1)) * 100}%` }}
-                transition={{ duration: 0.5 }}
-              />
-            </div>
-            
-            <div className="flex justify-between mt-1">
-              {sections.map((section, index) => (
-                <motion.button
-                  key={index}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setActiveSection(index)}
-                  className="relative flex flex-col items-center mt-1"
-                >
-                  <motion.div
-                    className={`w-5 h-5 rounded-full flex items-center justify-center
-                    ${index <= activeSection ? 'bg-gradient-to-r from-fuchsia-500 to-violet-500' : 'bg-violet-800'}`}
-                    initial={false}
-                    animate={index <= activeSection ? 
-                      { scale: [1, 1.2, 1], boxShadow: ['0 0 0 rgba(167, 139, 250, 0)', '0 0 15px rgba(167, 139, 250, 0.7)', '0 0 0 rgba(167, 139, 250, 0)'] } : 
-                      {}
-                    }
-                    transition={{ duration: 0.5 }}
-                  >
-                    {index < activeSection && (
-                      <CheckCircle2 size={12} className="text-white" />
-                    )}
-                  </motion.div>
-                  <span className={`text-xs mt-2 font-medium hidden md:block
-                    ${index <= activeSection ? 'text-violet-300' : 'text-violet-500'}`}>
-                    {section.title}
-                  </span>
-                </motion.button>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-
-        <motion.div 
-          className="flex md:hidden justify-center mb-8 overflow-x-auto pb-2 gap-2"
-          variants={sectionVariants}
-        >
-          {sections.map((section, index) => (
-            <motion.button
-              key={index}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setActiveSection(index)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 text-sm whitespace-nowrap ${
-                activeSection === index
-                  ? "bg-gradient-to-r from-fuchsia-600 to-violet-600 text-white font-medium"
-                  : "bg-violet-900/40 text-violet-200 hover:bg-violet-800/60"
-              }`}
-            >
-              {section.icon}
-              <span>{section.title}</span>
-            </motion.button>
-          ))}
+          <motion.div 
+            className="pt-4 flex justify-center gap-3 text-sm text-violet-300/70"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}
+          >
+            <span className="flex items-center gap-2">
+              <Calendar className="h-4 w-4" />
+              July 14 - 18, 2025
+            </span>
+            <span className="w-px h-4 bg-violet-500/20 my-auto" />
+            <span className="flex items-center gap-2">
+              <Users className="h-4 w-4" />
+              20 Spots Available
+            </span>
+          </motion.div>
         </motion.div>
 
         <Form {...form}>
