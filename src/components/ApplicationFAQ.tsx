@@ -48,7 +48,74 @@ const ApplicationFAQ = () => {
         },
         {
           question: "Can I pay in installments?",
-          answer: "Yes, we're happy to offer an installment plan to help make attending the workshop more manageable. Here's how it works:\n\n1. **Confirming Your Place:** To secure your spot, a **€100 registration fee** is requested within **5 business days** after you receive your acceptance notification (sent on June 1, 2025). This initial fee confirms your commitment and is non-refundable.\n\n2. **Installment Schedule:** The remaining balance of €899 can then be paid in three installments, scheduled as follows:\n    *   **Installment 1:** €300 due by **June 12, 2025**.\n    *   **Installment 2:** €300 due by **June 20, 2025**.\n    *   **Installment 3:** €299 due by **June 28, 2025**.\n\n**Important Notes:**\n*   You can select this payment plan when you accept your offer.\n*   Meeting these payment dates helps us finalize arrangements for everyone and ensures your place remains confirmed.\n*   The full tuition needs to be settled by the final installment date (June 28, 2025) so everything is in order before the workshop begins on July 14, 2025.\n\nWe understand planning is important. If you anticipate any difficulty meeting a deadline, please reach out to our admissions team at [Insert Admissions Email Address] as soon as possible to discuss your situation."
+          answer: (
+            <div className="space-y-6">
+              <p className="text-slate-600">
+                Yes, we're happy to offer an installment plan to help make attending the workshop more manageable. Here's how it works:
+              </p>
+              
+              <div className="space-y-4">
+                <div className="rounded-lg border border-violet-200 bg-violet-50/50 p-4">
+                  <h4 className="font-semibold text-violet-900 mb-2">1. Confirming Your Place</h4>
+                  <p className="text-violet-700">
+                    To secure your spot, a <span className="font-semibold">€100 registration fee</span> is requested within <span className="font-semibold">5 business days</span> after you receive your acceptance notification (sent on June 1, 2025). This initial fee confirms your commitment and is non-refundable.
+                  </p>
+                </div>
+
+                <div className="rounded-lg border border-violet-200 bg-violet-50/50 p-4">
+                  <h4 className="font-semibold text-violet-900 mb-2">2. Installment Schedule</h4>
+                  <p className="text-violet-700 mb-3">
+                    The remaining balance of €899 can then be paid in three installments:
+                  </p>
+                  <div className="space-y-2 pl-4">
+                    <div className="flex items-center gap-2 text-violet-700">
+                      <div className="h-1.5 w-1.5 rounded-full bg-violet-400"></div>
+                      <span><strong>Installment 1:</strong> €300 due by <strong>June 12, 2025</strong></span>
+                    </div>
+                    <div className="flex items-center gap-2 text-violet-700">
+                      <div className="h-1.5 w-1.5 rounded-full bg-violet-400"></div>
+                      <span><strong>Installment 2:</strong> €300 due by <strong>June 20, 2025</strong></span>
+                    </div>
+                    <div className="flex items-center gap-2 text-violet-700">
+                      <div className="h-1.5 w-1.5 rounded-full bg-violet-400"></div>
+                      <span><strong>Installment 3:</strong> €299 due by <strong>June 28, 2025</strong></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-lg border border-amber-200 bg-amber-50/50 p-4">
+                <h4 className="font-semibold text-amber-900 flex items-center gap-2 mb-3">
+                  <span className="text-amber-500"><HelpCircle className="w-5 h-5" /></span>
+                  Important Notes
+                </h4>
+                <ul className="space-y-2">
+                  <li className="flex items-start gap-2 text-amber-700">
+                    <div className="h-1.5 w-1.5 rounded-full bg-amber-400 mt-2"></div>
+                    <span>You can select this payment plan when you accept your offer.</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-amber-700">
+                    <div className="h-1.5 w-1.5 rounded-full bg-amber-400 mt-2"></div>
+                    <span>Meeting these payment dates helps us finalize arrangements for everyone and ensures your place remains confirmed.</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-amber-700">
+                    <div className="h-1.5 w-1.5 rounded-full bg-amber-400 mt-2"></div>
+                    <span>The full tuition needs to be settled by the final installment date (June 28, 2025) so everything is in order before the workshop begins on July 14, 2025.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="text-slate-600 italic border-t border-slate-200 pt-4">
+                <p>
+                  We understand planning is important. If you anticipate any difficulty meeting a deadline, please reach out to our admissions team at{' '}
+                  <a href="mailto:admissions@vocalexcellence.com" className="text-violet-600 hover:text-violet-700 underline underline-offset-2">
+                    admissions@vocalexcellence.com
+                  </a>
+                  {' '}as soon as possible to discuss your situation.
+                </p>
+              </div>
+            </div>
+          )
         }
       ]
     },
