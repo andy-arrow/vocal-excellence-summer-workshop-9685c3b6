@@ -8,6 +8,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Separator } from '@/components/ui/separator';
 import { Toggle } from '@/components/ui/toggle';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { 
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetClose,
+} from '@/components/ui/sheet';
 
 interface NavbarProps {
   activeSection?: string;
@@ -17,6 +24,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -145,6 +153,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
           })()}
         </div>
 
+        {/* Mobile menu toggle button */}
         <button 
           onClick={toggleMenu} 
           className="md:hidden flex items-center justify-center w-10 h-10 text-white rounded-full hover:bg-white/10 transition-colors"
@@ -160,6 +169,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
         </button>
       </div>
 
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div 
