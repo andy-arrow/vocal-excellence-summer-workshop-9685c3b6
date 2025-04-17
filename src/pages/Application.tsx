@@ -12,11 +12,11 @@ import ApplicationFAQ from '@/components/ApplicationFAQ';
 import ScrollToTopButton from '@/components/ScrollToTopButton';
 
 const fadeIn = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 20 },
   visible: { 
     opacity: 1, 
     y: 0,
-    transition: { duration: 0.8, ease: "easeOut" }
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] }
   }
 };
 
@@ -37,7 +37,7 @@ const Application = () => {
   }, []);
   
   return (
-    <div>
+    <div className="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-white">
       <Helmet>
         <title>Apply Now | Vocal Excellence Summer Workshop</title>
         <meta name="description" content="Apply now for the Vocal Excellence Summer Workshop and discover your true potential with world-class vocal coaching. Limited spots available." />
@@ -49,52 +49,58 @@ const Application = () => {
       </Helmet>
       
       <motion.div 
-        className="min-h-screen bg-slate-950 flex flex-col"
+        className="min-h-screen flex flex-col"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
         <Navbar />
         
-        <main className="flex-grow pt-16">
+        <main className="flex-grow">
           <ApplicationHero />
           
-          <motion.section
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeIn}
-          >
-            <ApplicationRequirements />
-          </motion.section>
-          
-          <motion.section
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeIn}
-          >
-            <ApplicationTimeline />
-          </motion.section>
-          
-          <motion.section
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeIn}
-            id="application-form-section"
-          >
-            <ApplicationForm />
-          </motion.section>
-          
-          <motion.section
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeIn}
-          >
-            <ApplicationFAQ />
-          </motion.section>
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.section
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeIn}
+              className="py-16 md:py-24"
+            >
+              <ApplicationRequirements />
+            </motion.section>
+            
+            <motion.section
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeIn}
+              className="py-16 md:py-24"
+            >
+              <ApplicationTimeline />
+            </motion.section>
+            
+            <motion.section
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeIn}
+              id="application-form-section"
+              className="py-16 md:py-24"
+            >
+              <ApplicationForm />
+            </motion.section>
+            
+            <motion.section
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeIn}
+              className="py-16 md:py-24"
+            >
+              <ApplicationFAQ />
+            </motion.section>
+          </div>
         </main>
         
         <ScrollToTopButton visible={showScrollToTop} />
