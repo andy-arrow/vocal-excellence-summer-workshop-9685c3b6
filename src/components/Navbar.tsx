@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { ArrowUpRight, Menu, X, Music, ChevronDown } from 'lucide-react';
@@ -28,6 +29,19 @@ const Navbar = ({ activeSection }: NavbarProps) => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [scrolled]);
+
+  // Add effect to prevent body scrolling when menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMenuOpen]);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -133,10 +147,16 @@ const Navbar = ({ activeSection }: NavbarProps) => {
 
         <button 
           onClick={toggleMenu} 
-          className="md:hidden text-white p-1 rounded-full hover:bg-white/10 transition-colors"
+          className="md:hidden flex items-center justify-center w-10 h-10 text-white rounded-full hover:bg-white/10 transition-colors"
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         >
-          {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          <motion.div
+            initial={false}
+            animate={{ rotate: isMenuOpen ? 90 : 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </motion.div>
         </button>
       </div>
 
@@ -178,11 +198,28 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                           href={`#${link.id}`}
                           onClick={(e) => handleSmoothScroll(e, link.id)}
                           className={cn(
-                            "block py-2 text-lg font-medium transition-colors",
+                            "block py-2 text-xl font-medium transition-colors relative overflow-hidden group",
                             activeSection === link.id ? "text-white" : "text-white/70 hover:text-white"
                           )}
                         >
-                          {link.label}
+                          <span className="relative z-10 flex items-center">
+                            {link.label}
+                            <motion.div
+                              initial={{ x: -4, opacity: 0 }}
+                              animate={{ x: 0, opacity: 1 }}
+                              transition={{ delay: 0.2 + idx * 0.05 }}
+                            >
+                              <ArrowUpRight className="ml-1 w-4 h-4 opacity-60 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                            </motion.div>
+                          </span>
+                          {activeSection === link.id && (
+                            <motion.div 
+                              className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-energy-purple to-energy-pink"
+                              initial={{ width: 0 }}
+                              animate={{ width: '30%' }}
+                              transition={{ duration: 0.3, delay: 0.2 }}
+                            />
+                          )}
                         </a>
                         <Separator className="mt-2 bg-white/10" />
                       </motion.li>
