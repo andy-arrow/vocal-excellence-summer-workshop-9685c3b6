@@ -6,9 +6,9 @@ import { Button } from '@/components/ui/button';
 const instructors = [
   {
     name: "Andreas Aroditis",
-    title: "Founder & Artistic Director",
+    title: "Founder & Director", // Updated role
     bio: "Acclaimed vocalist Andreas Aroditis has earned recognition from The New York Times and Opera Today for his versatile performances at prestigious international venues. A Juilliard graduate with numerous lead roles in opera and musical theater, he has collaborated with respected artists and orchestras. Locally, he has premiered works with the Cyprus Symphony Orchestra and the TrakArt Pops Orchestra. Mentored by legends such as Plácido Domingo and Sherill Millnes, he now shapes future performers as an Instructor at the University of Nicosia and the European University while maintaining a private studio in Limassol.",
-    image: "/lovable-uploads/e0f8da04-eb2f-4b36-8abb-00346d1c76be.png",
+    image: "/lovable-uploads/e0f8da04-eb2f-4b36-8abb-00346d1c76be.png", // Keeping Andreas's existing image
     socials: {
       instagram: "https://www.instagram.com/andreasaroditis/",
       linkedin: "https://www.linkedin.com/in/andreasaroditis/"
@@ -48,7 +48,7 @@ const instructors = [
     name: "Emmelia Pericleous",
     title: "Choir Director",
     bio: "Choir Conductor and Musicologist who graduated at the top of her master's class from the prestigious Sorbonne University. She directs choirs at three Paris conservatoires, combining classical and contemporary approaches while bridging Cypriot and French musical traditions.",
-    image: "/lovable-uploads/4e6da0c3-c667-4dd8-94e4-78ab459e4c18.png",
+    image: "/lovable-uploads/c503aee8-1c6f-4045-bcd9-46e1da3dc853.png", // Updated image
     socials: {
       instagram: "#",
       linkedin: "#"
