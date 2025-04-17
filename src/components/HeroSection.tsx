@@ -61,16 +61,19 @@ const HeroSection = () => {
   
   const featureCards = [
     {
-      icon: <Calendar className="w-4 h-4 text-white" />,
+      icon: <Calendar className="w-5 h-5 text-white" />,
       text: "July 14-18, 2025",
+      color: "from-violet-500/30 to-fuchsia-500/30"
     },
     {
-      icon: <MapPin className="w-4 h-4 text-white" />,
+      icon: <MapPin className="w-5 h-5 text-white" />,
       text: "Limassol, Cyprus",
+      color: "from-fuchsia-500/30 to-rose-500/30"
     },
     {
-      icon: <Users className="w-4 h-4 text-white" />,
+      icon: <Users className="w-5 h-5 text-white" />,
       text: "Limited to 20 students",
+      color: "from-rose-500/30 to-amber-500/30"
     },
   ];
 
@@ -207,13 +210,13 @@ const HeroSection = () => {
       
       <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-4xl mx-auto">
         <motion.div 
-          className="space-y-8"
+          className="space-y-10"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
           <motion.div
-            className="flex flex-wrap justify-center gap-3"
+            className="flex flex-wrap justify-center gap-4 md:gap-6"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.5 }}
@@ -221,16 +224,25 @@ const HeroSection = () => {
             {featureCards.map((card, index) => (
               <motion.div
                 key={index}
-                className="py-2 px-4 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center"
+                className="relative group"
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.5 + (index * 0.1) }}
               >
-                <div className="flex items-center space-x-2">
-                  <div className="w-6 h-6 rounded-full bg-energy-purple/30 flex items-center justify-center">
-                    {card.icon}
+                <div className={cn(
+                  "absolute inset-0 rounded-2xl bg-gradient-to-r",
+                  card.color,
+                  "blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                )} />
+                <div className="relative py-3 px-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center group-hover:border-white/30 transition-all duration-300">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-xl bg-gradient-to-r from-violet-500/20 to-fuchsia-500/20 flex items-center justify-center">
+                      {card.icon}
+                    </div>
+                    <span className="text-sm md:text-base text-white/90 font-medium tracking-wide">
+                      {card.text}
+                    </span>
                   </div>
-                  <span className="text-xs sm:text-sm text-white/90">{card.text}</span>
                 </div>
               </motion.div>
             ))}

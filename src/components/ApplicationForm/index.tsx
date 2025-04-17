@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -222,11 +223,11 @@ const ApplicationForm = () => {
         viewport={{ once: true, amount: 0.1 }}
       >
         <motion.div 
-          className="text-center mb-16 space-y-6"
+          className="text-center mb-16 space-y-8"
           variants={sectionVariants}
         >
           <motion.span 
-            className="inline-block text-violet-300/80 text-sm tracking-wide uppercase mb-2"
+            className="inline-block text-violet-300/80 text-sm tracking-wide uppercase mb-2 font-medium"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
@@ -234,37 +235,42 @@ const ApplicationForm = () => {
             Summer Workshop 2025
           </motion.span>
           
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light mb-6 tracking-tight text-white font-outfit">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white font-outfit">
             Ready to Join the
-            <span className="block mt-2 bg-clip-text text-transparent bg-gradient-to-r from-violet-200 to-violet-400">
-              Workshop?
+            <span className="block mt-3 bg-clip-text text-transparent bg-gradient-to-r from-violet-200 via-fuchsia-200 to-rose-200 font-medium">
+              Vocal Excellence Workshop?
             </span>
           </h2>
           
           <motion.p 
-            className="text-lg md:text-xl text-violet-200/90 max-w-2xl mx-auto leading-relaxed font-light tracking-wide"
+            className="text-lg md:text-xl text-violet-200/90 max-w-2xl mx-auto leading-relaxed font-light"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
           >
-            Begin your transformative journey in vocal artistry. Complete your application below — every voice has a story to tell.
+            Begin your transformative journey in vocal artistry. Every voice has a story to tell — let yours be heard.
           </motion.p>
 
           <motion.div 
-            className="pt-4 flex justify-center gap-3 text-sm text-violet-300/70"
+            className="pt-6 flex flex-col md:flex-row justify-center items-center gap-6 text-base text-violet-300/90"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
           >
-            <span className="flex items-center gap-2">
-              <Calendar className="h-4 w-4" />
-              July 14 - 18, 2025
-            </span>
-            <span className="w-px h-4 bg-violet-500/20 my-auto" />
-            <span className="flex items-center gap-2">
-              <Users className="h-4 w-4" />
-              20 Spots Available
-            </span>
+            <div className="flex items-center gap-3 backdrop-blur-sm bg-white/5 px-6 py-3 rounded-2xl border border-violet-500/20">
+              <Calendar className="h-5 w-5 text-violet-400" />
+              <span>July 14 - 18, 2025</span>
+            </div>
+            <div className="h-4 w-px bg-violet-500/20 hidden md:block" />
+            <div className="flex items-center gap-3 backdrop-blur-sm bg-white/5 px-6 py-3 rounded-2xl border border-violet-500/20">
+              <MapPin className="h-5 w-5 text-violet-400" />
+              <span>Limassol, Cyprus</span>
+            </div>
+            <div className="h-4 w-px bg-violet-500/20 hidden md:block" />
+            <div className="flex items-center gap-3 backdrop-blur-sm bg-white/5 px-6 py-3 rounded-2xl border border-violet-500/20">
+              <Users className="h-5 w-5 text-violet-400" />
+              <span>20 Spots Available</span>
+            </div>
           </motion.div>
         </motion.div>
 
