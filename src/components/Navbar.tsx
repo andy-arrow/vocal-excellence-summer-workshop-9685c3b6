@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { X, Menu } from 'lucide-react';
+import { X, Menu, Music, Users, Calendar, Sparkles } from 'lucide-react';
 import AuthButtons from '@/components/AuthButtons';
 import AuthButtonsPlaceholder from './AuthButtonsPlaceholder';
 
@@ -25,12 +25,40 @@ const Navbar = ({ activeSection }: NavbarProps) => {
 
         <div className="hidden md:flex items-center gap-8">
           <NavLink
-            to="/"
+            to="/#home"
             className={({ isActive }) =>
-              `text-white/90 hover:text-white transition-colors ${isActive || activeSection === 'home' ? 'text-white' : ''}`
+              `text-white/90 hover:text-white transition-colors flex items-center gap-2 ${isActive || activeSection === 'home' ? 'text-white' : ''}`
             }
           >
+            <Sparkles className="w-4 h-4" />
             Home
+          </NavLink>
+          <NavLink
+            to="/#about"
+            className={({ isActive }) =>
+              `text-white/90 hover:text-white transition-colors flex items-center gap-2 ${isActive || activeSection === 'about' ? 'text-white' : ''}`
+            }
+          >
+            <Music className="w-4 h-4" />
+            About
+          </NavLink>
+          <NavLink
+            to="/#curriculum"
+            className={({ isActive }) =>
+              `text-white/90 hover:text-white transition-colors flex items-center gap-2 ${isActive || activeSection === 'curriculum' ? 'text-white' : ''}`
+            }
+          >
+            <Calendar className="w-4 h-4" />
+            Curriculum
+          </NavLink>
+          <NavLink
+            to="/#instructors"
+            className={({ isActive }) =>
+              `text-white/90 hover:text-white transition-colors flex items-center gap-2 ${isActive || activeSection === 'instructors' ? 'text-white' : ''}`
+            }
+          >
+            <Users className="w-4 h-4" />
+            Instructors
           </NavLink>
           <NavLink
             to="/apply"
@@ -40,23 +68,6 @@ const Navbar = ({ activeSection }: NavbarProps) => {
           >
             Apply Now
           </NavLink>
-          <NavLink
-            to="/#about"
-            className={({ isActive }) =>
-              `text-white/90 hover:text-white transition-colors ${isActive || activeSection === 'about' ? 'text-white' : ''}`
-            }
-          >
-            About
-          </NavLink>
-          <NavLink
-            to="/#faq"
-            className={({ isActive }) =>
-              `text-white/90 hover:text-white transition-colors ${isActive || activeSection === 'faq' ? 'text-white' : ''}`
-            }
-          >
-            FAQ
-          </NavLink>
-          
           
           {(() => {
             try {
@@ -77,28 +88,43 @@ const Navbar = ({ activeSection }: NavbarProps) => {
         <div className="bg-slate-900 md:hidden absolute top-full left-0 w-full py-4 px-6 border-b border-violet-500/10">
           <div className="flex flex-col gap-4">
             <NavLink
-              to="/"
-              className="text-white/90 hover:text-white transition-colors block"
+              to="/#home"
+              className="text-white/90 hover:text-white transition-colors flex items-center gap-2"
+              onClick={toggleMenu}
             >
+              <Sparkles className="w-4 h-4" />
               Home
+            </NavLink>
+            <NavLink
+              to="/#about"
+              className="text-white/90 hover:text-white transition-colors flex items-center gap-2"
+              onClick={toggleMenu}
+            >
+              <Music className="w-4 h-4" />
+              About
+            </NavLink>
+            <NavLink
+              to="/#curriculum"
+              className="text-white/90 hover:text-white transition-colors flex items-center gap-2"
+              onClick={toggleMenu}
+            >
+              <Calendar className="w-4 h-4" />
+              Curriculum
+            </NavLink>
+            <NavLink
+              to="/#instructors"
+              className="text-white/90 hover:text-white transition-colors flex items-center gap-2"
+              onClick={toggleMenu}
+            >
+              <Users className="w-4 h-4" />
+              Instructors
             </NavLink>
             <NavLink
               to="/apply"
               className="text-white/90 hover:text-white transition-colors block"
+              onClick={toggleMenu}
             >
               Apply Now
-            </NavLink>
-            <NavLink
-              to="/#about"
-              className="text-white/90 hover:text-white transition-colors block"
-            >
-              About
-            </NavLink>
-            <NavLink
-              to="/#faq"
-              className="text-white/90 hover:text-white transition-colors block"
-            >
-              FAQ
             </NavLink>
             <AuthButtonsPlaceholder />
           </div>
