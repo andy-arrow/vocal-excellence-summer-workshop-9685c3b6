@@ -94,6 +94,7 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-energy-purple/90 via-energy-pink/70 to-energy-cyan/80 mix-blend-overlay z-10"></div>
       <div className="absolute inset-0 bg-black/40 z-10"></div>
 
+      {/* Musical notes animation */}
       {!hasReducedMotion && (
         <>
           <motion.div 
@@ -199,18 +200,19 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.3 }}
         >
           <motion.div 
-            className="inline-block py-2 px-4 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-2"
+            className="inline-block py-2 px-4 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-2 w-auto max-w-full"
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.5 }}
           >
-            <span className="uppercase tracking-widest text-xs font-medium text-white flex items-center justify-center">
-              <span className="mr-1 text-energy-yellow font-bold animate-pulse-slow">EXCLUSIVE:</span> July 14-18, 2025 • Limassol, Cyprus
+            <span className="uppercase tracking-widest text-xs font-medium text-white flex items-center justify-center flex-wrap">
+              <span className="mr-1 text-energy-yellow font-bold animate-pulse-slow inline-block">EXCLUSIVE:</span>
+              <span className="inline-block">July 14-18, 2025 • Limassol, Cyprus</span>
             </span>
           </motion.div>
           
           <motion.h1 
-            className="text-5xl md:text-7xl lg:text-8xl font-outfit font-bold text-white tracking-tight leading-tight"
+            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-outfit font-bold text-white tracking-tight leading-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
@@ -243,7 +245,7 @@ const HeroSection = () => {
               Apply Now — Only 20 Spots Available
             </motion.a>
             <motion.div
-              className="flex items-center justify-center mt-4 space-x-1"
+              className="flex items-center justify-center mt-4 space-x-1 flex-wrap"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.3, duration: 0.5 }}

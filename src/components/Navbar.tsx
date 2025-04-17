@@ -16,6 +16,15 @@ const Navbar = ({ activeSection }: NavbarProps) => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    setIsMenuOpen(false);
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <header className="bg-slate-900/80 backdrop-blur-sm fixed top-0 left-0 w-full z-50 border-b border-violet-500/10">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
@@ -24,42 +33,38 @@ const Navbar = ({ activeSection }: NavbarProps) => {
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
-          <NavLink
-            to="/#home"
-            className={({ isActive }) =>
-              `text-white/90 hover:text-white transition-colors flex items-center gap-2 ${isActive || activeSection === 'home' ? 'text-white' : ''}`
-            }
+          <a
+            href="#home"
+            onClick={(e) => handleSmoothScroll(e, 'home')}
+            className={`text-white/90 hover:text-white transition-colors flex items-center gap-2 ${activeSection === 'home' ? 'text-white' : ''}`}
           >
             <Sparkles className="w-4 h-4" />
             Home
-          </NavLink>
-          <NavLink
-            to="/#about"
-            className={({ isActive }) =>
-              `text-white/90 hover:text-white transition-colors flex items-center gap-2 ${isActive || activeSection === 'about' ? 'text-white' : ''}`
-            }
+          </a>
+          <a
+            href="#about"
+            onClick={(e) => handleSmoothScroll(e, 'about')}
+            className={`text-white/90 hover:text-white transition-colors flex items-center gap-2 ${activeSection === 'about' ? 'text-white' : ''}`}
           >
             <Music className="w-4 h-4" />
             About
-          </NavLink>
-          <NavLink
-            to="/#curriculum"
-            className={({ isActive }) =>
-              `text-white/90 hover:text-white transition-colors flex items-center gap-2 ${isActive || activeSection === 'curriculum' ? 'text-white' : ''}`
-            }
+          </a>
+          <a
+            href="#curriculum"
+            onClick={(e) => handleSmoothScroll(e, 'curriculum')}
+            className={`text-white/90 hover:text-white transition-colors flex items-center gap-2 ${activeSection === 'curriculum' ? 'text-white' : ''}`}
           >
             <Calendar className="w-4 h-4" />
             Curriculum
-          </NavLink>
-          <NavLink
-            to="/#instructors"
-            className={({ isActive }) =>
-              `text-white/90 hover:text-white transition-colors flex items-center gap-2 ${isActive || activeSection === 'instructors' ? 'text-white' : ''}`
-            }
+          </a>
+          <a
+            href="#instructors"
+            onClick={(e) => handleSmoothScroll(e, 'instructors')}
+            className={`text-white/90 hover:text-white transition-colors flex items-center gap-2 ${activeSection === 'instructors' ? 'text-white' : ''}`}
           >
             <Users className="w-4 h-4" />
             Instructors
-          </NavLink>
+          </a>
           <NavLink
             to="/apply"
             className={({ isActive }) =>
@@ -87,38 +92,38 @@ const Navbar = ({ activeSection }: NavbarProps) => {
       {isMenuOpen && (
         <div className="bg-slate-900 md:hidden absolute top-full left-0 w-full py-4 px-6 border-b border-violet-500/10">
           <div className="flex flex-col gap-4">
-            <NavLink
-              to="/#home"
+            <a
+              href="#home"
+              onClick={(e) => handleSmoothScroll(e, 'home')}
               className="text-white/90 hover:text-white transition-colors flex items-center gap-2"
-              onClick={toggleMenu}
             >
               <Sparkles className="w-4 h-4" />
               Home
-            </NavLink>
-            <NavLink
-              to="/#about"
+            </a>
+            <a
+              href="#about"
+              onClick={(e) => handleSmoothScroll(e, 'about')}
               className="text-white/90 hover:text-white transition-colors flex items-center gap-2"
-              onClick={toggleMenu}
             >
               <Music className="w-4 h-4" />
               About
-            </NavLink>
-            <NavLink
-              to="/#curriculum"
+            </a>
+            <a
+              href="#curriculum"
+              onClick={(e) => handleSmoothScroll(e, 'curriculum')}
               className="text-white/90 hover:text-white transition-colors flex items-center gap-2"
-              onClick={toggleMenu}
             >
               <Calendar className="w-4 h-4" />
               Curriculum
-            </NavLink>
-            <NavLink
-              to="/#instructors"
+            </a>
+            <a
+              href="#instructors"
+              onClick={(e) => handleSmoothScroll(e, 'instructors')}
               className="text-white/90 hover:text-white transition-colors flex items-center gap-2"
-              onClick={toggleMenu}
             >
               <Users className="w-4 h-4" />
               Instructors
-            </NavLink>
+            </a>
             <NavLink
               to="/apply"
               className="text-white/90 hover:text-white transition-colors block"

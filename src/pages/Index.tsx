@@ -36,11 +36,28 @@ const sectionVariants = {
 const Index = () => {
   const [showScrollToTop, setShowScrollToTop] = React.useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('');
+  const [activeSection, setActiveSection] = useState('home');
   
   useEffect(() => {
-    // Scroll to top when component mounts
-    window.scrollTo(0, 0);
+    // Check for hash in URL and scroll to that section
+    const handleHashChange = () => {
+      const hash = window.location.hash.substring(1);
+      if (hash) {
+        const element = document.getElementById(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+          setActiveSection(hash);
+        }
+      }
+    };
+
+    // Handle initial hash if present
+    handleHashChange();
+    
+    // Scroll to top when component mounts if no hash
+    if (!window.location.hash) {
+      window.scrollTo(0, 0);
+    }
     
     // Scroll reveal animations
     const revealElements = document.querySelectorAll('.reveal-on-scroll');
@@ -66,23 +83,45 @@ const Index = () => {
       
       // Determine active section for nav highlighting
       const sections = ['home', 'about', 'timeline', 'curriculum', 'instructors', 'apply'];
-      const currentSection = sections.find(section => {
+      
+      // Find the section that is currently most visible in the viewport
+      let maxVisibleSection = '';
+      let maxVisiblePercentage = 0;
+      
+      sections.forEach(section => {
         const element = document.getElementById(section);
-        if (!element) return false;
+        if (!element) return;
+        
         const rect = element.getBoundingClientRect();
-        return rect.top <= 100 && rect.bottom >= 100;
+        const windowHeight = window.innerHeight;
+        
+        // Calculate how much of the section is visible in the viewport as a percentage
+        const visibleHeight = Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0);
+        const visiblePercentage = visibleHeight > 0 ? visibleHeight / element.offsetHeight : 0;
+        
+        if (visiblePercentage > maxVisiblePercentage) {
+          maxVisiblePercentage = visiblePercentage;
+          maxVisibleSection = section;
+        }
       });
       
-      if (currentSection) {
-        setActiveSection(currentSection);
+      if (maxVisibleSection && maxVisiblePercentage > 0.2) {
+        setActiveSection(maxVisibleSection);
+        // Update URL hash without scrolling
+        const currentHash = window.location.hash.substring(1);
+        if (currentHash !== maxVisibleSection) {
+          window.history.replaceState(null, '', `#${maxVisibleSection}`);
+        }
       }
     };
     
     window.addEventListener('scroll', handleScroll);
+    window.addEventListener('hashchange', handleHashChange);
     
     return () => {
       revealElements.forEach((el) => revealObserver.unobserve(el));
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('hashchange', handleHashChange);
     };
   }, []);
 
