@@ -214,7 +214,7 @@ const ApplicationForm = () => {
   ];
 
   return (
-    <section id="application-form" className="py-24 md:py-32 bg-white">
+    <section className="py-24 md:py-32 bg-white">
       <motion.div 
         className="max-w-3xl mx-auto px-6"
         variants={formVariants}
@@ -223,7 +223,7 @@ const ApplicationForm = () => {
         viewport={{ once: true, amount: 0.1 }}
       >
         <motion.div 
-          className="text-center mb-16 space-y-8"
+          className="text-center mb-16 space-y-8 bg-white"
           variants={sectionVariants}
         >
           <motion.span 
@@ -235,7 +235,7 @@ const ApplicationForm = () => {
             Summer Workshop 2025
           </motion.span>
           
-          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight text-gray-900">
+          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight text-gray-900 bg-white">
             Join the
             <span className="block mt-1 text-gray-900">
               Vocal Excellence Workshop
@@ -243,7 +243,7 @@ const ApplicationForm = () => {
           </h2>
           
           <motion.p 
-            className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed"
+            className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed bg-white"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
@@ -252,7 +252,7 @@ const ApplicationForm = () => {
           </motion.p>
 
           <motion.div 
-            className="pt-6 flex flex-col md:flex-row justify-center items-center gap-6 text-base text-gray-700"
+            className="pt-6 flex flex-col md:flex-row justify-center items-center gap-6 text-base text-gray-700 bg-white"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
@@ -329,7 +329,7 @@ const ApplicationForm = () => {
         </Form>
 
         <motion.div 
-          className="text-center mt-8 text-sm text-gray-600"
+          className="text-center mt-8 text-sm text-gray-600 bg-white"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
