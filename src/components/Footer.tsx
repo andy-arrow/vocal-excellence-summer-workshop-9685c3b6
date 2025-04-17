@@ -39,9 +39,11 @@ const Footer = () => {
         <div className="grid md:grid-cols-3 gap-12 md:gap-8 lg:gap-12">
           <div className="md:col-span-1 space-y-6">
             <Link to="/" className="flex items-center group">
-              <div className="mr-3 w-10 h-10 rounded-full bg-gradient-to-br from-energy-purple to-energy-pink flex items-center justify-center text-white transform transition-transform group-hover:scale-110">
-                <img src="/lovable-uploads/1a01d722-402e-4868-86dd-84534eb24551.png" alt="Vocal Excellence Logo" className="w-5 h-5" />
-              </div>
+              <img 
+                src="/lovable-uploads/1a01d722-402e-4868-86dd-84534eb24551.png" 
+                alt="Vocal Excellence Logo" 
+                className="w-10 h-10 mr-3" 
+              />
               <h3 className="font-outfit text-2xl font-semibold tracking-tight">
                 Vocal Excellence<br />
                 <span className="text-sm font-normal text-white/70">Summer Workshop</span>

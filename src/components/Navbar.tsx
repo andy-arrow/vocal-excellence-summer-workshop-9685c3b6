@@ -81,9 +81,11 @@ const Navbar = ({ activeSection }: NavbarProps) => {
           className="font-outfit font-medium text-white tracking-tight transition-opacity hover:opacity-80"
         >
           <div className="flex items-center">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-energy-purple to-energy-pink flex items-center justify-center mr-3">
-              <img src="/lovable-uploads/1a01d722-402e-4868-86dd-84534eb24551.png" alt="Vocal Excellence Logo" className="w-4 h-4" />
-            </div>
+            <img 
+              src="/lovable-uploads/1a01d722-402e-4868-86dd-84534eb24551.png" 
+              alt="Vocal Excellence Logo" 
+              className="w-8 h-8 mr-3" 
+            />
             <div>
               <span className="text-lg font-medium md:text-xl">Vocal Excellence</span>
               <span className="hidden md:block text-xs opacity-80 -mt-1">Summer Workshop</span>
@@ -166,9 +168,11 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                   onClick={closeMenu}
                 >
                   <div className="flex items-center">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-energy-purple to-energy-pink flex items-center justify-center mr-3">
-                      <img src="/lovable-uploads/1a01d722-402e-4868-86dd-84534eb24551.png" alt="Vocal Excellence Logo" className="w-4 h-4" />
-                    </div>
+                    <img 
+                      src="/lovable-uploads/1a01d722-402e-4868-86dd-84534eb24551.png" 
+                      alt="Vocal Excellence Logo" 
+                      className="w-8 h-8 mr-3" 
+                    />
                     <div>
                       <span className="text-lg font-medium">Vocal Excellence</span>
                       <span className="block text-xs opacity-80 -mt-1">Summer Workshop</span>
