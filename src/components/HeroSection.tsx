@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { Music, ArrowDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -259,60 +258,21 @@ const HeroSection = () => {
       
       <motion.button 
         onClick={scrollToDiscoverSection}
-        className="absolute bottom-0 left-0 right-0 mx-auto w-max cursor-pointer z-20 group pb-8"
-        aria-label="Scroll to discover what awaits"
+        className="absolute bottom-0 left-0 right-0 mx-auto w-12 h-12 cursor-pointer z-20 group pb-8 flex items-center justify-center"
+        aria-label="Scroll down"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.5, duration: 0.8 }}
       >
-        <div className="flex flex-col items-center">
-          <motion.span 
-            className="text-white text-sm uppercase tracking-widest mb-2 font-medium group-hover:text-energy-yellow transition-colors"
-            animate={{ y: [0, -5, 0] }}
-            transition={{ duration: 2, repeat: Infinity, repeatType: "loop" }}
-          >
-            Discover What Awaits
-          </motion.span>
-          <motion.div 
-            className="flex items-center justify-center h-12 space-x-1"
-            animate={{ y: [0, 5, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, repeatType: "loop" }}
-          >
-            {!hasReducedMotion ? (
-              <div className="flex space-x-1">
-                <motion.span 
-                  className="inline-block w-1 h-4 bg-energy-pink rounded-full"
-                  animate={{ height: ["1rem", "1.5rem", "1rem"] }}
-                  transition={{ duration: 1, repeat: Infinity, delay: 0 }}
-                ></motion.span>
-                <motion.span 
-                  className="inline-block w-1 h-6 bg-energy-purple rounded-full"
-                  animate={{ height: ["1.5rem", "2rem", "1.5rem"] }}
-                  transition={{ duration: 1, repeat: Infinity, delay: 0.1 }}
-                ></motion.span>
-                <motion.span 
-                  className="inline-block w-1 h-8 bg-energy-cyan rounded-full"
-                  animate={{ height: ["2rem", "2.5rem", "2rem"] }}
-                  transition={{ duration: 1, repeat: Infinity, delay: 0.2 }}
-                ></motion.span>
-                <motion.span 
-                  className="inline-block w-1 h-6 bg-energy-purple rounded-full"
-                  animate={{ height: ["1.5rem", "2rem", "1.5rem"] }}
-                  transition={{ duration: 1, repeat: Infinity, delay: 0.3 }}
-                ></motion.span>
-                <motion.span 
-                  className="inline-block w-1 h-4 bg-energy-pink rounded-full"
-                  animate={{ height: ["1rem", "1.5rem", "1rem"] }}
-                  transition={{ duration: 1, repeat: Infinity, delay: 0.4 }}
-                ></motion.span>
-              </div>
-            ) : (
-              <div className="p-2 rounded-full bg-white/30 backdrop-blur-sm border border-white/40 group-hover:bg-white/40 transition-all">
-                <ArrowDown className="text-white" size={20} />
-              </div>
-            )}
-          </motion.div>
-        </div>
+        {!hasReducedMotion ? (
+          <div className="rounded-full bg-white/10 backdrop-blur-sm border border-white/20 p-3 hover:bg-white/20 transition-all">
+            <ArrowDown className="text-white w-5 h-5" />
+          </div>
+        ) : (
+          <div className="p-2 rounded-full bg-white/30 backdrop-blur-sm border border-white/40 group-hover:bg-white/40 transition-all">
+            <ArrowDown className="text-white" size={20} />
+          </div>
+        )}
       </motion.button>
     </section>
   );
