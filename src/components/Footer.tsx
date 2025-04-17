@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, Phone, MapPin, Instagram, Twitter, Facebook, Youtube, Music, ArrowRight } from 'lucide-react';
+import { Mail, Phone, MapPin, Instagram, Twitter, Facebook, Youtube, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
@@ -40,7 +40,7 @@ const Footer = () => {
           <div className="md:col-span-1 space-y-6">
             <Link to="/" className="flex items-center group">
               <div className="mr-3 w-10 h-10 rounded-full bg-gradient-to-br from-energy-purple to-energy-pink flex items-center justify-center text-white transform transition-transform group-hover:scale-110">
-                <Music className="w-5 h-5" />
+                <img src="/lovable-uploads/1a01d722-402e-4868-86dd-84534eb24551.png" alt="Vocal Excellence Logo" className="w-5 h-5" />
               </div>
               <h3 className="font-outfit text-2xl font-semibold tracking-tight">
                 Vocal Excellence<br />

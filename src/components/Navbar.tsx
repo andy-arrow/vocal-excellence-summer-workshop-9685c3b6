@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { Menu, X, ArrowUpRight, ChevronDown } from 'lucide-react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { ArrowUpRight, Menu, X, Music, ChevronDown } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import AuthButtons from '@/components/AuthButtons';
 import AuthButtonsPlaceholder from './AuthButtonsPlaceholder';
 import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '@/lib/utils';
 import { Separator } from '@/components/ui/separator';
 import { Toggle } from '@/components/ui/toggle';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -82,7 +82,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
         >
           <div className="flex items-center">
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-energy-purple to-energy-pink flex items-center justify-center mr-3">
-              <Music className="w-4 h-4 text-white" />
+              <img src="/lovable-uploads/1a01d722-402e-4868-86dd-84534eb24551.png" alt="Vocal Excellence Logo" className="w-4 h-4" />
             </div>
             <div>
               <span className="text-lg font-medium md:text-xl">Vocal Excellence</span>
@@ -167,7 +167,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                 >
                   <div className="flex items-center">
                     <div className="w-8 h-8 rounded-full bg-gradient-to-br from-energy-purple to-energy-pink flex items-center justify-center mr-3">
-                      <Music className="w-4 h-4 text-white" />
+                      <img src="/lovable-uploads/1a01d722-402e-4868-86dd-84534eb24551.png" alt="Vocal Excellence Logo" className="w-4 h-4" />
                     </div>
                     <div>
                       <span className="text-lg font-medium">Vocal Excellence</span>
