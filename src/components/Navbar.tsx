@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ArrowUpRight, ChevronDown } from 'lucide-react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
@@ -85,7 +84,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
             <img 
               src="/lovable-uploads/cd8668bd-81c1-4de3-b82b-b97f9c5be025.png" 
               alt="Vocal Excellence Logo" 
-              className="w-8 h-8 mr-3" 
+              className="w-16 h-16 mr-3" 
             />
             <div>
               <span className="text-lg font-medium md:text-xl">Vocal Excellence</span>
@@ -172,7 +171,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                     <img 
                       src="/lovable-uploads/cd8668bd-81c1-4de3-b82b-b97f9c5be025.png" 
                       alt="Vocal Excellence Logo" 
-                      className="w-8 h-8 mr-3" 
+                      className="w-16 h-16 mr-3" 
                     />
                     <div>
                       <span className="text-lg font-medium">Vocal Excellence</span>

@@ -42,7 +42,7 @@ const Footer = () => {
               <img 
                 src="/lovable-uploads/cd8668bd-81c1-4de3-b82b-b97f9c5be025.png" 
                 alt="Vocal Excellence Logo" 
-                className="w-10 h-10 mr-3" 
+                className="w-20 h-20 mr-3" 
               />
               <h3 className="font-outfit text-2xl font-semibold tracking-tight">
                 Vocal Excellence<br />
