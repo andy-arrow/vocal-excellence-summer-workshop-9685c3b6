@@ -258,9 +258,10 @@ const HeroSection = () => {
         </motion.div>
       </div>
       
+      {/* Move the "Discover What Awaits" button lower and adjust its positioning */}
       <motion.button 
         onClick={scrollToDiscoverSection}
-        className="absolute bottom-12 left-0 right-0 mx-auto w-max cursor-pointer z-20 group"
+        className="absolute bottom-8 left-0 right-0 mx-auto w-max cursor-pointer z-20 group"
         aria-label="Scroll to discover what awaits"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
