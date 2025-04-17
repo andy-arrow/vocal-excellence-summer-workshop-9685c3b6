@@ -1,11 +1,10 @@
-
 import React, { useState, useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
 import { toast } from '@/hooks/use-toast';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Sparkles, CheckCircle2, Hourglass, Calendar, Users } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Sparkles, CheckCircle2, Hourglass, Calendar, Users, MapPin } from 'lucide-react';
 import { generateCsrfToken } from '@/utils/security';
 import { Link } from 'react-router-dom';
 
