@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, Phone, MapPin, Instagram, Twitter, Facebook, Youtube, ArrowRight } from 'lucide-react';
+import { Mail, Phone, MapPin, Instagram, Twitter, Facebook, Youtube, ArrowRight, FileText, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
@@ -141,8 +141,36 @@ const Footer = () => {
           </div>
         </div>
         
-        <div className="mt-14 pt-6 border-t border-white/10 text-white/50 text-xs flex flex-col sm:flex-row justify-between items-center">
-          <p>&copy; {new Date().getFullYear()} Vocal Excellence Summer Workshop. All rights reserved.</p>
+        <div className="mt-14 pt-6 border-t border-white/10">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p className="text-white/50 text-xs">&copy; {new Date().getFullYear()} Vocal Excellence Summer Workshop. All rights reserved.</p>
+            
+            <div className="flex items-center space-x-6">
+              <Link 
+                to="/terms-and-conditions" 
+                className="text-white/70 hover:text-white text-sm flex items-center group transition-colors"
+              >
+                <FileText className="w-4 h-4 mr-2 text-energy-purple group-hover:text-energy-pink transition-colors" />
+                Terms & Conditions
+              </Link>
+              
+              <Link 
+                to="/privacy-policy" 
+                className="text-white/70 hover:text-white text-sm flex items-center group transition-colors"
+              >
+                <Shield className="w-4 h-4 mr-2 text-energy-purple group-hover:text-energy-pink transition-colors" />
+                Privacy Policy
+              </Link>
+              
+              <Link 
+                to="/cancellation-policy" 
+                className="text-white/70 hover:text-white text-sm flex items-center group transition-colors"
+              >
+                <FileText className="w-4 h-4 mr-2 text-energy-purple group-hover:text-energy-pink transition-colors" />
+                Cancellation Policy
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
