@@ -27,13 +27,13 @@ const PersonalInfoSection = () => {
   
   return (
     <div className="space-y-6">
-      <h3 className="text-xl font-semibold text-white mb-6">Personal Information</h3>
+      <h3 className="text-xl font-semibold text-violet-100 mb-6">Personal Information</h3>
       
-      <BasicInfoFields />
-      
-      <ContactInfoFields />
-      
-      <AddressFields />
+      <div className="space-y-8 bg-slate-950/50 p-6 rounded-xl border border-violet-500/20">
+        <BasicInfoFields />
+        <ContactInfoFields />
+        <AddressFields />
+      </div>
     </div>
   );
 };

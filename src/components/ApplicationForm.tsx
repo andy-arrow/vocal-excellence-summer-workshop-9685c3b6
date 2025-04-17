@@ -214,7 +214,7 @@ const ApplicationForm = () => {
   ];
 
   return (
-    <section className="py-24 md:py-32 min-h-screen bg-gradient-to-b from-slate-900 via-slate-900 to-violet-950/80">
+    <section className="py-24 md:py-32 min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-violet-950">
       <motion.div 
         className="max-w-6xl mx-auto px-6"
         variants={formVariants}
@@ -227,7 +227,7 @@ const ApplicationForm = () => {
           variants={sectionVariants}
         >
           <motion.span 
-            className="inline-block text-violet-200 text-sm tracking-wide uppercase mb-2 font-medium bg-violet-500/10 px-4 py-1.5 rounded-full"
+            className="inline-block text-violet-100 text-sm tracking-wide uppercase mb-2 font-semibold bg-violet-500/20 px-4 py-1.5 rounded-full border border-violet-400/20 shadow-lg shadow-violet-500/10"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
@@ -237,13 +237,13 @@ const ApplicationForm = () => {
           
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white font-outfit">
             Ready to Join the
-            <span className="block mt-3 bg-clip-text text-transparent bg-gradient-to-r from-violet-100 via-fuchsia-100 to-rose-100 font-medium">
+            <span className="block mt-3 font-medium text-transparent bg-clip-text bg-gradient-to-r from-white via-violet-100 to-violet-200">
               Vocal Excellence Workshop?
             </span>
           </h2>
           
           <motion.p 
-            className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto leading-relaxed font-light"
+            className="text-lg md:text-xl text-violet-100 max-w-2xl mx-auto leading-relaxed font-light"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
@@ -257,26 +257,26 @@ const ApplicationForm = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
           >
-            <div className="flex items-center gap-3 backdrop-blur-sm bg-white/10 px-6 py-4 rounded-2xl border border-violet-500/30 hover:border-violet-500/50 transition-colors">
-              <Calendar className="h-5 w-5 text-violet-300" />
-              <span className="text-white font-medium">July 14 - 18, 2025</span>
+            <div className="flex items-center gap-3 backdrop-blur-sm bg-white/10 px-6 py-4 rounded-2xl border border-violet-400/30 hover:border-violet-400/50 transition-colors shadow-lg">
+              <Calendar className="h-5 w-5 text-violet-200" />
+              <span className="text-violet-100 font-medium">July 14 - 18, 2025</span>
             </div>
-            <div className="flex items-center gap-3 backdrop-blur-sm bg-white/10 px-6 py-4 rounded-2xl border border-violet-500/30 hover:border-violet-500/50 transition-colors">
-              <MapPin className="h-5 w-5 text-violet-300" />
-              <span className="text-white font-medium">Limassol, Cyprus</span>
+            <div className="flex items-center gap-3 backdrop-blur-sm bg-white/10 px-6 py-4 rounded-2xl border border-violet-400/30 hover:border-violet-400/50 transition-colors shadow-lg">
+              <MapPin className="h-5 w-5 text-violet-200" />
+              <span className="text-violet-100 font-medium">Limassol, Cyprus</span>
             </div>
-            <div className="flex items-center gap-3 backdrop-blur-sm bg-white/10 px-6 py-4 rounded-2xl border border-violet-500/30 hover:border-violet-500/50 transition-colors">
-              <Users className="h-5 w-5 text-violet-300" />
-              <span className="text-white font-medium">20 Spots Available</span>
+            <div className="flex items-center gap-3 backdrop-blur-sm bg-white/10 px-6 py-4 rounded-2xl border border-violet-400/30 hover:border-violet-400/50 transition-colors shadow-lg">
+              <Users className="h-5 w-5 text-violet-200" />
+              <span className="text-violet-100 font-medium">20 Spots Available</span>
             </div>
           </motion.div>
         </motion.div>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-12">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
             <input type="hidden" name="csrfToken" value={csrfToken} />
             
-            <div className="grid gap-12">
+            <div className="grid gap-10">
               {sections.map((section, index) => (
                 <motion.div
                   key={section.title}
@@ -284,11 +284,11 @@ const ApplicationForm = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   viewport={{ once: true, margin: "-100px" }}
-                  className="bg-slate-900/80 backdrop-blur-sm border border-violet-500/30 p-8 rounded-2xl shadow-xl"
+                  className="bg-slate-900/95 backdrop-blur-lg border border-violet-500/20 p-8 rounded-2xl shadow-xl hover:border-violet-500/30 transition-colors"
                 >
                   <div className="flex items-center gap-4 mb-8 border-b border-violet-500/20 pb-4">
                     {section.icon}
-                    <h3 className="text-xl font-semibold text-white">{section.title}</h3>
+                    <h3 className="text-xl font-semibold text-violet-100">{section.title}</h3>
                   </div>
                   {section.component}
                 </motion.div>
@@ -307,12 +307,12 @@ const ApplicationForm = () => {
         </Form>
 
         <motion.div 
-          className="text-center mt-12 text-base text-white/80 bg-violet-950/30 rounded-xl p-4 border border-violet-500/20"
+          className="text-center mt-12 text-base text-violet-200 bg-violet-950/50 backdrop-blur-sm rounded-xl p-6 border border-violet-500/20 shadow-lg"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
         >
-          <p>Need help? Email us at <a href="mailto:help@vocalexcellence.com" className="text-fuchsia-300 hover:text-fuchsia-200 underline underline-offset-4 font-medium">help@vocalexcellence.com</a></p>
+          <p>Need help? Email us at <a href="mailto:help@vocalexcellence.com" className="text-violet-200 hover:text-violet-100 underline underline-offset-4 font-medium">help@vocalexcellence.com</a></p>
         </motion.div>
       </motion.div>
     </section>
