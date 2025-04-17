@@ -29,7 +29,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
     <header className="bg-slate-900/80 backdrop-blur-sm fixed top-0 left-0 w-full z-50 border-b border-violet-500/10">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <Link to="/" className="text-2xl font-bold text-white">
-          Vocal Excellence
+          Vocal Excellence Summer Workshop
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
