@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import {
   Accordion,
@@ -49,7 +48,7 @@ const ApplicationFAQ = () => {
         },
         {
           question: "Can I pay in installments?",
-          answer: "Yes. We offer interest-free payment plans over 3-6 months. Simply select your preferred payment schedule when accepting your admission offer."
+          answer: "Yes, we're happy to offer an installment plan to help make attending the workshop more manageable. Here's how it works:\n\n1. **Confirming Your Place:** To secure your spot, a **€100 registration fee** is requested within **5 business days** after you receive your acceptance notification (sent on June 1, 2025). This initial fee confirms your commitment and is non-refundable.\n\n2. **Installment Schedule:** The remaining balance of €899 can then be paid in three installments, scheduled as follows:\n    *   **Installment 1:** €300 due by **June 12, 2025**.\n    *   **Installment 2:** €300 due by **June 20, 2025**.\n    *   **Installment 3:** €299 due by **June 28, 2025**.\n\n**Important Notes:**\n*   You can select this payment plan when you accept your offer.\n*   Meeting these payment dates helps us finalize arrangements for everyone and ensures your place remains confirmed.\n*   The full tuition needs to be settled by the final installment date (June 28, 2025) so everything is in order before the workshop begins on July 14, 2025.\n\nWe understand planning is important. If you anticipate any difficulty meeting a deadline, please reach out to our admissions team at [Insert Admissions Email Address] as soon as possible to discuss your situation."
         }
       ]
     },
@@ -97,7 +96,6 @@ const ApplicationFAQ = () => {
       )
     })).filter(category => category.items.length > 0);
 
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { 
