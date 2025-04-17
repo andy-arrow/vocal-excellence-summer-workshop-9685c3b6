@@ -77,7 +77,6 @@ const ApplicationHero = () => {
           >
             <ChevronDown className="text-slate-400 dark:text-slate-500 h-6 w-6" />
           </motion.div>
-          <span className="text-xs text-slate-400 dark:text-slate-500 mt-2">View Application Details</span>
         </motion.div>
       </div>
     </section>
@@ -85,3 +84,4 @@ const ApplicationHero = () => {
 };
 
 export default ApplicationHero;
+
