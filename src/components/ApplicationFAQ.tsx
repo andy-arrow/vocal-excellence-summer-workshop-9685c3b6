@@ -6,68 +6,78 @@ import {
   AccordionItem,
   AccordionTrigger
 } from '@/components/ui/accordion';
-import { Star, HelpCircle, Sparkles, Award, Clock, Home, CreditCard, Music, Lightbulb } from 'lucide-react';
+import { 
+  HelpCircle, 
+  Search, 
+  ChevronRight, 
+  Music, 
+  CreditCard, 
+  Lightbulb, 
+  Home, 
+  MessageCircle 
+} from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const MotionDiv = motion.div;
 
 const ApplicationFAQ = () => {
   const [activeIndex, setActiveIndex] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
   
   const faqCategories = [
     {
-      title: "Program Basics",
-      icon: <Music className="w-5 h-5" />,
+      title: "Program Essentials",
+      icon: <Music className="w-4 h-4" />,
       items: [
         {
           question: "What level of experience do I need?",
-          answer: "All levels welcome! Whether you've been singing for years or just starting out, our workshop adapts to your skill level. Most participants have had at least some vocal training, but we have special tracks for beginners too."
+          answer: "All levels welcome. We adapt to your skill level, from beginners to advanced vocalists. Most participants have some prior vocal training, but we offer specialized tracks for those just starting their vocal journey."
         },
         {
           question: "Is there an age requirement?",
-          answer: "You need to be at least 16 years old. Most participants are between 16-30, but we evaluate based on your talent and energy, not your age. Participants under 18 will need parental consent forms."
+          answer: "Participants must be at least 16 years old. While most attendees are between 16-30, our selection is based on talent and potential rather than age. Participants under 18 require parental consent documentation."
         }
       ]
     },
     {
-      title: "Financial Info",
-      icon: <CreditCard className="w-5 h-5" />,
+      title: "Financial Details",
+      icon: <CreditCard className="w-4 h-4" />,
       items: [
         {
-          question: "Are there scholarships available?",
-          answer: "Absolutely! We offer several scholarships for talented young artists. Check the 'Scholarship' box on your application form and we'll send you details about the simple application process."
+          question: "Are scholarships available?",
+          answer: "Yes. We offer several merit-based scholarships for talented vocalists. Simply check the 'Scholarship Interest' box in your application, and we'll provide details on our streamlined application process."
         },
         {
           question: "Can I pay in installments?",
-          answer: "Yes! We offer flexible payment plans spread across 3-6 months with no interest. Just select the payment plan option when you accept your admission offer."
+          answer: "Yes. We offer interest-free payment plans over 3-6 months. Simply select your preferred payment schedule when accepting your admission offer."
         }
       ]
     },
     {
       title: "Program Content",
-      icon: <Lightbulb className="w-5 h-5" />,
+      icon: <Lightbulb className="w-4 h-4" />,
       items: [
         {
-          question: "What songs will I learn?",
-          answer: "You'll prepare 3-5 pieces in different styles that match your voice and interests. We cover pop, rock, musical theater, R&B, and more! You're welcome to bring songs you're already working on."
+          question: "What repertoire will I learn?",
+          answer: "You'll prepare 3-5 pieces tailored to your vocal profile across various genres including classical, contemporary, musical theater, and more. You're welcome to incorporate pieces you're currently studying."
         },
         {
-          question: "How is the program structured for young artists?",
-          answer: "Our workshop features dynamic learning sessions with expert feedback, hands-on vocal training, visual learning aids, and collaborative performance opportunities. We balance focused practice with creative exploration to keep everyone engaged and inspired."
+          question: "How is the program structured?",
+          answer: "The workshop features expert-led masterclasses, individual coaching, technical training, and collaborative performance opportunities. We maintain a careful balance of focused practice and creative exploration."
         }
       ]
     },
     {
-      title: "Practical Details",
-      icon: <Home className="w-5 h-5" />,
+      title: "Accommodation & Scheduling",
+      icon: <Home className="w-4 h-4" />,
       items: [
         {
           question: "Is housing provided?",
-          answer: "While housing isn't included in the workshop fee, we help you find affordable options nearby, including special rates at partner hotels and homestay opportunities with local families."
+          answer: "While accommodation isn't included in the workshop fee, we assist participants in finding suitable options, including preferential rates at partner hotels and curated homestay opportunities with local families."
         },
         {
-          question: "How much free time will I have?",
-          answer: "The workshop is intensive but balanced. Structured activities run from 9am-4pm with a long lunch break. Evenings include optional jam sessions and social events, but you'll have time to explore the beautiful Cyprus coastline too!"
+          question: "What is the daily schedule?",
+          answer: "Structured activities run from 9:00-16:00 with appropriate breaks. Evenings include optional practice sessions and social events, providing a balanced experience that also allows time to explore Limassol."
         }
       ]
     }
@@ -77,90 +87,165 @@ const ApplicationFAQ = () => {
     setActiveIndex(value === activeIndex ? null : value);
   };
 
+  const filteredCategories = searchTerm.trim() === '' ? 
+    faqCategories : 
+    faqCategories.map(category => ({
+      ...category,
+      items: category.items.filter(item => 
+        item.question.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        item.answer.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    })).filter(category => category.items.length > 0);
+
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { 
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
+    }
+  };
+
   return (
-    <section className="py-24 md:py-28 bg-gradient-to-b from-white to-primary/5 noise-bg">
-      <div className="max-w-6xl mx-auto px-6 md:px-8">
+    <section className="py-28 md:py-32 bg-gradient-to-b from-white to-slate-50">
+      <div className="max-w-5xl mx-auto px-6 md:px-8">
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <span className="inline-flex items-center bg-energy-purple/15 text-energy-purple rounded-full py-2 px-4 text-sm font-medium mb-5 shadow-sm">
-            <HelpCircle className="mr-2 w-4 h-4" />
-            Common Questions
-          </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 font-outfit tracking-tight text-gray-900">
-            Frequently Asked <span className="gradient-text">Questions</span>
-          </h2>
-          <div className="h-1 w-20 bg-gradient-to-r from-energy-purple to-energy-pink rounded-full mx-auto mb-6"></div>
-          <p className="text-foreground/80 max-w-2xl mx-auto text-lg leading-relaxed">
-            Everything you need to know about our vocal workshop in bite-sized answers
-          </p>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            viewport={{ once: true }}
+          >
+            <span className="inline-flex items-center bg-slate-100 text-slate-700 rounded-full py-1.5 px-3 text-sm font-medium mb-5">
+              <HelpCircle className="mr-2 w-3.5 h-3.5 text-slate-500" />
+              Questions & Answers
+            </span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 tracking-tight text-slate-900 font-outfit">
+              Frequently Asked <span className="text-primary">Questions</span>
+            </h2>
+            <div className="h-px w-16 bg-primary/30 rounded-full mx-auto mb-6"></div>
+            <p className="text-slate-600 max-w-2xl mx-auto text-lg leading-relaxed mb-10">
+              Everything you need to know about the Vocal Excellence Workshop, meticulously answered
+            </p>
+          </motion.div>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            viewport={{ once: true }}
+            className="relative max-w-xl mx-auto"
+          >
+            <div className="relative">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
+              <input
+                type="text"
+                placeholder="Search for answers..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full py-3 pl-10 pr-4 rounded-full border border-slate-200 focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-colors bg-white shadow-sm text-sm"
+              />
+              {searchTerm && (
+                <button
+                  onClick={() => setSearchTerm('')}
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                >
+                  <span className="sr-only">Clear search</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </button>
+              )}
+            </div>
+          </motion.div>
         </div>
           
-        <div className="grid md:grid-cols-2 gap-10 max-w-4xl mx-auto">
-          {faqCategories.map((category, catIndex) => (
-            <MotionDiv
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid md:grid-cols-2 gap-10 max-w-4xl mx-auto"
+        >
+          {filteredCategories.map((category, catIndex) => (
+            <motion.div
               key={catIndex}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: catIndex * 0.1 }}
-              viewport={{ once: true }}
-              className="focus-section"
+              variants={itemVariants}
+              className="focus-section space-y-3"
             >
-              <div className="flex items-center mb-6">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-energy-purple/20 to-energy-pink/20 flex items-center justify-center text-energy-purple shadow-md">
+              <div className="flex items-center mb-4">
+                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary shadow-sm">
                   {category.icon}
                 </div>
-                <h3 className="text-xl font-bold ml-4 text-gray-800 font-outfit tracking-tight">{category.title}</h3>
+                <h3 className="text-lg font-semibold ml-3 text-slate-800 font-outfit">{category.title}</h3>
               </div>
               
-              <Accordion type="single" collapsible className="space-y-4">
+              <Accordion type="single" collapsible className="space-y-2.5">
                 {category.items.map((item, index) => {
                   const itemId = `${catIndex}-${index}`;
                   return (
                     <AccordionItem 
                       key={itemId} 
                       value={itemId} 
-                      className="border border-gray-200 rounded-xl overflow-hidden shadow-sm transition-all hover:shadow-md bg-white"
+                      className="border border-slate-200 rounded-xl overflow-hidden shadow-sm transition-all hover:shadow bg-white"
                     >
                       <AccordionTrigger 
                         onClick={() => handleAccordionChange(itemId)}
-                        className="text-left font-medium text-lg text-gray-800 hover:text-energy-purple data-[state=open]:text-energy-purple transition-colors px-5 py-4"
+                        className="text-left font-medium text-base text-slate-800 hover:text-primary transition-colors px-4 py-3"
                       >
-                        <div className="flex items-center">
-                          <Star 
-                            className={`w-5 h-5 mr-3 transition-colors ${activeIndex === itemId ? 'text-energy-pink' : 'text-energy-pink/50'}`}
+                        <div className="flex items-center justify-between w-full">
+                          <span className="font-outfit tracking-tight pr-3">{item.question}</span>
+                          <ChevronRight 
+                            className={`w-4 h-4 flex-shrink-0 text-slate-400 transition-transform duration-300 ${
+                              activeIndex === itemId ? 'rotate-90 text-primary' : ''
+                            }`} 
                           />
-                          <span className="font-outfit tracking-tight">{item.question}</span>
                         </div>
                       </AccordionTrigger>
-                      <AccordionContent className="text-gray-600 text-base pt-2 px-6 pb-5 border-t border-gray-100 leading-relaxed">
+                      <AccordionContent className="text-slate-600 text-base pt-1 px-4 pb-4 border-t border-slate-100 leading-relaxed">
                         {item.answer}
                       </AccordionContent>
                     </AccordionItem>
                   );
                 })}
               </Accordion>
-            </MotionDiv>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
         
         <motion.div 
-          className="mt-16 bg-gradient-to-r from-energy-purple/10 to-energy-pink/10 p-6 md:p-8 rounded-2xl max-w-4xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           viewport={{ once: true }}
+          className="mt-20 bg-gradient-to-b from-slate-50 to-white p-8 rounded-2xl max-w-3xl mx-auto border border-slate-200 shadow-sm"
         >
           <div className="flex flex-col md:flex-row items-center gap-6">
-            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-energy-purple to-energy-pink flex items-center justify-center text-white shadow-lg flex-shrink-0">
-              <Sparkles className="w-8 h-8" />
+            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
+              <MessageCircle className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-gray-800 font-outfit mb-2">Still have questions?</h3>
-              <p className="text-gray-600 mb-4">If you couldn't find what you're looking for, please don't hesitate to contact us.</p>
+              <h3 className="text-xl font-medium text-slate-800 font-outfit mb-2">Still have questions?</h3>
+              <p className="text-slate-600 mb-4 text-base">Our admissions team is ready to assist with any inquiries you may have about the program.</p>
               <a 
-                href="mailto:info@vocalexcellence.com" 
-                className="inline-flex items-center font-medium text-energy-purple hover:text-energy-purple/80 transition-colors"
+                href="mailto:admissions@vocalexcellence.com" 
+                className="inline-flex items-center font-medium text-primary hover:text-primary/80 transition-colors group"
               >
-                Email our support team <span className="ml-2">→</span>
+                Contact the admissions team
+                <span className="ml-1 group-hover:ml-2 transition-all duration-300">→</span>
               </a>
             </div>
           </div>
