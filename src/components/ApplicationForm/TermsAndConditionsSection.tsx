@@ -45,11 +45,6 @@ const TermsAndConditionsSection = () => {
           </AlertDescription>
         </Alert>
       )}
-      
-      <p className="text-[#86868b] mb-6">
-        Please review our Terms and Privacy Policy before submitting. We've worked hard to make these 
-        documents clear and straightforward - they explain how we'll work together and protect your information.
-      </p>
 
       <div className="mb-6 space-y-4">
         <div className="bg-white rounded-xl p-4 border border-[#e6e6e6] mb-4 hover:border-[#d2d2d7] transition-colors">

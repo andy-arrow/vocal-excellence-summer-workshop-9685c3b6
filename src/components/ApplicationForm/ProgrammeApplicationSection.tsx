@@ -12,58 +12,69 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { ApplicationFormValues } from './schema';
+import { Info } from 'lucide-react';
 
 const ProgrammeApplicationSection = () => {
   const form = useFormContext<ApplicationFormValues>();
 
   return (
     <div className="space-y-6">
-      <h3 className="text-xl font-semibold text-[#1d1d1f] mb-6">Programme Application</h3>
+      <div className="flex items-center justify-between">
+        <h3 className="text-xl font-semibold text-[#1d1d1f]">Programme Application</h3>
+        <div className="flex items-center text-sm text-[#86868b] gap-1.5">
+          <Info className="w-4 h-4" />
+          <span>All fields are required unless marked optional</span>
+        </div>
+      </div>
       
       <div className="space-y-6">
-        <FormField
-          control={form.control}
-          name="reasonForApplying"
-          render={({ field }) => (
-            <FormItem className="space-y-2">
-              <FormLabel className="flex items-center gap-2 text-[#1d1d1f]">
-                Why do you want to join this programme?
-                <span className="text-[#bf4800]">*</span>
-              </FormLabel>
-              <FormControl>
-                <Textarea 
-                  placeholder="Please explain your interest in the programme and what you hope to achieve"
-                  className="min-h-[150px] rounded-xl border-[#e6e6e6] focus:border-[#0077ed] focus:ring-0"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage className="text-[#bf4800]" />
-            </FormItem>
-          )}
-        />
+        <div className="bg-white rounded-xl p-4 border border-[#e6e6e6] hover:border-[#d2d2d7] transition-colors">
+          <FormField
+            control={form.control}
+            name="reasonForApplying"
+            render={({ field }) => (
+              <FormItem className="space-y-2">
+                <FormLabel className="flex items-center gap-2 text-[#1d1d1f] font-medium">
+                  Why do you want to join this programme?
+                  <span className="text-[#bf4800]">*</span>
+                </FormLabel>
+                <FormControl>
+                  <Textarea 
+                    placeholder="Please explain your interest in the programme and what you hope to achieve"
+                    className="min-h-[150px] rounded-xl border-[#e6e6e6] focus:border-[#0077ed] focus:ring-0"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage className="text-[#bf4800]" />
+              </FormItem>
+            )}
+          />
+        </div>
         
-        <FormField
-          control={form.control}
-          name="heardAboutUs"
-          render={({ field }) => (
-            <FormItem className="space-y-2">
-              <FormLabel className="flex items-center gap-2 text-[#1d1d1f]">
-                How did you hear about us?
-                <span className="text-[#bf4800]">*</span>
-              </FormLabel>
-              <FormControl>
-                <Input 
-                  placeholder="Social media, website, referral, etc." 
-                  className="rounded-xl border-[#e6e6e6] focus:border-[#0077ed] focus:ring-0" 
-                  {...field} 
-                />
-              </FormControl>
-              <FormMessage className="text-[#bf4800]" />
-            </FormItem>
-          )}
-        />
+        <div className="bg-white rounded-xl p-4 border border-[#e6e6e6] hover:border-[#d2d2d7] transition-colors">
+          <FormField
+            control={form.control}
+            name="heardAboutUs"
+            render={({ field }) => (
+              <FormItem className="space-y-2">
+                <FormLabel className="flex items-center gap-2 text-[#1d1d1f] font-medium">
+                  How did you hear about us?
+                  <span className="text-[#bf4800]">*</span>
+                </FormLabel>
+                <FormControl>
+                  <Input 
+                    placeholder="Social media, website, referral, etc." 
+                    className="rounded-xl border-[#e6e6e6] focus:border-[#0077ed] focus:ring-0" 
+                    {...field} 
+                  />
+                </FormControl>
+                <FormMessage className="text-[#bf4800]" />
+              </FormItem>
+            )}
+          />
+        </div>
         
-        <div className="mt-8 p-5 rounded-xl bg-[#f5f5f7]">
+        <div className="bg-[#f5f5f7] rounded-xl p-4">
           <FormField
             control={form.control}
             name="scholarshipInterest"
@@ -77,7 +88,7 @@ const ProgrammeApplicationSection = () => {
                   />
                 </FormControl>
                 <div className="space-y-1 leading-none">
-                  <FormLabel className="text-[#1d1d1f]">
+                  <FormLabel className="text-[#1d1d1f] font-medium">
                     I wish to be considered for financial aid
                   </FormLabel>
                   {field.value && (
@@ -91,23 +102,27 @@ const ProgrammeApplicationSection = () => {
           />
         </div>
         
-        <FormField
-          control={form.control}
-          name="specialNeeds"
-          render={({ field }) => (
-            <FormItem className="space-y-2">
-              <FormLabel className="text-[#1d1d1f]">Accessibility Needs or Special Accommodations (Optional)</FormLabel>
-              <FormControl>
-                <Textarea 
-                  placeholder="Please inform us of any accessibility requirements or accommodations you may need"
-                  className="min-h-[100px] rounded-xl border-[#e6e6e6] focus:border-[#0077ed] focus:ring-0"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage className="text-[#bf4800]" />
-            </FormItem>
-          )}
-        />
+        <div className="bg-white rounded-xl p-4 border border-[#e6e6e6] hover:border-[#d2d2d7] transition-colors">
+          <FormField
+            control={form.control}
+            name="specialNeeds"
+            render={({ field }) => (
+              <FormItem className="space-y-2">
+                <FormLabel className="text-[#1d1d1f] font-medium">
+                  Accessibility Needs or Special Accommodations (Optional)
+                </FormLabel>
+                <FormControl>
+                  <Textarea 
+                    placeholder="Please inform us of any accessibility requirements or accommodations you may need"
+                    className="min-h-[100px] rounded-xl border-[#e6e6e6] focus:border-[#0077ed] focus:ring-0"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage className="text-[#bf4800]" />
+              </FormItem>
+            )}
+          />
+        </div>
       </div>
     </div>
   );
