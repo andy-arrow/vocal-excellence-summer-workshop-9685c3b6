@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { Music, ArrowDown, Calendar, Users, MapPin } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -216,7 +217,7 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.3 }}
         >
           <motion.div
-            className="flex flex-wrap justify-center gap-4 md:gap-6"
+            className="flex flex-wrap justify-center gap-4 md:gap-6 mb-8"  // Added margin bottom
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.5 }}
@@ -332,3 +333,4 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
+
