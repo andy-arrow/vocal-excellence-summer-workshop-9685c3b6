@@ -8,6 +8,7 @@ import Index from './pages/Index';
 import Application from './pages/Application';
 import CancellationPolicy from './pages/CancellationPolicy';
 import TermsAndConditions from './pages/TermsAndConditions';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
   {
     path: "/terms-and-conditions",
     element: <TermsAndConditions />,
+  },
+  {
+    path: "/privacy-policy",
+    element: <PrivacyPolicy />,
   },
 ]);
 
