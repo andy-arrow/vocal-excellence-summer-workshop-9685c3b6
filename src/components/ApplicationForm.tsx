@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -188,27 +189,27 @@ const ApplicationForm = () => {
     { 
       title: "Personal Info", 
       component: <PersonalInfoSection />,
-      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-fuchsia-500/20 p-2 rounded-full"><Sparkles size={18} className="text-fuchsia-500" /></motion.div>
+      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-fuchsia-500/30 p-2 rounded-full"><Sparkles size={18} className="text-fuchsia-400" /></motion.div>
     },
     { 
       title: "Musical Background", 
       component: <MusicalBackgroundSection />,
-      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-violet-500/20 p-2 rounded-full"><Hourglass size={18} className="text-violet-500" /></motion.div>
+      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-violet-500/30 p-2 rounded-full"><Hourglass size={18} className="text-violet-400" /></motion.div>
     },
     { 
       title: "Programme", 
       component: <ProgrammeApplicationSection />,
-      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-indigo-500/20 p-2 rounded-full"><CheckCircle2 size={18} className="text-indigo-500" /></motion.div>
+      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-indigo-500/30 p-2 rounded-full"><CheckCircle2 size={18} className="text-indigo-400" /></motion.div>
     },
     { 
       title: "Materials", 
       component: <SupportingMaterialsSection />,
-      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-purple-500/20 p-2 rounded-full"><CheckCircle2 size={18} className="text-purple-500" /></motion.div>
+      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-purple-500/30 p-2 rounded-full"><CheckCircle2 size={18} className="text-purple-400" /></motion.div>
     },
     { 
       title: "Terms", 
       component: <TermsAndConditionsSection />,
-      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-pink-500/20 p-2 rounded-full"><CheckCircle2 size={18} className="text-pink-500" /></motion.div>
+      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-pink-500/30 p-2 rounded-full"><CheckCircle2 size={18} className="text-pink-400" /></motion.div>
     },
   ];
 
@@ -226,7 +227,7 @@ const ApplicationForm = () => {
           variants={sectionVariants}
         >
           <motion.span 
-            className="inline-block text-violet-300/80 text-sm tracking-wide uppercase mb-2 font-medium"
+            className="inline-block text-violet-200 text-sm tracking-wide uppercase mb-2 font-medium bg-violet-500/10 px-4 py-1.5 rounded-full"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
@@ -236,13 +237,13 @@ const ApplicationForm = () => {
           
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white font-outfit">
             Ready to Join the
-            <span className="block mt-3 bg-clip-text text-transparent bg-gradient-to-r from-violet-200 via-fuchsia-200 to-rose-200 font-medium">
+            <span className="block mt-3 bg-clip-text text-transparent bg-gradient-to-r from-violet-100 via-fuchsia-100 to-rose-100 font-medium">
               Vocal Excellence Workshop?
             </span>
           </h2>
           
           <motion.p 
-            className="text-lg md:text-xl text-violet-200/90 max-w-2xl mx-auto leading-relaxed font-light"
+            className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto leading-relaxed font-light"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
@@ -256,17 +257,17 @@ const ApplicationForm = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
           >
-            <div className="flex items-center gap-3 backdrop-blur-sm bg-white/5 px-6 py-4 rounded-2xl border border-violet-500/20 hover:border-violet-500/40 transition-colors">
-              <Calendar className="h-5 w-5 text-violet-400" />
-              <span className="text-violet-300/90">July 14 - 18, 2025</span>
+            <div className="flex items-center gap-3 backdrop-blur-sm bg-white/10 px-6 py-4 rounded-2xl border border-violet-500/30 hover:border-violet-500/50 transition-colors">
+              <Calendar className="h-5 w-5 text-violet-300" />
+              <span className="text-white font-medium">July 14 - 18, 2025</span>
             </div>
-            <div className="flex items-center gap-3 backdrop-blur-sm bg-white/5 px-6 py-4 rounded-2xl border border-violet-500/20 hover:border-violet-500/40 transition-colors">
-              <MapPin className="h-5 w-5 text-violet-400" />
-              <span className="text-violet-300/90">Limassol, Cyprus</span>
+            <div className="flex items-center gap-3 backdrop-blur-sm bg-white/10 px-6 py-4 rounded-2xl border border-violet-500/30 hover:border-violet-500/50 transition-colors">
+              <MapPin className="h-5 w-5 text-violet-300" />
+              <span className="text-white font-medium">Limassol, Cyprus</span>
             </div>
-            <div className="flex items-center gap-3 backdrop-blur-sm bg-white/5 px-6 py-4 rounded-2xl border border-violet-500/20 hover:border-violet-500/40 transition-colors">
-              <Users className="h-5 w-5 text-violet-400" />
-              <span className="text-violet-300/90">20 Spots Available</span>
+            <div className="flex items-center gap-3 backdrop-blur-sm bg-white/10 px-6 py-4 rounded-2xl border border-violet-500/30 hover:border-violet-500/50 transition-colors">
+              <Users className="h-5 w-5 text-violet-300" />
+              <span className="text-white font-medium">20 Spots Available</span>
             </div>
           </motion.div>
         </motion.div>
@@ -283,9 +284,9 @@ const ApplicationForm = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   viewport={{ once: true, margin: "-100px" }}
-                  className="bg-slate-900/80 backdrop-blur-sm border border-violet-500/20 p-8 rounded-2xl shadow-xl"
+                  className="bg-slate-900/80 backdrop-blur-sm border border-violet-500/30 p-8 rounded-2xl shadow-xl"
                 >
-                  <div className="flex items-center gap-4 mb-8">
+                  <div className="flex items-center gap-4 mb-8 border-b border-violet-500/20 pb-4">
                     {section.icon}
                     <h3 className="text-xl font-semibold text-white">{section.title}</h3>
                   </div>
@@ -306,12 +307,12 @@ const ApplicationForm = () => {
         </Form>
 
         <motion.div 
-          className="text-center mt-12 text-sm text-violet-300/70"
+          className="text-center mt-12 text-base text-white/80 bg-violet-950/30 rounded-xl p-4 border border-violet-500/20"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
         >
-          <p>Need help? Email us at <a href="mailto:help@vocalexcellence.com" className="text-fuchsia-400 hover:text-fuchsia-300 underline underline-offset-4">help@vocalexcellence.com</a></p>
+          <p>Need help? Email us at <a href="mailto:help@vocalexcellence.com" className="text-fuchsia-300 hover:text-fuchsia-200 underline underline-offset-4 font-medium">help@vocalexcellence.com</a></p>
         </motion.div>
       </motion.div>
     </section>

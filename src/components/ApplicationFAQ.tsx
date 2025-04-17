@@ -201,15 +201,15 @@ const ApplicationFAQ = () => {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             viewport={{ once: true }}
           >
-            <span className="inline-flex items-center bg-slate-100 text-slate-700 rounded-full py-1.5 px-3 text-sm font-medium mb-5">
-              <HelpCircle className="mr-2 w-3.5 h-3.5 text-slate-500" />
+            <span className="inline-flex items-center bg-slate-200 text-slate-800 rounded-full py-1.5 px-3 text-sm font-medium mb-5">
+              <HelpCircle className="mr-2 w-3.5 h-3.5 text-slate-600" />
               Questions & Answers
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 tracking-tight text-slate-900 font-outfit">
               Frequently Asked <span className="text-primary">Questions</span>
             </h2>
-            <div className="h-px w-16 bg-primary/30 rounded-full mx-auto mb-6"></div>
-            <p className="text-slate-600 max-w-2xl mx-auto text-lg leading-relaxed mb-10">
+            <div className="h-px w-16 bg-primary/50 rounded-full mx-auto mb-6"></div>
+            <p className="text-slate-800 max-w-2xl mx-auto text-lg leading-relaxed mb-10 font-medium">
               Everything you need to know about the Vocal Excellence Workshop, meticulously answered
             </p>
           </motion.div>
@@ -222,18 +222,18 @@ const ApplicationFAQ = () => {
             className="relative max-w-xl mx-auto"
           >
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-600 w-4 h-4" />
               <input
                 type="text"
                 placeholder="Search for answers..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full py-3 pl-10 pr-4 rounded-full border border-slate-200 focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-colors bg-white shadow-sm text-sm"
+                className="w-full py-3 pl-10 pr-4 rounded-full border border-slate-300 focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-colors bg-white shadow-sm text-sm"
               />
               {searchTerm && (
                 <button
                   onClick={() => setSearchTerm('')}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-500 hover:text-slate-700"
                 >
                   <span className="sr-only">Clear search</span>
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -260,7 +260,7 @@ const ApplicationFAQ = () => {
               className="focus-section space-y-3"
             >
               <div className="flex items-center mb-4">
-                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary shadow-sm">
+                <div className="w-8 h-8 rounded-full bg-primary/15 flex items-center justify-center text-primary shadow-sm">
                   {category.icon}
                 </div>
                 <h3 className="text-lg font-semibold ml-3 text-slate-800 font-outfit">{category.title}</h3>
@@ -282,13 +282,13 @@ const ApplicationFAQ = () => {
                         <div className="flex items-center justify-between w-full">
                           <span className="font-outfit tracking-tight pr-3">{item.question}</span>
                           <ChevronRight 
-                            className={`w-4 h-4 flex-shrink-0 text-slate-400 transition-transform duration-300 ${
+                            className={`w-4 h-4 flex-shrink-0 text-slate-500 transition-transform duration-300 ${
                               activeIndex === itemId ? 'rotate-90 text-primary' : ''
                             }`} 
                           />
                         </div>
                       </AccordionTrigger>
-                      <AccordionContent className="text-slate-600 text-base pt-1 px-4 pb-4 border-t border-slate-100 leading-relaxed">
+                      <AccordionContent className="text-slate-700 text-base pt-1 px-4 pb-4 border-t border-slate-100 leading-relaxed font-medium">
                         {item.answer}
                       </AccordionContent>
                     </AccordionItem>
@@ -304,15 +304,15 @@ const ApplicationFAQ = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           viewport={{ once: true }}
-          className="mt-20 bg-gradient-to-b from-slate-50 to-white p-8 rounded-2xl max-w-3xl mx-auto border border-slate-200 shadow-sm"
+          className="mt-20 bg-gradient-to-b from-slate-50 to-white p-8 rounded-2xl max-w-3xl mx-auto border border-slate-300 shadow-sm"
         >
           <div className="flex flex-col md:flex-row items-center gap-6">
-            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
+            <div className="w-12 h-12 rounded-full bg-primary/15 flex items-center justify-center text-primary flex-shrink-0">
               <MessageCircle className="w-5 h-5" />
             </div>
             <div>
               <h3 className="text-xl font-medium text-slate-800 font-outfit mb-2">Still have questions?</h3>
-              <p className="text-slate-600 mb-4 text-base">Our admissions team is ready to assist with any inquiries you may have about the program.</p>
+              <p className="text-slate-700 mb-4 text-base font-medium">Our admissions team is ready to assist with any inquiries you may have about the program.</p>
               <a 
                 href="mailto:admissions@vocalexcellence.com" 
                 className="inline-flex items-center font-medium text-primary hover:text-primary/80 transition-colors group"
