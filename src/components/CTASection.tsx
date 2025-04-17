@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { Calendar, MapPin, BadgeEuro, Clock } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
@@ -187,8 +186,8 @@ const CTASection = () => {
               <div className="flex items-center text-gray-700">
                 <BadgeEuro className="w-5 h-5 mr-4 text-rose-500" />
                 <div>
-                  <span className="font-medium">Tuition: €500</span>
-                  <p className="text-sm text-rose-600 mt-1">Early application discount: Save €75 when you apply before April 30</p>
+                  <span className="font-medium">Tuition: €999</span>
+                  <p className="text-sm text-rose-600 mt-1">Early application discount: Save €100 when you apply before April 30</p>
                 </div>
               </div>
               <div className="flex items-center text-gray-700 pt-2 mt-2 border-t border-rose-100">

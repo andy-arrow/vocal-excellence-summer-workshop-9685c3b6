@@ -30,7 +30,7 @@ const timelineItems = [
   {
     date: "June 15, 2025",
     title: "Tuition Deadline",
-    description: "Full payment due to secure your place.",
+    description: "Full payment (€999) due to secure your place.",
     icon: <Wallet className="text-violet-600 dark:text-violet-400" />,
     status: "upcoming"
   },
