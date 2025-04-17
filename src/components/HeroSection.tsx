@@ -93,7 +93,60 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-energy-purple/90 via-energy-pink/70 to-energy-cyan/80 mix-blend-overlay z-10"></div>
       <div className="absolute inset-0 bg-black/50 z-10"></div>
 
-      {/* Musical notes animation */}
+      {/* Feature Pills - Repositioned and Redesigned */}
+      <div className="absolute inset-x-0 top-0 z-30">
+        <motion.div 
+          className="max-w-4xl mx-auto pt-32 px-6"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <div className="flex flex-wrap justify-center gap-4">
+            <motion.button
+              className="group relative"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              whileHover={{ scale: 1.02 }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-violet-500/20 to-fuchsia-500/20 rounded-2xl blur-xl transition-all group-hover:blur-2xl" />
+              <div className="relative backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl px-6 py-3.5 flex items-center space-x-3">
+                <Calendar className="w-5 h-5 text-white/90" />
+                <span className="text-sm text-white/90 font-medium whitespace-nowrap">July 14-18, 2025</span>
+              </div>
+            </motion.button>
+            
+            <motion.button
+              className="group relative"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              whileHover={{ scale: 1.02 }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-2xl blur-xl transition-all group-hover:blur-2xl" />
+              <div className="relative backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl px-6 py-3.5 flex items-center space-x-3">
+                <MapPin className="w-5 h-5 text-white/90" />
+                <span className="text-sm text-white/90 font-medium whitespace-nowrap">Limassol, Cyprus</span>
+              </div>
+            </motion.button>
+            
+            <motion.button
+              className="group relative"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              whileHover={{ scale: 1.02 }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-rose-500/20 to-orange-500/20 rounded-2xl blur-xl transition-all group-hover:blur-2xl" />
+              <div className="relative backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl px-6 py-3.5 flex items-center space-x-3">
+                <Users className="w-5 h-5 text-white/90" />
+                <span className="text-sm text-white/90 font-medium whitespace-nowrap">Limited to 20 students</span>
+              </div>
+            </motion.button>
+          </div>
+        </motion.div>
+      </div>
+
       {!hasReducedMotion && (
         <>
           <motion.div 
@@ -189,48 +242,6 @@ const HeroSection = () => {
         "transition-opacity duration-1000 z-0"
       )}>
         <div className="absolute inset-0 bg-[url('/lovable-uploads/masterclass-singers.jpg')] bg-cover bg-center opacity-40 mix-blend-overlay"></div>
-      </div>
-      
-      {/* Apple-inspired feature cards at top */}
-      <div className="absolute top-0 left-0 right-0 z-30 px-6 py-6 pt-28 md:pt-32">
-        <motion.div 
-          className="max-w-4xl mx-auto"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <div className="flex flex-wrap justify-center gap-3">
-            <motion.div
-              className="backdrop-blur-md bg-white/10 border border-white/20 rounded-full px-5 py-2.5 flex items-center"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-            >
-              <Calendar className="w-4 h-4 text-white mr-2.5" />
-              <span className="text-sm text-white/90 font-medium">July 14-18, 2025</span>
-            </motion.div>
-            
-            <motion.div
-              className="backdrop-blur-md bg-white/10 border border-white/20 rounded-full px-5 py-2.5 flex items-center"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
-              <MapPin className="w-4 h-4 text-white mr-2.5" />
-              <span className="text-sm text-white/90 font-medium">Limassol, Cyprus</span>
-            </motion.div>
-            
-            <motion.div
-              className="backdrop-blur-md bg-white/10 border border-white/20 rounded-full px-5 py-2.5 flex items-center"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-            >
-              <Users className="w-4 h-4 text-white mr-2.5" />
-              <span className="text-sm text-white/90 font-medium">Limited to 20 students</span>
-            </motion.div>
-          </div>
-        </motion.div>
       </div>
       
       <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-4xl mx-auto">
