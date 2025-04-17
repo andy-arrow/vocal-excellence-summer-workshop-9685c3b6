@@ -61,7 +61,7 @@ serve(async (req) => {
     // Determine which template to use based on the type
     switch (type) {
       case "welcome":
-        subject = "Welcome to Vocal Excellence Summer Programme";
+        subject = "Welcome to Vocal Excellence Summer Workshop";
         htmlContent = getWelcomeEmailTemplate(name || "");
         break;
       case "magic_link":
@@ -73,17 +73,17 @@ serve(async (req) => {
         htmlContent = getPasswordResetEmailTemplate(name || "", actionUrl || "");
         break;
       case "application_confirmation":
-        subject = "Application Received - Vocal Excellence Summer Programme";
+        subject = "Application Received - Vocal Excellence Summer Workshop";
         htmlContent = getApplicationConfirmationTemplate(name || "");
         toEmail = email || "";
         break;
       case "information_request":
-        subject = "Your Requested Information - Vocal Excellence Summer Programme";
+        subject = "Your Requested Information - Vocal Excellence Summer Workshop";
         htmlContent = getInformationRequestTemplate(name || "");
         break;
       case "admin_notification":
         if (applicantData) {
-          subject = "**Vocal Excellence** New Application Submission";
+          subject = "**Vocal Excellence Summer Workshop** New Application Submission";
           htmlContent = getDetailedAdminNotificationTemplate(applicantData);
           toEmail = "aroditis.andreas@gmail.com";
           
@@ -98,7 +98,7 @@ serve(async (req) => {
             }
           }
         } else {
-          subject = "New Application Submission - Vocal Excellence Summer Programme";
+          subject = "New Application Submission - Vocal Excellence Summer Workshop";
           htmlContent = getSimpleAdminNotificationTemplate(name || "", email || "");
           toEmail = "aroditis.andreas@gmail.com";
         }
@@ -111,7 +111,7 @@ serve(async (req) => {
     console.log(`With ${attachments.length} attachments`);
 
     const emailResponse = await resend.emails.send({
-      from: "Vocal Excellence <onboarding@resend.dev>", // Changed to use Resend's default domain
+      from: "Vocal Excellence Summer Workshop <onboarding@resend.dev>", // Changed to use Resend's default domain
       to: [toEmail],
       subject: subject,
       html: htmlContent,
@@ -205,7 +205,7 @@ function getWelcomeEmailTemplate(name: string) {
     <html>
     <head>
       <meta charset="utf-8">
-      <title>Welcome to Vocal Excellence Summer Programme</title>
+      <title>Welcome to Vocal Excellence Summer Workshop</title>
       <style>
         body { 
           font-family: 'Helvetica', Arial, sans-serif;
@@ -240,17 +240,17 @@ function getWelcomeEmailTemplate(name: string) {
     </head>
     <body>
       <div class="header">
-        <h2>Vocal Excellence Summer Programme</h2>
+        <h2>Vocal Excellence Summer Workshop</h2>
       </div>
       <div class="content">
         <h1>Welcome, ${name}!</h1>
-        <p>Thank you for creating an account with the Vocal Excellence Summer Programme. We're delighted to have you join us.</p>
-        <p>Your account is now active, and you can access our platform to manage your applications and programme content.</p>
+        <p>Thank you for creating an account with the Vocal Excellence Summer Workshop. We're delighted to have you join us.</p>
+        <p>Your account is now active, and you can access our platform to manage your applications and workshop content.</p>
         <p>If you have any questions or need assistance, please contact us at support@vocalexcellence.org.</p>
         <p>Best regards,<br>The Vocal Excellence Team</p>
       </div>
       <div class="footer">
-        <p>&copy; 2025 Vocal Excellence Summer Programme. All rights reserved.</p>
+        <p>&copy; 2025 Vocal Excellence Summer Workshop. All rights reserved.</p>
         <p>Limassol, Cyprus</p>
       </div>
     </body>
@@ -309,12 +309,12 @@ function getMagicLinkEmailTemplate(name: string, actionUrl: string) {
     </head>
     <body>
       <div class="header">
-        <h2>Vocal Excellence Summer Programme</h2>
+        <h2>Vocal Excellence Summer Workshop</h2>
       </div>
       <div class="content">
         <h1>Sign in to your account</h1>
         <p>Hello${name ? ` ${name}` : ''},</p>
-        <p>Click the button below to sign in to your Vocal Excellence Summer Programme account. This link is valid for the next 24 hours.</p>
+        <p>Click the button below to sign in to your Vocal Excellence Summer Workshop account. This link is valid for the next 24 hours.</p>
         <p style="text-align: center;">
           <a href="${actionUrl}" class="button">Sign In to Your Account</a>
         </p>
@@ -322,7 +322,7 @@ function getMagicLinkEmailTemplate(name: string, actionUrl: string) {
         <p>Best regards,<br>The Vocal Excellence Team</p>
       </div>
       <div class="footer">
-        <p>&copy; 2025 Vocal Excellence Summer Programme. All rights reserved.</p>
+        <p>&copy; 2025 Vocal Excellence Summer Workshop. All rights reserved.</p>
         <p>Limassol, Cyprus</p>
       </div>
     </body>
@@ -381,7 +381,7 @@ function getPasswordResetEmailTemplate(name: string, actionUrl: string) {
     </head>
     <body>
       <div class="header">
-        <h2>Vocal Excellence Summer Programme</h2>
+        <h2>Vocal Excellence Summer Workshop</h2>
       </div>
       <div class="content">
         <h1>Reset Your Password</h1>
@@ -394,7 +394,7 @@ function getPasswordResetEmailTemplate(name: string, actionUrl: string) {
         <p>Best regards,<br>The Vocal Excellence Team</p>
       </div>
       <div class="footer">
-        <p>&copy; 2025 Vocal Excellence Summer Programme. All rights reserved.</p>
+        <p>&copy; 2025 Vocal Excellence Summer Workshop. All rights reserved.</p>
         <p>Limassol, Cyprus</p>
       </div>
     </body>
@@ -408,7 +408,7 @@ function getApplicationConfirmationTemplate(name: string) {
     <html>
     <head>
       <meta charset="utf-8">
-      <title>Application Received - Vocal Excellence Summer Programme</title>
+      <title>Application Received - Vocal Excellence Summer Workshop</title>
       <style>
         body { 
           font-family: 'Helvetica', Arial, sans-serif;
@@ -460,12 +460,12 @@ function getApplicationConfirmationTemplate(name: string) {
     </head>
     <body>
       <div class="header">
-        <h2>Vocal Excellence Summer Programme</h2>
+        <h2>Vocal Excellence Summer Workshop</h2>
       </div>
       <div class="content">
         <h1>Application Received</h1>
         <p>Dear ${name},</p>
-        <p>Thank you for applying to the Vocal Excellence Summer Programme 2025. We have successfully received your application.</p>
+        <p>Thank you for applying to the Vocal Excellence Summer Workshop 2025. We have successfully received your application.</p>
         
         <p>Here's what happens next:</p>
         <ul class="steps">
@@ -480,7 +480,7 @@ function getApplicationConfirmationTemplate(name: string) {
         <p>Best regards,<br>The Vocal Excellence Admissions Team</p>
       </div>
       <div class="footer">
-        <p>&copy; 2025 Vocal Excellence Summer Programme. All rights reserved.</p>
+        <p>&copy; 2025 Vocal Excellence Summer Workshop. All rights reserved.</p>
         <p>Limassol, Cyprus</p>
       </div>
     </body>
@@ -494,7 +494,7 @@ function getInformationRequestTemplate(name: string) {
     <html>
     <head>
       <meta charset="utf-8">
-      <title>Your Requested Information - Vocal Excellence Summer Programme</title>
+      <title>Your Requested Information - Vocal Excellence Summer Workshop</title>
       <style>
         body { 
           font-family: 'Helvetica', Arial, sans-serif;
@@ -550,16 +550,16 @@ function getInformationRequestTemplate(name: string) {
     </head>
     <body>
       <div class="header">
-        <h2>Vocal Excellence Summer Programme</h2>
+        <h2>Vocal Excellence Summer Workshop</h2>
       </div>
       <div class="content">
         <h1>Your Requested Information</h1>
         <p>Dear ${name},</p>
-        <p>Thank you for your interest in the Vocal Excellence Summer Programme 2025. As requested, here is the detailed information about our programme.</p>
+        <p>Thank you for your interest in the Vocal Excellence Summer Workshop 2025. As requested, here is the detailed information about our workshop.</p>
         
         <div class="info-section">
-          <h3>Programme Details</h3>
-          <p>Our intensive 5-day programme runs from July 14-18, 2025 in Limassol, Cyprus. With world-class instructors and a limited enrollment of 20 participants, this is an unparalleled opportunity to develop your vocal technique, performance skills, and artistic expression.</p>
+          <h3>Workshop Details</h3>
+          <p>Our intensive 5-day workshop runs from July 14-18, 2025 in Limassol, Cyprus. With world-class instructors and a limited enrollment of 20 participants, this is an unparalleled opportunity to develop your vocal technique, performance skills, and artistic expression.</p>
         </div>
         
         <div class="info-section">
@@ -585,12 +585,12 @@ function getInformationRequestTemplate(name: string) {
           <a href="https://vocalexcellence.org/apply" class="button">Apply Now</a>
         </p>
         
-        <p>If you have any further questions, please don't hesitate to contact us at info@vocalexcellence.org.</p>
+        <p>If you have any further questions, please don't hesitate to contact us at info@vocalexcellence.com.</p>
         
         <p>Best regards,<br>The Vocal Excellence Team</p>
       </div>
       <div class="footer">
-        <p>&copy; 2025 Vocal Excellence Summer Programme. All rights reserved.</p>
+        <p>&copy; 2025 Vocal Excellence Summer Workshop. All rights reserved.</p>
         <p>Limassol, Cyprus</p>
       </div>
     </body>
@@ -643,7 +643,7 @@ function getSimpleAdminNotificationTemplate(name: string, applicantEmail: string
       </div>
       <div class="content">
         <h1>New Application Received</h1>
-        <p>A new application has been submitted to the Vocal Excellence Summer Programme.</p>
+        <p>A new application has been submitted to the Vocal Excellence Summer Workshop.</p>
         <p><strong>Applicant Details:</strong></p>
         <ul>
           <li>Name: ${name}</li>
@@ -652,7 +652,7 @@ function getSimpleAdminNotificationTemplate(name: string, applicantEmail: string
         <p>Please log in to the admin dashboard to review the complete application.</p>
       </div>
       <div class="footer">
-        <p>&copy; 2025 Vocal Excellence Summer Programme. All rights reserved.</p>
+        <p>&copy; 2025 Vocal Excellence Summer Workshop. All rights reserved.</p>
         <p>Limassol, Cyprus</p>
       </div>
     </body>
@@ -666,7 +666,7 @@ function getDetailedAdminNotificationTemplate(applicantData: any) {
     <html>
     <head>
       <meta charset="utf-8">
-      <title>**Vocal Excellence** New Application Submission</title>
+      <title>**Vocal Excellence Summer Workshop** New Application Submission</title>
       <style>
         body { 
           font-family: 'Helvetica', Arial, sans-serif;
@@ -730,11 +730,11 @@ function getDetailedAdminNotificationTemplate(applicantData: any) {
     </head>
     <body>
       <div class="header">
-        <h2>**Vocal Excellence** New Application Submission</h2>
+        <h2>**Vocal Excellence Summer Workshop** New Application Submission</h2>
       </div>
       <div class="content">
         <h1>Complete Application Details</h1>
-        <p>A new application has been submitted to the Vocal Excellence Summer Programme with the following details:</p>
+        <p>A new application has been submitted to the Vocal Excellence Summer Workshop with the following details:</p>
         
         <div class="section">
           <h2>Personal Information</h2>
@@ -796,7 +796,7 @@ function getDetailedAdminNotificationTemplate(applicantData: any) {
         </div>
         
         <div class="section">
-          <h2>Programme Application</h2>
+          <h2>Workshop Application</h2>
           <div class="field">
             <div class="field-label">Reason for Applying</div>
             <div class="field-value">${applicantData.reasonForApplying}</div>
@@ -825,7 +825,7 @@ function getDetailedAdminNotificationTemplate(applicantData: any) {
         </div>
       </div>
       <div class="footer">
-        <p>&copy; 2025 Vocal Excellence Summer Programme. All rights reserved.</p>
+        <p>&copy; 2025 Vocal Excellence Summer Workshop. All rights reserved.</p>
         <p>Limassol, Cyprus</p>
       </div>
     </body>

@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { Music, ArrowDown } from 'lucide-react';
 import { cn } from '@/lib/utils';

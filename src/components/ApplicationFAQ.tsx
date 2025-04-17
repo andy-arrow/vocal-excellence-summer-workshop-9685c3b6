@@ -21,7 +21,7 @@ const ApplicationFAQ = () => {
       items: [
         {
           question: "What level of experience do I need?",
-          answer: "All levels welcome! Whether you've been singing for years or just starting out, our program adapts to your skill level. Most participants have had at least some vocal training, but we have special tracks for beginners too."
+          answer: "All levels welcome! Whether you've been singing for years or just starting out, our workshop adapts to your skill level. Most participants have had at least some vocal training, but we have special tracks for beginners too."
         },
         {
           question: "Is there an age requirement?",
@@ -53,7 +53,7 @@ const ApplicationFAQ = () => {
         },
         {
           question: "How is the program structured for young artists?",
-          answer: "Our program features dynamic learning sessions with expert feedback, hands-on vocal training, visual learning aids, and collaborative performance opportunities. We balance focused practice with creative exploration to keep everyone engaged and inspired."
+          answer: "Our workshop features dynamic learning sessions with expert feedback, hands-on vocal training, visual learning aids, and collaborative performance opportunities. We balance focused practice with creative exploration to keep everyone engaged and inspired."
         }
       ]
     },
@@ -63,11 +63,11 @@ const ApplicationFAQ = () => {
       items: [
         {
           question: "Is housing provided?",
-          answer: "While housing isn't included in the program fee, we help you find affordable options nearby, including special rates at partner hotels and homestay opportunities with local families."
+          answer: "While housing isn't included in the workshop fee, we help you find affordable options nearby, including special rates at partner hotels and homestay opportunities with local families."
         },
         {
           question: "How much free time will I have?",
-          answer: "The program is intensive but balanced. Structured activities run from 9am-4pm with a long lunch break. Evenings include optional jam sessions and social events, but you'll have time to explore the beautiful Cyprus coastline too!"
+          answer: "The workshop is intensive but balanced. Structured activities run from 9am-4pm with a long lunch break. Evenings include optional jam sessions and social events, but you'll have time to explore the beautiful Cyprus coastline too!"
         }
       ]
     }
@@ -90,7 +90,7 @@ const ApplicationFAQ = () => {
           </h2>
           <div className="decorative-line mx-auto w-16 h-1 bg-accent/50 rounded-full mb-6"></div>
           <p className="text-foreground/80 max-w-2xl mx-auto text-lg">
-            Everything you need to know about our vocal program in bite-sized answers
+            Everything you need to know about our vocal workshop in bite-sized answers
           </p>
         </div>
           
