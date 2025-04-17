@@ -24,10 +24,8 @@ const Application = () => {
   const [showScrollToTop, setShowScrollToTop] = React.useState(false);
   
   useEffect(() => {
-    // Ensure the page scrolls to the top when component mounts
     window.scrollTo(0, 0);
     
-    // Scroll to top button visibility
     const handleScroll = () => {
       setShowScrollToTop(window.scrollY > 500);
     };
@@ -37,7 +35,7 @@ const Application = () => {
   }, []);
   
   return (
-    <div className="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-white">
+    <div className="bg-slate-950 text-white min-h-screen">
       <Helmet>
         <title>Apply Now | Vocal Excellence Summer Workshop</title>
         <meta name="description" content="Apply now for the Vocal Excellence Summer Workshop and discover your true potential with world-class vocal coaching. Limited spots available." />
@@ -59,13 +57,12 @@ const Application = () => {
         <main className="flex-grow">
           <ApplicationHero />
           
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="space-y-24 md:space-y-32 py-16 md:py-24">
             <motion.section
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
               variants={fadeIn}
-              className="py-16 md:py-24"
             >
               <ApplicationRequirements />
             </motion.section>
@@ -75,7 +72,6 @@ const Application = () => {
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
               variants={fadeIn}
-              className="py-16 md:py-24"
             >
               <ApplicationTimeline />
             </motion.section>
@@ -86,7 +82,6 @@ const Application = () => {
               viewport={{ once: true, margin: "-100px" }}
               variants={fadeIn}
               id="application-form-section"
-              className="py-16 md:py-24"
             >
               <ApplicationForm />
             </motion.section>
@@ -96,7 +91,6 @@ const Application = () => {
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
               variants={fadeIn}
-              className="py-16 md:py-24"
             >
               <ApplicationFAQ />
             </motion.section>

@@ -12,9 +12,9 @@ const ApplicationHero = () => {
   };
 
   return (
-    <section className="relative py-24 md:py-32 overflow-hidden bg-white dark:bg-slate-950">
-      {/* Subtle background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900 pointer-events-none"></div>
+    <section className="relative py-24 md:py-32 overflow-hidden bg-slate-950">
+      {/* Enhanced gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-950 to-violet-950/90 pointer-events-none"></div>
       
       {/* Main content */}
       <div className="container mx-auto px-6 relative z-10">
@@ -24,13 +24,15 @@ const ApplicationHero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
         >
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-outfit font-bold tracking-tight text-slate-900 dark:text-white">
+          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white drop-shadow-lg">
             Your Journey to<br />
-            <span className="text-violet-600 dark:text-violet-400">Vocal Mastery</span>
+            <span className="text-violet-300 drop-shadow-[0_0_25px_rgba(167,139,250,0.3)]">
+              Vocal Mastery
+            </span>
           </h1>
             
           <motion.p 
-            className="text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed font-light"
+            className="text-lg md:text-xl text-slate-200 max-w-2xl mx-auto leading-relaxed font-light drop-shadow"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.7 }}
@@ -46,7 +48,7 @@ const ApplicationHero = () => {
           >
             <motion.button
               onClick={scrollToForm}
-              className="px-8 py-4 rounded-full bg-violet-600 text-white hover:bg-violet-700 transition-all duration-300 font-medium text-lg shadow-sm hover:shadow-md"
+              className="px-8 py-4 rounded-full bg-gradient-to-r from-violet-500 to-violet-600 text-white hover:from-violet-600 hover:to-violet-700 transition-all duration-300 font-medium text-lg shadow-lg hover:shadow-violet-500/25"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -56,11 +58,13 @@ const ApplicationHero = () => {
               </span>
             </motion.button>
             
-            <div className="text-sm text-slate-500 dark:text-slate-400">
-              <span className="inline-block px-2 py-0.5 bg-violet-100 dark:bg-violet-900/30 rounded-full text-xs font-medium text-violet-800 dark:text-violet-300 mr-2">
+            <div className="text-sm">
+              <span className="inline-block px-3 py-1 bg-violet-900/60 backdrop-blur border border-violet-500/20 rounded-full text-xs font-medium text-violet-200 shadow-lg mr-2">
                 Limited Capacity
               </span>
-              Only 20 spots available for Summer 2025
+              <span className="text-slate-300">
+                Only 20 spots available for Summer 2025
+              </span>
             </div>
           </motion.div>
         </motion.div>
@@ -75,7 +79,7 @@ const ApplicationHero = () => {
             animate={{ y: [0, 8, 0] }} 
             transition={{ duration: 2, repeat: Infinity }}
           >
-            <ChevronDown className="text-slate-400 dark:text-slate-500 h-6 w-6" />
+            <ChevronDown className="text-violet-300 h-6 w-6" />
           </motion.div>
         </motion.div>
       </div>
@@ -84,4 +88,3 @@ const ApplicationHero = () => {
 };
 
 export default ApplicationHero;
-
