@@ -38,23 +38,6 @@ const Navbar = ({ activeSection }: NavbarProps) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [scrolled]);
 
-  // Add effect to prevent body scrolling when menu is open
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isMenuOpen]);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
   const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
     setIsMenuOpen(false);
@@ -70,6 +53,10 @@ const Navbar = ({ activeSection }: NavbarProps) => {
     { id: 'curriculum', label: 'Curriculum' },
     { id: 'instructors', label: 'Instructors' },
   ];
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
 
   return (
     <header 
@@ -153,57 +140,52 @@ const Navbar = ({ activeSection }: NavbarProps) => {
           })()}
         </div>
 
-        {/* Mobile menu toggle button */}
-        <button 
-          onClick={toggleMenu} 
-          className="md:hidden flex items-center justify-center w-10 h-10 text-white rounded-full hover:bg-white/10 transition-colors"
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-        >
-          <motion.div
-            initial={false}
-            animate={{ rotate: isMenuOpen ? 90 : 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
-          </motion.div>
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div 
-            className="md:hidden fixed inset-0 top-[72px] z-40 flex flex-col"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            <motion.div 
-              className="absolute inset-0 bg-black/60 backdrop-blur-md"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={toggleMenu}
-            />
-            
-            <motion.div 
-              className="relative z-10 flex-1 bg-slate-900/95 backdrop-blur-lg border-t border-white/10 overflow-auto"
-              initial={{ y: -50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -50, opacity: 0 }}
-              transition={{ delay: 0.1, duration: 0.3 }}
+        {/* Mobile Navigation with Sheet component */}
+        <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+          <SheetTrigger asChild>
+            <button 
+              className="md:hidden flex items-center justify-center w-10 h-10 text-white rounded-full hover:bg-white/10 transition-colors"
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             >
-              <div className="px-6 py-8 space-y-6">
-                <nav>
-                  <ul className="space-y-5">
-                    {navLinks.map((link, idx) => (
-                      <motion.li 
-                        key={link.id}
-                        initial={{ x: -20, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        transition={{ delay: 0.1 + idx * 0.06 }}
-                      >
+              <Menu size={20} />
+            </button>
+          </SheetTrigger>
+          <SheetContent 
+            side="left" 
+            className="w-full max-w-full p-0 border-none bg-slate-900/95 text-white backdrop-blur-md"
+          >
+            <div className="px-6 py-8 space-y-6 h-full flex flex-col">
+              <div className="flex items-center justify-between">
+                <Link 
+                  to="/" 
+                  className="font-outfit font-medium text-white tracking-tight transition-opacity hover:opacity-80"
+                  onClick={closeMenu}
+                >
+                  <div className="flex items-center">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-energy-purple to-energy-pink flex items-center justify-center mr-3">
+                      <Music className="w-4 h-4 text-white" />
+                    </div>
+                    <div>
+                      <span className="text-lg font-medium">Vocal Excellence</span>
+                      <span className="block text-xs opacity-80 -mt-1">Summer Workshop</span>
+                    </div>
+                  </div>
+                </Link>
+                <SheetClose className="rounded-full w-8 h-8 flex items-center justify-center hover:bg-white/10">
+                  <X size={18} />
+                </SheetClose>
+              </div>
+              
+              <nav className="flex-1">
+                <ul className="space-y-5">
+                  {navLinks.map((link, idx) => (
+                    <motion.li 
+                      key={link.id}
+                      initial={{ x: -20, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ delay: 0.1 + idx * 0.06 }}
+                    >
+                      <SheetClose asChild>
                         <a
                           href={`#${link.id}`}
                           onClick={(e) => handleSmoothScroll(e, link.id)}
@@ -231,41 +213,42 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                             />
                           )}
                         </a>
-                        <Separator className="mt-2 bg-white/10" />
-                      </motion.li>
-                    ))}
-                  </ul>
-                </nav>
-                
-                <motion.div
-                  initial={{ y: 10, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.4 }}
-                  className="pt-4"
-                >
+                      </SheetClose>
+                      <Separator className="mt-2 bg-white/10" />
+                    </motion.li>
+                  ))}
+                </ul>
+              </nav>
+              
+              <motion.div
+                initial={{ y: 10, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                className="pt-4"
+              >
+                <SheetClose asChild>
                   <NavLink
                     to="/apply"
                     className="w-full py-3.5 flex justify-center items-center bg-white text-slate-900 rounded-xl text-base font-medium"
-                    onClick={toggleMenu}
                   >
                     Apply Now
                     <ArrowUpRight size={16} className="ml-2 opacity-70" />
                   </NavLink>
-                </motion.div>
-                
-                <motion.div
-                  initial={{ y: 10, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                  className="pt-4 flex justify-center"
-                >
-                  <AuthButtonsPlaceholder />
-                </motion.div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                </SheetClose>
+              </motion.div>
+              
+              <motion.div
+                initial={{ y: 10, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                className="pt-4 flex justify-center"
+              >
+                <AuthButtonsPlaceholder />
+              </motion.div>
+            </div>
+          </SheetContent>
+        </Sheet>
+      </div>
     </header>
   );
 };
