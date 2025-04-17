@@ -5,22 +5,48 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-// Import only the Index page normally since it's the most visited page
-// but still use React.lazy for code splitting
-const Index = lazy(() => import('./pages/Index'));
+// Only import Index page normally as it's the most visited
+const Index = lazy(() => 
+  import('./pages/Index').then(module => ({
+    default: module.Index,
+    __esModule: true,
+  }))
+);
 
-// Use lazy loading with more aggressive code splitting for less frequently visited pages
-const Application = lazy(() => import('./pages/Application'));
-const CancellationPolicy = lazy(() => import('./pages/CancellationPolicy'));
-const TermsAndConditions = lazy(() => import('./pages/TermsAndConditions'));
-const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+// Use more aggressive code splitting for less frequently visited pages
+const Application = lazy(() => 
+  import('./pages/Application').then(module => ({
+    default: module.Application,
+    __esModule: true,
+  }))
+);
 
-// Optimized loading fallback for lazy-loaded components
+const CancellationPolicy = lazy(() => 
+  import('./pages/CancellationPolicy').then(module => ({
+    default: module.CancellationPolicy,
+    __esModule: true,
+  }))
+);
+
+const TermsAndConditions = lazy(() => 
+  import('./pages/TermsAndConditions').then(module => ({
+    default: module.TermsAndConditions,
+    __esModule: true,
+  }))
+);
+
+const PrivacyPolicy = lazy(() => 
+  import('./pages/PrivacyPolicy').then(module => ({
+    default: module.PrivacyPolicy,
+    __esModule: true,
+  }))
+);
+
+// Optimized loading fallback that doesn't block rendering
 const PageLoader = () => (
-  <div className="h-screen w-full flex items-center justify-center bg-slate-950">
+  <div className="min-h-screen w-full flex items-center justify-center bg-slate-950">
     <div className="space-y-4 text-center">
-      <div className="animate-spin w-10 h-10 border-4 border-energy-pink/30 border-t-energy-pink rounded-full mx-auto"></div>
-      <p className="text-white/80 text-sm">Loading...</p>
+      <div className="animate-spin w-8 h-8 border-2 border-violet-500/30 border-t-violet-500 rounded-full mx-auto"></div>
     </div>
   </div>
 );
@@ -29,7 +55,7 @@ function App() {
   const [router, setRouter] = useState<any>(null);
   
   useEffect(() => {
-    // Create router asynchronously to avoid blocking the main thread
+    // Create router asynchronously
     const initRouter = () => {
       const router = createBrowserRouter([
         {
@@ -80,20 +106,17 @@ function App() {
     initRouter();
     
     // Preload other routes after initial page load
-    const preloadRoutes = async () => {
+    const preloadRoutes = () => {
       if ('requestIdleCallback' in window) {
-        (window as any).requestIdleCallback(async () => {
-          // Preload all other pages
-          const importPromises = [
+        (window as any).requestIdleCallback(() => {
+          const routes = [
             import('./pages/Application'),
             import('./pages/CancellationPolicy'),
             import('./pages/TermsAndConditions'),
             import('./pages/PrivacyPolicy')
           ];
           
-          // Use Promise.all to load in parallel but don't block rendering
-          await Promise.all(importPromises);
-          console.log('All routes preloaded');
+          Promise.all(routes).catch(console.error);
         });
       }
     };
@@ -102,7 +125,6 @@ function App() {
     setTimeout(preloadRoutes, 2000);
   }, []);
   
-  // Don't render anything until router is initialized
   if (!router) {
     return <PageLoader />;
   }

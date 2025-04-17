@@ -12,119 +12,138 @@ import { AuthProvider } from '@/contexts/AuthContext'
 // Run preloading immediately
 preloadResources();
 
-// Lazy load the toasts and UI components that aren't needed immediately
-const Toaster = lazy(() => import('@/components/ui/toaster').then(module => ({
-  default: module.Toaster
-})));
-const Sonner = lazy(() => import('@/components/ui/sonner').then(module => ({
-  default: module.Toaster
-})));
-
-// Set up global error handler with debouncing to prevent error storms
+// Initialize performance monitoring
 let lastErrorTime = 0;
-const ERROR_THROTTLE_MS = 1000; // 1 second
+const ERROR_THROTTLE_MS = 1000;
 
-window.addEventListener('error', (event) => {
-  const now = Date.now();
-  if (now - lastErrorTime > ERROR_THROTTLE_MS) {
-    lastErrorTime = now;
-    trackError('error', event.error || new Error(event.message), {
-      source: event.filename,
-      line: event.lineno,
-      column: event.colno,
-    });
-  }
-});
+// Lazily load non-critical UI components with better code splitting
+const Toaster = lazy(() => 
+  import('./components/ui/toaster').then(module => ({
+    default: module.Toaster
+  }))
+);
 
-window.addEventListener('unhandledrejection', (event) => {
-  const now = Date.now();
-  if (now - lastErrorTime > ERROR_THROTTLE_MS) {
-    lastErrorTime = now;
-    trackError('error', 
-      event.reason instanceof Error 
-        ? event.reason 
-        : new Error(`Unhandled promise rejection: ${JSON.stringify(event.reason)}`),
-      { type: 'unhandledrejection' }
-    );
-  }
-});
+const Sonner = lazy(() => 
+  import('./components/ui/sonner').then(module => ({
+    default: module.Toaster
+  }))
+);
 
-// Simple loading fallback that doesn't block main thread
-const LoadingFallback = () => null;
+// Error handler setup
+const setupErrorHandlers = () => {
+  window.addEventListener('error', (event) => {
+    const now = Date.now();
+    if (now - lastErrorTime > ERROR_THROTTLE_MS) {
+      lastErrorTime = now;
+      trackError('error', event.error || new Error(event.message), {
+        source: event.filename,
+        line: event.lineno,
+        column: event.colno,
+      });
+    }
+  });
 
-// Measure and report performance
+  window.addEventListener('unhandledrejection', (event) => {
+    const now = Date.now();
+    if (now - lastErrorTime > ERROR_THROTTLE_MS) {
+      lastErrorTime = now;
+      trackError('error', 
+        event.reason instanceof Error 
+          ? event.reason 
+          : new Error(`Unhandled promise rejection: ${JSON.stringify(event.reason)}`),
+        { type: 'unhandledrejection' }
+      );
+    }
+  });
+};
+
+// Performance monitoring
 const reportWebVitals = () => {
   if ('performance' in window && 'getEntriesByType' in performance) {
-    // Use requestIdleCallback to ensure we don't block rendering
-    if ('requestIdleCallback' in window) {
-      (window as any).requestIdleCallback(() => {
-        setTimeout(() => {
-          const navEntry = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
-          if (navEntry) {
-            console.log(`Page load time: ${navEntry.loadEventEnd - navEntry.startTime}ms`);
-          }
-        }, 0);
-      });
-    } else {
-      setTimeout(() => {
-        const navEntry = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
-        if (navEntry) {
-          console.log(`Page load time: ${navEntry.loadEventEnd - navEntry.startTime}ms`);
+    const report = () => {
+      const navEntry = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
+      if (navEntry) {
+        console.log(`Page load time: ${navEntry.loadEventEnd - navEntry.startTime}ms`);
+        
+        // Report FCP
+        const fcpEntry = performance.getEntriesByName('first-contentful-paint')[0];
+        if (fcpEntry) {
+          console.log(`First Contentful Paint: ${fcpEntry.startTime}ms`);
         }
-      }, 0);
+        
+        // Report LCP
+        const lcpEntry = performance.getEntriesByName('largest-contentful-paint')[0];
+        if (lcpEntry) {
+          console.log(`Largest Contentful Paint: ${lcpEntry.startTime}ms`);
+        }
+      }
+    };
+
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(() => setTimeout(report, 0));
+    } else {
+      setTimeout(report, 0);
     }
   }
 };
 
-// Start performance monitoring
-reportWebVitals();
-
-// Use createRoot in a microtask to avoid blocking main thread
-setTimeout(() => {
-  // Get root element once to avoid repeated DOM access
+// Initialize app with optimized loading
+const initializeApp = async () => {
   const rootElement = document.getElementById('root');
-  
-  if (rootElement) {
-    // Initialize AuthContext
-    import('@/contexts/AuthContext').then(({ AuthProvider }) => {
-      // Implement progressive hydration - mount a minimal app first, then enhance
-      const root = ReactDOM.createRoot(rootElement);
-      
-      root.render(
-        <React.StrictMode>
-          <ErrorBoundary>
-            <AuthProvider>
-              <App />
-              
-              {/* Lazy load non-critical UI components */}
-              <Suspense fallback={null}>
-                <Toaster />
-                <Sonner position="top-right" closeButton />
-              </Suspense>
-            </AuthProvider>
-          </ErrorBoundary>
-        </React.StrictMode>
-      );
-      
-      console.log('App rendered with AuthProvider');
-    }).catch(error => {
-      console.error('Failed to load AuthContext:', error);
-      
-      // Fallback rendering without AuthProvider
-      const root = ReactDOM.createRoot(rootElement);
-      root.render(
-        <React.StrictMode>
-          <ErrorBoundary>
-            <div className="p-6 text-center">
-              <h2 className="text-xl text-red-500">Authentication service is currently unavailable</h2>
-              <p className="mt-2">Please try refreshing the page</p>
-            </div>
-          </ErrorBoundary>
-        </React.StrictMode>
-      );
-    });
-  }
-}, 0);
+  if (!rootElement) return;
 
-// Remove the SimpleAuthProvider and lazy loading of AuthContext since we're now
-// loading AuthContext properly with the app initialization
+  // Setup error handlers
+  setupErrorHandlers();
+  
+  try {
+    // Initialize auth context
+    const { AuthProvider } = await import('./contexts/AuthContext');
+    
+    const root = ReactDOM.createRoot(rootElement);
+    
+    root.render(
+      <React.StrictMode>
+        <ErrorBoundary>
+          <AuthProvider>
+            <App />
+            <Suspense fallback={null}>
+              <Toaster />
+              <Sonner position="top-right" closeButton />
+            </Suspense>
+          </AuthProvider>
+        </ErrorBoundary>
+      </React.StrictMode>
+    );
+    
+    console.log('App rendered with AuthProvider');
+    
+    // Start monitoring after initial render
+    reportWebVitals();
+    
+  } catch (error) {
+    console.error('Failed to load AuthContext:', error);
+    
+    // Fallback rendering without AuthProvider
+    const root = ReactDOM.createRoot(rootElement);
+    root.render(
+      <React.StrictMode>
+        <ErrorBoundary>
+          <div className="p-6 text-center">
+            <h2 className="text-xl text-red-500">Authentication service is currently unavailable</h2>
+            <p className="mt-2">Please try refreshing the page</p>
+          </div>
+        </ErrorBoundary>
+      </React.StrictMode>
+    );
+  }
+};
+
+// Use requestIdleCallback for non-critical initialization
+if ('requestIdleCallback' in window) {
+  (window as any).requestIdleCallback(() => {
+    initializeApp();
+  });
+} else {
+  // Fallback for browsers that don't support requestIdleCallback
+  setTimeout(initializeApp, 1);
+}
