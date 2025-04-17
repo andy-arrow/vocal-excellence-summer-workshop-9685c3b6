@@ -5,42 +5,12 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-// Only import Index page normally as it's the most visited
-const Index = lazy(() => 
-  import('./pages/Index').then(module => ({
-    default: module.Index,
-    __esModule: true,
-  }))
-);
-
-// Use more aggressive code splitting for less frequently visited pages
-const Application = lazy(() => 
-  import('./pages/Application').then(module => ({
-    default: module.Application,
-    __esModule: true,
-  }))
-);
-
-const CancellationPolicy = lazy(() => 
-  import('./pages/CancellationPolicy').then(module => ({
-    default: module.CancellationPolicy,
-    __esModule: true,
-  }))
-);
-
-const TermsAndConditions = lazy(() => 
-  import('./pages/TermsAndConditions').then(module => ({
-    default: module.TermsAndConditions,
-    __esModule: true,
-  }))
-);
-
-const PrivacyPolicy = lazy(() => 
-  import('./pages/PrivacyPolicy').then(module => ({
-    default: module.PrivacyPolicy,
-    __esModule: true,
-  }))
-);
+// Import pages using proper default imports
+const Index = lazy(() => import('./pages/Index'));
+const Application = lazy(() => import('./pages/Application'));
+const CancellationPolicy = lazy(() => import('./pages/CancellationPolicy'));
+const TermsAndConditions = lazy(() => import('./pages/TermsAndConditions'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 
 // Optimized loading fallback that doesn't block rendering
 const PageLoader = () => (
