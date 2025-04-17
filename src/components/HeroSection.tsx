@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { Calendar, MapPin, Users, ArrowDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -93,74 +92,6 @@ const HeroSection = () => {
       
       <div className="absolute inset-0 bg-gradient-to-b from-energy-purple/90 via-energy-pink/70 to-energy-cyan/80 mix-blend-overlay z-10"></div>
       <div className="absolute inset-0 bg-black/50 z-10"></div>
-
-      <div className="absolute inset-x-0 top-0 z-30">
-        <motion.div 
-          className="container mx-auto pt-28 px-6"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <div className="flex flex-wrap justify-center gap-6">
-            <motion.div
-              className="relative group"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              whileHover={{ scale: 1.02 }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/5 rounded-2xl blur-2xl transition-all duration-300 group-hover:blur-3xl group-hover:from-white/15" />
-              <div className="relative backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl px-8 py-5 transition-all duration-300">
-                <div className="flex items-center space-x-4">
-                  <Calendar className="w-5 h-5 text-white/90" strokeWidth={1.5} />
-                  <div>
-                    <div className="text-sm text-white/60 font-medium mb-1">Program Dates</div>
-                    <div className="text-base text-white font-medium tracking-wide">July 14-18, 2025</div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-            
-            <motion.div
-              className="relative group"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              whileHover={{ scale: 1.02 }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/5 rounded-2xl blur-2xl transition-all duration-300 group-hover:blur-3xl group-hover:from-white/15" />
-              <div className="relative backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl px-8 py-5 transition-all duration-300">
-                <div className="flex items-center space-x-4">
-                  <MapPin className="w-5 h-5 text-white/90" strokeWidth={1.5} />
-                  <div>
-                    <div className="text-sm text-white/60 font-medium mb-1">Location</div>
-                    <div className="text-base text-white font-medium tracking-wide">Limassol, Cyprus</div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-            
-            <motion.div
-              className="relative group"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-              whileHover={{ scale: 1.02 }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/5 rounded-2xl blur-2xl transition-all duration-300 group-hover:blur-3xl group-hover:from-white/15" />
-              <div className="relative backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl px-8 py-5 transition-all duration-300">
-                <div className="flex items-center space-x-4">
-                  <Users className="w-5 h-5 text-white/90" strokeWidth={1.5} />
-                  <div>
-                    <div className="text-sm text-white/60 font-medium mb-1">Class Size</div>
-                    <div className="text-base text-white font-medium tracking-wide">Limited to 20</div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </motion.div>
-      </div>
 
       {!hasReducedMotion && (
         <>
