@@ -40,7 +40,7 @@ const Footer = () => {
           <div className="md:col-span-1 space-y-6">
             <Link to="/" className="flex items-center group">
               <img 
-                src="/lovable-uploads/1a01d722-402e-4868-86dd-84534eb24551.png" 
+                src="/lovable-uploads/cd8668bd-81c1-4de3-b82b-b97f9c5be025.png" 
                 alt="Vocal Excellence Logo" 
                 className="w-10 h-10 mr-3" 
               />
