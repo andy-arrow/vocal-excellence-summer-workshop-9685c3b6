@@ -78,18 +78,18 @@ const ApplicationFAQ = () => {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-b from-white to-accent/5 noise-bg">
+    <section className="py-20 md:py-24 bg-gradient-to-b from-white to-accent/5 noise-bg">
       <div className="max-w-6xl mx-auto px-6 md:px-8">
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <span className="inline-flex items-center bg-accent/15 text-accent rounded-full py-2 px-4 text-sm font-medium mb-4 shadow-sm">
+          <span className="inline-flex items-center bg-accent/15 text-accent rounded-full py-2 px-4 text-sm font-medium mb-5 shadow-sm">
             <HelpCircle className="mr-2 w-4 h-4" />
             Common Questions
           </span>
-          <h2 className="section-title text-center text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 font-outfit tracking-tight">
             Frequently Asked <span className="gradient-text">Questions</span>
           </h2>
           <div className="decorative-line mx-auto w-16 h-1 bg-accent/50 rounded-full mb-6"></div>
-          <p className="text-foreground/80 max-w-2xl mx-auto text-lg">
+          <p className="text-foreground/80 max-w-2xl mx-auto text-lg leading-relaxed">
             Everything you need to know about our vocal workshop in bite-sized answers
           </p>
         </div>
@@ -108,7 +108,7 @@ const ApplicationFAQ = () => {
                 <div className="w-12 h-12 rounded-full bg-accent/15 flex items-center justify-center text-accent shadow-md">
                   {category.icon}
                 </div>
-                <h3 className="text-2xl font-bold ml-4 text-foreground">{category.title}</h3>
+                <h3 className="text-xl font-bold ml-4 text-foreground font-outfit tracking-tight">{category.title}</h3>
               </div>
               
               <Accordion type="single" collapsible className="space-y-4">
@@ -122,16 +122,16 @@ const ApplicationFAQ = () => {
                     >
                       <AccordionTrigger 
                         onClick={() => handleAccordionChange(itemId)}
-                        className="text-left font-medium text-lg text-foreground hover:text-primary data-[state=open]:text-primary transition-colors"
+                        className="text-left font-medium text-lg text-foreground hover:text-primary data-[state=open]:text-primary transition-colors px-5 py-4"
                       >
                         <div className="flex items-center">
                           <Star 
                             className={`w-5 h-5 mr-3 transition-colors ${activeIndex === itemId ? 'text-accent' : 'text-accent/50'}`}
                           />
-                          <span>{item.question}</span>
+                          <span className="font-outfit tracking-tight">{item.question}</span>
                         </div>
                       </AccordionTrigger>
-                      <AccordionContent className="text-foreground/90 text-base pt-2 px-4 pb-5 border-t border-border/50 leading-relaxed">
+                      <AccordionContent className="text-foreground/80 text-base pt-2 px-6 pb-5 border-t border-border/50 leading-relaxed">
                         {item.answer}
                       </AccordionContent>
                     </AccordionItem>

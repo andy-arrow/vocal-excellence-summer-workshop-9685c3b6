@@ -4,6 +4,7 @@ import { Music, Mic, Users, Award, Sparkles, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const features = [
   {
@@ -60,16 +61,16 @@ const AboutSection = () => {
   }, []);
 
   return (
-    <section id="about" ref={sectionRef} className="py-24 noise-bg bg-gradient-to-b from-white to-primary/5">
+    <section id="about" ref={sectionRef} className="py-24 md:py-28 noise-bg bg-gradient-to-b from-white to-primary/5">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         <div className="text-center mb-16">
-          <span className="inline-flex items-center bg-primary/10 text-primary rounded-full py-1 px-3 text-sm font-medium mb-4">
-            <Star className="mr-1 w-4 h-4 text-energy-yellow" />
+          <span className="inline-flex items-center bg-primary/10 text-primary rounded-full py-1.5 px-3.5 text-sm font-medium mb-4">
+            <Star className="mr-1.5 w-4 h-4 text-energy-yellow" />
             About The Programme
           </span>
           <h2 
             ref={(el) => (elementsRef.current[0] = el)} 
-            className="section-title reveal-on-scroll text-center block relative"
+            className="section-title reveal-on-scroll text-center block relative font-outfit text-4xl md:text-5xl mb-4 tracking-tight"
           >
             Break the Rules, <br className="md:hidden" />
             <span className="gradient-text">Find Your Sound</span>
@@ -77,7 +78,7 @@ const AboutSection = () => {
           <div className="decorative-line mx-auto"></div>
           <p 
             ref={(el) => (elementsRef.current[1] = el)} 
-            className="section-subtitle reveal-on-scroll"
+            className="section-subtitle reveal-on-scroll max-w-3xl mx-auto"
           >
             A high-energy vocal experience designed for your creative expression
           </p>
@@ -88,13 +89,13 @@ const AboutSection = () => {
             ref={(el) => (elementsRef.current[2] = el)} 
             className="reveal-on-scroll md:col-span-2 space-y-8"
           >
-            <div className="focus-section space-y-4">
-              <h3 className="text-2xl font-bold text-primary">Unlock Your Authentic Voice</h3>
+            <div className="focus-section space-y-5">
+              <h3 className="text-2xl font-bold text-primary font-outfit tracking-tight">Unlock Your Authentic Voice</h3>
               <p className="text-foreground/80 leading-relaxed">
-                <span className="font-semibold text-secondary">Vocal Excellence</span> isn't your typical boring workshop. 
+                <span className="font-semibold text-secondary">Vocal Excellence Summer Workshop</span> isn't your typical boring workshop. 
                 It's an <span className="font-semibold text-primary">energy-packed</span> five-day vocal transformation where you'll:
               </p>
-              <ul className="space-y-2">
+              <ul className="space-y-3 pt-1">
                 {[
                   "Find your unique vocal style",
                   "Master techniques that enhance your natural abilities",
@@ -110,7 +111,7 @@ const AboutSection = () => {
                 ))}
               </ul>
               
-              <div className="rounded-xl overflow-hidden relative h-6">
+              <div className="rounded-xl overflow-hidden relative h-6 mt-2">
                 <div className="progress-bar"></div>
               </div>
             </div>
@@ -136,7 +137,7 @@ const AboutSection = () => {
                 <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 mb-4 group-hover:scale-110 transition-transform">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">{feature.title}</h3>
+                <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors font-outfit tracking-tight">{feature.title}</h3>
                 <p className="text-foreground/70 leading-relaxed">{feature.description}</p>
                 
                 {/* Animated music notes on hover (only when reduced motion is off) */}
@@ -157,24 +158,26 @@ const AboutSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
                 viewport={{ once: true }}
-                className="focus-section"
+                className="focus-section p-6 md:p-8 bg-gradient-to-br from-white/90 to-primary/5 rounded-xl border border-primary/10 shadow-md"
               >
-                <div className="flex items-center mb-4">
+                <div className="flex items-center mb-5">
                   <span className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white">
                     <Sparkles className="w-5 h-5" />
                   </span>
-                  <h3 className="text-xl font-bold ml-3">Ready to find your voice?</h3>
+                  <h3 className="text-xl font-bold ml-3 font-outfit tracking-tight">Ready to find your voice?</h3>
                 </div>
                 
-                <p className="text-foreground/80 mb-6">
+                <p className="text-foreground/80 mb-6 leading-relaxed">
                   Our coaches understand that traditional voice lessons can feel constraining. 
                   We've designed this program specifically for young artists who crave movement,
                   variation, and quick results.
                 </p>
                 
-                <Button className="bg-primary hover:bg-primary/80 text-white rounded-xl">
-                  Apply Now <Sparkles className="ml-2 w-4 h-4" />
-                </Button>
+                <Link to="/apply">
+                  <Button className="bg-primary hover:bg-primary/80 text-white rounded-xl shadow-md shadow-primary/10 hover:shadow-primary/20 transition-all">
+                    Apply Now <Sparkles className="ml-2 w-4 h-4" />
+                  </Button>
+                </Link>
               </MotionDiv>
             </div>
           </div>
