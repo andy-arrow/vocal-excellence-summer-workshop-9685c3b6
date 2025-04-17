@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { Music, ArrowDown, Calendar, Users, MapPin } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -231,7 +230,7 @@ const HeroSection = () => {
                   <div className="w-6 h-6 rounded-full bg-energy-purple/30 flex items-center justify-center">
                     {card.icon}
                   </div>
-                  <span className="text-xs text-white/90">{card.text}</span>
+                  <span className="text-xs sm:text-sm text-white/90">{card.text}</span>
                 </div>
               </motion.div>
             ))}
