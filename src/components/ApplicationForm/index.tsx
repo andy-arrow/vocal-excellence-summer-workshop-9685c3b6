@@ -1,10 +1,11 @@
+
 import React, { useState, useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
 import { toast } from '@/hooks/use-toast';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Sparkles, CheckCircle2, Hourglass, Calendar, Users, MapPin } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar, MapPin, Users } from 'lucide-react';
 import { generateCsrfToken } from '@/utils/security';
 import { Link } from 'react-router-dom';
 
@@ -188,34 +189,34 @@ const ApplicationForm = () => {
     { 
       title: "Personal Info", 
       component: <PersonalInfoSection />,
-      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-fuchsia-500/20 p-2 rounded-full"><Sparkles size={18} className="text-fuchsia-500" /></motion.div>
+      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-neutral-100 p-2 rounded-full"><span className="text-neutral-800 font-medium text-sm">01</span></motion.div>
     },
     { 
       title: "Musical Background", 
       component: <MusicalBackgroundSection />,
-      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-violet-500/20 p-2 rounded-full"><Hourglass size={18} className="text-violet-500" /></motion.div>
+      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-neutral-100 p-2 rounded-full"><span className="text-neutral-800 font-medium text-sm">02</span></motion.div>
     },
     { 
       title: "Programme", 
       component: <ProgrammeApplicationSection />,
-      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-indigo-500/20 p-2 rounded-full"><CheckCircle2 size={18} className="text-indigo-500" /></motion.div>
+      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-neutral-100 p-2 rounded-full"><span className="text-neutral-800 font-medium text-sm">03</span></motion.div>
     },
     { 
       title: "Materials", 
       component: <SupportingMaterialsSection />,
-      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-purple-500/20 p-2 rounded-full"><CheckCircle2 size={18} className="text-purple-500" /></motion.div>
+      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-neutral-100 p-2 rounded-full"><span className="text-neutral-800 font-medium text-sm">04</span></motion.div>
     },
     { 
       title: "Terms", 
       component: <TermsAndConditionsSection />,
-      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-pink-500/20 p-2 rounded-full"><CheckCircle2 size={18} className="text-pink-500" /></motion.div>
+      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-neutral-100 p-2 rounded-full"><span className="text-neutral-800 font-medium text-sm">05</span></motion.div>
     },
   ];
 
   return (
-    <section id="application-form" className="py-24 md:py-32 bg-gradient-to-b from-slate-900 via-slate-900 to-violet-950/80">
+    <section id="application-form" className="py-24 md:py-32 bg-white">
       <motion.div 
-        className="max-w-4xl mx-auto px-6"
+        className="max-w-3xl mx-auto px-6"
         variants={formVariants}
         initial="hidden"
         whileInView="visible"
@@ -226,7 +227,7 @@ const ApplicationForm = () => {
           variants={sectionVariants}
         >
           <motion.span 
-            className="inline-block text-violet-300/80 text-sm tracking-wide uppercase mb-2 font-medium"
+            className="inline-block text-[#86868b] text-sm tracking-wide uppercase mb-2 font-medium"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
@@ -234,40 +235,40 @@ const ApplicationForm = () => {
             Summer Workshop 2025
           </motion.span>
           
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white font-outfit">
-            Ready to Join the
-            <span className="block mt-3 bg-clip-text text-transparent bg-gradient-to-r from-violet-200 via-fuchsia-200 to-rose-200 font-medium">
-              Vocal Excellence Workshop?
+          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight text-[#1d1d1f]">
+            Join the
+            <span className="block mt-1 text-[#1d1d1f]">
+              Vocal Excellence Workshop
             </span>
           </h2>
           
           <motion.p 
-            className="text-lg md:text-xl text-violet-200/90 max-w-2xl mx-auto leading-relaxed font-light"
+            className="text-lg md:text-xl text-[#86868b] max-w-2xl mx-auto leading-relaxed"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
           >
-            Begin your transformative journey in vocal artistry. Every voice has a story to tell — let yours be heard.
+            Begin your journey in vocal artistry. Every voice has a story to tell — let yours be heard.
           </motion.p>
 
           <motion.div 
-            className="pt-6 flex flex-col md:flex-row justify-center items-center gap-6 text-base text-violet-300/90"
+            className="pt-6 flex flex-col md:flex-row justify-center items-center gap-6 text-base text-[#86868b]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
           >
-            <div className="flex items-center gap-3 backdrop-blur-sm bg-white/5 px-6 py-3 rounded-2xl border border-violet-500/20">
-              <Calendar className="h-5 w-5 text-violet-400" />
+            <div className="flex items-center gap-3 bg-[#f5f5f7] px-6 py-3 rounded-full">
+              <Calendar className="h-5 w-5 text-[#1d1d1f]" />
               <span>July 14 - 18, 2025</span>
             </div>
-            <div className="h-4 w-px bg-violet-500/20 hidden md:block" />
-            <div className="flex items-center gap-3 backdrop-blur-sm bg-white/5 px-6 py-3 rounded-2xl border border-violet-500/20">
-              <MapPin className="h-5 w-5 text-violet-400" />
+            <div className="h-4 w-px bg-[#e6e6e6] hidden md:block" />
+            <div className="flex items-center gap-3 bg-[#f5f5f7] px-6 py-3 rounded-full">
+              <MapPin className="h-5 w-5 text-[#1d1d1f]" />
               <span>Limassol, Cyprus</span>
             </div>
-            <div className="h-4 w-px bg-violet-500/20 hidden md:block" />
-            <div className="flex items-center gap-3 backdrop-blur-sm bg-white/5 px-6 py-3 rounded-2xl border border-violet-500/20">
-              <Users className="h-5 w-5 text-violet-400" />
+            <div className="h-4 w-px bg-[#e6e6e6] hidden md:block" />
+            <div className="flex items-center gap-3 bg-[#f5f5f7] px-6 py-3 rounded-full">
+              <Users className="h-5 w-5 text-[#1d1d1f]" />
               <span>20 Spots Available</span>
             </div>
           </motion.div>
@@ -284,21 +285,21 @@ const ApplicationForm = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.3 }}
-                className="bg-slate-900/80 backdrop-blur-sm border border-violet-500/20 p-8 rounded-2xl shadow-xl"
+                className="bg-white border border-[#e6e6e6] p-8 rounded-2xl shadow-sm"
               >
                 {sections[activeSection].component}
                 
-                <div className="flex justify-between mt-8 pt-4 border-t border-violet-500/20">
+                <div className="flex justify-between mt-8 pt-4 border-t border-[#e6e6e6]">
                   <motion.button
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                     type="button"
                     onClick={() => setActiveSection(prev => Math.max(0, prev - 1))}
                     disabled={activeSection === 0}
-                    className={`px-4 py-2 rounded-lg transition-all duration-300 flex items-center gap-2 ${
+                    className={`px-4 py-2 rounded-full transition-all duration-300 flex items-center gap-2 ${
                       activeSection === 0
-                        ? "bg-slate-800/50 text-slate-500 cursor-not-allowed"
-                        : "bg-slate-800 text-white hover:bg-slate-700"
+                        ? "bg-[#f5f5f7] text-[#86868b] cursor-not-allowed"
+                        : "bg-[#f5f5f7] text-[#1d1d1f] hover:bg-[#e6e6e6]"
                     }`}
                     aria-label="Previous section"
                   >
@@ -308,11 +309,11 @@ const ApplicationForm = () => {
                   
                   {activeSection < sections.length - 1 ? (
                     <motion.button
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.97 }}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
                       type="button"
                       onClick={() => setActiveSection(prev => Math.min(sections.length - 1, prev + 1))}
-                      className="px-4 py-2 rounded-lg bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white hover:from-violet-500 hover:to-fuchsia-500 transition-all duration-300 flex items-center gap-2"
+                      className="px-5 py-2 rounded-full bg-[#000000] text-white hover:bg-[#333333] transition-all duration-300 flex items-center gap-2"
                       aria-label="Next section"
                     >
                       <span>Continue</span>
@@ -328,12 +329,12 @@ const ApplicationForm = () => {
         </Form>
 
         <motion.div 
-          className="text-center mt-8 text-sm text-violet-300/70"
+          className="text-center mt-8 text-sm text-[#86868b]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
         >
-          <p>Need help? Email us at <a href="mailto:help@vocalexcellence.com" className="text-fuchsia-400 hover:text-fuchsia-300 underline underline-offset-4">help@vocalexcellence.com</a></p>
+          <p>Need help? Email us at <a href="mailto:help@vocalexcellence.com" className="text-[#0066cc] hover:underline">help@vocalexcellence.com</a></p>
         </motion.div>
       </motion.div>
     </section>

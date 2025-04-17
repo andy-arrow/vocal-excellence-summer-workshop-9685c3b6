@@ -1,23 +1,7 @@
 
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { 
-  FormField, 
-  FormItem, 
-  FormLabel, 
-  FormControl, 
-  FormMessage 
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { countries, nationalities } from '@/data/countries';
-import { ApplicationFormValues } from '../ApplicationForm/schema';
+import { ApplicationFormValues } from './schema';
 import BasicInfoFields from './PersonalInfo/BasicInfoFields';
 import AddressFields from './PersonalInfo/AddressFields';
 import ContactInfoFields from './PersonalInfo/ContactInfoFields';
@@ -27,12 +11,23 @@ const PersonalInfoSection = () => {
   
   return (
     <div className="space-y-6">
-      <h3 className="text-xl font-semibold text-violet-100 mb-6">Personal Information</h3>
+      <h3 className="text-xl font-semibold text-[#1d1d1f] mb-6">Personal Information</h3>
       
-      <div className="space-y-8 bg-slate-950/50 p-6 rounded-xl border border-violet-500/20">
-        <BasicInfoFields />
-        <ContactInfoFields />
-        <AddressFields />
+      <div className="space-y-8">
+        <div className="space-y-6 p-5 rounded-xl bg-[#f5f5f7]">
+          <h4 className="text-base font-medium text-[#1d1d1f]">Basic Information</h4>
+          <BasicInfoFields />
+        </div>
+        
+        <div className="space-y-6 p-5 rounded-xl bg-[#f5f5f7]">
+          <h4 className="text-base font-medium text-[#1d1d1f]">Contact Information</h4>
+          <ContactInfoFields />
+        </div>
+        
+        <div className="space-y-6 p-5 rounded-xl bg-[#f5f5f7]">
+          <h4 className="text-base font-medium text-[#1d1d1f]">Address</h4>
+          <AddressFields />
+        </div>
       </div>
     </div>
   );

@@ -2,9 +2,8 @@
 import React, { useEffect } from 'react';
 import { FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Music4, FileText, ScrollText } from 'lucide-react';
+import { Music, FileText, File } from 'lucide-react';
 import { FileUploadSection } from './FileUploadSection';
-import { UploadStatus } from './UploadStatus';
 
 // Declare global window interface extension
 declare global {
@@ -46,46 +45,46 @@ const SupportingMaterialsSection = () => {
 
   return (
     <div className="space-y-8">
-      <h3 className="text-xl font-semibold text-violet-100 mb-4">Supporting Materials</h3>
+      <h3 className="text-xl font-semibold text-[#1d1d1f] mb-4">Supporting Materials</h3>
       
       <FileUploadSection
         label="First Audition Recording (Required)"
-        description="Upload your first piece (3-5 minutes) in MP3 or WAV format. This is required for your application."
-        icon={Music4}
+        description="Upload your first piece (3-5 minutes) in MP3 or WAV format."
+        icon={Music}
         fileType="audioFile1"
         acceptedFormats=".mp3,.wav"
         required={true}
-        iconColor="text-violet-400"
+        iconColor="text-[#1d1d1f]"
       />
       
       <FileUploadSection
         label="Second Audition Recording (Required)"
-        description="Upload your second contrasting piece (3-5 minutes) in MP3 or WAV format. This is required for your application."
-        icon={Music4}
+        description="Upload your second contrasting piece (3-5 minutes) in MP3 or WAV format."
+        icon={Music}
         fileType="audioFile2"
         acceptedFormats=".mp3,.wav"
         required={true}
-        iconColor="text-violet-400"
+        iconColor="text-[#1d1d1f]"
       />
       
       <FileUploadSection
         label="CV/Resume (Required)"
-        description="Upload your musical CV/Resume in PDF format. This is required for your application."
+        description="Upload your musical CV/Resume in PDF format."
         icon={FileText}
         fileType="cvFile"
         acceptedFormats=".pdf"
         required={true}
-        iconColor="text-fuchsia-400"
+        iconColor="text-[#1d1d1f]"
       />
       
       <FileUploadSection
         label="Recommendation Letter (Optional)"
-        description="Upload your recommendation letter in PDF format. This is optional and can be submitted later if needed."
-        icon={ScrollText}
+        description="Upload your recommendation letter in PDF format. This is optional."
+        icon={File}
         fileType="recommendationFile"
         acceptedFormats=".pdf"
         required={false}
-        iconColor="text-pink-400"
+        iconColor="text-[#1d1d1f]"
       />
     </div>
   );
