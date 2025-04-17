@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { Music, ArrowDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -258,7 +259,7 @@ const HeroSection = () => {
       
       <motion.button 
         onClick={scrollToDiscoverSection}
-        className="absolute bottom-4 left-0 right-0 mx-auto w-max cursor-pointer z-20 group"
+        className="absolute bottom-0 left-0 right-0 mx-auto w-max cursor-pointer z-20 group pb-8"
         aria-label="Scroll to discover what awaits"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
