@@ -227,7 +227,7 @@ const ApplicationForm = () => {
           variants={sectionVariants}
         >
           <motion.span 
-            className="inline-block text-[#86868b] text-sm tracking-wide uppercase mb-2 font-medium"
+            className="inline-block text-gray-600 text-sm tracking-wide uppercase mb-2 font-medium"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
@@ -235,15 +235,15 @@ const ApplicationForm = () => {
             Summer Workshop 2025
           </motion.span>
           
-          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight text-[#1d1d1f]">
+          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight text-gray-900">
             Join the
-            <span className="block mt-1 text-[#1d1d1f]">
+            <span className="block mt-1 text-gray-900">
               Vocal Excellence Workshop
             </span>
           </h2>
           
           <motion.p 
-            className="text-lg md:text-xl text-[#86868b] max-w-2xl mx-auto leading-relaxed"
+            className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
@@ -252,30 +252,30 @@ const ApplicationForm = () => {
           </motion.p>
 
           <motion.div 
-            className="pt-6 flex flex-col md:flex-row justify-center items-center gap-6 text-base text-[#86868b]"
+            className="pt-6 flex flex-col md:flex-row justify-center items-center gap-6 text-base text-gray-700"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
           >
-            <div className="flex items-center gap-3 bg-[#f5f5f7] px-6 py-3 rounded-full">
-              <Calendar className="h-5 w-5 text-[#1d1d1f]" />
+            <div className="flex items-center gap-3 bg-gray-100 px-6 py-3 rounded-full">
+              <Calendar className="h-5 w-5 text-gray-900" />
               <span>July 14 - 18, 2025</span>
             </div>
-            <div className="h-4 w-px bg-[#e6e6e6] hidden md:block" />
-            <div className="flex items-center gap-3 bg-[#f5f5f7] px-6 py-3 rounded-full">
-              <MapPin className="h-5 w-5 text-[#1d1d1f]" />
+            <div className="h-4 w-px bg-gray-200 hidden md:block" />
+            <div className="flex items-center gap-3 bg-gray-100 px-6 py-3 rounded-full">
+              <MapPin className="h-5 w-5 text-gray-900" />
               <span>Limassol, Cyprus</span>
             </div>
-            <div className="h-4 w-px bg-[#e6e6e6] hidden md:block" />
-            <div className="flex items-center gap-3 bg-[#f5f5f7] px-6 py-3 rounded-full">
-              <Users className="h-5 w-5 text-[#1d1d1f]" />
+            <div className="h-4 w-px bg-gray-200 hidden md:block" />
+            <div className="flex items-center gap-3 bg-gray-100 px-6 py-3 rounded-full">
+              <Users className="h-5 w-5 text-gray-900" />
               <span>20 Spots Available</span>
             </div>
           </motion.div>
         </motion.div>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10 bg-white">
             <input type="hidden" name="csrfToken" value={csrfToken} />
             
             <AnimatePresence mode="wait">
@@ -285,11 +285,11 @@ const ApplicationForm = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.3 }}
-                className="bg-white border border-[#e6e6e6] p-8 rounded-2xl shadow-sm"
+                className="bg-white border border-gray-200 p-8 rounded-2xl shadow-sm"
               >
                 {sections[activeSection].component}
                 
-                <div className="flex justify-between mt-8 pt-4 border-t border-[#e6e6e6]">
+                <div className="flex justify-between mt-8 pt-4 border-t border-gray-200">
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -298,8 +298,8 @@ const ApplicationForm = () => {
                     disabled={activeSection === 0}
                     className={`px-4 py-2 rounded-full transition-all duration-300 flex items-center gap-2 ${
                       activeSection === 0
-                        ? "bg-[#f5f5f7] text-[#86868b] cursor-not-allowed"
-                        : "bg-[#f5f5f7] text-[#1d1d1f] hover:bg-[#e6e6e6]"
+                        ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                        : "bg-gray-100 text-gray-900 hover:bg-gray-200"
                     }`}
                     aria-label="Previous section"
                   >
@@ -313,7 +313,7 @@ const ApplicationForm = () => {
                       whileTap={{ scale: 0.98 }}
                       type="button"
                       onClick={() => setActiveSection(prev => Math.min(sections.length - 1, prev + 1))}
-                      className="px-5 py-2 rounded-full bg-[#000000] text-white hover:bg-[#333333] transition-all duration-300 flex items-center gap-2"
+                      className="px-5 py-2 rounded-full bg-gray-900 text-white hover:bg-gray-800 transition-all duration-300 flex items-center gap-2"
                       aria-label="Next section"
                     >
                       <span>Continue</span>
@@ -329,12 +329,12 @@ const ApplicationForm = () => {
         </Form>
 
         <motion.div 
-          className="text-center mt-8 text-sm text-[#86868b]"
+          className="text-center mt-8 text-sm text-gray-600"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
         >
-          <p>Need help? Email us at <a href="mailto:help@vocalexcellence.com" className="text-[#0066cc] hover:underline">help@vocalexcellence.com</a></p>
+          <p>Need help? Email us at <a href="mailto:help@vocalexcellence.com" className="text-blue-600 hover:underline">help@vocalexcellence.com</a></p>
         </motion.div>
       </motion.div>
     </section>
