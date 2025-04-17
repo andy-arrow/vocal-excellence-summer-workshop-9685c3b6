@@ -213,9 +213,9 @@ const ApplicationForm = () => {
   ];
 
   return (
-    <section id="application-form" className="py-24 md:py-32 bg-gradient-to-b from-slate-900 via-slate-900 to-violet-950/80">
+    <section className="py-24 md:py-32 min-h-screen bg-gradient-to-b from-slate-900 via-slate-900 to-violet-950/80">
       <motion.div 
-        className="max-w-4xl mx-auto px-6"
+        className="max-w-6xl mx-auto px-6"
         variants={formVariants}
         initial="hidden"
         whileInView="visible"
@@ -251,105 +251,62 @@ const ApplicationForm = () => {
           </motion.p>
 
           <motion.div 
-            className="pt-6 flex flex-col md:flex-row justify-center items-center gap-6 text-base text-violet-300/90"
+            className="grid md:grid-cols-3 gap-4 max-w-4xl mx-auto pt-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
           >
-            <div className="flex items-center gap-3 backdrop-blur-sm bg-white/5 px-6 py-3 rounded-2xl border border-violet-500/20">
+            <div className="flex items-center gap-3 backdrop-blur-sm bg-white/5 px-6 py-4 rounded-2xl border border-violet-500/20 hover:border-violet-500/40 transition-colors">
               <Calendar className="h-5 w-5 text-violet-400" />
-              <span>July 14 - 18, 2025</span>
+              <span className="text-violet-300/90">July 14 - 18, 2025</span>
             </div>
-            <div className="h-4 w-px bg-violet-500/20 hidden md:block" />
-            <div className="flex items-center gap-3 backdrop-blur-sm bg-white/5 px-6 py-3 rounded-2xl border border-violet-500/20">
+            <div className="flex items-center gap-3 backdrop-blur-sm bg-white/5 px-6 py-4 rounded-2xl border border-violet-500/20 hover:border-violet-500/40 transition-colors">
               <MapPin className="h-5 w-5 text-violet-400" />
-              <span>Limassol, Cyprus</span>
+              <span className="text-violet-300/90">Limassol, Cyprus</span>
             </div>
-            <div className="h-4 w-px bg-violet-500/20 hidden md:block" />
-            <div className="flex items-center gap-3 backdrop-blur-sm bg-white/5 px-6 py-3 rounded-2xl border border-violet-500/20">
+            <div className="flex items-center gap-3 backdrop-blur-sm bg-white/5 px-6 py-4 rounded-2xl border border-violet-500/20 hover:border-violet-500/40 transition-colors">
               <Users className="h-5 w-5 text-violet-400" />
-              <span>20 Spots Available</span>
+              <span className="text-violet-300/90">20 Spots Available</span>
             </div>
           </motion.div>
         </motion.div>
 
-        <motion.div 
-          className="flex md:hidden justify-center mb-8 overflow-x-auto pb-2 gap-2"
-          variants={sectionVariants}
-        >
-          {sections.map((section, index) => (
-            <motion.button
-              key={index}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setActiveSection(index)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 text-sm whitespace-nowrap ${
-                activeSection === index
-                  ? "bg-gradient-to-r from-fuchsia-600 to-violet-600 text-white font-medium"
-                  : "bg-violet-900/40 text-violet-200 hover:bg-violet-800/60"
-              }`}
-            >
-              {section.icon}
-              <span>{section.title}</span>
-            </motion.button>
-          ))}
-        </motion.div>
-
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-12">
             <input type="hidden" name="csrfToken" value={csrfToken} />
             
-            <AnimatePresence mode="wait">
+            <div className="grid gap-12">
+              {sections.map((section, index) => (
+                <motion.div
+                  key={section.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  className="bg-slate-900/80 backdrop-blur-sm border border-violet-500/20 p-8 rounded-2xl shadow-xl"
+                >
+                  <div className="flex items-center gap-4 mb-8">
+                    {section.icon}
+                    <h3 className="text-xl font-semibold text-white">{section.title}</h3>
+                  </div>
+                  {section.component}
+                </motion.div>
+              ))}
+              
               <motion.div
-                key={activeSection}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3 }}
-                className="bg-slate-900/80 backdrop-blur-sm border border-violet-500/20 p-8 rounded-2xl shadow-xl"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                className="flex justify-center pt-6"
               >
-                {sections[activeSection].component}
-                
-                <div className="flex justify-between mt-8 pt-4 border-t border-violet-500/20">
-                  <motion.button
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    type="button"
-                    onClick={() => setActiveSection(prev => Math.max(0, prev - 1))}
-                    disabled={activeSection === 0}
-                    className={`px-4 py-2 rounded-lg transition-all duration-300 flex items-center gap-2 ${
-                      activeSection === 0
-                        ? "bg-slate-800/50 text-slate-500 cursor-not-allowed"
-                        : "bg-slate-800 text-white hover:bg-slate-700"
-                    }`}
-                    aria-label="Previous section"
-                  >
-                    <ChevronLeft size={18} />
-                    <span>Previous</span>
-                  </motion.button>
-                  
-                  {activeSection < sections.length - 1 ? (
-                    <motion.button
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.97 }}
-                      type="button"
-                      onClick={() => setActiveSection(prev => Math.min(sections.length - 1, prev + 1))}
-                      className="px-4 py-2 rounded-lg bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white hover:from-violet-500 hover:to-fuchsia-500 transition-all duration-300 flex items-center gap-2"
-                      aria-label="Next section"
-                    >
-                      <span>Continue</span>
-                      <ChevronRight size={18} />
-                    </motion.button>
-                  ) : (
-                    <SubmitButton isSubmitting={isSubmitting} />
-                  )}
-                </div>
+                <SubmitButton isSubmitting={isSubmitting} />
               </motion.div>
-            </AnimatePresence>
+            </div>
           </form>
         </Form>
 
         <motion.div 
-          className="text-center mt-8 text-sm text-violet-300/70"
+          className="text-center mt-12 text-sm text-violet-300/70"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
