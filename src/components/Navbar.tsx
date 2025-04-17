@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { ArrowUpRight, Menu, X, Music, ChevronDown } from 'lucide-react';
@@ -48,8 +47,6 @@ const Navbar = ({ activeSection }: NavbarProps) => {
     { id: 'about', label: 'About' },
     { id: 'curriculum', label: 'Curriculum' },
     { id: 'instructors', label: 'Instructors' },
-    { id: 'testimonials', label: 'Testimonials' },
-    { id: 'gallery', label: 'Gallery' },
   ];
 
   return (
@@ -65,7 +62,6 @@ const Navbar = ({ activeSection }: NavbarProps) => {
       }}
     >
       <div className="max-w-[1200px] mx-auto px-6 md:px-10 py-4 flex items-center justify-between">
-        {/* Logo */}
         <Link 
           to="/" 
           className="font-outfit font-medium text-white tracking-tight transition-opacity hover:opacity-80"
@@ -81,7 +77,6 @@ const Navbar = ({ activeSection }: NavbarProps) => {
           </div>
         </Link>
 
-        {/* Desktop Navigation */}
         <nav className="hidden md:block">
           <ul className="flex space-x-8">
             {navLinks.map((link) => (
@@ -113,7 +108,6 @@ const Navbar = ({ activeSection }: NavbarProps) => {
           </ul>
         </nav>
         
-        {/* Call to Action & Auth */}
         <div className="hidden md:flex items-center space-x-6">
           <NavLink
             to="/apply"
@@ -137,7 +131,6 @@ const Navbar = ({ activeSection }: NavbarProps) => {
           })()}
         </div>
 
-        {/* Mobile Menu Trigger */}
         <button 
           onClick={toggleMenu} 
           className="md:hidden text-white p-1 rounded-full hover:bg-white/10 transition-colors"
@@ -147,7 +140,6 @@ const Navbar = ({ activeSection }: NavbarProps) => {
         </button>
       </div>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div 
@@ -157,7 +149,6 @@ const Navbar = ({ activeSection }: NavbarProps) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            {/* Backdrop */}
             <motion.div 
               className="absolute inset-0 bg-black/60 backdrop-blur-md"
               initial={{ opacity: 0 }}
@@ -166,7 +157,6 @@ const Navbar = ({ activeSection }: NavbarProps) => {
               onClick={toggleMenu}
             />
             
-            {/* Menu Content */}
             <motion.div 
               className="relative z-10 flex-1 bg-slate-900/95 backdrop-blur-lg border-t border-white/10 overflow-auto"
               initial={{ y: -50, opacity: 0 }}
