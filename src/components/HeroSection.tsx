@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { Music, ArrowDown, Calendar, Users, MapPin } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -60,24 +59,6 @@ const HeroSection = () => {
     }
   };
   
-  const featureCards = [
-    {
-      icon: <Calendar className="w-5 h-5 text-white" />,
-      text: "July 14-18, 2025",
-      color: "from-violet-500/30 to-fuchsia-500/30"
-    },
-    {
-      icon: <MapPin className="w-5 h-5 text-white" />,
-      text: "Limassol, Cyprus",
-      color: "from-fuchsia-500/30 to-rose-500/30"
-    },
-    {
-      icon: <Users className="w-5 h-5 text-white" />,
-      text: "Limited to 20 students",
-      color: "from-rose-500/30 to-amber-500/30"
-    },
-  ];
-
   return (
     <section 
       id="home" 
@@ -210,54 +191,63 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-[url('/lovable-uploads/masterclass-singers.jpg')] bg-cover bg-center opacity-40 mix-blend-overlay"></div>
       </div>
       
-      <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-4xl mx-auto pt-24 md:pt-16">
+      {/* Apple-inspired feature cards at top */}
+      <div className="absolute top-0 left-0 right-0 z-30 px-6 py-6 pt-28 md:pt-32">
+        <motion.div 
+          className="max-w-4xl mx-auto"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <div className="flex flex-wrap justify-center gap-3">
+            <motion.div
+              className="backdrop-blur-md bg-white/10 border border-white/20 rounded-full px-5 py-2.5 flex items-center"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              <Calendar className="w-4 h-4 text-white mr-2.5" />
+              <span className="text-sm text-white/90 font-medium">July 14-18, 2025</span>
+            </motion.div>
+            
+            <motion.div
+              className="backdrop-blur-md bg-white/10 border border-white/20 rounded-full px-5 py-2.5 flex items-center"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              <MapPin className="w-4 h-4 text-white mr-2.5" />
+              <span className="text-sm text-white/90 font-medium">Limassol, Cyprus</span>
+            </motion.div>
+            
+            <motion.div
+              className="backdrop-blur-md bg-white/10 border border-white/20 rounded-full px-5 py-2.5 flex items-center"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+            >
+              <Users className="w-4 h-4 text-white mr-2.5" />
+              <span className="text-sm text-white/90 font-medium">Limited to 20 students</span>
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
+      
+      <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-4xl mx-auto">
         <motion.div 
           className="space-y-8"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          <motion.div
-            className="flex flex-wrap justify-center gap-4 md:gap-6 mb-10"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-          >
-            {featureCards.map((card, index) => (
-              <motion.div
-                key={index}
-                className="relative group"
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.5 + (index * 0.1) }}
-              >
-                <div className={cn(
-                  "absolute inset-0 rounded-2xl bg-gradient-to-r",
-                  card.color,
-                  "blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                )} />
-                <div className="relative py-3 px-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center group-hover:border-white/30 transition-all duration-300">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-xl bg-gradient-to-r from-violet-500/20 to-fuchsia-500/20 flex items-center justify-center">
-                      {card.icon}
-                    </div>
-                    <span className="text-sm md:text-base text-white/90 font-medium tracking-wide">
-                      {card.text}
-                    </span>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-          
           <motion.h1 
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-outfit font-bold text-white tracking-tight leading-[1.1]"
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-outfit font-light text-white tracking-tight leading-[1.1]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
           >
             <span className="block">Unlock Your</span> 
-            <span className="gradient-text">Vocal Potential</span>
+            <span className="gradient-text font-medium">Vocal Potential</span>
           </motion.h1>
           
           <motion.p 
@@ -278,8 +268,8 @@ const HeroSection = () => {
             <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <motion.a 
                 href="/apply" 
-                className="primary-button inline-block text-lg px-8 py-4 rounded-xl transition-all bg-gradient-to-r from-energy-purple to-energy-pink text-white shadow-xl shadow-energy-purple/20 hover:shadow-energy-purple/30"
-                whileHover={{ scale: 1.05, boxShadow: "0 0 30px 5px rgba(124, 58, 237, 0.4)" }}
+                className="primary-button inline-block text-lg px-8 py-4 rounded-full transition-all bg-white text-slate-900 shadow-xl shadow-white/20 hover:shadow-white/30 font-medium"
+                whileHover={{ scale: 1.05, boxShadow: "0 0 30px 5px rgba(255, 255, 255, 0.4)" }}
                 whileTap={{ scale: 0.98 }}
               >
                 Apply Now
@@ -287,7 +277,7 @@ const HeroSection = () => {
               
               <motion.button
                 onClick={scrollToDiscoverSection}
-                className="text-white/80 hover:text-white px-6 py-3 rounded-xl border border-white/20 backdrop-blur-sm transition-all hover:bg-white/10 text-base"
+                className="text-white/80 hover:text-white px-6 py-3 rounded-full border border-white/20 backdrop-blur-sm transition-all hover:bg-white/10 text-base"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -301,9 +291,9 @@ const HeroSection = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 1.3, duration: 0.5 }}
             >
-              <div className="w-2 h-2 rounded-full bg-energy-pink animate-pulse-slow"></div>
+              <div className="w-2 h-2 rounded-full bg-white animate-pulse-slow"></div>
               <p className="text-white/80 text-sm font-medium">Applications close <span className="text-white">May 15, 2025</span> — Only 20 spots available</p>
-              <div className="w-2 h-2 rounded-full bg-energy-pink animate-pulse-slow"></div>
+              <div className="w-2 h-2 rounded-full bg-white animate-pulse-slow"></div>
             </motion.div>
           </motion.div>
         </motion.div>
