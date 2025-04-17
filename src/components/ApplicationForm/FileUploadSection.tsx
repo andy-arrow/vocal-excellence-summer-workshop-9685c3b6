@@ -24,7 +24,7 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
   fileType,
   acceptedFormats,
   required = false,
-  iconColor = "text-indigo-400"
+  iconColor = "text-[#1d1d1f]"
 }) => {
   const { uploadState, handleFileUpload, reset } = useFileUpload(fileType);
 
@@ -48,16 +48,16 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
   return (
     <div>
       <div className="flex items-center justify-between mb-2">
-        <FormLabel className="text-white flex items-center gap-2">
+        <FormLabel className="text-[#1d1d1f] flex items-center gap-2">
           <Icon className={iconColor} size={16} />
           <span>{label}</span>
-          {required && <span className="text-rose-400">*</span>}
+          {required && <span className="text-[#bf4800]">*</span>}
         </FormLabel>
-        <span className="text-xs text-slate-400">
+        <span className="text-xs text-[#86868b]">
           {acceptedFormats}
         </span>
       </div>
-      <p className="text-sm text-slate-300 mb-4">{description}</p>
+      <p className="text-sm text-[#86868b] mb-4">{description}</p>
       
       <motion.div 
         className="relative group"
@@ -67,13 +67,14 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
         <Input 
           type="file" 
           accept={acceptedFormats}
-          className={`file:mr-5 file:py-1 file:px-3 file:border-0 file:text-sm file:font-medium file:bg-violet-600 file:text-white hover:file:cursor-pointer hover:file:bg-violet-500 file:rounded
+          className={`file:mr-5 file:py-1 file:px-3 file:border-0 file:text-sm file:font-medium
+            file:bg-[#f5f5f7] file:text-[#1d1d1f] hover:file:bg-[#e6e6e7] file:rounded-lg
+            border-[#e6e6e6] hover:border-[#d2d2d7] rounded-xl transition-colors
             ${uploadState.status !== 'idle' ? 'opacity-60 pointer-events-none' : ''}
           `}
           disabled={uploadState.status !== 'idle'}
           onChange={handleFileChange}
         />
-        <div className="absolute inset-0 rounded-md pointer-events-none opacity-0 group-hover:opacity-100 bg-gradient-to-br from-fuchsia-500/5 to-violet-500/5 transition-opacity"></div>
       </motion.div>
       
       <UploadStatus 

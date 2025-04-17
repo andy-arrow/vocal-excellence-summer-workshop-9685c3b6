@@ -27,18 +27,18 @@ const SubmitButton = ({ isSubmitting }: SubmitButtonProps) => {
         <Button 
           type="submit" 
           disabled={isSubmitting}
-          className="bg-violet-500 hover:bg-violet-600 text-white font-medium py-6 px-12 rounded-full text-base relative overflow-hidden group transition-all duration-300 shadow-lg shadow-violet-500/25"
+          className="bg-[#0066cc] hover:bg-[#0077ed] text-white font-medium py-3 px-8 rounded-full text-base relative overflow-hidden group transition-all duration-300"
           aria-label={isSubmitting ? "Submitting application" : "Submit application"}
         >
           <span className="relative z-10 flex items-center gap-3">
             {isSubmitting ? (
               <>
                 <Spinner size="sm" color="white" speed={1} />
-                <span className="tracking-tight">Submitting...</span>
+                <span>Submitting...</span>
               </>
             ) : (
               <>
-                <span className="tracking-tight">Submit Application</span>
+                <span>Submit Application</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
               </>
             )}
