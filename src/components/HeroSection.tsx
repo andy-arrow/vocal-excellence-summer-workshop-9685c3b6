@@ -93,56 +93,61 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-energy-purple/90 via-energy-pink/70 to-energy-cyan/80 mix-blend-overlay z-10"></div>
       <div className="absolute inset-0 bg-black/50 z-10"></div>
 
-      {/* Feature Pills - Repositioned and Redesigned */}
       <div className="absolute inset-x-0 top-0 z-30">
         <motion.div 
-          className="max-w-4xl mx-auto pt-32 px-6"
+          className="container mx-auto pt-28 px-6"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <div className="flex flex-wrap justify-center gap-4">
-            <motion.button
-              className="group relative"
+            <motion.div
+              className="group cursor-default"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.3 }}
               whileHover={{ scale: 1.02 }}
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-violet-500/20 to-fuchsia-500/20 rounded-2xl blur-xl transition-all group-hover:blur-2xl" />
-              <div className="relative backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl px-6 py-3.5 flex items-center space-x-3">
-                <Calendar className="w-5 h-5 text-white/90" />
-                <span className="text-sm text-white/90 font-medium whitespace-nowrap">July 14-18, 2025</span>
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-violet-500/20 to-fuchsia-500/20 rounded-2xl blur-xl transition-all group-hover:blur-2xl" />
+                <div className="relative backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl px-8 py-4 flex items-center space-x-3">
+                  <Calendar className="w-5 h-5 text-white/90" />
+                  <span className="text-base text-white/90 font-medium">July 14-18, 2025</span>
+                </div>
               </div>
-            </motion.button>
+            </motion.div>
             
-            <motion.button
-              className="group relative"
+            <motion.div
+              className="group cursor-default"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.4 }}
               whileHover={{ scale: 1.02 }}
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-2xl blur-xl transition-all group-hover:blur-2xl" />
-              <div className="relative backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl px-6 py-3.5 flex items-center space-x-3">
-                <MapPin className="w-5 h-5 text-white/90" />
-                <span className="text-sm text-white/90 font-medium whitespace-nowrap">Limassol, Cyprus</span>
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-2xl blur-xl transition-all group-hover:blur-2xl" />
+                <div className="relative backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl px-8 py-4 flex items-center space-x-3">
+                  <MapPin className="w-5 h-5 text-white/90" />
+                  <span className="text-base text-white/90 font-medium">Limassol, Cyprus</span>
+                </div>
               </div>
-            </motion.button>
+            </motion.div>
             
-            <motion.button
-              className="group relative"
+            <motion.div
+              className="group cursor-default"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.5 }}
               whileHover={{ scale: 1.02 }}
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-rose-500/20 to-orange-500/20 rounded-2xl blur-xl transition-all group-hover:blur-2xl" />
-              <div className="relative backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl px-6 py-3.5 flex items-center space-x-3">
-                <Users className="w-5 h-5 text-white/90" />
-                <span className="text-sm text-white/90 font-medium whitespace-nowrap">Limited to 20 students</span>
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-rose-500/20 to-orange-500/20 rounded-2xl blur-xl transition-all group-hover:blur-2xl" />
+                <div className="relative backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl px-8 py-4 flex items-center space-x-3">
+                  <Users className="w-5 h-5 text-white/90" />
+                  <span className="text-base text-white/90 font-medium">Limited to 20 students</span>
+                </div>
               </div>
-            </motion.button>
+            </motion.div>
           </div>
         </motion.div>
       </div>
@@ -244,7 +249,7 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-[url('/lovable-uploads/masterclass-singers.jpg')] bg-cover bg-center opacity-40 mix-blend-overlay"></div>
       </div>
       
-      <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-4xl mx-auto">
+      <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-4xl mx-auto mt-32">
         <motion.div 
           className="space-y-8"
           initial={{ opacity: 0, y: 30 }}
