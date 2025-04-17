@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { Music, ArrowDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -65,7 +64,7 @@ const HeroSection = () => {
       id="home" 
       ref={heroRef}
       className={cn(
-        "relative h-screen flex items-center justify-center overflow-hidden bg-black",
+        "relative min-h-screen flex items-center justify-center overflow-hidden bg-black",
         hasReducedMotion ? "reduced-motion" : ""
       )}
     >
@@ -94,7 +93,6 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-energy-purple/90 via-energy-pink/70 to-energy-cyan/80 mix-blend-overlay z-10"></div>
       <div className="absolute inset-0 bg-black/40 z-10"></div>
 
-      {/* Musical notes animation */}
       {!hasReducedMotion && (
         <>
           <motion.div 
@@ -258,10 +256,9 @@ const HeroSection = () => {
         </motion.div>
       </div>
       
-      {/* Move the "Discover What Awaits" button lower and adjust its positioning */}
       <motion.button 
         onClick={scrollToDiscoverSection}
-        className="absolute bottom-8 left-0 right-0 mx-auto w-max cursor-pointer z-20 group"
+        className="absolute bottom-4 left-0 right-0 mx-auto w-max cursor-pointer z-20 group"
         aria-label="Scroll to discover what awaits"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
