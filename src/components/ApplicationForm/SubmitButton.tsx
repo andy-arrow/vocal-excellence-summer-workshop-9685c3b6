@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Mic, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Spinner from '@/components/ui/spinner';
 
@@ -27,7 +27,7 @@ const SubmitButton = ({ isSubmitting }: SubmitButtonProps) => {
         <Button 
           type="submit" 
           disabled={isSubmitting}
-          className="bg-[#000000] hover:bg-[#333333] text-white font-medium py-4 px-12 rounded-full text-base relative overflow-hidden group transition-all duration-300 shadow-sm"
+          className="bg-violet-500 hover:bg-violet-600 text-white font-medium py-6 px-12 rounded-full text-base relative overflow-hidden group transition-all duration-300 shadow-lg shadow-violet-500/25"
           aria-label={isSubmitting ? "Submitting application" : "Submit application"}
         >
           <span className="relative z-10 flex items-center gap-3">

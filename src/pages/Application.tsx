@@ -48,11 +48,11 @@ const Application = () => {
   }, []);
   
   return (
-    <div className="bg-[#f5f5f7] text-[#1d1d1f] min-h-screen font-sans">
+    <div className="bg-slate-950 text-violet-100 min-h-screen font-sans antialiased">
       <Helmet>
         <title>Apply Now | Vocal Excellence Workshop</title>
         <meta name="description" content="Apply now for the Vocal Excellence Summer Workshop and discover your true potential with world-class vocal coaching. Limited spots available." />
-        <meta name="theme-color" content="#f5f5f7" />
+        <meta name="theme-color" content="#0f172a" />
       </Helmet>
       
       <motion.div 
@@ -101,7 +101,7 @@ const Application = () => {
                 viewport={{ once: true, margin: "-100px" }}
                 variants={fadeIn}
                 id="application-form-section"
-                className="bg-white py-24"
+                className="bg-gradient-to-b from-slate-950 via-slate-900 to-violet-950 py-24"
               >
                 <Suspense fallback={<SectionLoader />}>
                   <ApplicationForm />

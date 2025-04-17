@@ -10,22 +10,22 @@ const PersonalInfoSection = () => {
   const form = useFormContext<ApplicationFormValues>();
   
   return (
-    <div className="space-y-6">
-      <h3 className="text-xl font-semibold text-[#1d1d1f] mb-6">Personal Information</h3>
+    <div className="space-y-8">
+      <h3 className="text-2xl font-medium text-violet-100 tracking-tight">Personal Information</h3>
       
       <div className="space-y-8">
-        <div className="space-y-6 p-5 rounded-xl bg-[#f5f5f7]">
-          <h4 className="text-base font-medium text-[#1d1d1f]">Basic Information</h4>
+        <div className="space-y-6 p-6 rounded-2xl bg-white/5 backdrop-blur-lg border border-violet-500/20 hover:border-violet-500/30 transition-colors shadow-lg">
+          <h4 className="text-lg font-medium text-violet-100">Basic Information</h4>
           <BasicInfoFields />
         </div>
         
-        <div className="space-y-6 p-5 rounded-xl bg-[#f5f5f7]">
-          <h4 className="text-base font-medium text-[#1d1d1f]">Contact Information</h4>
+        <div className="space-y-6 p-6 rounded-2xl bg-white/5 backdrop-blur-lg border border-violet-500/20 hover:border-violet-500/30 transition-colors shadow-lg">
+          <h4 className="text-lg font-medium text-violet-100">Contact Information</h4>
           <ContactInfoFields />
         </div>
         
-        <div className="space-y-6 p-5 rounded-xl bg-[#f5f5f7]">
-          <h4 className="text-base font-medium text-[#1d1d1f]">Address</h4>
+        <div className="space-y-6 p-6 rounded-2xl bg-white/5 backdrop-blur-lg border border-violet-500/20 hover:border-violet-500/30 transition-colors shadow-lg">
+          <h4 className="text-lg font-medium text-violet-100">Address</h4>
           <AddressFields />
         </div>
       </div>
