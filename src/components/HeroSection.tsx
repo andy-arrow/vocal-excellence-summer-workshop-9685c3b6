@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Music, ArrowDown, Calendar, Users, MapPin } from 'lucide-react';
+import { Calendar, MapPin, Users } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -100,51 +100,60 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-6">
             <motion.div
-              className="group cursor-default"
+              className="relative group"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.3 }}
               whileHover={{ scale: 1.02 }}
             >
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-violet-500/20 to-fuchsia-500/20 rounded-2xl blur-xl transition-all group-hover:blur-2xl" />
-                <div className="relative backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl px-8 py-4 flex items-center space-x-3">
-                  <Calendar className="w-5 h-5 text-white/90" />
-                  <span className="text-base text-white/90 font-medium">July 14-18, 2025</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/5 rounded-2xl blur-2xl transition-all duration-300 group-hover:blur-3xl group-hover:from-white/15" />
+              <div className="relative backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl px-8 py-5 transition-all duration-300">
+                <div className="flex items-center space-x-4">
+                  <Calendar className="w-5 h-5 text-white/90" strokeWidth={1.5} />
+                  <div>
+                    <div className="text-sm text-white/60 font-medium mb-1">Program Dates</div>
+                    <div className="text-base text-white font-medium tracking-wide">July 14-18, 2025</div>
+                  </div>
                 </div>
               </div>
             </motion.div>
             
             <motion.div
-              className="group cursor-default"
+              className="relative group"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.4 }}
               whileHover={{ scale: 1.02 }}
             >
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-2xl blur-xl transition-all group-hover:blur-2xl" />
-                <div className="relative backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl px-8 py-4 flex items-center space-x-3">
-                  <MapPin className="w-5 h-5 text-white/90" />
-                  <span className="text-base text-white/90 font-medium">Limassol, Cyprus</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/5 rounded-2xl blur-2xl transition-all duration-300 group-hover:blur-3xl group-hover:from-white/15" />
+              <div className="relative backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl px-8 py-5 transition-all duration-300">
+                <div className="flex items-center space-x-4">
+                  <MapPin className="w-5 h-5 text-white/90" strokeWidth={1.5} />
+                  <div>
+                    <div className="text-sm text-white/60 font-medium mb-1">Location</div>
+                    <div className="text-base text-white font-medium tracking-wide">Limassol, Cyprus</div>
+                  </div>
                 </div>
               </div>
             </motion.div>
             
             <motion.div
-              className="group cursor-default"
+              className="relative group"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.5 }}
               whileHover={{ scale: 1.02 }}
             >
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-rose-500/20 to-orange-500/20 rounded-2xl blur-xl transition-all group-hover:blur-2xl" />
-                <div className="relative backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl px-8 py-4 flex items-center space-x-3">
-                  <Users className="w-5 h-5 text-white/90" />
-                  <span className="text-base text-white/90 font-medium">Limited to 20 students</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/5 rounded-2xl blur-2xl transition-all duration-300 group-hover:blur-3xl group-hover:from-white/15" />
+              <div className="relative backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl px-8 py-5 transition-all duration-300">
+                <div className="flex items-center space-x-4">
+                  <Users className="w-5 h-5 text-white/90" strokeWidth={1.5} />
+                  <div>
+                    <div className="text-sm text-white/60 font-medium mb-1">Class Size</div>
+                    <div className="text-base text-white font-medium tracking-wide">Limited to 20</div>
+                  </div>
                 </div>
               </div>
             </motion.div>
