@@ -1,15 +1,24 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import ApplicationForm from '@/components/ApplicationForm';
 import ApplicationHero from '@/components/ApplicationHero';
-import ApplicationRequirements from '@/components/ApplicationRequirements';
-import ApplicationTimeline from '@/components/ApplicationTimeline';
-import ApplicationFAQ from '@/components/ApplicationFAQ';
-import ScrollToTopButton from '@/components/ScrollToTopButton';
+
+// Lazily load less critical components
+const ApplicationForm = lazy(() => import('@/components/ApplicationForm'));
+const ApplicationRequirements = lazy(() => import('@/components/ApplicationRequirements'));
+const ApplicationTimeline = lazy(() => import('@/components/ApplicationTimeline'));
+const ApplicationFAQ = lazy(() => import('@/components/ApplicationFAQ'));
+const ScrollToTopButton = lazy(() => import('@/components/ScrollToTopButton'));
+
+// Loading indicator for lazy components
+const SectionLoader = () => (
+  <div className="py-16 flex justify-center">
+    <div className="w-8 h-8 border-4 border-energy-purple/30 border-t-energy-purple rounded-full animate-spin"></div>
+  </div>
+);
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -24,13 +33,17 @@ const Application = () => {
   const [showScrollToTop, setShowScrollToTop] = React.useState(false);
   
   useEffect(() => {
+    // Scroll to top more efficiently
     window.scrollTo(0, 0);
     
     const handleScroll = () => {
-      setShowScrollToTop(window.scrollY > 500);
+      // Use requestAnimationFrame to avoid layout thrashing during scroll
+      requestAnimationFrame(() => {
+        setShowScrollToTop(window.scrollY > 500);
+      });
     };
     
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   
@@ -64,7 +77,9 @@ const Application = () => {
               viewport={{ once: true, margin: "-100px" }}
               variants={fadeIn}
             >
-              <ApplicationRequirements />
+              <Suspense fallback={<SectionLoader />}>
+                <ApplicationRequirements />
+              </Suspense>
             </motion.section>
             
             <motion.section
@@ -73,7 +88,9 @@ const Application = () => {
               viewport={{ once: true, margin: "-100px" }}
               variants={fadeIn}
             >
-              <ApplicationTimeline />
+              <Suspense fallback={<SectionLoader />}>
+                <ApplicationTimeline />
+              </Suspense>
             </motion.section>
             
             <motion.section
@@ -83,7 +100,9 @@ const Application = () => {
               variants={fadeIn}
               id="application-form-section"
             >
-              <ApplicationForm />
+              <Suspense fallback={<SectionLoader />}>
+                <ApplicationForm />
+              </Suspense>
             </motion.section>
             
             <motion.section
@@ -92,12 +111,16 @@ const Application = () => {
               viewport={{ once: true, margin: "-100px" }}
               variants={fadeIn}
             >
-              <ApplicationFAQ />
+              <Suspense fallback={<SectionLoader />}>
+                <ApplicationFAQ />
+              </Suspense>
             </motion.section>
           </div>
         </main>
         
-        <ScrollToTopButton visible={showScrollToTop} />
+        <Suspense fallback={null}>
+          <ScrollToTopButton visible={showScrollToTop} />
+        </Suspense>
         
         <Footer />
       </motion.div>

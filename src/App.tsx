@@ -1,14 +1,28 @@
 
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+
+// Import the Index page normally since it's the most visited page
 import Index from './pages/Index';
-import Application from './pages/Application';
-import CancellationPolicy from './pages/CancellationPolicy';
-import TermsAndConditions from './pages/TermsAndConditions';
-import PrivacyPolicy from './pages/PrivacyPolicy';
+
+// Use lazy loading for less frequently visited pages
+const Application = lazy(() => import('./pages/Application'));
+const CancellationPolicy = lazy(() => import('./pages/CancellationPolicy'));
+const TermsAndConditions = lazy(() => import('./pages/TermsAndConditions'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+
+// Loading fallback for lazy-loaded components
+const PageLoader = () => (
+  <div className="h-screen w-full flex items-center justify-center bg-slate-950">
+    <div className="space-y-4 text-center">
+      <div className="animate-spin w-10 h-10 border-4 border-energy-pink/30 border-t-energy-pink rounded-full mx-auto"></div>
+      <p className="text-white/80 text-sm">Loading...</p>
+    </div>
+  </div>
+);
 
 const router = createBrowserRouter([
   {
@@ -17,19 +31,35 @@ const router = createBrowserRouter([
   },
   {
     path: "/apply",
-    element: <Application />,
+    element: (
+      <Suspense fallback={<PageLoader />}>
+        <Application />
+      </Suspense>
+    ),
   },
   {
     path: "/cancellation-policy",
-    element: <CancellationPolicy />,
+    element: (
+      <Suspense fallback={<PageLoader />}>
+        <CancellationPolicy />
+      </Suspense>
+    ),
   },
   {
     path: "/terms-and-conditions",
-    element: <TermsAndConditions />,
+    element: (
+      <Suspense fallback={<PageLoader />}>
+        <TermsAndConditions />
+      </Suspense>
+    ),
   },
   {
     path: "/privacy-policy",
-    element: <PrivacyPolicy />,
+    element: (
+      <Suspense fallback={<PageLoader />}>
+        <PrivacyPolicy />
+      </Suspense>
+    ),
   },
 ]);
 
