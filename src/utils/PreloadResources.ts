@@ -34,7 +34,7 @@ export function preloadResources(): void {
     link.rel = 'preload';
     link.as = 'image';
     link.href = src;
-    link.fetchPriority = 'high';
+    (link as HTMLLinkElement).fetchPriority = 'high';
     document.head.appendChild(link);
   });
 
@@ -45,7 +45,9 @@ export function preloadResources(): void {
       link.rel = 'preload';
       link.as = 'style';
       link.href = href;
-      link.onload = function() {
+      // Fix: Cast to HTMLLinkElement and use proper type checking
+      const linkElement = link as HTMLLinkElement;
+      linkElement.onload = function(this: HTMLLinkElement) {
         this.onload = null;
         this.rel = 'stylesheet';
       };
