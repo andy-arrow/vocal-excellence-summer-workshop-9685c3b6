@@ -1,16 +1,25 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
-import AboutSection from '@/components/AboutSection';
-import CurriculumSection from '@/components/CurriculumSection';
-import InstructorsSection from '@/components/InstructorsSection';
-import CTASection from '@/components/CTASection';
-import Footer from '@/components/Footer';
-import ScrollToTopButton from '@/components/ScrollToTopButton';
-import ApplicationTimeline from '@/components/ApplicationTimeline';
 import { useToast } from '@/hooks/use-toast';
+
+// Lazy load non-critical sections
+const AboutSection = lazy(() => import('@/components/AboutSection'));
+const CurriculumSection = lazy(() => import('@/components/CurriculumSection'));
+const InstructorsSection = lazy(() => import('@/components/InstructorsSection'));
+const CTASection = lazy(() => import('@/components/CTASection'));
+const Footer = lazy(() => import('@/components/Footer'));
+const ScrollToTopButton = lazy(() => import('@/components/ScrollToTopButton'));
+const ApplicationTimeline = lazy(() => import('@/components/ApplicationTimeline'));
+
+// Simple section loader
+const SectionLoader = () => (
+  <div className="py-8 flex justify-center">
+    <div className="w-6 h-6 border-2 border-violet-500/30 border-t-violet-500 rounded-full animate-spin"></div>
+  </div>
+);
 
 // Animation variants
 const pageVariants = {
@@ -35,15 +44,22 @@ const sectionVariants = {
 };
 
 const Index = () => {
-  const [showScrollToTop, setShowScrollToTop] = React.useState(false);
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [sectionsVisible, setSectionsVisible] = useState({
+    about: false,
+    timeline: false,
+    curriculum: false,
+    instructors: false,
+    apply: false
+  });
   const { toast } = useToast();
   
   useEffect(() => {
-    // Show welcome toast for first-time visitors
+    // Show welcome toast for first-time visitors without blocking main thread
     if (!localStorage.getItem('visitedBefore')) {
-      setTimeout(() => {
+      const timeoutId = setTimeout(() => {
         toast({
           title: "Welcome to Vocal Excellence Summer Workshop",
           description: "Applications for our 2025 program are now open!",
@@ -51,6 +67,8 @@ const Index = () => {
         });
         localStorage.setItem('visitedBefore', 'true');
       }, 2000);
+      
+      return () => clearTimeout(timeoutId);
     }
     
     // Check for hash in URL and scroll to that section
@@ -73,67 +91,60 @@ const Index = () => {
       window.scrollTo(0, 0);
     }
     
-    // Scroll reveal animations
-    const revealElements = document.querySelectorAll('.reveal-on-scroll');
+    // Use Intersection Observer for efficient scroll detection
+    const sections = ['about', 'timeline', 'curriculum', 'instructors', 'apply'];
     
-    const revealObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('revealed');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-    
-    revealElements.forEach((el) => revealObserver.observe(el));
-    
-    // Active section detection and scroll to top button visibility
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      setShowScrollToTop(scrollPosition > 500);
-      setHasScrolled(scrollPosition > 100);
-      
-      // Determine active section for nav highlighting
-      const sections = ['home', 'about', 'timeline', 'curriculum', 'instructors', 'apply'];
-      
-      // Find the section that is currently most visible in the viewport
-      let maxVisibleSection = '';
-      let maxVisiblePercentage = 0;
-      
-      sections.forEach(section => {
-        const element = document.getElementById(section);
-        if (!element) return;
-        
-        const rect = element.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-        
-        // Calculate how much of the section is visible in the viewport as a percentage
-        const visibleHeight = Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0);
-        const visiblePercentage = visibleHeight > 0 ? visibleHeight / element.offsetHeight : 0;
-        
-        if (visiblePercentage > maxVisiblePercentage) {
-          maxVisiblePercentage = visiblePercentage;
-          maxVisibleSection = section;
-        }
-      });
-      
-      if (maxVisibleSection && maxVisiblePercentage > 0.2) {
-        setActiveSection(maxVisibleSection);
-        // Update URL hash without scrolling
-        const currentHash = window.location.hash.substring(1);
-        if (currentHash !== maxVisibleSection) {
-          window.history.replaceState(null, '', `#${maxVisibleSection}`);
-        }
-      }
+    const observerOptions = { 
+      threshold: [0.1, 0.5],
+      rootMargin: "-50px 0px"
     };
     
-    window.addEventListener('scroll', handleScroll);
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const id = entry.target.id;
+        
+        // Update visible sections state
+        if (entry.isIntersecting) {
+          setSectionsVisible(prev => ({ ...prev, [id]: true }));
+          
+          // If it's very visible, update active section
+          if (entry.intersectionRatio > 0.5) {
+            setActiveSection(id);
+            
+            // Update URL hash without scrolling
+            const currentHash = window.location.hash.substring(1);
+            if (currentHash !== id) {
+              window.history.replaceState(null, '', `#${id}`);
+            }
+          }
+        }
+      });
+    }, observerOptions);
+    
+    // Observe sections
+    sections.forEach(id => {
+      const element = document.getElementById(id);
+      if (element) sectionObserver.observe(element);
+    });
+    
+    // Setup scroll event listeners optimized for performance
+    const handleScroll = () => {
+      requestAnimationFrame(() => {
+        const scrollPosition = window.scrollY;
+        setShowScrollToTop(scrollPosition > 500);
+        setHasScrolled(scrollPosition > 100);
+      });
+    };
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('hashchange', handleHashChange);
     
     return () => {
-      revealElements.forEach((el) => revealObserver.unobserve(el));
+      // Clean up all observers and listeners
+      sections.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) sectionObserver.unobserve(element);
+      });
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('hashchange', handleHashChange);
     };
@@ -149,12 +160,12 @@ const Index = () => {
     >
       <Navbar activeSection={activeSection} />
       
-      {/* Hero Section */}
+      {/* Hero Section - loads immediately */}
       <motion.div variants={sectionVariants} id="home">
         <HeroSection />
       </motion.div>
       
-      {/* About Section */}
+      {/* About Section - lazy loaded */}
       <motion.div 
         id="about"
         variants={sectionVariants}
@@ -163,10 +174,12 @@ const Index = () => {
         viewport={{ once: true, amount: 0.1 }}
         className="scroll-mt-16"
       >
-        <AboutSection />
+        <Suspense fallback={<SectionLoader />}>
+          {sectionsVisible.about || activeSection === 'about' ? <AboutSection /> : <div className="h-screen"></div>}
+        </Suspense>
       </motion.div>
       
-      {/* Timeline Section */}
+      {/* Timeline Section - lazy loaded */}
       <motion.div 
         id="timeline"
         variants={sectionVariants}
@@ -175,10 +188,12 @@ const Index = () => {
         viewport={{ once: true, amount: 0.1 }}
         className="scroll-mt-16"
       >
-        <ApplicationTimeline />
+        <Suspense fallback={<SectionLoader />}>
+          {sectionsVisible.timeline || activeSection === 'timeline' ? <ApplicationTimeline /> : <div className="h-screen"></div>}
+        </Suspense>
       </motion.div>
       
-      {/* Curriculum Section */}
+      {/* Curriculum Section - lazy loaded */}
       <motion.div 
         id="curriculum"
         variants={sectionVariants}
@@ -187,10 +202,12 @@ const Index = () => {
         viewport={{ once: true, amount: 0.1 }}
         className="scroll-mt-16"
       >
-        <CurriculumSection />
+        <Suspense fallback={<SectionLoader />}>
+          {sectionsVisible.curriculum || activeSection === 'curriculum' ? <CurriculumSection /> : <div className="h-screen"></div>}
+        </Suspense>
       </motion.div>
       
-      {/* Instructors Section */}
+      {/* Instructors Section - lazy loaded */}
       <motion.div 
         id="instructors"
         variants={sectionVariants}
@@ -199,10 +216,12 @@ const Index = () => {
         viewport={{ once: true, amount: 0.1 }}
         className="scroll-mt-16"
       >
-        <InstructorsSection />
+        <Suspense fallback={<SectionLoader />}>
+          {sectionsVisible.instructors || activeSection === 'instructors' ? <InstructorsSection /> : <div className="h-screen"></div>}
+        </Suspense>
       </motion.div>
       
-      {/* CTA Section */}
+      {/* CTA Section - lazy loaded */}
       <motion.div 
         id="apply"
         variants={sectionVariants}
@@ -211,7 +230,9 @@ const Index = () => {
         viewport={{ once: true, amount: 0.1 }}
         className="scroll-mt-16"
       >
-        <CTASection />
+        <Suspense fallback={<SectionLoader />}>
+          {sectionsVisible.apply || activeSection === 'apply' ? <CTASection /> : <div className="h-screen"></div>}
+        </Suspense>
       </motion.div>
       
       {/* Progress indicator for visual feedback */}
@@ -228,9 +249,13 @@ const Index = () => {
       </div>
       
       {/* ScrollToTopButton with improved styling */}
-      <ScrollToTopButton visible={showScrollToTop} />
+      <Suspense fallback={null}>
+        {showScrollToTop && <ScrollToTopButton visible={true} />}
+      </Suspense>
       
-      <Footer />
+      <Suspense fallback={<SectionLoader />}>
+        <Footer />
+      </Suspense>
     </motion.div>
   );
 };

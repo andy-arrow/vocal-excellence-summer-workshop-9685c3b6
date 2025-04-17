@@ -1,23 +1,31 @@
 
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, lazy, Suspense } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
 import { toast } from '@/hooks/use-toast';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Sparkles, CheckCircle2, Hourglass, Calendar, MapPin, Users } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Sparkles, CheckCircle2, Hourglass, Calendar, MapPin, Users } from 'lucide-react';
 import { generateCsrfToken } from '@/utils/security';
-import { Link } from 'react-router-dom';
 
 import { applicationSchema, ApplicationFormValues } from '@/components/ApplicationForm/schema';
-import PersonalInfoSection from '@/components/ApplicationForm/PersonalInfoSection';
-import MusicalBackgroundSection from '@/components/ApplicationForm/MusicalBackgroundSection';
-import ProgrammeApplicationSection from '@/components/ApplicationForm/ProgrammeApplicationSection';
-import SupportingMaterialsSection from '@/components/ApplicationForm/SupportingMaterialsSection';
-import TermsAndConditionsSection from '@/components/ApplicationForm/TermsAndConditionsSection';
-import SubmitButton from '@/components/ApplicationForm/SubmitButton';
-import SubmissionSuccessMessage from '@/components/ApplicationForm/SubmissionSuccessMessage';
 import { submitApplicationWithFiles } from '@/utils/fileUpload';
+
+// Lazy load all form sections
+const PersonalInfoSection = lazy(() => import('@/components/ApplicationForm/PersonalInfoSection'));
+const MusicalBackgroundSection = lazy(() => import('@/components/ApplicationForm/MusicalBackgroundSection'));
+const ProgrammeApplicationSection = lazy(() => import('@/components/ApplicationForm/ProgrammeApplicationSection'));
+const SupportingMaterialsSection = lazy(() => import('@/components/ApplicationForm/SupportingMaterialsSection'));
+const TermsAndConditionsSection = lazy(() => import('@/components/ApplicationForm/TermsAndConditionsSection'));
+const SubmitButton = lazy(() => import('@/components/ApplicationForm/SubmitButton'));
+const SubmissionSuccessMessage = lazy(() => import('@/components/ApplicationForm/SubmissionSuccessMessage'));
+
+// Loading indicator for lazy components
+const SectionLoader = () => (
+  <div className="py-8 flex justify-center">
+    <div className="w-8 h-8 border-4 border-energy-purple/30 border-t-energy-purple rounded-full animate-spin"></div>
+  </div>
+);
 
 const formVariants = {
   hidden: { opacity: 0 },
@@ -53,12 +61,21 @@ const ApplicationForm = () => {
     
     sessionStorage.setItem('formCsrfToken', token);
     
-    if (typeof window !== 'undefined') {
-      console.log('ApplicationForm mount: applicationFiles state:', 
-        window.applicationFiles ? Object.keys(window.applicationFiles).map(key => 
-          `${key}: ${window.applicationFiles[key] ? window.applicationFiles[key].name : 'null'}`
-        ) : 'Not initialized');
+    // Initialize window.applicationFiles if needed
+    if (typeof window !== 'undefined' && !window.applicationFiles) {
+      window.applicationFiles = {};
+      console.log('Initialized window.applicationFiles');
     }
+    
+    // Return cleanup function to improve memory usage
+    return () => {
+      // Clear any large objects that might cause memory leaks
+      if (typeof window !== 'undefined' && window.applicationFiles) {
+        Object.keys(window.applicationFiles).forEach(key => {
+          window.applicationFiles[key] = null;
+        });
+      }
+    };
   }, []);
   
   const form = useForm<ApplicationFormValues>({
@@ -182,33 +199,57 @@ const ApplicationForm = () => {
   }, []);
 
   if (isSubmitted) {
-    return <SubmissionSuccessMessage />;
+    return (
+      <Suspense fallback={<SectionLoader />}>
+        <SubmissionSuccessMessage />
+      </Suspense>
+    );
   }
 
   const sections = [
     { 
       title: "Personal Info", 
-      component: <PersonalInfoSection />,
+      component: (
+        <Suspense fallback={<SectionLoader />}>
+          <PersonalInfoSection />
+        </Suspense>
+      ),
       icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-fuchsia-500/30 p-2 rounded-full"><Sparkles size={18} className="text-fuchsia-400" /></motion.div>
     },
     { 
       title: "Musical Background", 
-      component: <MusicalBackgroundSection />,
+      component: (
+        <Suspense fallback={<SectionLoader />}>
+          <MusicalBackgroundSection />
+        </Suspense>
+      ),
       icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-violet-500/30 p-2 rounded-full"><Hourglass size={18} className="text-violet-400" /></motion.div>
     },
     { 
       title: "Programme", 
-      component: <ProgrammeApplicationSection />,
+      component: (
+        <Suspense fallback={<SectionLoader />}>
+          <ProgrammeApplicationSection />
+        </Suspense>
+      ),
       icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-indigo-500/30 p-2 rounded-full"><CheckCircle2 size={18} className="text-indigo-400" /></motion.div>
     },
     { 
       title: "Materials", 
-      component: <SupportingMaterialsSection />,
+      component: (
+        <Suspense fallback={<SectionLoader />}>
+          <SupportingMaterialsSection />
+        </Suspense>
+      ),
       icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-purple-500/30 p-2 rounded-full"><CheckCircle2 size={18} className="text-purple-400" /></motion.div>
     },
     { 
       title: "Terms", 
-      component: <TermsAndConditionsSection />,
+      component: (
+        <Suspense fallback={<SectionLoader />}>
+          <TermsAndConditionsSection />
+        </Suspense>
+      ),
       icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-pink-500/30 p-2 rounded-full"><CheckCircle2 size={18} className="text-pink-400" /></motion.div>
     },
   ];
@@ -300,7 +341,9 @@ const ApplicationForm = () => {
                 viewport={{ once: true }}
                 className="flex justify-center pt-6"
               >
-                <SubmitButton isSubmitting={isSubmitting} />
+                <Suspense fallback={<SectionLoader />}>
+                  <SubmitButton isSubmitting={isSubmitting} />
+                </Suspense>
               </motion.div>
             </div>
           </form>
