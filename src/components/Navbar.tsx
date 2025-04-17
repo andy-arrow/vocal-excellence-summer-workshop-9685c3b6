@@ -1,11 +1,13 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { X, Menu, Music, Users, Calendar, Sparkles } from 'lucide-react';
+import { ArrowUpRight, Menu, X, Music, ChevronDown } from 'lucide-react';
 import AuthButtons from '@/components/AuthButtons';
 import AuthButtonsPlaceholder from './AuthButtonsPlaceholder';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { Separator } from '@/components/ui/separator';
+import { Toggle } from '@/components/ui/toggle';
 
 interface NavbarProps {
   activeSection?: string;
@@ -14,10 +16,11 @@ interface NavbarProps {
 const Navbar = ({ activeSection }: NavbarProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hovered, setHovered] = useState<string | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      const isScrolled = window.scrollY > 20;
+      const isScrolled = window.scrollY > 10;
       if (isScrolled !== scrolled) {
         setScrolled(isScrolled);
       }
@@ -40,68 +43,89 @@ const Navbar = ({ activeSection }: NavbarProps) => {
     }
   };
 
+  const navLinks = [
+    { id: 'home', label: 'Home' },
+    { id: 'about', label: 'About' },
+    { id: 'curriculum', label: 'Curriculum' },
+    { id: 'instructors', label: 'Instructors' },
+    { id: 'testimonials', label: 'Testimonials' },
+    { id: 'gallery', label: 'Gallery' },
+  ];
+
   return (
-    <header className={cn(
-      "fixed top-0 left-0 w-full z-50 transition-all duration-300",
-      scrolled 
-        ? "bg-slate-900/95 backdrop-blur-md shadow-md shadow-black/10 border-b border-violet-500/15" 
-        : "bg-slate-900/70 backdrop-blur-sm"
-    )}>
-      <div className="container mx-auto px-5 md:px-8 py-4 flex items-center justify-between">
+    <header 
+      className={cn(
+        "fixed top-0 left-0 w-full z-50 transition-all duration-300",
+        scrolled 
+          ? "backdrop-blur-md border-b border-white/10" 
+          : "backdrop-blur-sm"
+      )}
+      style={{
+        backgroundColor: scrolled ? 'rgba(22, 22, 23, 0.8)' : 'rgba(22, 22, 23, 0.5)'
+      }}
+    >
+      <div className="max-w-[1200px] mx-auto px-6 md:px-10 py-4 flex items-center justify-between">
+        {/* Logo */}
         <Link 
           to="/" 
-          className="font-outfit font-bold text-white tracking-tight hover:text-energy-purple/90 transition-colors flex items-center group"
+          className="font-outfit font-medium text-white tracking-tight transition-opacity hover:opacity-80"
         >
-          <div className="mr-2 w-8 h-8 rounded-full bg-gradient-to-br from-energy-purple to-energy-pink flex items-center justify-center text-white transform transition-transform group-hover:scale-110">
-            <Music className="w-4 h-4" />
+          <div className="flex items-center">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-energy-purple to-energy-pink flex items-center justify-center mr-3">
+              <Music className="w-4 h-4 text-white" />
+            </div>
+            <div>
+              <span className="text-lg font-medium md:text-xl">Vocal Excellence</span>
+              <span className="hidden md:block text-xs opacity-80 -mt-1">Summer Workshop</span>
+            </div>
           </div>
-          <span className="text-xl md:text-2xl bg-clip-text text-transparent bg-gradient-to-r from-white to-white/80">
-            Vocal Excellence Summer Workshop
-          </span>
         </Link>
 
-        <div className="hidden md:flex items-center gap-7">
-          <a
-            href="#home"
-            onClick={(e) => handleSmoothScroll(e, 'home')}
-            className={`text-white/85 hover:text-white transition-colors flex items-center gap-2 text-sm font-medium ${activeSection === 'home' ? 'text-white' : ''}`}
-          >
-            <Sparkles className="w-3.5 h-3.5" />
-            Home
-          </a>
-          <a
-            href="#about"
-            onClick={(e) => handleSmoothScroll(e, 'about')}
-            className={`text-white/85 hover:text-white transition-colors flex items-center gap-2 text-sm font-medium ${activeSection === 'about' ? 'text-white' : ''}`}
-          >
-            <Music className="w-3.5 h-3.5" />
-            About
-          </a>
-          <a
-            href="#curriculum"
-            onClick={(e) => handleSmoothScroll(e, 'curriculum')}
-            className={`text-white/85 hover:text-white transition-colors flex items-center gap-2 text-sm font-medium ${activeSection === 'curriculum' ? 'text-white' : ''}`}
-          >
-            <Calendar className="w-3.5 h-3.5" />
-            Curriculum
-          </a>
-          <a
-            href="#instructors"
-            onClick={(e) => handleSmoothScroll(e, 'instructors')}
-            className={`text-white/85 hover:text-white transition-colors flex items-center gap-2 text-sm font-medium ${activeSection === 'instructors' ? 'text-white' : ''}`}
-          >
-            <Users className="w-3.5 h-3.5" />
-            Instructors
-          </a>
+        {/* Desktop Navigation */}
+        <nav className="hidden md:block">
+          <ul className="flex space-x-8">
+            {navLinks.map((link) => (
+              <li key={link.id}>
+                <a
+                  href={`#${link.id}`}
+                  onClick={(e) => handleSmoothScroll(e, link.id)}
+                  onMouseEnter={() => setHovered(link.id)}
+                  onMouseLeave={() => setHovered(null)}
+                  className={cn(
+                    "relative py-1 text-sm font-medium transition-colors",
+                    activeSection === link.id ? "text-white" : "text-white/75 hover:text-white"
+                  )}
+                >
+                  {link.label}
+                  {(activeSection === link.id || hovered === link.id) && (
+                    <motion.div
+                      className="absolute bottom-[-4px] left-0 right-0 h-[1px] bg-white/60"
+                      layoutId="underline"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                    />
+                  )}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        
+        {/* Call to Action & Auth */}
+        <div className="hidden md:flex items-center space-x-6">
           <NavLink
             to="/apply"
-            className={({ isActive }) =>
-              `px-4 py-1.5 rounded-full ${isActive 
-                ? 'bg-energy-purple/90 text-white shadow-lg shadow-energy-purple/20' 
-                : 'bg-white/10 hover:bg-white/20 text-white/85 hover:text-white'} transition-all text-sm font-medium`
-            }
+            className={({ isActive }) => cn(
+              "group px-4 py-1.5 text-sm font-medium rounded-full flex items-center gap-1.5 transition-all",
+              isActive 
+                ? "bg-white text-slate-900" 
+                : "bg-white/10 text-white backdrop-blur-sm hover:bg-white/20"
+            )}
           >
-            Apply Now
+            <span>Apply Now</span>
+            <ArrowUpRight size={14} className="opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </NavLink>
           
           {(() => {
@@ -113,98 +137,95 @@ const Navbar = ({ activeSection }: NavbarProps) => {
           })()}
         </div>
 
+        {/* Mobile Menu Trigger */}
         <button 
           onClick={toggleMenu} 
-          className="md:hidden text-white p-1.5 rounded-md hover:bg-white/10 transition-colors"
+          className="md:hidden text-white p-1 rounded-full hover:bg-white/10 transition-colors"
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         >
-          {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
+          {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
 
-      {/* Mobile Menu with improved animations */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div 
-            className="bg-slate-900/98 backdrop-blur-lg md:hidden fixed top-[73px] left-0 w-full border-b border-violet-500/15 shadow-lg shadow-black/10"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
+            className="md:hidden fixed inset-0 top-[72px] z-40 flex flex-col"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
           >
-            <div className="flex flex-col gap-4 py-6 px-6">
-              <motion.a
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-                href="#home"
-                onClick={(e) => handleSmoothScroll(e, 'home')}
-                className="text-white/90 hover:text-white transition-colors flex items-center gap-3 py-3 px-4 rounded-lg hover:bg-white/5"
-              >
-                <Sparkles className="w-4 h-4" />
-                Home
-              </motion.a>
-              <motion.a
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                href="#about"
-                onClick={(e) => handleSmoothScroll(e, 'about')}
-                className="text-white/90 hover:text-white transition-colors flex items-center gap-3 py-3 px-4 rounded-lg hover:bg-white/5"
-              >
-                <Music className="w-4 h-4" />
-                About
-              </motion.a>
-              <motion.a
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                href="#curriculum"
-                onClick={(e) => handleSmoothScroll(e, 'curriculum')}
-                className="text-white/90 hover:text-white transition-colors flex items-center gap-3 py-3 px-4 rounded-lg hover:bg-white/5"
-              >
-                <Calendar className="w-4 h-4" />
-                Curriculum
-              </motion.a>
-              <motion.a
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                href="#instructors"
-                onClick={(e) => handleSmoothScroll(e, 'instructors')}
-                className="text-white/90 hover:text-white transition-colors flex items-center gap-3 py-3 px-4 rounded-lg hover:bg-white/5"
-              >
-                <Users className="w-4 h-4" />
-                Instructors
-              </motion.a>
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-              >
-                <NavLink
-                  to="/apply"
-                  className={({ isActive }) =>
-                    `flex justify-center items-center w-full py-3 mt-2 rounded-xl ${
-                      isActive 
-                        ? 'bg-gradient-to-r from-energy-purple to-energy-pink text-white' 
-                        : 'bg-white/10 text-white hover:bg-white/15'
-                    } transition-all`
-                  }
-                  onClick={toggleMenu}
+            {/* Backdrop */}
+            <motion.div 
+              className="absolute inset-0 bg-black/60 backdrop-blur-md"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={toggleMenu}
+            />
+            
+            {/* Menu Content */}
+            <motion.div 
+              className="relative z-10 flex-1 bg-slate-900/95 backdrop-blur-lg border-t border-white/10 overflow-auto"
+              initial={{ y: -50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -50, opacity: 0 }}
+              transition={{ delay: 0.1, duration: 0.3 }}
+            >
+              <div className="px-6 py-8 space-y-6">
+                <nav>
+                  <ul className="space-y-5">
+                    {navLinks.map((link, idx) => (
+                      <motion.li 
+                        key={link.id}
+                        initial={{ x: -20, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ delay: 0.1 + idx * 0.06 }}
+                      >
+                        <a
+                          href={`#${link.id}`}
+                          onClick={(e) => handleSmoothScroll(e, link.id)}
+                          className={cn(
+                            "block py-2 text-lg font-medium transition-colors",
+                            activeSection === link.id ? "text-white" : "text-white/70 hover:text-white"
+                          )}
+                        >
+                          {link.label}
+                        </a>
+                        <Separator className="mt-2 bg-white/10" />
+                      </motion.li>
+                    ))}
+                  </ul>
+                </nav>
+                
+                <motion.div
+                  initial={{ y: 10, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.4 }}
+                  className="pt-4"
                 >
-                  Apply Now
-                </NavLink>
-              </motion.div>
-              <motion.div 
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-                className="pt-3 mt-2 border-t border-white/10"
-              >
-                <AuthButtonsPlaceholder />
-              </motion.div>
-            </div>
+                  <NavLink
+                    to="/apply"
+                    className="w-full py-3.5 flex justify-center items-center bg-white text-slate-900 rounded-xl text-base font-medium"
+                    onClick={toggleMenu}
+                  >
+                    Apply Now
+                    <ArrowUpRight size={16} className="ml-2 opacity-70" />
+                  </NavLink>
+                </motion.div>
+                
+                <motion.div
+                  initial={{ y: 10, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                  className="pt-4 flex justify-center"
+                >
+                  <AuthButtonsPlaceholder />
+                </motion.div>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

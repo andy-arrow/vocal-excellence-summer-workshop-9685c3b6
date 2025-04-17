@@ -6,9 +6,12 @@ import { LogIn } from 'lucide-react';
 // A simplified version of AuthButtons that doesn't require authentication context
 const AuthButtonsPlaceholder = memo(() => {
   return (
-    <Link to="/auth" className="text-white/90 hover:text-white transition-colors flex items-center gap-1">
-      <LogIn size={16} />
-      <span>Login</span>
+    <Link 
+      to="/auth" 
+      className="text-white/80 hover:text-white transition-colors flex items-center gap-1.5 text-sm font-medium"
+    >
+      <LogIn size={14} />
+      <span>Sign In</span>
     </Link>
   );
 });
