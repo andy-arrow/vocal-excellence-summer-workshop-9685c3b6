@@ -7,6 +7,7 @@ import './styles/animations.css'
 import ErrorBoundary from '@/utils/ErrorBoundary'
 import { trackError } from '@/utils/monitoring'
 import { preloadResources } from '@/utils/PreloadResources'
+import { AuthProvider } from '@/contexts/AuthContext'
 
 // Run preloading immediately
 preloadResources();
@@ -51,11 +52,6 @@ window.addEventListener('unhandledrejection', (event) => {
 // Simple loading fallback that doesn't block main thread
 const LoadingFallback = () => null;
 
-// Create simplified AuthProvider that doesn't block rendering
-const SimpleAuthProvider = ({ children }: { children: React.ReactNode }) => {
-  return <>{children}</>;
-};
-
 // Measure and report performance
 const reportWebVitals = () => {
   if ('performance' in window && 'getEntriesByType' in performance) {
@@ -89,37 +85,46 @@ setTimeout(() => {
   const rootElement = document.getElementById('root');
   
   if (rootElement) {
-    // Implement progressive hydration - mount a minimal app first, then enhance
-    const root = ReactDOM.createRoot(rootElement);
-    
-    root.render(
-      <React.StrictMode>
-        <ErrorBoundary>
-          <SimpleAuthProvider>
-            <App />
-          </SimpleAuthProvider>
-          
-          {/* Lazy load non-critical UI components */}
-          <Suspense fallback={null}>
-            <Toaster />
-            <Sonner position="top-right" closeButton />
-          </Suspense>
-        </ErrorBoundary>
-      </React.StrictMode>
-    );
+    // Initialize AuthContext
+    import('@/contexts/AuthContext').then(({ AuthProvider }) => {
+      // Implement progressive hydration - mount a minimal app first, then enhance
+      const root = ReactDOM.createRoot(rootElement);
+      
+      root.render(
+        <React.StrictMode>
+          <ErrorBoundary>
+            <AuthProvider>
+              <App />
+              
+              {/* Lazy load non-critical UI components */}
+              <Suspense fallback={null}>
+                <Toaster />
+                <Sonner position="top-right" closeButton />
+              </Suspense>
+            </AuthProvider>
+          </ErrorBoundary>
+        </React.StrictMode>
+      );
+      
+      console.log('App rendered with AuthProvider');
+    }).catch(error => {
+      console.error('Failed to load AuthContext:', error);
+      
+      // Fallback rendering without AuthProvider
+      const root = ReactDOM.createRoot(rootElement);
+      root.render(
+        <React.StrictMode>
+          <ErrorBoundary>
+            <div className="p-6 text-center">
+              <h2 className="text-xl text-red-500">Authentication service is currently unavailable</h2>
+              <p className="mt-2">Please try refreshing the page</p>
+            </div>
+          </ErrorBoundary>
+        </React.StrictMode>
+      );
+    });
   }
 }, 0);
 
-// Lazily load complete AuthProvider after initial render
-if ('requestIdleCallback' in window) {
-  (window as any).requestIdleCallback(async () => {
-    await import('@/contexts/AuthContext');
-    console.log('Auth context loaded in background');
-  });
-} else {
-  // Fallback for browsers without requestIdleCallback
-  setTimeout(async () => {
-    await import('@/contexts/AuthContext');
-    console.log('Auth context loaded with setTimeout fallback');
-  }, 2000);
-}
+// Remove the SimpleAuthProvider and lazy loading of AuthContext since we're now
+// loading AuthContext properly with the app initialization

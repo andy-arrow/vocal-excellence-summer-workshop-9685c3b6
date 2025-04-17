@@ -30,24 +30,23 @@ export function preloadResources(): void {
   
   // Preload critical images
   criticalResources.images.forEach(src => {
-    const link = document.createElement('link');
+    const link = document.createElement('link') as HTMLLinkElement;
     link.rel = 'preload';
     link.as = 'image';
     link.href = src;
-    (link as HTMLLinkElement).fetchPriority = 'high';
+    link.fetchPriority = 'high';
     document.head.appendChild(link);
   });
 
   // Preload critical stylesheets
   criticalResources.stylesheets.forEach(href => {
     if (!document.querySelector(`link[href="${href}"]`)) {
-      const link = document.createElement('link');
+      const link = document.createElement('link') as HTMLLinkElement;
       link.rel = 'preload';
       link.as = 'style';
       link.href = href;
-      // Fix: Cast to HTMLLinkElement and use proper type checking
-      const linkElement = link as HTMLLinkElement;
-      linkElement.onload = function(this: HTMLLinkElement) {
+      
+      link.onload = function(this: HTMLLinkElement) {
         this.onload = null;
         this.rel = 'stylesheet';
       };
@@ -58,7 +57,7 @@ export function preloadResources(): void {
   // Add preconnect for external domains
   criticalResources.preconnects.forEach(({ href, crossOrigin }) => {
     if (!document.querySelector(`link[rel="preconnect"][href="${href}"]`)) {
-      const link = document.createElement('link');
+      const link = document.createElement('link') as HTMLLinkElement;
       link.rel = 'preconnect';
       link.href = href;
       if (crossOrigin) link.crossOrigin = crossOrigin;
@@ -69,7 +68,7 @@ export function preloadResources(): void {
   // Add DNS prefetch
   criticalResources.dnsPrefetch.forEach(href => {
     if (!document.querySelector(`link[rel="dns-prefetch"][href="${href}"]`)) {
-      const link = document.createElement('link');
+      const link = document.createElement('link') as HTMLLinkElement;
       link.rel = 'dns-prefetch';
       link.href = href;
       document.head.appendChild(link);
@@ -83,7 +82,7 @@ export function preloadResources(): void {
 export function preloadImage(src: string): void {
   if (typeof document === 'undefined' || !src) return;
   
-  const link = document.createElement('link');
+  const link = document.createElement('link') as HTMLLinkElement;
   link.rel = 'preload';
   link.as = 'image';
   link.href = src;
