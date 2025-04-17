@@ -6,7 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger
 } from '@/components/ui/accordion';
-import { Star, HelpCircle, Sparkles, Award, Clock, Home, CreditCard } from 'lucide-react';
+import { Star, HelpCircle, Sparkles, Award, Clock, Home, CreditCard, Music, Lightbulb } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const MotionDiv = motion.div;
@@ -17,7 +17,7 @@ const ApplicationFAQ = () => {
   const faqCategories = [
     {
       title: "Program Basics",
-      icon: <HelpCircle className="w-5 h-5" />,
+      icon: <Music className="w-5 h-5" />,
       items: [
         {
           question: "What level of experience do I need?",
@@ -45,7 +45,7 @@ const ApplicationFAQ = () => {
     },
     {
       title: "Program Content",
-      icon: <Sparkles className="w-5 h-5" />,
+      icon: <Lightbulb className="w-5 h-5" />,
       items: [
         {
           question: "What songs will I learn?",
@@ -78,17 +78,17 @@ const ApplicationFAQ = () => {
   };
 
   return (
-    <section className="py-20 md:py-24 bg-gradient-to-b from-white to-accent/5 noise-bg">
+    <section className="py-24 md:py-28 bg-gradient-to-b from-white to-primary/5 noise-bg">
       <div className="max-w-6xl mx-auto px-6 md:px-8">
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <span className="inline-flex items-center bg-accent/15 text-accent rounded-full py-2 px-4 text-sm font-medium mb-5 shadow-sm">
+          <span className="inline-flex items-center bg-energy-purple/15 text-energy-purple rounded-full py-2 px-4 text-sm font-medium mb-5 shadow-sm">
             <HelpCircle className="mr-2 w-4 h-4" />
             Common Questions
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 font-outfit tracking-tight">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 font-outfit tracking-tight text-gray-900">
             Frequently Asked <span className="gradient-text">Questions</span>
           </h2>
-          <div className="decorative-line mx-auto w-16 h-1 bg-accent/50 rounded-full mb-6"></div>
+          <div className="h-1 w-20 bg-gradient-to-r from-energy-purple to-energy-pink rounded-full mx-auto mb-6"></div>
           <p className="text-foreground/80 max-w-2xl mx-auto text-lg leading-relaxed">
             Everything you need to know about our vocal workshop in bite-sized answers
           </p>
@@ -105,10 +105,10 @@ const ApplicationFAQ = () => {
               className="focus-section"
             >
               <div className="flex items-center mb-6">
-                <div className="w-12 h-12 rounded-full bg-accent/15 flex items-center justify-center text-accent shadow-md">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-energy-purple/20 to-energy-pink/20 flex items-center justify-center text-energy-purple shadow-md">
                   {category.icon}
                 </div>
-                <h3 className="text-xl font-bold ml-4 text-foreground font-outfit tracking-tight">{category.title}</h3>
+                <h3 className="text-xl font-bold ml-4 text-gray-800 font-outfit tracking-tight">{category.title}</h3>
               </div>
               
               <Accordion type="single" collapsible className="space-y-4">
@@ -118,20 +118,20 @@ const ApplicationFAQ = () => {
                     <AccordionItem 
                       key={itemId} 
                       value={itemId} 
-                      className="border border-border rounded-xl overflow-hidden shadow-md transition-all hover:shadow-lg"
+                      className="border border-gray-200 rounded-xl overflow-hidden shadow-sm transition-all hover:shadow-md bg-white"
                     >
                       <AccordionTrigger 
                         onClick={() => handleAccordionChange(itemId)}
-                        className="text-left font-medium text-lg text-foreground hover:text-primary data-[state=open]:text-primary transition-colors px-5 py-4"
+                        className="text-left font-medium text-lg text-gray-800 hover:text-energy-purple data-[state=open]:text-energy-purple transition-colors px-5 py-4"
                       >
                         <div className="flex items-center">
                           <Star 
-                            className={`w-5 h-5 mr-3 transition-colors ${activeIndex === itemId ? 'text-accent' : 'text-accent/50'}`}
+                            className={`w-5 h-5 mr-3 transition-colors ${activeIndex === itemId ? 'text-energy-pink' : 'text-energy-pink/50'}`}
                           />
                           <span className="font-outfit tracking-tight">{item.question}</span>
                         </div>
                       </AccordionTrigger>
-                      <AccordionContent className="text-foreground/80 text-base pt-2 px-6 pb-5 border-t border-border/50 leading-relaxed">
+                      <AccordionContent className="text-gray-600 text-base pt-2 px-6 pb-5 border-t border-gray-100 leading-relaxed">
                         {item.answer}
                       </AccordionContent>
                     </AccordionItem>
@@ -141,6 +141,30 @@ const ApplicationFAQ = () => {
             </MotionDiv>
           ))}
         </div>
+        
+        <motion.div 
+          className="mt-16 bg-gradient-to-r from-energy-purple/10 to-energy-pink/10 p-6 md:p-8 rounded-2xl max-w-4xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+        >
+          <div className="flex flex-col md:flex-row items-center gap-6">
+            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-energy-purple to-energy-pink flex items-center justify-center text-white shadow-lg flex-shrink-0">
+              <Sparkles className="w-8 h-8" />
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-gray-800 font-outfit mb-2">Still have questions?</h3>
+              <p className="text-gray-600 mb-4">If you couldn't find what you're looking for, please don't hesitate to contact us.</p>
+              <a 
+                href="mailto:info@vocalexcellence.com" 
+                className="inline-flex items-center font-medium text-energy-purple hover:text-energy-purple/80 transition-colors"
+              >
+                Email our support team <span className="ml-2">→</span>
+              </a>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -10,6 +10,9 @@ import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
 import ScrollToTopButton from '@/components/ScrollToTopButton';
 import ApplicationTimeline from '@/components/ApplicationTimeline';
+import TestimonialsSection from '@/components/TestimonialsSection';
+import GallerySection from '@/components/GallerySection';
+import { useToast } from '@/hooks/use-toast';
 
 // Animation variants
 const pageVariants = {
@@ -37,8 +40,21 @@ const Index = () => {
   const [showScrollToTop, setShowScrollToTop] = React.useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const { toast } = useToast();
   
   useEffect(() => {
+    // Show welcome toast for first-time visitors
+    if (!localStorage.getItem('visitedBefore')) {
+      setTimeout(() => {
+        toast({
+          title: "Welcome to Vocal Excellence Summer Workshop",
+          description: "Applications for our 2025 program are now open!",
+          duration: 5000,
+        });
+        localStorage.setItem('visitedBefore', 'true');
+      }, 2000);
+    }
+    
     // Check for hash in URL and scroll to that section
     const handleHashChange = () => {
       const hash = window.location.hash.substring(1);
@@ -82,7 +98,7 @@ const Index = () => {
       setHasScrolled(scrollPosition > 100);
       
       // Determine active section for nav highlighting
-      const sections = ['home', 'about', 'timeline', 'curriculum', 'instructors', 'apply'];
+      const sections = ['home', 'about', 'timeline', 'curriculum', 'instructors', 'testimonials', 'gallery', 'apply'];
       
       // Find the section that is currently most visible in the viewport
       let maxVisibleSection = '';
@@ -123,7 +139,7 @@ const Index = () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('hashchange', handleHashChange);
     };
-  }, []);
+  }, [toast]);
 
   return (
     <motion.div 
@@ -140,7 +156,7 @@ const Index = () => {
         <HeroSection />
       </motion.div>
       
-      {/* About Section - this is what "awaits" */}
+      {/* About Section */}
       <motion.div 
         id="about"
         variants={sectionVariants}
@@ -152,7 +168,7 @@ const Index = () => {
         <AboutSection />
       </motion.div>
       
-      {/* Timeline Section - Highlighting May 15 deadline */}
+      {/* Timeline Section */}
       <motion.div 
         id="timeline"
         variants={sectionVariants}
@@ -186,6 +202,30 @@ const Index = () => {
         className="scroll-mt-16"
       >
         <InstructorsSection />
+      </motion.div>
+      
+      {/* Testimonials Section */}
+      <motion.div 
+        id="testimonials"
+        variants={sectionVariants}
+        initial="initial" 
+        whileInView="animate"
+        viewport={{ once: true, amount: 0.1 }}
+        className="scroll-mt-16"
+      >
+        <TestimonialsSection />
+      </motion.div>
+      
+      {/* Gallery Section */}
+      <motion.div 
+        id="gallery"
+        variants={sectionVariants}
+        initial="initial" 
+        whileInView="animate"
+        viewport={{ once: true, amount: 0.1 }}
+        className="scroll-mt-16"
+      >
+        <GallerySection />
       </motion.div>
       
       {/* CTA Section */}

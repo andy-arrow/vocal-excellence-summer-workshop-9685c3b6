@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Music, Mic, Users, Award, Sparkles, Star } from 'lucide-react';
+import { Music, Mic, Users, Award, Sparkles, Star, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
@@ -61,8 +61,12 @@ const AboutSection = () => {
   }, []);
 
   return (
-    <section id="about" ref={sectionRef} className="py-24 md:py-28 noise-bg bg-gradient-to-b from-white to-primary/5">
-      <div className="max-w-7xl mx-auto px-6 md:px-10">
+    <section id="about" ref={sectionRef} className="py-24 md:py-28 noise-bg bg-gradient-to-b from-white to-primary/5 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 md:px-10 relative">
+        {/* Decorative blobs */}
+        <div className="absolute -top-64 -right-64 w-[500px] h-[500px] rounded-full bg-energy-purple/5 blur-[120px] -z-10"></div>
+        <div className="absolute -bottom-64 -left-64 w-[500px] h-[500px] rounded-full bg-energy-pink/5 blur-[120px] -z-10"></div>
+        
         <div className="text-center mb-16">
           <span className="inline-flex items-center bg-primary/10 text-primary rounded-full py-1.5 px-3.5 text-sm font-medium mb-4">
             <Star className="mr-1.5 w-4 h-4 text-energy-yellow" />
@@ -75,7 +79,7 @@ const AboutSection = () => {
             Break the Rules, <br className="md:hidden" />
             <span className="gradient-text">Find Your Sound</span>
           </h2>
-          <div className="decorative-line mx-auto"></div>
+          <div className="h-1 w-24 bg-gradient-to-r from-energy-purple to-energy-pink rounded-full mx-auto mb-6"></div>
           <p 
             ref={(el) => (elementsRef.current[1] = el)} 
             className="section-subtitle reveal-on-scroll max-w-3xl mx-auto"
@@ -95,30 +99,57 @@ const AboutSection = () => {
                 <span className="font-semibold text-secondary">Vocal Excellence Summer Workshop</span> isn't your typical boring workshop. 
                 It's an <span className="font-semibold text-primary">energy-packed</span> five-day vocal transformation where you'll:
               </p>
-              <ul className="space-y-3 pt-1">
+              <ul className="space-y-3.5 pt-1">
                 {[
                   "Find your unique vocal style",
                   "Master techniques that enhance your natural abilities",
                   "Connect with coaches who understand your creative vision",
                   "Perform on stage in our final showcase"
                 ].map((item, i) => (
-                  <li key={i} className="flex items-start">
-                    <span className="flex-shrink-0 w-5 h-5 rounded-full bg-secondary/20 flex items-center justify-center mt-1 mr-3">
-                      <span className="w-2 h-2 rounded-full bg-secondary"></span>
+                  <motion.li 
+                    key={i} 
+                    className="flex items-start"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: i * 0.1 }}
+                    viewport={{ once: true }}
+                  >
+                    <span className="flex-shrink-0 w-5 h-5 rounded-full bg-gradient-to-br from-energy-purple/30 to-energy-pink/30 flex items-center justify-center mt-1 mr-3">
+                      <span className="w-1.5 h-1.5 rounded-full bg-energy-pink"></span>
                     </span>
                     <span>{item}</span>
-                  </li>
+                  </motion.li>
                 ))}
               </ul>
               
-              <div className="rounded-xl overflow-hidden relative h-6 mt-2">
-                <div className="progress-bar"></div>
+              <div className="rounded-xl overflow-hidden relative h-1 mt-6">
+                <div className="w-full h-full bg-gray-100 rounded-full overflow-hidden">
+                  <motion.div 
+                    className="h-full bg-gradient-to-r from-energy-purple to-energy-pink rounded-full"
+                    initial={{ width: "0%" }}
+                    whileInView={{ width: "85%" }}
+                    transition={{ duration: 1, ease: "easeOut" }}
+                    viewport={{ once: true }}
+                  />
+                </div>
               </div>
             </div>
             
-            <blockquote className="decorative-quote pl-6 border-l-2 border-secondary/50 my-8">
+            <blockquote className="pl-6 border-l-2 border-energy-pink/50 my-8 italic text-2xl text-energy-purple/80 font-light leading-relaxed">
               "Your voice is your superpower. Your creativity is your edge. Together, they're unstoppable."
             </blockquote>
+            
+            <div className="bg-white/70 backdrop-blur-sm p-5 rounded-xl border border-energy-purple/10 shadow-sm">
+              <h4 className="font-semibold text-lg mb-2 font-outfit text-gray-800">Next Application Deadline</h4>
+              <div className="flex justify-between items-center">
+                <p className="text-gray-600">May 15, 2025</p>
+                <div className="w-auto h-6 flex items-center gap-1">
+                  <div className="w-1.5 h-full rounded-full bg-energy-purple animate-pulse-slow"></div>
+                  <div className="w-1.5 h-3 rounded-full bg-energy-pink animate-pulse-slow animation-delay-300"></div>
+                  <div className="w-1.5 h-5 rounded-full bg-energy-cyan animate-pulse-slow animation-delay-500"></div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:col-span-3">
@@ -130,7 +161,7 @@ const AboutSection = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
                 className={cn(
-                  "vibrant-card p-6 shadow-md hover:shadow-lg transition-all duration-300",
+                  "bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300",
                   "group cursor-pointer"
                 )}
               >
@@ -158,26 +189,30 @@ const AboutSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
                 viewport={{ once: true }}
-                className="focus-section p-6 md:p-8 bg-gradient-to-br from-white/90 to-primary/5 rounded-xl border border-primary/10 shadow-md"
+                className="p-8 bg-gradient-to-br from-white/90 to-primary/5 rounded-xl border border-primary/10 shadow-md"
               >
-                <div className="flex items-center mb-5">
-                  <span className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white">
-                    <Sparkles className="w-5 h-5" />
-                  </span>
-                  <h3 className="text-xl font-bold ml-3 font-outfit tracking-tight">Ready to find your voice?</h3>
+                <div className="flex flex-col md:flex-row md:items-center gap-6">
+                  <div className="flex-shrink-0">
+                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-energy-purple to-energy-pink flex items-center justify-center text-white shadow-lg">
+                      <Sparkles className="w-8 h-8" />
+                    </div>
+                  </div>
+                  
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold font-outfit tracking-tight mb-2">Ready to find your voice?</h3>
+                    <p className="text-foreground/80 mb-6 leading-relaxed">
+                      Our coaches understand that traditional voice lessons can feel constraining. 
+                      We've designed this program specifically for young artists who crave movement,
+                      variation, and quick results.
+                    </p>
+                    
+                    <Link to="/apply">
+                      <Button className="bg-gradient-to-r from-energy-purple to-energy-pink hover:from-energy-purple/90 hover:to-energy-pink/90 text-white rounded-xl shadow-md shadow-energy-purple/20 hover:shadow-xl hover:shadow-energy-purple/30 transition-all flex items-center gap-2 px-6 py-5">
+                        Apply Now <ArrowRight className="w-4 h-4" />
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
-                
-                <p className="text-foreground/80 mb-6 leading-relaxed">
-                  Our coaches understand that traditional voice lessons can feel constraining. 
-                  We've designed this program specifically for young artists who crave movement,
-                  variation, and quick results.
-                </p>
-                
-                <Link to="/apply">
-                  <Button className="bg-primary hover:bg-primary/80 text-white rounded-xl shadow-md shadow-primary/10 hover:shadow-primary/20 transition-all">
-                    Apply Now <Sparkles className="ml-2 w-4 h-4" />
-                  </Button>
-                </Link>
               </MotionDiv>
             </div>
           </div>

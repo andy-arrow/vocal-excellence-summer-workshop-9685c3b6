@@ -1,7 +1,8 @@
 
 import React from 'react';
-import { Mail, Phone, MapPin, Instagram, Twitter, Facebook, Youtube } from 'lucide-react';
+import { Mail, Phone, MapPin, Instagram, Twitter, Facebook, Youtube, Music, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const Footer = () => {
   const scrollToSection = (sectionId: string) => {
@@ -11,109 +12,148 @@ const Footer = () => {
     }
   };
 
+  const footerLinks = [
+    { name: "Home", action: () => scrollToSection('home') },
+    { name: "About the Workshop", action: () => scrollToSection('about') },
+    { name: "Curriculum & Schedule", action: () => scrollToSection('curriculum') },
+    { name: "Instructors", action: () => scrollToSection('instructors') },
+    { name: "Apply Now", href: "/apply" },
+    { name: "Cancellation Policy", href: "/cancellation-policy" },
+    { name: "Privacy Policy", href: "/privacy-policy" }
+  ];
+
+  const socials = [
+    { icon: <Instagram size={18} />, url: "https://instagram.com/vocalexcellence", label: "Instagram" },
+    { icon: <Twitter size={18} />, url: "https://twitter.com/vocalexcellence", label: "Twitter" },
+    { icon: <Facebook size={18} />, url: "https://facebook.com/vocalexcellence", label: "Facebook" },
+    { icon: <Youtube size={18} />, url: "https://youtube.com/vocalexcellence", label: "YouTube" }
+  ];
+
   return (
-    <footer className="bg-slate-900 text-white shadow-lg border-t border-violet-500/10">
-      <div className="max-w-6xl mx-auto py-16 px-8 md:px-10">
-        <div className="grid md:grid-cols-3 gap-12">
-          <div className="md:col-span-1 space-y-5">
-            <h3 className="font-outfit text-2xl font-semibold tracking-tight">Vocal Excellence Summer Workshop</h3>
+    <footer className="relative bg-slate-900 text-white overflow-hidden">
+      {/* Decorative elements */}
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-energy-purple via-energy-pink to-energy-cyan"></div>
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute -top-20 -left-20 w-60 h-60 rounded-full bg-energy-purple/20 blur-[100px]"></div>
+        <div className="absolute -bottom-20 -right-20 w-60 h-60 rounded-full bg-energy-pink/20 blur-[100px]"></div>
+      </div>
+      
+      <div className="max-w-6xl mx-auto py-16 sm:py-20 px-8 md:px-10 relative z-10">
+        <div className="grid md:grid-cols-3 gap-12 md:gap-8 lg:gap-12">
+          <div className="md:col-span-1 space-y-6">
+            <Link to="/" className="flex items-center group">
+              <div className="mr-3 w-10 h-10 rounded-full bg-gradient-to-br from-energy-purple to-energy-pink flex items-center justify-center text-white transform transition-transform group-hover:scale-110">
+                <Music className="w-5 h-5" />
+              </div>
+              <h3 className="font-outfit text-2xl font-semibold tracking-tight">
+                Vocal Excellence<br />
+                <span className="text-sm font-normal text-white/70">Summer Workshop</span>
+              </h3>
+            </Link>
+            
             <p className="text-white/75 text-sm leading-relaxed max-w-md">
-              Transforming passionate singers into confident performers through immersive, expert-led training.
+              Transforming passionate singers into confident performers through immersive, expert-led training in the stunning coastal setting of Limassol, Cyprus.
             </p>
+            
             <div className="flex space-x-5 pt-2">
-              <a href="https://instagram.com/vocalexcellence" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-white transition-colors" aria-label="Instagram">
-                <Instagram size={18} />
-              </a>
-              <a href="https://twitter.com/vocalexcellence" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-white transition-colors" aria-label="Twitter">
-                <Twitter size={18} />
-              </a>
-              <a href="https://facebook.com/vocalexcellence" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-white transition-colors" aria-label="Facebook">
-                <Facebook size={18} />
-              </a>
-              <a href="https://youtube.com/vocalexcellence" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-white transition-colors" aria-label="YouTube">
-                <Youtube size={18} />
-              </a>
+              {socials.map((social, index) => (
+                <motion.a 
+                  key={index}
+                  href={social.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-white/70 hover:text-white transition-colors p-2 rounded-full hover:bg-white/5"
+                  aria-label={social.label}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {social.icon}
+                </motion.a>
+              ))}
             </div>
           </div>
           
           <div className="md:col-span-1">
-            <h4 className="font-outfit text-xs font-semibold mb-5 text-white/50 uppercase tracking-wider">Quick Links</h4>
-            <ul className="space-y-3">
-              <li>
-                <button 
-                  onClick={() => scrollToSection('home')}
-                  className="text-white/70 hover:text-white transition-colors text-sm text-left"
-                >
-                  Home
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => scrollToSection('about')}
-                  className="text-white/70 hover:text-white transition-colors text-sm text-left"
-                >
-                  About the Workshop
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => scrollToSection('curriculum')}
-                  className="text-white/70 hover:text-white transition-colors text-sm text-left"
-                >
-                  Curriculum & Schedule
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => scrollToSection('instructors')}
-                  className="text-white/70 hover:text-white transition-colors text-sm text-left"
-                >
-                  Instructors
-                </button>
-              </li>
-              <li>
-                <Link to="/apply" className="text-white/70 hover:text-white transition-colors text-sm">
-                  Apply Now
-                </Link>
-              </li>
-              <li>
-                <Link to="/cancellation-policy" className="text-white/70 hover:text-white transition-colors text-sm">
-                  Cancellation Policy
-                </Link>
-              </li>
-              <li>
-                <Link to="/privacy-policy" className="text-white/70 hover:text-white transition-colors text-sm">
-                  Privacy Policy
-                </Link>
-              </li>
+            <h4 className="font-outfit text-xs font-semibold mb-5 text-white/50 uppercase tracking-wider">Explore</h4>
+            <ul className="space-y-3.5">
+              {footerLinks.map((link, index) => (
+                <li key={index}>
+                  {link.href ? (
+                    <Link 
+                      to={link.href} 
+                      className="text-white/70 hover:text-white transition-colors text-sm flex items-center group"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-energy-purple mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                      {link.name}
+                    </Link>
+                  ) : (
+                    <button 
+                      onClick={link.action}
+                      className="text-white/70 hover:text-white transition-colors text-sm text-left flex items-center group"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-energy-purple mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                      {link.name}
+                    </button>
+                  )}
+                </li>
+              ))}
             </ul>
+            
+            <div className="mt-10 pt-8 border-t border-white/10">
+              <Link 
+                to="/apply" 
+                className="inline-flex items-center text-sm text-white hover:text-energy-cyan transition-colors"
+              >
+                <span>Start Your Application</span>
+                <ArrowRight className="ml-2 w-3.5 h-3.5" />
+              </Link>
+            </div>
           </div>
           
           <div className="md:col-span-1">
             <h4 className="font-outfit text-xs font-semibold mb-5 text-white/50 uppercase tracking-wider">Contact Us</h4>
             <ul className="space-y-4">
               <li className="flex items-start">
-                <MapPin className="w-4 h-4 mr-3 text-blue-400 shrink-0 mt-0.5" />
+                <MapPin className="w-4 h-4 mr-3 text-energy-pink shrink-0 mt-0.5" />
                 <span className="text-white/75 text-sm">Nafpliou 12, Pentadromos, 3025, Limassol, Cyprus</span>
               </li>
               <li className="flex items-center">
-                <Mail className="w-4 h-4 mr-3 text-blue-400 shrink-0" />
+                <Mail className="w-4 h-4 mr-3 text-energy-pink shrink-0" />
                 <a href="mailto:info@vocalexcellence.com" className="text-white/75 hover:text-white transition-colors text-sm">
                   info@vocalexcellence.com
                 </a>
               </li>
               <li className="flex items-center">
-                <Phone className="w-4 h-4 mr-3 text-blue-400 shrink-0" />
+                <Phone className="w-4 h-4 mr-3 text-energy-pink shrink-0" />
                 <a href="tel:+35725775885" className="text-white/75 hover:text-white transition-colors text-sm">
                   +357 25 775 885
                 </a>
               </li>
             </ul>
+            
+            <div className="mt-8 pt-8 border-t border-white/10 flex flex-col">
+              <span className="text-xs text-white/40 mb-1">Sign up for program updates</span>
+              <div className="flex mt-2">
+                <input 
+                  type="email" 
+                  placeholder="Your email" 
+                  className="bg-white/5 border border-white/10 rounded-l-md px-3 py-2 text-sm w-full focus:outline-none focus:ring-1 focus:ring-energy-purple/50"
+                />
+                <button className="bg-energy-purple hover:bg-energy-purple/90 text-white rounded-r-md px-3 py-2 text-sm transition-colors">
+                  Subscribe
+                </button>
+              </div>
+            </div>
           </div>
         </div>
         
-        <div className="mt-14 pt-6 border-t border-white/10 text-white/50 text-xs text-center">
+        <div className="mt-14 pt-6 border-t border-white/10 text-white/50 text-xs flex flex-col sm:flex-row justify-between items-center">
           <p>&copy; {new Date().getFullYear()} Vocal Excellence Summer Workshop. All rights reserved.</p>
+          <div className="flex gap-4 mt-4 sm:mt-0">
+            <Link to="/terms-and-conditions" className="hover:text-white transition-colors">Terms</Link>
+            <Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy</Link>
+            <Link to="/cancellation-policy" className="hover:text-white transition-colors">Cancellation</Link>
+          </div>
         </div>
       </div>
     </footer>
