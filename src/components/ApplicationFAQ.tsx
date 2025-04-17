@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import {
   Accordion,
@@ -153,14 +154,21 @@ const ApplicationFAQ = () => {
     setActiveIndex(value === activeIndex ? null : value);
   };
 
+  // Update the filtering logic to handle both string and JSX Element cases
   const filteredCategories = searchTerm.trim() === '' ? 
     faqCategories : 
     faqCategories.map(category => ({
       ...category,
-      items: category.items.filter(item => 
-        item.question.toLowerCase().includes(searchTerm.toLowerCase()) || 
-        item.answer.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+      items: category.items.filter(item => {
+        const questionMatch = item.question.toLowerCase().includes(searchTerm.toLowerCase());
+        
+        // Check if answer is a string before calling toLowerCase
+        const answerMatch = typeof item.answer === 'string' 
+          ? item.answer.toLowerCase().includes(searchTerm.toLowerCase())
+          : false; // If it's a React element, we can't search inside it easily
+          
+        return questionMatch || answerMatch;
+      })
     })).filter(category => category.items.length > 0);
 
   const containerVariants = {
