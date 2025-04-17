@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Mail, Phone, MapPin, Instagram, Twitter, Facebook, Youtube, Music, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -17,9 +16,7 @@ const Footer = () => {
     { name: "About the Workshop", action: () => scrollToSection('about') },
     { name: "Curriculum & Schedule", action: () => scrollToSection('curriculum') },
     { name: "Instructors", action: () => scrollToSection('instructors') },
-    { name: "Apply Now", href: "/apply" },
-    { name: "Cancellation Policy", href: "/cancellation-policy" },
-    { name: "Privacy Policy", href: "/privacy-policy" }
+    { name: "Apply Now", href: "/apply" }
   ];
 
   const socials = [
@@ -149,11 +146,6 @@ const Footer = () => {
         
         <div className="mt-14 pt-6 border-t border-white/10 text-white/50 text-xs flex flex-col sm:flex-row justify-between items-center">
           <p>&copy; {new Date().getFullYear()} Vocal Excellence Summer Workshop. All rights reserved.</p>
-          <div className="flex gap-4 mt-4 sm:mt-0">
-            <Link to="/terms-and-conditions" className="hover:text-white transition-colors">Terms</Link>
-            <Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy</Link>
-            <Link to="/cancellation-policy" className="hover:text-white transition-colors">Cancellation</Link>
-          </div>
         </div>
       </div>
     </footer>

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { ArrowUpRight, Menu, X, Music, ChevronDown } from 'lucide-react';
@@ -43,14 +42,12 @@ const Navbar = ({ activeSection }: NavbarProps) => {
     e.preventDefault();
     setIsMenuOpen(false);
     
-    // Only perform smooth scroll on the homepage
     if (location.pathname === '/') {
       const element = document.getElementById(id);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
       }
     } else {
-      // If we're not on the homepage, navigate to homepage and then scroll
       window.location.href = `/#${id}`;
     }
   };
@@ -60,12 +57,6 @@ const Navbar = ({ activeSection }: NavbarProps) => {
     { id: 'about', label: 'About' },
     { id: 'curriculum', label: 'Curriculum' },
     { id: 'instructors', label: 'Instructors' },
-  ];
-
-  const policyLinks = [
-    { path: '/terms-and-conditions', label: 'Terms & Conditions' },
-    { path: '/privacy-policy', label: 'Privacy Policy' },
-    { path: '/cancellation-policy', label: 'Cancellation Policy' },
   ];
 
   const closeMenu = () => {
@@ -154,7 +145,6 @@ const Navbar = ({ activeSection }: NavbarProps) => {
           })()}
         </div>
 
-        {/* Mobile Navigation with Sheet component */}
         <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
           <SheetTrigger asChild>
             <button 
@@ -231,38 +221,6 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                       <Separator className="mt-2 bg-white/10" />
                     </motion.li>
                   ))}
-                  
-                  {/* Policy links in mobile navigation */}
-                  {policyLinks.map((link, idx) => (
-                    <motion.li 
-                      key={link.path}
-                      initial={{ x: -20, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ delay: 0.1 + (navLinks.length + idx) * 0.06 }}
-                    >
-                      <SheetClose asChild>
-                        <NavLink
-                          to={link.path}
-                          className={({ isActive }) => cn(
-                            "block py-2 text-xl font-medium transition-colors relative overflow-hidden group",
-                            isActive ? "text-white" : "text-white/70 hover:text-white"
-                          )}
-                        >
-                          <span className="relative z-10 flex items-center">
-                            {link.label}
-                            <motion.div
-                              initial={{ x: -4, opacity: 0 }}
-                              animate={{ x: 0, opacity: 1 }}
-                              transition={{ delay: 0.2 + (navLinks.length + idx) * 0.05 }}
-                            >
-                              <ArrowUpRight className="ml-1 w-4 h-4 opacity-60 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                            </motion.div>
-                          </span>
-                        </NavLink>
-                      </SheetClose>
-                      <Separator className="mt-2 bg-white/10" />
-                    </motion.li>
-                  ))}
                 </ul>
               </nav>
               
@@ -294,26 +252,6 @@ const Navbar = ({ activeSection }: NavbarProps) => {
             </div>
           </SheetContent>
         </Sheet>
-      </div>
-      
-      {/* Policy Links dropdown for desktop */}
-      <div className="hidden md:block absolute bottom-0 right-0 transform translate-y-full">
-        <div className="bg-slate-900/90 backdrop-blur-md rounded-b-lg overflow-hidden">
-          <div className="py-2 px-3">
-            {policyLinks.map((link) => (
-              <NavLink
-                key={link.path}
-                to={link.path}
-                className={({ isActive }) => cn(
-                  "block py-2 px-4 text-sm font-medium transition-colors whitespace-nowrap",
-                  isActive ? "text-white" : "text-white/70 hover:text-white"
-                )}
-              >
-                {link.label}
-              </NavLink>
-            ))}
-          </div>
-        </div>
       </div>
     </header>
   );
