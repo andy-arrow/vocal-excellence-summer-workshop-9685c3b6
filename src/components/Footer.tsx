@@ -28,7 +28,6 @@ const Footer = () => {
 
   return (
     <footer className="relative bg-slate-900 text-white overflow-hidden">
-      {/* Decorative elements */}
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-energy-purple via-energy-pink to-energy-cyan"></div>
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute -top-20 -left-20 w-60 h-60 rounded-full bg-energy-purple/20 blur-[100px]"></div>
@@ -40,14 +39,10 @@ const Footer = () => {
           <div className="md:col-span-1 space-y-6">
             <Link to="/" className="flex items-center group">
               <img 
-                src="/lovable-uploads/cd8668bd-81c1-4de3-b82b-b97f9c5be025.png" 
+                src="/lovable-uploads/e980c9b0-8cdc-423d-a726-2f677be33737.png" 
                 alt="Vocal Excellence Logo" 
-                className="w-20 h-20 mr-3" 
+                className="w-40 h-40 mr-3" 
               />
-              <h3 className="font-outfit text-2xl font-semibold tracking-tight">
-                Vocal Excellence<br />
-                <span className="text-sm font-normal text-white/70">Summer Workshop</span>
-              </h3>
             </Link>
             
             <p className="text-white/75 text-sm leading-relaxed max-w-md">

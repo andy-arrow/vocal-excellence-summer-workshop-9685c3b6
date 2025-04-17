@@ -68,28 +68,21 @@ const Navbar = ({ activeSection }: NavbarProps) => {
       className={cn(
         "fixed top-0 left-0 w-full z-50 transition-all duration-300",
         scrolled 
-          ? "backdrop-blur-md border-b border-white/10" 
-          : "backdrop-blur-sm"
+          ? "bg-white border-b border-gray-200" 
+          : "bg-white/90 backdrop-blur-sm"
       )}
-      style={{
-        backgroundColor: scrolled ? 'rgba(22, 22, 23, 0.8)' : 'rgba(22, 22, 23, 0.5)'
-      }}
     >
       <div className="max-w-[1200px] mx-auto px-6 md:px-10 py-4 flex items-center justify-between">
         <Link 
           to="/" 
-          className="font-outfit font-medium text-white tracking-tight transition-opacity hover:opacity-80"
+          className="font-outfit font-medium text-slate-900 tracking-tight transition-opacity hover:opacity-80"
         >
           <div className="flex items-center">
             <img 
-              src="/lovable-uploads/cd8668bd-81c1-4de3-b82b-b97f9c5be025.png" 
+              src="/lovable-uploads/e980c9b0-8cdc-423d-a726-2f677be33737.png" 
               alt="Vocal Excellence Logo" 
-              className="w-16 h-16 mr-3" 
+              className="w-32 h-32 mr-3" 
             />
-            <div>
-              <span className="text-lg font-medium md:text-xl">Vocal Excellence</span>
-              <span className="hidden md:block text-xs opacity-80 -mt-1">Summer Workshop</span>
-            </div>
           </div>
         </Link>
 
@@ -130,8 +123,8 @@ const Navbar = ({ activeSection }: NavbarProps) => {
             className={({ isActive }) => cn(
               "group px-4 py-1.5 text-sm font-medium rounded-full flex items-center gap-1.5 transition-all",
               isActive 
-                ? "bg-white text-slate-900" 
-                : "bg-white/10 text-white backdrop-blur-sm hover:bg-white/20"
+                ? "bg-energy-purple text-white" 
+                : "bg-energy-purple/10 text-slate-900 backdrop-blur-sm hover:bg-energy-purple/20"
             )}
           >
             <span>Apply Now</span>
