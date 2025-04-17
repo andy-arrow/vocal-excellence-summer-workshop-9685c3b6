@@ -11,21 +11,23 @@ const PersonalInfoSection = () => {
   
   return (
     <div className="space-y-8">
-      <h3 className="text-2xl font-medium text-violet-100 tracking-tight">Personal Information</h3>
+      <h3 className="text-2xl font-semibold text-[#1d1d1f] tracking-tight">
+        Personal Information
+      </h3>
       
       <div className="space-y-8">
-        <div className="space-y-6 p-6 rounded-2xl bg-white/5 backdrop-blur-lg border border-violet-500/20 hover:border-violet-500/30 transition-colors shadow-lg">
-          <h4 className="text-lg font-medium text-violet-100">Basic Information</h4>
+        <div className="space-y-6 p-6 rounded-xl bg-white border border-[#e6e6e6] hover:border-[#d2d2d7] transition-colors shadow-sm">
+          <h4 className="text-lg font-medium text-[#1d1d1f]">Basic Information</h4>
           <BasicInfoFields />
         </div>
         
-        <div className="space-y-6 p-6 rounded-2xl bg-white/5 backdrop-blur-lg border border-violet-500/20 hover:border-violet-500/30 transition-colors shadow-lg">
-          <h4 className="text-lg font-medium text-violet-100">Contact Information</h4>
+        <div className="space-y-6 p-6 rounded-xl bg-white border border-[#e6e6e6] hover:border-[#d2d2d7] transition-colors shadow-sm">
+          <h4 className="text-lg font-medium text-[#1d1d1f]">Contact Information</h4>
           <ContactInfoFields />
         </div>
         
-        <div className="space-y-6 p-6 rounded-2xl bg-white/5 backdrop-blur-lg border border-violet-500/20 hover:border-violet-500/30 transition-colors shadow-lg">
-          <h4 className="text-lg font-medium text-violet-100">Address</h4>
+        <div className="space-y-6 p-6 rounded-xl bg-white border border-[#e6e6e6] hover:border-[#d2d2d7] transition-colors shadow-sm">
+          <h4 className="text-lg font-medium text-[#1d1d1f]">Address</h4>
           <AddressFields />
         </div>
       </div>

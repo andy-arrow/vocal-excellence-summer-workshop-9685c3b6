@@ -47,17 +47,20 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
   
   return (
     <div>
-      <div className="flex items-center justify-between mb-2">
-        <FormLabel className="text-[#1d1d1f] flex items-center gap-2">
-          <Icon className={iconColor} size={16} />
+      <div className="flex items-center justify-between mb-3">
+        <FormLabel className="text-[#1d1d1f] text-base flex items-center gap-2 font-medium">
+          <Icon className={`${iconColor} w-5 h-5`} />
           <span>{label}</span>
-          {required && <span className="text-[#bf4800]">*</span>}
+          {required && <span className="text-[#bf4800] ml-1">*</span>}
         </FormLabel>
-        <span className="text-xs text-[#86868b]">
+        <span className="text-xs text-[#86868b] font-medium">
           {acceptedFormats}
         </span>
       </div>
-      <p className="text-sm text-[#86868b] mb-4">{description}</p>
+      
+      <p className="text-sm text-[#86868b] mb-4 leading-relaxed">
+        {description}
+      </p>
       
       <motion.div 
         className="relative group"
@@ -67,13 +70,19 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
         <Input 
           type="file" 
           accept={acceptedFormats}
-          className={`file:mr-5 file:py-1 file:px-3 file:border-0 file:text-sm file:font-medium
-            file:bg-[#f5f5f7] file:text-[#1d1d1f] hover:file:bg-[#e6e6e7] file:rounded-lg
-            border-[#e6e6e6] hover:border-[#d2d2d7] rounded-xl transition-colors
+          className={`
+            file:mr-5 file:py-2 file:px-4 
+            file:border-0 file:text-sm file:font-medium
+            file:bg-[#f5f5f7] file:text-[#1d1d1f] 
+            hover:file:bg-[#e6e6e7] file:rounded-lg
+            border-[#e6e6e6] hover:border-[#d2d2d7] 
+            focus:border-[#0066cc] focus:ring-1 focus:ring-[#0066cc]
+            rounded-xl transition-colors text-sm
             ${uploadState.status !== 'idle' ? 'opacity-60 pointer-events-none' : ''}
           `}
           disabled={uploadState.status !== 'idle'}
           onChange={handleFileChange}
+          aria-label={`Upload ${label}`}
         />
       </motion.div>
       

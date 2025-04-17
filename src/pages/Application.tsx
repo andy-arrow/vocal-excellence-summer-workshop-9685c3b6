@@ -102,6 +102,7 @@ const Application = () => {
                 variants={fadeIn}
                 id="application-form-section"
                 className="bg-gradient-to-b from-slate-950 via-slate-900 to-violet-950 py-24"
+                aria-label="Application Form Section"
               >
                 <Suspense fallback={<SectionLoader />}>
                   <ApplicationForm />
