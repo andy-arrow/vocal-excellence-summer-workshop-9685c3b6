@@ -112,6 +112,7 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-energy-purple/90 via-energy-pink/70 to-energy-cyan/80 mix-blend-overlay z-10"></div>
       <div className="absolute inset-0 bg-black/50 z-10"></div>
 
+      {/* Musical notes animation */}
       {!hasReducedMotion && (
         <>
           <motion.div 
@@ -209,15 +210,15 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-[url('/lovable-uploads/masterclass-singers.jpg')] bg-cover bg-center opacity-40 mix-blend-overlay"></div>
       </div>
       
-      <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-4xl mx-auto">
+      <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-4xl mx-auto pt-24 md:pt-16">
         <motion.div 
-          className="space-y-10"
+          className="space-y-8"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
           <motion.div
-            className="flex flex-wrap justify-center gap-4 md:gap-6 mb-8"  // Added margin bottom
+            className="flex flex-wrap justify-center gap-4 md:gap-6 mb-10"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.5 }}
@@ -333,4 +334,3 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
-
