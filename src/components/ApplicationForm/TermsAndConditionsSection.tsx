@@ -21,13 +21,12 @@ const TermsAndConditionsSection = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="text-xl font-semibold text-[#1d1d1f]">Terms & Conditions</h3>
+      <div className="flex items-center justify-between mb-4">
         <Button 
           variant="ghost" 
           size="sm" 
           onClick={() => setShowTips(!showTips)}
-          className="text-xs font-medium text-[#0066cc] hover:text-[#0077ed] hover:bg-transparent"
+          className="text-xs font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50"
         >
           {showTips ? 'Hide Tips' : 'Show Tips'} 
           <Info className="ml-1 w-3 h-3" />
@@ -35,11 +34,11 @@ const TermsAndConditionsSection = () => {
       </div>
       
       {showTips && (
-        <Alert className="mb-6 bg-[#f2f7fd] border border-[#d6e5f5] text-[#1d1d1f]">
-          <AlertTitle className="text-[#0066cc] font-medium flex items-center">
+        <Alert className="mb-6 bg-blue-50 border border-blue-100 text-gray-800">
+          <AlertTitle className="text-blue-700 font-medium flex items-center">
             Quick Tip
           </AlertTitle>
-          <AlertDescription className="text-[#86868b]">
+          <AlertDescription className="text-gray-600">
             Be sure to review the Terms and Privacy Policy so you know your rights. We've made them 
             easy to read with highlighted key points to help you focus on what matters.
           </AlertDescription>
@@ -47,24 +46,22 @@ const TermsAndConditionsSection = () => {
       )}
 
       <div className="mb-6 space-y-4">
-        <div className="bg-white rounded-xl p-4 border border-[#e6e6e6] mb-4 hover:border-[#d2d2d7] transition-colors">
-          <h4 className="font-medium mb-2 flex items-center text-[#1d1d1f]">
-            <span className="w-6 h-6 rounded-full bg-[#f5f5f7] text-[#1d1d1f] flex items-center justify-center text-xs mr-2">1</span>
+        <div className="bg-gray-50 rounded-lg p-5 border border-gray-200 mb-4">
+          <h4 className="font-medium mb-3 text-gray-900">
             Terms and Conditions Key Points:
           </h4>
-          <ul className="space-y-2 text-sm text-[#86868b] pl-8 list-disc">
+          <ul className="space-y-2 text-gray-700 pl-8 list-disc">
             <li>You can cancel up to 30 days before the program for a full refund</li>
             <li>Photos and recordings from the program may be used for promotional purposes</li>
             <li>We have a strict anti-harassment policy to keep everyone safe</li>
           </ul>
         </div>
         
-        <div className="bg-white rounded-xl p-4 border border-[#e6e6e6] hover:border-[#d2d2d7] transition-colors">
-          <h4 className="font-medium mb-2 flex items-center text-[#1d1d1f]">
-            <span className="w-6 h-6 rounded-full bg-[#f5f5f7] text-[#1d1d1f] flex items-center justify-center text-xs mr-2">2</span>
+        <div className="bg-gray-50 rounded-lg p-5 border border-gray-200">
+          <h4 className="font-medium mb-3 text-gray-900">
             Privacy Policy Key Points:
           </h4>
-          <ul className="space-y-2 text-sm text-[#86868b] pl-8 list-disc">
+          <ul className="space-y-2 text-gray-700 pl-8 list-disc">
             <li>Your contact info will only be used for program communications</li>
             <li>We'll never sell your personal data to third parties</li>
             <li>You can request deletion of your information after the program ends</li>
@@ -77,22 +74,22 @@ const TermsAndConditionsSection = () => {
         name="termsAgreed"
         render={({ field }) => (
           <FormItem className="space-y-3">
-            <div className="bg-white rounded-xl p-4 border border-[#e6e6e6] relative overflow-hidden">
+            <div className="bg-white rounded-lg p-5 border-2 border-gray-200 relative overflow-hidden">
               {field.value && (
-                <div className="absolute top-0 left-0 w-full h-1 bg-[#0077ed]"></div>
+                <div className="absolute top-0 left-0 w-full h-1 bg-blue-600"></div>
               )}
               <div className="flex flex-row items-start space-x-3">
                 <FormControl>
                   <Checkbox
                     checked={field.value}
                     onCheckedChange={field.onChange}
-                    className={`${field.value ? 'border-[#0077ed] bg-[#0077ed] text-white' : 'border-[#d2d2d7] bg-white'} h-5 w-5 rounded-md`}
+                    className={`${field.value ? 'border-blue-600 bg-blue-600 text-white' : 'border-gray-300 bg-white'} h-5 w-5 rounded`}
                   />
                 </FormControl>
                 <div className="space-y-1 leading-none">
-                  <FormLabel className="text-[#1d1d1f]">
-                    I agree to the <Link to="/terms-and-conditions" className="text-[#0066cc] hover:underline font-medium">Terms and Conditions</Link> and <Link to="/privacy-policy" className="text-[#0066cc] hover:underline font-medium">Privacy Policy</Link>. 
-                    <span className="block mt-1 text-sm text-[#86868b]">I confirm that all information I've provided is accurate and complete.</span>
+                  <FormLabel className="text-gray-800">
+                    I agree to the <Link to="/terms-and-conditions" className="text-blue-600 hover:underline font-medium">Terms and Conditions</Link> and <Link to="/privacy-policy" className="text-blue-600 hover:underline font-medium">Privacy Policy</Link>. 
+                    <span className="block mt-2 text-sm text-gray-600">I confirm that all information I've provided is accurate and complete.</span>
                   </FormLabel>
                   <FormMessage />
                 </div>
@@ -100,7 +97,7 @@ const TermsAndConditionsSection = () => {
             </div>
             
             {field.value && (
-              <div className="text-sm text-[#0066cc] font-medium flex items-center animate-fade-in">
+              <div className="text-sm text-blue-600 font-medium flex items-center animate-fade-in">
                 Great! You're ready to submit your application
                 <ChevronRight className="ml-2 w-3 h-3" />
               </div>

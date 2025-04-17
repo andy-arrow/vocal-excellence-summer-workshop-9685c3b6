@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -18,6 +17,7 @@ import TermsAndConditionsSection from '@/components/ApplicationForm/TermsAndCond
 import SubmitButton from '@/components/ApplicationForm/SubmitButton';
 import SubmissionSuccessMessage from '@/components/ApplicationForm/SubmissionSuccessMessage';
 import { submitApplicationWithFiles } from '@/utils/fileUpload';
+import ApplicationProgressIndicator from '@/components/ApplicationForm/ApplicationProgressIndicator';
 
 const formVariants = {
   hidden: { opacity: 0 },
@@ -187,138 +187,114 @@ const ApplicationForm = () => {
 
   const sections = [
     { 
-      title: "Personal Info", 
+      title: "Personal Information", 
       component: <PersonalInfoSection />,
-      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-neutral-100 p-2 rounded-full"><span className="text-neutral-800 font-medium text-sm">01</span></motion.div>
+      description: "Basic details about you and your contact information",
     },
     { 
       title: "Musical Background", 
       component: <MusicalBackgroundSection />,
-      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-neutral-100 p-2 rounded-full"><span className="text-neutral-800 font-medium text-sm">02</span></motion.div>
+      description: "Your experience and education in music",
     },
     { 
-      title: "Programme", 
+      title: "Programme Application", 
       component: <ProgrammeApplicationSection />,
-      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-neutral-100 p-2 rounded-full"><span className="text-neutral-800 font-medium text-sm">03</span></motion.div>
+      description: "Why you're applying and your specific needs",
     },
     { 
-      title: "Materials", 
+      title: "Supporting Materials", 
       component: <SupportingMaterialsSection />,
-      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-neutral-100 p-2 rounded-full"><span className="text-neutral-800 font-medium text-sm">04</span></motion.div>
+      description: "Upload required audio and document files",
     },
     { 
-      title: "Terms", 
+      title: "Terms & Conditions", 
       component: <TermsAndConditionsSection />,
-      icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-neutral-100 p-2 rounded-full"><span className="text-neutral-800 font-medium text-sm">05</span></motion.div>
+      description: "Review and agree to workshop terms",
     },
   ];
 
   return (
-    <section className="py-24 md:py-32 bg-white">
-      <motion.div 
-        className="max-w-3xl mx-auto px-6"
-        variants={formVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-      >
-        <motion.div 
-          className="text-center mb-16 space-y-8 bg-white"
-          variants={sectionVariants}
-        >
-          <motion.span 
-            className="inline-block text-gray-600 text-sm tracking-wide uppercase mb-2 font-medium"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-          >
-            Summer Workshop 2025
-          </motion.span>
+    <section className="py-12 md:py-16 bg-white">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6">
+        <div className="text-center mb-10 space-y-4">
+          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-gray-900 mb-2">
+            Vocal Excellence Workshop Application
+          </h1>
           
-          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight text-gray-900 bg-white">
-            Join the
-            <span className="block mt-1 text-gray-900">
-              Vocal Excellence Workshop
-            </span>
-          </h2>
-          
-          <motion.p 
-            className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed bg-white"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-          >
-            Begin your journey in vocal artistry. Every voice has a story to tell — let yours be heard.
-          </motion.p>
+          <p className="text-lg text-gray-700 max-w-2xl mx-auto leading-relaxed">
+            Complete your application for the Summer 2025 workshop in Limassol, Cyprus.
+          </p>
 
-          <motion.div 
-            className="pt-6 flex flex-col md:flex-row justify-center items-center gap-6 text-base text-gray-700 bg-white"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
-          >
-            <div className="flex items-center gap-3 bg-gray-100 px-6 py-3 rounded-full">
+          <div className="pt-4 flex flex-col md:flex-row justify-center items-center gap-4 text-base text-gray-700">
+            <div className="bg-gray-50 px-4 py-2 rounded-lg flex items-center gap-2 border border-gray-200">
               <Calendar className="h-5 w-5 text-gray-900" />
               <span>July 14 - 18, 2025</span>
             </div>
-            <div className="h-4 w-px bg-gray-200 hidden md:block" />
-            <div className="flex items-center gap-3 bg-gray-100 px-6 py-3 rounded-full">
+            <div className="hidden md:block h-4 w-px bg-gray-200" />
+            <div className="bg-gray-50 px-4 py-2 rounded-lg flex items-center gap-2 border border-gray-200">
               <MapPin className="h-5 w-5 text-gray-900" />
               <span>Limassol, Cyprus</span>
             </div>
-            <div className="h-4 w-px bg-gray-200 hidden md:block" />
-            <div className="flex items-center gap-3 bg-gray-100 px-6 py-3 rounded-full">
+            <div className="hidden md:block h-4 w-px bg-gray-200" />
+            <div className="bg-gray-50 px-4 py-2 rounded-lg flex items-center gap-2 border border-gray-200">
               <Users className="h-5 w-5 text-gray-900" />
               <span>20 Spots Available</span>
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
+
+        <ApplicationProgressIndicator 
+          currentStep={activeSection + 1} 
+          totalSteps={sections.length} 
+          stepTitles={sections.map(s => s.title)}
+        />
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10 bg-white">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="mt-8">
             <input type="hidden" name="csrfToken" value={csrfToken} />
             
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeSection}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
-                className="bg-white border border-gray-200 p-8 rounded-2xl shadow-sm"
+                className="bg-white border border-gray-200 p-6 sm:p-8 rounded-lg shadow-sm"
               >
+                <div className="mb-6">
+                  <h2 className="text-2xl font-semibold text-gray-900 mb-2">{sections[activeSection].title}</h2>
+                  <p className="text-gray-600">{sections[activeSection].description}</p>
+                </div>
+                
                 {sections[activeSection].component}
                 
                 <div className="flex justify-between mt-8 pt-4 border-t border-gray-200">
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+                  <button
                     type="button"
                     onClick={() => setActiveSection(prev => Math.max(0, prev - 1))}
                     disabled={activeSection === 0}
-                    className={`px-4 py-2 rounded-full transition-all duration-300 flex items-center gap-2 ${
+                    className={`px-4 py-2 rounded-lg transition-all duration-300 flex items-center gap-2 border ${
                       activeSection === 0
-                        ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                        : "bg-gray-100 text-gray-900 hover:bg-gray-200"
+                        ? "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed"
+                        : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
                     }`}
                     aria-label="Previous section"
                   >
                     <ChevronLeft size={18} />
                     <span>Previous</span>
-                  </motion.button>
+                  </button>
                   
                   {activeSection < sections.length - 1 ? (
-                    <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
+                    <button
                       type="button"
                       onClick={() => setActiveSection(prev => Math.min(sections.length - 1, prev + 1))}
-                      className="px-5 py-2 rounded-full bg-gray-900 text-white hover:bg-gray-800 transition-all duration-300 flex items-center gap-2"
+                      className="px-5 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all duration-300 flex items-center gap-2"
                       aria-label="Next section"
                     >
                       <span>Continue</span>
                       <ChevronRight size={18} />
-                    </motion.button>
+                    </button>
                   ) : (
                     <SubmitButton isSubmitting={isSubmitting} />
                   )}
@@ -328,15 +304,10 @@ const ApplicationForm = () => {
           </form>
         </Form>
 
-        <motion.div 
-          className="text-center mt-8 text-sm text-gray-600 bg-white"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
-        >
+        <div className="text-center mt-6 text-sm text-gray-600">
           <p>Need help? Email us at <a href="mailto:help@vocalexcellence.com" className="text-blue-600 hover:underline">help@vocalexcellence.com</a></p>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </section>
   );
 };

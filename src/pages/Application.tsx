@@ -1,10 +1,9 @@
 
 import React, { useEffect, lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import ApplicationHero from '@/components/ApplicationHero';
 
 // Lazily load less critical components
 const ApplicationForm = lazy(() => import('@/components/ApplicationForm'));
@@ -15,7 +14,7 @@ const ScrollToTopButton = lazy(() => import('@/components/ScrollToTopButton'));
 
 const SectionLoader = () => (
   <div className="py-16 flex justify-center">
-    <div className="w-8 h-8 border-2 border-neutral-300 border-t-neutral-800 rounded-full animate-spin"></div>
+    <div className="w-8 h-8 border-2 border-gray-300 border-t-gray-800 rounded-full animate-spin"></div>
   </div>
 );
 
@@ -52,73 +51,80 @@ const Application = () => {
         <meta name="theme-color" content="#ffffff" />
       </Helmet>
       
-      <motion.div 
-        className="min-h-screen flex flex-col bg-white"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-      >
+      <div className="min-h-screen flex flex-col bg-white">
         <Navbar />
         
-        <main className="flex-grow bg-white">
-          <ApplicationHero />
+        <main className="flex-grow">
+          <div className="bg-gray-50 py-12 md:py-20 border-b border-gray-200">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6">
+              <div className="text-center">
+                <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-4">
+                  Apply to the Vocal Excellence Workshop
+                </h1>
+                <p className="text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed">
+                  Join our Summer 2025 program and take your vocal talents to new heights with world-class coaching
+                </p>
+              </div>
+            </div>
+          </div>
           
-          <div className="space-y-32 py-16 md:py-32 bg-white">
-            <AnimatePresence mode="wait">
-              <motion.section
-                key="requirements"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
-                variants={fadeIn}
-                className="max-w-5xl mx-auto px-6 md:px-8 bg-white"
-              >
-                <Suspense fallback={<SectionLoader />}>
-                  <ApplicationRequirements />
-                </Suspense>
-              </motion.section>
-              
-              <motion.section
-                key="timeline"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
-                variants={fadeIn}
-                className="max-w-5xl mx-auto px-6 md:px-8 bg-white"
-              >
-                <Suspense fallback={<SectionLoader />}>
-                  <ApplicationTimeline />
-                </Suspense>
-              </motion.section>
-              
-              <motion.section
-                key="form"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
-                variants={fadeIn}
-                id="application-form-section"
-                className="bg-white py-24"
-                aria-label="Application Form Section"
-              >
-                <Suspense fallback={<SectionLoader />}>
-                  <ApplicationForm />
-                </Suspense>
-              </motion.section>
-              
-              <motion.section
-                key="faq"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
-                variants={fadeIn}
-                className="max-w-5xl mx-auto px-6 md:px-8 bg-white"
-              >
-                <Suspense fallback={<SectionLoader />}>
-                  <ApplicationFAQ />
-                </Suspense>
-              </motion.section>
-            </AnimatePresence>
+          <div className="py-12 md:py-20 bg-white">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6">
+              <div className="space-y-20">
+                <motion.section
+                  key="requirements"
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-100px" }}
+                  variants={fadeIn}
+                  className="bg-white"
+                >
+                  <Suspense fallback={<SectionLoader />}>
+                    <ApplicationRequirements />
+                  </Suspense>
+                </motion.section>
+                
+                <motion.section
+                  key="timeline"
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-100px" }}
+                  variants={fadeIn}
+                  className="bg-white"
+                >
+                  <Suspense fallback={<SectionLoader />}>
+                    <ApplicationTimeline />
+                  </Suspense>
+                </motion.section>
+                
+                <motion.section
+                  key="form"
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-100px" }}
+                  id="application-form-section"
+                  className="bg-white"
+                  aria-label="Application Form Section"
+                >
+                  <Suspense fallback={<SectionLoader />}>
+                    <ApplicationForm />
+                  </Suspense>
+                </motion.section>
+                
+                <motion.section
+                  key="faq"
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-100px" }}
+                  variants={fadeIn}
+                  className="bg-white"
+                >
+                  <Suspense fallback={<SectionLoader />}>
+                    <ApplicationFAQ />
+                  </Suspense>
+                </motion.section>
+              </div>
+            </div>
           </div>
         </main>
         
@@ -127,7 +133,7 @@ const Application = () => {
         </Suspense>
         
         <Footer />
-      </motion.div>
+      </div>
     </div>
   );
 };

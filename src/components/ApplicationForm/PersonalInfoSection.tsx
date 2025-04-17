@@ -11,23 +11,19 @@ const PersonalInfoSection = () => {
   
   return (
     <div className="space-y-8">
-      <h3 className="text-2xl font-semibold text-[#1d1d1f] tracking-tight">
-        Personal Information
-      </h3>
-      
-      <div className="space-y-8">
-        <div className="space-y-6 p-6 rounded-xl bg-white border border-[#e6e6e6] hover:border-[#d2d2d7] transition-colors shadow-sm">
-          <h4 className="text-lg font-medium text-[#1d1d1f]">Basic Information</h4>
+      <div className="space-y-6">
+        <div className="p-5 rounded-lg bg-gray-50 border border-gray-200">
+          <h3 className="text-lg font-medium text-gray-900 mb-4">Basic Information</h3>
           <BasicInfoFields />
         </div>
         
-        <div className="space-y-6 p-6 rounded-xl bg-white border border-[#e6e6e6] hover:border-[#d2d2d7] transition-colors shadow-sm">
-          <h4 className="text-lg font-medium text-[#1d1d1f]">Contact Information</h4>
+        <div className="p-5 rounded-lg bg-gray-50 border border-gray-200">
+          <h3 className="text-lg font-medium text-gray-900 mb-4">Contact Information</h3>
           <ContactInfoFields />
         </div>
         
-        <div className="space-y-6 p-6 rounded-xl bg-white border border-[#e6e6e6] hover:border-[#d2d2d7] transition-colors shadow-sm">
-          <h4 className="text-lg font-medium text-[#1d1d1f]">Address</h4>
+        <div className="p-5 rounded-lg bg-gray-50 border border-gray-200">
+          <h3 className="text-lg font-medium text-gray-900 mb-4">Address</h3>
           <AddressFields />
         </div>
       </div>
