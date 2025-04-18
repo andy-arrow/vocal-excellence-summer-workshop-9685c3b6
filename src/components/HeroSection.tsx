@@ -64,126 +64,11 @@ const HeroSection = () => {
       ref={heroRef}
       className={cn(
         "relative min-h-screen flex items-center justify-center overflow-hidden",
-        "bg-gradient-to-br from-slate-950 to-energy-purple/90",
+        "bg-white", // Changed from gradient background to white
         hasReducedMotion ? "reduced-motion" : ""
       )}
     >
-      {/* Video Background */}
-      <div className={cn(
-        "absolute inset-0 overflow-hidden",
-        isVideoLoaded && !hasReducedMotion ? "opacity-100" : "opacity-0",
-        "transition-opacity duration-1000"
-      )}>
-        <video 
-          ref={videoRef}
-          autoPlay 
-          loop 
-          muted
-          playsInline
-          onCanPlay={handleVideoLoad}
-          className={cn(
-            "absolute min-w-full min-h-full object-cover opacity-40",
-            hasReducedMotion ? "hidden" : "block"
-          )}
-        >
-          <source src="/lovable-uploads/cyprus-coast-waves.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      </div>
-      
-      {/* Gradient Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/90 via-slate-900/80 to-energy-purple/40 mix-blend-multiply"></div>
-      <div className="absolute inset-0 bg-gradient-to-r from-energy-purple/20 via-energy-pink/20 to-energy-cyan/20 mix-blend-overlay"></div>
-
-      {/* Animated Musical Notes - Only show if reduced motion is off */}
-      {!hasReducedMotion && (
-        <>
-          <motion.div 
-            className="musical-note absolute top-[15%] left-[10%] text-white/20 text-5xl z-10"
-            animate={{
-              y: [0, -15, 0],
-              rotate: [0, 5, 0],
-              opacity: [0.2, 0.4, 0.2]
-            }}
-            transition={{ 
-              duration: 4,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "easeInOut"
-            }}
-          >
-            ♪
-          </motion.div>
-          <motion.div 
-            className="musical-note absolute top-[25%] right-[15%] text-white/20 text-6xl z-10"
-            animate={{
-              y: [0, -20, 0],
-              rotate: [0, -5, 0],
-              opacity: [0.2, 0.5, 0.2]
-            }}
-            transition={{ 
-              duration: 5,
-              delay: 0.7,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "easeInOut"
-            }}
-          >
-            ♩
-          </motion.div>
-          <motion.div 
-            className="musical-note absolute bottom-[35%] left-[20%] text-white/20 text-4xl z-10"
-            animate={{
-              y: [0, -10, 0],
-              rotate: [0, 8, 0],
-              opacity: [0.2, 0.4, 0.2]
-            }}
-            transition={{ 
-              duration: 3.5,
-              delay: 1.5,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "easeInOut"
-            }}
-          >
-            ♫
-          </motion.div>
-          <motion.div 
-            className="musical-note absolute bottom-[25%] right-[25%] text-white/20 text-7xl z-10"
-            animate={{
-              y: [0, -25, 0],
-              rotate: [0, -8, 0],
-              opacity: [0.2, 0.5, 0.2]
-            }}
-            transition={{ 
-              duration: 6,
-              delay: 2,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "easeInOut"
-            }}
-          >
-            𝄞
-          </motion.div>
-          <motion.div 
-            className="musical-note absolute top-[40%] left-[30%] text-white/20 text-5xl z-10"
-            animate={{
-              y: [0, -15, 0],
-              rotate: [0, 10, 0],
-              opacity: [0.2, 0.4, 0.2]
-            }}
-            transition={{ 
-              duration: 4.5,
-              delay: 1,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "easeInOut"
-            }}
-          >
-            ♬
-          </motion.div>
-        </>
-      )}
+      {/* Removed video background and gradient overlays */}
       
       {/* Main Content */}
       <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-5xl mx-auto">
@@ -194,7 +79,7 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.3 }}
         >
           <motion.h1 
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-light text-white tracking-tight leading-[1.1]"
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-light text-charcoal tracking-tight leading-[1.1]" // Changed text color to charcoal
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
@@ -204,7 +89,7 @@ const HeroSection = () => {
           </motion.h1>
           
           <motion.p 
-            className="text-lg md:text-2xl text-slate-200 max-w-3xl mx-auto font-light leading-relaxed"
+            className="text-lg md:text-2xl text-charcoal/80 max-w-3xl mx-auto font-light leading-relaxed" // Updated text color
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.9 }}
@@ -229,7 +114,7 @@ const HeroSection = () => {
               
               <button
                 onClick={scrollToDiscoverSection}
-                className="text-slate-200 hover:text-white px-8 py-4 rounded-xl border border-white/20 backdrop-blur-sm transition-all hover:bg-white/10 text-lg font-light"
+                className="text-charcoal hover:text-charcoal/80 px-8 py-4 rounded-xl border border-charcoal/20 backdrop-blur-sm transition-all hover:bg-charcoal/5 text-lg font-light"
               >
                 Discover More
               </button>
@@ -242,8 +127,8 @@ const HeroSection = () => {
               transition={{ delay: 1.3, duration: 0.5 }}
             >
               <div className="w-2 h-2 rounded-full bg-energy-purple animate-pulse-slow"></div>
-              <p className="text-slate-300 text-sm font-light">
-                Applications close <span className="text-white font-medium">May 15, 2025</span> — Only 20 spots available
+              <p className="text-charcoal/70 text-sm font-light">
+                Applications close <span className="text-charcoal font-medium">May 15, 2025</span> — Only 20 spots available
               </p>
               <div className="w-2 h-2 rounded-full bg-energy-purple animate-pulse-slow"></div>
             </motion.div>
@@ -261,7 +146,7 @@ const HeroSection = () => {
         transition={{ delay: 1.5, duration: 0.8 }}
       >
         <motion.div 
-          className="rounded-full bg-white/10 backdrop-blur-sm border border-white/20 p-3 hover:bg-white/20 transition-all"
+          className="rounded-full bg-charcoal/10 backdrop-blur-sm border border-charcoal/20 p-3 hover:bg-charcoal/20 transition-all"
           animate={{ y: [0, 8, 0] }}
           transition={{ 
             duration: 2, 
@@ -269,7 +154,7 @@ const HeroSection = () => {
             repeatType: "loop"
           }}
         >
-          <ArrowDown className="text-white w-5 h-5" />
+          <ArrowDown className="text-charcoal w-5 h-5" />
         </motion.div>
       </motion.button>
     </section>
