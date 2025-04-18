@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ArrowUpRight, ChevronDown } from 'lucide-react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
@@ -62,7 +61,6 @@ const Navbar = ({ activeSection }: NavbarProps) => {
     { id: 'about', label: 'About' },
     { id: 'curriculum', label: 'Curriculum' },
     { id: 'instructors', label: 'Instructors' },
-    { id: 'summer-programme', label: 'Summer Programme', href: '/summer-programme' },
   ];
 
   return (
@@ -95,7 +93,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
         </Link>
 
         <nav className="hidden md:block">
-          <ul className="flex space-x-1">
+          <ul className="flex space-x-2">
             {navLinks.map((link) => (
               <li key={link.id}>
                 {link.href ? (
