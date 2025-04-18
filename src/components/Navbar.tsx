@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ArrowUpRight, ChevronDown } from 'lucide-react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
@@ -69,14 +70,14 @@ const Navbar = ({ activeSection }: NavbarProps) => {
       className={cn(
         "fixed top-0 left-0 w-full z-50 transition-all duration-300",
         scrolled 
-          ? "bg-white/95 backdrop-blur-md border-b border-slate-200/50 shadow-sm" 
-          : "bg-white/50 backdrop-blur-sm"
+          ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-energy-purple/10" 
+          : "bg-transparent"
       )}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-8 py-4 flex items-center justify-between">
         <Link 
           to="/" 
-          className="font-outfit text-slate-900 tracking-tight transition-all hover:opacity-80"
+          className="font-outfit text-energy-purple tracking-tight transition-all hover:opacity-80"
           aria-label="Vocal Excellence - Home"
         >
           <motion.div 
@@ -88,7 +89,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
             <img 
               src="/lovable-uploads/e980c9b0-8cdc-423d-a726-2f677be33737.png" 
               alt="Vocal Excellence Logo" 
-              className="w-16 h-16 mr-3" 
+              className="w-14 h-14 mr-3" 
             />
           </motion.div>
         </Link>
@@ -104,7 +105,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                       "relative py-2 px-4 text-sm font-medium rounded-lg transition-colors",
                       location.pathname === link.href 
                         ? "text-energy-purple bg-energy-purple/5" 
-                        : "text-slate-600 hover:text-energy-purple hover:bg-slate-50"
+                        : "text-slate-600 hover:text-energy-purple hover:bg-energy-purple/5"
                     )}
                     onMouseEnter={() => setHovered(link.id)}
                     onMouseLeave={() => setHovered(null)}
@@ -121,7 +122,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                       "relative py-2 px-4 text-sm font-medium rounded-lg transition-colors",
                       activeSection === link.id 
                         ? "text-energy-purple bg-energy-purple/5" 
-                        : "text-slate-600 hover:text-energy-purple hover:bg-slate-50"
+                        : "text-slate-600 hover:text-energy-purple hover:bg-energy-purple/5"
                     )}
                     onMouseEnter={() => setHovered(link.id)}
                     onMouseLeave={() => setHovered(null)}
@@ -162,7 +163,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
         <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
           <SheetTrigger asChild>
             <button 
-              className="md:hidden flex items-center justify-center w-10 h-10 text-slate-700 rounded-lg hover:bg-slate-100 transition-colors"
+              className="md:hidden flex items-center justify-center w-10 h-10 text-energy-purple rounded-lg hover:bg-energy-purple/5 transition-colors"
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             >
               <Menu size={20} />
@@ -176,18 +177,18 @@ const Navbar = ({ activeSection }: NavbarProps) => {
               <div className="flex items-center justify-between">
                 <Link 
                   to="/" 
-                  className="font-outfit text-slate-900 tracking-tight transition-opacity hover:opacity-80"
+                  className="font-outfit text-energy-purple tracking-tight transition-opacity hover:opacity-80"
                   onClick={closeMenu}
                 >
                   <div className="flex items-center">
                     <img 
                       src="/lovable-uploads/e980c9b0-8cdc-423d-a726-2f677be33737.png" 
                       alt="Vocal Excellence Logo" 
-                      className="w-14 h-14 mr-3" 
+                      className="w-12 h-12 mr-3" 
                     />
                   </div>
                 </Link>
-                <SheetClose className="rounded-lg w-10 h-10 flex items-center justify-center hover:bg-slate-100">
+                <SheetClose className="rounded-lg w-10 h-10 flex items-center justify-center hover:bg-energy-purple/5 text-energy-purple">
                   <X size={18} />
                 </SheetClose>
               </div>
@@ -210,7 +211,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                               "block py-3 px-4 text-base font-medium transition-colors rounded-xl relative overflow-hidden group",
                               location.pathname === link.href 
                                 ? "text-energy-purple bg-energy-purple/5" 
-                                : "text-slate-700 hover:text-energy-purple hover:bg-slate-50"
+                                : "text-slate-700 hover:text-energy-purple hover:bg-energy-purple/5"
                             )}
                           >
                             <span className="relative z-10 flex items-center">
@@ -226,7 +227,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                               "block py-3 px-4 text-base font-medium transition-colors rounded-xl relative overflow-hidden group",
                               activeSection === link.id 
                                 ? "text-energy-purple bg-energy-purple/5" 
-                                : "text-slate-700 hover:text-energy-purple hover:bg-slate-50"
+                                : "text-slate-700 hover:text-energy-purple hover:bg-energy-purple/5"
                             )}
                           >
                             <span className="relative z-10 flex items-center">
