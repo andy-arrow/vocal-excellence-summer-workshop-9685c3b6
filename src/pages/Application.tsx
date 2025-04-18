@@ -1,3 +1,4 @@
+
 import React, { useEffect, lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
@@ -65,17 +66,6 @@ const Application = () => {
           
           <div className="py-12 md:py-16 bg-white">
             <div className="max-w-7xl mx-auto px-6 md:px-8">
-              <div className="mb-12 max-w-3xl mx-auto bg-gradient-to-br from-coral-50/50 to-coral-50/30 p-8 rounded-2xl border border-coral-100/50">
-                <h2 className="font-serif text-2xl font-light text-charcoal mb-4">Need Help?</h2>
-                <p className="text-charcoal/80 text-lg">
-                  We're here to help you with your application! If you have any questions, 
-                  call us at <span className="font-medium text-charcoal">123-456-7890</span> or email{' '}
-                  <a href="mailto:help@vocalexcellence.com" className="text-coral-600 hover:text-coral-700 underline-offset-4 hover:underline transition-colors">
-                    help@vocalexcellence.com
-                  </a>
-                </p>
-              </div>
-              
               <div className="space-y-20">
                 <motion.section key="requirements" initial="hidden" whileInView="visible" viewport={{
                 once: true,
@@ -126,3 +116,4 @@ const Application = () => {
     </div>;
 };
 export default Application;
+
