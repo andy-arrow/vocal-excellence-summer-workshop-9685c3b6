@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown, MusicIcon } from 'lucide-react';
@@ -30,7 +29,7 @@ const ApplicationHero = () => {
               Vocal Mastery
             </span>
           </h1>
-            
+          
           <motion.p 
             className="text-lg md:text-xl text-slate-200 max-w-2xl mx-auto leading-relaxed font-light drop-shadow"
             initial={{ opacity: 0 }}
