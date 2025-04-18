@@ -73,7 +73,7 @@ const Application = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6">
               <div className="mb-12 max-w-3xl mx-auto bg-blue-50 p-6 rounded-xl border border-blue-100">
                 <h2 className="text-2xl font-bold text-blue-800 mb-4">Need Help?</h2>
-                <p className="text-blue-700">
+                <p className="text-blue-900 text-lg">
                   We're here to help you with your application! If you have any questions, 
                   call us at <span className="font-bold">123-456-7890</span> or email 
                   <a href="mailto:help@vocalexcellence.com" className="ml-1 font-bold underline">help@vocalexcellence.com</a>

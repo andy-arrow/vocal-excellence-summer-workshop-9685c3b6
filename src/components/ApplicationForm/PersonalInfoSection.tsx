@@ -14,19 +14,19 @@ const PersonalInfoSection = () => {
       <div className="space-y-8">
         <div className="p-6 rounded-xl bg-white border-2 border-blue-100 shadow-sm">
           <h3 className="text-xl font-bold text-gray-800 mb-4">About You</h3>
-          <p className="text-gray-600 mb-6">Let's start with your basic information</p>
+          <p className="text-gray-700 mb-6 text-base">Let's start with your basic information</p>
           <BasicInfoFields />
         </div>
         
         <div className="p-6 rounded-xl bg-white border-2 border-blue-100 shadow-sm">
           <h3 className="text-xl font-bold text-gray-800 mb-4">How to Reach You</h3>
-          <p className="text-gray-600 mb-6">Your contact information is important so we can keep you updated</p>
+          <p className="text-gray-700 mb-6 text-base">Your contact information is important so we can keep you updated</p>
           <ContactInfoFields />
         </div>
         
         <div className="p-6 rounded-xl bg-white border-2 border-blue-100 shadow-sm">
           <h3 className="text-xl font-bold text-gray-800 mb-4">Where You Live</h3>
-          <p className="text-gray-600 mb-6">Please tell us your home address</p>
+          <p className="text-gray-700 mb-6 text-base">Please tell us your home address</p>
           <AddressFields />
         </div>
       </div>
