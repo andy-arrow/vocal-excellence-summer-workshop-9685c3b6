@@ -1,4 +1,3 @@
-
 import React, { useEffect, lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
@@ -13,8 +12,8 @@ const ApplicationFAQ = lazy(() => import('@/components/ApplicationFAQ'));
 const ScrollToTopButton = lazy(() => import('@/components/ScrollToTopButton'));
 
 const SectionLoader = () => (
-  <div className="py-16 flex justify-center">
-    <div className="w-8 h-8 border-4 border-blue-300 border-t-blue-500 rounded-full animate-spin"></div>
+  <div className="flex justify-center py-16">
+    <div className="w-8 h-8 border-4 border-coral-300 border-t-coral-500 rounded-full animate-spin"></div>
   </div>
 );
 
@@ -44,24 +43,24 @@ const Application = () => {
   }, []);
   
   return (
-    <div className="bg-white text-gray-900 min-h-screen font-sans antialiased">
+    <div className="bg-white text-charcoal min-h-screen font-sans antialiased">
       <Helmet>
         <title>Apply Now | Vocal Excellence Workshop</title>
         <meta name="description" content="Apply now for the Vocal Excellence Summer Workshop and discover your true potential with world-class vocal coaching. Limited spots available." />
         <meta name="theme-color" content="#ffffff" />
       </Helmet>
       
-      <div className="min-h-screen flex flex-col bg-gray-50">
+      <div className="min-h-screen flex flex-col">
         <Navbar />
         
         <main className="flex-grow">
-          <div className="bg-white py-12 md:py-20 border-b border-gray-200 shadow-sm">
-            <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <div className="bg-gradient-to-b from-white to-neutral-50 py-16 md:py-24 border-b border-neutral-100">
+            <div className="max-w-4xl mx-auto px-6 md:px-8">
               <div className="text-center">
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-charcoal mb-6 tracking-tight">
                   Join Our Vocal Excellence Workshop
                 </h1>
-                <p className="text-xl text-gray-800 max-w-2xl mx-auto leading-relaxed font-medium">
+                <p className="font-sans text-lg md:text-xl text-charcoal/80 max-w-2xl mx-auto leading-relaxed">
                   Fill out this simple form to apply for our Summer 2025 program 
                   and take your singing to the next level!
                 </p>
@@ -69,14 +68,17 @@ const Application = () => {
             </div>
           </div>
           
-          <div className="py-8 md:py-12 bg-gray-50">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6">
-              <div className="mb-12 max-w-3xl mx-auto bg-blue-50 p-6 rounded-xl border border-blue-200 shadow-sm">
-                <h2 className="text-2xl font-bold text-blue-900 mb-4">Need Help?</h2>
-                <p className="text-blue-900 text-lg font-medium">
+          <div className="py-12 md:py-16">
+            <div className="max-w-7xl mx-auto px-6 md:px-8">
+              <div className="mb-12 max-w-3xl mx-auto bg-gradient-to-br from-coral-50/50 to-coral-50/30 p-8 rounded-2xl border border-coral-100/50">
+                <h2 className="font-serif text-2xl font-light text-charcoal mb-4">Need Help?</h2>
+                <p className="text-charcoal/80 text-lg">
                   We're here to help you with your application! If you have any questions, 
-                  call us at <span className="font-bold">123-456-7890</span> or email 
-                  <a href="mailto:help@vocalexcellence.com" className="ml-1 font-bold underline">help@vocalexcellence.com</a>
+                  call us at <span className="font-medium">123-456-7890</span> or email{' '}
+                  <a href="mailto:help@vocalexcellence.com" 
+                     className="text-coral-600 hover:text-coral-700 underline-offset-4 hover:underline transition-colors">
+                    help@vocalexcellence.com
+                  </a>
                 </p>
               </div>
               
@@ -87,7 +89,7 @@ const Application = () => {
                   whileInView="visible"
                   viewport={{ once: true, margin: "-100px" }}
                   variants={fadeIn}
-                  className="bg-white p-8 rounded-xl shadow-sm border border-gray-200"
+                  className="bg-white rounded-2xl shadow-sm border border-neutral-200/80 overflow-hidden"
                 >
                   <Suspense fallback={<SectionLoader />}>
                     <ApplicationRequirements />
@@ -100,7 +102,7 @@ const Application = () => {
                   whileInView="visible"
                   viewport={{ once: true, margin: "-100px" }}
                   variants={fadeIn}
-                  className="bg-white p-8 rounded-xl shadow-sm border border-gray-200"
+                  className="bg-white rounded-2xl shadow-sm border border-neutral-200/80 overflow-hidden"
                 >
                   <Suspense fallback={<SectionLoader />}>
                     <ApplicationTimeline />
@@ -113,7 +115,7 @@ const Application = () => {
                   whileInView="visible"
                   viewport={{ once: true, margin: "-100px" }}
                   id="application-form-section"
-                  className="bg-white p-8 rounded-xl shadow-sm border border-gray-200"
+                  className="bg-white rounded-2xl shadow-sm border border-neutral-200/80 overflow-hidden"
                   aria-label="Application Form Section"
                 >
                   <Suspense fallback={<SectionLoader />}>
@@ -127,7 +129,7 @@ const Application = () => {
                   whileInView="visible"
                   viewport={{ once: true, margin: "-100px" }}
                   variants={fadeIn}
-                  className="bg-white p-8 rounded-xl shadow-sm border border-gray-200"
+                  className="bg-white rounded-2xl shadow-sm border border-neutral-200/80 overflow-hidden"
                 >
                   <Suspense fallback={<SectionLoader />}>
                     <ApplicationFAQ />
