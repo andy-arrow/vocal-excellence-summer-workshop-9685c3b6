@@ -7,7 +7,7 @@ import './styles/animations.css'
 import ErrorBoundary from '@/utils/ErrorBoundary'
 import { trackError } from '@/utils/monitoring'
 import { preloadResources } from '@/utils/PreloadResources'
-import { AuthProvider } from '@/contexts/AuthContext'
+import { ThemeProvider } from 'next-themes'
 
 // Run preloading immediately
 preloadResources();
@@ -96,7 +96,7 @@ const initializeApp = async () => {
   setupErrorHandlers();
   
   try {
-    // Initialize auth context
+    // Import AuthProvider from context
     const { AuthProvider } = await import('./contexts/AuthContext');
     
     const root = ReactDOM.createRoot(rootElement);
@@ -104,32 +104,34 @@ const initializeApp = async () => {
     root.render(
       <React.StrictMode>
         <ErrorBoundary>
-          <AuthProvider>
-            <App />
-            <Suspense fallback={null}>
-              <Toaster />
-              <Sonner position="top-right" closeButton />
-            </Suspense>
-          </AuthProvider>
+          <ThemeProvider attribute="class" defaultTheme="light">
+            <AuthProvider>
+              <App />
+              <Suspense fallback={null}>
+                <Toaster />
+                <Sonner position="top-right" closeButton />
+              </Suspense>
+            </AuthProvider>
+          </ThemeProvider>
         </ErrorBoundary>
       </React.StrictMode>
     );
     
-    console.log('App rendered with AuthProvider');
+    console.log('App rendered with AuthProvider and ThemeProvider');
     
     // Start monitoring after initial render
     reportWebVitals();
     
   } catch (error) {
-    console.error('Failed to load AuthContext:', error);
+    console.error('Failed to load application:', error);
     
-    // Fallback rendering without AuthProvider
+    // Fallback rendering without providers
     const root = ReactDOM.createRoot(rootElement);
     root.render(
       <React.StrictMode>
         <ErrorBoundary>
           <div className="p-6 text-center">
-            <h2 className="text-xl text-red-500">Authentication service is currently unavailable</h2>
+            <h2 className="text-xl text-red-500">Application failed to load</h2>
             <p className="mt-2">Please try refreshing the page</p>
           </div>
         </ErrorBoundary>

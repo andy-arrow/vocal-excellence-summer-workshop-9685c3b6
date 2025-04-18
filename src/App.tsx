@@ -11,6 +11,7 @@ const Application = lazy(() => import('./pages/Application'));
 const CancellationPolicy = lazy(() => import('./pages/CancellationPolicy'));
 const TermsAndConditions = lazy(() => import('./pages/TermsAndConditions'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const Auth = lazy(() => import('./pages/Auth'));
 
 // Optimized loading fallback that doesn't block rendering
 const PageLoader = () => (
@@ -41,6 +42,14 @@ function App() {
           element: (
             <Suspense fallback={<PageLoader />}>
               <Application />
+            </Suspense>
+          ),
+        },
+        {
+          path: "/auth",
+          element: (
+            <Suspense fallback={<PageLoader />}>
+              <Auth />
             </Suspense>
           ),
         },
@@ -81,6 +90,7 @@ function App() {
         (window as any).requestIdleCallback(() => {
           const routes = [
             import('./pages/Application'),
+            import('./pages/Auth'),
             import('./pages/CancellationPolicy'),
             import('./pages/TermsAndConditions'),
             import('./pages/PrivacyPolicy')
