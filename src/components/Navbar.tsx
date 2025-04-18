@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ArrowUpRight, ChevronDown } from 'lucide-react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
@@ -17,6 +18,12 @@ import {
 
 interface NavbarProps {
   activeSection?: string;
+}
+
+interface NavLink {
+  id: string;
+  label: string;
+  href?: string;
 }
 
 const Navbar = ({ activeSection }: NavbarProps) => {
@@ -56,7 +63,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
     setIsMenuOpen(false);
   };
 
-  const navLinks = [
+  const navLinks: NavLink[] = [
     { id: 'home', label: 'Home' },
     { id: 'about', label: 'About' },
     { id: 'curriculum', label: 'Curriculum' },
