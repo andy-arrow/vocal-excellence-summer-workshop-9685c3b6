@@ -58,6 +58,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
     { id: 'about', label: 'About' },
     { id: 'curriculum', label: 'Curriculum' },
     { id: 'instructors', label: 'Instructors' },
+    { id: 'summer-programme', label: 'Summer Programme', href: '/summer-programme' },
   ];
 
   const closeMenu = () => {
@@ -256,4 +257,3 @@ const Navbar = ({ activeSection }: NavbarProps) => {
 };
 
 export default Navbar;
-
