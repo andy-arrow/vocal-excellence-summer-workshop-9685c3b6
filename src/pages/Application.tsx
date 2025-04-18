@@ -1,4 +1,3 @@
-
 import React, { useEffect, lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
@@ -28,6 +27,7 @@ const fadeIn = {
     }
   }
 };
+
 const Application = () => {
   const [showScrollToTop, setShowScrollToTop] = React.useState(false);
   useEffect(() => {
@@ -115,5 +115,5 @@ const Application = () => {
       </div>
     </div>;
 };
-export default Application;
 
+export default Application;
