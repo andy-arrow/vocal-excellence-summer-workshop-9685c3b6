@@ -174,19 +174,6 @@ const InstructorsSection = () => {
             </div>
           ))}
         </div>
-
-        <div 
-          ref={(el) => (elementsRef.current[7] = el)} 
-          className="mt-16 text-center reveal-on-scroll"
-        >
-          <p className="text-gray-600 mb-6">
-            During the intensive, you'll also have the opportunity to work with guest artists and industry professionals in specialized workshops and masterclasses.
-          </p>
-          <a href="#" className="inline-flex items-center text-rose-500 hover:text-rose-600 transition-colors">
-            <span className="mr-1">View All Faculty & Guest Artists</span>
-            <ArrowRight size={16} />
-          </a>
-        </div>
       </div>
     </section>
   );
