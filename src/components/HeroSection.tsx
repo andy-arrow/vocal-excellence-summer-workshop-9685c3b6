@@ -83,7 +83,7 @@ const HeroSection = () => {
         }} transition={{
           duration: 0.8,
           delay: 0.9
-        }}>Join our exclusive 5-day Workshop where world-class mentors will transform your voice and elevate your technique to new heights.</motion.p>
+        }}>A transformative 5-day vocal intensive for advancing singers, featuring masterclasses, private coaching, and performance opportunities with world-class faculty</motion.p>
 
           <motion.div className="pt-8" initial={{
           opacity: 0,
