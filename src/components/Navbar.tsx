@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ArrowUpRight, ChevronDown } from 'lucide-react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
@@ -98,28 +97,52 @@ const Navbar = ({ activeSection }: NavbarProps) => {
           <ul className="flex space-x-8">
             {navLinks.map((link) => (
               <li key={link.id}>
-                <a
-                  href={`#${link.id}`}
-                  onClick={(e) => handleSmoothScroll(e, link.id)}
-                  onMouseEnter={() => setHovered(link.id)}
-                  onMouseLeave={() => setHovered(null)}
-                  className={cn(
-                    "relative py-1 text-sm font-medium transition-colors",
-                    activeSection === link.id ? "text-energy-purple" : "text-slate-800 hover:text-energy-purple"
-                  )}
-                >
-                  {link.label}
-                  {(activeSection === link.id || hovered === link.id) && (
-                    <motion.div
-                      className="absolute bottom-[-4px] left-0 right-0 h-[2px] bg-energy-purple"
-                      layoutId="navUnderline"
-                      initial={{ opacity: 0, width: 0 }}
-                      animate={{ opacity: 1, width: '100%' }}
-                      exit={{ opacity: 0, width: 0 }}
-                      transition={{ duration: 0.2, ease: "easeInOut" }}
-                    />
-                  )}
-                </a>
+                {link.href ? (
+                  <Link
+                    to={link.href}
+                    className={cn(
+                      "relative py-1 text-sm font-medium transition-colors",
+                      location.pathname === link.href ? "text-energy-purple" : "text-slate-800 hover:text-energy-purple"
+                    )}
+                    onMouseEnter={() => setHovered(link.id)}
+                    onMouseLeave={() => setHovered(null)}
+                  >
+                    {link.label}
+                    {(location.pathname === link.href || hovered === link.id) && (
+                      <motion.div
+                        className="absolute bottom-[-4px] left-0 right-0 h-[2px] bg-energy-purple"
+                        layoutId="navUnderline"
+                        initial={{ opacity: 0, width: 0 }}
+                        animate={{ opacity: 1, width: '100%' }}
+                        exit={{ opacity: 0, width: 0 }}
+                        transition={{ duration: 0.2, ease: "easeInOut" }}
+                      />
+                    )}
+                  </Link>
+                ) : (
+                  <a
+                    href={`#${link.id}`}
+                    onClick={(e) => handleSmoothScroll(e, link.id)}
+                    onMouseEnter={() => setHovered(link.id)}
+                    onMouseLeave={() => setHovered(null)}
+                    className={cn(
+                      "relative py-1 text-sm font-medium transition-colors",
+                      activeSection === link.id ? "text-energy-purple" : "text-slate-800 hover:text-energy-purple"
+                    )}
+                  >
+                    {link.label}
+                    {(activeSection === link.id || hovered === link.id) && (
+                      <motion.div
+                        className="absolute bottom-[-4px] left-0 right-0 h-[2px] bg-energy-purple"
+                        layoutId="navUnderline"
+                        initial={{ opacity: 0, width: 0 }}
+                        animate={{ opacity: 1, width: '100%' }}
+                        exit={{ opacity: 0, width: 0 }}
+                        transition={{ duration: 0.2, ease: "easeInOut" }}
+                      />
+                    )}
+                  </a>
+                )}
               </li>
             ))}
           </ul>
@@ -196,27 +219,50 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                       className="overflow-hidden"
                     >
                       <SheetClose asChild>
-                        <a
-                          href={`#${link.id}`}
-                          onClick={(e) => handleSmoothScroll(e, link.id)}
-                          className={cn(
-                            "block py-3 px-4 text-base font-medium transition-colors rounded-xl relative overflow-hidden group",
-                            activeSection === link.id 
-                              ? "text-energy-purple bg-energy-purple/5" 
-                              : "text-slate-800 hover:text-energy-purple hover:bg-slate-50"
-                          )}
-                        >
-                          <span className="relative z-10 flex items-center">
-                            {link.label}
-                            <motion.div
-                              initial={{ x: -4, opacity: 0 }}
-                              animate={{ x: 0, opacity: 1 }}
-                              transition={{ delay: 0.2 + idx * 0.05 }}
-                            >
-                              <ArrowUpRight className="ml-2 w-4 h-4 opacity-60 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                            </motion.div>
-                          </span>
-                        </a>
+                        {link.href ? (
+                          <Link
+                            to={link.href}
+                            className={cn(
+                              "block py-3 px-4 text-base font-medium transition-colors rounded-xl relative overflow-hidden group",
+                              location.pathname === link.href 
+                                ? "text-energy-purple bg-energy-purple/5" 
+                                : "text-slate-800 hover:text-energy-purple hover:bg-slate-50"
+                            )}
+                          >
+                            <span className="relative z-10 flex items-center">
+                              {link.label}
+                              <motion.div
+                                initial={{ x: -4, opacity: 0 }}
+                                animate={{ x: 0, opacity: 1 }}
+                                transition={{ delay: 0.2 + idx * 0.05 }}
+                              >
+                                <ArrowUpRight className="ml-2 w-4 h-4 opacity-60 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                              </motion.div>
+                            </span>
+                          </Link>
+                        ) : (
+                          <a
+                            href={`#${link.id}`}
+                            onClick={(e) => handleSmoothScroll(e, link.id)}
+                            className={cn(
+                              "block py-3 px-4 text-base font-medium transition-colors rounded-xl relative overflow-hidden group",
+                              activeSection === link.id 
+                                ? "text-energy-purple bg-energy-purple/5" 
+                                : "text-slate-800 hover:text-energy-purple hover:bg-slate-50"
+                            )}
+                          >
+                            <span className="relative z-10 flex items-center">
+                              {link.label}
+                              <motion.div
+                                initial={{ x: -4, opacity: 0 }}
+                                animate={{ x: 0, opacity: 1 }}
+                                transition={{ delay: 0.2 + idx * 0.05 }}
+                              >
+                                <ArrowUpRight className="ml-2 w-4 h-4 opacity-60 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                              </motion.div>
+                            </span>
+                          </a>
+                        )}
                       </SheetClose>
                     </motion.li>
                   ))}
