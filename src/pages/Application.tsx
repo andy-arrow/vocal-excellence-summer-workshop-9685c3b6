@@ -53,13 +53,15 @@ const Application = () => {
         <Navbar />
         
         <main className="flex-grow">
-          <div className="bg-gradient-to-b from-white to-neutral-50 py-16 md:py-24 border-b border-neutral-100">
+          <div className="bg-gradient-to-b from-white to-neutral-50 py-16 md:py-20 border-b border-neutral-100">
             <div className="max-w-4xl mx-auto px-6 md:px-8">
               <div className="text-center">
                 <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-charcoal mb-6 tracking-tight">
-                  Join Our Vocal Excellence Workshop
+                  Unlock Your Vocal Potential
                 </h1>
-                <p className="font-sans text-lg md:text-xl text-charcoal/80 max-w-2xl mx-auto leading-relaxed">Join our exclusive 5-day Workshop where world-class mentors will transform your voice and elevate your technique to new heights.</p>
+                <p className="font-sans text-lg md:text-xl text-charcoal/80 max-w-2xl mx-auto leading-relaxed">
+                  A transformative 5-day vocal intensive for advancing singers, featuring masterclasses, private coaching, and performance opportunities with world-class faculty.
+                </p>
               </div>
             </div>
           </div>
