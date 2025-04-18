@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ArrowUpRight, ChevronDown } from 'lucide-react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
@@ -51,6 +50,10 @@ const Navbar = ({ activeSection }: NavbarProps) => {
     } else {
       window.location.href = `/#${id}`;
     }
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
   };
 
   const navLinks = [
@@ -272,4 +275,3 @@ const Navbar = ({ activeSection }: NavbarProps) => {
 };
 
 export default Navbar;
-
