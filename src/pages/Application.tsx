@@ -27,7 +27,6 @@ const fadeIn = {
     }
   }
 };
-
 const Application = () => {
   const [showScrollToTop, setShowScrollToTop] = React.useState(false);
   useEffect(() => {
@@ -56,9 +55,7 @@ const Application = () => {
           <div className="bg-gradient-to-b from-white to-neutral-50 py-16 md:py-20 border-b border-neutral-100">
             <div className="max-w-4xl mx-auto px-6 md:px-8">
               <div className="text-center">
-                <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-charcoal mb-6 tracking-tight">
-                  Unlock Your Vocal Potential
-                </h1>
+                <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-charcoal mb-6 tracking-tight">Your Journey To Vocal Mastery</h1>
                 <p className="font-sans text-lg md:text-xl text-charcoal/80 max-w-2xl mx-auto leading-relaxed">
                   A transformative 5-day vocal intensive for advancing singers, featuring masterclasses, private coaching, and performance opportunities with world-class faculty.
                 </p>
@@ -117,5 +114,4 @@ const Application = () => {
       </div>
     </div>;
 };
-
 export default Application;
