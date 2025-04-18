@@ -64,13 +64,10 @@ const HeroSection = () => {
       ref={heroRef}
       className={cn(
         "relative min-h-screen flex items-center justify-center overflow-hidden",
-        "bg-white", // Changed from gradient background to white
+        "bg-white",
         hasReducedMotion ? "reduced-motion" : ""
       )}
     >
-      {/* Removed video background and gradient overlays */}
-      
-      {/* Main Content */}
       <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-5xl mx-auto">
         <motion.div 
           className="space-y-10"
@@ -79,7 +76,7 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.3 }}
         >
           <motion.h1 
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-light text-charcoal tracking-tight leading-[1.1]" // Changed text color to charcoal
+            className="display-text tracking-tight leading-[1.1]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
@@ -89,7 +86,7 @@ const HeroSection = () => {
           </motion.h1>
           
           <motion.p 
-            className="text-lg md:text-2xl text-charcoal/80 max-w-3xl mx-auto font-light leading-relaxed" // Updated text color
+            className="subtitle max-w-3xl mx-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.9 }}
@@ -136,7 +133,6 @@ const HeroSection = () => {
         </motion.div>
       </div>
       
-      {/* Scroll Down Button */}
       <motion.button 
         onClick={scrollToDiscoverSection}
         className="absolute bottom-12 left-0 right-0 mx-auto w-12 h-12 cursor-pointer z-20 flex items-center justify-center"

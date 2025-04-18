@@ -112,7 +112,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                       : "text-slate-600 hover:text-energy-purple hover:bg-energy-purple/5"
                   )}
                 >
-                  <span className="relative z-10 flex items-center">
+                  <span className="relative z-10 flex items-center font-sans">
                     {link.label}
                   </span>
                 </a>

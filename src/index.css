@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -51,24 +52,37 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  /* Typography System */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif font-light tracking-tight;
+    @apply font-serif tracking-tight;
   }
 
   h1 {
-    @apply text-4xl md:text-5xl lg:text-6xl leading-tight;
+    @apply text-h1 font-light mb-6;
   }
 
   h2 {
-    @apply text-3xl md:text-4xl leading-snug;
+    @apply text-h2 font-light mb-4;
   }
 
   h3 {
-    @apply text-2xl md:text-3xl;
+    @apply text-h3 font-light mb-3;
+  }
+
+  h4 {
+    @apply text-h4 font-light mb-2;
   }
 
   p {
-    @apply leading-relaxed text-charcoal/80;
+    @apply text-body leading-relaxed text-charcoal/80;
+  }
+
+  .display-text {
+    @apply font-serif text-display-lg md:text-display font-light;
+  }
+
+  .subtitle {
+    @apply text-body-lg text-charcoal/70;
   }
 }
 

@@ -69,12 +69,12 @@ const AboutSection = () => {
             <Star className="mr-1.5 w-4 h-4 text-energy-yellow" />
             About The Programme
           </span>
-          <h2 className="text-3xl md:text-4xl font-serif font-bold text-slate-900 mb-4">
+          <h2 className="text-h2 font-serif mb-4">
             Break the Rules, <br className="md:hidden" />
             Find Your Sound
           </h2>
           <div className="w-16 h-0.5 bg-energy-pink"></div>
-          <p className="text-lg text-slate-700 max-w-2xl mt-6 leading-relaxed">
+          <p className="subtitle mt-6">
             A high-energy vocal experience designed for your creative expression
           </p>
         </div>
