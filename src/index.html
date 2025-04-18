@@ -8,7 +8,7 @@
     <meta name="theme-color" content="#ffffff" />
     <meta name="description" content="Vocal Excellence Workshop - Summer 2025" />
     
-    <!-- System font strategy for improved performance -->
+    <!-- System font strategy for improved readability -->
     <style>
       /* Improve font rendering */
       html { 
@@ -16,19 +16,34 @@
         -moz-osx-font-smoothing: grayscale;
         font-display: swap;
       }
-      /* Ensure consistent text sizing */
+      /* Ensure comfortable text sizing */
       html {
         font-size: 16px;
-        line-height: 1.5;
+        line-height: 1.6;
       }
       /* Prevent layout shifts during font loading */
       body {
         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        background-color: #f8fafc;
+        color: #374151;
       }
       /* Focus styles for accessibility */
       *:focus-visible {
-        outline: 2px solid #3b4bdb;
+        outline: 3px solid #3b82f6;
         outline-offset: 2px;
+      }
+      /* Enhanced heading styles */
+      h1, h2, h3, h4, h5, h6 {
+        font-weight: 600;
+        line-height: 1.3;
+      }
+      /* Larger text size for forms */
+      input, select, textarea, button {
+        font-size: 1rem;
+      }
+      /* Larger touch targets */
+      button, a, input[type="checkbox"], input[type="radio"] {
+        min-height: 42px;
       }
       /* Smooth animations for improved performance */
       @media (prefers-reduced-motion: no-preference) {

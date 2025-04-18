@@ -14,7 +14,7 @@ const ScrollToTopButton = lazy(() => import('@/components/ScrollToTopButton'));
 
 const SectionLoader = () => (
   <div className="py-16 flex justify-center">
-    <div className="w-8 h-8 border-2 border-gray-300 border-t-gray-800 rounded-full animate-spin"></div>
+    <div className="w-8 h-8 border-4 border-blue-300 border-t-blue-500 rounded-full animate-spin"></div>
   </div>
 );
 
@@ -51,25 +51,35 @@ const Application = () => {
         <meta name="theme-color" content="#ffffff" />
       </Helmet>
       
-      <div className="min-h-screen flex flex-col bg-white">
+      <div className="min-h-screen flex flex-col bg-gray-50">
         <Navbar />
         
         <main className="flex-grow">
-          <div className="bg-gray-50 py-12 md:py-20 border-b border-gray-200">
+          <div className="bg-white py-12 md:py-20 border-b border-gray-100 shadow-sm">
             <div className="max-w-4xl mx-auto px-4 sm:px-6">
               <div className="text-center">
-                <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-4">
-                  Apply to the Vocal Excellence Workshop
+                <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
+                  Join Our Vocal Excellence Workshop
                 </h1>
                 <p className="text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed">
-                  Join our Summer 2025 program and take your vocal talents to new heights with world-class coaching
+                  Fill out this simple form to apply for our Summer 2025 program 
+                  and take your singing to the next level!
                 </p>
               </div>
             </div>
           </div>
           
-          <div className="py-12 md:py-20 bg-white">
+          <div className="py-8 md:py-12 bg-gray-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6">
+              <div className="mb-12 max-w-3xl mx-auto bg-blue-50 p-6 rounded-xl border border-blue-100">
+                <h2 className="text-2xl font-bold text-blue-800 mb-4">Need Help?</h2>
+                <p className="text-blue-700">
+                  We're here to help you with your application! If you have any questions, 
+                  call us at <span className="font-bold">123-456-7890</span> or email 
+                  <a href="mailto:help@vocalexcellence.com" className="ml-1 font-bold underline">help@vocalexcellence.com</a>
+                </p>
+              </div>
+              
               <div className="space-y-20">
                 <motion.section
                   key="requirements"
@@ -77,7 +87,7 @@ const Application = () => {
                   whileInView="visible"
                   viewport={{ once: true, margin: "-100px" }}
                   variants={fadeIn}
-                  className="bg-white"
+                  className="bg-white p-8 rounded-xl shadow-sm border border-gray-100"
                 >
                   <Suspense fallback={<SectionLoader />}>
                     <ApplicationRequirements />
@@ -90,7 +100,7 @@ const Application = () => {
                   whileInView="visible"
                   viewport={{ once: true, margin: "-100px" }}
                   variants={fadeIn}
-                  className="bg-white"
+                  className="bg-white p-8 rounded-xl shadow-sm border border-gray-100"
                 >
                   <Suspense fallback={<SectionLoader />}>
                     <ApplicationTimeline />
@@ -103,7 +113,7 @@ const Application = () => {
                   whileInView="visible"
                   viewport={{ once: true, margin: "-100px" }}
                   id="application-form-section"
-                  className="bg-white"
+                  className="bg-white p-8 rounded-xl shadow-sm border border-gray-100"
                   aria-label="Application Form Section"
                 >
                   <Suspense fallback={<SectionLoader />}>
@@ -117,7 +127,7 @@ const Application = () => {
                   whileInView="visible"
                   viewport={{ once: true, margin: "-100px" }}
                   variants={fadeIn}
-                  className="bg-white"
+                  className="bg-white p-8 rounded-xl shadow-sm border border-gray-100"
                 >
                   <Suspense fallback={<SectionLoader />}>
                     <ApplicationFAQ />

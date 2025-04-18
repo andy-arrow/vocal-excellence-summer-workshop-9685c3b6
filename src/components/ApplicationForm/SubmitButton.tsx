@@ -12,21 +12,21 @@ const SubmitButton = ({ isSubmitting }: SubmitButtonProps) => {
     <button 
       type="submit" 
       disabled={isSubmitting}
-      className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg text-base 
+      className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white text-lg font-medium rounded-xl 
                 relative overflow-hidden transition-all duration-300 disabled:opacity-70 
-                disabled:cursor-not-allowed disabled:hover:bg-blue-600 shadow-sm"
+                disabled:cursor-not-allowed disabled:hover:bg-green-600 shadow-md hover:shadow-lg"
       aria-label={isSubmitting ? "Submitting application" : "Submit application"}
     >
-      <span className="flex items-center gap-2">
+      <span className="flex items-center gap-3">
         {isSubmitting ? (
           <>
             <Spinner size="sm" color="white" speed={1} />
-            <span>Submitting...</span>
+            <span>Sending your application...</span>
           </>
         ) : (
           <>
-            <span>Submit Application</span>
-            <ArrowRight className="w-4 h-4" />
+            <span>Submit Your Application</span>
+            <ArrowRight className="w-5 h-5" />
           </>
         )}
       </span>
