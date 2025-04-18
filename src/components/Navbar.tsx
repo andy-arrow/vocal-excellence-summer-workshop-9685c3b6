@@ -69,8 +69,8 @@ const Navbar = ({ activeSection }: NavbarProps) => {
       className={cn(
         "fixed top-0 left-0 w-full z-50 transition-all duration-500",
         scrolled 
-          ? "bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm" 
-          : "bg-white/80 backdrop-blur-sm"
+          ? "bg-energy-purple/10 backdrop-blur-md border-b border-energy-purple/10 shadow-sm" 
+          : "bg-energy-purple/5 backdrop-blur-sm"
       )}
     >
       <div className="max-w-[1200px] mx-auto px-6 md:px-10 py-3 flex items-center justify-between">
@@ -256,3 +256,4 @@ const Navbar = ({ activeSection }: NavbarProps) => {
 };
 
 export default Navbar;
+
