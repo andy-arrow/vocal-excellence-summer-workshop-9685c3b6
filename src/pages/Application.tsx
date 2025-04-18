@@ -14,19 +14,14 @@ const SectionLoader = () => <div className="flex justify-center py-16">
     <div className="w-8 h-8 border-4 border-coral-300 border-t-coral-500 rounded-full animate-spin"></div>
   </div>;
 const fadeIn = {
-  hidden: {
-    opacity: 0,
-    y: 20
-  },
+  hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: {
-      duration: 0.5,
-      ease: [0.22, 1, 0.36, 1]
-    }
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
   }
 };
+
 const Application = () => {
   const [showScrollToTop, setShowScrollToTop] = React.useState(false);
   useEffect(() => {
@@ -54,12 +49,20 @@ const Application = () => {
         <main className="flex-grow">
           <div className="bg-gradient-to-b from-white to-neutral-50 py-16 md:py-20 border-b border-neutral-100">
             <div className="max-w-4xl mx-auto px-6 md:px-8">
-              <div className="text-center">
-                <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-charcoal mb-6 tracking-tight">Your Journey To Vocal Mastery</h1>
+              <motion.div 
+                className="text-center"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+              >
+                <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-charcoal mb-6 tracking-tight">
+                  <span className="block mb-4">Unlock Your</span>
+                  <span className="gradient-text">Vocal Potential</span>
+                </h1>
                 <p className="font-sans text-lg md:text-xl text-charcoal/80 max-w-2xl mx-auto leading-relaxed">
                   A transformative 5-day vocal intensive for advancing singers, featuring masterclasses, private coaching, and performance opportunities with world-class faculty.
                 </p>
-              </div>
+              </motion.div>
             </div>
           </div>
           
@@ -114,4 +117,5 @@ const Application = () => {
       </div>
     </div>;
 };
+
 export default Application;
