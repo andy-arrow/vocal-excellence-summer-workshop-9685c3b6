@@ -10,40 +10,38 @@ const ApplicationRequirements = lazy(() => import('@/components/ApplicationRequi
 const ApplicationTimeline = lazy(() => import('@/components/ApplicationTimeline'));
 const ApplicationFAQ = lazy(() => import('@/components/ApplicationFAQ'));
 const ScrollToTopButton = lazy(() => import('@/components/ScrollToTopButton'));
-
-const SectionLoader = () => (
-  <div className="flex justify-center py-16">
+const SectionLoader = () => <div className="flex justify-center py-16">
     <div className="w-8 h-8 border-4 border-coral-300 border-t-coral-500 rounded-full animate-spin"></div>
-  </div>
-);
-
+  </div>;
 const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
+  hidden: {
+    opacity: 0,
+    y: 20
+  },
+  visible: {
+    opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
+    transition: {
+      duration: 0.5,
+      ease: [0.22, 1, 0.36, 1]
+    }
   }
 };
-
 const Application = () => {
   const [showScrollToTop, setShowScrollToTop] = React.useState(false);
-  
   useEffect(() => {
     window.scrollTo(0, 0);
-    
     const handleScroll = () => {
       requestAnimationFrame(() => {
         setShowScrollToTop(window.scrollY > 500);
       });
     };
-    
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('scroll', handleScroll, {
+      passive: true
+    });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-  
-  return (
-    <div className="bg-white text-charcoal min-h-screen font-sans antialiased">
+  return <div className="bg-white text-charcoal min-h-screen font-sans antialiased">
       <Helmet>
         <title>Apply Now | Vocal Excellence Workshop</title>
         <meta name="description" content="Apply now for the Vocal Excellence Summer Workshop and discover your true potential with world-class vocal coaching. Limited spots available." />
@@ -60,10 +58,7 @@ const Application = () => {
                 <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-charcoal mb-6 tracking-tight">
                   Join Our Vocal Excellence Workshop
                 </h1>
-                <p className="font-sans text-lg md:text-xl text-charcoal/80 max-w-2xl mx-auto leading-relaxed">
-                  Fill out this simple form to apply for our Summer 2025 program 
-                  and take your singing to the next level!
-                </p>
+                <p className="font-sans text-lg md:text-xl text-charcoal/80 max-w-2xl mx-auto leading-relaxed">Join our exclusive 5-day Workshop where world-class mentors will transform your voice and elevate your technique to new heights.</p>
               </div>
             </div>
           </div>
@@ -75,62 +70,44 @@ const Application = () => {
                 <p className="text-charcoal/80 text-lg">
                   We're here to help you with your application! If you have any questions, 
                   call us at <span className="font-medium text-charcoal">123-456-7890</span> or email{' '}
-                  <a href="mailto:help@vocalexcellence.com" 
-                     className="text-coral-600 hover:text-coral-700 underline-offset-4 hover:underline transition-colors">
+                  <a href="mailto:help@vocalexcellence.com" className="text-coral-600 hover:text-coral-700 underline-offset-4 hover:underline transition-colors">
                     help@vocalexcellence.com
                   </a>
                 </p>
               </div>
               
               <div className="space-y-20">
-                <motion.section
-                  key="requirements"
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, margin: "-100px" }}
-                  variants={fadeIn}
-                  className="bg-white rounded-2xl shadow-sm border border-neutral-200/80 overflow-hidden"
-                >
+                <motion.section key="requirements" initial="hidden" whileInView="visible" viewport={{
+                once: true,
+                margin: "-100px"
+              }} variants={fadeIn} className="bg-white rounded-2xl shadow-sm border border-neutral-200/80 overflow-hidden">
                   <Suspense fallback={<SectionLoader />}>
                     <ApplicationRequirements />
                   </Suspense>
                 </motion.section>
                 
-                <motion.section
-                  key="timeline"
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, margin: "-100px" }}
-                  variants={fadeIn}
-                  className="bg-white rounded-2xl shadow-sm border border-neutral-200/80 overflow-hidden"
-                >
+                <motion.section key="timeline" initial="hidden" whileInView="visible" viewport={{
+                once: true,
+                margin: "-100px"
+              }} variants={fadeIn} className="bg-white rounded-2xl shadow-sm border border-neutral-200/80 overflow-hidden">
                   <Suspense fallback={<SectionLoader />}>
                     <ApplicationTimeline />
                   </Suspense>
                 </motion.section>
                 
-                <motion.section
-                  key="form"
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, margin: "-100px" }}
-                  id="application-form-section"
-                  className="bg-white rounded-2xl shadow-sm border border-neutral-200/80 overflow-hidden"
-                  aria-label="Application Form Section"
-                >
+                <motion.section key="form" initial="hidden" whileInView="visible" viewport={{
+                once: true,
+                margin: "-100px"
+              }} id="application-form-section" className="bg-white rounded-2xl shadow-sm border border-neutral-200/80 overflow-hidden" aria-label="Application Form Section">
                   <Suspense fallback={<SectionLoader />}>
                     <ApplicationForm />
                   </Suspense>
                 </motion.section>
                 
-                <motion.section
-                  key="faq"
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, margin: "-100px" }}
-                  variants={fadeIn}
-                  className="bg-white rounded-2xl shadow-sm border border-neutral-200/80 overflow-hidden"
-                >
+                <motion.section key="faq" initial="hidden" whileInView="visible" viewport={{
+                once: true,
+                margin: "-100px"
+              }} variants={fadeIn} className="bg-white rounded-2xl shadow-sm border border-neutral-200/80 overflow-hidden">
                   <Suspense fallback={<SectionLoader />}>
                     <ApplicationFAQ />
                   </Suspense>
@@ -146,8 +123,6 @@ const Application = () => {
         
         <Footer />
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Application;
