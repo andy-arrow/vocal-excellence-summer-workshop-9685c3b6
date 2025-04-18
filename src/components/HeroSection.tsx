@@ -76,7 +76,7 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.3 }}
         >
           <motion.h1 
-            className="display-text tracking-tight leading-[1.1]"
+            className="display-text tracking-tight leading-[1.1] text-[2.5rem] md:text-display-lg"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
