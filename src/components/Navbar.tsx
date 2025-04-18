@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ArrowUpRight, ChevronDown } from 'lucide-react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
@@ -79,10 +78,10 @@ const Navbar = ({ activeSection }: NavbarProps) => {
           : "bg-transparent"
       )}
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-8 py-4 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 flex items-center justify-between space-x-4">
         <Link 
           to="/" 
-          className="font-outfit text-energy-purple tracking-tight transition-all hover:opacity-80"
+          className="font-outfit text-energy-purple tracking-tight transition-all hover:opacity-80 flex-shrink-0"
           aria-label="Vocal Excellence - Home"
         >
           <motion.div 
@@ -94,49 +93,29 @@ const Navbar = ({ activeSection }: NavbarProps) => {
             <img 
               src="/lovable-uploads/e980c9b0-8cdc-423d-a726-2f677be33737.png" 
               alt="Vocal Excellence Logo" 
-              className="w-14 h-14 mr-3" 
+              className="w-12 h-12 mr-3" 
             />
           </motion.div>
         </Link>
 
-        <nav className="hidden md:block">
-          <ul className="flex space-x-2">
+        <nav className="hidden md:flex items-center flex-grow justify-center">
+          <ul className="flex space-x-2 items-center">
             {navLinks.map((link) => (
-              <li key={link.id}>
-                {link.href ? (
-                  <Link
-                    to={link.href}
-                    className={cn(
-                      "relative py-2 px-4 text-sm font-medium rounded-lg transition-colors",
-                      location.pathname === link.href 
-                        ? "text-energy-purple bg-energy-purple/5" 
-                        : "text-slate-600 hover:text-energy-purple hover:bg-energy-purple/5"
-                    )}
-                    onMouseEnter={() => setHovered(link.id)}
-                    onMouseLeave={() => setHovered(null)}
-                  >
-                    <span className="relative z-10 flex items-center">
-                      {link.label}
-                    </span>
-                  </Link>
-                ) : (
-                  <a
-                    href={`#${link.id}`}
-                    onClick={(e) => handleSmoothScroll(e, link.id)}
-                    className={cn(
-                      "relative py-2 px-4 text-sm font-medium rounded-lg transition-colors",
-                      activeSection === link.id 
-                        ? "text-energy-purple bg-energy-purple/5" 
-                        : "text-slate-600 hover:text-energy-purple hover:bg-energy-purple/5"
-                    )}
-                    onMouseEnter={() => setHovered(link.id)}
-                    onMouseLeave={() => setHovered(null)}
-                  >
-                    <span className="relative z-10 flex items-center">
-                      {link.label}
-                    </span>
-                  </a>
-                )}
+              <li key={link.id} className="px-1">
+                <a
+                  href={`#${link.id}`}
+                  onClick={(e) => handleSmoothScroll(e, link.id)}
+                  className={cn(
+                    "relative py-2 px-3 text-sm font-medium rounded-lg transition-colors",
+                    activeSection === link.id 
+                      ? "text-energy-purple bg-energy-purple/5" 
+                      : "text-slate-600 hover:text-energy-purple hover:bg-energy-purple/5"
+                  )}
+                >
+                  <span className="relative z-10 flex items-center">
+                    {link.label}
+                  </span>
+                </a>
               </li>
             ))}
           </ul>
