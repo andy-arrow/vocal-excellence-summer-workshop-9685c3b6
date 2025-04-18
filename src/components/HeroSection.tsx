@@ -1,8 +1,9 @@
+
 import React, { useEffect, useRef, useState } from 'react';
-import { Calendar, MapPin, Users, ArrowDown } from 'lucide-react';
+import { ArrowDown } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
 
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -64,12 +65,13 @@ const HeroSection = () => {
       id="home" 
       ref={heroRef}
       className={cn(
-        "relative min-h-screen flex items-center justify-center overflow-hidden bg-black",
+        "relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-slate-950",
         hasReducedMotion ? "reduced-motion" : ""
       )}
     >
+      {/* Video Background */}
       <div className={cn(
-        "absolute inset-0 overflow-hidden bg-black",
+        "absolute inset-0 overflow-hidden",
         isVideoLoaded && !hasReducedMotion ? "opacity-100" : "opacity-0",
         "transition-opacity duration-1000"
       )}>
@@ -81,7 +83,7 @@ const HeroSection = () => {
           playsInline
           onCanPlay={handleVideoLoad}
           className={cn(
-            "absolute min-w-full min-h-full object-cover opacity-70",
+            "absolute min-w-full min-h-full object-cover opacity-60",
             hasReducedMotion ? "hidden" : "block"
           )}
         >
@@ -90,9 +92,11 @@ const HeroSection = () => {
         </video>
       </div>
       
-      <div className="absolute inset-0 bg-gradient-to-b from-energy-purple/90 via-energy-pink/70 to-energy-cyan/80 mix-blend-overlay z-10"></div>
-      <div className="absolute inset-0 bg-black/50 z-10"></div>
+      {/* Gradient Overlays */}
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/90 via-slate-900/80 to-slate-800/70 mix-blend-multiply"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-violet-500/20 via-fuchsia-500/20 to-cyan-500/20 mix-blend-overlay"></div>
 
+      {/* Animated Musical Notes - Only show if reduced motion is off */}
       {!hasReducedMotion && (
         <>
           <motion.div 
@@ -182,33 +186,35 @@ const HeroSection = () => {
         </>
       )}
       
+      {/* Fallback Background for Reduced Motion */}
       <div className={cn(
-        "absolute inset-0 bg-black",
+        "absolute inset-0",
         isVideoLoaded && !hasReducedMotion ? "opacity-0" : "opacity-100",
         "transition-opacity duration-1000 z-0"
       )}>
-        <div className="absolute inset-0 bg-[url('/lovable-uploads/masterclass-singers.jpg')] bg-cover bg-center opacity-40 mix-blend-overlay"></div>
+        <div className="absolute inset-0 bg-[url('/lovable-uploads/masterclass-singers.jpg')] bg-cover bg-center opacity-30 mix-blend-overlay"></div>
       </div>
       
-      <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-4xl mx-auto mt-32">
+      {/* Main Content */}
+      <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-5xl mx-auto">
         <motion.div 
-          className="space-y-8"
+          className="space-y-10"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
           <motion.h1 
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-outfit font-light text-white tracking-tight leading-[1.1]"
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-light text-white tracking-tight leading-[1.1]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
           >
-            <span className="block">Unlock Your</span> 
-            <span className="gradient-text font-medium">Vocal Potential</span>
+            <span className="block mb-4">Unlock Your</span> 
+            <span className="gradient-text">Vocal Potential</span>
           </motion.h1>
           
           <motion.p 
-            className="text-lg md:text-2xl text-white/90 max-w-2xl mx-auto font-light leading-relaxed"
+            className="text-lg md:text-2xl text-slate-200 max-w-3xl mx-auto font-light leading-relaxed"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.9 }}
@@ -217,16 +223,16 @@ const HeroSection = () => {
           </motion.p>
 
           <motion.div 
-            className="pt-6"
+            className="pt-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.1 }}
           >
-            <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-6">
               <motion.a 
                 href="/apply" 
-                className="primary-button inline-block text-lg px-8 py-4 rounded-full transition-all bg-white text-slate-900 shadow-xl shadow-white/20 hover:shadow-white/30 font-medium"
-                whileHover={{ scale: 1.05, boxShadow: "0 0 30px 5px rgba(255, 255, 255, 0.4)" }}
+                className="px-8 py-4 bg-gradient-to-r from-violet-600 to-violet-700 text-white rounded-full text-lg font-medium transition-all duration-300 hover:from-violet-700 hover:to-violet-800 shadow-lg shadow-violet-500/25 hover:shadow-xl hover:shadow-violet-500/40 hover:-translate-y-0.5"
+                whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
                 Apply Now
@@ -234,7 +240,7 @@ const HeroSection = () => {
               
               <motion.button
                 onClick={scrollToDiscoverSection}
-                className="text-white/80 hover:text-white px-6 py-3 rounded-full border border-white/20 backdrop-blur-sm transition-all hover:bg-white/10 text-base"
+                className="text-slate-200 hover:text-white px-8 py-4 rounded-full border border-slate-400/30 backdrop-blur-sm transition-all hover:bg-white/10 text-lg font-light"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -243,19 +249,22 @@ const HeroSection = () => {
             </motion.div>
             
             <motion.div
-              className="flex items-center justify-center mt-8 space-x-3"
+              className="flex items-center justify-center mt-12 space-x-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.3, duration: 0.5 }}
             >
-              <div className="w-2 h-2 rounded-full bg-white animate-pulse-slow"></div>
-              <p className="text-white/80 text-sm font-medium">Applications close <span className="text-white">May 15, 2025</span> — Only 20 spots available</p>
-              <div className="w-2 h-2 rounded-full bg-white animate-pulse-slow"></div>
+              <div className="w-2 h-2 rounded-full bg-violet-400 animate-pulse-slow"></div>
+              <p className="text-slate-300 text-sm font-light">
+                Applications close <span className="text-white font-medium">May 15, 2025</span> — Only 20 spots available
+              </p>
+              <div className="w-2 h-2 rounded-full bg-violet-400 animate-pulse-slow"></div>
             </motion.div>
           </motion.div>
         </motion.div>
       </div>
       
+      {/* Scroll Down Button */}
       <motion.button 
         onClick={scrollToDiscoverSection}
         className="absolute bottom-12 left-0 right-0 mx-auto w-12 h-12 cursor-pointer z-20 flex items-center justify-center"
