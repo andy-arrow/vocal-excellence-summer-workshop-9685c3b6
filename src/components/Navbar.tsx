@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ArrowUpRight, ChevronDown } from 'lucide-react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
@@ -60,23 +61,19 @@ const Navbar = ({ activeSection }: NavbarProps) => {
     { id: 'summer-programme', label: 'Summer Programme', href: '/summer-programme' },
   ];
 
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-  };
-
   return (
     <header 
       className={cn(
-        "fixed top-0 left-0 w-full z-50 transition-all duration-500",
+        "fixed top-0 left-0 w-full z-50 transition-all duration-300",
         scrolled 
-          ? "bg-energy-purple/10 backdrop-blur-md border-b border-energy-purple/10 shadow-sm" 
-          : "bg-energy-purple/5 backdrop-blur-sm"
+          ? "bg-white/95 backdrop-blur-md border-b border-slate-200/50 shadow-sm" 
+          : "bg-white/50 backdrop-blur-sm"
       )}
     >
-      <div className="max-w-[1200px] mx-auto px-6 md:px-10 py-3 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 md:px-8 py-4 flex items-center justify-between">
         <Link 
           to="/" 
-          className="font-outfit font-medium text-slate-900 tracking-tight transition-all hover:opacity-80"
+          className="font-outfit text-slate-900 tracking-tight transition-all hover:opacity-80"
           aria-label="Vocal Excellence - Home"
         >
           <motion.div 
@@ -88,59 +85,47 @@ const Navbar = ({ activeSection }: NavbarProps) => {
             <img 
               src="/lovable-uploads/e980c9b0-8cdc-423d-a726-2f677be33737.png" 
               alt="Vocal Excellence Logo" 
-              className="w-20 h-20 mr-3" 
+              className="w-16 h-16 mr-3" 
             />
           </motion.div>
         </Link>
 
         <nav className="hidden md:block">
-          <ul className="flex space-x-8">
+          <ul className="flex space-x-1">
             {navLinks.map((link) => (
               <li key={link.id}>
                 {link.href ? (
                   <Link
                     to={link.href}
                     className={cn(
-                      "relative py-1 text-sm font-medium transition-colors",
-                      location.pathname === link.href ? "text-energy-purple" : "text-slate-800 hover:text-energy-purple"
+                      "relative py-2 px-4 text-sm font-medium rounded-lg transition-colors",
+                      location.pathname === link.href 
+                        ? "text-energy-purple bg-energy-purple/5" 
+                        : "text-slate-600 hover:text-energy-purple hover:bg-slate-50"
                     )}
                     onMouseEnter={() => setHovered(link.id)}
                     onMouseLeave={() => setHovered(null)}
                   >
-                    {link.label}
-                    {(location.pathname === link.href || hovered === link.id) && (
-                      <motion.div
-                        className="absolute bottom-[-4px] left-0 right-0 h-[2px] bg-energy-purple"
-                        layoutId="navUnderline"
-                        initial={{ opacity: 0, width: 0 }}
-                        animate={{ opacity: 1, width: '100%' }}
-                        exit={{ opacity: 0, width: 0 }}
-                        transition={{ duration: 0.2, ease: "easeInOut" }}
-                      />
-                    )}
+                    <span className="relative z-10 flex items-center">
+                      {link.label}
+                    </span>
                   </Link>
                 ) : (
                   <a
                     href={`#${link.id}`}
                     onClick={(e) => handleSmoothScroll(e, link.id)}
+                    className={cn(
+                      "relative py-2 px-4 text-sm font-medium rounded-lg transition-colors",
+                      activeSection === link.id 
+                        ? "text-energy-purple bg-energy-purple/5" 
+                        : "text-slate-600 hover:text-energy-purple hover:bg-slate-50"
+                    )}
                     onMouseEnter={() => setHovered(link.id)}
                     onMouseLeave={() => setHovered(null)}
-                    className={cn(
-                      "relative py-1 text-sm font-medium transition-colors",
-                      activeSection === link.id ? "text-energy-purple" : "text-slate-800 hover:text-energy-purple"
-                    )}
                   >
-                    {link.label}
-                    {(activeSection === link.id || hovered === link.id) && (
-                      <motion.div
-                        className="absolute bottom-[-4px] left-0 right-0 h-[2px] bg-energy-purple"
-                        layoutId="navUnderline"
-                        initial={{ opacity: 0, width: 0 }}
-                        animate={{ opacity: 1, width: '100%' }}
-                        exit={{ opacity: 0, width: 0 }}
-                        transition={{ duration: 0.2, ease: "easeInOut" }}
-                      />
-                    )}
+                    <span className="relative z-10 flex items-center">
+                      {link.label}
+                    </span>
                   </a>
                 )}
               </li>
@@ -148,13 +133,13 @@ const Navbar = ({ activeSection }: NavbarProps) => {
           </ul>
         </nav>
         
-        <div className="hidden md:flex items-center space-x-6">
+        <div className="hidden md:flex items-center space-x-4">
           <NavLink
             to="/apply"
             className={({ isActive }) => cn(
-              "group px-5 py-2 text-sm font-medium rounded-full flex items-center gap-1.5 transition-all shadow-sm hover:shadow",
+              "group px-5 py-2 text-sm font-medium rounded-lg flex items-center gap-1.5 transition-all",
               isActive 
-                ? "bg-energy-purple text-white" 
+                ? "bg-energy-purple text-white shadow-lg shadow-energy-purple/20" 
                 : "bg-white text-energy-purple border border-energy-purple/30 hover:bg-energy-purple/5"
             )}
           >
@@ -174,7 +159,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
         <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
           <SheetTrigger asChild>
             <button 
-              className="md:hidden flex items-center justify-center w-10 h-10 text-slate-900 rounded-full hover:bg-slate-100 transition-colors"
+              className="md:hidden flex items-center justify-center w-10 h-10 text-slate-700 rounded-lg hover:bg-slate-100 transition-colors"
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             >
               <Menu size={20} />
@@ -182,28 +167,24 @@ const Navbar = ({ activeSection }: NavbarProps) => {
           </SheetTrigger>
           <SheetContent 
             side="left" 
-            className="w-full max-w-full p-0 border-none bg-white text-slate-900"
+            className="w-full max-w-full p-0 border-none bg-white"
           >
             <div className="px-6 py-8 space-y-6 h-full flex flex-col">
               <div className="flex items-center justify-between">
                 <Link 
                   to="/" 
-                  className="font-outfit font-medium text-slate-900 tracking-tight transition-opacity hover:opacity-80"
+                  className="font-outfit text-slate-900 tracking-tight transition-opacity hover:opacity-80"
                   onClick={closeMenu}
                 >
                   <div className="flex items-center">
                     <img 
                       src="/lovable-uploads/e980c9b0-8cdc-423d-a726-2f677be33737.png" 
                       alt="Vocal Excellence Logo" 
-                      className="w-16 h-16 mr-3" 
+                      className="w-14 h-14 mr-3" 
                     />
-                    <div>
-                      <span className="text-lg font-medium">Vocal Excellence</span>
-                      <span className="block text-xs text-slate-500 -mt-1">Summer Workshop</span>
-                    </div>
                   </div>
                 </Link>
-                <SheetClose className="rounded-full w-10 h-10 flex items-center justify-center hover:bg-slate-100">
+                <SheetClose className="rounded-lg w-10 h-10 flex items-center justify-center hover:bg-slate-100">
                   <X size={18} />
                 </SheetClose>
               </div>
@@ -215,7 +196,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                       key={link.id}
                       initial={{ x: -20, opacity: 0 }}
                       animate={{ x: 0, opacity: 1 }}
-                      transition={{ delay: 0.1 + idx * 0.06, duration: 0.5, ease: "easeOut" }}
+                      transition={{ delay: 0.1 + idx * 0.06 }}
                       className="overflow-hidden"
                     >
                       <SheetClose asChild>
@@ -226,18 +207,12 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                               "block py-3 px-4 text-base font-medium transition-colors rounded-xl relative overflow-hidden group",
                               location.pathname === link.href 
                                 ? "text-energy-purple bg-energy-purple/5" 
-                                : "text-slate-800 hover:text-energy-purple hover:bg-slate-50"
+                                : "text-slate-700 hover:text-energy-purple hover:bg-slate-50"
                             )}
                           >
                             <span className="relative z-10 flex items-center">
                               {link.label}
-                              <motion.div
-                                initial={{ x: -4, opacity: 0 }}
-                                animate={{ x: 0, opacity: 1 }}
-                                transition={{ delay: 0.2 + idx * 0.05 }}
-                              >
-                                <ArrowUpRight className="ml-2 w-4 h-4 opacity-60 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                              </motion.div>
+                              <ArrowUpRight className="ml-2 w-4 h-4 opacity-60 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                             </span>
                           </Link>
                         ) : (
@@ -248,18 +223,12 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                               "block py-3 px-4 text-base font-medium transition-colors rounded-xl relative overflow-hidden group",
                               activeSection === link.id 
                                 ? "text-energy-purple bg-energy-purple/5" 
-                                : "text-slate-800 hover:text-energy-purple hover:bg-slate-50"
+                                : "text-slate-700 hover:text-energy-purple hover:bg-slate-50"
                             )}
                           >
                             <span className="relative z-10 flex items-center">
                               {link.label}
-                              <motion.div
-                                initial={{ x: -4, opacity: 0 }}
-                                animate={{ x: 0, opacity: 1 }}
-                                transition={{ delay: 0.2 + idx * 0.05 }}
-                              >
-                                <ArrowUpRight className="ml-2 w-4 h-4 opacity-60 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                              </motion.div>
+                              <ArrowUpRight className="ml-2 w-4 h-4 opacity-60 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                             </span>
                           </a>
                         )}
@@ -272,7 +241,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
               <motion.div
                 initial={{ y: 10, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.4, duration: 0.5 }}
+                transition={{ delay: 0.4 }}
                 className="pt-4"
               >
                 <SheetClose asChild>
@@ -289,7 +258,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
               <motion.div
                 initial={{ y: 10, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.5, duration: 0.5 }}
+                transition={{ delay: 0.5 }}
                 className="pt-4 flex justify-center"
               >
                 <AuthButtonsPlaceholder />
@@ -303,3 +272,4 @@ const Navbar = ({ activeSection }: NavbarProps) => {
 };
 
 export default Navbar;
+
