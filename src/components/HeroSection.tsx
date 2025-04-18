@@ -3,11 +3,13 @@ import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';
+
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [hasReducedMotion, setHasReducedMotion] = useState(false);
+
   useEffect(() => {
     const savedPreference = localStorage.getItem('reduced-motion') === 'true';
     setHasReducedMotion(savedPreference);
@@ -39,9 +41,11 @@ const HeroSection = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [hasReducedMotion]);
+
   const handleVideoLoad = () => {
     setIsVideoLoaded(true);
   };
+
   const scrollToDiscoverSection = () => {
     const aboutSection = document.getElementById('about');
     if (aboutSection) {
@@ -50,7 +54,8 @@ const HeroSection = () => {
       });
     }
   };
-  return <section id="home" ref={heroRef} className={cn("relative min-h-screen flex items-center justify-center overflow-hidden", "bg-white", hasReducedMotion ? "reduced-motion" : "")}>
+
+  return <section id="home" ref={heroRef} className={cn("relative min-h-screen flex items-center justify-center overflow-hidden mt-16", "bg-white", hasReducedMotion ? "reduced-motion" : "")}>
       <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-5xl mx-auto">
         <motion.div className="space-y-10" initial={{
         opacity: 0,
@@ -83,7 +88,7 @@ const HeroSection = () => {
         }} transition={{
           duration: 0.8,
           delay: 0.9
-        }}>Join our exclusive 5-day Workshop where world-class mentors will transform your voice and elevate your technique to new heights.</motion.p>
+        }}>A transformative 5-day vocal intensive for advancing singers, featuring masterclasses, private coaching, and performance opportunities with world-class faculty.</motion.p>
 
           <motion.div className="pt-8" initial={{
           opacity: 0,
@@ -146,4 +151,5 @@ const HeroSection = () => {
       </motion.button>
     </section>;
 };
+
 export default HeroSection;
