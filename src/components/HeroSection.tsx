@@ -3,13 +3,11 @@ import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';
-
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [hasReducedMotion, setHasReducedMotion] = useState(false);
-
   useEffect(() => {
     const savedPreference = localStorage.getItem('reduced-motion') === 'true';
     setHasReducedMotion(savedPreference);
@@ -41,11 +39,9 @@ const HeroSection = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [hasReducedMotion]);
-
   const handleVideoLoad = () => {
     setIsVideoLoaded(true);
   };
-
   const scrollToDiscoverSection = () => {
     const aboutSection = document.getElementById('about');
     if (aboutSection) {
@@ -54,49 +50,51 @@ const HeroSection = () => {
       });
     }
   };
-
-  return (
-    <section 
-      id="home" 
-      ref={heroRef} 
-      className={cn(
-        "relative min-h-screen flex items-center justify-center overflow-hidden mt-16",
-        "bg-gradient-to-b from-white to-neutral-50 border-b border-neutral-100",
-        hasReducedMotion ? "reduced-motion" : ""
-      )}
-    >
+  return <section id="home" ref={heroRef} className={cn("relative min-h-screen flex items-center justify-center overflow-hidden mt-16", "bg-gradient-to-b from-white to-neutral-50 border-b border-neutral-100", hasReducedMotion ? "reduced-motion" : "")}>
       <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-5xl mx-auto">
-        <motion.div 
-          className="space-y-10" 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-        >
-          <motion.h1 
-            className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-charcoal mb-6 tracking-tight"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
-          >
+        <motion.div className="space-y-10" initial={{
+        opacity: 0,
+        y: 30
+      }} animate={{
+        opacity: 1,
+        y: 0
+      }} transition={{
+        duration: 0.8,
+        delay: 0.3
+      }}>
+          <motion.h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-charcoal mb-6 tracking-tight" initial={{
+          opacity: 0,
+          y: 20
+        }} animate={{
+          opacity: 1,
+          y: 0
+        }} transition={{
+          duration: 0.8,
+          delay: 0.7
+        }}>
             <span className="block mb-4">Unlock Your</span>
             <span className="gradient-text">Vocal Potential</span>
           </motion.h1>
           
-          <motion.p 
-            className="font-sans text-lg md:text-xl text-charcoal/80 max-w-2xl mx-auto leading-relaxed"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
-          >
-            A transformative 5-day vocal intensive for advancing singers, featuring masterclasses, private coaching, and performance opportunities with world-class faculty.
-          </motion.p>
+          <motion.p className="font-sans text-lg md:text-xl text-charcoal/80 max-w-2xl mx-auto leading-relaxed" initial={{
+          opacity: 0
+        }} animate={{
+          opacity: 1
+        }} transition={{
+          duration: 0.8,
+          delay: 0.9
+        }}>Join our exclusive 5-day Workshop where world-class mentors will transform your voice and elevate your technique to new heights.</motion.p>
 
-          <motion.div 
-            className="pt-8" 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.1 }}
-          >
+          <motion.div className="pt-8" initial={{
+          opacity: 0,
+          y: 20
+        }} animate={{
+          opacity: 1,
+          y: 0
+        }} transition={{
+          duration: 0.8,
+          delay: 1.1
+        }}>
             <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-6">
               <Link to="/apply" className="group px-8 py-4 bg-energy-purple text-white rounded-xl text-lg font-medium transition-all duration-300 hover:bg-energy-purple/90 shadow-lg shadow-energy-purple/25 hover:shadow-xl hover:shadow-energy-purple/40 hover:-translate-y-0.5 flex items-center gap-2">
                 Apply Now
@@ -146,8 +144,6 @@ const HeroSection = () => {
           <ArrowDown className="text-charcoal w-5 h-5" />
         </motion.div>
       </motion.button>
-    </section>
-  );
+    </section>;
 };
-
 export default HeroSection;
