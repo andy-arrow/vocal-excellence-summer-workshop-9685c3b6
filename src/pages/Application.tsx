@@ -55,13 +55,13 @@ const Application = () => {
         <Navbar />
         
         <main className="flex-grow">
-          <div className="bg-white py-12 md:py-20 border-b border-gray-100 shadow-sm">
+          <div className="bg-white py-12 md:py-20 border-b border-gray-200 shadow-sm">
             <div className="max-w-4xl mx-auto px-4 sm:px-6">
               <div className="text-center">
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
+                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
                   Join Our Vocal Excellence Workshop
                 </h1>
-                <p className="text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed">
+                <p className="text-xl text-gray-800 max-w-2xl mx-auto leading-relaxed font-medium">
                   Fill out this simple form to apply for our Summer 2025 program 
                   and take your singing to the next level!
                 </p>
@@ -71,9 +71,9 @@ const Application = () => {
           
           <div className="py-8 md:py-12 bg-gray-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6">
-              <div className="mb-12 max-w-3xl mx-auto bg-blue-50 p-6 rounded-xl border border-blue-100">
-                <h2 className="text-2xl font-bold text-blue-800 mb-4">Need Help?</h2>
-                <p className="text-blue-900 text-lg">
+              <div className="mb-12 max-w-3xl mx-auto bg-blue-50 p-6 rounded-xl border border-blue-200 shadow-sm">
+                <h2 className="text-2xl font-bold text-blue-900 mb-4">Need Help?</h2>
+                <p className="text-blue-900 text-lg font-medium">
                   We're here to help you with your application! If you have any questions, 
                   call us at <span className="font-bold">123-456-7890</span> or email 
                   <a href="mailto:help@vocalexcellence.com" className="ml-1 font-bold underline">help@vocalexcellence.com</a>
@@ -87,7 +87,7 @@ const Application = () => {
                   whileInView="visible"
                   viewport={{ once: true, margin: "-100px" }}
                   variants={fadeIn}
-                  className="bg-white p-8 rounded-xl shadow-sm border border-gray-100"
+                  className="bg-white p-8 rounded-xl shadow-sm border border-gray-200"
                 >
                   <Suspense fallback={<SectionLoader />}>
                     <ApplicationRequirements />
@@ -100,7 +100,7 @@ const Application = () => {
                   whileInView="visible"
                   viewport={{ once: true, margin: "-100px" }}
                   variants={fadeIn}
-                  className="bg-white p-8 rounded-xl shadow-sm border border-gray-100"
+                  className="bg-white p-8 rounded-xl shadow-sm border border-gray-200"
                 >
                   <Suspense fallback={<SectionLoader />}>
                     <ApplicationTimeline />
@@ -113,7 +113,7 @@ const Application = () => {
                   whileInView="visible"
                   viewport={{ once: true, margin: "-100px" }}
                   id="application-form-section"
-                  className="bg-white p-8 rounded-xl shadow-sm border border-gray-100"
+                  className="bg-white p-8 rounded-xl shadow-sm border border-gray-200"
                   aria-label="Application Form Section"
                 >
                   <Suspense fallback={<SectionLoader />}>
@@ -127,7 +127,7 @@ const Application = () => {
                   whileInView="visible"
                   viewport={{ once: true, margin: "-100px" }}
                   variants={fadeIn}
-                  className="bg-white p-8 rounded-xl shadow-sm border border-gray-100"
+                  className="bg-white p-8 rounded-xl shadow-sm border border-gray-200"
                 >
                   <Suspense fallback={<SectionLoader />}>
                     <ApplicationFAQ />

@@ -30,7 +30,7 @@ const AddressFields = () => {
           name="address"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-violet-100" htmlFor="address">Address</FormLabel>
+              <FormLabel className="text-gray-900 font-medium" htmlFor="address">Address</FormLabel>
               <FormControl>
                 <Input 
                   {...field}
@@ -38,9 +38,10 @@ const AddressFields = () => {
                   placeholder="Street address"
                   autoComplete="street-address"
                   aria-required="true"
+                  className="text-gray-900 placeholder:text-gray-500"
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-700" />
             </FormItem>
           )}
         />
@@ -52,7 +53,7 @@ const AddressFields = () => {
           name="city"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-violet-100" htmlFor="city">City</FormLabel>
+              <FormLabel className="text-gray-900 font-medium" htmlFor="city">City</FormLabel>
               <FormControl>
                 <Input 
                   {...field}
@@ -60,9 +61,10 @@ const AddressFields = () => {
                   placeholder="City"
                   autoComplete="address-level2"
                   aria-required="true"
+                  className="text-gray-900 placeholder:text-gray-500"
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-700" />
             </FormItem>
           )}
         />
@@ -72,25 +74,26 @@ const AddressFields = () => {
           name="country"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-violet-100">Country</FormLabel>
+              <FormLabel className="text-gray-900 font-medium">Country</FormLabel>
               <Select onValueChange={field.onChange} value={field.value || ""}>
                 <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select your country" />
+                  <SelectTrigger className="text-gray-900">
+                    <SelectValue placeholder="Select your country" className="text-gray-900" />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent>
+                <SelectContent className="text-gray-900">
                   {countries.map((country) => (
                     <SelectItem 
                       key={country.value} 
                       value={country.value}
+                      className="text-gray-900"
                     >
                       {country.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-              <FormMessage />
+              <FormMessage className="text-red-700" />
             </FormItem>
           )}
         />
@@ -100,7 +103,7 @@ const AddressFields = () => {
           name="postalCode"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-violet-100" htmlFor="postalCode">Postal/Zip Code</FormLabel>
+              <FormLabel className="text-gray-900 font-medium" htmlFor="postalCode">Postal/Zip Code</FormLabel>
               <FormControl>
                 <Input 
                   {...field}
@@ -108,9 +111,10 @@ const AddressFields = () => {
                   placeholder="Postal/Zip code"
                   autoComplete="postal-code"
                   aria-required="true"
+                  className="text-gray-900 placeholder:text-gray-500"
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-700" />
             </FormItem>
           )}
         />

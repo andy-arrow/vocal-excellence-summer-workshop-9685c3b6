@@ -21,7 +21,7 @@ const ContactInfoFields = () => {
         name="email"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-violet-100" htmlFor="email">Email Address</FormLabel>
+            <FormLabel className="text-gray-900 font-medium" htmlFor="email">Email Address</FormLabel>
             <FormControl>
               <Input 
                 {...field}
@@ -30,9 +30,10 @@ const ContactInfoFields = () => {
                 placeholder="Your email"
                 autoComplete="email"
                 aria-required="true"
+                className="text-gray-900 placeholder:text-gray-500"
               />
             </FormControl>
-            <FormMessage />
+            <FormMessage className="text-red-700" />
           </FormItem>
         )}
       />
@@ -42,7 +43,7 @@ const ContactInfoFields = () => {
         name="phone"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-violet-100" htmlFor="phone">Phone Number</FormLabel>
+            <FormLabel className="text-gray-900 font-medium" htmlFor="phone">Phone Number</FormLabel>
             <FormControl>
               <Input 
                 {...field}
@@ -51,9 +52,10 @@ const ContactInfoFields = () => {
                 placeholder="Your phone number"
                 autoComplete="tel"
                 aria-required="true"
+                className="text-gray-900 placeholder:text-gray-500"
               />
             </FormControl>
-            <FormMessage />
+            <FormMessage className="text-red-700" />
           </FormItem>
         )}
       />

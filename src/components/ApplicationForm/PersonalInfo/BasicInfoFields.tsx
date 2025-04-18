@@ -29,7 +29,7 @@ const BasicInfoFields = () => {
         name="firstName"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-violet-100" htmlFor="firstName">First Name</FormLabel>
+            <FormLabel className="text-gray-900 font-medium" htmlFor="firstName">First Name</FormLabel>
             <FormControl>
               <Input 
                 {...field}
@@ -37,9 +37,10 @@ const BasicInfoFields = () => {
                 placeholder="First name"
                 autoComplete="given-name"
                 aria-required="true"
+                className="text-gray-900 placeholder:text-gray-500"
               />
             </FormControl>
-            <FormMessage />
+            <FormMessage className="text-red-700" />
           </FormItem>
         )}
       />
@@ -49,7 +50,7 @@ const BasicInfoFields = () => {
         name="lastName"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-violet-100" htmlFor="lastName">Last Name</FormLabel>
+            <FormLabel className="text-gray-900 font-medium" htmlFor="lastName">Last Name</FormLabel>
             <FormControl>
               <Input 
                 {...field}
@@ -57,9 +58,10 @@ const BasicInfoFields = () => {
                 placeholder="Last name"
                 autoComplete="family-name"
                 aria-required="true"
+                className="text-gray-900 placeholder:text-gray-500"
               />
             </FormControl>
-            <FormMessage />
+            <FormMessage className="text-red-700" />
           </FormItem>
         )}
       />
@@ -69,7 +71,7 @@ const BasicInfoFields = () => {
         name="dateOfBirth"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-violet-100" htmlFor="dateOfBirth">Date of Birth</FormLabel>
+            <FormLabel className="text-gray-900 font-medium" htmlFor="dateOfBirth">Date of Birth</FormLabel>
             <FormControl>
               <Input 
                 {...field}
@@ -77,9 +79,10 @@ const BasicInfoFields = () => {
                 id="dateOfBirth"
                 autoComplete="bday"
                 aria-required="true"
+                className="text-gray-900"
               />
             </FormControl>
-            <FormMessage />
+            <FormMessage className="text-red-700" />
           </FormItem>
         )}
       />
@@ -89,25 +92,26 @@ const BasicInfoFields = () => {
         name="nationality"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-violet-100">Nationality</FormLabel>
+            <FormLabel className="text-gray-900 font-medium">Nationality</FormLabel>
             <Select onValueChange={field.onChange} value={field.value || ""}>
               <FormControl>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select your nationality" />
+                <SelectTrigger className="text-gray-900">
+                  <SelectValue placeholder="Select your nationality" className="text-gray-900" />
                 </SelectTrigger>
               </FormControl>
-              <SelectContent>
+              <SelectContent className="text-gray-900">
                 {nationalities.map((nationality) => (
                   <SelectItem 
                     key={nationality.value} 
                     value={nationality.value}
+                    className="text-gray-900"
                   >
                     {nationality.label}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
-            <FormMessage />
+            <FormMessage className="text-red-700" />
           </FormItem>
         )}
       />
