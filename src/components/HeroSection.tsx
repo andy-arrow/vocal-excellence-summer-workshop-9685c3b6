@@ -3,11 +3,13 @@ import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';
+
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [hasReducedMotion, setHasReducedMotion] = useState(false);
+
   useEffect(() => {
     const savedPreference = localStorage.getItem('reduced-motion') === 'true';
     setHasReducedMotion(savedPreference);
@@ -39,9 +41,11 @@ const HeroSection = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [hasReducedMotion]);
+
   const handleVideoLoad = () => {
     setIsVideoLoaded(true);
   };
+
   const scrollToDiscoverSection = () => {
     const aboutSection = document.getElementById('about');
     if (aboutSection) {
@@ -50,6 +54,7 @@ const HeroSection = () => {
       });
     }
   };
+
   return <section id="home" ref={heroRef} className={cn("relative min-h-screen flex items-center justify-center overflow-hidden mt-16", "bg-gradient-to-b from-white to-neutral-50 border-b border-neutral-100", hasReducedMotion ? "reduced-motion" : "")}>
       <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-5xl mx-auto">
         <motion.div className="space-y-10" initial={{
@@ -96,12 +101,12 @@ const HeroSection = () => {
           delay: 1.1
         }}>
             <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              <Link to="/apply" className="group px-8 py-4 bg-energy-purple text-white rounded-xl text-lg font-medium transition-all duration-300 hover:bg-energy-purple/90 shadow-lg shadow-energy-purple/25 hover:shadow-xl hover:shadow-energy-purple/40 hover:-translate-y-0.5 flex items-center gap-2">
+              <Link to="/apply" className="group px-8 py-4 bg-black text-white rounded-xl text-lg font-medium transition-all duration-300 hover:bg-gray-900 shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center gap-2">
                 Apply Now
-                <ArrowUpRight className="w-5 h-5 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                <ArrowUpRight className="w-5 h-5 opacity-90 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform text-white" />
               </Link>
               
-              <button onClick={scrollToDiscoverSection} className="text-charcoal hover:text-charcoal/80 px-8 py-4 rounded-xl border border-charcoal/20 backdrop-blur-sm transition-all hover:bg-charcoal/5 text-lg font-light">
+              <button onClick={scrollToDiscoverSection} className="text-white bg-gray-900/80 px-8 py-4 rounded-xl backdrop-blur-sm transition-all hover:bg-gray-900 text-lg font-light">
                 Discover More
               </button>
             </motion.div>
@@ -146,4 +151,5 @@ const HeroSection = () => {
       </motion.button>
     </section>;
 };
+
 export default HeroSection;
