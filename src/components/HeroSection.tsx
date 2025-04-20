@@ -3,19 +3,24 @@ import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';
+
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [hasReducedMotion, setHasReducedMotion] = useState(false);
   const [imageLoadError, setImageLoadError] = useState(false);
-  const imagePath = '/lovable-uploads/06153527-7089-4713-b4d9-ddf638befdcb.png';
-  const fallbackImageUrl = 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D&w=1000&q=80';
+  
+  const imagePath = '/lovable-uploads/5f2b13ba-7279-45da-86e2-af6b9c336634.png';
+  const fallbackImageUrl = 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?ixlib=rb-4.0.3&w=1000&q=80';
+
   useEffect(() => {
     console.log('Hero container dimensions:', {
       width: heroRef.current?.offsetWidth,
       height: heroRef.current?.offsetHeight
     });
+    
     console.log('Attempting to load image from:', imagePath);
+    
     const img = new Image();
     img.onload = () => {
       console.log('✅ Background image loaded successfully:', {
@@ -26,10 +31,12 @@ const HeroSection = () => {
       setIsImageLoaded(true);
       setImageLoadError(false);
     };
+    
     img.onerror = e => {
       console.error('Failed to load background image:', e);
       setImageLoadError(true);
       setIsImageLoaded(false);
+      
       const fallbackImg = new Image();
       fallbackImg.onload = () => {
         console.log('Fallback image loaded successfully');
@@ -37,13 +44,16 @@ const HeroSection = () => {
       };
       fallbackImg.src = fallbackImageUrl;
     };
+    
     img.src = imagePath;
+
     const savedPreference = localStorage.getItem('reduced-motion') === 'true';
     setHasReducedMotion(savedPreference);
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     if (mediaQuery.matches && !localStorage.getItem('reduced-motion')) {
       setHasReducedMotion(true);
     }
+
     const handleScroll = () => {
       if (!heroRef.current) return;
       const scrollPosition = window.scrollY;
@@ -65,9 +75,11 @@ const HeroSection = () => {
         });
       }
     };
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [hasReducedMotion]);
+
   const scrollToDiscoverSection = () => {
     const aboutSection = document.getElementById('about');
     if (aboutSection) {
@@ -76,25 +88,37 @@ const HeroSection = () => {
       });
     }
   };
-  return <section id="home" ref={heroRef} className="">
-      <div className="absolute inset-0 bg-center bg-cover bg-no-repeat z-0" style={{
-      backgroundImage: `url(${imageLoadError ? fallbackImageUrl : imagePath})`,
-      opacity: 0.15,
-      width: '100%',
-      height: '100%',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center'
-    }} />
+
+  return (
+    <section id="home" ref={heroRef} className="">
+      <div 
+        className="absolute inset-0 bg-center bg-cover bg-no-repeat z-0" 
+        style={{
+          backgroundImage: imageLoadError ? `url(${fallbackImageUrl})` : `url(${imagePath})`,
+          opacity: 0.15,
+          width: '100%',
+          height: '100%',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }} 
+      />
       
-      {imageLoadError && <img src={fallbackImageUrl} alt="Background" className="absolute inset-0 object-cover w-full h-full opacity-15 z-0" style={{
-      opacity: 0.15
-    }} />}
+      {imageLoadError && (
+        <img 
+          src={fallbackImageUrl} 
+          alt="Background" 
+          className="absolute inset-0 object-cover w-full h-full z-0" 
+          style={{ opacity: 0.15 }} 
+        />
+      )}
       
       <div className="absolute inset-0 bg-black/80 z-10"></div>
       
-      {process.env.NODE_ENV !== 'production' && <div className="absolute top-20 right-4 z-50 bg-black/70 text-white text-xs p-2 rounded">
+      {process.env.NODE_ENV !== 'production' && (
+        <div className="absolute top-20 right-4 z-50 bg-black/70 text-white text-xs p-2 rounded">
           Image: {isImageLoaded ? '✅ Loaded' : imageLoadError ? '❌ Error' : '⏳ Loading'}
-        </div>}
+        </div>
+      )}
       
       <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-5xl mx-auto pt-24 md:pt-32 lg:pt-40">
         <motion.div className="space-y-10" initial={{
@@ -165,26 +189,24 @@ const HeroSection = () => {
         </motion.div>
       </div>
       
-      <motion.button onClick={scrollToDiscoverSection} className="absolute bottom-12 left-0 right-0 mx-auto w-12 h-12 cursor-pointer z-20 flex items-center justify-center" aria-label="Scroll down" initial={{
-      opacity: 0,
-      y: 20
-    }} animate={{
-      opacity: 1,
-      y: 0
-    }} transition={{
-      delay: 1.5,
-      duration: 0.8
-    }}>
-        <motion.div className="rounded-full bg-white/20 backdrop-blur-sm border border-white/30 p-3 hover:bg-white/30 transition-all" animate={{
-        y: [0, 8, 0]
-      }} transition={{
-        duration: 2,
-        repeat: Infinity,
-        repeatType: "loop"
-      }}>
+      <motion.button 
+        onClick={scrollToDiscoverSection} 
+        className="absolute bottom-12 left-0 right-0 mx-auto w-12 h-12 cursor-pointer z-20 flex items-center justify-center" 
+        aria-label="Scroll down"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.5, duration: 0.8 }}
+      >
+        <motion.div 
+          className="rounded-full bg-white/20 backdrop-blur-sm border border-white/30 p-3 hover:bg-white/30 transition-all"
+          animate={{ y: [0, 8, 0] }} 
+          transition={{ duration: 2, repeat: Infinity, repeatType: "loop" }}
+        >
           <ArrowDown className="text-white w-5 h-5" />
         </motion.div>
       </motion.button>
-    </section>;
+    </section>
+  );
 };
+
 export default HeroSection;
