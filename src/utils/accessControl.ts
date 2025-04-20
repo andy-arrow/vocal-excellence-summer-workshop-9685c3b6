@@ -3,6 +3,10 @@
  * Access control utilities for the application
  */
 
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
+
 // List of authorized administrator email addresses
 export const AUTHORIZED_ADMIN_EMAILS = [
   'info@vocalexcellence.cy',
@@ -36,4 +40,41 @@ export const logAdminAccessAttempt = (email: string | undefined | null, success:
   
   // In production, this would send the log to a secure storage system
   // This could be implemented with a Supabase edge function
+};
+
+interface ProtectedRouteProps {
+  children: React.ReactNode;
+}
+
+/**
+ * A route wrapper that only allows authenticated users to access the route
+ */
+export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+  const { user } = useAuth();
+  
+  if (!user) {
+    return <Navigate to="/auth" replace />;
+  }
+  
+  return <>{children}</>;
+};
+
+/**
+ * A route wrapper that only allows authenticated administrators to access the route
+ */
+export const AdminRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+  const { user } = useAuth();
+  
+  if (!user) {
+    return <Navigate to="/auth" replace />;
+  }
+  
+  const isAdmin = isAuthorizedAdmin(user.email);
+  if (!isAdmin) {
+    logAdminAccessAttempt(user.email, false);
+    return <Navigate to="/" replace />;
+  }
+  
+  logAdminAccessAttempt(user.email, true);
+  return <>{children}</>;
 };
