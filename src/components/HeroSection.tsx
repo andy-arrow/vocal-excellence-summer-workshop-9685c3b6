@@ -105,10 +105,6 @@ const HeroSection = () => {
                 Apply Now
                 <ArrowUpRight className="w-5 h-5 opacity-90 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform text-white" />
               </Link>
-              
-              <button onClick={scrollToDiscoverSection} className="text-white bg-gray-900/80 px-8 py-4 rounded-xl backdrop-blur-sm transition-all hover:bg-gray-900 text-lg font-light">
-                Discover More
-              </button>
             </motion.div>
             
             <motion.div className="flex items-center justify-center mt-12 space-x-4" initial={{
@@ -129,7 +125,7 @@ const HeroSection = () => {
         </motion.div>
       </div>
       
-      <motion.button onClick={scrollToDiscoverSection} className="absolute bottom-12 left-0 right-0 mx-auto w-12 h-12 cursor-pointer z-20 flex items-center justify-center" aria-label="Scroll down" initial={{
+      <motion.button onClick={() => {}} className="absolute bottom-12 left-0 right-0 mx-auto w-12 h-12 cursor-pointer z-20 flex items-center justify-center" aria-label="Scroll down" initial={{
       opacity: 0,
       y: 20
     }} animate={{
@@ -148,7 +144,7 @@ const HeroSection = () => {
       }}>
           <ArrowDown className="text-charcoal w-5 h-5" />
         </motion.div>
-      </motion.button>
+    </motion.button>
     </section>;
 };
 
