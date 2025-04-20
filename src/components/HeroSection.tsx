@@ -11,8 +11,8 @@ const HeroSection = () => {
   const [hasReducedMotion, setHasReducedMotion] = useState(false);
   const [imageLoadError, setImageLoadError] = useState(false);
   
-  // Changed to reference the newly uploaded image - note the correct path format
-  const imagePath = '/Vocal Excellence Class 1.jpg';
+  // Updated to use URL encoded path format
+  const imagePath = '/lovable-uploads/Vocal%20Excellence%20Class%201.jpg';
   // Also updating fallback to a more relevant one
   const fallbackImageUrl = 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?ixlib=rb-4.0.3&w=1000&q=80';
 
