@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { Instagram, Linkedin, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -89,7 +88,7 @@ const InstructorsSection = () => {
   };
 
   return (
-    <section id="instructors" ref={sectionRef} className="section-container bg-white">
+    <section id="instructors" ref={sectionRef} className="section-container bg-gradient-to-b from-rose-50 to-white">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 
@@ -100,7 +99,7 @@ const InstructorsSection = () => {
           </h2>
           <p 
             ref={(el) => (elementsRef.current[1] = el)} 
-            className="section-subtitle reveal-on-scroll text-gray-600"
+            className="section-subtitle reveal-on-scroll"
           >
             Learn from industry-leading vocal professionals with international performance careers
           </p>
@@ -114,13 +113,13 @@ const InstructorsSection = () => {
               className="reveal-on-scroll overflow-hidden group scale-on-hover"
               style={{ transitionDelay: `${index * 100}ms` }}
             >
-              <div className="relative overflow-hidden rounded-2xl shadow-md mb-5 aspect-[3/4] border border-gray-200">
+              <div className="relative overflow-hidden rounded-2xl shadow-md mb-5 aspect-[3/4] border border-rose-100">
                 <img 
                   src={instructor.image} 
                   alt={instructor.name} 
-                  className="w-full h-full object-cover grayscale transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                <div className="absolute inset-0 bg-gradient-to-t from-rose-900/80 via-rose-800/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
                   <div className="p-5 text-white">
                     <div className="flex space-x-4 mb-3">
                       {instructor.socials.instagram && instructor.socials.instagram !== "#" && (
@@ -145,15 +144,15 @@ const InstructorsSection = () => {
                   </div>
                 </div>
               </div>
-              <h3 className="text-xl font-serif font-medium text-black">{instructor.name}</h3>
-              <p className="text-gray-600 mb-2 font-light">{instructor.title}</p>
-              <div className="text-gray-700 text-sm">
+              <h3 className="text-xl font-serif font-medium text-gray-800">{instructor.name}</h3>
+              <p className="text-rose-500 mb-2 font-light">{instructor.title}</p>
+              <div className="text-gray-600 text-sm">
                 {expandedBios[index] ? (
                   <>
                     <p className="mb-2">{instructor.bio}</p>
                     <Button 
                       variant="link" 
-                      className="text-black hover:text-gray-700 p-0 h-auto transition-colors"
+                      className="text-rose-500 hover:text-rose-600 p-0 h-auto transition-colors"
                       onClick={() => toggleBio(index)}
                     >
                       Read less
@@ -164,7 +163,7 @@ const InstructorsSection = () => {
                     <p className="line-clamp-4 mb-2">{instructor.bio}</p>
                     <Button 
                       variant="link" 
-                      className="text-black hover:text-gray-700 p-0 h-auto transition-colors"
+                      className="text-rose-500 hover:text-rose-600 p-0 h-auto transition-colors"
                       onClick={() => toggleBio(index)}
                     >
                       Read more
