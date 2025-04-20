@@ -10,7 +10,7 @@ const HeroSection = () => {
   const [hasReducedMotion, setHasReducedMotion] = useState(false);
   const [imageLoadError, setImageLoadError] = useState(false);
   
-  const imagePath = '/lovable-uploads/5f2b13ba-7279-45da-86e2-af6b9c336634.png';
+  const imagePath = '/lovable-uploads/204317a0-ff6c-4102-a68e-f39fddf77be4.png';
   const fallbackImageUrl = 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?ixlib=rb-4.0.3&w=1000&q=80';
 
   useEffect(() => {
