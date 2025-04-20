@@ -56,7 +56,7 @@ const HeroSection = () => {
   };
 
   return <section id="home" ref={heroRef} className={cn("relative min-h-screen flex items-center justify-center overflow-hidden mt-16", "bg-gradient-to-b from-white to-neutral-50 border-b border-neutral-100", hasReducedMotion ? "reduced-motion" : "")}>
-      <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-5xl mx-auto">
+      <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-5xl mx-auto pt-24 md:pt-32 lg:pt-40">
         <motion.div className="space-y-10" initial={{
         opacity: 0,
         y: 30
