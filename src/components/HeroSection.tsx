@@ -55,7 +55,21 @@ const HeroSection = () => {
     }
   };
 
-  return <section id="home" ref={heroRef} className={cn("relative min-h-screen flex items-center justify-center overflow-hidden mt-16", "bg-gradient-to-b from-white to-neutral-50 border-b border-neutral-100", hasReducedMotion ? "reduced-motion" : "")}>
+  return <section 
+    id="home" 
+    ref={heroRef} 
+    className={cn(
+      "relative min-h-screen flex items-center justify-center overflow-hidden mt-16",
+      "before:content-[''] before:absolute before:inset-0 before:bg-black/60 before:z-10",
+      hasReducedMotion ? "reduced-motion" : ""
+    )}
+    style={{
+      backgroundImage: "url('/lovable-uploads/c447ca82-5213-46f5-a2e4-ab1d96d73325.png')",
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat'
+    }}
+  >
       <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-5xl mx-auto pt-24 md:pt-32 lg:pt-40">
         <motion.div className="space-y-10" initial={{
         opacity: 0,
@@ -67,7 +81,7 @@ const HeroSection = () => {
         duration: 0.8,
         delay: 0.3
       }}>
-          <motion.h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-charcoal mb-6 tracking-tight" initial={{
+          <motion.h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight drop-shadow-lg" initial={{
           opacity: 0,
           y: 20
         }} animate={{
@@ -78,10 +92,10 @@ const HeroSection = () => {
           delay: 0.7
         }}>
             <span className="block mb-4">Unlock Your</span>
-            <span className="gradient-text">Vocal Potential</span>
+            <span className="text-gradient">Vocal Potential</span>
           </motion.h1>
           
-          <motion.p className="font-sans text-lg md:text-xl text-charcoal/80 max-w-2xl mx-auto leading-relaxed" initial={{
+          <motion.p className="font-sans text-lg md:text-xl text-white font-medium max-w-2xl mx-auto leading-relaxed drop-shadow-lg" initial={{
           opacity: 0
         }} animate={{
           opacity: 1
@@ -101,9 +115,9 @@ const HeroSection = () => {
           delay: 1.1
         }}>
             <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              <Link to="/apply" className="group px-8 py-4 bg-black text-white rounded-xl text-lg font-medium transition-all duration-300 hover:bg-gray-900 shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center gap-2">
+              <Link to="/apply" className="group px-8 py-4 bg-white text-black rounded-xl text-lg font-medium transition-all duration-300 hover:bg-gray-100 shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center gap-2">
                 Apply Now
-                <ArrowUpRight className="w-5 h-5 opacity-90 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform text-white" />
+                <ArrowUpRight className="w-5 h-5 opacity-90 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </Link>
             </motion.div>
             
@@ -115,11 +129,11 @@ const HeroSection = () => {
             delay: 1.3,
             duration: 0.5
           }}>
-              <div className="w-2 h-2 rounded-full bg-energy-purple animate-pulse-slow"></div>
-              <p className="text-charcoal/70 text-sm font-light">
-                Applications close <span className="text-charcoal font-medium">May 15, 2025</span> — Only 20 spots available
+              <div className="w-2 h-2 rounded-full bg-white animate-pulse-slow"></div>
+              <p className="text-white text-sm font-medium">
+                Applications close <span className="text-white font-bold">May 15, 2025</span> — Only 20 spots available
               </p>
-              <div className="w-2 h-2 rounded-full bg-energy-purple animate-pulse-slow"></div>
+              <div className="w-2 h-2 rounded-full bg-white animate-pulse-slow"></div>
             </motion.div>
           </motion.div>
         </motion.div>
@@ -135,14 +149,14 @@ const HeroSection = () => {
       delay: 1.5,
       duration: 0.8
     }}>
-        <motion.div className="rounded-full bg-charcoal/10 backdrop-blur-sm border border-charcoal/20 p-3 hover:bg-charcoal/20 transition-all" animate={{
+        <motion.div className="rounded-full bg-white/20 backdrop-blur-sm border border-white/30 p-3 hover:bg-white/30 transition-all" animate={{
         y: [0, 8, 0]
       }} transition={{
         duration: 2,
         repeat: Infinity,
         repeatType: "loop"
       }}>
-          <ArrowDown className="text-charcoal w-5 h-5" />
+          <ArrowDown className="text-white w-5 h-5" />
         </motion.div>
     </motion.button>
     </section>;
