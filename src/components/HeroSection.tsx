@@ -8,6 +8,7 @@ const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [hasReducedMotion, setHasReducedMotion] = useState(false);
+  const imagePath = '/lovable-uploads/07191bfc-9a89-4851-b4f3-1e146e44ae27.png';
 
   useEffect(() => {
     const img = new Image();
@@ -18,7 +19,7 @@ const HeroSection = () => {
     img.onerror = (e) => {
       console.error('Failed to load background image:', e);
     };
-    img.src = '/lovable-uploads/07191bfc-9a89-4851-b4f3-1e146e44ae27.png';
+    img.src = imagePath;
     
     const savedPreference = localStorage.getItem('reduced-motion') === 'true';
     setHasReducedMotion(savedPreference);
@@ -75,7 +76,7 @@ const HeroSection = () => {
         <div 
           className="absolute inset-0 bg-center bg-cover bg-no-repeat z-0"
           style={{
-            backgroundImage: `url('/lovable-uploads/07191bfc-9a89-4851-b4f3-1e146e44ae27.png')`,
+            backgroundImage: `url('${imagePath}')`,
             width: '100%',
             height: '100%'
           }}
