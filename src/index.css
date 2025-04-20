@@ -1,6 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://use.typekit.net/[YOUR-KIT-CODE].css'); /* Note: Users will need to get their own Adobe Fonts kit code for Didot */
 
 @tailwind base;
 @tailwind components;
@@ -46,7 +44,8 @@
   }
 
   body {
-    @apply bg-background text-charcoal font-sans antialiased;
+    @apply bg-background text-charcoal antialiased;
+    font-family: 'Didot', serif;
     font-feature-settings: "rlig" 1, "calt" 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -54,7 +53,8 @@
 
   /* Typography System */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif tracking-tight;
+    @apply tracking-tight;
+    font-family: 'Didot', serif;
   }
 
   h1 {

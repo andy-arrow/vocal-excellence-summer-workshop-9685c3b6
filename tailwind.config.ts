@@ -103,9 +103,9 @@ export default {
       },
       fontFamily: {
         // Define consistent font families
-        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
-        serif: ['Playfair Display', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif'],
-        outfit: ['Outfit', 'sans-serif'],
+        sans: ['Didot', 'serif'],
+        serif: ['Didot', 'serif'],
+        outfit: ['Didot', 'serif'], // Replacing Outfit with Didot
       },
       fontSize: {
         // Define consistent font sizes
