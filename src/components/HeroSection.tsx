@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -7,13 +6,10 @@ import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-  const [hasReducedMotion, setHasReducedMotion] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [hasReducedMotion, setHasReducedMotion] = useState(false);
 
   useEffect(() => {
-    // Using a verified image that exists in the project
     const img = new Image();
     img.onload = () => {
       console.log('Background image loaded successfully');
@@ -22,8 +18,7 @@ const HeroSection = () => {
     img.onerror = (e) => {
       console.error('Failed to load background image:', e);
     };
-    // Using a verified image from the read-only files list
-    img.src = '/lovable-uploads/5a4b7bc3-bc7e-42cc-b5bf-fd69555887e3.png';
+    img.src = '/lovable-uploads/9f7c1495-78de-4e1f-957b-888e58ece6c2.png';
     
     const savedPreference = localStorage.getItem('reduced-motion') === 'true';
     setHasReducedMotion(savedPreference);
@@ -80,12 +75,11 @@ const HeroSection = () => {
         hasReducedMotion ? "reduced-motion" : ""
       )}
     >
-      {/* Background image with explicit width/height and fallback color */}
       {isImageLoaded ? (
         <div 
           className="absolute inset-0 bg-center bg-cover bg-no-repeat z-0"
           style={{
-            backgroundImage: `url('/lovable-uploads/5a4b7bc3-bc7e-42cc-b5bf-fd69555887e3.png')`,
+            backgroundImage: `url('/lovable-uploads/9f7c1495-78de-4e1f-957b-888e58ece6c2.png')`,
             width: '100%',
             height: '100%'
           }}
@@ -94,8 +88,7 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-black z-0"></div>
       )}
       
-      {/* Dark overlay with reduced opacity */}
-      <div className="absolute inset-0 bg-black/50 z-10"></div>
+      <div className="absolute inset-0 bg-black/60 z-10"></div>
       
       <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-5xl mx-auto pt-24 md:pt-32 lg:pt-40">
         <motion.div className="space-y-10" initial={{
