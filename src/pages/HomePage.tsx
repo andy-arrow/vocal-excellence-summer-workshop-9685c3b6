@@ -1,19 +1,12 @@
 
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import Index from './Index';
 
 /**
- * This component is a simple redirect to the Index page.
- * It exists to maintain compatibility with the original import in App.tsx.
+ * This component serves as a wrapper for the Index page.
  */
 const HomePage = () => {
-  const navigate = useNavigate();
-  
-  useEffect(() => {
-    navigate('/', { replace: true });
-  }, [navigate]);
-  
-  return null;
+  return <Index />;
 };
 
 export default HomePage;

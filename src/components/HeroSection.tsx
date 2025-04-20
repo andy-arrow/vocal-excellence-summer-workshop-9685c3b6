@@ -63,6 +63,8 @@ const HeroSection = () => {
     }
   };
 
+  const fallbackImageUrl = 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D&w=1000&q=80';
+
   return (
     <section 
       id="home" 
@@ -76,13 +78,20 @@ const HeroSection = () => {
         <div 
           className="absolute inset-0 bg-center bg-cover bg-no-repeat z-0"
           style={{
-            backgroundImage: `url('${imagePath}')`,
+            backgroundImage: `url(${imagePath})`,
             width: '100%',
             height: '100%'
           }}
         />
       ) : (
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-black z-0"></div>
+        <div 
+          className="absolute inset-0 bg-gradient-to-b from-gray-900 to-black z-0"
+          style={{
+            backgroundImage: `url(${fallbackImageUrl})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+          }}
+        />
       )}
       
       <div className="absolute inset-0 bg-black/70 z-10"></div>

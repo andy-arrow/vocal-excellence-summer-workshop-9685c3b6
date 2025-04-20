@@ -10,7 +10,8 @@ import PrivacyPolicy from '@/pages/PrivacyPolicy';
 import CancellationPolicy from '@/pages/CancellationPolicy';
 import Admin from '@/pages/Admin';
 import SummerProgramme from '@/pages/SummerProgramme';
-import ImageTest from '@/components/ImageTest'; // Add this import
+import ImageTest from '@/components/ImageTest';
+import Index from '@/pages/Index';
 
 // Protected Routes
 import { ProtectedRoute, AdminRoute } from '@/utils/accessControl';
@@ -19,8 +20,9 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/image-test" element={<ImageTest />} /> {/* Add this route */}
+        <Route path="/" element={<Index />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/image-test" element={<ImageTest />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/apply" element={
           <ProtectedRoute>
