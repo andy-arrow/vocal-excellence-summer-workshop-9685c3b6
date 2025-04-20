@@ -53,10 +53,6 @@ const HeroSection = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [hasReducedMotion]);
 
-  const handleVideoLoad = () => {
-    setIsVideoLoaded(true);
-  };
-
   const scrollToDiscoverSection = () => {
     const aboutSection = document.getElementById('about');
     if (aboutSection) {
