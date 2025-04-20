@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Calendar, MapPin, Users, Clock, Star, ChevronRight, Music } from 'lucide-react';
@@ -12,7 +11,7 @@ const SummerProgramme = () => {
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center text-white overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/lovable-uploads/masterclass-singers.jpg')] bg-cover bg-center"></div>
+        <div className="absolute inset-0 bg-[url('/lovable-uploads/masterclass-singers.jpg')] bg-cover bg-center grayscale"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/40"></div>
         <div className="relative z-10 container mx-auto px-6 py-20 text-center max-w-[1100px]">
           <motion.div 
@@ -103,7 +102,7 @@ const SummerProgramme = () => {
           </div>
         </section>
         
-        <Separator className="my-16 bg-slate-200" />
+        <Separator className="my-16 bg-gray-200" />
         
         {/* Programme Schedule */}
         <section className="mb-20">
@@ -180,7 +179,7 @@ const SummerProgramme = () => {
           </div>
         </section>
         
-        <Separator className="my-16 bg-slate-200" />
+        <Separator className="my-16 bg-gray-200" />
         
         {/* Faculty Section */}
         <section className="mb-20">
@@ -224,7 +223,7 @@ const SummerProgramme = () => {
                   <img 
                     src={faculty.image} 
                     alt={faculty.name}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover grayscale"
                   />
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-1">
@@ -245,7 +244,7 @@ const SummerProgramme = () => {
           </div>
         </section>
         
-        <Separator className="my-16 bg-slate-200" />
+        <Separator className="my-16 bg-gray-200" />
         
         {/* Why Join Us */}
         <section className="mb-20">
@@ -403,7 +402,7 @@ const SummerProgramme = () => {
       </div>
       
       {/* Testimonials */}
-      <section className="bg-slate-900 py-20 text-white">
+      <section className="bg-black py-20 text-white">
         <div className="container mx-auto max-w-[1000px] px-6">
           <div className="flex flex-col items-center text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mb-4">
