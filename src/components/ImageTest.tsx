@@ -7,7 +7,7 @@ const ImageTest = () => {
   const [diagnosticInfo, setDiagnosticInfo] = useState<string[]>([]);
   
   // Original project image path
-  const originalImagePath = '/lovable-uploads/07191bfc-9a89-4851-b4f3-1e146e44ae27.png';
+  const originalImagePath = '/lovable-uploads/06153527-7089-4713-b4d9-ddf638befdcb.png';
   
   // Verified working image URL from Unsplash
   const fallbackImageUrl = 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D&w=1000&q=80';

@@ -8,17 +8,42 @@ const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [hasReducedMotion, setHasReducedMotion] = useState(false);
+  const [imageLoadError, setImageLoadError] = useState(false);
   const imagePath = '/lovable-uploads/06153527-7089-4713-b4d9-ddf638befdcb.png';
+  const fallbackImageUrl = 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D&w=1000&q=80';
 
   useEffect(() => {
+    console.log('Hero container dimensions:', {
+      width: heroRef.current?.offsetWidth,
+      height: heroRef.current?.offsetHeight
+    });
+    
+    console.log('Attempting to load image from:', imagePath);
+    
     const img = new Image();
     img.onload = () => {
-      console.log('Background image loaded successfully');
+      console.log('✅ Background image loaded successfully:', {
+        width: img.width,
+        height: img.height,
+        src: img.src
+      });
       setIsImageLoaded(true);
+      setImageLoadError(false);
     };
+    
     img.onerror = (e) => {
       console.error('Failed to load background image:', e);
+      setImageLoadError(true);
+      setIsImageLoaded(false);
+      
+      const fallbackImg = new Image();
+      fallbackImg.onload = () => {
+        console.log('Fallback image loaded successfully');
+        setIsImageLoaded(true);
+      };
+      fallbackImg.src = fallbackImageUrl;
     };
+    
     img.src = imagePath;
     
     const savedPreference = localStorage.getItem('reduced-motion') === 'true';
@@ -63,8 +88,6 @@ const HeroSection = () => {
     }
   };
 
-  const fallbackImageUrl = 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D&w=1000&q=80';
-
   return (
     <section 
       id="home" 
@@ -77,7 +100,7 @@ const HeroSection = () => {
       <div 
         className="absolute inset-0 bg-center bg-cover bg-no-repeat z-0"
         style={{
-          backgroundImage: `url(${imagePath})`,
+          backgroundImage: `url(${imageLoadError ? fallbackImageUrl : imagePath})`,
           opacity: 0.15,
           width: '100%',
           height: '100%',
@@ -86,7 +109,22 @@ const HeroSection = () => {
         }}
       />
       
+      {imageLoadError && (
+        <img 
+          src={fallbackImageUrl}
+          alt="Background"
+          className="absolute inset-0 object-cover w-full h-full opacity-15 z-0"
+          style={{ opacity: 0.15 }}
+        />
+      )}
+      
       <div className="absolute inset-0 bg-black/80 z-10"></div>
+      
+      {process.env.NODE_ENV !== 'production' && (
+        <div className="absolute top-20 right-4 z-50 bg-black/70 text-white text-xs p-2 rounded">
+          Image: {isImageLoaded ? '✅ Loaded' : imageLoadError ? '❌ Error' : '⏳ Loading'}
+        </div>
+      )}
       
       <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-5xl mx-auto pt-24 md:pt-32 lg:pt-40">
         <motion.div className="space-y-10" initial={{
