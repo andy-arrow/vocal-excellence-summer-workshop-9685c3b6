@@ -6,8 +6,8 @@ const ImageTest = () => {
   const [hasError, setHasError] = useState(false);
   const [diagnosticInfo, setDiagnosticInfo] = useState<string[]>([]);
   
-  // Original project image path
-  const originalImagePath = '/lovable-uploads/06153527-7089-4713-b4d9-ddf638befdcb.png';
+  // Update to test the new image path
+  const originalImagePath = '/Vocal Excellence Class 1.jpg';
   
   // Verified working image URL from Unsplash
   const fallbackImageUrl = 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D&w=1000&q=80';
@@ -21,8 +21,31 @@ const ImageTest = () => {
     setDiagnosticInfo(prev => [...prev, message]);
   };
 
-  // Test image loading through JavaScript
+  // Test multiple image path formats to help diagnose the issue
   useEffect(() => {
+    addLog(`Testing original path: ${originalImagePath}`);
+    
+    // Test various path formats to determine which works
+    const pathsToTest = [
+      originalImagePath,
+      `./Vocal Excellence Class 1.jpg`,
+      `/lovable-uploads/Vocal Excellence Class 1.jpg`,
+      `Vocal Excellence Class 1.jpg`
+    ];
+    
+    pathsToTest.forEach(path => {
+      const testImg = new Image();
+      testImg.onload = () => {
+        addLog(`✅ SUCCESS with path: ${path}`);
+        addLog(`Image dimensions: ${testImg.width}x${testImg.height}`);
+      };
+      testImg.onerror = () => {
+        addLog(`❌ FAILED with path: ${path}`);
+      };
+      testImg.src = path;
+    });
+    
+    // Continue with normal image testing
     const testImageLoad = () => {
       addLog(`Testing image load for: ${currentImagePath}`);
       
@@ -32,6 +55,7 @@ const ImageTest = () => {
         addLog(`✅ Image loaded successfully through JavaScript: ${currentImagePath}`);
         addLog(`Image dimensions: ${img.width}x${img.height}`);
         setIsLoaded(true);
+        setHasError(false);
       };
       
       img.onerror = (e) => {
@@ -86,7 +110,9 @@ const ImageTest = () => {
         <div className="flex justify-between items-center mb-4">
           <p className="font-mono text-sm break-all">Current image: {currentImagePath}</p>
           <button 
-            onClick={toggleImageSource}
+            onClick={() => setCurrentImagePath(current => 
+              current === originalImagePath ? fallbackImageUrl : originalImagePath
+            )}
             className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm"
           >
             Try {currentImagePath === originalImagePath ? 'Unsplash Image' : 'Original Image'}

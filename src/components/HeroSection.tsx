@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -10,7 +11,9 @@ const HeroSection = () => {
   const [hasReducedMotion, setHasReducedMotion] = useState(false);
   const [imageLoadError, setImageLoadError] = useState(false);
   
-  const imagePath = '/lovable-uploads/204317a0-ff6c-4102-a68e-f39fddf77be4.png';
+  // Changed to reference the newly uploaded image - note the correct path format
+  const imagePath = '/Vocal Excellence Class 1.jpg';
+  // Also updating fallback to a more relevant one
   const fallbackImageUrl = 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?ixlib=rb-4.0.3&w=1000&q=80';
 
   useEffect(() => {
