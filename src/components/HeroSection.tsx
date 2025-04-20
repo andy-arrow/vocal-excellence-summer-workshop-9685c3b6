@@ -8,7 +8,7 @@ const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [hasReducedMotion, setHasReducedMotion] = useState(false);
-  const imagePath = '/lovable-uploads/07191bfc-9a89-4851-b4f3-1e146e44ae27.png';
+  const imagePath = '/lovable-uploads/06153527-7089-4713-b4d9-ddf638befdcb.png';
 
   useEffect(() => {
     const img = new Image();
@@ -70,31 +70,23 @@ const HeroSection = () => {
       id="home" 
       ref={heroRef} 
       className={cn(
-        "relative min-h-screen flex items-center justify-center overflow-hidden mt-16",
+        "relative min-h-[500px] h-screen flex items-center justify-center overflow-hidden mt-16",
         hasReducedMotion ? "reduced-motion" : ""
       )}
     >
-      {isImageLoaded ? (
-        <div 
-          className="absolute inset-0 bg-center bg-cover bg-no-repeat z-0"
-          style={{
-            backgroundImage: `url(${imagePath})`,
-            width: '100%',
-            height: '100%'
-          }}
-        />
-      ) : (
-        <div 
-          className="absolute inset-0 bg-gradient-to-b from-gray-900 to-black z-0"
-          style={{
-            backgroundImage: `url(${fallbackImageUrl})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center'
-          }}
-        />
-      )}
+      <div 
+        className="absolute inset-0 bg-center bg-cover bg-no-repeat z-0"
+        style={{
+          backgroundImage: `url(${imagePath})`,
+          opacity: 0.15,
+          width: '100%',
+          height: '100%',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
+      />
       
-      <div className="absolute inset-0 bg-black/70 z-10"></div>
+      <div className="absolute inset-0 bg-black/80 z-10"></div>
       
       <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-5xl mx-auto pt-24 md:pt-32 lg:pt-40">
         <motion.div className="space-y-10" initial={{
