@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -12,6 +13,7 @@ const HeroSection = () => {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   useEffect(() => {
+    // Preload the background image
     const img = new Image();
     img.onload = () => setIsImageLoaded(true);
     img.src = '/lovable-uploads/c447ca82-5213-46f5-a2e4-ab1d96d73325.png';
@@ -22,6 +24,7 @@ const HeroSection = () => {
     if (mediaQuery.matches && !localStorage.getItem('reduced-motion')) {
       setHasReducedMotion(true);
     }
+    
     const handleScroll = () => {
       if (!heroRef.current) return;
       const scrollPosition = window.scrollY;
@@ -43,6 +46,7 @@ const HeroSection = () => {
         });
       }
     };
+    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [hasReducedMotion]);
@@ -66,16 +70,21 @@ const HeroSection = () => {
       ref={heroRef} 
       className={cn(
         "relative min-h-screen flex items-center justify-center overflow-hidden mt-16",
-        "before:content-[''] before:absolute before:inset-0 before:bg-black/60 before:z-10",
         hasReducedMotion ? "reduced-motion" : ""
       )}
     >
+      {/* Background image - fixed position, lower z-index */}
       <div 
-        className="absolute inset-0 z-0 bg-center bg-cover bg-no-repeat"
+        className="absolute inset-0 bg-center bg-cover bg-no-repeat z-0"
         style={{
           backgroundImage: `url('/lovable-uploads/c447ca82-5213-46f5-a2e4-ab1d96d73325.png')`,
+          opacity: isImageLoaded ? 1 : 0,
+          transition: 'opacity 0.5s ease',
         }}
       />
+      
+      {/* Dark overlay with reduced opacity */}
+      <div className="absolute inset-0 bg-black/40 z-10"></div>
       
       <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-5xl mx-auto pt-24 md:pt-32 lg:pt-40">
         <motion.div className="space-y-10" initial={{
