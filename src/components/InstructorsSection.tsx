@@ -1,6 +1,9 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { Instagram, Linkedin, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
 const instructors = [
   {
@@ -58,7 +61,7 @@ const instructors = [
 const InstructorsSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const elementsRef = useRef<(HTMLElement | null)[]>([]);
-  const [expandedBios, setExpandedBios] = useState<Record<number, boolean>>({});
+  const [activeBio, setActiveBio] = useState<number | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -81,95 +84,116 @@ const InstructorsSection = () => {
   }, []);
 
   const toggleBio = (index: number) => {
-    setExpandedBios(prev => ({
-      ...prev,
-      [index]: !prev[index]
-    }));
+    setActiveBio(activeBio === index ? null : index);
   };
 
   return (
-    <section id="instructors" ref={sectionRef} className="section-container bg-gradient-to-b from-rose-50 to-white">
-      <div className="max-w-6xl mx-auto">
+    <section id="instructors" ref={sectionRef} className="section-container bg-gradient-to-b from-rose-50 to-white py-20">
+      <div className="max-w-6xl mx-auto px-4 md:px-6">
         <div className="text-center mb-16">
           <h2 
             ref={(el) => (elementsRef.current[0] = el)} 
-            className="section-title reveal-on-scroll"
+            className="didot-heading text-4xl md:text-5xl font-light text-apple-text mb-4 reveal-on-scroll"
           >
             World-Class Faculty
           </h2>
+          <div className="w-20 h-px bg-apple-blue mx-auto mb-6"></div>
           <p 
             ref={(el) => (elementsRef.current[1] = el)} 
-            className="section-subtitle reveal-on-scroll"
+            className="text-lg text-apple-grey max-w-2xl mx-auto reveal-on-scroll"
           >
             Learn from industry-leading vocal professionals with international performance careers
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
           {instructors.map((instructor, index) => (
             <div 
               key={index}
               ref={(el) => (elementsRef.current[2 + index] = el)} 
-              className="reveal-on-scroll overflow-hidden group scale-on-hover"
+              className="reveal-on-scroll"
               style={{ transitionDelay: `${index * 100}ms` }}
             >
-              <div className="relative overflow-hidden rounded-2xl shadow-md mb-5 aspect-[3/4] border border-rose-100">
-                <img 
-                  src={instructor.image} 
-                  alt={instructor.name} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-rose-900/80 via-rose-800/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                  <div className="p-5 text-white">
-                    <div className="flex space-x-4 mb-3">
-                      {instructor.socials.instagram && instructor.socials.instagram !== "#" && (
-                        <a href={instructor.socials.instagram} target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white transition-colors">
-                          <Instagram size={18} />
-                        </a>
-                      )}
-                      {instructor.socials.linkedin && instructor.socials.linkedin !== "#" && (
-                        <a href={instructor.socials.linkedin} target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white transition-colors">
-                          <Linkedin size={18} />
-                        </a>
-                      )}
+              <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-apple-border/20 h-full flex flex-col">
+                <div className="relative overflow-hidden aspect-square">
+                  <img 
+                    src={instructor.image} 
+                    alt={instructor.name} 
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="absolute bottom-0 left-0 right-0 p-4">
+                      <div className="flex space-x-3">
+                        {instructor.socials.instagram && instructor.socials.instagram !== "#" && (
+                          <a href={instructor.socials.instagram} target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white transition-colors">
+                            <Instagram size={18} />
+                          </a>
+                        )}
+                        {instructor.socials.linkedin && instructor.socials.linkedin !== "#" && (
+                          <a href={instructor.socials.linkedin} target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white transition-colors">
+                            <Linkedin size={18} />
+                          </a>
+                        )}
+                      </div>
                     </div>
-                    <Button
-                      variant="link"
-                      className="text-white p-0 hover:text-white/90"
-                      onClick={() => toggleBio(index)}
-                    >
-                      <span className="mr-1">Full Biography</span>
-                      <ArrowRight size={14} />
-                    </Button>
                   </div>
                 </div>
-              </div>
-              <h3 className="text-xl font-serif font-medium text-gray-800">{instructor.name}</h3>
-              <p className="text-rose-500 mb-2 font-light">{instructor.title}</p>
-              <div className="text-gray-600 text-sm">
-                {expandedBios[index] ? (
-                  <>
-                    <p className="mb-2">{instructor.bio}</p>
-                    <Button 
-                      variant="link" 
-                      className="text-rose-500 hover:text-rose-600 p-0 h-auto transition-colors"
-                      onClick={() => toggleBio(index)}
-                    >
-                      Read less
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                    <p className="line-clamp-4 mb-2">{instructor.bio}</p>
-                    <Button 
-                      variant="link" 
-                      className="text-rose-500 hover:text-rose-600 p-0 h-auto transition-colors"
-                      onClick={() => toggleBio(index)}
-                    >
-                      Read more
-                    </Button>
-                  </>
-                )}
+                
+                <div className="p-6 flex flex-col flex-grow">
+                  <h3 className="text-xl font-serif font-medium text-apple-text mb-1">{instructor.name}</h3>
+                  <p className="text-apple-blue mb-4 font-light">{instructor.title}</p>
+                  
+                  <div className="text-apple-grey text-sm flex-grow">
+                    {activeBio === index ? (
+                      <>
+                        <p className="mb-4 leading-relaxed">{instructor.bio}</p>
+                        <Button 
+                          variant="ghost" 
+                          size="sm"
+                          className="text-apple-blue hover:text-apple-blue hover:bg-apple-light px-0 h-auto font-normal"
+                          onClick={() => toggleBio(index)}
+                        >
+                          Read less <ChevronUp className="ml-1 h-4 w-4" />
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <p className="mb-4 line-clamp-3 leading-relaxed">{instructor.bio}</p>
+                        <Button 
+                          variant="ghost" 
+                          size="sm"
+                          className="text-apple-blue hover:text-apple-blue hover:bg-apple-light px-0 h-auto font-normal"
+                          onClick={() => toggleBio(index)}
+                        >
+                          Read more <ChevronDown className="ml-1 h-4 w-4" />
+                        </Button>
+                      </>
+                    )}
+                  </div>
+                  
+                  <div className="mt-4 flex space-x-3">
+                    {instructor.socials.instagram && instructor.socials.instagram !== "#" && (
+                      <a 
+                        href={instructor.socials.instagram} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="text-apple-grey hover:text-apple-blue transition-colors"
+                      >
+                        <Instagram size={18} />
+                      </a>
+                    )}
+                    {instructor.socials.linkedin && instructor.socials.linkedin !== "#" && (
+                      <a 
+                        href={instructor.socials.linkedin} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="text-apple-grey hover:text-apple-blue transition-colors"
+                      >
+                        <Linkedin size={18} />
+                      </a>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           ))}
