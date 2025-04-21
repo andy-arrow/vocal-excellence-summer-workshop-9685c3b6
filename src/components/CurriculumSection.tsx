@@ -74,71 +74,68 @@ const scheduleData = [
     day: "Monday", 
     theme: "Foundation Day (08:00–19:00)",
     activities: [
-      "08:00–09:00: Group Welcome & Warm-Up – Icebreakers, daily goals, and vocal warm-ups.",
-      "09:00–09:45: Alexander Technique Group Session – Posture, breathwork, and physical awareness.",
-      "09:45–11:45: Vocal Masterclass (Fundamentals) – Core techniques: resonance, articulation, and support.",
-      "11:45–13:00: Individual Coaching/Free Studio Time – Book private 45-minute voice lessons in advance.",
-      "13:00–14:30: Lunch Break – Catered options available; dietary restrictions accommodated.",
-      "14:30–16:30: Acting Workshop (Scene Work) – Character analysis and emotional authenticity.",
-      "16:30–18:30: Choir Practice – Blend, dynamics, and repertoire introduction.",
-      "18:30–19:00: Reflection & Wind-Down – Stretching, journaling, or informal peer feedback."
+      "08:00–09:00: Group Welcome & Warm-Up",
+      "09:00–09:45: Alexander Technique Group Session",
+      "09:45–11:45: Vocal Masterclass (Fundamentals)",
+      "11:45–13:00: Individual Coaching Sessions",
+      "13:00–14:30: Lunch Break",
+      "14:30–16:30: Acting Workshop (Scene Work)",
+      "16:30–18:30: Choir Practice",
+      "18:30–19:00: Daily Reflection"
     ] 
   },
   { 
     day: "Tuesday", 
     theme: "Repertoire Focus (08:00–19:00)",
     activities: [
-      "08:00–09:00: Group Check-In & Goal Setting – Share progress and challenges.",
-      "09:00–09:45: Alexander Technique Group Session – Movement efficiency and tension release.",
-      "09:45–11:45: Vocal Masterclass (Repertoire) – Guest artist-led session on interpretation and style.",
-      "11:45–13:00: Repertoire Coaching/Free Studio Time – Polish assigned pieces or seek feedback.",
-      "13:00–14:30: Lunch Break.",
-      "14:30–16:30: Acting Workshop (Improv & Text Analysis) – Spontaneity and subtext exploration.",
-      "16:30–18:30: Choir Practice – Refining harmonies and transitions.",
-      "18:30–19:00: Wrap-Up & Peer Feedback – Share takeaways from the day."
+      "08:00–09:00: Group Check-In & Goal Setting",
+      "09:00–09:45: Alexander Technique Group Session",
+      "09:45–11:45: Vocal Masterclass (Repertoire)",
+      "11:45–13:00: Repertoire Coaching",
+      "13:00–14:30: Lunch Break",
+      "14:30–16:30: Acting Workshop (Text Analysis)",
+      "16:30–18:30: Ensemble Work",
+      "18:30–19:00: Progress Review"
     ] 
   },
   { 
     day: "Wednesday", 
-    theme: "Collaborative Day (08:00–19:00)",
+    theme: "Performance Technique (08:00–19:00)",
     activities: [
-      "08:00–09:00: Group Energizer & Vocal Warm-Ups – Collaborative games and stretches.",
-      "09:00–09:45: Alexander Technique Group Session – Spatial awareness and ensemble alignment.",
-      "09:45–11:45: Acting Masterclass (Collaborative Performance) – Partner work and staging.",
-      "11:45–13:00: Ensemble Rehearsal/Free Studio Time – Focus on group pieces or solos.",
-      "13:00–14:30: Lunch Break.",
-      "14:30–16:30: Acting Workshop (Physical Theatre) – Body language and nonverbal storytelling.",
-      "16:30–18:30: Choir Practice – Run ensemble piece with staging.",
-      "18:30–19:00: Group Reflection – Discuss challenges and breakthroughs."
+      "08:00–09:00: Group Warm-Up",
+      "09:00–09:45: Alexander Technique Group Session",
+      "09:45–11:45: Stage Presence Masterclass",
+      "11:45–13:00: Individual Coaching Sessions",
+      "13:00–14:30: Lunch Break",
+      "14:30–16:30: Stage Movement Workshop",
+      "16:30–18:30: Mock Audition Preparation",
+      "18:30–19:00: Feedback Session"
     ] 
   },
   { 
     day: "Thursday", 
-    theme: "Performance Prep (08:00–19:00)",
+    theme: "Vocal Health & Industry (08:00–19:00)",
     activities: [
-      "08:00–09:00: Group Check-In & Vocal Warm-Ups – Mental and vocal readiness.",
-      "09:00–09:45: Alexander Technique Group Session – Confidence-building for stage presence.",
-      "09:45–11:45: Vocal Masterclass (Performance Techniques) – Audition skills and audience engagement.",
-      "11:45–13:00: Performance Coaching/Free Studio Time – Final polish for solos.",
-      "13:00–14:30: Lunch Break.",
-      "14:30–16:30: Acting Workshop (Monologues) – Emotional vulnerability and projection.",
-      "16:30–18:30: Choir Practice – Full run-through with accompanist.",
-      "18:30–19:00: Mindful Cool-Down – Guided relaxation and visualization."
+      "08:00–09:00: Group Warm-Up",
+      "09:00–10:30: Vocal Health Seminar (Medical Professional)",
+      "10:45–12:15: Industry Panel Discussion",
+      "12:15–13:45: Networking Lunch",
+      "13:45–15:45: Career Strategy Workshop",
+      "16:00–18:00: Professional Recording Session",
+      "18:00–19:00: Q&A with Industry Professionals"
     ] 
   },
   { 
     day: "Friday", 
-    theme: "Culmination Day (08:00–21:00)",
+    theme: "Showcase Day (08:00–21:00)",
     activities: [
-      "08:00–09:00: Group Pep Talk & Warm-Up – Address nerves and celebrate progress.",
-      "09:00–09:45: Alexander Technique Group Session – Centering and focus exercises.",
-      "09:45–11:45: Final Rehearsals – Individual run-throughs with faculty feedback.",
-      "11:45–13:00: Ensemble Rehearsal/Free Studio Time – Coordinate transitions and cues.",
-      "13:00–14:30: Lunch Break – Light meal provided to avoid fatigue.",
-      "14:30–16:30: Acting Workshop (Final Adjustments) – Sharpening delivery and timing.",
-      "16:30–18:30: Choir Dress Rehearsal – Full tech run in performance space.",
-      "18:30–19:00: Accompanist Sessions – 25-minute slots per student (schedule in advance).",
-      "19:00–21:00: Showcase Concert – Featuring solos and ensemble piece. Reception to follow."
+      "08:00–09:00: Final Group Warm-Up",
+      "09:00–10:30: Technical Rehearsal",
+      "10:45–12:45: Dress Rehearsal",
+      "12:45–14:15: Light Lunch & Rest Period",
+      "14:15–16:15: Final Preparations",
+      "16:30–18:30: Professional Showcase Performance",
+      "19:00–21:00: Closing Reception & Networking"
     ] 
   }
 ];
@@ -198,43 +195,36 @@ function ScheduleContent() {
   
   return (
     <>
-      <Card className="mb-4 bg-white border border-gray-100 shadow-sm">
+      <Card className="mb-6 bg-white/80 backdrop-blur-sm border border-apple-border">
         <CardHeader className="flex flex-row items-center gap-3 pb-2 pt-4">
-          <Clock className="w-5 h-5 md:w-6 md:h-6 text-rose-500" />
-          <CardTitle className="text-lg md:text-xl font-serif font-medium text-gray-800">
-            Your Daily Rhythm
+          <Clock className="w-5 h-5 md:w-6 md:h-6 text-apple-blue" />
+          <CardTitle className="text-lg md:text-xl font-serif font-medium text-apple-text">
+            Your Week at a Glance
           </CardTitle>
         </CardHeader>
         <CardContent className="pt-0 pb-4">
-          <p className="text-gray-700 mb-3 text-sm md:text-base">
-            Each day at Vocal Excellence has its own rhythm and focus, creating a comprehensive experience that builds your vocal abilities sequentially. The program structure balances intensive learning with adequate rest periods for vocal recovery.
+          <p className="text-apple-grey mb-3 text-sm md:text-base">
+            Each day is carefully structured to maximize your learning and development, with a balance of technical training, performance practice, and industry insight.
           </p>
-          
-          <div className="relative h-2 bg-gray-100 rounded-full my-4 overflow-hidden">
-            <div 
-              className="absolute h-full bg-gradient-to-r from-rose-400 to-rose-500 left-0 rounded-full" 
-              style={{ width: '100%' }}
-            ></div>
-          </div>
         </CardContent>
       </Card>
 
-      <div className="space-y-3 mb-4">
+      <div className="space-y-3">
         {scheduleData.map((day, index) => (
           <Collapsible
             key={`day-${index}`}
             open={expandedDay === day.day}
             onOpenChange={() => setExpandedDay(expandedDay === day.day ? null : day.day)}
-            className="border border-gray-100 rounded-lg bg-white shadow-sm hover:shadow-md transition-all duration-300"
+            className="border border-apple-border rounded-xl bg-white/80 backdrop-blur-sm hover:shadow-md transition-all duration-300"
           >
             <CollapsibleTrigger className="w-full px-4 py-3 flex items-center justify-between">
               <div className="flex flex-col items-start text-left">
-                <h3 className="text-base md:text-lg font-medium text-rose-600">{day.day}</h3>
-                <div className="rounded bg-rose-50 px-2 py-1 text-sm text-rose-700 inline-block mt-1">
+                <h3 className="text-base md:text-lg font-medium text-apple-blue">{day.day}</h3>
+                <div className="text-sm text-apple-grey mt-1">
                   {day.theme}
                 </div>
               </div>
-              <div className="text-rose-500 flex-shrink-0">
+              <div className="text-apple-blue flex-shrink-0">
                 {expandedDay === day.day ? (
                   <ChevronUp size={isMobile ? 18 : 20} />
                 ) : (
@@ -243,12 +233,12 @@ function ScheduleContent() {
               </div>
             </CollapsibleTrigger>
             
-            <CollapsibleContent className="px-4 pb-3 pt-1">
-              <ul className="space-y-2 text-sm">
+            <CollapsibleContent className="px-4 pb-4 pt-1">
+              <ul className="space-y-2.5 text-sm md:text-base">
                 {day.activities.map((activity, idx) => (
                   <li key={`activity-${index}-${idx}`} className="flex items-start">
-                    <span className="text-rose-500 mr-2 mt-1 flex-shrink-0">•</span>
-                    <span className="text-gray-700">{activity}</span>
+                    <span className="text-apple-blue mr-2 mt-1.5 flex-shrink-0 text-xs">•</span>
+                    <span className="text-apple-text">{activity}</span>
                   </li>
                 ))}
               </ul>
@@ -256,24 +246,6 @@ function ScheduleContent() {
           </Collapsible>
         ))}
       </div>
-
-      <Card className="bg-white border border-gray-100 shadow-sm">
-        <CardHeader className="pb-2 pt-4">
-          <CardTitle className="text-lg md:text-xl font-serif font-medium text-gray-800">
-            Key Logistics & Notes
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="pt-0 pb-4">
-          <ul className="space-y-2 text-sm md:text-base">
-            {logisticsData.map((item, index) => (
-              <li key={`logistics-${index}`} className="flex items-start">
-                <span className="text-rose-500 mr-2 mt-1 flex-shrink-0">•</span>
-                <span className="text-gray-700">{item}</span>
-              </li>
-            ))}
-          </ul>
-        </CardContent>
-      </Card>
     </>
   );
 }
