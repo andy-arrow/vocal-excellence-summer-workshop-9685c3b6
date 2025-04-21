@@ -1,3 +1,4 @@
+
 import React, { useEffect, lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
@@ -54,9 +55,9 @@ const Application = () => {
       <div className="min-h-screen flex flex-col">
         <Navbar />
         
-        <main className="flex-grow pt-28 md:pt-32"> {/* Increased padding-top to move content lower */}
+        <main className="flex-grow pt-36 md:pt-40"> {/* Increased top padding to bring hero section lower */}
           <div className="bg-gradient-to-b from-white to-[#f5f5f7] border-b border-apple-border/10">
-            <div className="max-w-5xl mx-auto px-6 md:px-8 py-6 md:py-8"> {/* Reduced vertical padding */}
+            <div className="max-w-5xl mx-auto px-6 md:px-8 py-6 md:py-8">
               <motion.div 
                 className="text-center"
                 initial={{ opacity: 0, y: 20 }}
@@ -74,9 +75,9 @@ const Application = () => {
             </div>
           </div>
           
-          <div className="py-4 md:py-8 bg-[#f5f5f7]"> {/* Reduced spacing to bring content closer */}
+          <div className="py-2 md:py-6 bg-[#f5f5f7]"> {/* Further reduced vertical padding to bring content closer */}
             <div className="max-w-7xl mx-auto px-6 md:px-8">
-              <div className="space-y-8 md:space-y-16"> {/* Further reduced spacing between sections */}
+              <div className="space-y-4 md:space-y-8"> {/* Reduced spacing between sections even more */}
                 <motion.section 
                   key="requirements" 
                   initial="hidden" 
