@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Mic, Calendar, ChevronUp, ChevronDown, GraduationCap, Award, Headphones, Clock } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -370,22 +369,22 @@ const CurriculumSection = () => {
             className="w-full"
           >
             <div className="flex justify-center mb-8">
-              <TabsList className="bg-apple-light/80 backdrop-blur-sm p-1 rounded-xl">
+              <TabsList className="bg-white/80 backdrop-blur-sm rounded-xl border border-apple-border/10 p-1 shadow-sm">
                 <TabsTrigger 
                   value="modules"
-                  className="rounded-lg px-6 py-2.5 text-base font-medium transition-all data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                  className="min-w-[180px] rounded-lg px-8 py-3 text-base font-medium transition-all data-[state=active]:bg-apple-blue data-[state=active]:text-white data-[state=active]:shadow-sm"
                 >
                   <div className="flex items-center justify-center space-x-2">
-                    <Mic size={isMobile ? 16 : 18} />
+                    <Mic size={isMobile ? 16 : 18} className="opacity-80" />
                     <span>Program Modules</span>
                   </div>
                 </TabsTrigger>
                 <TabsTrigger 
                   value="schedule"
-                  className="rounded-lg px-6 py-2.5 text-base font-medium transition-all data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                  className="min-w-[180px] rounded-lg px-8 py-3 text-base font-medium transition-all data-[state=active]:bg-apple-blue data-[state=active]:text-white data-[state=active]:shadow-sm"
                 >
                   <div className="flex items-center justify-center space-x-2">
-                    <Calendar size={isMobile ? 16 : 18} />
+                    <Calendar size={isMobile ? 16 : 18} className="opacity-80" />
                     <span>Daily Schedule</span>
                   </div>
                 </TabsTrigger>
