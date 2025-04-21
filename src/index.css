@@ -2,7 +2,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
-/* Add Didot via font-family as a system/installed font, web fallback options next */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,55 +9,46 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 260 10% 3.9%;
+    --foreground: 0 0% 9%;
 
     --card: 0 0% 100%;
-    --card-foreground: 260 10% 3.9%;
+    --card-foreground: 0 0% 9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 260 10% 3.9%;
+    --popover-foreground: 0 0% 9%;
 
-    --primary: 260 90% 50%;
+    --primary: 240 5% 11%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 320 100% 60%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 240 5% 11%;
 
-    --muted: 260 20% 96%;
-    --muted-foreground: 260 20% 40%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 190 95% 45%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 213 100% 47%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 260 15% 90%;
-    --input: 260 15% 90%;
-    --ring: 260 90% 50%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 213 100% 47%;
 
-    --radius: 1rem;
-    
-    --background: 0 0% 100%;
-    --foreground: 222 47% 11%;
-    
-    --primary: 0 85% 71%;
-    --primary-foreground: 0 0% 100%;
+    --radius: 0.75rem;
   }
 
   body {
     @apply bg-background font-sans antialiased;
-    /* Didot should be the primary font everywhere, if installed! */
-    font-family: Didot, Garamond, "Times New Roman", Times, serif;
-    color: var(--foreground, #222);
+    font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    color: var(--foreground, #1d1d1f);
     font-feature-settings: "rlig" 1, "calt" 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Typography System */
   h1, h2, h3, h4, h5, h6 {
-    /* All headers force Didot! */
     font-family: Didot, Garamond, "Times New Roman", Times, serif;
     @apply font-serif tracking-tight;
   }
@@ -95,11 +85,6 @@
   }
 }
 
-/* Make sure serif/Playfair classes also use Didot: */
-.font-serif, .font-playfair {
-  font-family: Didot, Garamond, "Times New Roman", Times, serif !important;
-}
-
 @layer components {
   .focus-ring {
     @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-opacity-75;
@@ -126,11 +111,13 @@
   }
 
   .primary-button {
-    @apply px-6 py-3 bg-primary text-white rounded-xl text-sm font-medium tracking-wide uppercase hover:bg-primary/80 transition-all duration-300 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transform hover:-translate-y-1;
+    @apply px-6 py-3 bg-[#0071e3] text-white rounded-full text-sm font-medium tracking-wide 
+           hover:bg-[#0077ED] transition-all duration-300 shadow-sm;
   }
 
   .secondary-button {
-    @apply px-6 py-3 border-2 border-secondary/20 text-secondary bg-secondary/5 rounded-xl text-sm font-medium tracking-wide uppercase hover:bg-secondary/10 transition-all duration-300 shadow-sm hover:shadow transform hover:-translate-y-1;
+    @apply px-6 py-3 bg-[#f5f5f7] text-[#1d1d1f] rounded-full text-sm font-medium tracking-wide 
+           hover:bg-[#e8e8ed] transition-all duration-300;
   }
 
   .scale-on-hover {
@@ -145,12 +132,10 @@
     @apply opacity-100 translate-y-0;
   }
   
-  /* Card styling */
   .vibrant-card {
     @apply bg-gradient-to-br from-white/90 to-white/70 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg shadow-primary/5 overflow-hidden;
   }
   
-  /* Form elements */
   input, select, textarea {
     @apply rounded-xl border-2 border-border px-4 py-3 text-sm text-foreground focus:ring-2 focus:ring-primary/50 focus:border-primary/50 focus:outline-none bg-white;
   }
@@ -159,7 +144,6 @@
     @apply text-sm text-foreground/80 font-medium mb-1;
   }
   
-  /* Custom decorative elements */
   .decorative-line {
     @apply w-20 h-1 bg-gradient-to-r from-primary to-secondary rounded-full my-4;
   }
@@ -168,7 +152,6 @@
     @apply text-2xl md:text-3xl font-outfit italic text-secondary/80 leading-relaxed;
   }
 
-  /* Custom animations */
   .animate-float {
     animation: float 4s ease-in-out infinite;
   }
@@ -213,7 +196,6 @@
     animation-delay: 2s;
   }
 
-  /* Reduced motion settings */
   .reduced-motion * {
     animation: none !important;
     transition: background-color 0.3s ease, color 0.3s ease, opacity 0.3s ease !important;
@@ -257,7 +239,6 @@
   }
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -274,7 +255,6 @@
   @apply bg-primary/40;
 }
 
-/* Specific animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -299,7 +279,6 @@
   animation: fadeIn 1s ease-out forwards;
 }
 
-/* Music note animation */
 @keyframes float {
   0%, 100% {
     transform: translateY(0) rotate(0deg);
@@ -309,7 +288,6 @@
   }
 }
 
-/* Sound wave animation */
 @keyframes soundwave {
   0%, 100% {
     transform: scaleY(0.5);
@@ -319,15 +297,13 @@
   }
 }
 
-/* Enhanced shadow glow effect */
 .hover\:shadow-glow:hover {
   box-shadow: 0 0 25px 5px rgba(124, 58, 237, 0.6), 0 0 35px 10px rgba(236, 72, 153, 0.4);
   transition: box-shadow 0.3s ease-out;
 }
 
-/* Enhanced primary button with better hover effect */
 .primary-button {
-  @apply px-6 py-3 bg-primary text-white rounded-xl text-sm font-medium tracking-wide uppercase transition-all duration-300 shadow-lg shadow-primary/20;
+  @apply px-6 py-3 bg-primary text-white rounded-xl text-sm font-medium tracking-wide transition-all duration-300 shadow-lg shadow-primary/20;
   background-size: 200% 100%;
   background-position: 0% 0%;
 }
@@ -342,12 +318,10 @@
   transform: translateY(0px);
 }
 
-/* Focus styles for accessibility */
 *:focus-visible {
   @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background rounded-sm;
 }
 
-/* Custom background */
 .noise-bg {
   position: relative;
   overflow: hidden;
@@ -370,7 +344,6 @@
   text-shadow: 0 0 30px rgba(124, 58, 237, 0.3);
 }
 
-/* Enhanced learning section */
 .enhanced-section {
   @apply p-6 md:p-8 rounded-2xl border-2 border-primary/10 bg-gradient-to-br from-white to-primary/5;
   position: relative;
@@ -388,7 +361,6 @@
   border-radius: 5px 5px 0 0;
 }
 
-/* Progress bars for visual interest */
 .progress-bar {
   @apply h-1 bg-primary/20 rounded-full overflow-hidden;
   position: relative;
@@ -415,7 +387,6 @@
   }
 }
 
-/* Task completion design */
 .task-item {
   @apply flex items-center p-3 rounded-lg transition-all;
 }
@@ -437,7 +408,6 @@
   @apply text-white text-xs font-bold;
 }
 
-/* Subtle animation for the progress bar */
 @keyframes progress-pulse {
   0% {
     opacity: 0.7;
