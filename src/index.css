@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
+/* Add Didot via font-family as a system/installed font, web fallback options next */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -46,7 +47,10 @@
   }
 
   body {
-    @apply bg-background text-charcoal font-sans antialiased;
+    @apply bg-background font-sans antialiased;
+    /* Didot should be the primary font everywhere, if installed! */
+    font-family: Didot, Garamond, "Times New Roman", Times, serif;
+    color: var(--foreground, #222);
     font-feature-settings: "rlig" 1, "calt" 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -54,6 +58,8 @@
 
   /* Typography System */
   h1, h2, h3, h4, h5, h6 {
+    /* All headers force Didot! */
+    font-family: Didot, Garamond, "Times New Roman", Times, serif;
     @apply font-serif tracking-tight;
   }
 
@@ -74,16 +80,24 @@
   }
 
   p {
+    font-family: Didot, Garamond, "Times New Roman", Times, serif;
     @apply text-body leading-relaxed text-charcoal/80;
   }
 
   .display-text {
+    font-family: Didot, Garamond, "Times New Roman", Times, serif;
     @apply font-serif text-display-lg md:text-display font-light;
   }
 
   .subtitle {
+    font-family: Didot, Garamond, "Times New Roman", Times, serif;
     @apply text-body-lg text-charcoal/70;
   }
+}
+
+/* Make sure serif/Playfair classes also use Didot: */
+.font-serif, .font-playfair {
+  font-family: Didot, Garamond, "Times New Roman", Times, serif !important;
 }
 
 @layer components {

@@ -30,12 +30,13 @@ export default {
 					'sans-serif'
 				],
 				serif: [
-					'Georgia',
-					'Cambria',
+					'Didot',
+					'Garamond',
 					'Times New Roman',
 					'Times',
 					'serif'
 				],
+				outfit: ['Outfit', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -71,7 +72,6 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				// Adding consistent blue shade for application form
 				blue: {
 					50: '#f0f5ff',
 					100: '#e5eeff',
@@ -79,23 +79,22 @@ export default {
 					300: '#a4bdff',
 					400: '#8599ff',
 					500: '#6574ff',
-					600: '#3b4bdb', // Used for buttons, links, focus states
-					700: '#3e4fcc', // Used for button hover states 
+					600: '#3b4bdb',
+					700: '#3e4fcc',
 					800: '#2d3b94',
 					900: '#1e2c6a',
 				},
-				// Clean grayscale palette with better contrast
 				gray: {
-					50: '#f8fafc', // Background for form sections
-					100: '#f1f5f9', // Background for secondary elements
-					200: '#e2e8f0', // Borders
-					300: '#cbd5e1', // Muted elements
-					400: '#94a3b8', // Muted text
-					500: '#64748b', // Secondary text
-					600: '#475569', // Body text
-					700: '#334155', // Strong text
-					800: '#1e293b', // Headings 
-					900: '#0f172a', // Dark text, main headings
+					50: '#f8fafc',
+					100: '#f1f5f9',
+					200: '#e2e8f0',
+					300: '#cbd5e1',
+					400: '#94a3b8',
+					500: '#64748b',
+					600: '#475569',
+					700: '#334155',
+					800: '#1e293b',
+					900: '#0f172a',
 				},
 			},
 			borderRadius: {
@@ -104,21 +103,19 @@ export default {
 				sm: 'calc(var(--radius) - 4px)'
 			},
 			spacing: {
-				// Consistent spacing scale
-				'xs': '0.25rem',
-				'sm': '0.5rem',
-				'md': '1rem',
-				'lg': '1.5rem',
-				'xl': '2rem',
+				xs: '0.25rem',
+				sm: '0.5rem',
+				md: '1rem',
+				lg: '1.5rem',
+				xl: '2rem',
 				'2xl': '3rem',
 				'3xl': '4rem',
 			},
 			boxShadow: {
-				// Subtle shadows for depth
-				'sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-				'DEFAULT': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
-				'md': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-				'lg': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+				sm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+				DEFAULT: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+				md: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+				lg: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
 			},
 			keyframes: {
 				'accordion-down': {
@@ -175,6 +172,7 @@ export default {
 						maxWidth: 'none',
 						color: '#1d1d1f',
 						lineHeight: '1.47059',
+						fontFamily: 'Didot, Garamond, Times New Roman, Times, serif',
 						p: {
 							marginTop: '0.8em',
 							marginBottom: '0.8em',
@@ -189,17 +187,20 @@ export default {
 						h1: {
 							fontWeight: '600',
 							letterSpacing: '-.009em',
+							fontFamily: 'Didot, Garamond, Times New Roman, Times, serif',
 						},
 						h2: {
 							fontWeight: '600',
 							letterSpacing: '-.009em',
 							marginTop: '1.6em',
 							marginBottom: '0.8em',
+							fontFamily: 'Didot, Garamond, Times New Roman, Times, serif',
 						},
 						h3: {
 							fontWeight: '600',
 							marginTop: '1.4em',
 							marginBottom: '0.6em',
+							fontFamily: 'Didot, Garamond, Times New Roman, Times, serif',
 						},
 						ul: {
 							marginTop: '0.8em',
@@ -215,7 +216,6 @@ export default {
 			},
 		}
 	},
-	// Safelist critical classes that might be dynamically used
 	safelist: [
 		'bg-energy-purple',
 		'bg-energy-pink',
@@ -228,7 +228,6 @@ export default {
 		require("tailwindcss-animate"),
 		require("@tailwindcss/typography"),
 	],
-	// Reduce variants to improve build time
 	variants: {
 		extend: {
 			opacity: ['active'],
@@ -237,3 +236,5 @@ export default {
 		},
 	},
 } satisfies Config;
+
+// NOTE: This file is getting very long. Consider refactoring into smaller files for maintainability if you plan future changes.

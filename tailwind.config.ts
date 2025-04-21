@@ -18,6 +18,17 @@ export default {
       }
     },
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+        serif: [
+          'Didot',
+          'Garamond',
+          'Times New Roman',
+          'Times',
+          'serif'
+        ],
+        outfit: ['Outfit', 'sans-serif'],
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
@@ -52,7 +63,6 @@ export default {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))'
         },
-        // Vibrant color palette for youth-friendly design
         energy: {
           purple: '#7C3AED',
           pink: '#EC4899',
@@ -60,8 +70,6 @@ export default {
           yellow: '#FBBF24',
           green: '#10B981',
         },
-
-        // Adding refined color palette
         charcoal: {
           DEFAULT: '#1A1F2C',
           50: '#f8f9fa',
@@ -101,14 +109,7 @@ export default {
           900: '#1c1917',
         },
       },
-      fontFamily: {
-        // Define consistent font families
-        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
-        serif: ['Playfair Display', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif'],
-        outfit: ['Outfit', 'sans-serif'],
-      },
       fontSize: {
-        // Define consistent font sizes
         'display-lg': ['4.5rem', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
         'display': ['3.75rem', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
         'h1': ['3rem', { lineHeight: '1.2', letterSpacing: '-0.01em' }],
@@ -143,3 +144,5 @@ export default {
   },
   plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 } satisfies Config;
+
+// NOTE: This file is getting very long. Consider refactoring if you continue editing for maintainability.
