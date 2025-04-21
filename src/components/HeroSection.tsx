@@ -52,7 +52,7 @@ const HeroSection = () => {
       ref={heroRef} 
       className={cn(
         "relative min-h-screen flex items-center justify-center overflow-hidden",
-        "bg-apple-light border-b border-apple-border pt-32", // Added pt-32 to move content down
+        "bg-apple-light border-b border-apple-border pt-48 md:pt-36", // Increased padding-top for both mobile and desktop
         hasReducedMotion ? "reduced-motion" : ""
       )}
     >
