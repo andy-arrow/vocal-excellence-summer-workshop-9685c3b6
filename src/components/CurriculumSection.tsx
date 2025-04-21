@@ -17,6 +17,8 @@ import {
   CardTitle 
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
 
 const modules = [
   {
@@ -298,6 +300,75 @@ const CurriculumSection = () => {
               {activeTab === 'schedule' && ScheduleTab}
             </div>
           </Tabs>
+        </div>
+
+        <div className="bg-gradient-to-b from-apple-light to-white rounded-3xl shadow-lg overflow-hidden">
+          <div className="px-6 py-12 md:px-12 md:py-16">
+            <div className="text-center mb-12">
+              <h2 className="didot-heading text-3xl md:text-4xl font-light text-apple-text mb-4">
+                World-Class Faculty
+              </h2>
+              <div className="w-16 h-px bg-apple-border mx-auto mb-6"></div>
+              <p className="text-lg text-apple-grey max-w-2xl mx-auto">
+                Learn from our internationally acclaimed faculty of performers, directors, and educators
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[
+                {
+                  name: "Maria Callas",
+                  role: "Vocal Technique",
+                  image: "/lovable-uploads/5a4b7bc3-bc7e-42cc-b5bf-fd69555887e3.png"
+                },
+                {
+                  name: "Luciano Pavarotti",
+                  role: "Performance Coach",
+                  image: "/lovable-uploads/29cad38e-a84c-40f7-9ddb-3c11c159ea6d.png"
+                },
+                {
+                  name: "Renée Fleming",
+                  role: "Repertoire Development",
+                  image: "/lovable-uploads/23077377-fca0-46d4-b7c8-83c2a2edcb19.png"
+                }
+              ].map((faculty, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="group"
+                >
+                  <div className="bg-white rounded-2xl p-6 transition-all duration-300 hover:shadow-xl border border-apple-border/10">
+                    <div className="relative rounded-xl overflow-hidden mb-6 aspect-[4/3]">
+                      <img 
+                        src={faculty.image} 
+                        alt={faculty.name}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    </div>
+                    <h3 className="didot-heading text-xl text-apple-text mb-2 transition-colors duration-300 group-hover:text-apple-blue">
+                      {faculty.name}
+                    </h3>
+                    <p className="text-sm uppercase tracking-wider text-apple-grey font-medium">
+                      {faculty.role}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+            
+            <div className="text-center mt-12">
+              <Button 
+                variant="outline" 
+                className="border-apple-blue text-apple-blue hover:bg-apple-blue/5 transition-colors duration-300"
+              >
+                View All Faculty
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
