@@ -51,8 +51,8 @@ const HeroSection = () => {
       id="home" 
       ref={heroRef} 
       className={cn(
-        "relative min-h-screen flex items-center justify-center overflow-hidden mt-16",
-        "bg-apple-light border-b border-apple-border",
+        "relative min-h-screen flex items-center justify-center overflow-hidden",
+        "bg-apple-light border-b border-apple-border pt-32", // Added pt-32 to move content down
         hasReducedMotion ? "reduced-motion" : ""
       )}
     >
