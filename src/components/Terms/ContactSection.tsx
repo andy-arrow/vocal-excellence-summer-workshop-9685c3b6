@@ -24,7 +24,7 @@ const ContactSection = () => {
             </div>
             <div className="flex items-center">
               <Mail className="w-5 h-5 text-primary mr-3" />
-              <p>info@vocalexcellence.com</p>
+              <p>info@vocalexcellence.cy</p>
             </div>
             <div className="flex items-center">
               <Phone className="w-5 h-5 text-primary mr-3" />

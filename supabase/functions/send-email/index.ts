@@ -1,4 +1,3 @@
-
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 import { supabase } from "./supabaseClient.ts";
@@ -85,7 +84,7 @@ serve(async (req) => {
         if (applicantData) {
           subject = "**Vocal Excellence Summer Workshop** New Application Submission";
           htmlContent = getDetailedAdminNotificationTemplate(applicantData);
-          toEmail = "aroditis.andreas@gmail.com";
+          toEmail = "info@vocalexcellence.cy";
           
           // If we have an applicationId, attempt to retrieve file attachments
           if (applicationId) {
@@ -100,7 +99,7 @@ serve(async (req) => {
         } else {
           subject = "New Application Submission - Vocal Excellence Summer Workshop";
           htmlContent = getSimpleAdminNotificationTemplate(name || "", email || "");
-          toEmail = "aroditis.andreas@gmail.com";
+          toEmail = "info@vocalexcellence.cy";
         }
         break;
       default:
@@ -475,7 +474,7 @@ function getApplicationConfirmationTemplate(name: string) {
           <li>All applicants will be notified of their status by email</li>
         </ul>
         
-        <p>If you have any questions or need to update your application, please contact us at applications@vocalexcellence.org.</p>
+        <p>If you have any questions or need to update your application, please contact us at info@vocalexcellence.cy.</p>
         
         <p>Best regards,<br>The Vocal Excellence Admissions Team</p>
       </div>
@@ -649,7 +648,7 @@ function getSimpleAdminNotificationTemplate(name: string, applicantEmail: string
           <li>Name: ${name}</li>
           <li>Email: ${applicantEmail}</li>
         </ul>
-        <p>Please log in to the admin dashboard to review the complete application.</p>
+        <p>Please log in to the admin dashboard to review the complete application or email info@vocalexcellence.cy.</p>
       </div>
       <div class="footer">
         <p>&copy; 2025 Vocal Excellence Summer Workshop. All rights reserved.</p>
@@ -818,9 +817,9 @@ function getDetailedAdminNotificationTemplate(applicantData: any) {
         <div class="section">
           <h2>Supporting Materials</h2>
           <div class="file-notice">
-            <strong>Note:</strong> Supporting materials (audition recordings, CV, recommendation letter) 
-            are attached to this email. If you don't see the attachments, they may be available in your 
-            Supabase storage under the application files bucket.
+            <strong>Note:</strong> Supporting materials (audition recordings, CV, recommendation letter)
+            are attached to this email. If you don't see the attachments, they may be available in your
+            Supabase storage under the application files bucket. Contact info@vocalexcellence.cy for help.
           </div>
         </div>
       </div>

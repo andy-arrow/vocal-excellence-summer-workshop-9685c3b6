@@ -1,4 +1,3 @@
-
 import { Resend } from "npm:resend@2.0.0";
 import { ApplicationData } from "./types.ts";
 
@@ -54,12 +53,12 @@ export class EmailHandler {
       console.log("Preparing admin notification email");
       const adminEmailHtml = this.getDetailedAdminNotificationTemplate(applicationData);
       
-      console.log("Sending admin email to: aroditis.andreas@gmail.com");
+      console.log("Sending admin email to: info@vocalexcellence.cy");
       console.log("File attachments:", attachments.map(f => f.filename).join(", ") || "None");
       
       const result = await this.resend.emails.send({
-        from: "Vocal Excellence <onboarding@resend.dev>", // Changed to use Resend's default domain
-        to: ["aroditis.andreas@gmail.com"],
+        from: "Vocal Excellence <onboarding@resend.dev>",
+        to: ["info@vocalexcellence.cy"],
         subject: "**Vocal Excellence** New Application Submission",
         html: adminEmailHtml,
         attachments: attachments,
@@ -81,7 +80,7 @@ export class EmailHandler {
       console.log("Sending confirmation email to:", applicationData.email);
       
       const result = await this.resend.emails.send({
-        from: "Vocal Excellence <onboarding@resend.dev>", // Changed to use Resend's default domain
+        from: "Vocal Excellence <onboarding@resend.dev>",
         to: [applicationData.email],
         subject: "Application Received - Vocal Excellence Summer Programme",
         html: applicantEmailHtml
@@ -254,7 +253,7 @@ export class EmailHandler {
           <h2>Supporting Materials</h2>
           <div class="file-notice">
             <strong>Note:</strong> Supporting materials (audition recordings, CV, recommendation letter) 
-            are attached to this email.
+            are attached to this email. For issues, contact info@vocalexcellence.cy.
           </div>
         </div>
       </div>
@@ -340,7 +339,7 @@ export class EmailHandler {
           <li>All applicants will be notified of their status by email</li>
         </ul>
         
-        <p>If you have any questions or need to update your application, please contact us at applications@vocalexcellence.org.</p>
+        <p>If you have any questions or need to update your application, please contact us at info@vocalexcellence.cy.</p>
         
         <p>Best regards,<br>The Vocal Excellence Admissions Team</p>
       </div>

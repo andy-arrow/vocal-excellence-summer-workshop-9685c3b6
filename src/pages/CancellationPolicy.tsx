@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -41,7 +40,7 @@ const CancellationPolicy = () => {
             To initiate a cancellation, you must adhere to the following procedure:
           </p>
           <ul className="list-disc pl-6 text-gray-700 mb-6">
-            <li>Provide a written notice of cancellation by emailing your request to info@veasummer.com.</li>
+            <li>Provide a written notice of cancellation by emailing your request to info@vocalexcellence.cy.</li>
             <li>Include within your notice your full name, registration details, and a succinct explanation for your cancellation request.</li>
             <li>It is recommended that you request and retain confirmation of receipt of your cancellation email.</li>
           </ul>
@@ -84,7 +83,7 @@ const CancellationPolicy = () => {
           </p>
 
           <p className="text-gray-700">
-            If you have any questions regarding this policy, please contact our administrative office at info@veasummer.com or call +357 25 775 885.
+            If you have any questions regarding this policy, please contact our administrative office at info@vocalexcellence.cy or call +357 25 775 885.
           </p>
         </div>
       </div>

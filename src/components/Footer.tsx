@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Mail, Phone, MapPin, Instagram, Twitter, Facebook, Youtube, ArrowRight, FileText, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -12,7 +11,6 @@ const Footer = () => {
     }
   };
 
-  // Memoize these arrays to prevent recreating them on each render
   const footerLinks = React.useMemo(() => [
     { name: "Home", action: () => scrollToSection('home') },
     { name: "About the Workshop", action: () => scrollToSection('about') },
@@ -31,7 +29,6 @@ const Footer = () => {
   return (
     <footer className="relative bg-slate-900 text-white overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-energy-purple via-energy-pink to-energy-cyan"></div>
-      {/* Reduce number of absolute elements */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute -top-20 -left-20 w-60 h-60 rounded-full bg-energy-purple/20 blur-[100px]"></div>
         <div className="absolute -bottom-20 -right-20 w-60 h-60 rounded-full bg-energy-pink/20 blur-[100px]"></div>
@@ -55,7 +52,6 @@ const Footer = () => {
               Transforming passionate singers into confident performers through immersive, expert-led training in the stunning coastal setting of Limassol, Cyprus.
             </p>
             
-            {/* Simplified social icons with proper hover styles */}
             <div className="flex space-x-4 pt-2">
               {socials.map((social, index) => (
                 <a 
@@ -118,8 +114,8 @@ const Footer = () => {
               </li>
               <li className="flex items-center">
                 <Mail className="w-4 h-4 mr-3 text-energy-pink shrink-0" />
-                <a href="mailto:info@vocalexcellence.com" className="text-white/75 hover:text-white transition-colors text-sm">
-                  info@vocalexcellence.com
+                <a href="mailto:info@vocalexcellence.cy" className="text-white/75 hover:text-white transition-colors text-sm">
+                  info@vocalexcellence.cy
                 </a>
               </li>
               <li className="flex items-center">
