@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from '@/components/Navbar';
@@ -12,7 +11,6 @@ const InstructorsSection = lazy(() => import('@/components/InstructorsSection'))
 const CTASection = lazy(() => import('@/components/CTASection'));
 const Footer = lazy(() => import('@/components/Footer'));
 const ScrollToTopButton = lazy(() => import('@/components/ScrollToTopButton'));
-const ApplicationTimeline = lazy(() => import('@/components/ApplicationTimeline'));
 
 // Simple section loader
 const SectionLoader = () => (
@@ -49,7 +47,6 @@ const Index = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [sectionsVisible, setSectionsVisible] = useState({
     about: false,
-    timeline: false,
     curriculum: false,
     instructors: false,
     apply: false
@@ -92,7 +89,7 @@ const Index = () => {
     }
     
     // Use Intersection Observer for efficient scroll detection
-    const sections = ['about', 'timeline', 'curriculum', 'instructors', 'apply'];
+    const sections = ['about', 'curriculum', 'instructors', 'apply'];
     
     const observerOptions = { 
       threshold: [0.1, 0.5],
@@ -176,20 +173,6 @@ const Index = () => {
       >
         <Suspense fallback={<SectionLoader />}>
           {sectionsVisible.about || activeSection === 'about' ? <AboutSection /> : <div className="h-screen"></div>}
-        </Suspense>
-      </motion.div>
-      
-      {/* Timeline Section - lazy loaded */}
-      <motion.div 
-        id="timeline"
-        variants={sectionVariants}
-        initial="initial" 
-        whileInView="animate"
-        viewport={{ once: true, amount: 0.1 }}
-        className="scroll-mt-16"
-      >
-        <Suspense fallback={<SectionLoader />}>
-          {sectionsVisible.timeline || activeSection === 'timeline' ? <ApplicationTimeline /> : <div className="h-screen"></div>}
         </Suspense>
       </motion.div>
       
