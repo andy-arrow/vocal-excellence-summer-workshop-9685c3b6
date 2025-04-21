@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Mail, Phone, MapPin, Instagram, Twitter, Facebook, Youtube, ArrowRight, FileText, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -40,7 +39,7 @@ const Footer = () => {
           <div className="md:col-span-1 space-y-5">
             <Link to="/" className="flex items-center">
               <img 
-                src="/lovable-uploads/e980c9b0-8cdc-423d-a726-2f677be33737.png" 
+                src="/lovable-uploads/9994f82c-80e4-477a-b629-3bef5ef8f2c1.png" 
                 alt="Vocal Excellence Logo" 
                 className="w-32 h-32 mr-3"
                 loading="lazy" 

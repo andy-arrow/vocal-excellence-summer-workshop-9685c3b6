@@ -83,7 +83,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
             transition={{ duration: 0.5 }}
           >
             <img 
-              src="/lovable-uploads/e980c9b0-8cdc-423d-a726-2f677be33737.png" 
+              src="/lovable-uploads/9994f82c-80e4-477a-b629-3bef5ef8f2c1.png" 
               alt="Vocal Excellence Logo" 
               className="w-24 h-24 mr-3" 
             />
@@ -166,7 +166,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                 >
                   <div className="flex items-center">
                     <img 
-                      src="/lovable-uploads/e980c9b0-8cdc-423d-a726-2f677be33737.png" 
+                      src="/lovable-uploads/9994f82c-80e4-477a-b629-3bef5ef8f2c1.png" 
                       alt="Vocal Excellence Logo" 
                       className="w-16 h-16" 
                     />
