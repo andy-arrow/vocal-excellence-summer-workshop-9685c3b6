@@ -55,29 +55,29 @@ const Application = () => {
       <div className="min-h-screen flex flex-col">
         <Navbar />
         
-        <main className="flex-grow pt-16 sm:pt-20"> {/* Added padding-top to ensure content doesn't start under navbar */}
+        <main className="flex-grow pt-20 md:pt-24"> {/* Increased padding-top to ensure content is visible below navbar */}
           <div className="bg-gradient-to-b from-white to-[#f5f5f7] border-b border-apple-border/10">
-            <div className="max-w-5xl mx-auto px-6 md:px-8 py-12 md:py-16"> {/* Reduced vertical padding */}
+            <div className="max-w-5xl mx-auto px-6 md:px-8 py-8 md:py-12"> {/* Further reduced vertical padding */}
               <motion.div 
                 className="text-center"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
               >
-                <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-medium text-black mb-4 tracking-tight"> {/* Reduced font size and margin */}
+                <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-black mb-3 tracking-tight"> {/* Changed font-medium to font-bold and reduced margin */}
                   Your Journey To
-                  <span className="block mt-1">Vocal Mastery</span> {/* Reduced margin-top */}
+                  <span className="block mt-0.5">Vocal Mastery</span> {/* Further reduced margin-top */}
                 </h1>
-                <p className="font-sans text-base md:text-lg text-black max-w-2xl mx-auto leading-relaxed"> {/* Reduced font size */}
+                <p className="font-sans text-base md:text-lg text-black max-w-2xl mx-auto leading-relaxed"> 
                   Join our exclusive 5-day Workshop where world-class mentors will transform your voice and elevate your technique to new heights.
                 </p>
               </motion.div>
             </div>
           </div>
           
-          <div className="py-12 md:py-24 bg-[#f5f5f7]">
+          <div className="py-8 md:py-16 bg-[#f5f5f7]"> {/* Reduced vertical padding */}
             <div className="max-w-7xl mx-auto px-6 md:px-8">
-              <div className="space-y-16 md:space-y-24">
+              <div className="space-y-12 md:space-y-20"> {/* Reduced spacing between sections */}
                 <motion.section 
                   key="requirements" 
                   initial="hidden" 
