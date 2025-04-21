@@ -56,21 +56,18 @@ const Application = () => {
         
         <main className="flex-grow">
           <div className="bg-gradient-to-b from-white to-[#f5f5f7] border-b border-apple-border/10">
-            <div className="max-w-5xl mx-auto px-6 md:px-8 py-24 md:py-32">
+            <div className="max-w-5xl mx-auto px-6 md:px-8 py-16 md:py-20">
               <motion.div 
                 className="text-center"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
               >
-                <span className="inline-block text-apple-grey text-sm tracking-wide uppercase mb-4 font-medium">
-                  Summer Workshop 2025
-                </span>
-                <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-apple-text mb-6 tracking-tight">
+                <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-medium text-black mb-6 tracking-tight">
                   Your Journey To
                   <span className="block mt-2">Vocal Mastery</span>
                 </h1>
-                <p className="font-sans text-lg md:text-xl text-apple-grey max-w-2xl mx-auto leading-relaxed">
+                <p className="font-sans text-lg md:text-xl text-black max-w-2xl mx-auto leading-relaxed">
                   Join our exclusive 5-day Workshop where world-class mentors will transform your voice and elevate your technique to new heights.
                 </p>
               </motion.div>
