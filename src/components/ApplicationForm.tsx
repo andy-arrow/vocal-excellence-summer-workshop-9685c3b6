@@ -1,9 +1,11 @@
+
 import React, { useState, useCallback, useEffect, lazy, Suspense } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
 import { toast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
+import { Sparkles, CheckCircle2, Hourglass } from 'lucide-react';
 import { generateCsrfToken } from '@/utils/security';
 
 import { applicationSchema, ApplicationFormValues } from '@/components/ApplicationForm/schema';
