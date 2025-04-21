@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { Mail, Phone, MapPin, Instagram, Twitter, Facebook, Youtube, ArrowRight, FileText, Shield } from 'lucide-react';
+import { Mail, Phone, MapPin, Instagram, Twitter, Youtube } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
@@ -22,70 +23,36 @@ const Footer = () => {
   const socials = React.useMemo(() => [
     { icon: <Instagram size={18} />, url: "https://instagram.com/vocalexcellence", label: "Instagram" },
     { icon: <Twitter size={18} />, url: "https://twitter.com/vocalexcellence", label: "Twitter" },
-    { icon: <Facebook size={18} />, url: "https://facebook.com/vocalexcellence", label: "Facebook" },
     { icon: <Youtube size={18} />, url: "https://youtube.com/vocalexcellence", label: "YouTube" }
   ], []);
 
   return (
-    <footer className="relative bg-apple-text text-white overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-apple-blue via-apple-blue to-apple-blue/70"></div>
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute -top-20 -left-20 w-60 h-60 rounded-full bg-apple-blue/10 blur-[100px]"></div>
-        <div className="absolute -bottom-20 -right-20 w-60 h-60 rounded-full bg-apple-blue/10 blur-[100px]"></div>
-      </div>
-      
-      <div className="max-w-6xl mx-auto py-12 sm:py-16 px-6 md:px-8 relative z-10">
-        <div className="grid md:grid-cols-3 gap-10 md:gap-6 lg:gap-10">
-          <div className="md:col-span-1 space-y-5">
-            <Link to="/" className="flex items-center">
-              <img 
-                src="/lovable-uploads/9994f82c-80e4-477a-b629-3bef5ef8f2c1.png" 
-                alt="Vocal Excellence Logo" 
-                className="w-32 h-32 mr-3"
-                loading="lazy" 
-                width="128"
-                height="128"
-              />
-            </Link>
-            
-            <p className="text-apple-grey text-sm leading-relaxed max-w-md">
-              Transforming passionate singers into confident performers through immersive, expert-led training in the stunning coastal setting of Limassol, Cyprus.
-            </p>
-            
-            <ul className="flex space-x-4 mt-4">
-              {socials.map((social, i) => (
-                <li key={i}>
-                  <a 
-                    href={social.url} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="w-8 h-8 rounded-full flex items-center justify-center bg-apple-blue/10 text-apple-grey hover:text-white hover:bg-apple-blue/20 transition-colors duration-300"
-                    aria-label={social.label}
-                  >
-                    {social.icon}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-          
-          <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-8">
-            <div>
-              <h3 className="font-medium text-white mb-4 uppercase text-sm tracking-wider">Quick Links</h3>
+    <footer className="relative bg-[#fbfbfd] overflow-hidden">
+      <div className="max-w-[980px] mx-auto px-6 md:px-8">
+        <div className="py-4 border-b border-[#d2d2d7]">
+          <p className="text-[12px] leading-[1.33337] font-normal text-[#6e6e73]">
+            Vocal Excellence brings transformative musical education to passionate singers through expert-led training in Limassol, Cyprus.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-5 gap-8 py-12">
+          <div className="md:col-span-2">
+            <nav>
+              <h3 className="text-[12px] leading-[1.33337] font-semibold mb-3 text-[#1d1d1f]">Quick Links</h3>
               <ul className="space-y-2">
                 {footerLinks.map((link, i) => (
                   <li key={i}>
                     {link.href ? (
                       <Link 
                         to={link.href}
-                        className="text-apple-grey hover:text-white transition-colors duration-300 text-sm"
+                        className="text-[12px] leading-[1.33337] text-[#424245] hover:text-[#1d1d1f] transition-colors duration-300"
                       >
                         {link.name}
                       </Link>
                     ) : (
                       <button 
                         onClick={link.action} 
-                        className="text-apple-grey hover:text-white transition-colors duration-300 text-sm text-left"
+                        className="text-[12px] leading-[1.33337] text-[#424245] hover:text-[#1d1d1f] transition-colors duration-300 text-left"
                       >
                         {link.name}
                       </button>
@@ -93,67 +60,80 @@ const Footer = () => {
                   </li>
                 ))}
               </ul>
-            </div>
-            
-            <div>
-              <h3 className="font-medium text-white mb-4 uppercase text-sm tracking-wider">Legal</h3>
-              <ul className="space-y-2">
-                <li>
-                  <Link to="/terms" className="text-apple-grey hover:text-white transition-colors duration-300 text-sm">
-                    Terms & Conditions
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/privacy" className="text-apple-grey hover:text-white transition-colors duration-300 text-sm">
-                    Privacy Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/accessibility" className="text-apple-grey hover:text-white transition-colors duration-300 text-sm">
-                    Accessibility
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="font-medium text-white mb-4 uppercase text-sm tracking-wider">Contact</h3>
-              <ul className="space-y-3">
-                <li className="flex items-start">
-                  <Mail className="w-4 h-4 text-apple-grey mt-1 mr-2" />
-                  <a href="mailto:info@vocalexcellence.com" className="text-apple-grey hover:text-white transition-colors duration-300 text-sm">
-                    info@vocalexcellence.com
-                  </a>
-                </li>
-                <li className="flex items-start">
-                  <Phone className="w-4 h-4 text-apple-grey mt-1 mr-2" />
-                  <a href="tel:+35799123456" className="text-apple-grey hover:text-white transition-colors duration-300 text-sm">
-                    +357 99 123 456
-                  </a>
-                </li>
-                <li className="flex items-start">
-                  <MapPin className="w-4 h-4 text-apple-grey mt-1 mr-2" />
-                  <span className="text-apple-grey text-sm">
-                    Limassol, Cyprus
-                  </span>
-                </li>
-              </ul>
-            </div>
+            </nav>
+          </div>
+
+          <div className="md:col-span-1">
+            <h3 className="text-[12px] leading-[1.33337] font-semibold mb-3 text-[#1d1d1f]">Legal</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link to="/privacy" className="text-[12px] leading-[1.33337] text-[#424245] hover:text-[#1d1d1f] transition-colors duration-300">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link to="/terms" className="text-[12px] leading-[1.33337] text-[#424245] hover:text-[#1d1d1f] transition-colors duration-300">
+                  Terms of Use
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div className="md:col-span-2">
+            <h3 className="text-[12px] leading-[1.33337] font-semibold mb-3 text-[#1d1d1f]">Contact</h3>
+            <ul className="space-y-3">
+              <li className="flex items-center">
+                <Mail className="w-4 h-4 text-[#424245] mr-2" />
+                <a href="mailto:info@vocalexcellence.com" className="text-[12px] leading-[1.33337] text-[#424245] hover:text-[#1d1d1f] transition-colors duration-300">
+                  info@vocalexcellence.com
+                </a>
+              </li>
+              <li className="flex items-center">
+                <Phone className="w-4 h-4 text-[#424245] mr-2" />
+                <a href="tel:+35799123456" className="text-[12px] leading-[1.33337] text-[#424245] hover:text-[#1d1d1f] transition-colors duration-300">
+                  +357 99 123 456
+                </a>
+              </li>
+              <li className="flex items-center">
+                <MapPin className="w-4 h-4 text-[#424245] mr-2" />
+                <span className="text-[12px] leading-[1.33337] text-[#424245]">
+                  Limassol, Cyprus
+                </span>
+              </li>
+            </ul>
           </div>
         </div>
-        
-        <div className="mt-12 pt-8 border-t border-apple-grey/20 flex flex-col sm:flex-row justify-between items-center">
-          <p className="text-xs text-apple-grey mb-4 sm:mb-0">
-            © {new Date().getFullYear()} Vocal Excellence. All rights reserved.
-          </p>
-          
-          <div className="flex items-center space-x-4">
+
+        <div className="flex flex-col md:flex-row justify-between items-center py-4 border-t border-[#d2d2d7]">
+          <div className="flex items-center space-x-4 mb-4 md:mb-0">
+            {socials.map((social, i) => (
+              <a
+                key={i}
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#424245] hover:text-[#1d1d1f] transition-colors duration-300"
+                aria-label={social.label}
+              >
+                {social.icon}
+              </a>
+            ))}
+          </div>
+
+          <div className="flex items-center space-x-6">
+            <p className="text-[12px] leading-[1.33337] text-[#6e6e73]">
+              Copyright © {new Date().getFullYear()} Vocal Excellence. All rights reserved.
+            </p>
             <Link 
-              to="/apply"
-              className="flex items-center text-apple-blue/90 hover:text-apple-blue transition-colors duration-300 text-xs font-medium"
+              to="/"
+              className="hidden md:block"
             >
-              <span>Apply Now</span>
-              <ArrowRight className="w-3 h-3 ml-1" />
+              <img 
+                src="/lovable-uploads/9994f82c-80e4-477a-b629-3bef5ef8f2c1.png" 
+                alt="Vocal Excellence Logo" 
+                className="w-12 h-12"
+                loading="lazy"
+              />
             </Link>
           </div>
         </div>
