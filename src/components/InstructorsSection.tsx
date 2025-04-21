@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Instagram, Linkedin, ChevronDown, ChevronUp } from 'lucide-react';
@@ -133,7 +134,7 @@ const InstructorsSection = () => {
                 "hover:shadow-xl hover:shadow-black/[0.03]",
                 "h-full flex flex-col"
               )}>
-                <div className="relative aspect-square overflow-hidden">
+                <div className="relative aspect-[3/4] overflow-hidden">
                   <div className={cn(
                     "absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent z-10",
                     "transition-opacity duration-300",
