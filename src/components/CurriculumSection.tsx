@@ -1,5 +1,6 @@
+
 import React, { useState } from 'react';
-import { Mic, Calendar, ChevronUp, ChevronDown } from 'lucide-react';
+import { Mic, Calendar, ChevronUp, ChevronDown, GraduationCap, Award, Headphones, Clock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 
