@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { GraduationCap, Mic, Award, Headphones, Video } from 'lucide-react';
+import { GraduationCap, Mic, Award, Headphones, Video, Clock, ChevronUp, ChevronDown, Calendar } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -308,7 +308,7 @@ const CurriculumSection = () => {
               <TabsList className="shadow-md max-w-md bg-gray-50">
                 <TabsTrigger value="modules">
                   <div className="flex items-center justify-center space-x-2">
-                    <Music size={isMobile ? 16 : 18} />
+                    <Mic size={isMobile ? 16 : 18} />
                     <span className="font-medium">Program Modules</span>
                   </div>
                 </TabsTrigger>
