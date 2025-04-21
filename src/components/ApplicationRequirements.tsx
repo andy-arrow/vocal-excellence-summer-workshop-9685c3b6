@@ -33,7 +33,7 @@ const requirementItems = [
 
 const ApplicationRequirements = () => {
   return (
-    <section className="bg-white py-24 md:py-32">
+    <section className="py-16 md:py-24">
       <div className="max-w-4xl mx-auto px-6">
         <motion.div 
           className="text-center mb-16"
@@ -51,7 +51,7 @@ const ApplicationRequirements = () => {
         </motion.div>
         
         <motion.div 
-          className="grid md:grid-cols-2 gap-8"
+          className="grid md:grid-cols-2 gap-6"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -60,14 +60,14 @@ const ApplicationRequirements = () => {
           {requirementItems.map((item, index) => (
             <motion.div 
               key={index} 
-              className="bg-white rounded-xl p-8 border border-apple-border hover:border-apple-blue/30 transition-all duration-300 shadow-sm hover:shadow-md"
+              className="bg-white rounded-2xl p-6 md:p-8 border border-apple-border/40 hover:border-apple-border/60 transition-all duration-300 shadow-sm hover:shadow-md"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
             >
               <div className="flex items-start gap-4">
-                <div className="bg-apple-light p-3 rounded-xl border border-apple-border">
+                <div className="bg-[#f5f5f7] p-3 rounded-xl border border-apple-border/40">
                   {item.icon}
                 </div>
                 <div>
@@ -80,7 +80,7 @@ const ApplicationRequirements = () => {
         </motion.div>
         
         <motion.div 
-          className="mt-16 bg-apple-light rounded-xl p-8 border border-apple-border"
+          className="mt-16 bg-[#f5f5f7] rounded-2xl p-8 border border-apple-border/40"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

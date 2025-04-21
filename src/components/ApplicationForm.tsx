@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
 import { toast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
-import { Sparkles, CheckCircle2, Hourglass, Calendar, MapPin, Users } from 'lucide-react';
 import { generateCsrfToken } from '@/utils/security';
 
 import { applicationSchema, ApplicationFormValues } from '@/components/ApplicationForm/schema';
@@ -249,7 +248,7 @@ const ApplicationForm = () => {
   ];
 
   return (
-    <section className="py-24 md:py-32 bg-white">
+    <section className="py-16 md:py-24">
       <motion.div 
         className="max-w-3xl mx-auto px-6"
         variants={formVariants}
@@ -258,11 +257,11 @@ const ApplicationForm = () => {
         viewport={{ once: true, amount: 0.1 }}
       >
         <motion.div 
-          className="text-center mb-16 space-y-8"
+          className="text-center mb-16 space-y-6"
           variants={sectionVariants}
         >
           <motion.span 
-            className="inline-block text-[#86868b] text-sm tracking-wide uppercase mb-2 font-medium"
+            className="inline-block text-apple-grey text-sm tracking-wide uppercase mb-2 font-medium"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
@@ -270,15 +269,12 @@ const ApplicationForm = () => {
             Summer Workshop 2025
           </motion.span>
           
-          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight text-[#1d1d1f]">
-            Apply Now for the
-            <span className="block mt-1">
-              Vocal Excellence Workshop
-            </span>
+          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight text-apple-text">
+            Apply Now
           </h2>
           
           <motion.p 
-            className="text-lg md:text-xl text-[#86868b] max-w-2xl mx-auto leading-relaxed"
+            className="text-lg md:text-xl text-apple-grey max-w-2xl mx-auto leading-relaxed"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
@@ -288,10 +284,10 @@ const ApplicationForm = () => {
         </motion.div>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <input type="hidden" name="csrfToken" value={csrfToken} />
             
-            <div className="space-y-8">
+            <div className="space-y-6">
               {sections.map((section, index) => (
                 <motion.div
                   key={section.title}
@@ -299,11 +295,11 @@ const ApplicationForm = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   viewport={{ once: true, margin: "-100px" }}
-                  className="bg-white rounded-xl p-4 border border-[#e6e6e6] hover:border-[#d2d2d7] transition-colors shadow-sm"
+                  className="bg-white rounded-2xl p-6 md:p-8 border border-apple-border/40 hover:border-apple-border/60 transition-colors shadow-sm hover:shadow-md"
                 >
                   <div className="flex items-center gap-4 mb-6">
                     {section.icon}
-                    <h3 className="text-xl font-semibold text-[#1d1d1f]">{section.title}</h3>
+                    <h3 className="text-xl font-semibold text-apple-text">{section.title}</h3>
                   </div>
                   {section.component}
                 </motion.div>
@@ -322,12 +318,12 @@ const ApplicationForm = () => {
         </Form>
 
         <motion.div 
-          className="text-center mt-8 text-sm text-[#86868b]"
+          className="text-center mt-8 text-sm text-apple-grey"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
         >
-          <p>Need help? Email us at <a href="mailto:help@vocalexcellence.com" className="text-[#0066cc] hover:underline">help@vocalexcellence.com</a></p>
+          <p>Need help? Email us at <a href="mailto:help@vocalexcellence.com" className="text-apple-blue hover:underline">help@vocalexcellence.com</a></p>
         </motion.div>
       </motion.div>
     </section>
