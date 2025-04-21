@@ -1,14 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Instagram, Linkedin, ArrowRight, ChevronUp, ChevronDown } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+
+import React, { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Instagram, Linkedin, ChevronDown, ChevronUp } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const instructors = [
   {
     name: "Andreas Aroditis",
-    title: "Founder & Director",
-    bio: "Andreas Aroditis has earned recognition from The New York Times and Opera Today for his versatile performances at prestigious international venues. A Juilliard graduate with numerous lead roles in opera and musical theater, he has collaborated with respected artists and orchestras. Locally, he has premiered works with the Cyprus Symphony Orchestra and the TrakArt Pops Orchestra. Mentored by legends such as Plácido Domingo and Sherill Millnes, he now shapes future performers as an Instructor at the University of Nicosia and the European University while maintaining a private studio in Limassol.",
+    role: "Founder & Director",
+    bio: "Andreas Aroditis has earned recognition from The New York Times and Opera Today for his versatile performances at prestigious international venues. A Juilliard graduate with numerous lead roles in opera and musical theater, he has collaborated with respected artists and orchestras.",
     image: "/lovable-uploads/a10cf0f4-c46f-4599-b410-6e1c715c92d5.png",
     socials: {
       instagram: "https://www.instagram.com/andreasaroditis/",
@@ -17,18 +18,18 @@ const instructors = [
   },
   {
     name: "Carolyn Michelle-Smith",
-    title: "Acting Coach",
-    bio: "Carolyn Michelle-Smith is an actress, producer, and educator known for her roles in House of Cards, Luke Cage, Russian Doll, and The Chi. A Juilliard graduate, she has performed on Broadway (Romeo and Juliet) and with renowned theater companies. She is also a Visiting Lecturer at Cornell University and Co-Director of Lena Waithe's Hillman Grad Mentorship Lab, empowering BIPOC creatives. Carolyn develops original content inspired by her heritage and operates AspireHigher Coaching Services to mentor actors. Her entrepreneurial artistry focuses on elevating diverse voices in Hollywood through acting, producing, and education.",
+    role: "Acting Coach",
+    bio: "Carolyn Michelle-Smith is an actress, producer, and educator known for her roles in House of Cards, Luke Cage, Russian Doll, and The Chi. A Juilliard graduate, she has performed on Broadway and with renowned theater companies.",
     image: "/lovable-uploads/5f2b13ba-7279-45da-86e2-af6b9c336634.png",
     socials: {
       instagram: "https://www.instagram.com/that_carolynmichelle?igsh=MWluZGpwb2pqMm4yeQ==",
-      linkedin: "https://www.linkedin.com/in/carolyn-michelle-smith-12435451?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
+      linkedin: "https://www.linkedin.com/in/carolyn-michelle-smith-12435451"
     }
   },
   {
     name: "Kate Batter",
-    title: "Vocal Coach",
-    bio: "Kate Batter is a highly experienced vocal coach, performer, and founder of Sing Wimbledon. With over 20 years of teaching experience, she specializes in vocal technique, musicality, and acting through song, working with beginners and professionals alike. A graduate of the Royal Birmingham Conservatoire and Royal Academy of Music, Kate has performed in West End productions (The Sound of Music, The Phantom of the Opera) and TV shows (Top Boy, Call the Midwife). Based in Cambridge, she offers private lessons, masterclasses, and drama school audition prep. As Musical Director of Sing Space Choir, she champions vocal excellence and confidence-building.",
+    role: "Vocal Coach",
+    bio: "Kate Batter is a highly experienced vocal coach, performer, and founder of Sing Wimbledon. With over 20 years of teaching experience, she specializes in vocal technique, musicality, and acting through song, working with beginners and professionals alike.",
     image: "/lovable-uploads/e26c0944-dc77-4d19-8059-c61e7800b8d1.png",
     socials: {
       instagram: "#",
@@ -37,8 +38,8 @@ const instructors = [
   },
   {
     name: "Aris Antoniades",
-    title: "Composer",
-    bio: "Praised for his ability to immerse audiences in \"a world of sound\" (The National Herald, NYC), Aris Antoniades is a Cypriot composer, arranger, and music director whose work spans symphonic, jazz, theatrical, and cinematic mediums. Collaborating with icons like Grammy nominee Bobby Sanabria and platinum artist Alkistis Protopsalti, his creations range from orchestral works like Chiaroscuro to Afro-Cuban jazz arrangements. As Artistic Director of the TrakArt Pops Orchestra, Antoniades continues to shape Cyprus's musical landscape while pursuing a Ph.D. His music blends emotional depth with structural clarity, resonating globally across genres and cultures.",
+    role: "Composer",
+    bio: "Praised for his ability to immerse audiences in \"a world of sound\" (The National Herald, NYC), Aris Antoniades is a Cypriot composer, arranger, and music director whose work spans symphonic, jazz, theatrical, and cinematic mediums.",
     image: "/lovable-uploads/23077377-fca0-46d4-b7c8-83c2a2edcb19.png",
     socials: {
       instagram: "#",
@@ -47,8 +48,8 @@ const instructors = [
   },
   {
     name: "Emmelia Pericleous",
-    title: "Choir Director",
-    bio: "Choir Director and Musicologist who graduated at the top of her master's class from the prestigious Sorbonne University, France. She directs choirs at 3 Paris Conservatoires, combining classical and contemporary approaches while bridging Cypriot and French musical traditions.",
+    role: "Choir Director",
+    bio: "Choir Conductor and Musicologist who graduated at the top of her master's class from the prestigious Sorbonne University. She directs choirs at three Paris conservatoires, combining classical and contemporary approaches while bridging Cypriot and French musical traditions.",
     image: "/lovable-uploads/c503aee8-1c6f-4045-bcd9-46e1da3dc853.png",
     socials: {
       instagram: "#",
@@ -58,143 +59,173 @@ const instructors = [
 ];
 
 const InstructorsSection = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const elementsRef = useRef<(HTMLElement | null)[]>([]);
   const [activeBio, setActiveBio] = useState<number | null>(null);
+  const [hoveredInstructor, setHoveredInstructor] = useState<number | null>(null);
+  const isMobile = useIsMobile();
+  const sectionRef = useRef<HTMLElement>(null);
+  const intersectionRef = useRef<HTMLDivElement>(null);
+
+  const toggleBio = (index: number) => {
+    setActiveBio(activeBio === index ? null : index);
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('revealed');
+            entry.target.classList.add('opacity-100');
+            entry.target.classList.remove('opacity-0', 'translate-y-8');
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.1, rootMargin: '0px 0px -100px 0px' }
     );
 
-    const currentElements = elementsRef.current.filter(Boolean) as HTMLElement[];
-    currentElements.forEach((el) => observer.observe(el));
+    if (intersectionRef.current) {
+      observer.observe(intersectionRef.current);
+    }
+
+    const instructorElements = document.querySelectorAll('.instructor-card');
+    instructorElements.forEach((el) => observer.observe(el));
 
     return () => {
-      currentElements.forEach((el) => observer.unobserve(el));
+      if (intersectionRef.current) {
+        observer.unobserve(intersectionRef.current);
+      }
+      instructorElements.forEach((el) => observer.unobserve(el));
     };
   }, []);
 
-  const toggleBio = (index: number) => {
-    setActiveBio(activeBio === index ? null : index);
-  };
-
   return (
-    <section id="instructors" ref={sectionRef} className="section-container bg-gradient-to-b from-rose-50 to-white py-20">
-      <div className="max-w-6xl mx-auto px-4 md:px-6">
-        <div className="text-center mb-16">
-          <h2 
-            ref={(el) => (elementsRef.current[0] = el)} 
-            className="didot-heading text-4xl md:text-5xl font-light text-apple-text mb-4 reveal-on-scroll"
-          >
+    <section id="faculty" className="py-24 md:py-32 bg-white overflow-hidden">
+      <div className="max-w-[1100px] mx-auto px-6 md:px-10">
+        <div 
+          ref={intersectionRef}
+          className="text-center mb-16 md:mb-20 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
+        >
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight text-apple-text mb-5">
             World-Class Faculty
           </h2>
-          <div className="w-20 h-px bg-apple-blue mx-auto mb-6"></div>
-          <p 
-            ref={(el) => (elementsRef.current[1] = el)} 
-            className="text-lg text-apple-grey max-w-2xl mx-auto reveal-on-scroll"
-          >
+          <p className="text-lg md:text-xl text-apple-grey font-light max-w-2xl mx-auto leading-relaxed">
             Learn from industry-leading vocal professionals with international performance careers
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 xl:gap-10">
           {instructors.map((instructor, index) => (
-            <div 
+            <motion.div
               key={index}
-              ref={(el) => (elementsRef.current[2 + index] = el)} 
-              className="reveal-on-scroll"
-              style={{ transitionDelay: `${index * 100}ms` }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ 
+                duration: 0.6, 
+                delay: index * 0.1,
+                ease: [0.25, 0.1, 0.25, 1]
+              }}
+              viewport={{ once: true, margin: "-100px" }}
+              className="instructor-card relative"
+              onMouseEnter={() => setHoveredInstructor(index)}
+              onMouseLeave={() => setHoveredInstructor(null)}
             >
-              <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-apple-border/20 h-full flex flex-col">
-                <div className="relative overflow-hidden aspect-square">
+              <div className={cn(
+                "group overflow-hidden rounded-2xl border border-apple-border/10",
+                "transition-all duration-500 ease-out bg-white",
+                "hover:shadow-xl hover:shadow-black/[0.03]",
+                "h-full flex flex-col"
+              )}>
+                <div className="relative aspect-square overflow-hidden">
+                  <div className={cn(
+                    "absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent z-10",
+                    "transition-opacity duration-300",
+                    hoveredInstructor === index ? "opacity-60" : "opacity-0"
+                  )} />
+                  
                   <img 
                     src={instructor.image} 
-                    alt={instructor.name} 
-                    className="w-full h-full object-cover"
+                    alt={instructor.name}
+                    className={cn(
+                      "w-full h-full object-cover object-center",
+                      "transform transition-transform duration-700 ease-[cubic-bezier(0.25,0.1,0.25,1)]",
+                      hoveredInstructor === index ? "scale-105" : "scale-100"
+                    )}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="absolute bottom-0 left-0 right-0 p-4">
-                      <div className="flex space-x-3">
-                        {instructor.socials.instagram && instructor.socials.instagram !== "#" && (
-                          <a href={instructor.socials.instagram} target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white transition-colors">
-                            <Instagram size={18} />
-                          </a>
-                        )}
-                        {instructor.socials.linkedin && instructor.socials.linkedin !== "#" && (
-                          <a href={instructor.socials.linkedin} target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white transition-colors">
-                            <Linkedin size={18} />
-                          </a>
-                        )}
-                      </div>
+                  
+                  <div className={cn(
+                    "absolute bottom-0 left-0 right-0 p-5 z-20",
+                    "transform transition-transform duration-500 ease-out",
+                    hoveredInstructor === index ? "translate-y-0" : "translate-y-full opacity-0"
+                  )}>
+                    <div className="flex space-x-3">
+                      {instructor.socials.instagram && instructor.socials.instagram !== "#" && (
+                        <a 
+                          href={instructor.socials.instagram} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="w-9 h-9 rounded-full bg-white/90 flex items-center justify-center backdrop-blur-sm text-apple-text hover:bg-white transition-colors"
+                        >
+                          <Instagram size={18} />
+                        </a>
+                      )}
+                      {instructor.socials.linkedin && instructor.socials.linkedin !== "#" && (
+                        <a 
+                          href={instructor.socials.linkedin} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="w-9 h-9 rounded-full bg-white/90 flex items-center justify-center backdrop-blur-sm text-apple-text hover:bg-white transition-colors"
+                        >
+                          <Linkedin size={18} />
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
                 
                 <div className="p-6 flex flex-col flex-grow">
-                  <h3 className="text-xl font-serif font-medium text-apple-text mb-1">{instructor.name}</h3>
-                  <p className="text-apple-blue mb-4 font-light">{instructor.title}</p>
+                  <h3 className="text-xl font-medium text-apple-text">{instructor.name}</h3>
+                  <p className="text-apple-blue text-sm font-medium mb-4">{instructor.role}</p>
                   
                   <div className="text-apple-grey text-sm flex-grow">
-                    {activeBio === index ? (
-                      <>
-                        <p className="mb-4 leading-relaxed">{instructor.bio}</p>
-                        <Button 
-                          variant="ghost" 
-                          size="sm"
-                          className="text-apple-blue hover:text-apple-blue hover:bg-apple-light px-0 h-auto font-normal"
-                          onClick={() => toggleBio(index)}
+                    <AnimatePresence mode="wait">
+                      {activeBio === index ? (
+                        <motion.div
+                          key={`bio-expanded-${index}`}
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+                          className="overflow-hidden"
                         >
-                          Read less <ChevronUp className="ml-1 h-4 w-4" />
-                        </Button>
-                      </>
-                    ) : (
-                      <>
-                        <p className="mb-4 line-clamp-3 leading-relaxed">{instructor.bio}</p>
-                        <Button 
-                          variant="ghost" 
-                          size="sm"
-                          className="text-apple-blue hover:text-apple-blue hover:bg-apple-light px-0 h-auto font-normal"
-                          onClick={() => toggleBio(index)}
+                          <p className="leading-relaxed mb-4">{instructor.bio}</p>
+                          <button 
+                            onClick={() => toggleBio(index)}
+                            className="text-apple-blue text-sm font-medium flex items-center hover:text-apple-blue-hover focus:outline-none focus:ring-2 focus:ring-apple-blue/20 rounded-md -ml-1 px-1"
+                          >
+                            Read less <ChevronUp className="ml-1 h-4 w-4" />
+                          </button>
+                        </motion.div>
+                      ) : (
+                        <motion.div
+                          key={`bio-collapsed-${index}`}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.3 }}
                         >
-                          Read more <ChevronDown className="ml-1 h-4 w-4" />
-                        </Button>
-                      </>
-                    )}
-                  </div>
-                  
-                  <div className="mt-4 flex space-x-3">
-                    {instructor.socials.instagram && instructor.socials.instagram !== "#" && (
-                      <a 
-                        href={instructor.socials.instagram} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="text-apple-grey hover:text-apple-blue transition-colors"
-                      >
-                        <Instagram size={18} />
-                      </a>
-                    )}
-                    {instructor.socials.linkedin && instructor.socials.linkedin !== "#" && (
-                      <a 
-                        href={instructor.socials.linkedin} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="text-apple-grey hover:text-apple-blue transition-colors"
-                      >
-                        <Linkedin size={18} />
-                      </a>
-                    )}
+                          <p className="line-clamp-2 leading-relaxed mb-4">{instructor.bio}</p>
+                          <button 
+                            onClick={() => toggleBio(index)}
+                            className="text-apple-blue text-sm font-medium flex items-center hover:text-apple-blue-hover focus:outline-none focus:ring-2 focus:ring-apple-blue/20 rounded-md -ml-1 px-1"
+                          >
+                            Read more <ChevronDown className="ml-1 h-4 w-4" />
+                          </button>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
