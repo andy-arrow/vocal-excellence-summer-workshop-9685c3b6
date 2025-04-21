@@ -1,31 +1,29 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Music, Mic, Users, Award, ArrowRight, Star } from 'lucide-react';
+import { Star, Mic, Video, UserCheck, Stethoscope } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
 const features = [
   {
-    icon: <Mic className="w-5 h-5 text-energy-pink" />,
-    title: "Level Up Your Voice",
-    description: "Train with international vocal coaches who'll help you discover your unique sound and push your technical limits."
+    icon: <UserCheck className="w-5 h-5 text-energy-purple" />,
+    title: "Personalized Coaching",
+    description: "45-minute private lessons tailored to your goals, plus 30-minute sessions with professional accompanists for your repertoire."
   },
   {
-    icon: <Music className="w-5 h-5 text-energy-purple" />,
-    title: "Perform With Fire",
-    description: "Develop your stage presence through energetic masterclasses and show off your skills in our showcase events."
+    icon: <Video className="w-5 h-5 text-energy-pink" />,
+    title: "Professional Recording",
+    description: "Take home professionally recorded footage of your mock auditions—a valuable asset for your career portfolio."
   },
   {
-    icon: <Users className="w-5 h-5 text-energy-cyan" />,
-    title: "Find Your Crew",
-    description: "Connect with other passionate singers who share your energy and create music collaborations that will last."
+    icon: <Mic className="w-5 h-5 text-energy-cyan" />,
+    title: "Performance Mastery",
+    description: "Transform your stage presence through Alexander Technique workshops and targeted performance coaching."
   },
   {
-    icon: <Award className="w-5 h-5 text-energy-yellow" />,
-    title: "Launch Your Sound",
-    description: "Get insider tips on breaking into the music industry and building your social media presence as an artist."
+    icon: <Stethoscope className="w-5 h-5 text-energy-yellow" />,
+    title: "Expert Health Focus",
+    description: "Learn from physicians specializing in vocal health, ensuring your instrument stays in peak condition."
   }
 ];
 
@@ -69,74 +67,47 @@ const AboutSection = () => {
             <Star className="mr-1.5 w-4 h-4 text-energy-yellow" />
             About The Programme
           </span>
-          <h2 className="text-h2 font-serif mb-4">
-            Break the Rules, <br className="md:hidden" />
-            Find Your Sound
+          <h2 className="text-3xl md:text-4xl font-serif mb-4 text-gray-900">
+            Your Voice, Your Future: <br />
+            Why This Workshop Changes Everything
           </h2>
-          <div className="w-16 h-0.5 bg-energy-pink"></div>
-          <p className="subtitle mt-6">
-            A high-energy vocal experience designed for your creative expression
-          </p>
+          <div className="w-16 h-0.5 bg-energy-pink mb-6"></div>
         </div>
 
         <div className="grid md:grid-cols-5 gap-8 md:gap-16 items-start">
           <div className="md:col-span-2 space-y-8">
-            <div className="focus-section space-y-5">
-              <h3 className="text-2xl font-bold text-slate-900 font-outfit tracking-tight">Unlock Your Authentic Voice</h3>
-              <p className="text-slate-700 leading-relaxed">
-                <span className="font-semibold text-energy-purple">Vocal Excellence Summer Workshop</span> isn't your typical boring workshop. 
-                It's an <span className="font-semibold text-energy-pink">energy-packed</span> five-day vocal transformation where you'll:
+            <div className="prose prose-slate max-w-none space-y-6">
+              <p className="text-lg leading-relaxed text-gray-700">
+                Picture this: You're working with world-class vocal teachers who actually understand where you want to go. Not just vocal technique, but the whole artist—your presence, your confidence, your career.
               </p>
-              <ul className="space-y-3.5 pt-1">
-                {[
-                  "Find your unique vocal style",
-                  "Master techniques that enhance your natural abilities",
-                  "Connect with coaches who understand your creative vision",
-                  "Perform on stage in our final showcase"
-                ].map((item, i) => (
-                  <motion.li 
-                    key={i}
-                    className="flex items-start"
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: i * 0.1 }}
-                    viewport={{ once: true }}
-                  >
-                    <span className="flex-shrink-0 w-5 h-5 rounded-full bg-gradient-to-br from-energy-purple/30 to-energy-pink/30 flex items-center justify-center mt-1 mr-3">
-                      <span className="w-1.5 h-1.5 rounded-full bg-energy-pink"></span>
-                    </span>
-                    <span className="text-slate-700">{item}</span>
-                  </motion.li>
-                ))}
-              </ul>
+              <p className="text-lg font-medium text-energy-purple">
+                That's exactly what our Vocal Excellence Summer Workshop delivers.
+              </p>
+              <div className="space-y-4">
+                <p className="text-gray-700">
+                  What makes us different? We believe preparation meets opportunity. Every participant receives a 45-minute private lesson tailored just for you. You'll work directly with an accompanist for 30 minutes on your repertoire (yes, your actual audition pieces). Our Alexander Technique workshops transform how you physically approach performance.
+                </p>
+                <p className="text-gray-700">
+                  Worried about stage fright? We address that head-on. Concerned about vocal health? An actual physician leads our vocal health seminar.
+                </p>
+                <p className="text-gray-700">
+                  The highlight? Those mock auditions aren't just practice—they're professionally recorded. Think about that: performance-ready footage you'll own forever. That's not just a workshop benefit; that's a career asset.
+                </p>
+              </div>
               
-              <div className="rounded-xl overflow-hidden relative h-1 mt-6">
-                <div className="w-full h-full bg-slate-100 rounded-full overflow-hidden">
-                  <motion.div 
-                    className="h-full bg-gradient-to-r from-energy-purple to-energy-pink rounded-full"
-                    initial={{ width: "0%" }}
-                    whileInView={{ width: "85%" }}
-                    transition={{ duration: 1, ease: "easeOut" }}
-                    viewport={{ once: true }}
-                  />
-                </div>
-              </div>
-            </div>
-            
-            <blockquote className="pl-6 border-l-2 border-energy-pink/50 my-8 italic text-2xl text-slate-700 font-light leading-relaxed">
-              "Your voice is your superpower. Your creativity is your edge. Together, they're unstoppable."
-            </blockquote>
-            
-            <div className="bg-slate-50 p-5 rounded-xl border border-slate-200">
-              <h4 className="font-semibold text-lg mb-2 text-slate-900">Next Application Deadline</h4>
-              <div className="flex justify-between items-center">
-                <p className="text-slate-700">May 15, 2025</p>
-                <div className="flex items-center gap-1">
-                  <div className="w-1.5 h-6 rounded-full bg-energy-purple animate-pulse-slow"></div>
-                  <div className="w-1.5 h-3 rounded-full bg-energy-pink animate-pulse-slow animation-delay-300"></div>
-                  <div className="w-1.5 h-5 rounded-full bg-energy-cyan animate-pulse-slow animation-delay-500"></div>
-                </div>
-              </div>
+              <blockquote className="pl-6 border-l-2 border-energy-pink/50 my-8 italic text-2xl text-gray-700 font-light leading-relaxed">
+                "The best musicians know something others don't: success happens through connections."
+              </blockquote>
+              
+              <p className="text-gray-700">
+                Our industry professionals aren't just visitors—they're actively working in the spaces you want to enter.
+              </p>
+              <p className="text-xl font-medium text-energy-purple">
+                This isn't just training; it's transformation.
+              </p>
+              <p className="text-2xl font-serif text-gray-900 mt-6">
+                Isn't it time your voice got the platform it deserves?
+              </p>
             </div>
           </div>
 
@@ -188,18 +159,15 @@ const AboutSection = () => {
                   </div>
                   
                   <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-slate-900 mb-2">Ready to find your voice?</h3>
-                    <p className="text-slate-700 mb-6 leading-relaxed">
-                      Our coaches understand that traditional voice lessons can feel constraining. 
-                      We've designed this program specifically for young artists who crave movement,
-                      variation, and quick results.
+                    <h3 className="text-2xl font-bold text-slate-900 mb-2">Ready to transform your voice?</h3>
+                    <p className="text-slate-700 mb-6">
+                      Join a community of dedicated artists and take your first step towards vocal excellence. Limited spots available.
                     </p>
                     
-                    <Link to="/apply">
-                      <Button className="bg-gradient-to-r from-energy-purple to-energy-pink hover:from-energy-purple/90 hover:to-energy-pink/90 text-white rounded-xl shadow-md shadow-energy-purple/20 hover:shadow-xl hover:shadow-energy-purple/30 transition-all flex items-center gap-2 px-6 py-5">
-                        Apply Now <ArrowRight className="w-4 h-4" />
-                      </Button>
-                    </Link>
+                    <a href="/apply" className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-energy-purple to-energy-pink text-white rounded-xl shadow-md shadow-energy-purple/20 hover:shadow-xl hover:shadow-energy-purple/30 transition-all">
+                      Apply Now
+                      <span className="text-white">→</span>
+                    </a>
                   </div>
                 </div>
               </motion.div>
