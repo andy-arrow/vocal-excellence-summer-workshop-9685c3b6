@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
@@ -67,10 +68,10 @@ const Navbar = ({ activeSection }: NavbarProps) => {
         "fixed top-0 left-0 w-full z-50 transition-all duration-300",
         scrolled 
           ? "bg-white/95 backdrop-blur-md border-b border-apple-border" 
-          : "bg-apple-light/90 backdrop-blur-md"
+          : "bg-apple-light/80 backdrop-blur-sm" // Reduced opacity for better text visibility
       )}
     >
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-2 flex items-center justify-between">
         <Link 
           to="/" 
           className="font-sans text-apple-text tracking-tight transition-all hover:opacity-80 flex-shrink-0"
@@ -85,20 +86,20 @@ const Navbar = ({ activeSection }: NavbarProps) => {
             <img 
               src="/lovable-uploads/9994f82c-80e4-477a-b629-3bef5ef8f2c1.png" 
               alt="Vocal Excellence Logo" 
-              className="w-48 h-48 mr-3"
+              className="w-36 h-36 md:w-40 md:h-40 mr-2" // Reduced logo size
             />
           </motion.div>
         </Link>
 
         <nav className="hidden md:flex items-center flex-grow justify-center">
-          <ul className="flex space-x-2 items-center">
+          <ul className="flex space-x-1 items-center">
             {navLinks.map((link) => (
               <li key={link.id}>
                 <a
                   href={`#${link.id}`}
                   onClick={(e) => handleSmoothScroll(e, link.id)}
                   className={cn(
-                    "relative py-2 px-3 text-sm font-medium transition-colors duration-300",
+                    "relative py-1 px-2 text-sm font-medium transition-colors duration-300", // Reduced padding
                     "hover:text-apple-blue",
                     activeSection === link.id 
                       ? "text-apple-blue" 
@@ -114,18 +115,18 @@ const Navbar = ({ activeSection }: NavbarProps) => {
           </ul>
         </nav>
         
-        <div className="hidden md:flex items-center space-x-4">
+        <div className="hidden md:flex items-center space-x-3">
           <NavLink
             to="/apply"
             className={({ isActive }) => cn(
-              "group px-4 py-1 text-sm font-medium rounded-full flex items-center gap-1.5 transition-all duration-300",
+              "group px-3 py-1 text-xs font-medium rounded-full flex items-center gap-1 transition-all duration-300", // Reduced size
               isActive 
                 ? "bg-apple-blue text-white" 
                 : "bg-apple-light text-apple-blue hover:bg-apple-light-hover"
             )}
           >
             <span>Apply Now</span>
-            <ArrowUpRight size={14} className="opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            <ArrowUpRight size={12} className="opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </NavLink>
           
           {(() => {
