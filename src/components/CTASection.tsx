@@ -1,8 +1,11 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { Calendar, MapPin, BadgeEuro, Clock } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
 import { useNavigate } from 'react-router-dom';
 import { submitContactForm } from '@/services/formSubmissionService';
+import { FeatureCard } from '@/components/ui/feature-card';
+import { motion } from 'framer-motion';
 
 const CTASection = () => {
   const navigate = useNavigate();
@@ -144,157 +147,175 @@ const CTASection = () => {
   };
 
   return (
-    <section id="apply" ref={sectionRef} className="py-20 bg-gradient-to-b from-white to-rose-50">
-      <div className="max-w-6xl mx-auto px-6 md:px-10">
-        <div className="grid md:grid-cols-2 gap-12 items-start">
-          <div>
-            <div 
-              ref={(el) => (elementsRef.current[0] = el)} 
-              className="reveal-on-scroll mb-8"
-            >
-              <div className="inline-block px-4 py-1 rounded-full bg-rose-100 text-rose-700 text-xs font-bold uppercase tracking-wider mb-4">
-                Limited Enrollment
-              </div>
-              <h2 className="text-3xl md:text-5xl font-serif font-light mb-6 text-gray-800">
-                Secure Your Spot for <span className="text-rose-600 font-semibold">Summer 2025</span>
-              </h2>
-              <div className="w-20 h-px bg-rose-300 mb-6"></div>
-              <p className="text-gray-600 mb-5 leading-relaxed text-lg">
-                <strong className="text-rose-700">Only 20 participants</strong> will be selected to ensure personalized coaching and maximum growth during this career-defining week.
-              </p>
-              <p className="text-gray-600 mb-8 leading-relaxed">
-                Early applicants receive priority consideration and may qualify for our exclusive early enrollment discount.
-              </p>
-              <a href="/apply" onClick={handleApplyClick} className="primary-button inline-block relative group overflow-hidden">
-                <span className="relative z-10 font-medium tracking-wide">Begin Your Application</span>
-                <span className="absolute inset-0 bg-gradient-to-r from-rose-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
-              </a>
-            </div>
-
-            <div 
-              ref={(el) => (elementsRef.current[1] = el)} 
-              className="space-y-5 reveal-on-scroll p-6 bg-white shadow-lg rounded-lg border border-rose-100"
-            >
-              <div className="flex items-center text-gray-700">
-                <Calendar className="w-5 h-5 mr-4 text-rose-500" />
-                <span className="font-medium">Programme Dates: July 14 - July 18, 2025</span>
-              </div>
-              <div className="flex items-center text-gray-700">
-                <MapPin className="w-5 h-5 mr-4 text-rose-500" />
-                <span className="font-medium">Location: Limassol, Cyprus</span>
-              </div>
-              <div className="flex items-center text-gray-700">
-                <BadgeEuro className="w-5 h-5 mr-4 text-rose-500" />
-                <div>
-                  <span className="font-medium">Tuition: €999</span>
-                  <p className="text-sm text-rose-600 mt-1">Early application discount: Save €100 when you apply before April 30</p>
-                </div>
-              </div>
-              <div className="flex items-center text-gray-700 pt-2 mt-2 border-t border-rose-100">
-                <Clock className="w-5 h-5 mr-4 text-rose-500" />
-                <div>
-                  <span className="font-medium">Application Deadline: May 15, 2025</span>
-                  <p className="text-sm text-rose-600 mt-1">Mark your calendar — applications close in less than 2 months</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div 
-            ref={(el) => (elementsRef.current[2] = el)} 
-            className="reveal-on-scroll"
+    <section className="py-24 bg-white overflow-hidden">
+      <div className="max-w-[980px] mx-auto px-6">
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
+          {/* Left Column */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
           >
-            <div className="glass-card p-8 border border-rose-200 shadow-xl rounded-lg">
-              <h3 className="text-2xl font-serif mb-6 text-gray-800 flex items-center">
-                <span className="bg-rose-100 text-rose-700 w-8 h-8 inline-flex items-center justify-center rounded-full mr-3 text-sm">1</span>
-                <span>Request Information</span>
-              </h3>
-              <p className="text-gray-600 mb-6">
-                Complete this form to receive detailed programme information, scholarship opportunities, and application tips from our team.
-              </p>
-              <form className="space-y-5" onSubmit={handleSubmit}>
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                    Full Name <span className="text-rose-500">*</span>
-                  </label>
-                  <input 
-                    type="text" 
-                    id="name" 
-                    className="w-full border border-rose-200 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-300 transition-all"
-                    placeholder="Your name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                    disabled={isSubmitting}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                    Email Address <span className="text-rose-500">*</span>
-                  </label>
-                  <input 
-                    type="email" 
-                    id="email" 
-                    className="w-full border border-rose-200 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-300 transition-all"
-                    placeholder="Your email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    disabled={isSubmitting}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="vocal_type" className="block text-sm font-medium text-gray-700 mb-1">
-                    Vocal Type/Range <span className="text-rose-500">*</span>
-                  </label>
-                  <select 
-                    id="vocal_type" 
-                    className="w-full border border-rose-200 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-300 transition-all"
-                    value={formData.vocal_type}
-                    onChange={handleInputChange}
-                    required
-                    disabled={isSubmitting}
-                  >
-                    <option value="">Select your vocal type</option>
-                    <option value="soprano">Soprano</option>
-                    <option value="mezzo">Mezzo-Soprano</option>
-                    <option value="alto">Alto/Contralto</option>
-                    <option value="tenor">Tenor</option>
-                    <option value="baritone">Baritone</option>
-                    <option value="bass">Bass</option>
-                    <option value="other">Other/Unsure</option>
-                  </select>
-                </div>
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-                    Questions or Comments (Optional)
-                  </label>
-                  <textarea 
-                    id="message" 
-                    rows={4} 
-                    className="w-full border border-rose-200 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-300 transition-all"
-                    placeholder="Any specific questions about the programme?"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    disabled={isSubmitting}
-                  ></textarea>
-                </div>
-                <button 
-                  type="submit" 
-                  className="w-full primary-button disabled:opacity-70 disabled:cursor-not-allowed relative overflow-hidden group"
-                  disabled={isSubmitting || (lastSubmitTime !== null && !checkRateLimit())}
-                >
-                  <span className="relative z-10">
-                    {isSubmitting ? 'Submitting...' : 'Get Programme Details'}
-                  </span>
-                  <span className="absolute inset-0 bg-gradient-to-r from-rose-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-all duration-300"></span>
-                </button>
-                <p className="text-center text-xs text-gray-500 mt-2">
-                  We respect your privacy and will never share your information.
-                </p>
-              </form>
+            <span className="inline-block text-apple-blue text-[12px] font-semibold tracking-wide uppercase mb-3">
+              Limited Enrollment
+            </span>
+            
+            <h2 className="text-[40px] md:text-[48px] font-medium text-apple-text leading-tight mb-4">
+              Secure your spot for Summer&nbsp;2025
+            </h2>
+            
+            <p className="text-[21px] text-apple-grey leading-relaxed mb-8">
+              Only 20 participants will be selected to ensure personalized coaching and maximum growth during this career-defining week.
+            </p>
+
+            <div className="space-y-6 mb-12">
+              <FeatureCard
+                icon={Calendar}
+                title="Programme Dates"
+                description="July 14 - July 18, 2025"
+              />
+              
+              <FeatureCard
+                icon={MapPin}
+                title="Location"
+                description="Limassol, Cyprus"
+              />
+              
+              <FeatureCard
+                icon={BadgeEuro}
+                title="Tuition"
+                description="€999 (Save €100 when you apply before April 30)"
+              />
+              
+              <FeatureCard
+                icon={Clock}
+                title="Application Deadline"
+                description="May 15, 2025 - Less than 2 months remaining"
+              />
             </div>
-          </div>
+
+            <button
+              onClick={handleApplyClick}
+              className="w-full md:w-auto text-center px-8 py-4 bg-apple-blue text-white rounded-full text-[17px] font-medium 
+                       hover:bg-apple-blue-hover transition-all duration-300 focus:outline-none focus:ring-2 
+                       focus:ring-apple-blue focus:ring-offset-2"
+            >
+              Apply Now
+            </button>
+          </motion.div>
+
+          {/* Right Column - Form */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="bg-apple-light rounded-3xl p-8 md:p-12"
+          >
+            <h3 className="text-[24px] font-medium text-apple-text mb-4">
+              Request Information
+            </h3>
+            
+            <p className="text-[17px] text-apple-grey mb-8">
+              Complete this form to receive detailed programme information and application tips.
+            </p>
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label htmlFor="name" className="block text-[14px] font-medium text-apple-text mb-2">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 text-[17px] rounded-xl border border-apple-border bg-white 
+                           focus:outline-none focus:ring-2 focus:ring-apple-blue focus:border-apple-blue 
+                           transition-all duration-200"
+                  placeholder="Your name"
+                  required
+                  disabled={isSubmitting}
+                />
+              </div>
+
+              <div>
+                <label htmlFor="email" className="block text-[14px] font-medium text-apple-text mb-2">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 text-[17px] rounded-xl border border-apple-border bg-white 
+                           focus:outline-none focus:ring-2 focus:ring-apple-blue focus:border-apple-blue 
+                           transition-all duration-200"
+                  placeholder="Your email"
+                  required
+                  disabled={isSubmitting}
+                />
+              </div>
+
+              <div>
+                <label htmlFor="vocal_type" className="block text-[14px] font-medium text-apple-text mb-2">
+                  Vocal Type/Range
+                </label>
+                <select
+                  id="vocal_type"
+                  value={formData.vocal_type}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 text-[17px] rounded-xl border border-apple-border bg-white 
+                           focus:outline-none focus:ring-2 focus:ring-apple-blue focus:border-apple-blue 
+                           transition-all duration-200"
+                  required
+                  disabled={isSubmitting}
+                >
+                  <option value="">Select your vocal type</option>
+                  <option value="soprano">Soprano</option>
+                  <option value="mezzo">Mezzo-Soprano</option>
+                  <option value="alto">Alto/Contralto</option>
+                  <option value="tenor">Tenor</option>
+                  <option value="baritone">Baritone</option>
+                  <option value="bass">Bass</option>
+                  <option value="other">Other/Unsure</option>
+                </select>
+              </div>
+
+              <div>
+                <label htmlFor="message" className="block text-[14px] font-medium text-apple-text mb-2">
+                  Questions or Comments (Optional)
+                </label>
+                <textarea
+                  id="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  rows={4}
+                  className="w-full px-4 py-3 text-[17px] rounded-xl border border-apple-border bg-white 
+                           focus:outline-none focus:ring-2 focus:ring-apple-blue focus:border-apple-blue 
+                           transition-all duration-200 resize-none"
+                  placeholder="Any specific questions about the programme?"
+                  disabled={isSubmitting}
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting || (lastSubmitTime !== null && !checkRateLimit())}
+                className="w-full bg-apple-blue text-white rounded-full py-4 text-[17px] font-medium 
+                         hover:bg-apple-blue-hover transition-all duration-300 focus:outline-none 
+                         focus:ring-2 focus:ring-apple-blue focus:ring-offset-2 disabled:opacity-50 
+                         disabled:cursor-not-allowed"
+              >
+                {isSubmitting ? 'Submitting...' : 'Get Programme Details'}
+              </button>
+
+              <p className="text-center text-[12px] text-apple-grey mt-4">
+                We respect your privacy and will never share your information.
+              </p>
+            </form>
+          </motion.div>
         </div>
       </div>
     </section>
