@@ -63,10 +63,6 @@ const AboutSection = () => {
     >
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         <div className="flex flex-col items-center text-center mb-12">
-          <span className="inline-flex items-center bg-primary/10 text-primary rounded-full py-1.5 px-3.5 text-sm font-medium mb-4">
-            <Star className="mr-1.5 w-4 h-4 text-energy-yellow" />
-            About The Programme
-          </span>
           <h2 className="text-3xl md:text-4xl font-serif mb-4 text-gray-900">
             Your Voice, Your Future: <br />
             Why This Workshop Changes Everything
