@@ -1,3 +1,4 @@
+
 import React, { useEffect, lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
@@ -54,20 +55,20 @@ const Application = () => {
       <div className="min-h-screen flex flex-col">
         <Navbar />
         
-        <main className="flex-grow">
+        <main className="flex-grow pt-16 sm:pt-20"> {/* Added padding-top to ensure content doesn't start under navbar */}
           <div className="bg-gradient-to-b from-white to-[#f5f5f7] border-b border-apple-border/10">
-            <div className="max-w-5xl mx-auto px-6 md:px-8 py-16 md:py-20">
+            <div className="max-w-5xl mx-auto px-6 md:px-8 py-12 md:py-16"> {/* Reduced vertical padding */}
               <motion.div 
                 className="text-center"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
               >
-                <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-medium text-black mb-6 tracking-tight">
+                <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-medium text-black mb-4 tracking-tight"> {/* Reduced font size and margin */}
                   Your Journey To
-                  <span className="block mt-2">Vocal Mastery</span>
+                  <span className="block mt-1">Vocal Mastery</span> {/* Reduced margin-top */}
                 </h1>
-                <p className="font-sans text-lg md:text-xl text-black max-w-2xl mx-auto leading-relaxed">
+                <p className="font-sans text-base md:text-lg text-black max-w-2xl mx-auto leading-relaxed"> {/* Reduced font size */}
                   Join our exclusive 5-day Workshop where world-class mentors will transform your voice and elevate your technique to new heights.
                 </p>
               </motion.div>
