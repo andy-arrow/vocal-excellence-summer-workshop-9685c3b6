@@ -49,6 +49,12 @@ export default {
           yellow: '#f5f5f7',
           green: '#06c',
         },
+        charcoal: {
+          DEFAULT: '#403E43',
+          50: 'rgba(64, 62, 67, 0.5)',
+          70: 'rgba(64, 62, 67, 0.7)',
+          80: 'rgba(64, 62, 67, 0.8)',
+        },
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
