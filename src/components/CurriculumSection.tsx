@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { GraduationCap, Mic, Award, Headphones, Video, Clock, ChevronUp, ChevronDown, Calendar } from 'lucide-react';
+import { GraduationCap, Mic, Award, Headphones, Video, Clock, ChevronUp, ChevronDown, Calendar, Instagram, Linkedin } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -148,6 +148,59 @@ const logisticsData = [
   "Accompanist: Available for Friday rehearsals only; sheet music must be submitted 48 hours in advance.",
   "Concert Logistics: Semi-formal attire, tech rehearsal Friday 16:30–18:30 (mandatory), limited to 2 guests per participant (RSVP required).",
   "Materials: Bring a notebook, water bottle, and performance scores daily."
+];
+
+const facultyMembers = [
+  {
+    name: "Andreas Aroditis",
+    role: "Founder & Director",
+    bio: "Andreas Aroditis has earned recognition from The New York Times and Opera Today for his versatile performances at prestigious international venues. A Juilliard graduate with numerous lead roles in opera and musical theater, he has collaborated with respected artists and orchestras.",
+    image: "/lovable-uploads/a10cf0f4-c46f-4599-b410-6e1c715c92d5.png",
+    socials: {
+      instagram: "https://www.instagram.com/andreasaroditis/",
+      linkedin: "https://www.linkedin.com/in/andreasaroditis/"
+    }
+  },
+  {
+    name: "Carolyn Michelle-Smith",
+    role: "Acting Coach",
+    bio: "Carolyn Michelle-Smith is an actress, producer, and educator known for her roles in House of Cards, Luke Cage, Russian Doll, and The Chi. A Juilliard graduate, she has performed on Broadway and with renowned theater companies.",
+    image: "/lovable-uploads/5f2b13ba-7279-45da-86e2-af6b9c336634.png",
+    socials: {
+      instagram: "https://www.instagram.com/that_carolynmichelle?igsh=MWluZGpwb2pqMm4yeQ==",
+      linkedin: "https://www.linkedin.com/in/carolyn-michelle-smith-12435451"
+    }
+  },
+  {
+    name: "Kate Batter",
+    role: "Vocal Coach",
+    bio: "Kate Batter is a highly experienced vocal coach, performer, and founder of Sing Wimbledon. With over 20 years of teaching experience, she specializes in vocal technique, musicality, and acting through song, working with beginners and professionals alike.",
+    image: "/lovable-uploads/e26c0944-dc77-4d19-8059-c61e7800b8d1.png",
+    socials: {
+      instagram: "#",
+      linkedin: "#"
+    }
+  },
+  {
+    name: "Aris Antoniades",
+    role: "Composer",
+    bio: "Praised for his ability to immerse audiences in \"a world of sound\" (The National Herald, NYC), Aris Antoniades is a Cypriot composer, arranger, and music director whose work spans symphonic, jazz, theatrical, and cinematic mediums.",
+    image: "/lovable-uploads/23077377-fca0-46d4-b7c8-83c2a2edcb19.png",
+    socials: {
+      instagram: "#",
+      linkedin: "#"
+    }
+  },
+  {
+    name: "Emmelia Pericleous",
+    role: "Choir Director",
+    bio: "Choir Conductor and Musicologist who graduated at the top of her master's class from the prestigious Sorbonne University. She directs choirs at three Paris conservatoires, combining classical and contemporary approaches while bridging Cypriot and French musical traditions.",
+    image: "/lovable-uploads/c503aee8-1c6f-4045-bcd9-46e1da3dc853.png",
+    socials: {
+      instagram: "#",
+      linkedin: "#"
+    }
+  }
 ];
 
 function ModulesContent() {
@@ -315,23 +368,7 @@ const CurriculumSection = () => {
             </div>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[
-                {
-                  name: "Maria Callas",
-                  role: "Vocal Technique",
-                  image: "/lovable-uploads/5a4b7bc3-bc7e-42cc-b5bf-fd69555887e3.png"
-                },
-                {
-                  name: "Luciano Pavarotti",
-                  role: "Performance Coach",
-                  image: "/lovable-uploads/29cad38e-a84c-40f7-9ddb-3c11c159ea6d.png"
-                },
-                {
-                  name: "Renée Fleming",
-                  role: "Repertoire Development",
-                  image: "/lovable-uploads/23077377-fca0-46d4-b7c8-83c2a2edcb19.png"
-                }
-              ].map((faculty, index) => (
+              {facultyMembers.map((faculty, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
@@ -347,13 +384,39 @@ const CurriculumSection = () => {
                         alt={faculty.name}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div className="absolute bottom-0 left-0 right-0 p-4">
+                          {faculty.socials.instagram !== "#" && (
+                            <a
+                              href={faculty.socials.instagram}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-white/80 hover:text-white mr-3 inline-block transition-colors"
+                            >
+                              <Instagram size={18} />
+                            </a>
+                          )}
+                          {faculty.socials.linkedin !== "#" && (
+                            <a
+                              href={faculty.socials.linkedin}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-white/80 hover:text-white inline-block transition-colors"
+                            >
+                              <Linkedin size={18} />
+                            </a>
+                          )}
+                        </div>
+                      </div>
                     </div>
                     <h3 className="didot-heading text-xl text-apple-text mb-2 transition-colors duration-300 group-hover:text-apple-blue">
                       {faculty.name}
                     </h3>
-                    <p className="text-sm uppercase tracking-wider text-apple-grey font-medium">
+                    <p className="text-sm uppercase tracking-wider text-apple-grey font-medium mb-3">
                       {faculty.role}
+                    </p>
+                    <p className="text-apple-grey text-sm leading-relaxed">
+                      {faculty.bio}
                     </p>
                   </div>
                 </motion.div>
