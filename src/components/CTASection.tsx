@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { Calendar, MapPin, BadgeEuro, Clock } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
@@ -158,15 +157,15 @@ const CTASection = () => {
             transition={{ duration: 0.6 }}
           >
             <span className="inline-block text-apple-blue text-[12px] font-semibold tracking-wide uppercase mb-3">
-              Limited Enrollment
+              Limited Opportunity
             </span>
             
             <h2 className="text-[40px] md:text-[48px] font-medium text-apple-text leading-tight mb-4">
-              Secure your spot for Summer&nbsp;2025
+              Secure Your Spot for Summer 2025
             </h2>
             
             <p className="text-[21px] text-apple-grey leading-relaxed mb-8">
-              Only 20 participants will be selected to ensure personalized coaching and maximum growth during this career-defining week.
+              We're selecting only 20 exceptional participants to ensure personalized, high-impact coaching during this transformative week.
             </p>
 
             <div className="space-y-6 mb-12">
@@ -184,14 +183,14 @@ const CTASection = () => {
               
               <FeatureCard
                 icon={BadgeEuro}
-                title="Tuition"
+                title="Early Bird Tuition"
                 description="€999 (Save €100 when you apply before April 30)"
               />
               
               <FeatureCard
                 icon={Clock}
-                title="Application Deadline"
-                description="May 15, 2025 - Less than 2 months remaining"
+                title="Application Closing Soon"
+                description="Deadline: May 15, 2025 - Less than 2 months remaining"
               />
             </div>
 
@@ -214,11 +213,11 @@ const CTASection = () => {
             className="bg-apple-light rounded-3xl p-8 md:p-12"
           >
             <h3 className="text-[24px] font-medium text-apple-text mb-4">
-              Request Information
+              Request Programme Details
             </h3>
             
             <p className="text-[17px] text-apple-grey mb-8">
-              Complete this form to receive detailed programme information and application tips.
+              Complete this form to receive comprehensive programme information and personalized application guidance.
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-6">
