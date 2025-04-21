@@ -1,19 +1,13 @@
+
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowUpRight, ChevronDown } from 'lucide-react';
+import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import AuthButtons from '@/components/AuthButtons';
 import AuthButtonsPlaceholder from './AuthButtonsPlaceholder';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Separator } from '@/components/ui/separator';
-import { Toggle } from '@/components/ui/toggle';
+import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { 
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-  SheetClose,
-} from '@/components/ui/sheet';
 
 interface NavbarProps {
   activeSection?: string;
@@ -28,7 +22,6 @@ interface NavLink {
 const Navbar = ({ activeSection }: NavbarProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [hovered, setHovered] = useState<string | null>(null);
   const isMobile = useIsMobile();
   const location = useLocation();
 
@@ -74,14 +67,14 @@ const Navbar = ({ activeSection }: NavbarProps) => {
       className={cn(
         "fixed top-0 left-0 w-full z-50 transition-all duration-300",
         scrolled 
-          ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-energy-purple/10" 
-          : "bg-transparent"
+          ? "bg-white/95 backdrop-blur-md border-b border-apple-border" 
+          : "bg-apple-light/90 backdrop-blur-md"
       )}
     >
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 flex items-center justify-between space-x-4">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 flex items-center justify-between">
         <Link 
           to="/" 
-          className="font-outfit text-energy-purple tracking-tight transition-all hover:opacity-80 flex-shrink-0"
+          className="font-sans text-apple-text tracking-tight transition-all hover:opacity-80 flex-shrink-0"
           aria-label="Vocal Excellence - Home"
         >
           <motion.div 
@@ -101,18 +94,19 @@ const Navbar = ({ activeSection }: NavbarProps) => {
         <nav className="hidden md:flex items-center flex-grow justify-center">
           <ul className="flex space-x-2 items-center">
             {navLinks.map((link) => (
-              <li key={link.id} className="px-1">
+              <li key={link.id}>
                 <a
                   href={`#${link.id}`}
                   onClick={(e) => handleSmoothScroll(e, link.id)}
                   className={cn(
-                    "relative py-2 px-3 text-sm font-medium rounded-lg transition-colors",
+                    "relative py-2 px-3 text-sm font-medium transition-colors duration-300",
+                    "hover:text-apple-blue",
                     activeSection === link.id 
-                      ? "text-energy-purple bg-energy-purple/5" 
-                      : "text-slate-600 hover:text-energy-purple hover:bg-energy-purple/5"
+                      ? "text-apple-blue" 
+                      : "text-apple-text"
                   )}
                 >
-                  <span className="relative z-10 flex items-center font-sans">
+                  <span className="relative z-10">
                     {link.label}
                   </span>
                 </a>
@@ -125,10 +119,10 @@ const Navbar = ({ activeSection }: NavbarProps) => {
           <NavLink
             to="/apply"
             className={({ isActive }) => cn(
-              "group px-5 py-2 text-sm font-medium rounded-lg flex items-center gap-1.5 transition-all",
+              "group px-4 py-1 text-sm font-medium rounded-full flex items-center gap-1.5 transition-all duration-300",
               isActive 
-                ? "bg-energy-purple text-white shadow-lg shadow-energy-purple/20" 
-                : "bg-white text-energy-purple border border-energy-purple/30 hover:bg-energy-purple/5"
+                ? "bg-apple-blue text-white" 
+                : "bg-apple-light text-apple-blue hover:bg-apple-light-hover"
             )}
           >
             <span>Apply Now</span>
@@ -147,7 +141,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
         <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
           <SheetTrigger asChild>
             <button 
-              className="md:hidden flex items-center justify-center w-10 h-10 text-energy-purple rounded-lg hover:bg-energy-purple/5 transition-colors"
+              className="md:hidden flex items-center justify-center w-10 h-10 text-apple-text rounded-lg hover:bg-apple-light transition-colors"
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             >
               <Menu size={20} />
@@ -161,7 +155,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
               <div className="flex items-center justify-between">
                 <Link 
                   to="/" 
-                  className="font-outfit text-energy-purple tracking-tight transition-opacity hover:opacity-80"
+                  className="font-sans text-apple-text tracking-tight transition-opacity hover:opacity-80"
                   onClick={closeMenu}
                 >
                   <div className="flex items-center">
@@ -172,7 +166,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                     />
                   </div>
                 </Link>
-                <SheetClose className="rounded-lg w-10 h-10 flex items-center justify-center hover:bg-energy-purple/5 text-energy-purple">
+                <SheetClose className="rounded-lg w-10 h-10 flex items-center justify-center hover:bg-apple-light text-apple-text">
                   <X size={18} />
                 </SheetClose>
               </div>
@@ -185,7 +179,6 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                       initial={{ x: -20, opacity: 0 }}
                       animate={{ x: 0, opacity: 1 }}
                       transition={{ delay: 0.1 + idx * 0.06 }}
-                      className="overflow-hidden"
                     >
                       <SheetClose asChild>
                         {link.href ? (
@@ -194,8 +187,8 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                             className={cn(
                               "block py-3 px-4 text-base font-medium transition-colors rounded-xl relative overflow-hidden group",
                               location.pathname === link.href 
-                                ? "text-energy-purple bg-energy-purple/5" 
-                                : "text-slate-700 hover:text-energy-purple hover:bg-energy-purple/5"
+                                ? "text-apple-blue bg-apple-light" 
+                                : "text-apple-text hover:text-apple-blue hover:bg-apple-light"
                             )}
                           >
                             <span className="relative z-10 flex items-center">
@@ -210,8 +203,8 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                             className={cn(
                               "block py-3 px-4 text-base font-medium transition-colors rounded-xl relative overflow-hidden group",
                               activeSection === link.id 
-                                ? "text-energy-purple bg-energy-purple/5" 
-                                : "text-slate-700 hover:text-energy-purple hover:bg-energy-purple/5"
+                                ? "text-apple-blue bg-apple-light" 
+                                : "text-apple-text hover:text-apple-blue hover:bg-apple-light"
                             )}
                           >
                             <span className="relative z-10 flex items-center">
@@ -235,7 +228,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                 <SheetClose asChild>
                   <NavLink
                     to="/apply"
-                    className="w-full py-3.5 flex justify-center items-center bg-energy-purple text-white rounded-xl text-base font-medium shadow-lg shadow-energy-purple/20 hover:shadow-xl hover:shadow-energy-purple/30 transition-all"
+                    className="w-full py-3 flex justify-center items-center bg-apple-blue text-white rounded-full text-base font-medium hover:bg-apple-blue-hover transition-colors"
                   >
                     Apply Now
                     <ArrowUpRight size={16} className="ml-2 opacity-70" />
