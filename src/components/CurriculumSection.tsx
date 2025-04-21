@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Calendar, Clock, Book, Mic, Users, Theater, Music, Sparkles, ChevronDown, ChevronUp } from 'lucide-react';
+import { GraduationCap, Mic, Award, Headphones, Video } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 import { 
   Collapsible,
   CollapsibleContent,
-  CollapsibleTrigger
+  CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { 
@@ -20,52 +20,52 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const modules = [
   {
-    title: "Vocal Technique & Health",
-    description: "Master the fundamentals of healthy vocal production, breath control, resonance, and range extension.",
-    icon: <Mic className="w-8 h-8 text-rose-500" />,
+    title: "World-Class Faculty",
+    description: "Learn from internationally renowned teachers from top conservatories and universities.",
+    icon: <GraduationCap className="w-8 h-8 text-apple-blue" />,
     highlights: [
-      "Diaphragmatic breath support and control",
-      "Vocal placement and balanced resonance",
-      "Range extension and register blending",
-      "Vocal health and sustainable practice"
+      "45-minute private lesson with master teachers",
+      "30-minute dedicated accompanist sessions",
+      "Personalized feedback and mentoring",
+      "Active industry professionals as mentors"
     ],
-    iconBg: "bg-rose-50"
+    iconBg: "bg-apple-light"
   },
   {
     title: "Performance Mastery",
-    description: "Develop compelling stage presence, emotional connection, and authentic performance skills.",
-    icon: <Theater className="w-8 h-8 text-amber-500" />,
+    description: "Comprehensive approach to performance excellence and stage presence.",
+    icon: <Award className="w-8 h-8 text-apple-blue" />,
     highlights: [
-      "Dynamic stage presence and movement",
-      "Emotional connectivity to text and music",
-      "Microphone technique and amplification",
-      "Audience engagement and performance anxiety"
+      "Alexander Technique workshops",
+      "Stage anxiety management training",
+      "Mock audition experience",
+      "Professional performance recordings"
     ],
-    iconBg: "bg-amber-50"
+    iconBg: "bg-apple-light"
   },
   {
-    title: "Repertoire Development",
-    description: "Expand your repertoire across genres while receiving guidance on appropriate song selection.",
-    icon: <Book className="w-8 h-8 text-blue-500" />,
+    title: "Professional Development",
+    description: "Build your career with industry-standard preparation and connections.",
+    icon: <Mic className="w-8 h-8 text-apple-blue" />,
     highlights: [
-      "Genre-specific vocal techniques",
-      "Personalized repertoire selection",
-      "Language coaching and diction mastery",
-      "Style interpretation and authenticity"
+      "Audition preparation masterclasses",
+      "Industry networking opportunities",
+      "Professional recording portfolio",
+      "Career strategy sessions"
     ],
-    iconBg: "bg-blue-50"
+    iconBg: "bg-apple-light"
   },
   {
-    title: "Ensemble & Collaborative Work",
-    description: "Refine your skills in harmony, blend, and musical collaboration with fellow vocalists.",
-    icon: <Users className="w-8 h-8 text-green-500" />,
+    title: "Holistic Artist Care",
+    description: "360° approach to vocal health and artistic development.",
+    icon: <Headphones className="w-8 h-8 text-apple-blue" />,
     highlights: [
-      "Harmony techniques and ear training",
-      "Vocal blend and dynamic balance",
-      "Collaborative performance skills",
-      "Chamber music and ensemble approach"
+      "Vocal health seminar with medical professionals",
+      "Physical wellness workshops",
+      "Performance psychology coaching",
+      "Long-term sustainability strategies"
     ],
-    iconBg: "bg-green-50"
+    iconBg: "bg-apple-light"
   }
 ];
 
@@ -158,20 +158,21 @@ function ModulesContent() {
         <Card 
           key={`module-${index}`}
           className={cn(
-            "hover:shadow-lg hover:-translate-y-1 group bg-white border border-gray-100 transition-all duration-300"
+            "hover:shadow-lg hover:-translate-y-1 group transition-all duration-300",
+            "bg-white/80 backdrop-blur-sm border border-apple-border"
           )}
         >
           <CardHeader className="pb-2 pt-4 md:pt-5">
             <div className={cn(
-              "mb-3 w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center",
+              "mb-3 w-10 h-10 md:w-12 md:h-12 rounded-2xl flex items-center justify-center",
               module.iconBg
             )}>
               {module.icon}
             </div>
-            <CardTitle className="text-lg md:text-xl font-serif font-medium text-gray-800 group-hover:text-rose-600 transition-colors">
+            <CardTitle className="text-lg md:text-xl font-medium text-apple-text group-hover:text-apple-blue transition-colors">
               {module.title}
             </CardTitle>
-            <CardDescription className="text-gray-600 font-light text-sm md:text-base mt-1">
+            <CardDescription className="text-apple-grey font-light text-sm md:text-base mt-1">
               {module.description}
             </CardDescription>
           </CardHeader>
@@ -179,8 +180,8 @@ function ModulesContent() {
             <ul className="space-y-2 text-sm md:text-base">
               {module.highlights.map((highlight, idx) => (
                 <li key={`highlight-${index}-${idx}`} className="flex items-start">
-                  <span className="text-rose-500 mr-2 mt-1 flex-shrink-0">♪</span>
-                  <span className="text-gray-700">{highlight}</span>
+                  <span className="text-apple-blue mr-2 mt-1 flex-shrink-0">•</span>
+                  <span className="text-apple-text">{highlight}</span>
                 </li>
               ))}
             </ul>
