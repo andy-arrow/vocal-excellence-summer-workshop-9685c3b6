@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
@@ -141,18 +140,25 @@ const Navbar = ({ activeSection }: NavbarProps) => {
         <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
           <SheetTrigger asChild>
             <button 
-              className="md:hidden flex items-center justify-center w-10 h-10 text-apple-text rounded-lg hover:bg-apple-light transition-colors"
+              className={cn(
+                "md:hidden w-10 h-10 flex items-center justify-center rounded-lg",
+                "text-apple-text hover:bg-apple-light/80 active:bg-apple-light",
+                "transition-all duration-300"
+              )}
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             >
-              <Menu size={20} />
+              <Menu className="w-5 h-5" />
             </button>
           </SheetTrigger>
           <SheetContent 
-            side="left" 
-            className="w-full max-w-full p-0 border-none bg-white"
+            side="left"
+            className={cn(
+              "w-[100vw] max-w-full p-0 border-none",
+              "bg-white/[0.985] backdrop-blur-xl"
+            )}
           >
-            <div className="px-6 py-8 space-y-6 h-full flex flex-col">
-              <div className="flex items-center justify-between">
+            <div className="px-6 py-4 space-y-6 h-full flex flex-col">
+              <div className="flex items-center justify-between pb-2 border-b border-apple-border">
                 <Link 
                   to="/" 
                   className="font-sans text-apple-text tracking-tight transition-opacity hover:opacity-80"
@@ -162,55 +168,57 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                     <img 
                       src="/lovable-uploads/e980c9b0-8cdc-423d-a726-2f677be33737.png" 
                       alt="Vocal Excellence Logo" 
-                      className="w-12 h-12 mr-3" 
+                      className="w-8 h-8" 
                     />
                   </div>
                 </Link>
-                <SheetClose className="rounded-lg w-10 h-10 flex items-center justify-center hover:bg-apple-light text-apple-text">
-                  <X size={18} />
+                <SheetClose className={cn(
+                  "rounded-lg w-10 h-10 flex items-center justify-center",
+                  "text-apple-text hover:bg-apple-light/80 active:bg-apple-light",
+                  "transition-all duration-300"
+                )}>
+                  <X className="w-5 h-5" />
                 </SheetClose>
               </div>
               
-              <nav className="flex-1">
-                <ul className="space-y-1">
+              <nav className="flex-1 -mx-6">
+                <ul className="space-y-[2px] px-2">
                   {navLinks.map((link, idx) => (
                     <motion.li 
                       key={link.id}
-                      initial={{ x: -20, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ delay: 0.1 + idx * 0.06 }}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1 + idx * 0.05, duration: 0.3 }}
                     >
                       <SheetClose asChild>
                         {link.href ? (
                           <Link
                             to={link.href}
                             className={cn(
-                              "block py-3 px-4 text-base font-medium transition-colors rounded-xl relative overflow-hidden group",
-                              location.pathname === link.href 
-                                ? "text-apple-blue bg-apple-light" 
-                                : "text-apple-text hover:text-apple-blue hover:bg-apple-light"
+                              "flex items-center justify-between py-3 px-4",
+                              "text-[17px] font-normal text-apple-text",
+                              "rounded-xl transition-colors duration-200",
+                              "hover:bg-apple-light active:bg-apple-light-hover",
+                              location.pathname === link.href && "text-apple-blue"
                             )}
                           >
-                            <span className="relative z-10 flex items-center">
-                              {link.label}
-                              <ArrowUpRight className="ml-2 w-4 h-4 opacity-60 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                            </span>
+                            <span>{link.label}</span>
+                            <ArrowUpRight className="w-4 h-4 opacity-60" />
                           </Link>
                         ) : (
                           <a
                             href={`#${link.id}`}
                             onClick={(e) => handleSmoothScroll(e, link.id)}
                             className={cn(
-                              "block py-3 px-4 text-base font-medium transition-colors rounded-xl relative overflow-hidden group",
-                              activeSection === link.id 
-                                ? "text-apple-blue bg-apple-light" 
-                                : "text-apple-text hover:text-apple-blue hover:bg-apple-light"
+                              "flex items-center justify-between py-3 px-4",
+                              "text-[17px] font-normal text-apple-text",
+                              "rounded-xl transition-colors duration-200",
+                              "hover:bg-apple-light active:bg-apple-light-hover",
+                              activeSection === link.id && "text-apple-blue"
                             )}
                           >
-                            <span className="relative z-10 flex items-center">
-                              {link.label}
-                              <ArrowUpRight className="ml-2 w-4 h-4 opacity-60 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                            </span>
+                            <span>{link.label}</span>
+                            <ArrowUpRight className="w-4 h-4 opacity-60" />
                           </a>
                         )}
                       </SheetClose>
@@ -220,29 +228,35 @@ const Navbar = ({ activeSection }: NavbarProps) => {
               </nav>
               
               <motion.div
-                initial={{ y: 10, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.4 }}
-                className="pt-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="pt-4 space-y-4"
               >
                 <SheetClose asChild>
                   <NavLink
                     to="/apply"
-                    className="w-full py-3 flex justify-center items-center bg-apple-blue text-white rounded-full text-base font-medium hover:bg-apple-blue-hover transition-colors"
+                    className={cn(
+                      "w-full py-3 flex justify-center items-center",
+                      "bg-apple-blue text-white rounded-full",
+                      "text-[17px] font-normal",
+                      "transition-colors duration-200",
+                      "hover:bg-apple-blue-hover"
+                    )}
                   >
                     Apply Now
-                    <ArrowUpRight size={16} className="ml-2 opacity-70" />
+                    <ArrowUpRight className="ml-1 w-4 h-4 opacity-70" />
                   </NavLink>
                 </SheetClose>
-              </motion.div>
-              
-              <motion.div
-                initial={{ y: 10, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.5 }}
-                className="pt-4 flex justify-center"
-              >
-                <AuthButtonsPlaceholder />
+                
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.4 }}
+                  className="flex justify-center"
+                >
+                  <AuthButtonsPlaceholder />
+                </motion.div>
               </motion.div>
             </div>
           </SheetContent>
