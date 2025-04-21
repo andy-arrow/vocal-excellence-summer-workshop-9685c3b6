@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Calendar, MapPin, Users, Clock, Star, ChevronRight, Music } from 'lucide-react';
@@ -13,7 +12,7 @@ const SummerProgramme = () => {
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center text-white overflow-hidden">
         <div className="absolute inset-0 bg-[url('/lovable-uploads/masterclass-singers.jpg')] bg-cover bg-center"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/40"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-apple-text/60 to-apple-text/40"></div>
         <div className="relative z-10 container mx-auto px-6 py-20 text-center max-w-[1100px]">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -21,26 +20,26 @@ const SummerProgramme = () => {
             transition={{ duration: 0.8 }}
             className="space-y-8"
           >
-            <h1 className="text-5xl md:text-7xl font-serif font-bold leading-tight tracking-tight">
-              SUMMER INTENSIVE
-              <span className="block text-xl md:text-2xl font-sans font-light tracking-widest uppercase mt-4">
+            <h1 className="text-5xl md:text-7xl font-serif font-light leading-tight tracking-tight">
+              Summer Intensive
+              <span className="block text-xl md:text-2xl font-sans font-light tracking-wide mt-4">
                 July 15-20, 2025 • Limassol, Cyprus
               </span>
             </h1>
             
-            <div className="w-24 h-1 bg-energy-pink mx-auto"></div>
+            <div className="w-24 h-px bg-white/30 mx-auto"></div>
             
-            <p className="text-xl md:text-2xl font-light max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl font-light max-w-2xl mx-auto leading-relaxed text-white/90">
               An immersive five-day vocal training programme designed to take your performance skills to the next level
             </p>
             
             <div className="pt-8">
               <Link 
                 to="/apply" 
-                className="inline-flex items-center gap-2 bg-energy-pink text-white px-8 py-4 rounded-md text-lg font-medium transition-all group shadow-md hover:shadow-lg hover:bg-opacity-90"
+                className="inline-flex items-center gap-2 bg-apple-blue text-white px-8 py-4 rounded-full text-lg font-medium transition-all duration-300 hover:bg-apple-blue-hover"
               >
-                REGISTER NOW
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                Register Now
+                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-0.5" />
               </Link>
             </div>
           </motion.div>
@@ -52,32 +51,32 @@ const SummerProgramme = () => {
         
         {/* Introduction */}
         <section className="mb-20">
-          <div className="flex flex-col items-center text-center mb-8">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-slate-900 mb-4">
-              ABOUT THE PROGRAMME
+          <div className="flex flex-col items-center text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-serif font-light text-apple-text mb-4">
+              About the Programme
             </h2>
-            <div className="w-16 h-0.5 bg-energy-pink"></div>
+            <div className="w-16 h-px bg-apple-border mx-auto"></div>
           </div>
           
-          <p className="text-lg text-slate-800 leading-relaxed mb-8 max-w-3xl mx-auto">
+          <p className="text-lg text-apple-grey leading-relaxed mb-8 max-w-3xl mx-auto">
             The Vocal Excellence Summer Intensive is a comprehensive programme designed for serious vocalists looking to refine their technique, expand their repertoire, and connect with industry professionals. Over five transformative days, participants will engage in personalized coaching, masterclasses, and performance opportunities.
           </p>
           
           <div className="grid md:grid-cols-3 gap-8 mt-12">
             {[
               {
-                icon: <Calendar className="w-6 h-6 text-energy-pink" />,
-                title: "FIVE DAYS",
+                icon: <Calendar className="w-6 h-6 text-apple-blue" />,
+                title: "Five Days",
                 description: "Intensive daily training from 9am to 5pm with evening showcases"
               },
               {
-                icon: <Users className="w-6 h-6 text-energy-pink" />,
-                title: "LIMITED PLACES",
+                icon: <Users className="w-6 h-6 text-apple-blue" />,
+                title: "Limited Places",
                 description: "Only 20 participants to ensure personalized attention"
               },
               {
-                icon: <Star className="w-6 h-6 text-energy-pink" />,
-                title: "EXPERT FACULTY",
+                icon: <Star className="w-6 h-6 text-apple-blue" />,
+                title: "Expert Faculty",
                 description: "Learn from internationally recognized vocal coaches"
               }
             ].map((item, index) => (
@@ -87,15 +86,15 @@ const SummerProgramme = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="text-center"
+                className="text-center p-6 rounded-2xl bg-apple-light hover:bg-apple-light-hover transition-all duration-300"
               >
                 <div className="flex justify-center mb-4">
                   {item.icon}
                 </div>
-                <h3 className="text-lg font-bold tracking-wide mb-2 text-slate-900">
+                <h3 className="text-lg font-medium tracking-wide mb-2 text-apple-text">
                   {item.title}
                 </h3>
-                <p className="text-slate-700">
+                <p className="text-apple-grey">
                   {item.description}
                 </p>
               </motion.div>
@@ -103,15 +102,15 @@ const SummerProgramme = () => {
           </div>
         </section>
         
-        <Separator className="my-16 bg-slate-200" />
+        <Separator className="my-16 bg-apple-border" />
         
         {/* Programme Schedule */}
         <section className="mb-20">
           <div className="flex flex-col items-center text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-slate-900 mb-4">
-              PROGRAMME SCHEDULE
+            <h2 className="text-3xl md:text-4xl font-serif font-light text-apple-text mb-4">
+              Programme Schedule
             </h2>
-            <div className="w-16 h-0.5 bg-energy-pink"></div>
+            <div className="w-16 h-px bg-apple-border mx-auto"></div>
           </div>
           
           <div className="grid gap-8">
@@ -153,17 +152,17 @@ const SummerProgramme = () => {
                 ]
               }
             ].map((day, index) => (
-              <Card key={index} className="overflow-hidden border-slate-200 hover:shadow-md transition-all">
+              <Card key={index} className="overflow-hidden border-apple-border hover:shadow-lg transition-all duration-300">
                 <CardContent className="p-0">
-                  <div className="bg-slate-50 px-6 py-4 border-b border-slate-200">
-                    <h3 className="text-xl font-bold text-slate-900">{day.day}: {day.title}</h3>
+                  <div className="bg-apple-light px-6 py-4 border-b border-apple-border">
+                    <h3 className="text-xl font-light text-apple-text">{day.day}: {day.title}</h3>
                   </div>
                   <div className="p-6">
                     <ul className="space-y-3">
                       {day.schedule.map((item, idx) => (
                         <li key={idx} className="flex items-start">
-                          <ChevronRight className="w-4 h-4 text-energy-pink mt-1 mr-2 flex-shrink-0" />
-                          <span className="text-slate-700">{item}</span>
+                          <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
+                          <span className="text-apple-grey">{item}</span>
                         </li>
                       ))}
                     </ul>
@@ -173,23 +172,26 @@ const SummerProgramme = () => {
             ))}
             
             <div className="text-center mt-8">
-              <Button variant="outline" className="border-energy-pink text-energy-pink hover:bg-energy-pink/5">
+              <Button 
+                variant="outline" 
+                className="border-apple-blue text-apple-blue hover:bg-apple-blue/5"
+              >
                 View Full 5-Day Schedule
               </Button>
             </div>
           </div>
         </section>
         
-        <Separator className="my-16 bg-slate-200" />
+        <Separator className="my-16 bg-apple-border" />
         
         {/* Faculty Section */}
         <section className="mb-20">
           <div className="flex flex-col items-center text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-slate-900 mb-4">
-              MEET THE 2025 FACULTY
+            <h2 className="text-3xl md:text-4xl font-serif font-light text-apple-text mb-4">
+              Meet the 2025 Faculty
             </h2>
-            <div className="w-16 h-0.5 bg-energy-pink"></div>
-            <p className="text-lg text-slate-700 max-w-2xl mt-6">
+            <div className="w-16 h-px bg-apple-border mx-auto"></div>
+            <p className="text-lg text-apple-grey max-w-2xl mt-6">
               Learn from our internationally acclaimed faculty of performers, directors, and educators
             </p>
           </div>
@@ -227,70 +229,70 @@ const SummerProgramme = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-1">
+                <h3 className="text-xl font-bold text-apple-text mb-1">
                   {faculty.name}
                 </h3>
-                <p className="text-sm uppercase tracking-wider text-slate-600 mb-3">
+                <p className="text-sm uppercase tracking-wider text-apple-grey mb-3">
                   {faculty.role}
                 </p>
-                <div className="w-8 h-0.5 bg-energy-pink mx-auto"></div>
+                <div className="w-8 h-px bg-apple-border mx-auto"></div>
               </motion.div>
             ))}
           </div>
           
           <div className="text-center mt-10">
-            <Button variant="outline" className="border-energy-pink text-energy-pink hover:bg-energy-pink/5">
+            <Button variant="outline" className="border-apple-blue text-apple-blue hover:bg-apple-blue/5">
               View All Faculty
             </Button>
           </div>
         </section>
         
-        <Separator className="my-16 bg-slate-200" />
+        <Separator className="my-16 bg-apple-border" />
         
         {/* Why Join Us */}
         <section className="mb-20">
           <div className="flex flex-col items-center text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-slate-900 mb-4">
-              WHY JOIN US?
+            <h2 className="text-3xl md:text-4xl font-serif font-light text-apple-text mb-4">
+              Why Join Us?
             </h2>
-            <div className="w-16 h-0.5 bg-energy-pink"></div>
+            <div className="w-16 h-px bg-apple-border mx-auto"></div>
           </div>
           
           <div className="grid md:grid-cols-2 gap-12">
             <div className="space-y-6">
               <div className="flex items-start">
                 <div className="mr-4 mt-1">
-                  <div className="p-2 bg-slate-50 rounded-full">
-                    <Music className="w-5 h-5 text-energy-pink" />
+                  <div className="p-2 bg-apple-light rounded-full">
+                    <Music className="w-5 h-5 text-apple-blue" />
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900 mb-2">Individual Attention</h3>
-                  <p className="text-slate-700">Our small class size ensures you receive personalized coaching tailored to your unique voice and performance style.</p>
+                  <h3 className="text-lg font-bold text-apple-text mb-2">Individual Attention</h3>
+                  <p className="text-apple-grey">Our small class size ensures you receive personalized coaching tailored to your unique voice and performance style.</p>
                 </div>
               </div>
               
               <div className="flex items-start">
                 <div className="mr-4 mt-1">
-                  <div className="p-2 bg-slate-50 rounded-full">
-                    <Users className="w-5 h-5 text-energy-pink" />
+                  <div className="p-2 bg-apple-light rounded-full">
+                    <Users className="w-5 h-5 text-apple-blue" />
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900 mb-2">Professional Network</h3>
-                  <p className="text-slate-700">Connect with industry professionals and like-minded performers, building relationships that can last throughout your career.</p>
+                  <h3 className="text-lg font-bold text-apple-text mb-2">Professional Network</h3>
+                  <p className="text-apple-grey">Connect with industry professionals and like-minded performers, building relationships that can last throughout your career.</p>
                 </div>
               </div>
               
               <div className="flex items-start">
                 <div className="mr-4 mt-1">
-                  <div className="p-2 bg-slate-50 rounded-full">
-                    <Star className="w-5 h-5 text-energy-pink" />
+                  <div className="p-2 bg-apple-light rounded-full">
+                    <Star className="w-5 h-5 text-apple-blue" />
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900 mb-2">Performance Opportunities</h3>
-                  <p className="text-slate-700">Showcase your progress in our final concert, with potential opportunities for outstanding participants.</p>
+                  <h3 className="text-lg font-bold text-apple-text mb-2">Performance Opportunities</h3>
+                  <p className="text-apple-grey">Showcase your progress in our final concert, with potential opportunities for outstanding participants.</p>
                 </div>
               </div>
             </div>
@@ -298,37 +300,37 @@ const SummerProgramme = () => {
             <div className="space-y-6">
               <div className="flex items-start">
                 <div className="mr-4 mt-1">
-                  <div className="p-2 bg-slate-50 rounded-full">
-                    <Clock className="w-5 h-5 text-energy-pink" />
+                  <div className="p-2 bg-apple-light rounded-full">
+                    <Clock className="w-5 h-5 text-apple-blue" />
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900 mb-2">Intensive Format</h3>
-                  <p className="text-slate-700">Our immersive five-day format allows for rapid skill development and immediate application of techniques.</p>
+                  <h3 className="text-lg font-bold text-apple-text mb-2">Intensive Format</h3>
+                  <p className="text-apple-grey">Our immersive five-day format allows for rapid skill development and immediate application of techniques.</p>
                 </div>
               </div>
               
               <div className="flex items-start">
                 <div className="mr-4 mt-1">
-                  <div className="p-2 bg-slate-50 rounded-full">
-                    <MapPin className="w-5 h-5 text-energy-pink" />
+                  <div className="p-2 bg-apple-light rounded-full">
+                    <MapPin className="w-5 h-5 text-apple-blue" />
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900 mb-2">Inspiring Location</h3>
-                  <p className="text-slate-700">Our Limassol, Cyprus venue provides a beautiful and inspiring setting for your artistic development.</p>
+                  <h3 className="text-lg font-bold text-apple-text mb-2">Inspiring Location</h3>
+                  <p className="text-apple-grey">Our Limassol, Cyprus venue provides a beautiful and inspiring setting for your artistic development.</p>
                 </div>
               </div>
               
               <div className="flex items-start">
                 <div className="mr-4 mt-1">
-                  <div className="p-2 bg-slate-50 rounded-full">
-                    <Calendar className="w-5 h-5 text-energy-pink" />
+                  <div className="p-2 bg-apple-light rounded-full">
+                    <Calendar className="w-5 h-5 text-apple-blue" />
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900 mb-2">Comprehensive Curriculum</h3>
-                  <p className="text-slate-700">From technical fundamentals to advanced performance techniques, our curriculum covers all aspects of vocal excellence.</p>
+                  <h3 className="text-lg font-bold text-apple-text mb-2">Comprehensive Curriculum</h3>
+                  <p className="text-apple-grey">From technical fundamentals to advanced performance techniques, our curriculum covers all aspects of vocal excellence.</p>
                 </div>
               </div>
             </div>
@@ -338,10 +340,10 @@ const SummerProgramme = () => {
         {/* Application Information */}
         <section className="mb-20 bg-slate-50 p-10 rounded-lg">
           <div className="flex flex-col items-center text-center mb-8">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-slate-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif font-light text-slate-900 mb-4">
               APPLICATION INFORMATION
             </h2>
-            <div className="w-16 h-0.5 bg-energy-pink"></div>
+            <div className="w-16 h-px bg-apple-border mx-auto"></div>
           </div>
           
           <div className="grid md:grid-cols-2 gap-10">
@@ -349,19 +351,19 @@ const SummerProgramme = () => {
               <h3 className="text-xl font-bold text-slate-900 mb-4">ELIGIBILITY</h3>
               <ul className="space-y-3">
                 <li className="flex items-start">
-                  <ChevronRight className="w-4 h-4 text-energy-pink mt-1 mr-2 flex-shrink-0" />
+                  <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
                   <span className="text-slate-700">Vocalists aged 16 and above</span>
                 </li>
                 <li className="flex items-start">
-                  <ChevronRight className="w-4 h-4 text-energy-pink mt-1 mr-2 flex-shrink-0" />
+                  <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
                   <span className="text-slate-700">Minimum 2 years of formal vocal training</span>
                 </li>
                 <li className="flex items-start">
-                  <ChevronRight className="w-4 h-4 text-energy-pink mt-1 mr-2 flex-shrink-0" />
+                  <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
                   <span className="text-slate-700">All voice types and genres welcome</span>
                 </li>
                 <li className="flex items-start">
-                  <ChevronRight className="w-4 h-4 text-energy-pink mt-1 mr-2 flex-shrink-0" />
+                  <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
                   <span className="text-slate-700">Intermediate to advanced skill level</span>
                 </li>
               </ul>
@@ -371,19 +373,19 @@ const SummerProgramme = () => {
               <h3 className="text-xl font-bold text-slate-900 mb-4">FEES & DEADLINES</h3>
               <ul className="space-y-3">
                 <li className="flex items-start">
-                  <ChevronRight className="w-4 h-4 text-energy-pink mt-1 mr-2 flex-shrink-0" />
+                  <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
                   <span className="text-slate-700">Early Bird: €1,200 (until March 15, 2025)</span>
                 </li>
                 <li className="flex items-start">
-                  <ChevronRight className="w-4 h-4 text-energy-pink mt-1 mr-2 flex-shrink-0" />
+                  <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
                   <span className="text-slate-700">Regular Rate: €1,500</span>
                 </li>
                 <li className="flex items-start">
-                  <ChevronRight className="w-4 h-4 text-energy-pink mt-1 mr-2 flex-shrink-0" />
+                  <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
                   <span className="text-slate-700">Application Deadline: May 31, 2025</span>
                 </li>
                 <li className="flex items-start">
-                  <ChevronRight className="w-4 h-4 text-energy-pink mt-1 mr-2 flex-shrink-0" />
+                  <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
                   <span className="text-slate-700">Limited scholarships available</span>
                 </li>
               </ul>
@@ -393,10 +395,10 @@ const SummerProgramme = () => {
           <div className="text-center mt-10">
             <Link 
               to="/apply" 
-              className="inline-flex items-center gap-2 bg-energy-pink text-white px-8 py-4 rounded-md text-lg font-medium transition-all group shadow-md hover:shadow-lg hover:bg-opacity-90"
+              className="inline-flex items-center gap-2 bg-apple-blue text-white px-8 py-4 rounded-full text-lg font-medium transition-all duration-300 hover:bg-apple-blue-hover"
             >
               APPLY NOW
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-0.5" />
             </Link>
           </div>
         </section>
@@ -406,10 +408,10 @@ const SummerProgramme = () => {
       <section className="bg-slate-900 py-20 text-white">
         <div className="container mx-auto max-w-[1000px] px-6">
           <div className="flex flex-col items-center text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif font-light text-white mb-4">
               WHAT PARTICIPANTS SAY
             </h2>
-            <div className="w-16 h-0.5 bg-energy-pink"></div>
+            <div className="w-16 h-px bg-apple-border mx-auto"></div>
           </div>
           
           <div className="grid md:grid-cols-2 gap-8">
@@ -448,23 +450,23 @@ const SummerProgramme = () => {
       </section>
       
       {/* Call to Action */}
-      <section className="bg-white py-20 px-6">
+      <section className="bg-apple-light py-20 px-6 rounded-3xl">
         <div className="container mx-auto text-center max-w-3xl">
-          <h2 className="text-3xl md:text-4xl font-serif font-bold text-slate-900 mb-6">
-            SECURE YOUR PLACE
+          <h2 className="text-3xl md:text-4xl font-serif font-light text-apple-text mb-6">
+            Secure Your Place
           </h2>
-          <div className="w-16 h-0.5 bg-energy-pink mx-auto mb-6"></div>
-          <p className="text-lg md:text-xl mb-8 text-slate-700 leading-relaxed">
+          <div className="w-16 h-px bg-apple-border mx-auto mb-6"></div>
+          <p className="text-lg md:text-xl mb-8 text-apple-grey leading-relaxed">
             Join us this summer for an unforgettable experience that will take your vocal abilities to the next level. With only 20 places available, early application is recommended.
           </p>
           <Link 
             to="/apply" 
-            className="inline-flex items-center gap-2 bg-energy-pink text-white px-10 py-5 rounded-md text-lg font-medium transition-all group shadow-md hover:shadow-lg hover:bg-opacity-90"
+            className="inline-flex items-center gap-2 bg-apple-blue text-white px-10 py-5 rounded-full text-lg font-medium transition-all duration-300 hover:bg-apple-blue-hover"
           >
-            APPLY FOR SUMMER 2025
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            Apply for Summer 2025
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
           </Link>
-          <p className="text-sm text-slate-600 mt-4">
+          <p className="text-sm text-apple-grey mt-4">
             Early bird pricing ends March 15, 2025
           </p>
         </div>
