@@ -27,6 +27,7 @@ const fadeIn = {
     }
   }
 };
+
 const Application = () => {
   const [showScrollToTop, setShowScrollToTop] = React.useState(false);
   useEffect(() => {
@@ -41,6 +42,7 @@ const Application = () => {
     });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
   return <div className="bg-white text-charcoal min-h-screen font-sans antialiased">
       <Helmet>
         <title>Apply Now | Vocal Excellence Workshop</title>
@@ -63,9 +65,9 @@ const Application = () => {
             }} transition={{
               duration: 0.8
             }}>
-                <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-charcoal mb-6 tracking-tight">
-                  <span className="block mb-4">Unlock Your</span>
-                  <span className="gradient-text">Vocal Potential</span>
+                <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-black mb-6 tracking-tight">
+                  <span className="block mb-4">Your Journey To</span>
+                  <span className="block">Vocal Mastery</span>
                 </h1>
                 <p className="font-sans text-lg md:text-xl text-charcoal/80 max-w-2xl mx-auto leading-relaxed">Join our exclusive 5-day Workshop where world-class mentors will transform your voice and elevate your technique to new heights.</p>
               </motion.div>
@@ -123,4 +125,5 @@ const Application = () => {
       </div>
     </div>;
 };
+
 export default Application;
