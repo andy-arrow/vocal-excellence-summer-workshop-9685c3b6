@@ -78,7 +78,7 @@ const TermsAndConditions = () => {
           </div>
           
           <p className="text-[#86868b] mt-8">
-            Please review our full terms and conditions carefully before applying. If you have any questions, please contact us at <a href="mailto:help@vocalexcellence.com" className="text-[#0066cc] hover:underline">help@vocalexcellence.com</a>.
+            Please review our full terms and conditions carefully before applying. If you have any questions, please contact us at <a href="mailto:info@vocalexcellence.cy" className="text-[#0066cc] hover:underline">info@vocalexcellence.cy</a>.
           </p>
         </div>
       </motion.div>

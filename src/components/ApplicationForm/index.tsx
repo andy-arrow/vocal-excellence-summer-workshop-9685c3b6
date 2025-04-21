@@ -304,9 +304,14 @@ const ApplicationForm = () => {
           </form>
         </Form>
 
-        <div className="text-center mt-6 text-sm text-gray-600">
-          <p>Need help? Email us at <a href="mailto:help@vocalexcellence.com" className="text-blue-600 hover:underline">help@vocalexcellence.com</a></p>
-        </div>
+        <motion.div 
+          className="text-center mt-6 text-sm text-gray-600"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+        >
+          <p>Need help? Email us at <a href="mailto:info@vocalexcellence.cy" className="text-blue-600 hover:underline">info@vocalexcellence.cy</a></p>
+        </motion.div>
       </div>
     </section>
   );
