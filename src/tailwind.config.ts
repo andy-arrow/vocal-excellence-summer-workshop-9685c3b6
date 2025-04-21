@@ -96,6 +96,12 @@ export default {
 					800: '#1e293b',
 					900: '#0f172a',
 				},
+				charcoal: {
+					DEFAULT: '#403E43',
+					50: 'rgba(64, 62, 67, 0.5)',
+					70: 'rgba(64, 62, 67, 0.7)',
+					80: 'rgba(64, 62, 67, 0.8)',
+				},
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -236,5 +242,3 @@ export default {
 		},
 	},
 } satisfies Config;
-
-// NOTE: This file is getting very long. Consider refactoring into smaller files for maintainability if you plan future changes.

@@ -83,19 +83,20 @@
     font-family: Didot, Garamond, "Times New Roman", Times, serif;
     @apply text-body-lg text-charcoal/70;
   }
+
+  .section-title {
+    @apply font-serif text-3xl md:text-4xl font-light mb-6 
+           text-charcoal tracking-tight;
+  }
+
+  .section-subtitle {
+    @apply text-lg md:text-xl mb-8 text-charcoal/70;
+  }
 }
 
 @layer components {
   .focus-ring {
     @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-opacity-75;
-  }
-
-  .section-title {
-    @apply text-3xl md:text-4xl font-outfit font-bold mb-4 text-primary/90 tracking-tight relative;
-  }
-
-  .section-subtitle {
-    @apply text-lg md:text-xl mb-10 text-foreground/80 font-light;
   }
 
   .section-container {
