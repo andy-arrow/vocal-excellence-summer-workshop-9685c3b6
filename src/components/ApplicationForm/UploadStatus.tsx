@@ -18,18 +18,18 @@ export const UploadStatus: React.FC<UploadStatusProps> = ({ uploadState, onRemov
   if (uploadState.status === 'uploading') {
     return (
       <motion.div 
-        className="mt-2 bg-gray-100 rounded-xl p-3 flex items-center"
+        className="mt-2 bg-apple-light rounded-xl p-3 flex items-center"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
       >
         <div className="flex-1 mr-3">
-          <div className="flex justify-between text-xs text-gray-800 font-medium mb-1">
+          <div className="flex justify-between text-xs text-apple-text font-medium mb-1">
             <span className="truncate max-w-[150px]">{fileName}</span>
             <span>{Math.round(uploadState.progress)}%</span>
           </div>
-          <div className="h-1.5 bg-gray-300 rounded-full overflow-hidden">
+          <div className="h-1.5 bg-apple-border rounded-full overflow-hidden">
             <motion.div 
-              className="h-full bg-blue-700 rounded-full"
+              className="h-full bg-apple-blue rounded-full"
               animate={{ width: `${uploadState.progress}%` }}
             />
           </div>
@@ -38,7 +38,7 @@ export const UploadStatus: React.FC<UploadStatusProps> = ({ uploadState, onRemov
           animate={{ rotate: 360 }}
           transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
         >
-          <Upload size={16} className="text-blue-700" />
+          <Upload size={16} className="text-apple-blue" />
         </motion.div>
       </motion.div>
     );
@@ -53,12 +53,12 @@ export const UploadStatus: React.FC<UploadStatusProps> = ({ uploadState, onRemov
       >
         <div className="flex items-center">
           <CheckCircle size={16} className="text-green-700 mr-2" />
-          <span className="text-sm text-gray-900 font-medium truncate max-w-[200px]">{fileName}</span>
+          <span className="text-sm text-apple-text font-medium truncate max-w-[200px]">{fileName}</span>
         </div>
         <Button 
           variant="ghost" 
           size="sm" 
-          className="h-7 w-7 p-0 text-gray-700 hover:text-gray-900"
+          className="h-7 w-7 p-0 text-apple-grey hover:text-apple-text"
           onClick={onRemove}
         >
           <X size={14} />
@@ -77,12 +77,12 @@ export const UploadStatus: React.FC<UploadStatusProps> = ({ uploadState, onRemov
       >
         <div className="flex items-center">
           <AlertCircle size={16} className="text-red-700 mr-2" />
-          <span className="text-sm text-gray-900 font-medium">Upload failed. Please try again.</span>
+          <span className="text-sm text-apple-text font-medium">Upload failed. Please try again.</span>
         </div>
         <Button 
           variant="ghost" 
           size="sm" 
-          className="h-7 w-7 p-0 text-gray-700 hover:text-gray-900"
+          className="h-7 w-7 p-0 text-apple-grey hover:text-apple-text"
           onClick={onRemove}
         >
           <X size={14} />

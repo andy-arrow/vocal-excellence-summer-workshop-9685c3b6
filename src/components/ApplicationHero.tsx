@@ -1,6 +1,7 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Music } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 const ApplicationHero = () => {
   const scrollToForm = () => {
@@ -11,8 +12,8 @@ const ApplicationHero = () => {
   };
 
   return (
-    <section className="relative py-24 md:py-32 overflow-hidden bg-[#1d1d1f]">
-      <div className="absolute inset-0 bg-gradient-to-b from-[#1d1d1f] to-[#1d1d1f]/90 pointer-events-none"></div>
+    <section className="relative py-24 md:py-32 overflow-hidden bg-apple-text">
+      <div className="absolute inset-0 bg-gradient-to-b from-apple-text to-apple-text/90 pointer-events-none"></div>
       
       <div className="container mx-auto px-6 relative z-10">
         <motion.div 
@@ -23,13 +24,13 @@ const ApplicationHero = () => {
         >
           <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white">
             Your Journey to<br />
-            <span className="text-[#2997ff]">
+            <span className="text-apple-blue">
               Vocal Mastery
             </span>
           </h1>
           
           <motion.p 
-            className="text-lg md:text-xl text-[#86868b] max-w-2xl mx-auto leading-relaxed font-light"
+            className="text-lg md:text-xl text-apple-grey max-w-2xl mx-auto leading-relaxed font-light"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.7 }}
@@ -45,7 +46,7 @@ const ApplicationHero = () => {
           >
             <motion.button
               onClick={scrollToForm}
-              className="px-8 py-4 rounded-full bg-[#0071e3] text-white hover:bg-[#0077ED] transition-all duration-300 font-medium text-lg shadow-sm"
+              className="px-8 py-4 rounded-full bg-apple-blue text-white hover:bg-apple-blue-hover transition-all duration-300 font-medium text-lg shadow-sm"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -56,10 +57,10 @@ const ApplicationHero = () => {
             </motion.button>
             
             <div className="text-sm">
-              <span className="inline-block px-3 py-1 bg-[#1d1d1f]/60 backdrop-blur border border-[#86868b]/20 rounded-full text-xs font-medium text-[#86868b]">
+              <span className="inline-block px-3 py-1 bg-apple-text/60 backdrop-blur border border-apple-grey/20 rounded-full text-xs font-medium text-apple-grey">
                 Limited Capacity
               </span>
-              <span className="text-[#86868b] ml-2">
+              <span className="text-apple-grey ml-2">
                 Only 20 spots available for Summer 2025
               </span>
             </div>

@@ -20,28 +20,28 @@ const ProgrammeApplicationSection = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h3 className="text-xl font-bold text-gray-900">Programme Application</h3>
-        <div className="flex items-center text-sm text-gray-800 gap-1.5 font-medium">
+        <h3 className="text-xl font-bold text-apple-text">Programme Application</h3>
+        <div className="flex items-center text-sm text-apple-grey gap-1.5 font-medium">
           <Info className="w-4 h-4" />
           <span>All fields are required unless marked optional</span>
         </div>
       </div>
       
       <div className="space-y-6">
-        <div className="bg-white rounded-xl p-4 border border-gray-300 shadow-sm">
+        <div className="bg-white rounded-xl p-4 border border-apple-border shadow-sm">
           <FormField
             control={form.control}
             name="reasonForApplying"
             render={({ field }) => (
               <FormItem className="space-y-2">
-                <FormLabel className="flex items-center gap-2 text-gray-900 font-medium">
+                <FormLabel className="flex items-center gap-2 text-apple-text font-medium">
                   Why do you want to join this programme?
                   <span className="text-red-700">*</span>
                 </FormLabel>
                 <FormControl>
                   <Textarea 
                     placeholder="Please explain your interest in the programme and what you hope to achieve"
-                    className="min-h-[150px] rounded-xl border-gray-300 focus:border-blue-700 focus:ring-0 text-gray-900 placeholder:text-gray-600"
+                    className="min-h-[150px] rounded-xl border-apple-border focus:border-apple-blue focus:ring-0 text-apple-text placeholder:text-apple-grey"
                     {...field}
                   />
                 </FormControl>
@@ -51,20 +51,20 @@ const ProgrammeApplicationSection = () => {
           />
         </div>
         
-        <div className="bg-white rounded-xl p-4 border border-gray-300 shadow-sm">
+        <div className="bg-white rounded-xl p-4 border border-apple-border shadow-sm">
           <FormField
             control={form.control}
             name="heardAboutUs"
             render={({ field }) => (
               <FormItem className="space-y-2">
-                <FormLabel className="flex items-center gap-2 text-gray-900 font-medium">
+                <FormLabel className="flex items-center gap-2 text-apple-text font-medium">
                   How did you hear about us?
                   <span className="text-red-700">*</span>
                 </FormLabel>
                 <FormControl>
                   <Input 
                     placeholder="Social media, website, referral, etc." 
-                    className="rounded-xl border-gray-300 focus:border-blue-700 focus:ring-0 text-gray-900 placeholder:text-gray-600" 
+                    className="rounded-xl border-apple-border focus:border-apple-blue focus:ring-0 text-apple-text placeholder:text-apple-grey" 
                     {...field} 
                   />
                 </FormControl>
@@ -74,7 +74,7 @@ const ProgrammeApplicationSection = () => {
           />
         </div>
         
-        <div className="bg-gray-100 rounded-xl p-4 border border-gray-300">
+        <div className="bg-apple-light rounded-xl p-4 border border-apple-border">
           <FormField
             control={form.control}
             name="scholarshipInterest"
@@ -84,15 +84,15 @@ const ProgrammeApplicationSection = () => {
                   <Checkbox
                     checked={field.value}
                     onCheckedChange={field.onChange}
-                    className={`${field.value ? 'border-blue-700 bg-blue-700 text-white' : 'border-gray-400 bg-white'} h-5 w-5 rounded-md`}
+                    className={`${field.value ? 'border-apple-blue bg-apple-blue text-white' : 'border-apple-grey bg-white'} h-5 w-5 rounded-md`}
                   />
                 </FormControl>
                 <div className="space-y-1 leading-none">
-                  <FormLabel className="text-gray-900 font-medium">
+                  <FormLabel className="text-apple-text font-medium">
                     I wish to be considered for financial aid
                   </FormLabel>
                   {field.value && (
-                    <p className="text-sm text-gray-800 mt-2 font-medium">
+                    <p className="text-sm text-apple-grey mt-2 font-medium">
                       If selected, we will contact you with further instructions on how to complete the financial aid application.
                     </p>
                   )}
@@ -102,19 +102,19 @@ const ProgrammeApplicationSection = () => {
           />
         </div>
         
-        <div className="bg-white rounded-xl p-4 border border-gray-300 shadow-sm">
+        <div className="bg-white rounded-xl p-4 border border-apple-border shadow-sm">
           <FormField
             control={form.control}
             name="specialNeeds"
             render={({ field }) => (
               <FormItem className="space-y-2">
-                <FormLabel className="text-gray-900 font-medium">
+                <FormLabel className="text-apple-text font-medium">
                   Accessibility Needs or Special Accommodations (Optional)
                 </FormLabel>
                 <FormControl>
                   <Textarea 
                     placeholder="Please inform us of any accessibility requirements or accommodations you may need"
-                    className="min-h-[100px] rounded-xl border-gray-300 focus:border-blue-700 focus:ring-0 text-gray-900 placeholder:text-gray-600"
+                    className="min-h-[100px] rounded-xl border-apple-border focus:border-apple-blue focus:ring-0 text-apple-text placeholder:text-apple-grey"
                     {...field}
                   />
                 </FormControl>

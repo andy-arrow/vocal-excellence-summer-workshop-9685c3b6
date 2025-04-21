@@ -46,14 +46,14 @@ const SupportingMaterialsSection = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h3 className="text-xl font-bold text-gray-900">Supporting Materials</h3>
-        <div className="flex items-center text-sm text-gray-800 gap-1.5 font-medium">
+        <h3 className="text-xl font-bold text-apple-text">Supporting Materials</h3>
+        <div className="flex items-center text-sm text-apple-grey gap-1.5 font-medium">
           <Info className="w-4 h-4" />
           <span>MP3, WAV, or PDF files only</span>
         </div>
       </div>
       
-      <div className="bg-white rounded-xl p-4 border border-gray-300 shadow-sm">
+      <div className="bg-white rounded-xl p-4 border border-apple-border shadow-sm">
         <FileUploadSection
           label="First Audition Recording"
           description="Upload your first piece (3-5 minutes) in MP3 or WAV format."
@@ -61,11 +61,11 @@ const SupportingMaterialsSection = () => {
           fileType="audioFile1"
           acceptedFormats=".mp3,.wav"
           required={true}
-          iconColor="text-gray-900"
+          iconColor="text-apple-text"
         />
       </div>
       
-      <div className="bg-white rounded-xl p-4 border border-gray-300 shadow-sm">
+      <div className="bg-white rounded-xl p-4 border border-apple-border shadow-sm">
         <FileUploadSection
           label="Second Audition Recording"
           description="Upload your second contrasting piece (3-5 minutes) in MP3 or WAV format."
@@ -73,11 +73,11 @@ const SupportingMaterialsSection = () => {
           fileType="audioFile2"
           acceptedFormats=".mp3,.wav"
           required={true}
-          iconColor="text-gray-900"
+          iconColor="text-apple-text"
         />
       </div>
       
-      <div className="bg-white rounded-xl p-4 border border-gray-300 shadow-sm">
+      <div className="bg-white rounded-xl p-4 border border-apple-border shadow-sm">
         <FileUploadSection
           label="CV/Resume"
           description="Upload your musical CV/Resume in PDF format."
@@ -85,11 +85,11 @@ const SupportingMaterialsSection = () => {
           fileType="cvFile"
           acceptedFormats=".pdf"
           required={true}
-          iconColor="text-gray-900"
+          iconColor="text-apple-text"
         />
       </div>
       
-      <div className="bg-white rounded-xl p-4 border border-gray-300 shadow-sm">
+      <div className="bg-white rounded-xl p-4 border border-apple-border shadow-sm">
         <FileUploadSection
           label="Recommendation Letter (Optional)"
           description="Upload your recommendation letter in PDF format. This is optional."
@@ -97,7 +97,7 @@ const SupportingMaterialsSection = () => {
           fileType="recommendationFile"
           acceptedFormats=".pdf"
           required={false}
-          iconColor="text-gray-900"
+          iconColor="text-apple-text"
         />
       </div>
     </div>

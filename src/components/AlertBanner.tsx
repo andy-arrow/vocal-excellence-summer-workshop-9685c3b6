@@ -22,7 +22,7 @@ const AlertBanner = ({
   const getIcon = () => {
     switch (type) {
       case 'info':
-        return <Info className="h-5 w-5 text-blue-600" />;
+        return <Info className="h-5 w-5 text-apple-blue" />;
       case 'success':
         return <Check className="h-5 w-5 text-green-600" />;
       case 'warning':
@@ -37,30 +37,30 @@ const AlertBanner = ({
   const getAlertClass = () => {
     switch (type) {
       case 'info':
-        return 'border-blue-200 bg-blue-50 text-blue-800';
+        return 'border-blue-200 bg-blue-50 text-apple-text';
       case 'success':
-        return 'border-green-200 bg-green-50 text-green-800';
+        return 'border-green-200 bg-green-50 text-apple-text';
       case 'warning':
-        return 'border-amber-200 bg-amber-50 text-amber-800';
+        return 'border-amber-200 bg-amber-50 text-apple-text';
       case 'error':
-        return 'border-red-200 bg-red-50 text-red-800';
+        return 'border-red-200 bg-red-50 text-apple-text';
       default:
         return '';
     }
   };
 
   return (
-    <Alert className={cn('relative', getAlertClass(), className)}>
+    <Alert className={cn('relative rounded-xl', getAlertClass(), className)}>
       <div className="flex items-start">
         <div className="mr-3 mt-0.5">{getIcon()}</div>
         <div className="flex-1">
           <AlertTitle className="font-semibold">{title}</AlertTitle>
-          <AlertDescription className="mt-1">{message}</AlertDescription>
+          <AlertDescription className="mt-1 text-apple-grey">{message}</AlertDescription>
         </div>
         {onClose && (
           <button
             onClick={onClose}
-            className="absolute right-2 top-2 p-1 rounded-full hover:bg-gray-200/50 transition-colors"
+            className="absolute right-2 top-2 p-1 rounded-full hover:bg-apple-light transition-colors"
             aria-label="Close alert"
           >
             <X size={16} />

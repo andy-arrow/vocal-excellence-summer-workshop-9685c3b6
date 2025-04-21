@@ -9,14 +9,14 @@ const timelineItems = [
     date: "March 1, 2025",
     title: "Applications Open",
     description: "Early application is encouraged as spaces fill quickly.",
-    icon: <Calendar className="text-coral-500" />,
+    icon: <Calendar className="text-apple-blue" />,
     status: "active"
   },
   {
     date: "May 15, 2025",
     title: "Application Deadline",
     description: "All applications must be submitted by this date.",
-    icon: <Clock className="text-coral-500" />,
+    icon: <Clock className="text-apple-blue" />,
     status: "upcoming",
     highlight: true
   },
@@ -24,21 +24,21 @@ const timelineItems = [
     date: "June 1, 2025",
     title: "Final Notifications",
     description: "All applicants will be notified of their acceptance status.",
-    icon: <Check className="text-coral-500" />,
+    icon: <Check className="text-apple-blue" />,
     status: "upcoming"
   },
   {
     date: "June 15, 2025",
     title: "Tuition Deadline",
     description: "Full payment (€999) due to secure your place.",
-    icon: <Wallet className="text-coral-500" />,
+    icon: <Wallet className="text-apple-blue" />,
     status: "upcoming"
   },
   {
     date: "July 14, 2025",
     title: "Programme Begins",
     description: "Welcome reception and orientation.",
-    icon: <PartyPopper className="text-coral-500" />,
+    icon: <PartyPopper className="text-apple-blue" />,
     status: "upcoming"
   }
 ];
@@ -69,17 +69,17 @@ const ApplicationTimeline = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="font-serif text-4xl md:text-5xl text-charcoal-900 font-light mb-6 tracking-tight">
+          <h2 className="font-serif text-4xl md:text-5xl text-apple-text font-light mb-6 tracking-tight">
             Application Timeline
           </h2>
-          <p className="text-lg md:text-xl text-charcoal-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-apple-grey max-w-2xl mx-auto leading-relaxed">
             Mark these important dates in your calendar to stay on track with your application.
           </p>
         </motion.div>
 
         <div className="relative">
           <motion.div 
-            className="absolute left-8 top-0 bottom-0 w-px bg-stone-200"
+            className="absolute left-8 top-0 bottom-0 w-px bg-apple-border"
             style={{ height: '0%' }}
             animate={isInView ? { height: '100%' } : {}}
             transition={{ duration: 1.2, ease: "easeOut" }}
@@ -97,8 +97,8 @@ const ApplicationTimeline = () => {
                 <motion.div 
                   className={`absolute left-8 w-6 h-6 rounded-full border-2 bg-white flex items-center justify-center transform -translate-x-3 ${
                     item.highlight 
-                      ? 'border-coral-500' 
-                      : 'border-stone-300'
+                      ? 'border-apple-blue' 
+                      : 'border-apple-border'
                   }`}
                   initial={{ scale: 0 }}
                   animate={isInView ? { scale: 1 } : {}}
@@ -109,30 +109,30 @@ const ApplicationTimeline = () => {
                 
                 <div>
                   <span className={`block ${
-                    item.highlight ? 'text-coral-600 font-medium' : 'text-charcoal-600'
+                    item.highlight ? 'text-apple-blue font-medium' : 'text-apple-grey'
                   } text-sm mb-1`}>
                     {item.date}
                   </span>
-                  <h3 className="text-xl font-serif text-charcoal-900 mb-2 flex items-center gap-2">
+                  <h3 className="text-xl font-serif text-apple-text mb-2 flex items-center gap-2">
                     {item.title}
                     {item.status === 'active' && (
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-50 text-green-700 border border-green-200">
                         Current
                       </span>
                     )}
                     {item.highlight && (
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-coral-50 text-coral-700 border border-coral-200">
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-50 text-apple-blue border border-blue-200">
                         Important
                       </span>
                     )}
                   </h3>
-                  <p className="text-charcoal-600 leading-relaxed">
+                  <p className="text-apple-grey leading-relaxed">
                     {item.description}
                   </p>
                   
                   {item.highlight && (
-                    <div className="mt-3 p-4 bg-gradient-to-br from-coral-50 to-white rounded-xl border border-coral-100">
-                      <p className="text-sm text-coral-800 font-medium">
+                    <div className="mt-3 p-4 bg-gradient-to-br from-blue-50 to-white rounded-xl border border-blue-100">
+                      <p className="text-sm text-apple-text font-medium">
                         <strong>{daysRemaining} days remaining</strong> to complete your application
                       </p>
                     </div>
@@ -151,7 +151,7 @@ const ApplicationTimeline = () => {
         >
           <motion.a 
             href="#application-form"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-coral-500 hover:bg-coral-600 text-white rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-coral-500/25"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-apple-blue hover:bg-apple-blue-hover text-white rounded-full font-medium transition-all duration-300 shadow-sm"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >

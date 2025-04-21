@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Mail, Phone, MapPin, Instagram, Twitter, Facebook, Youtube, ArrowRight, FileText, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -27,11 +28,11 @@ const Footer = () => {
   ], []);
 
   return (
-    <footer className="relative bg-slate-900 text-white overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-energy-purple via-energy-pink to-energy-cyan"></div>
+    <footer className="relative bg-apple-text text-white overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-apple-blue via-apple-blue to-apple-blue/70"></div>
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute -top-20 -left-20 w-60 h-60 rounded-full bg-energy-purple/20 blur-[100px]"></div>
-        <div className="absolute -bottom-20 -right-20 w-60 h-60 rounded-full bg-energy-pink/20 blur-[100px]"></div>
+        <div className="absolute -top-20 -left-20 w-60 h-60 rounded-full bg-apple-blue/10 blur-[100px]"></div>
+        <div className="absolute -bottom-20 -right-20 w-60 h-60 rounded-full bg-apple-blue/10 blur-[100px]"></div>
       </div>
       
       <div className="max-w-6xl mx-auto py-12 sm:py-16 px-6 md:px-8 relative z-10">
@@ -48,130 +49,113 @@ const Footer = () => {
               />
             </Link>
             
-            <p className="text-white/75 text-sm leading-relaxed max-w-md">
+            <p className="text-apple-grey text-sm leading-relaxed max-w-md">
               Transforming passionate singers into confident performers through immersive, expert-led training in the stunning coastal setting of Limassol, Cyprus.
             </p>
             
-            <div className="flex space-x-4 pt-2">
-              {socials.map((social, index) => (
-                <a 
-                  key={index}
-                  href={social.url} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="text-white/70 hover:text-white transition-colors p-2 rounded-full hover:bg-white/5"
-                  aria-label={social.label}
-                >
-                  {social.icon}
-                </a>
-              ))}
-            </div>
-          </div>
-          
-          <div className="md:col-span-1">
-            <h4 className="font-outfit text-xs font-semibold mb-4 text-white/50 uppercase tracking-wider">Explore</h4>
-            <ul className="space-y-3">
-              {footerLinks.map((link, index) => (
-                <li key={index}>
-                  {link.href ? (
-                    <Link 
-                      to={link.href} 
-                      className="text-white/70 hover:text-white transition-colors text-sm flex items-center group"
-                    >
-                      <span className="w-1 h-1 rounded-full bg-energy-purple mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                      {link.name}
-                    </Link>
-                  ) : (
-                    <button 
-                      onClick={link.action}
-                      className="text-white/70 hover:text-white transition-colors text-sm text-left flex items-center group"
-                    >
-                      <span className="w-1 h-1 rounded-full bg-energy-purple mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                      {link.name}
-                    </button>
-                  )}
+            <ul className="flex space-x-4 mt-4">
+              {socials.map((social, i) => (
+                <li key={i}>
+                  <a 
+                    href={social.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="w-8 h-8 rounded-full flex items-center justify-center bg-apple-blue/10 text-apple-grey hover:text-white hover:bg-apple-blue/20 transition-colors duration-300"
+                    aria-label={social.label}
+                  >
+                    {social.icon}
+                  </a>
                 </li>
               ))}
             </ul>
-            
-            <div className="mt-8 pt-6 border-t border-white/10">
-              <Link 
-                to="/apply" 
-                className="inline-flex items-center text-sm text-white hover:text-energy-cyan transition-colors"
-              >
-                <span>Start Your Application</span>
-                <ArrowRight className="ml-2 w-3.5 h-3.5" />
-              </Link>
-            </div>
           </div>
           
-          <div className="md:col-span-1">
-            <h4 className="font-outfit text-xs font-semibold mb-4 text-white/50 uppercase tracking-wider">Contact Us</h4>
-            <ul className="space-y-3">
-              <li className="flex items-start">
-                <MapPin className="w-4 h-4 mr-3 text-energy-pink shrink-0 mt-0.5" />
-                <span className="text-white/75 text-sm">Nafpliou 12, Pentadromos, 3025, Limassol, Cyprus</span>
-              </li>
-              <li className="flex items-center">
-                <Mail className="w-4 h-4 mr-3 text-energy-pink shrink-0" />
-                <a href="mailto:info@vocalexcellence.cy" className="text-white/75 hover:text-white transition-colors text-sm">
-                  info@vocalexcellence.cy
-                </a>
-              </li>
-              <li className="flex items-center">
-                <Phone className="w-4 h-4 mr-3 text-energy-pink shrink-0" />
-                <a href="tel:+35725775885" className="text-white/75 hover:text-white transition-colors text-sm">
-                  +357 25 775 885
-                </a>
-              </li>
-            </ul>
+          <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-8">
+            <div>
+              <h3 className="font-medium text-white mb-4 uppercase text-sm tracking-wider">Quick Links</h3>
+              <ul className="space-y-2">
+                {footerLinks.map((link, i) => (
+                  <li key={i}>
+                    {link.href ? (
+                      <Link 
+                        to={link.href}
+                        className="text-apple-grey hover:text-white transition-colors duration-300 text-sm"
+                      >
+                        {link.name}
+                      </Link>
+                    ) : (
+                      <button 
+                        onClick={link.action} 
+                        className="text-apple-grey hover:text-white transition-colors duration-300 text-sm text-left"
+                      >
+                        {link.name}
+                      </button>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
             
-            <div className="mt-7 pt-6 border-t border-white/10 flex flex-col">
-              <span className="text-xs text-white/40 mb-1">Sign up for program updates</span>
-              <div className="flex mt-2">
-                <input 
-                  type="email" 
-                  placeholder="Your email" 
-                  className="bg-white/5 border border-white/10 rounded-l-md px-3 py-2 text-sm w-full focus:outline-none focus:ring-1 focus:ring-energy-purple/50"
-                  aria-label="Email for updates"
-                />
-                <button className="bg-energy-purple hover:bg-energy-purple/90 text-white rounded-r-md px-3 py-2 text-sm transition-colors">
-                  Subscribe
-                </button>
-              </div>
+            <div>
+              <h3 className="font-medium text-white mb-4 uppercase text-sm tracking-wider">Legal</h3>
+              <ul className="space-y-2">
+                <li>
+                  <Link to="/terms" className="text-apple-grey hover:text-white transition-colors duration-300 text-sm">
+                    Terms & Conditions
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/privacy" className="text-apple-grey hover:text-white transition-colors duration-300 text-sm">
+                    Privacy Policy
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/accessibility" className="text-apple-grey hover:text-white transition-colors duration-300 text-sm">
+                    Accessibility
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 className="font-medium text-white mb-4 uppercase text-sm tracking-wider">Contact</h3>
+              <ul className="space-y-3">
+                <li className="flex items-start">
+                  <Mail className="w-4 h-4 text-apple-grey mt-1 mr-2" />
+                  <a href="mailto:info@vocalexcellence.com" className="text-apple-grey hover:text-white transition-colors duration-300 text-sm">
+                    info@vocalexcellence.com
+                  </a>
+                </li>
+                <li className="flex items-start">
+                  <Phone className="w-4 h-4 text-apple-grey mt-1 mr-2" />
+                  <a href="tel:+35799123456" className="text-apple-grey hover:text-white transition-colors duration-300 text-sm">
+                    +357 99 123 456
+                  </a>
+                </li>
+                <li className="flex items-start">
+                  <MapPin className="w-4 h-4 text-apple-grey mt-1 mr-2" />
+                  <span className="text-apple-grey text-sm">
+                    Limassol, Cyprus
+                  </span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
         
-        <div className="mt-10 pt-5 border-t border-white/10">
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-white/50 text-xs">&copy; {new Date().getFullYear()} Vocal Excellence Summer Workshop. All rights reserved.</p>
-            
-            <div className="flex items-center space-x-4 sm:space-x-6">
-              <Link 
-                to="/terms-and-conditions" 
-                className="text-white/70 hover:text-white text-xs sm:text-sm flex items-center group transition-colors"
-              >
-                <FileText className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 text-energy-purple group-hover:text-energy-pink transition-colors" />
-                Terms & Conditions
-              </Link>
-              
-              <Link 
-                to="/privacy-policy" 
-                className="text-white/70 hover:text-white text-xs sm:text-sm flex items-center group transition-colors"
-              >
-                <Shield className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 text-energy-purple group-hover:text-energy-pink transition-colors" />
-                Privacy Policy
-              </Link>
-              
-              <Link 
-                to="/cancellation-policy" 
-                className="text-white/70 hover:text-white text-xs sm:text-sm flex items-center group transition-colors"
-              >
-                <FileText className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 text-energy-purple group-hover:text-energy-pink transition-colors" />
-                Cancellation Policy
-              </Link>
-            </div>
+        <div className="mt-12 pt-8 border-t border-apple-grey/20 flex flex-col sm:flex-row justify-between items-center">
+          <p className="text-xs text-apple-grey mb-4 sm:mb-0">
+            © {new Date().getFullYear()} Vocal Excellence. All rights reserved.
+          </p>
+          
+          <div className="flex items-center space-x-4">
+            <Link 
+              to="/apply"
+              className="flex items-center text-apple-blue/90 hover:text-apple-blue transition-colors duration-300 text-xs font-medium"
+            >
+              <span>Apply Now</span>
+              <ArrowRight className="w-3 h-3 ml-1" />
+            </Link>
           </div>
         </div>
       </div>
@@ -179,4 +163,4 @@ const Footer = () => {
   );
 };
 
-export default React.memo(Footer);
+export default Footer;

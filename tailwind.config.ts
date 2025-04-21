@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -43,11 +44,11 @@ export default {
           border: '#d2d2d7',
         },
         energy: {
-          purple: '#0071e3',
-          pink: '#1d1d1f',
-          cyan: '#86868b',
-          yellow: '#f5f5f7',
-          green: '#06c',
+          purple: '#0071e3', // Changed to Apple blue
+          pink: '#1d1d1f',   // Changed to Apple dark text
+          cyan: '#86868b',   // Changed to Apple grey
+          yellow: '#f5f5f7', // Changed to Apple light
+          green: '#06c',     // Apple accent blue
         },
         charcoal: {
           DEFAULT: '#403E43',
@@ -57,15 +58,15 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+        sans: ['SF Pro Text', 'SF Pro Icons', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
         serif: [
-          'Didot',
-          'Garamond',
+          'New York',
+          'Georgia',
           'Times New Roman',
           'Times',
           'serif'
         ],
-        outfit: ['Outfit', 'sans-serif'],
+        outfit: ['SF Pro Display', 'SF Pro Text', 'system-ui', 'sans-serif'],
       },
       fontSize: {
         'display-lg': ['4.5rem', { lineHeight: '1.1', letterSpacing: '-0.02em' }],

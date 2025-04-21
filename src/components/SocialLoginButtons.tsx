@@ -1,3 +1,4 @@
+
 import React, { memo } from 'react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
@@ -17,7 +18,6 @@ export const SocialLoginButtons = memo(() => {
           queryParams: {
             // Force account selection each time
             prompt: 'select_account'
-            // Removed domain restriction (hd parameter)
           }
         }
       });
@@ -59,7 +59,7 @@ export const SocialLoginButtons = memo(() => {
     <div className="space-y-3">
       <Button 
         variant="outline" 
-        className="w-full flex items-center gap-2 bg-white hover:bg-[#f5f5f7] text-[#1d1d1f] border border-[#d2d2d7] rounded-full py-6" 
+        className="w-full flex items-center gap-2 bg-white hover:bg-apple-light text-apple-text border border-apple-border rounded-full py-6" 
         onClick={handleGoogleLogin}
       >
         <GoogleIcon className="h-5 w-5" />
@@ -79,7 +79,7 @@ const GoogleIcon = memo(({ className }: { className?: string }) => (
     aria-hidden="true"
   >
     <path 
-      d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM11 7H13V13H11V7ZM11 15H13V17H11V15Z"
+      d="M12 1.95c-5.52 0-10 4.48-10 10s4.48 10 10 10 10-4.48 10-10-4.48-10-10-10zm-1.13 14.32c-2.38 0-4.32-1.93-4.32-4.32 0-2.38 1.94-4.32 4.32-4.32 1.16 0 2.13.43 2.88 1.14l-1.17 1.12c-.32-.31-.89-.67-1.7-.67-1.46 0-2.65 1.2-2.65 2.73 0 1.52 1.19 2.73 2.65 2.73 1.69 0 2.33-1.22 2.43-1.85h-2.43v-1.47h4.06c.04.23.06.46.06.71 0 2.49-1.67 4.2-4.13 4.2z"
       fill="currentColor"
     />
   </svg>
