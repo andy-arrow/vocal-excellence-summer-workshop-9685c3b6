@@ -4,6 +4,8 @@ import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import GoogleTagManager from '@/components/analytics/GoogleTagManager';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 // Lazily load less critical components
 const ApplicationForm = lazy(() => import('@/components/ApplicationForm'));
@@ -11,9 +13,11 @@ const ApplicationRequirements = lazy(() => import('@/components/ApplicationRequi
 const ApplicationTimeline = lazy(() => import('@/components/ApplicationTimeline'));
 const ApplicationFAQ = lazy(() => import('@/components/ApplicationFAQ'));
 const ScrollToTopButton = lazy(() => import('@/components/ScrollToTopButton'));
+
 const SectionLoader = () => <div className="flex justify-center py-16">
     <div className="w-8 h-8 border-4 border-coral-300 border-t-coral-500 rounded-full animate-spin"></div>
   </div>;
+
 const fadeIn = {
   hidden: {
     opacity: 0,
@@ -31,21 +35,42 @@ const fadeIn = {
 
 const Application = () => {
   const [showScrollToTop, setShowScrollToTop] = React.useState(false);
+  const analytics = useAnalytics();
+  
   useEffect(() => {
     window.scrollTo(0, 0);
+    
     const handleScroll = () => {
       requestAnimationFrame(() => {
         setShowScrollToTop(window.scrollY > 500);
       });
     };
+    
     window.addEventListener('scroll', handleScroll, {
       passive: true
     });
+    
+    // Track page view with custom metadata
+    analytics.trackEvent(
+      'Page',
+      'view',
+      'Application Page',
+      undefined,
+      false,
+      { page_type: 'application', referrer: document.referrer }
+    );
+    
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [analytics]);
 
   return (
     <div className="bg-[#f5f5f7] text-apple-text min-h-screen font-sans antialiased">
+      {/* Google Tag Manager initialization */}
+      <GoogleTagManager 
+        gtmId="GTM-XXXXXX" // Replace with your actual GTM ID
+        googleAdsId="AW-CONVERSION_ID" // Replace with your actual Google Ads ID
+      />
+      
       <Helmet>
         <title>Apply Now | Vocal Excellence Workshop</title>
         <meta name="description" content="Apply now for the Vocal Excellence Summer Workshop and discover your true potential with world-class vocal coaching. Limited spots available." />
@@ -63,6 +88,10 @@ const Application = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
+                onAnimationComplete={() => {
+                  // Track when hero section becomes visible
+                  analytics.trackEvent('Visibility', 'hero_visible', 'Application Hero', undefined, true);
+                }}
               >
                 <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-black mb-2 tracking-tight">
                   Your Journey To
@@ -84,6 +113,9 @@ const Application = () => {
                   whileInView="visible" 
                   viewport={{ once: true, margin: "-100px" }} 
                   variants={fadeIn}
+                  onViewportEnter={() => {
+                    analytics.trackEvent('Visibility', 'section_visible', 'Application Requirements', undefined, true);
+                  }}
                 >
                   <Suspense fallback={<SectionLoader />}>
                     <ApplicationRequirements />
@@ -96,6 +128,9 @@ const Application = () => {
                   whileInView="visible" 
                   viewport={{ once: true, margin: "-100px" }} 
                   variants={fadeIn}
+                  onViewportEnter={() => {
+                    analytics.trackEvent('Visibility', 'section_visible', 'Application Timeline', undefined, true);
+                  }}
                 >
                   <Suspense fallback={<SectionLoader />}>
                     <ApplicationTimeline />
@@ -110,6 +145,16 @@ const Application = () => {
                   id="application-form-section"
                   className="bg-white rounded-2xl shadow-sm overflow-hidden"
                   aria-label="Application Form Section"
+                  onViewportEnter={() => {
+                    analytics.trackEvent('Visibility', 'section_visible', 'Application Form', undefined, true);
+                    analytics.trackConversion(
+                      'AW-CONVERSION_ID/FORM_VIEW_LABEL', // Replace with your actual conversion ID and label
+                      undefined,
+                      undefined,
+                      undefined,
+                      { important_section: 'application_form' }
+                    );
+                  }}
                 >
                   <Suspense fallback={<SectionLoader />}>
                     <ApplicationForm />
@@ -122,6 +167,9 @@ const Application = () => {
                   whileInView="visible" 
                   viewport={{ once: true, margin: "-100px" }} 
                   variants={fadeIn}
+                  onViewportEnter={() => {
+                    analytics.trackEvent('Visibility', 'section_visible', 'Application FAQ', undefined, true);
+                  }}
                 >
                   <Suspense fallback={<SectionLoader />}>
                     <ApplicationFAQ />
