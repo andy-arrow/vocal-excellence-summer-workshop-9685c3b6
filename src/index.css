@@ -48,8 +48,13 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  .didot-heading {
+    font-family: Didot, "Playfair Display", Garamond, "Times New Roman", Times, serif;
+    @apply tracking-tight;
+  }
+
   h1, h2, h3, h4, h5, h6 {
-    font-family: Didot, Garamond, "Times New Roman", Times, serif;
+    font-family: Didot, "Playfair Display", Garamond, "Times New Roman", Times, serif;
     @apply font-serif tracking-tight;
   }
 

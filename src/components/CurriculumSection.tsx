@@ -266,7 +266,7 @@ const CurriculumSection = () => {
     <section id="curriculum" className="py-12 md:py-16 px-3 md:px-6 bg-white">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-6 md:mb-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
+          <h2 className="didot-heading text-3xl md:text-4xl font-light text-gray-800 mb-2">
             Your Summer Crescendo
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -281,13 +281,13 @@ const CurriculumSection = () => {
                 <TabsTrigger value="modules">
                   <div className="flex items-center justify-center space-x-2">
                     <Mic size={isMobile ? 16 : 18} />
-                    <span className="font-medium">Program Modules</span>
+                    <span className="didot-heading font-medium">Program Modules</span>
                   </div>
                 </TabsTrigger>
                 <TabsTrigger value="schedule">
                   <div className="flex items-center justify-center space-x-2">
                     <Calendar size={isMobile ? 16 : 18} />
-                    <span className="font-medium">Daily Schedule</span>
+                    <span className="didot-heading font-medium">Daily Schedule</span>
                   </div>
                 </TabsTrigger>
               </TabsList>
