@@ -64,8 +64,8 @@ const Application = () => {
               duration: 0.8
             }}>
                 <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-charcoal mb-6 tracking-tight">
-                  <span className="block mb-4">Your Journey To</span>
-                  <span className="gradient-text">Vocal Mastery</span>
+                  <span className="block mb-4">Unlock Your</span>
+                  <span className="gradient-text">Vocal Potential</span>
                 </h1>
                 <p className="font-sans text-lg md:text-xl text-charcoal/80 max-w-2xl mx-auto leading-relaxed">Join our exclusive 5-day Workshop where world-class mentors will transform your voice and elevate your technique to new heights.</p>
               </motion.div>

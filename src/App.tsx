@@ -1,47 +1,114 @@
+import React, { lazy, Suspense, useState, useEffect } from 'react';
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import HomePage from '@/pages/HomePage';
-import Auth from '@/pages/Auth';
-import Application from '@/pages/Application';
-import NotFound from '@/pages/NotFound';
-import TermsAndConditions from '@/pages/TermsAndConditions';
-import PrivacyPolicy from '@/pages/PrivacyPolicy';
-import CancellationPolicy from '@/pages/CancellationPolicy';
-import Admin from '@/pages/Admin';
-import SummerProgramme from '@/pages/SummerProgramme';
-import ImageTest from '@/components/ImageTest';
-import Index from '@/pages/Index';
+// Import pages using proper default imports
+const Index = lazy(() => import('./pages/Index'));
+const Application = lazy(() => import('./pages/Application'));
+const CancellationPolicy = lazy(() => import('./pages/CancellationPolicy'));
+const TermsAndConditions = lazy(() => import('./pages/TermsAndConditions'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const Auth = lazy(() => import('./pages/Auth'));
 
-// Protected Routes
-import { ProtectedRoute, AdminRoute } from '@/utils/accessControl';
+// Optimized loading fallback that doesn't block rendering
+const PageLoader = () => (
+  <div className="min-h-screen w-full flex items-center justify-center bg-slate-950">
+    <div className="space-y-4 text-center">
+      <div className="animate-spin w-8 h-8 border-2 border-violet-500/30 border-t-violet-500 rounded-full mx-auto"></div>
+    </div>
+  </div>
+);
 
 function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/image-test" element={<ImageTest />} />
-        <Route path="/auth" element={<Auth />} />
-        <Route path="/apply" element={
-          <ProtectedRoute>
-            <Application />
-          </ProtectedRoute>
-        } />
-        <Route path="/admin" element={
-          <AdminRoute>
-            <Admin />
-          </AdminRoute>
-        } />
-        <Route path="/terms" element={<TermsAndConditions />} />
-        <Route path="/privacy" element={<PrivacyPolicy />} />
-        <Route path="/cancellation" element={<CancellationPolicy />} />
-        <Route path="/summer-programme" element={<SummerProgramme />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Router>
-  );
+  const [router, setRouter] = useState<any>(null);
+  
+  useEffect(() => {
+    // Create router asynchronously
+    const initRouter = () => {
+      const router = createBrowserRouter([
+        {
+          path: "/",
+          element: (
+            <Suspense fallback={<PageLoader />}>
+              <Index />
+            </Suspense>
+          ),
+        },
+        {
+          path: "/apply",
+          element: (
+            <Suspense fallback={<PageLoader />}>
+              <Application />
+            </Suspense>
+          ),
+        },
+        {
+          path: "/auth",
+          element: (
+            <Suspense fallback={<PageLoader />}>
+              <Auth />
+            </Suspense>
+          ),
+        },
+        {
+          path: "/cancellation-policy",
+          element: (
+            <Suspense fallback={<PageLoader />}>
+              <CancellationPolicy />
+            </Suspense>
+          ),
+        },
+        {
+          path: "/terms-and-conditions",
+          element: (
+            <Suspense fallback={<PageLoader />}>
+              <TermsAndConditions />
+            </Suspense>
+          ),
+        },
+        {
+          path: "/privacy-policy",
+          element: (
+            <Suspense fallback={<PageLoader />}>
+              <PrivacyPolicy />
+            </Suspense>
+          ),
+        },
+      ]);
+      
+      setRouter(router);
+    };
+    
+    initRouter();
+    
+    // Preload other routes after initial page load
+    const preloadRoutes = () => {
+      if ('requestIdleCallback' in window) {
+        (window as any).requestIdleCallback(() => {
+          const routes = [
+            import('./pages/Application'),
+            import('./pages/Auth'),
+            import('./pages/CancellationPolicy'),
+            import('./pages/TermsAndConditions'),
+            import('./pages/PrivacyPolicy')
+          ];
+          
+          Promise.all(routes).catch(console.error);
+        });
+      }
+    };
+    
+    // Start preloading after a short delay
+    setTimeout(preloadRoutes, 2000);
+  }, []);
+  
+  if (!router) {
+    return <PageLoader />;
+  }
+
+  return <RouterProvider router={router} />;
 }
 
 export default App;
