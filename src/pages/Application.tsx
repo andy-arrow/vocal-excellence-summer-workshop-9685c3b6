@@ -67,8 +67,8 @@ const Application = () => {
     <div className="bg-[#f5f5f7] text-apple-text min-h-screen font-sans antialiased">
       {/* Google Tag Manager initialization */}
       <GoogleTagManager 
-        gtmId="GTM-XXXXXX" // Replace with your actual GTM ID
-        googleAdsId="AW-CONVERSION_ID" // Replace with your actual Google Ads ID
+        gtmId="GTM-WRPV2R2P" // Using the actual GTM ID
+        googleAdsId="AW-123456789" // Replace with your actual Google Ads ID
       />
       
       <Helmet>

@@ -40,17 +40,12 @@ export default function GoogleTagManager({ gtmId, googleAdsId }: GoogleTagManage
     // Start tracking user engagement
     startEngagementTracking();
     
-    // Load GTM script and initialize
-    const script = document.createElement('script');
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${gtmId}`;
-    script.async = true;
-    script.onload = initGTM;
+    // No need to load the script again as it's already in the head
+    // Just initialize the GTM
+    initGTM();
     
-    document.head.appendChild(script);
-    
-    // Clean up
     return () => {
-      document.head.removeChild(script);
+      console.log('GoogleTagManager component unmounted');
     };
   }, [gtmId, googleAdsId]);
 
