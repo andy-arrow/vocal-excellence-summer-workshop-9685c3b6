@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -53,29 +52,29 @@ const HeroSection = () => {
       ref={heroRef} 
       className={cn(
         "relative min-h-[75vh] flex flex-col justify-center overflow-hidden",
-        "bg-apple-light border-b border-apple-border pt-20 md:pt-20", // Further reduced height and top padding 
+        "bg-apple-light border-b border-apple-border pt-20 md:pt-20", 
         hasReducedMotion ? "reduced-motion" : ""
       )}
     >
       <div className="hero-content relative z-20 text-center px-4 transition-all duration-500 ease-out max-w-5xl mx-auto mt-16 md:mt-14">
         <motion.div 
-          className="space-y-3" // Further reduced spacing between elements
+          className="space-y-3"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
           <motion.h1 
-            className="font-serif text-3xl md:text-4xl lg:text-5xl font-light text-apple-text tracking-tight"
+            className="font-serif text-3xl md:text-4xl lg:text-5xl font-light tracking-tight text-black"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
           >
             <span className="inline md:block">Unlock Your </span>
-            <span className="text-apple-blue">Vocal Potential</span>
+            <span className="text-black">Vocal Potential</span>
           </motion.h1>
           
           <motion.p 
-            className="font-sans text-sm md:text-base text-apple-grey max-w-2xl mx-auto leading-relaxed"
+            className="font-sans text-sm md:text-base text-black max-w-2xl mx-auto leading-relaxed"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.9 }}
@@ -85,7 +84,7 @@ const HeroSection = () => {
           </motion.p>
 
           <motion.div 
-            className="pt-3" // Further reduced padding
+            className="pt-3"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.1 }}
@@ -93,29 +92,29 @@ const HeroSection = () => {
             <motion.div className="flex flex-row items-center justify-center gap-2 md:gap-3">
               <Link 
                 to="/apply" 
-                className="group px-4 py-2 bg-apple-blue text-white rounded-full text-sm md:text-base font-medium transition-all duration-300 hover:bg-apple-blue-hover shadow-sm"
+                className="group px-4 py-2 bg-apple-blue text-black rounded-full text-sm md:text-base font-medium transition-all duration-300 hover:bg-apple-blue-hover shadow-sm"
               >
                 Apply Now
-                <ArrowUpRight className="inline-block ml-1 w-4 h-4 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                <ArrowUpRight className="inline-block ml-1 w-4 h-4 text-black opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </Link>
               
               <button 
                 onClick={scrollToDiscoverSection} 
-                className="text-apple-text hover:text-apple-grey px-4 py-2 rounded-full border border-apple-border backdrop-blur-sm transition-all hover:bg-apple-light-hover text-sm md:text-base font-light"
+                className="text-black hover:text-black/70 px-4 py-2 rounded-full border border-apple-border backdrop-blur-sm transition-all hover:bg-apple-light-hover text-sm md:text-base font-light"
               >
                 Discover More
               </button>
             </motion.div>
             
             <motion.div 
-              className="flex items-center justify-center mt-3 space-x-2 text-xs md:text-sm" // Further reduced margin and text size
+              className="flex items-center justify-center mt-3 space-x-2 text-xs md:text-sm"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.3, duration: 0.5 }}
             >
               <div className="w-1.5 h-1.5 rounded-full bg-apple-blue animate-pulse-slow"></div>
-              <p className="text-apple-grey font-light">
-                Applications close <span className="text-apple-text font-medium">May 15, 2025</span> — <span className="whitespace-nowrap">20 spots available</span>
+              <p className="text-black font-light">
+                Applications close <span className="text-black font-medium">May 15, 2025</span> — <span className="whitespace-nowrap">20 spots available</span>
               </p>
               <div className="w-1.5 h-1.5 rounded-full bg-apple-blue animate-pulse-slow"></div>
             </motion.div>
@@ -136,7 +135,7 @@ const HeroSection = () => {
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity, repeatType: "loop" }}
         >
-          <ArrowDown className="text-apple-text w-4 h-4" />
+          <ArrowDown className="text-black w-4 h-4" />
         </motion.div>
       </motion.button>
     </section>
