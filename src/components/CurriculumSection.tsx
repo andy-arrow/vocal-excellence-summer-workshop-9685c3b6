@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { GraduationCap, Mic, Award, Headphones, Video, Clock, ChevronUp, ChevronDown, Calendar, Instagram, Linkedin } from 'lucide-react';
+import React, { useState } from 'react';
+import { Mic, Calendar, ChevronUp, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -12,13 +12,11 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { 
   Card, 
   CardContent, 
-  CardDescription, 
   CardHeader, 
   CardTitle 
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const modules = [
   {
@@ -205,40 +203,47 @@ const facultyMembers = [
 
 function ModulesContent() {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
       {modules.map((module, index) => (
-        <Card 
+        <motion.div
           key={`module-${index}`}
-          className={cn(
-            "hover:shadow-lg hover:-translate-y-1 group transition-all duration-300",
-            "bg-white/80 backdrop-blur-sm border border-apple-border"
-          )}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: index * 0.1 }}
         >
-          <CardHeader className="pb-2 pt-4 md:pt-5">
-            <div className={cn(
-              "mb-3 w-10 h-10 md:w-12 md:h-12 rounded-2xl flex items-center justify-center",
-              module.iconBg
-            )}>
-              {module.icon}
-            </div>
-            <CardTitle className="text-lg md:text-xl font-medium text-apple-text group-hover:text-apple-blue transition-colors">
-              {module.title}
-            </CardTitle>
-            <CardDescription className="text-apple-grey font-light text-sm md:text-base mt-1">
-              {module.description}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="pt-2 pb-4">
-            <ul className="space-y-2 text-sm md:text-base">
-              {module.highlights.map((highlight, idx) => (
-                <li key={`highlight-${index}-${idx}`} className="flex items-start">
-                  <span className="text-apple-blue mr-2 mt-1 flex-shrink-0">•</span>
-                  <span className="text-apple-text">{highlight}</span>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
+          <Card className="group overflow-hidden bg-white/80 backdrop-blur-xl border border-apple-border/10 rounded-3xl hover:shadow-2xl transition-all duration-500">
+            <CardHeader className="pb-2 pt-6 md:pt-8">
+              <div className={cn(
+                "mb-4 w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center",
+                "bg-apple-light group-hover:bg-apple-blue/10 transition-colors duration-500"
+              )}>
+                {module.icon}
+              </div>
+              <CardTitle className="text-xl md:text-2xl font-medium text-apple-text group-hover:text-apple-blue transition-colors duration-500">
+                {module.title}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="pt-2 pb-6">
+              <p className="text-apple-grey text-base mb-4 font-light">{module.description}</p>
+              <ul className="space-y-3">
+                {module.highlights.map((highlight, idx) => (
+                  <motion.li
+                    key={`highlight-${index}-${idx}`}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3, delay: (index * 0.1) + (idx * 0.05) }}
+                    className="flex items-start group/item"
+                  >
+                    <span className="text-apple-blue mr-3 mt-1.5 flex-shrink-0 text-sm">•</span>
+                    <span className="text-apple-text/90 group-hover/item:text-apple-text transition-colors duration-300">
+                      {highlight}
+                    </span>
+                  </motion.li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        </motion.div>
       ))}
     </div>
   );
@@ -250,56 +255,82 @@ function ScheduleContent() {
   
   return (
     <>
-      <Card className="mb-6 bg-white/80 backdrop-blur-sm border border-apple-border">
-        <CardHeader className="flex flex-row items-center gap-3 pb-2 pt-4">
-          <Clock className="w-5 h-5 md:w-6 md:h-6 text-apple-blue" />
-          <CardTitle className="text-lg md:text-xl font-serif font-medium text-apple-text">
+      <Card className="mb-8 bg-white/80 backdrop-blur-xl border border-apple-border/10 rounded-3xl overflow-hidden">
+        <CardHeader className="flex flex-row items-center gap-4 pt-6 pb-4">
+          <div className="w-10 h-10 rounded-2xl bg-apple-light flex items-center justify-center">
+            <Clock className="w-5 h-5 text-apple-blue" />
+          </div>
+          <CardTitle className="text-xl md:text-2xl font-medium text-apple-text">
             Your Week at a Glance
           </CardTitle>
         </CardHeader>
-        <CardContent className="pt-0 pb-4">
-          <p className="text-apple-grey mb-3 text-sm md:text-base">
+        <CardContent className="pt-0 pb-6">
+          <p className="text-apple-grey text-base font-light">
             Each day is carefully structured to maximize your learning and development, with a balance of technical training, performance practice, and industry insight.
           </p>
         </CardContent>
       </Card>
 
-      <div className="space-y-3">
-        {scheduleData.map((day, index) => (
-          <Collapsible
-            key={`day-${index}`}
-            open={expandedDay === day.day}
-            onOpenChange={() => setExpandedDay(expandedDay === day.day ? null : day.day)}
-            className="border border-apple-border rounded-xl bg-white/80 backdrop-blur-sm hover:shadow-md transition-all duration-300"
-          >
-            <CollapsibleTrigger className="w-full px-4 py-3 flex items-center justify-between">
-              <div className="flex flex-col items-start text-left">
-                <h3 className="text-base md:text-lg font-medium text-apple-blue">{day.day}</h3>
-                <div className="text-sm text-apple-grey mt-1">
-                  {day.theme}
-                </div>
-              </div>
-              <div className="text-apple-blue flex-shrink-0">
-                {expandedDay === day.day ? (
-                  <ChevronUp size={isMobile ? 18 : 20} />
-                ) : (
-                  <ChevronDown size={isMobile ? 18 : 20} />
-                )}
-              </div>
-            </CollapsibleTrigger>
-            
-            <CollapsibleContent className="px-4 pb-4 pt-1">
-              <ul className="space-y-2.5 text-sm md:text-base">
-                {day.activities.map((activity, idx) => (
-                  <li key={`activity-${index}-${idx}`} className="flex items-start">
-                    <span className="text-apple-blue mr-2 mt-1.5 flex-shrink-0 text-xs">•</span>
-                    <span className="text-apple-text">{activity}</span>
-                  </li>
-                ))}
-              </ul>
-            </CollapsibleContent>
-          </Collapsible>
-        ))}
+      <div className="space-y-4">
+        <AnimatePresence>
+          {scheduleData.map((day, index) => (
+            <motion.div
+              key={`day-${index}`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+            >
+              <Collapsible
+                open={expandedDay === day.day}
+                onOpenChange={() => setExpandedDay(expandedDay === day.day ? null : day.day)}
+                className="border border-apple-border/10 rounded-2xl bg-white/80 backdrop-blur-xl hover:shadow-lg transition-all duration-500"
+              >
+                <CollapsibleTrigger className="w-full px-6 py-4 flex items-center justify-between">
+                  <div className="flex flex-col items-start text-left">
+                    <h3 className="text-lg md:text-xl font-medium text-apple-text">{day.day}</h3>
+                    <p className="text-sm text-apple-grey mt-1 font-light">
+                      {day.theme}
+                    </p>
+                  </div>
+                  <div className="text-apple-blue transition-transform duration-300">
+                    {expandedDay === day.day ? (
+                      <ChevronUp size={20} />
+                    ) : (
+                      <ChevronDown size={20} />
+                    )}
+                  </div>
+                </CollapsibleTrigger>
+                
+                <CollapsibleContent>
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="px-6 pb-6"
+                  >
+                    <ul className="space-y-3 border-t border-apple-border/10 pt-4">
+                      {day.activities.map((activity, idx) => (
+                        <motion.li
+                          key={`activity-${index}-${idx}`}
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.3, delay: idx * 0.05 }}
+                          className="flex items-start group"
+                        >
+                          <span className="text-apple-blue mr-3 mt-1.5 flex-shrink-0 text-sm">•</span>
+                          <span className="text-apple-text/90 group-hover:text-apple-text transition-colors duration-300 font-light">
+                            {activity}
+                          </span>
+                        </motion.li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                </CollapsibleContent>
+              </Collapsible>
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
     </>
   );
@@ -308,54 +339,72 @@ function ScheduleContent() {
 const CurriculumSection = () => {
   const [activeTab, setActiveTab] = useState('modules');
   const isMobile = useIsMobile();
-  
+
   const handleTabChange = (value: string) => {
-    console.log('Tab changed to:', value);
     setActiveTab(value);
   };
 
-  const ModulesTab = React.useMemo(() => <ModulesContent />, []);
-  const ScheduleTab = React.useMemo(() => <ScheduleContent />, []);
-
   return (
-    <section id="curriculum" className="py-12 md:py-16 px-3 md:px-6 bg-white">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-6 md:mb-8">
-          <h2 className="didot-heading text-3xl md:text-4xl font-light text-gray-800 mb-2">
+    <section id="curriculum" className="py-20 md:py-24 px-6 md:px-8 bg-gradient-to-b from-white to-apple-light/50">
+      <div className="max-w-[980px] mx-auto">
+        <motion.div 
+          className="text-center mb-12 md:mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <h2 className="text-3xl md:text-4xl xl:text-5xl font-medium text-apple-text mb-4">
             Your Summer Crescendo
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-apple-grey font-light max-w-2xl mx-auto">
             A daily rhythm designed to elevate your vocal artistry
           </p>
-        </div>
+        </motion.div>
 
         <div className="mb-4">
-          <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-            <div className="flex justify-center mb-4">
-              <TabsList className="shadow-md max-w-md bg-gray-50">
-                <TabsTrigger value="modules">
+          <Tabs 
+            value={activeTab} 
+            onValueChange={handleTabChange} 
+            className="w-full"
+          >
+            <div className="flex justify-center mb-8">
+              <TabsList className="bg-apple-light/80 backdrop-blur-sm p-1 rounded-xl">
+                <TabsTrigger 
+                  value="modules"
+                  className="rounded-lg px-6 py-2.5 text-base font-medium transition-all data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                >
                   <div className="flex items-center justify-center space-x-2">
                     <Mic size={isMobile ? 16 : 18} />
-                    <span className="didot-heading font-medium">Program Modules</span>
+                    <span>Program Modules</span>
                   </div>
                 </TabsTrigger>
-                <TabsTrigger value="schedule">
+                <TabsTrigger 
+                  value="schedule"
+                  className="rounded-lg px-6 py-2.5 text-base font-medium transition-all data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                >
                   <div className="flex items-center justify-center space-x-2">
                     <Calendar size={isMobile ? 16 : 18} />
-                    <span className="didot-heading font-medium">Daily Schedule</span>
+                    <span>Daily Schedule</span>
                   </div>
                 </TabsTrigger>
               </TabsList>
             </div>
 
-            <div className="tab-content">
-              {activeTab === 'modules' && ModulesTab}
-              {activeTab === 'schedule' && ScheduleTab}
-            </div>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+              >
+                {activeTab === 'modules' && <ModulesContent />}
+                {activeTab === 'schedule' && <ScheduleContent />}
+              </motion.div>
+            </AnimatePresence>
           </Tabs>
         </div>
-
-        
       </div>
     </section>
   );
