@@ -17,6 +17,9 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { motion, AnimatePresence } from 'framer-motion';
+import CurriculumScheduleTable from "./CurriculumScheduleTable";
+import HousingInfoPanel from "./HousingInfoPanel";
+import CurriculumDownloadModal from "./CurriculumDownloadModal";
 
 const modules = [
   {
@@ -250,89 +253,41 @@ function ModulesContent() {
 }
 
 function ScheduleContent() {
-  const [expandedDay, setExpandedDay] = useState<string | null>(null);
-  const isMobile = useIsMobile();
-  
-  return (
-    <>
-      <Card className="mb-8 bg-white/80 backdrop-blur-xl border border-apple-border/10 rounded-3xl overflow-hidden">
-        <CardHeader className="flex flex-row items-center gap-4 pt-6 pb-4">
-          <div className="w-10 h-10 rounded-2xl bg-apple-light flex items-center justify-center">
-            <Clock className="w-5 h-5 text-apple-blue" />
-          </div>
-          <CardTitle className="text-xl md:text-2xl font-medium text-apple-text">
-            Your Week at a Glance
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="pt-0 pb-6">
-          <p className="text-apple-grey text-base font-light">
-            Each day is carefully structured to maximize your learning and development, with a balance of technical training, performance practice, and industry insight.
-          </p>
-        </CardContent>
-      </Card>
+  const [modalOpen, setModalOpen] = useState(false);
 
-      <div className="space-y-4">
-        <AnimatePresence>
-          {scheduleData.map((day, index) => (
-            <motion.div
-              key={`day-${index}`}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-            >
-              <Collapsible
-                open={expandedDay === day.day}
-                onOpenChange={() => setExpandedDay(expandedDay === day.day ? null : day.day)}
-                className="border border-apple-border/10 rounded-2xl bg-white/80 backdrop-blur-xl hover:shadow-lg transition-all duration-500"
-              >
-                <CollapsibleTrigger className="w-full px-6 py-4 flex items-center justify-between">
-                  <div className="flex flex-col items-start text-left">
-                    <h3 className="text-lg md:text-xl font-medium text-apple-text">{day.day}</h3>
-                    <p className="text-sm text-apple-grey mt-1 font-light">
-                      {day.theme}
-                    </p>
-                  </div>
-                  <div className="text-apple-blue transition-transform duration-300">
-                    {expandedDay === day.day ? (
-                      <ChevronUp size={20} />
-                    ) : (
-                      <ChevronDown size={20} />
-                    )}
-                  </div>
-                </CollapsibleTrigger>
-                
-                <CollapsibleContent>
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="px-6 pb-6"
-                  >
-                    <ul className="space-y-3 border-t border-apple-border/10 pt-4">
-                      {day.activities.map((activity, idx) => (
-                        <motion.li
-                          key={`activity-${index}-${idx}`}
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ duration: 0.3, delay: idx * 0.05 }}
-                          className="flex items-start group"
-                        >
-                          <span className="text-apple-blue mr-3 mt-1.5 flex-shrink-0 text-sm">•</span>
-                          <span className="text-apple-text/90 group-hover:text-apple-text transition-colors duration-300 font-light">
-                            {activity}
-                          </span>
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </motion.div>
-                </CollapsibleContent>
-              </Collapsible>
-            </motion.div>
-          ))}
-        </AnimatePresence>
+  return (
+    <div className="flex flex-col lg:flex-row gap-10">
+      <div className="flex-1 min-w-0">
+        <Card className="mb-8 bg-white/80 backdrop-blur-xl border border-apple-border/10 rounded-3xl overflow-hidden">
+          <CardHeader className="flex flex-row items-center gap-4 pt-6 pb-4">
+            <div className="w-10 h-10 rounded-2xl bg-apple-light flex items-center justify-center">
+              <Clock className="w-5 h-5 text-apple-blue" />
+            </div>
+            <CardTitle className="text-xl md:text-2xl font-medium text-apple-text">
+              Typical Week: Session & Block Schedule
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="pt-0 pb-6">
+            <p className="text-apple-grey text-base font-light">
+              Every day offers focused training blocks to maximize your progress and community connections.
+            </p>
+          </CardContent>
+        </Card>
+        <CurriculumScheduleTable />
+        <div className="py-6 flex justify-center">
+          <button
+            className="bg-apple-blue hover:bg-apple-blue-hover text-white px-6 py-3 rounded-full font-medium shadow transition"
+            onClick={() => setModalOpen(true)}
+          >
+            Download Curriculum + Travel Tips (PDF)
+          </button>
+        </div>
+        <CurriculumDownloadModal open={modalOpen} onClose={() => setModalOpen(false)} />
       </div>
-    </>
+      <div className="lg:w-[340px] flex-shrink-0">
+        <HousingInfoPanel />
+      </div>
+    </div>
   );
 }
 
