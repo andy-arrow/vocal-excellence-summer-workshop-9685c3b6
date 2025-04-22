@@ -22,15 +22,15 @@ const GuaranteeBadge: React.FC<GuaranteeBadgeProps> = ({
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <div className={`inline-flex items-center gap-1.5 bg-green-50 border border-green-200 
+          <div className={`inline-flex items-center gap-1.5 bg-green-100 border border-green-200 
                           text-green-800 rounded-full ${sizeClasses[size]} ${className}`}>
             <BadgeCheck className="w-4 h-4" />
             <span className="font-medium">Satisfaction Guarantee</span>
-            <Info className="w-3.5 h-3.5 text-green-600 ml-0.5" />
+            <Info className="w-3.5 h-3.5 text-green-700 ml-0.5" />
           </div>
         </TooltipTrigger>
-        <TooltipContent className="max-w-xs p-3">
-          <p className="text-sm">
+        <TooltipContent className="max-w-xs p-4">
+          <p className="text-sm max-w-prose">
             100% Money-Back Guarantee until lunch on Day 1. 
             If you're not completely satisfied, we'll refund your full payment with no questions asked.
           </p>

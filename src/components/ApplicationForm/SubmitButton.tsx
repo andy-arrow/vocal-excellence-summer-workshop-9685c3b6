@@ -22,9 +22,9 @@ const SubmitButton = ({ isSubmitting, onClick }: SubmitButtonProps) => {
     <button 
       type="submit" 
       disabled={isSubmitting}
-      className="px-6 py-3 bg-apple-blue hover:bg-apple-blue-hover text-white text-lg font-medium rounded-full
+      className="px-6 py-3 bg-blue-700 hover:bg-blue-800 text-white text-lg font-medium rounded-full
                 relative overflow-hidden transition-all duration-300 disabled:opacity-70 
-                disabled:cursor-not-allowed disabled:hover:bg-apple-blue shadow-sm"
+                disabled:cursor-not-allowed disabled:hover:bg-blue-700 shadow-sm"
       aria-label={isSubmitting ? "Submitting application" : "Submit application"}
       onClick={handleClick}
     >

@@ -1,3 +1,4 @@
+
 import React, { lazy, Suspense } from 'react';
 import {
   createBrowserRouter,
@@ -13,9 +14,8 @@ const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const Auth = lazy(() => import('./pages/Auth'));
 const SummerProgramme = lazy(() => import('./pages/SummerProgramme'));
 
-// Import the new LiveChat component and SocialProofCarousel
+// Import LiveChat component
 import LiveChat from './components/LiveChat';
-import SocialProofCarousel from './components/SocialProofCarousel';
 
 // Optimized loading fallback
 const PageLoader = () => (

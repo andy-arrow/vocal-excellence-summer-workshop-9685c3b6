@@ -1,11 +1,9 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Instagram, Linkedin, ChevronDown, ChevronUp, Video } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 
-// Update: add "tag" for top-line tag
 const instructors = [
   {
     name: "Andreas Aroditis",
@@ -64,13 +62,12 @@ const instructors = [
   }
 ];
 
-// Helper: get first ~24 words or less from the bio
 function bioIntro(bio: string) {
   const words = bio.split(' ');
   if(words.length <= 24) return bio;
   return words.slice(0, 24).join(' ') + '...';
 }
-// Helper: get rest of bio for "Read more"
+
 function bioRest(bio: string) {
   const words = bio.split(' ');
   if(words.length <= 24) return '';
@@ -89,12 +86,10 @@ const InstructorsSection = () => {
   };
 
   useEffect(() => {
-    // Structured data (SEO) for each person, inject as JSON-LD
     instructors.forEach((instructor, idx) => {
       const existing = document.getElementById(`person-ld-${idx}`);
       if (existing) existing.remove();
 
-      // Prepare structured data
       const personData = {
         "@context": "https://schema.org",
         "@type": "Person",
@@ -116,7 +111,6 @@ const InstructorsSection = () => {
       document.head.appendChild(script);
     });
 
-    // intersection observer animation
     const observer = new window.IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -141,7 +135,6 @@ const InstructorsSection = () => {
         observer.unobserve(intersectionRef.current);
       }
       instructorElements.forEach((el) => observer.unobserve(el));
-      // Remove all ld+json tags on unmount
       instructors.forEach((_, idx) => {
         const el = document.getElementById(`person-ld-${idx}`);
         if (el) el.remove();
@@ -156,10 +149,10 @@ const InstructorsSection = () => {
           ref={intersectionRef}
           className="text-center mb-16 md:mb-20 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight text-apple-text mb-5">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight text-gray-900 mb-5">
             Meet Our Faculty
           </h2>
-          <p className="text-lg md:text-xl text-charcoal font-light max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-gray-700 font-light max-w-prose mx-auto leading-relaxed">
             Learn from world-class vocal and performance professionals from top programs and global stages
           </p>
         </div>
@@ -179,20 +172,17 @@ const InstructorsSection = () => {
               className="instructor-card relative"
               onMouseEnter={() => setHoveredInstructor(index)}
               onMouseLeave={() => setHoveredInstructor(null)}
-              // For consistent card heights with flex-col
               style={{ minHeight: 460, display: 'flex', flexDirection: 'column' }}
             >
               <div className={cn(
-                "group overflow-hidden rounded-2xl border border-apple-border/10 bg-white flex flex-col h-full transition-all duration-500 ease-out hover:shadow-xl hover:shadow-black/[0.03]"
+                "group overflow-hidden rounded-2xl border border-gray-200 bg-white flex flex-col h-full transition-all duration-500 ease-out hover:shadow-xl hover:shadow-black/[0.03]"
               )}>
                 <div className="relative w-full flex justify-center items-center" style={{ height: 300 }}>
-                  {/* Top-line tag */}
                   <span className={cn(
-                    "absolute top-4 left-4 z-30 bg-apple-blue/90 text-white text-xs px-3 py-1 rounded-full font-semibold shadow"
+                    "absolute top-4 left-4 z-30 bg-blue-700 text-white text-xs px-3 py-1 rounded-full font-semibold shadow"
                   )}>
                     {instructor.tag}
                   </span>
-                  {/* Instructor photo */}
                   <img
                     src={instructor.image}
                     alt={`Photo of ${instructor.name}`}
@@ -202,7 +192,6 @@ const InstructorsSection = () => {
                       hoveredInstructor === index ? "scale-105" : "scale-100"
                     )}
                   />
-                  {/* Socials show on hover */}
                   <div className={cn(
                     "absolute bottom-4 right-4 z-30 flex space-x-2",
                     hoveredInstructor === index ? "opacity-100" : "opacity-0 pointer-events-none",
@@ -213,7 +202,7 @@ const InstructorsSection = () => {
                         href={instructor.socials.instagram} 
                         target="_blank" 
                         rel="noopener noreferrer" 
-                        className="w-9 h-9 rounded-full bg-white/90 flex items-center justify-center backdrop-blur-sm text-apple-text hover:bg-white transition-colors"
+                        className="w-9 h-9 rounded-full bg-white/90 flex items-center justify-center backdrop-blur-sm text-gray-700 hover:bg-white transition-colors"
                         aria-label={`Instagram profile of ${instructor.name}`}
                       >
                         <Instagram size={18} />
@@ -224,7 +213,7 @@ const InstructorsSection = () => {
                         href={instructor.socials.linkedin} 
                         target="_blank" 
                         rel="noopener noreferrer" 
-                        className="w-9 h-9 rounded-full bg-white/90 flex items-center justify-center backdrop-blur-sm text-apple-text hover:bg-white transition-colors"
+                        className="w-9 h-9 rounded-full bg-white/90 flex items-center justify-center backdrop-blur-sm text-gray-700 hover:bg-white transition-colors"
                         aria-label={`LinkedIn profile of ${instructor.name}`}
                       >
                         <Linkedin size={18} />
@@ -234,9 +223,9 @@ const InstructorsSection = () => {
                 </div>
                 
                 <div className="p-6 flex flex-col flex-grow">
-                  <h3 className="text-xl font-medium text-apple-text mb-1">{instructor.name}</h3>
-                  <p className="text-apple-blue text-sm font-medium mb-2">{instructor.role}</p>
-                  <div className="text-charcoal text-sm flex-grow max-w-prose">
+                  <h3 className="text-xl font-medium text-gray-800 mb-1">{instructor.name}</h3>
+                  <p className="text-blue-700 text-sm font-medium mb-2">{instructor.role}</p>
+                  <div className="text-gray-700 text-sm flex-grow max-w-prose">
                     <AnimatePresence mode="wait">
                       {activeBio === index ? (
                         <motion.div
@@ -253,7 +242,7 @@ const InstructorsSection = () => {
                           </p>
                           <button 
                             onClick={() => toggleBio(index)}
-                            className="text-apple-blue text-sm font-medium flex items-center hover:text-apple-blue-hover focus:outline-none focus:ring-2 focus:ring-apple-blue/20 rounded-md -ml-1 px-1"
+                            className="text-blue-700 text-sm font-medium flex items-center hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-200 rounded-md -ml-1 px-1"
                           >
                             Read less <ChevronUp className="ml-1 h-4 w-4" />
                           </button>
@@ -270,7 +259,7 @@ const InstructorsSection = () => {
                           {bioRest(instructor.bio) && (
                             <button 
                               onClick={() => toggleBio(index)}
-                              className="text-apple-blue text-sm font-medium flex items-center hover:text-apple-blue-hover focus:outline-none focus:ring-2 focus:ring-apple-blue/20 rounded-md -ml-1 px-1"
+                              className="text-blue-700 text-sm font-medium flex items-center hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-200 rounded-md -ml-1 px-1"
                             >
                               Read more <ChevronDown className="ml-1 h-4 w-4" />
                             </button>
@@ -285,11 +274,10 @@ const InstructorsSection = () => {
           ))}
         </div>
 
-        {/* Book Meet-and-Greet CTA */}
         <div className="text-center mt-16">
           <a
             href="mailto:info@vocalexcellence.org?subject=Book%20a%2015-min%20Faculty%20Meet-and-Greet"
-            className="inline-flex items-center justify-center gap-2 bg-apple-blue text-white px-8 py-4 rounded-full text-lg font-medium transition-all duration-300 hover:bg-apple-blue-hover shadow"
+            className="inline-flex items-center justify-center gap-2 bg-blue-700 text-white px-8 py-4 rounded-full text-lg font-medium transition-all duration-300 hover:bg-blue-800 shadow"
             style={{ marginTop: '2rem' }}
           >
             <Video className="w-5 h-5" />

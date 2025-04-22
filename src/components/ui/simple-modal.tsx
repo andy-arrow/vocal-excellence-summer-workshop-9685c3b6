@@ -23,16 +23,16 @@ const SimpleModal: React.FC<SimpleModalProps> = ({
   
   const backdropClasses = {
     light: "bg-black/30",
-    medium: "bg-black/40",
-    dark: "bg-black/60"
+    medium: "bg-black/50",
+    dark: "bg-black/70"
   };
   
   return (
     <div className={`fixed inset-0 z-50 flex items-center justify-center ${backdropClasses[backdropOpacity]}`}>
-      <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-8 relative">
+      <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-8 relative mx-4">
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 px-2 py-1 text-apple-blue hover:text-apple-blue-hover text-xl"
+          className="absolute top-4 right-4 px-2 py-1 text-blue-700 hover:text-blue-800 text-xl"
           aria-label="Close"
         >
           ×

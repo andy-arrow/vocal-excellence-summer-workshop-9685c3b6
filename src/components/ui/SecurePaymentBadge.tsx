@@ -18,8 +18,8 @@ const SecurePaymentBadge: React.FC<SecurePaymentBadgeProps> = ({
   };
   
   return (
-    <div className={`inline-flex items-center gap-1.5 bg-slate-50 border border-slate-200 
-                    text-charcoal rounded-full ${sizeClasses[size]} ${className}`}>
+    <div className={`inline-flex items-center gap-1.5 bg-slate-100 border border-slate-200 
+                    text-slate-800 rounded-full ${sizeClasses[size]} ${className}`}>
       <Lock className="w-4 h-4" />
       <span className="font-medium">Secure Payment</span>
     </div>
