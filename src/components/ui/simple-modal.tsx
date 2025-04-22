@@ -1,11 +1,13 @@
 
 import React from "react";
+import SecurePaymentBadge from "./SecurePaymentBadge";
 
 interface SimpleModalProps {
   open: boolean;
   onClose: () => void;
   title?: string;
   children: React.ReactNode;
+  showSecureBadge?: boolean;
 }
 
 const SimpleModal: React.FC<SimpleModalProps> = ({
@@ -13,6 +15,7 @@ const SimpleModal: React.FC<SimpleModalProps> = ({
   onClose,
   title,
   children,
+  showSecureBadge = false,
 }) => {
   if (!open) return null;
   return (
@@ -25,7 +28,10 @@ const SimpleModal: React.FC<SimpleModalProps> = ({
         >
           ×
         </button>
-        {title && <h2 className="text-lg font-bold mb-4">{title}</h2>}
+        <div className="flex items-center justify-between mb-4">
+          {title && <h2 className="text-lg font-bold">{title}</h2>}
+          {showSecureBadge && <SecurePaymentBadge size="sm" />}
+        </div>
         {children}
       </div>
     </div>

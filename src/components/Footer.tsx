@@ -26,6 +26,29 @@ const Footer = () => {
     { icon: <Youtube size={18} />, url: "https://youtube.com/vocalexcellence", label: "YouTube" }
   ], []);
 
+  const partnerLogos = React.useMemo(() => [
+    { 
+      name: "European University Cyprus", 
+      image: "/lovable-uploads/e0f8da04-eb2f-4b36-8abb-00346d1c76be.png", 
+      url: "https://www.euc.ac.cy/" 
+    },
+    { 
+      name: "Cyprus Symphony Orchestra", 
+      image: "/lovable-uploads/cd8668bd-81c1-4de3-b82b-b97f9c5be025.png", 
+      url: "https://www.cyso.org.cy/" 
+    },
+    { 
+      name: "Limassol Municipality", 
+      image: "/lovable-uploads/c503aee8-1c6f-4045-bcd9-46e1da3dc853.png", 
+      url: "https://www.limassolmunicipal.com.cy/" 
+    },
+    { 
+      name: "Cyprus Tourism Organization", 
+      image: "/lovable-uploads/1a01d722-402e-4868-86dd-84534eb24551.png", 
+      url: "https://www.visitcyprus.com/" 
+    },
+  ], []);
+
   return (
     <footer className="relative bg-[#fbfbfd] overflow-hidden">
       <div className="max-w-[980px] mx-auto px-6 md:px-8">
@@ -33,6 +56,30 @@ const Footer = () => {
           <p className="text-[12px] leading-[1.33337] font-normal text-[#6e6e73]">
             Vocal Excellence brings transformative musical education to passionate singers through expert-led training in Limassol, Cyprus.
           </p>
+        </div>
+
+        {/* Partner Logos Section */}
+        <div className="py-8 border-b border-[#d2d2d7]">
+          <h4 className="text-[12px] leading-[1.33337] font-semibold mb-4 text-[#1d1d1f] text-center">
+            ACCREDITED & PARTNERED WITH
+          </h4>
+          <div className="flex flex-wrap justify-center items-center gap-6 md:gap-10">
+            {partnerLogos.map((partner, i) => (
+              <a 
+                key={i} 
+                href={partner.url} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transition-all duration-300"
+              >
+                <img 
+                  src={partner.image} 
+                  alt={partner.name} 
+                  className="h-10 md:h-12 object-contain"
+                />
+              </a>
+            ))}
+          </div>
         </div>
 
         <div className="grid md:grid-cols-5 gap-8 py-12">

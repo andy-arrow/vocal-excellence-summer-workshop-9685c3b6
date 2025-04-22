@@ -1,4 +1,3 @@
-
 import React, { lazy, Suspense } from 'react';
 import {
   createBrowserRouter,
@@ -13,6 +12,10 @@ const TermsAndConditions = lazy(() => import('./pages/TermsAndConditions'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const Auth = lazy(() => import('./pages/Auth'));
 const SummerProgramme = lazy(() => import('./pages/SummerProgramme'));
+
+// Import the new LiveChat component and SocialProofCarousel
+import LiveChat from './components/LiveChat';
+import SocialProofCarousel from './components/SocialProofCarousel';
 
 // Optimized loading fallback
 const PageLoader = () => (
@@ -84,7 +87,14 @@ function App() {
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+      
+      {/* Add LiveChat component */}
+      <LiveChat />
+    </>
+  );
 }
 
 export default App;

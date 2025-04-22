@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import SocialProofCarousel from '@/components/SocialProofCarousel';
+import GuaranteeBadge from '@/components/ui/GuaranteeBadge';
+import SecurePaymentBadge from '@/components/ui/SecurePaymentBadge';
 
 const SummerProgramme = () => {
   return (
@@ -393,16 +396,25 @@ const SummerProgramme = () => {
           </div>
           
           <div className="text-center mt-10">
-            <Link 
-              to="/apply" 
-              className="inline-flex items-center gap-2 bg-apple-blue text-white px-8 py-4 rounded-full text-lg font-medium transition-all duration-300 hover:bg-apple-blue-hover"
-            >
-              APPLY NOW
-              <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-0.5" />
-            </Link>
+            <div className="flex flex-col items-center space-y-4">
+              <div className="flex items-center gap-3 mb-2">
+                <GuaranteeBadge />
+                <SecurePaymentBadge />
+              </div>
+              <Link 
+                to="/apply" 
+                className="inline-flex items-center gap-2 bg-apple-blue text-white px-8 py-4 rounded-full text-lg font-medium transition-all duration-300 hover:bg-apple-blue-hover"
+              >
+                APPLY NOW
+                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-0.5" />
+              </Link>
+            </div>
           </div>
         </section>
       </div>
+      
+      {/* Social Proof Carousel */}
+      <SocialProofCarousel />
       
       {/* Testimonials */}
       <section className="bg-slate-900 py-20 text-white">

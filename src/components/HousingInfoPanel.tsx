@@ -1,15 +1,20 @@
 
 import React from "react";
 import { Bed, Hotel, Utensils } from "lucide-react";
+import GuaranteeBadge from "./ui/GuaranteeBadge";
 
 const HousingInfoPanel: React.FC = () => (
   <aside
     className="bg-apple-blue/10 border border-apple-blue/20 rounded-2xl p-6 max-w-xs md:ml-10 mb-8 shadow-sm"
     aria-label="Housing and Meals Information"
   >
-    <h3 className="text-lg font-bold text-apple-blue mb-4 flex items-center gap-2">
-      <Bed className="w-5 h-5" /> Housing Options
-    </h3>
+    <div className="flex justify-between items-start mb-4">
+      <h3 className="text-lg font-bold text-apple-blue flex items-center gap-2">
+        <Bed className="w-5 h-5" /> Housing Options
+      </h3>
+      <GuaranteeBadge size="sm" />
+    </div>
+    
     <ul className="space-y-2 mb-4 text-apple-text">
       <li className="flex items-center gap-2">
         <Hotel className="w-4 h-4" />

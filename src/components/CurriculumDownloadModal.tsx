@@ -1,6 +1,7 @@
 
 import React, { useState } from "react";
 import SimpleModal from "./ui/simple-modal";
+import { Lock } from "lucide-react";
 
 // Dummy submission for demo; adapt to handle email lead forms as needed
 const CurriculumDownloadModal: React.FC<{
@@ -21,7 +22,7 @@ const CurriculumDownloadModal: React.FC<{
   };
 
   return (
-    <SimpleModal open={open} onClose={onClose} title="Get the Detailed Curriculum + Travel Tips PDF">
+    <SimpleModal open={open} onClose={onClose} title="Get the Detailed Curriculum + Travel Tips PDF" showSecureBadge={true}>
       {submitted ? (
         <div className="text-green-700 p-4 text-center">
           Thank you! Your download will begin shortly.
@@ -39,6 +40,10 @@ const CurriculumDownloadModal: React.FC<{
             onChange={(e) => setEmail(e.target.value)}
             className="border border-apple-border rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-apple-blue"
           />
+          <div className="flex items-center gap-2 text-xs text-gray-500 mt-2">
+            <Lock className="w-3.5 h-3.5" />
+            <span>Your information is secure and will never be shared</span>
+          </div>
           <button
             type="submit"
             className="w-full bg-apple-blue text-white rounded-lg py-2 hover:bg-apple-blue-hover font-medium"
