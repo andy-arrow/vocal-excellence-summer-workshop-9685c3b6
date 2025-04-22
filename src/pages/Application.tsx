@@ -1,4 +1,3 @@
-
 import React, { useEffect, lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
@@ -38,8 +37,6 @@ const Application = () => {
   const analytics = useAnalytics();
   
   useEffect(() => {
-    window.scrollTo(0, 0);
-    
     const handleScroll = () => {
       requestAnimationFrame(() => {
         setShowScrollToTop(window.scrollY > 500);
