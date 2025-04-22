@@ -1,44 +1,23 @@
 
-import React, { useEffect, useRef, useState } from 'react';
-import { ArrowDown, ArrowUpRight, Check } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '@/lib/utils';
+import React, { useEffect, useRef } from 'react';
+import { ArrowDown, ArrowUpRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+import { CountdownTimer } from './CountdownTimer';
 
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
-  const [hasReducedMotion, setHasReducedMotion] = useState(false);
-  
+  const videoRef = useRef<HTMLVideoElement>(null);
+
   useEffect(() => {
-    const savedPreference = localStorage.getItem('reduced-motion') === 'true';
-    setHasReducedMotion(savedPreference);
-    
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (mediaQuery.matches && !localStorage.getItem('reduced-motion')) {
-      setHasReducedMotion(true);
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {
+        console.log('Autoplay prevented');
+      });
     }
-    
-    const handleScroll = () => {
-      if (!heroRef.current) return;
-      const scrollPosition = window.scrollY;
-      const opacity = 1 - scrollPosition / 700;
-      const translateY = scrollPosition * 0.3;
-      
-      if (heroRef.current) {
-        const heroContent = heroRef.current.querySelector('.hero-content') as HTMLElement;
-        if (heroContent) {
-          heroContent.style.opacity = Math.max(0.2, opacity).toString();
-          heroContent.style.transform = `translateY(${translateY}px)`;
-        }
-      }
-    };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [hasReducedMotion]);
-  
-  const scrollToDiscoverSection = () => {
+  }, []);
+
+  const scrollToAboutSection = () => {
     const aboutSection = document.getElementById('about');
     if (aboutSection) {
       aboutSection.scrollIntoView({
@@ -46,114 +25,112 @@ const HeroSection = () => {
       });
     }
   };
-  
+
   return (
     <section 
-      id="home" 
-      ref={heroRef} 
-      className={cn(
-        "relative min-h-[75vh] flex flex-col justify-center overflow-hidden",
-        "bg-apple-light border-b border-apple-border pt-20 md:pt-20", 
-        hasReducedMotion ? "reduced-motion" : ""
-      )}
+      ref={heroRef}
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-apple-text"
     >
-      <div className="hero-content relative z-20 text-center px-4 transition-all duration-500 ease-out max-w-5xl mx-auto mt-16 md:mt-14">
-        <motion.div 
-          className="space-y-3"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
+      {/* Background Video */}
+      <div className="absolute inset-0 w-full h-full">
+        <video
+          ref={videoRef}
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster="/lovable-uploads/masterclass-singers.jpg"
         >
-          <motion.h1 
-            className="font-serif text-3xl md:text-4xl lg:text-5xl font-light tracking-tight text-black"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
-          >
-            <span className="inline md:block">Land Your Next Audition </span>
-            <span className="text-black">in 5 Days</span>
-          </motion.h1>
-          
+          <source src="/lovable-uploads/masterclass-video.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-apple-text/70"></div>
+      </div>
+
+      <div className="relative z-10 container mx-auto px-6 text-center">
+        <motion.div 
+          className="max-w-4xl mx-auto space-y-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          {/* Main Headline */}
+          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white">
+            Earn a Professional Audition Reel
+            <br />
+            <span className="text-apple-blue">in 5 Days</span>
+          </h1>
+
+          {/* Subheadline */}
           <motion.p 
-            className="font-sans text-sm md:text-base text-black max-w-2xl mx-auto leading-relaxed font-medium"
+            className="text-lg md:text-xl text-apple-grey max-w-2xl mx-auto leading-relaxed"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
+            transition={{ delay: 0.4, duration: 0.7 }}
           >
-            Elite Training, Pro Video Reel, Industry Network—Guaranteed or Your Tuition Back
+            Private coaching, Alexander Technique, & physician-led vocal health in sunny Limassol. 
+            <span className="font-medium"> Only 20 singers admitted.</span>
           </motion.p>
 
-          <motion.div
-            className="pt-4 flex flex-wrap justify-center gap-2"
+          {/* Trust Badges */}
+          <motion.div 
+            className="flex flex-wrap justify-center gap-8 pt-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1.0 }}
+            transition={{ delay: 0.6, duration: 0.7 }}
           >
-            <div className="flex items-center gap-1.5 bg-apple-light-hover rounded-full px-3 py-1">
-              <Check className="h-3.5 w-3.5 text-apple-blue" />
-              <span className="text-xs">Juilliard & Broadway faculty</span>
-            </div>
-            <div className="flex items-center gap-1.5 bg-apple-light-hover rounded-full px-3 py-1">
-              <Check className="h-3.5 w-3.5 text-apple-blue" />
-              <span className="text-xs">Pro performance videos</span>
-            </div>
-            <div className="flex items-center gap-1.5 bg-apple-light-hover rounded-full px-3 py-1">
-              <Check className="h-3.5 w-3.5 text-apple-blue" />
-              <span className="text-xs font-medium">94% booking rate</span>
-            </div>
+            <img src="/lovable-uploads/juilliard-logo.png" alt="Juilliard" className="h-8 opacity-50 grayscale" />
+            <img src="/lovable-uploads/broadway-logo.png" alt="Broadway" className="h-8 opacity-50 grayscale" />
+            <img src="/lovable-uploads/nyt-logo.png" alt="New York Times" className="h-8 opacity-50 grayscale" />
+            <img src="/lovable-uploads/opera-today-logo.png" alt="Opera Today" className="h-8 opacity-50 grayscale" />
           </motion.div>
 
+          {/* Success Metric & Timer */}
           <motion.div 
-            className="pt-3"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.1 }}
+            className="flex flex-col items-center gap-3 pt-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8, duration: 0.7 }}
           >
-            <motion.div className="flex flex-row items-center justify-center gap-2 md:gap-3">
-              <Link 
-                to="/apply" 
-                className="group px-4 py-2 bg-apple-blue text-black rounded-full text-sm md:text-base font-medium transition-all duration-300 hover:bg-apple-blue-hover shadow-sm"
-              >
-                Apply Now
-                <ArrowUpRight className="inline-block ml-1 w-4 h-4 text-black opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </Link>
-              
-              <button 
-                onClick={scrollToDiscoverSection} 
-                className="text-black hover:text-black/70 px-4 py-2 rounded-full border border-apple-border backdrop-blur-sm transition-all hover:bg-apple-light-hover text-sm md:text-base font-light"
-              >
-                Discover More
-              </button>
-            </motion.div>
+            <div className="px-4 py-1.5 bg-apple-text/60 backdrop-blur border border-apple-grey/20 rounded-full">
+              <span className="text-sm text-white font-medium">94% of past attendees booked paid gigs within 6 months</span>
+            </div>
             
-            <motion.div 
-              className="flex items-center justify-center mt-4 space-x-2 text-xs md:text-sm"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.3, duration: 0.5 }}
+            <CountdownTimer deadline="2025-05-15" />
+          </motion.div>
+
+          {/* CTA Button */}
+          <motion.div 
+            className="pt-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1, duration: 0.7 }}
+          >
+            <Link 
+              to="/apply" 
+              className="group inline-flex items-center gap-2 px-8 py-4 bg-apple-blue text-white rounded-full text-lg font-medium transition-all duration-300 hover:bg-apple-blue-hover"
             >
-              <p className="text-black font-light px-3 py-1.5 bg-apple-light-hover rounded-full">
-                <span className="font-medium">94% of past attendees booked paid gigs within 6 months</span>
-              </p>
-            </motion.div>
+              Reserve My Spot
+              <ArrowUpRight className="w-5 h-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </Link>
           </motion.div>
         </motion.div>
       </div>
-      
+
+      {/* Scroll Down Arrow */}
       <motion.button 
-        onClick={scrollToDiscoverSection} 
-        className="absolute bottom-4 left-0 right-0 mx-auto w-10 h-10 cursor-pointer z-20 flex items-center justify-center"
-        aria-label="Scroll down"
+        onClick={scrollToAboutSection}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white cursor-pointer z-20"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.5, duration: 0.8 }}
+        transition={{ delay: 1.2, duration: 0.8 }}
       >
         <motion.div 
-          className="rounded-full bg-apple-border/20 backdrop-blur-sm border border-apple-border p-2 hover:bg-apple-border/40 transition-all"
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity, repeatType: "loop" }}
+          className="rounded-full bg-apple-text/20 backdrop-blur-sm border border-white/20 p-2 hover:bg-apple-text/40 transition-all"
         >
-          <ArrowDown className="text-black w-4 h-4" />
+          <ArrowDown className="w-6 h-6" />
         </motion.div>
       </motion.button>
     </section>
@@ -161,3 +138,4 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
+
