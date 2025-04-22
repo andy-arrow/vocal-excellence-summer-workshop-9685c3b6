@@ -206,7 +206,7 @@ const facultyMembers = [
 
 function ModulesContent() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
       {modules.map((module, index) => (
         <motion.div
           key={`module-${index}`}
@@ -215,9 +215,9 @@ function ModulesContent() {
           transition={{ duration: 0.5, delay: index * 0.1 }}
         >
           <Card className="group overflow-hidden bg-white/80 backdrop-blur-xl border border-apple-border/10 rounded-3xl hover:shadow-2xl transition-all duration-500">
-            <CardHeader className="pb-2 pt-6 md:pt-8">
+            <CardHeader className="pb-2 pt-8">
               <div className={cn(
-                "mb-4 w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center",
+                "mb-4 w-14 h-14 rounded-2xl flex items-center justify-center",
                 "bg-apple-light group-hover:bg-apple-blue/10 transition-colors duration-500"
               )}>
                 {module.icon}
@@ -226,9 +226,9 @@ function ModulesContent() {
                 {module.title}
               </CardTitle>
             </CardHeader>
-            <CardContent className="pt-2 pb-6">
-              <p className="text-apple-grey text-base mb-4 font-light">{module.description}</p>
-              <ul className="space-y-3">
+            <CardContent className="pt-2 pb-8">
+              <p className="text-charcoal text-base mb-6 font-light max-w-prose">{module.description}</p>
+              <ul className="space-y-4">
                 {module.highlights.map((highlight, idx) => (
                   <motion.li
                     key={`highlight-${index}-${idx}`}
@@ -238,7 +238,7 @@ function ModulesContent() {
                     className="flex items-start group/item"
                   >
                     <span className="text-apple-blue mr-3 mt-1.5 flex-shrink-0 text-sm">•</span>
-                    <span className="text-apple-text/90 group-hover/item:text-apple-text transition-colors duration-300">
+                    <span className="text-charcoal group-hover/item:text-apple-text transition-colors duration-300">
                       {highlight}
                     </span>
                   </motion.li>
@@ -259,7 +259,7 @@ function ScheduleContent() {
     <div className="flex flex-col lg:flex-row gap-10">
       <div className="flex-1 min-w-0">
         <Card className="mb-8 bg-white/80 backdrop-blur-xl border border-apple-border/10 rounded-3xl overflow-hidden">
-          <CardHeader className="flex flex-row items-center gap-4 pt-6 pb-4">
+          <CardHeader className="flex flex-row items-center gap-4 pt-8 pb-4">
             <div className="w-10 h-10 rounded-2xl bg-apple-light flex items-center justify-center">
               <Clock className="w-5 h-5 text-apple-blue" />
             </div>
@@ -267,16 +267,16 @@ function ScheduleContent() {
               Typical Week: Session & Block Schedule
             </CardTitle>
           </CardHeader>
-          <CardContent className="pt-0 pb-6">
-            <p className="text-apple-grey text-base font-light">
+          <CardContent className="pt-0 pb-8">
+            <p className="text-charcoal text-base font-light max-w-prose">
               Every day offers focused training blocks to maximize your progress and community connections.
             </p>
           </CardContent>
         </Card>
         <CurriculumScheduleTable />
-        <div className="py-6 flex justify-center">
+        <div className="py-8 flex justify-center">
           <button
-            className="bg-apple-blue hover:bg-apple-blue-hover text-white px-6 py-3 rounded-full font-medium shadow transition"
+            className="bg-apple-blue hover:bg-apple-blue-hover text-white px-8 py-4 rounded-full font-medium shadow transition"
             onClick={() => setModalOpen(true)}
           >
             Download Curriculum + Travel Tips (PDF)
@@ -300,24 +300,24 @@ const CurriculumSection = () => {
   };
 
   return (
-    <section id="curriculum" className="py-20 md:py-24 px-6 md:px-8 bg-gradient-to-b from-white to-apple-light/50">
+    <section id="curriculum" className="py-24 md:py-32 px-6 md:px-8 bg-gradient-to-b from-white to-apple-light/50">
       <div className="max-w-[980px] mx-auto">
         <motion.div 
-          className="text-center mb-12 md:mb-16"
+          className="text-center mb-16 md:mb-20"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-3xl md:text-4xl xl:text-5xl font-medium text-apple-text mb-4">
+          <h2 className="text-3xl md:text-4xl xl:text-5xl font-medium text-apple-text mb-6">
             Your Summer Crescendo
           </h2>
-          <p className="text-lg md:text-xl text-apple-grey font-light max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-charcoal font-light max-w-2xl mx-auto">
             A daily rhythm designed to elevate your vocal artistry
           </p>
         </motion.div>
 
-        <div className="mb-4">
+        <div className="mb-8">
           <Tabs 
             value={activeTab} 
             onValueChange={handleTabChange} 

@@ -44,7 +44,7 @@ const instructors = [
     name: "Aris Antoniades",
     role: "Composer",
     tag: "Award-Winning Composer",
-    bio: "Aris Antoniades composes for symphonic, jazz, theatre, and film. Artistic Director of TrakArt Pops Orchestra, collaborator with Grammy nominee Bobby Sanabria, and platinum artist Alkistis Protopsalti. His works blend emotional depth and clarity. Cyprus’s musical landscape is shaped by his commitment and craft.",
+    bio: "Aris Antoniades composes for symphonic, jazz, theatre, and film. Artistic Director of TrakArt Pops Orchestra, collaborator with Grammy nominee Bobby Sanabria, and platinum artist Alkistis Protopsalti. His works blend emotional depth and clarity. Cyprus's musical landscape is shaped by his commitment and craft.",
     image: "/lovable-uploads/23077377-fca0-46d4-b7c8-83c2a2edcb19.png",
     socials: {
       instagram: "#",
@@ -159,12 +159,12 @@ const InstructorsSection = () => {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight text-apple-text mb-5">
             Meet Our Faculty
           </h2>
-          <p className="text-lg md:text-xl text-apple-grey font-light max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-charcoal font-light max-w-2xl mx-auto leading-relaxed">
             Learn from world-class vocal and performance professionals from top programs and global stages
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 xl:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 xl:gap-10">
           {instructors.map((instructor, index) => (
             <motion.div
               key={index}
@@ -236,7 +236,7 @@ const InstructorsSection = () => {
                 <div className="p-6 flex flex-col flex-grow">
                   <h3 className="text-xl font-medium text-apple-text mb-1">{instructor.name}</h3>
                   <p className="text-apple-blue text-sm font-medium mb-2">{instructor.role}</p>
-                  <div className="text-apple-grey text-sm flex-grow">
+                  <div className="text-charcoal text-sm flex-grow max-w-prose">
                     <AnimatePresence mode="wait">
                       {activeBio === index ? (
                         <motion.div

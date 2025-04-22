@@ -29,19 +29,21 @@ const SimpleModal: React.FC<SimpleModalProps> = ({
   
   return (
     <div className={`fixed inset-0 z-50 flex items-center justify-center ${backdropClasses[backdropOpacity]}`}>
-      <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6 relative">
+      <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-8 relative">
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 px-2 py-1 text-apple-blue hover:text-apple-blue-hover text-xl"
+          className="absolute top-3 right-3 px-2 py-1 text-apple-blue hover:text-apple-blue-hover text-xl"
           aria-label="Close"
         >
           ×
         </button>
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-6">
           {title && <h2 className="text-lg font-bold">{title}</h2>}
           {showSecureBadge && <SecurePaymentBadge size="sm" />}
         </div>
-        {children}
+        <div className="max-w-prose">
+          {children}
+        </div>
       </div>
     </div>
   );
