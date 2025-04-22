@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { CountdownTimer } from './CountdownTimer';
+import CountdownTimer from './CountdownTimer';
 
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -138,4 +138,3 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
-

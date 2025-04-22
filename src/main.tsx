@@ -87,7 +87,7 @@ const reportWebVitals = () => {
   }
 };
 
-// Initialize app with optimized loading
+// Initialize app
 const initializeApp = async () => {
   const rootElement = document.getElementById('root');
   if (!rootElement) return;
@@ -96,8 +96,11 @@ const initializeApp = async () => {
   setupErrorHandlers();
   
   try {
-    // Import AuthProvider from context
-    const { AuthProvider } = await import('./contexts/AuthContext');
+    // Import AuthProvider from context if it exists
+    const { AuthProvider } = await import('./contexts/AuthContext').catch(() => ({
+      // Fallback if import fails
+      AuthProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>
+    }));
     
     const root = ReactDOM.createRoot(rootElement);
     
@@ -117,7 +120,7 @@ const initializeApp = async () => {
       </React.StrictMode>
     );
     
-    console.log('App rendered with AuthProvider and ThemeProvider');
+    console.log('App rendered successfully');
     
     // Start monitoring after initial render
     reportWebVitals();
@@ -140,12 +143,5 @@ const initializeApp = async () => {
   }
 };
 
-// Use requestIdleCallback for non-critical initialization
-if ('requestIdleCallback' in window) {
-  (window as any).requestIdleCallback(() => {
-    initializeApp();
-  });
-} else {
-  // Fallback for browsers that don't support requestIdleCallback
-  setTimeout(initializeApp, 1);
-}
+// Start initialization
+initializeApp();

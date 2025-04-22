@@ -8,14 +8,16 @@ const calculateTimeLeft = (deadline: string) => {
     return {
       days: 0,
       hours: 0,
-      minutes: 0
+      minutes: 0,
+      seconds: 0
     };
   }
 
   return {
     days: Math.floor(difference / (1000 * 60 * 60 * 24)),
     hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-    minutes: Math.floor((difference / 1000 / 60) % 60)
+    minutes: Math.floor((difference / 1000 / 60) % 60),
+    seconds: Math.floor((difference / 1000) % 60)
   };
 };
 
@@ -25,12 +27,12 @@ export const CountdownTimer = ({ deadline }: { deadline: string }) => {
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft(deadline));
-    }, 1000 * 60); // Update every minute
+    }, 1000); // Update every second instead of every minute
 
     return () => clearInterval(timer);
   }, [deadline]);
 
-  if (timeLeft.days <= 0 && timeLeft.hours <= 0 && timeLeft.minutes <= 0) {
+  if (timeLeft.days <= 0 && timeLeft.hours <= 0 && timeLeft.minutes <= 0 && timeLeft.seconds <= 0) {
     return null;
   }
 
@@ -39,9 +41,11 @@ export const CountdownTimer = ({ deadline }: { deadline: string }) => {
       <span className="text-sm text-white">
         {timeLeft.days > 0 && `${timeLeft.days}d `}
         {timeLeft.hours > 0 && `${timeLeft.hours}h `}
-        {timeLeft.minutes}m until deadline
+        {timeLeft.minutes > 0 && `${timeLeft.minutes}m `}
+        {timeLeft.seconds}s until deadline
       </span>
     </div>
   );
 };
 
+export default CountdownTimer;
