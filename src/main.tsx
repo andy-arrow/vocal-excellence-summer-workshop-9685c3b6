@@ -16,7 +16,7 @@ preloadResources();
 let lastErrorTime = 0;
 const ERROR_THROTTLE_MS = 1000;
 
-// Lazily load non-critical UI components with better code splitting
+// Lazily load non-critical UI components
 const Toaster = lazy(() => 
   import('./components/ui/toaster').then(module => ({
     default: module.Toaster
@@ -24,7 +24,7 @@ const Toaster = lazy(() =>
 );
 
 const Sonner = lazy(() => 
-  import('./components/ui/sonner').then(module => ({
+  import('sonner').then(module => ({
     default: module.Toaster
   }))
 );
@@ -119,8 +119,6 @@ const initializeApp = async () => {
         </ErrorBoundary>
       </React.StrictMode>
     );
-    
-    console.log('App rendered successfully');
     
     // Start monitoring after initial render
     reportWebVitals();

@@ -14,7 +14,7 @@ const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const Auth = lazy(() => import('./pages/Auth'));
 const SummerProgramme = lazy(() => import('./pages/SummerProgramme'));
 
-// Optimized loading fallback that doesn't block rendering
+// Optimized loading fallback
 const PageLoader = () => (
   <div className="min-h-screen w-full flex items-center justify-center bg-slate-950">
     <div className="space-y-4 text-center">
@@ -24,7 +24,7 @@ const PageLoader = () => (
 );
 
 function App() {
-  // Create router synchronously
+  // Router configuration
   const router = createBrowserRouter([
     {
       path: "/",

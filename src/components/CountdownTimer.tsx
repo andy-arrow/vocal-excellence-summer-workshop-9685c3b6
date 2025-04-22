@@ -21,13 +21,17 @@ const calculateTimeLeft = (deadline: string) => {
   };
 };
 
-export const CountdownTimer = ({ deadline }: { deadline: string }) => {
+interface CountdownTimerProps {
+  deadline: string;
+}
+
+const CountdownTimer: React.FC<CountdownTimerProps> = ({ deadline }) => {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(deadline));
 
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft(deadline));
-    }, 1000); // Update every second instead of every minute
+    }, 1000);
 
     return () => clearInterval(timer);
   }, [deadline]);
