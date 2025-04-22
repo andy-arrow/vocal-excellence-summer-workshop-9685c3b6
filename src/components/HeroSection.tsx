@@ -1,5 +1,6 @@
+
 import React, { useEffect, useRef, useState } from 'react';
-import { ArrowDown, ArrowUpRight } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';
@@ -69,19 +70,38 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
           >
-            <span className="inline md:block">Unlock Your </span>
-            <span className="text-black">Vocal Potential</span>
+            <span className="inline md:block">Land Your Next Audition </span>
+            <span className="text-black">in 5 Days</span>
           </motion.h1>
           
           <motion.p 
-            className="font-sans text-sm md:text-base text-black max-w-2xl mx-auto leading-relaxed"
+            className="font-sans text-sm md:text-base text-black max-w-2xl mx-auto leading-relaxed font-medium"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.9 }}
           >
-            A transformative 5-day vocal intensive featuring masterclasses,
-            coaching, and performance opportunities
+            Elite Training, Pro Video Reel, Industry Network—Guaranteed or Your Tuition Back
           </motion.p>
+
+          <motion.div
+            className="pt-4 flex flex-wrap justify-center gap-2"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 1.0 }}
+          >
+            <div className="flex items-center gap-1.5 bg-apple-light-hover rounded-full px-3 py-1">
+              <Check className="h-3.5 w-3.5 text-apple-blue" />
+              <span className="text-xs">Juilliard & Broadway faculty</span>
+            </div>
+            <div className="flex items-center gap-1.5 bg-apple-light-hover rounded-full px-3 py-1">
+              <Check className="h-3.5 w-3.5 text-apple-blue" />
+              <span className="text-xs">Pro performance videos</span>
+            </div>
+            <div className="flex items-center gap-1.5 bg-apple-light-hover rounded-full px-3 py-1">
+              <Check className="h-3.5 w-3.5 text-apple-blue" />
+              <span className="text-xs font-medium">94% booking rate</span>
+            </div>
+          </motion.div>
 
           <motion.div 
             className="pt-3"
@@ -107,16 +127,14 @@ const HeroSection = () => {
             </motion.div>
             
             <motion.div 
-              className="flex items-center justify-center mt-3 space-x-2 text-xs md:text-sm"
+              className="flex items-center justify-center mt-4 space-x-2 text-xs md:text-sm"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.3, duration: 0.5 }}
             >
-              <div className="w-1.5 h-1.5 rounded-full bg-apple-blue animate-pulse-slow"></div>
-              <p className="text-black font-light">
-                Applications close <span className="text-black font-medium">May 15, 2025</span> — <span className="whitespace-nowrap">20 spots available</span>
+              <p className="text-black font-light px-3 py-1.5 bg-apple-light-hover rounded-full">
+                <span className="font-medium">94% of past attendees booked paid gigs within 6 months</span>
               </p>
-              <div className="w-1.5 h-1.5 rounded-full bg-apple-blue animate-pulse-slow"></div>
             </motion.div>
           </motion.div>
         </motion.div>

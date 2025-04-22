@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Check } from 'lucide-react';
 
 const ApplicationHero = () => {
   const scrollToForm = () => {
@@ -17,29 +17,49 @@ const ApplicationHero = () => {
       
       <div className="container mx-auto px-6 relative z-10">
         <motion.div 
-          className="max-w-3xl mx-auto text-center space-y-8"
+          className="max-w-3xl mx-auto text-center space-y-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
         >
           <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white">
-            Your Journey to<br />
+            Land Your Next Audition <br />
             <span className="text-apple-blue">
-              Vocal Mastery
+              in 5 Days
             </span>
           </h1>
           
           <motion.p 
-            className="text-lg md:text-xl text-apple-grey max-w-2xl mx-auto leading-relaxed font-light"
+            className="text-lg md:text-xl text-apple-grey max-w-2xl mx-auto leading-relaxed"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.7 }}
           >
-            Join our exclusive 5-day Workshop where world-class mentors will transform your voice and elevate your technique to new heights.
+            <span className="font-medium">Elite Training, Pro Video Reel, Industry Network—<br />Guaranteed or Your Tuition Back</span>
           </motion.p>
           
           <motion.div 
-            className="flex flex-col items-center gap-5 pt-4"
+            className="flex flex-wrap justify-center gap-3 pt-2"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 0.7 }}
+          >
+            <div className="flex items-center bg-apple-text/60 backdrop-blur border border-apple-grey/20 rounded-full px-4 py-1.5">
+              <Check className="h-4 w-4 text-apple-blue mr-1.5" />
+              <span className="text-sm text-white">Limited to 20 participants</span>
+            </div>
+            <div className="flex items-center bg-apple-text/60 backdrop-blur border border-apple-grey/20 rounded-full px-4 py-1.5">
+              <Check className="h-4 w-4 text-apple-blue mr-1.5" />
+              <span className="text-sm text-white">Juilliard & Broadway faculty</span>
+            </div>
+            <div className="flex items-center bg-apple-text/60 backdrop-blur border border-apple-grey/20 rounded-full px-4 py-1.5">
+              <Check className="h-4 w-4 text-apple-blue mr-1.5" />
+              <span className="text-sm text-white font-medium">94% booking rate</span>
+            </div>
+          </motion.div>
+          
+          <motion.div 
+            className="flex flex-col items-center gap-5 pt-6 mt-2"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.7 }}
@@ -51,18 +71,15 @@ const ApplicationHero = () => {
               whileTap={{ scale: 0.98 }}
             >
               <span className="flex items-center gap-2">
-                Begin Your Application
+                Secure Your Spot
                 <ArrowRight className="h-5 w-5" />
               </span>
             </motion.button>
             
             <div className="text-sm">
-              <span className="inline-block px-3 py-1 bg-apple-text/60 backdrop-blur border border-apple-grey/20 rounded-full text-xs font-medium text-apple-grey">
-                Limited Capacity
-              </span>
-              <span className="text-apple-grey ml-2">
-                Only 20 spots available for Summer 2025
-              </span>
+              <div className="px-3 py-1.5 bg-apple-text/60 backdrop-blur border border-apple-grey/20 rounded-full text-sm text-white mt-2">
+                <span className="font-medium">94% of past attendees booked paid gigs within 6 months</span>
+              </div>
             </div>
           </motion.div>
         </motion.div>

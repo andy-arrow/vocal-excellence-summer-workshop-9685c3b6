@@ -1,3 +1,4 @@
+
 import React, { useEffect, lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
@@ -5,6 +6,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import GoogleTagManager from '@/components/analytics/GoogleTagManager';
 import { useAnalytics } from '@/hooks/useAnalytics';
+import ApplicationHero from '@/components/ApplicationHero';
 
 // Lazily load less critical components
 const ApplicationForm = lazy(() => import('@/components/ApplicationForm'));
@@ -70,36 +72,15 @@ const Application = () => {
       
       <Helmet>
         <title>Apply Now | Vocal Excellence Workshop</title>
-        <meta name="description" content="Apply now for the Vocal Excellence Summer Workshop and discover your true potential with world-class vocal coaching. Limited spots available." />
+        <meta name="description" content="Land your next audition in 5 days with our elite vocal training program. 94% of past attendees booked paid gigs within 6 months." />
         <meta name="theme-color" content="#ffffff" />
       </Helmet>
       
       <div className="min-h-screen flex flex-col">
         <Navbar />
         
-        <main className="flex-grow pt-36 md:pt-40"> {/* Increased top padding to bring hero section lower */}
-          <div className="bg-gradient-to-b from-white to-[#f5f5f7] border-b border-apple-border/10">
-            <div className="max-w-5xl mx-auto px-6 md:px-8 py-6 md:py-8">
-              <motion.div 
-                className="text-center"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                onAnimationComplete={() => {
-                  // Track when hero section becomes visible
-                  analytics.trackEvent('Visibility', 'hero_visible', 'Application Hero', undefined, true);
-                }}
-              >
-                <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-black mb-2 tracking-tight">
-                  Your Journey To
-                  <span className="block mt-0.5">Vocal Mastery</span>
-                </h1>
-                <p className="font-sans text-base md:text-lg text-black max-w-2xl mx-auto leading-relaxed">
-                  Join our exclusive 5-day Workshop where world-class mentors will transform your voice and elevate your technique to new heights.
-                </p>
-              </motion.div>
-            </div>
-          </div>
+        <main className="flex-grow">
+          <ApplicationHero />
           
           <div className="py-2 md:py-6 bg-[#f5f5f7]"> {/* Further reduced vertical padding to bring content closer */}
             <div className="max-w-7xl mx-auto px-6 md:px-8">
