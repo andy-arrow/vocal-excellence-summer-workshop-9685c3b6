@@ -8,6 +8,7 @@ interface SimpleModalProps {
   title?: string;
   children: React.ReactNode;
   showSecureBadge?: boolean;
+  backdropOpacity?: "light" | "medium" | "dark";
 }
 
 const SimpleModal: React.FC<SimpleModalProps> = ({
@@ -16,10 +17,18 @@ const SimpleModal: React.FC<SimpleModalProps> = ({
   title,
   children,
   showSecureBadge = false,
+  backdropOpacity = "medium",
 }) => {
   if (!open) return null;
+  
+  const backdropClasses = {
+    light: "bg-black/30",
+    medium: "bg-black/40",
+    dark: "bg-black/60"
+  };
+  
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+    <div className={`fixed inset-0 z-50 flex items-center justify-center ${backdropClasses[backdropOpacity]}`}>
       <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6 relative">
         <button
           onClick={onClose}
