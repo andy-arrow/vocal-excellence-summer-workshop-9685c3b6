@@ -23,7 +23,7 @@ const PricingSection = () => {
             Training That Fits Your Budget
           </h2>
           <p className="text-lg text-apple-grey">
-            Only €28 per day for world-class vocal training that launches careers
+            About €200 per day for world-class vocal training that launches careers
           </p>
         </div>
 
@@ -101,7 +101,7 @@ const PricingSection = () => {
             
               <div className="text-center mb-6">
                 <h3 className="text-xl font-bold mb-2">Easy Plan</h3>
-                <div className="text-3xl font-bold mb-2">€299</div>
+                <div className="text-3xl font-bold mb-2">€299.67</div>
                 <p className="text-apple-grey text-sm">× 3 monthly payments</p>
                 <div className="text-xs text-apple-grey mt-2">after €100 deposit</div>
               </div>
@@ -163,7 +163,7 @@ const PricingSection = () => {
                 Are there any hidden fees with the payment plans?
               </AccordionTrigger>
               <AccordionContent className="max-w-prose">
-                Absolutely not. The Easy Plan installment option comes with no interest charges or additional fees. You'll pay exactly the same total amount (€999) as the program cost, just divided into three convenient payments of €299 each, plus your initial €100 deposit.
+                Absolutely not. The Easy Plan divides the tuition into four payments (€100 deposit plus three monthly payments of €299.67), with no interest charges or additional fees. You'll pay exactly €999 total.
               </AccordionContent>
             </AccordionItem>
             
@@ -196,7 +196,7 @@ const PricingSection = () => {
           
           <div className="text-center text-xs text-apple-grey max-w-prose mx-auto">
             <p>
-              *The total program cost is €999. The Easy Plan includes your initial €100 non-refundable deposit followed by three monthly payments of €299 each with no additional fees or interest charges. Subject to acceptance into the program.
+              *The total program cost is €999. The Easy Plan includes your initial €100 non-refundable deposit followed by three monthly payments of €299.67 each with no additional fees or interest charges. Subject to acceptance into the program.
             </p>
           </div>
         </div>
