@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Calendar, MapPin, Users, Clock, Star, ChevronRight, Music } from 'lucide-react';
@@ -8,6 +9,7 @@ import { Separator } from '@/components/ui/separator';
 import SocialProofCarousel from '@/components/SocialProofCarousel';
 import GuaranteeBadge from '@/components/ui/GuaranteeBadge';
 import SecurePaymentBadge from '@/components/ui/SecurePaymentBadge';
+import PricingSection from '@/components/PricingSection';
 
 const SummerProgramme = () => {
   return (
@@ -412,6 +414,9 @@ const SummerProgramme = () => {
           </div>
         </section>
       </div>
+      
+      {/* Pricing Section */}
+      <PricingSection />
       
       {/* Social Proof Carousel */}
       <SocialProofCarousel />
