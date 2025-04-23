@@ -1,5 +1,6 @@
-
 import React from 'react';
+import HeroSection from '@/components/summer-programme/HeroSection';
+import ProgrammeSnapshot from '@/components/summer-programme/ProgrammeSnapshot';
 import { motion } from 'framer-motion';
 import { ArrowRight, Calendar, MapPin, Users, Clock, Star, ChevronRight, Music } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -14,46 +15,10 @@ import PricingSection from '@/components/PricingSection';
 const SummerProgramme = () => {
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center text-white overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/lovable-uploads/masterclass-singers.jpg')] bg-cover bg-center"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-apple-text/60 to-apple-text/40"></div>
-        <div className="relative z-10 container mx-auto px-6 py-20 text-center max-w-[1100px]">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-8"
-          >
-            <h1 className="text-5xl md:text-7xl font-serif font-light leading-tight tracking-tight">
-              Summer Intensive
-              <span className="block text-xl md:text-2xl font-sans font-light tracking-wide mt-4">
-                July 15-20, 2025 • Limassol, Cyprus
-              </span>
-            </h1>
-            
-            <div className="w-24 h-px bg-white/30 mx-auto"></div>
-            
-            <p className="text-xl md:text-2xl font-light max-w-2xl mx-auto leading-relaxed text-white/90">
-              An immersive five-day vocal training programme designed to take your performance skills to the next level
-            </p>
-            
-            <div className="pt-8">
-              <Link 
-                to="/apply" 
-                className="inline-flex items-center gap-2 bg-apple-blue text-white px-8 py-4 rounded-full text-lg font-medium transition-all duration-300 hover:bg-apple-blue-hover"
-              >
-                Register Now
-                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-0.5" />
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <HeroSection />
 
       {/* Main Content */}
       <div className="container mx-auto max-w-[1000px] px-6 py-20">
-        
         {/* Introduction */}
         <section className="mb-20">
           <div className="flex flex-col items-center text-center mb-12">
@@ -64,7 +29,7 @@ const SummerProgramme = () => {
           </div>
           
           <p className="text-lg text-apple-grey leading-relaxed mb-8 max-w-3xl mx-auto">
-            The Vocal Excellence Summer Intensive is a comprehensive programme designed for serious vocalists looking to refine their technique, expand their repertoire, and connect with industry professionals. Over five transformative days, participants will engage in personalized coaching, masterclasses, and performance opportunities.
+            The Vocal Excellence Summer Intensive is a focused five-day vocal training experience designed for dedicated singers who want to elevate their technique, expand their repertoire, and gain confidence on stage through personalized coaching, masterclasses, and performance opportunities.
           </p>
           
           <div className="grid md:grid-cols-3 gap-8 mt-12">
@@ -109,83 +74,7 @@ const SummerProgramme = () => {
         
         <Separator className="my-16 bg-apple-border" />
         
-        {/* Programme Schedule */}
-        <section className="mb-20">
-          <div className="flex flex-col items-center text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif font-light text-apple-text mb-4">
-              Programme Schedule
-            </h2>
-            <div className="w-16 h-px bg-apple-border mx-auto"></div>
-          </div>
-          
-          <div className="grid gap-8">
-            {[
-              {
-                day: "DAY 1",
-                title: "Technique Foundations",
-                schedule: [
-                  "9:00 AM - Welcome & Orientation",
-                  "10:00 AM - Vocal Assessment",
-                  "12:00 PM - Lunch Break",
-                  "1:30 PM - Breath Control Masterclass",
-                  "3:30 PM - Repertoire Selection",
-                  "5:00 PM - Day Review & Practice Assignment"
-                ]
-              },
-              {
-                day: "DAY 2",
-                title: "Performance Development",
-                schedule: [
-                  "9:00 AM - Morning Warm-up",
-                  "10:00 AM - Individual Coaching",
-                  "12:00 PM - Lunch Break",
-                  "1:30 PM - Performance Techniques Workshop",
-                  "3:30 PM - Group Rehearsal",
-                  "5:00 PM - Faculty Performance"
-                ]
-              },
-              {
-                day: "DAY 3",
-                title: "Musical Interpretation",
-                schedule: [
-                  "9:00 AM - Morning Warm-up",
-                  "10:00 AM - Emotional Connection Workshop",
-                  "12:00 PM - Lunch Break",
-                  "1:30 PM - Individual Coaching",
-                  "3:30 PM - Style & Genre Exploration",
-                  "5:00 PM - Group Critique Session"
-                ]
-              }
-            ].map((day, index) => (
-              <Card key={index} className="overflow-hidden border-apple-border hover:shadow-lg transition-all duration-300">
-                <CardContent className="p-0">
-                  <div className="bg-apple-light px-6 py-4 border-b border-apple-border">
-                    <h3 className="text-xl font-light text-apple-text">{day.day}: {day.title}</h3>
-                  </div>
-                  <div className="p-6">
-                    <ul className="space-y-3">
-                      {day.schedule.map((item, idx) => (
-                        <li key={idx} className="flex items-start">
-                          <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
-                          <span className="text-apple-grey">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-            
-            <div className="text-center mt-8">
-              <Button 
-                variant="outline" 
-                className="border-apple-blue text-apple-blue hover:bg-apple-blue/5"
-              >
-                View Full 5-Day Schedule
-              </Button>
-            </div>
-          </div>
-        </section>
+        <ProgrammeSnapshot />
         
         <Separator className="my-16 bg-apple-border" />
         
