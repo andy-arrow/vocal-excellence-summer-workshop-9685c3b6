@@ -23,7 +23,7 @@ const CTASection = () => {
           className="text-center max-w-3xl mx-auto space-y-8"
         >
           <h2 className="text-4xl md:text-5xl font-medium text-apple-text leading-tight">
-            ### The Threshold.
+            The Threshold.
           </h2>
           
           <p className="text-xl text-apple-grey mb-8">
@@ -39,7 +39,7 @@ const CTASection = () => {
           </p>
           
           <h3 className="text-3xl font-medium text-apple-text mt-12 mb-6">
-            ### The Commitment.
+            The Commitment.
           </h3>
           
           <p className="text-lg text-apple-grey mb-8">
@@ -59,7 +59,7 @@ const CTASection = () => {
           </p>
           
           <h3 className="text-3xl font-medium text-apple-text mt-12 mb-6">
-            ### The Window is Narrow.
+            The Window is Narrow.
           </h3>
           
           <p className="text-lg text-apple-grey mb-8">
