@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
@@ -13,6 +13,25 @@ import ScrollToTopButton from '@/components/ScrollToTopButton';
 import { Toaster } from '@/components/ui/toaster';
 
 const Pricing = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  
+  useEffect(() => {
+    // Function to toggle visibility of scroll-to-top button
+    const toggleVisibility = () => {
+      if (window.pageYOffset > 300) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+    
+    // Add scroll event listener
+    window.addEventListener('scroll', toggleVisibility);
+    
+    // Clean up event listener
+    return () => window.removeEventListener('scroll', toggleVisibility);
+  }, []);
+  
   return (
     <>
       <Helmet>
@@ -29,7 +48,7 @@ const Pricing = () => {
         <PricingFAQ />
       </main>
       <Footer />
-      <ScrollToTopButton />
+      <ScrollToTopButton visible={isVisible} />
       <Toaster />
     </>
   );
