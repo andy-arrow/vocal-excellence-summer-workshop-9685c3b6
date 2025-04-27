@@ -48,9 +48,25 @@ const TuitionFAQ = () => {
     }
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { 
+        staggerChildren: 0.07,
+        delayChildren: 0.2 
+      } 
+    }
+  };
+  
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  };
+
   return (
-    <section className="py-16 md:py-20 px-6 md:px-12 bg-[#f9fafa]">
-      <div className="max-w-3xl mx-auto">
+    <section className="py-16 md:py-24 px-6 md:px-12 bg-gradient-to-b from-[#fafafa] to-white">
+      <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -61,31 +77,41 @@ const TuitionFAQ = () => {
           <h2 className="font-serif text-3xl md:text-4xl font-light text-[#141414] mb-4">
             Common Questions
           </h2>
-          <p className="font-sans text-lg text-[#141414]/70">
+          <p className="font-sans text-lg text-[#141414]/70 max-w-2xl mx-auto">
             Everything you need to know about joining our program
           </p>
+          <div className="pt-6">
+            <motion.div 
+              className="h-1 w-16 bg-gradient-to-r from-[#4f6e72] to-[#6a8d91] rounded-full mx-auto"
+              initial={{ width: 0 }}
+              animate={{ width: 64 }}
+              transition={{ delay: 0.5, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            />
+          </div>
         </motion.div>
         
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          className="space-y-4"
         >
           <Accordion type="single" collapsible className="w-full">
             {faqItems.map((item, i) => (
-              <AccordionItem 
-                key={i} 
-                value={`item-${i}`} 
-                className={`mb-4 border border-[#f0f0f0] rounded-xl bg-white overflow-hidden shadow-[0_2px_10px_rgb(0,0,0,0.02)]`}
-              >
-                <AccordionTrigger className="text-left font-serif text-lg px-6 py-5 hover:no-underline text-[#141414]">
-                  {item.question}
-                </AccordionTrigger>
-                <AccordionContent className="font-sans text-base text-[#141414]/70 px-6 pb-6 pt-0">
-                  {item.answer}
-                </AccordionContent>
-              </AccordionItem>
+              <motion.div key={i} variants={itemVariants}>
+                <AccordionItem 
+                  value={`item-${i}`} 
+                  className="mb-4 border border-[#eaeaea] rounded-xl bg-white overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
+                >
+                  <AccordionTrigger className="text-left font-serif text-lg px-6 py-5 hover:no-underline text-[#141414]">
+                    {item.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="font-sans text-base text-[#141414]/70 px-6 pb-6 pt-0 leading-relaxed">
+                    {item.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              </motion.div>
             ))}
           </Accordion>
         </motion.div>
@@ -95,11 +121,11 @@ const TuitionFAQ = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-12 text-center"
+          className="mt-16 text-center"
         >
           <p className="font-sans text-[#141414]/70">
             Have more questions about the program?{" "}
-            <a href="mailto:admissions@vocalexcellence.com" className="text-[#4f6e72] hover:underline transition-all">
+            <a href="mailto:admissions@vocalexcellence.com" className="text-[#4f6e72] hover:text-[#41595c] hover:underline transition-all">
               Get in touch with our team
             </a>
           </p>

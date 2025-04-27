@@ -39,14 +39,21 @@ const Tuition = () => {
           name="description" 
           content="Explore our flexible tuition options, payment plans, and financial assistance for the Vocal Excellence Summer 2025 program." 
         />
+        <meta name="keywords" content="vocal training tuition, music program costs, singing scholarship, vocal education financing" />
       </Helmet>
-      <Navbar />
-      <main className="min-h-screen bg-white overflow-hidden">
-        <TuitionHero />
-        <TuitionTiers />
-        <TuitionFAQ />
-      </main>
-      <Footer />
+      
+      <div className="min-h-screen flex flex-col">
+        <Navbar />
+        
+        <main className="flex-grow bg-white overflow-hidden">
+          <TuitionHero />
+          <TuitionTiers />
+          <TuitionFAQ />
+        </main>
+        
+        <Footer />
+      </div>
+      
       <ScrollToTopButton visible={isVisible} />
       <Toaster />
     </>
