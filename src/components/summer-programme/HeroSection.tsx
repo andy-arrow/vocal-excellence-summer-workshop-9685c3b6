@@ -1,26 +1,35 @@
-import React from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
+  const [videoError, setVideoError] = useState(false);
+  
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center text-white overflow-hidden">
       <div className="absolute inset-0 bg-black">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover opacity-70"
-        >
-          <source src="/lovable-uploads/performance.mp4" type="video/mp4" />
+        {!videoError ? (
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover opacity-70"
+            onError={() => setVideoError(true)}
+            poster="/lovable-uploads/masterclass-singers.jpg"
+          >
+            <source src="/lovable-uploads/performance.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        ) : (
           <img 
             src="/lovable-uploads/masterclass-singers.jpg" 
             alt="Masterclass singers" 
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover opacity-70"
           />
-        </video>
+        )}
       </div>
       <div className="absolute inset-0 bg-gradient-to-b from-apple-text/60 to-apple-text/40"></div>
       <div className="relative z-10 container mx-auto px-6 py-20 text-center max-w-[1100px]">
