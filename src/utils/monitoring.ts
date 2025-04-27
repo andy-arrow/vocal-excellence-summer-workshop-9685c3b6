@@ -86,3 +86,29 @@ export function startPerfTimer(label: string): () => void {
     });
   };
 }
+
+/**
+ * Web vitals reporting function 
+ */
+export function reportWebVitals(): void {
+  // Check if the browser supports the web vitals API
+  if ('web-vitals' in window) {
+    import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
+      getCLS(sendToAnalytics);
+      getFID(sendToAnalytics);
+      getFCP(sendToAnalytics);
+      getLCP(sendToAnalytics);
+      getTTFB(sendToAnalytics);
+    }).catch(err => {
+      console.error('Failed to load web-vitals:', err);
+    });
+  }
+}
+
+function sendToAnalytics({ name, delta, id }: { name: string, delta: number, id: string }) {
+  // In production, send metrics to analytics service
+  trackEvent('user_action', 'info', {
+    message: `Web Vital: ${name}`,
+    details: { metricName: name, value: Math.round(delta), id }
+  });
+}

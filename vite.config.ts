@@ -11,8 +11,8 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react({
-      // Enable fast refresh
-      fastRefresh: true,
+      // SWC configuration options
+      jsxImportSource: undefined,
     }),
     mode === 'development' && componentTagger(),
   ].filter(Boolean),

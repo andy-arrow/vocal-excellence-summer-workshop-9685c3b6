@@ -11,9 +11,9 @@ import { ThemeProvider } from 'next-themes'
 // Preload critical resources immediately
 preloadResources();
 
-// Lazy load non-critical UI components
-const Toaster = lazy(() => import('./components/ui/toaster'));
-const Sonner = lazy(() => import('./components/ui/sonner'));
+// Import non-lazy components
+import { Toaster } from './components/ui/toaster';
+import { Toaster as Sonner } from './components/ui/sonner';
 
 const initializeApp = async () => {
   const rootElement = document.getElementById('root');
@@ -29,10 +29,8 @@ const initializeApp = async () => {
           <ThemeProvider attribute="class" defaultTheme="light">
             <AuthProvider>
               <App />
-              <Suspense fallback={null}>
-                <Toaster />
-                <Sonner position="top-right" closeButton />
-              </Suspense>
+              <Toaster />
+              <Sonner position="top-right" closeButton />
             </AuthProvider>
           </ThemeProvider>
         </ErrorBoundary>
