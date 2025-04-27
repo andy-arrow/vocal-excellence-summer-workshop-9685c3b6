@@ -2,17 +2,16 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
 
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import PricingHero from '@/components/Pricing/PricingHero';
-import PricingTiers from '@/components/Pricing/PricingTiers';
-import PricingFAQ from '@/components/Pricing/PricingFAQ';
+import TuitionHero from '@/components/Tuition/TuitionHero';
+import TuitionTiers from '@/components/Tuition/TuitionTiers';
+import TuitionFAQ from '@/components/Tuition/TuitionFAQ';
 import ScrollToTopButton from '@/components/ScrollToTopButton';
 import { Toaster } from '@/components/ui/toaster';
 
-const Pricing = () => {
+const Tuition = () => {
   const [isVisible, setIsVisible] = useState(false);
   
   useEffect(() => {
@@ -35,17 +34,17 @@ const Pricing = () => {
   return (
     <>
       <Helmet>
-        <title>Pricing - The Threshold</title>
+        <title>Tuition - Vocal Excellence</title>
         <meta 
           name="description" 
-          content="Pricing options for The Threshold - a transformative experience for growth and impact." 
+          content="Tuition options for Vocal Excellence - a transformative vocal training experience." 
         />
       </Helmet>
       <Navbar />
       <main className="min-h-screen bg-white overflow-hidden">
-        <PricingHero />
-        <PricingTiers />
-        <PricingFAQ />
+        <TuitionHero />
+        <TuitionTiers />
+        <TuitionFAQ />
       </main>
       <Footer />
       <ScrollToTopButton visible={isVisible} />
@@ -54,4 +53,4 @@ const Pricing = () => {
   );
 };
 
-export default Pricing;
+export default Tuition;

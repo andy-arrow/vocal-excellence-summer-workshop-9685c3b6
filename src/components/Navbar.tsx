@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
@@ -13,7 +14,7 @@ interface NavbarProps {
 }
 
 interface NavLink {
-  id: string;
+  id?: string;
   label: string;
   href?: string;
 }
@@ -59,7 +60,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
     { id: 'about', label: 'About' },
     { id: 'curriculum', label: 'Curriculum' },
     { id: 'instructors', label: 'Instructors' },
-    { href: '/pricing', label: 'Tuition' },
+    { href: '/tuition', label: 'Tuition' },
   ];
 
   return (

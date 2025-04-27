@@ -1,23 +1,28 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import { APPLICATION_DATES } from './ApplicationTimeline';
+
 const CTASection = () => {
   const navigate = useNavigate();
   const today = new Date();
   const applicationsClosed = today > APPLICATION_DATES.DEADLINE;
+  
   const handleApplyClick = (e: React.MouseEvent) => {
     e.preventDefault();
     navigate('/apply');
     window.scrollTo(0, 0);
   };
-  const handlePricingClick = (e: React.MouseEvent) => {
+  
+  const handleTuitionClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    navigate('/pricing');
+    navigate('/tuition');
     window.scrollTo(0, 0);
   };
+  
   return <section className="py-16 md:py-24 lg:py-32 bg-apple-light">
       <div className="container mx-auto px-6">
         <motion.div className="max-w-4xl mx-auto text-center space-y-8" initial={{
@@ -59,7 +64,7 @@ const CTASection = () => {
                 Applications Closed
               </Button>}
             
-            <Button onClick={handlePricingClick} variant="outline" size="lg" className="border-apple-border text-apple-text hover:bg-apple-light-hover text-lg px-8 rounded-full">Tuition</Button>
+            <Button onClick={handleTuitionClick} variant="outline" size="lg" className="border-apple-border text-apple-text hover:bg-apple-light-hover text-lg px-8 rounded-full">Tuition</Button>
           </motion.div>
           
           {!applicationsClosed && <p className="text-apple-grey text-sm">
@@ -73,4 +78,5 @@ const CTASection = () => {
       </div>
     </section>;
 };
+
 export default CTASection;

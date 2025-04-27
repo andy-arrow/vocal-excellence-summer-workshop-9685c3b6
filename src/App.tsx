@@ -8,11 +8,12 @@ import {
 // Import pages using proper default imports
 const Index = lazy(() => import('./pages/Index'));
 const Application = lazy(() => import('./pages/Application'));
-const Pricing = lazy(() => import('./pages/Pricing'));
+const Tuition = lazy(() => import('./pages/Tuition'));
 const CancellationPolicy = lazy(() => import('./pages/CancellationPolicy'));
 const TermsAndConditions = lazy(() => import('./pages/TermsAndConditions'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const Auth = lazy(() => import('./pages/Auth'));
+const TuitionRedirect = lazy(() => import('./components/TuitionRedirect'));
 
 // Optimized loading fallback that doesn't block rendering
 const PageLoader = () => (
@@ -47,10 +48,18 @@ function App() {
           ),
         },
         {
+          path: "/tuition",
+          element: (
+            <Suspense fallback={<PageLoader />}>
+              <Tuition />
+            </Suspense>
+          ),
+        },
+        {
           path: "/pricing",
           element: (
             <Suspense fallback={<PageLoader />}>
-              <Pricing />
+              <TuitionRedirect />
             </Suspense>
           ),
         },
@@ -99,7 +108,7 @@ function App() {
         (window as any).requestIdleCallback(() => {
           const routes = [
             import('./pages/Application'),
-            import('./pages/Pricing'),
+            import('./pages/Tuition'),
             import('./pages/Auth'),
             import('./pages/CancellationPolicy'),
             import('./pages/TermsAndConditions'),

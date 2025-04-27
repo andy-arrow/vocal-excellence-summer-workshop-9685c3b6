@@ -9,7 +9,7 @@ import { APPLICATION_DATES } from '../ApplicationTimeline';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
-const PricingTiers = () => {
+const TuitionTiers = () => {
   const navigate = useNavigate();
   const earlyBirdDate = format(APPLICATION_DATES.EARLY_BIRD_DEADLINE, 'MMMM d, yyyy');
   const tuitionDeadline = format(APPLICATION_DATES.TUITION_DEADLINE, 'MMMM d, yyyy');
@@ -148,4 +148,4 @@ const PricingTiers = () => {
   );
 };
 
-export default PricingTiers;
+export default TuitionTiers;

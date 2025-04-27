@@ -2,7 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const PricingHero = () => {
+const TuitionHero = () => {
   return (
     <section className="py-24 md:py-32 px-6 max-w-7xl mx-auto">
       <div className="max-w-3xl mx-auto text-center">
@@ -23,4 +23,4 @@ const PricingHero = () => {
   );
 };
 
-export default PricingHero;
+export default TuitionHero;
