@@ -12,45 +12,43 @@ import {
 } from "@/components/ui/accordion";
 
 const PricingFAQ = () => {
-  // Get the program year
   const programYear = format(APPLICATION_DATES.PROGRAM_START, 'yyyy');
-  // Get formatted dates
   const programDates = `${format(APPLICATION_DATES.PROGRAM_START, 'MMMM d')}-${format(new Date(APPLICATION_DATES.PROGRAM_START.getTime() + 4 * 24 * 60 * 60 * 1000), 'MMMM d, yyyy')}`;
   const paymentDeadline = format(APPLICATION_DATES.TUITION_DEADLINE, 'MMMM d, yyyy');
   const programStartDate = format(APPLICATION_DATES.PROGRAM_START, 'MMMM d, yyyy');
 
   const faqItems = [
     {
-      question: "What does the pricing include?",
-      answer: `The €999 investment covers your entire five-day Threshold experience, including all expert-led sessions, workshops, materials, and resources. You'll also receive personalized feedback, guidance, and post-event support materials. Accommodation and travel expenses are not included.`
+      question: "What's included in the tuition?",
+      answer: `Your €999 tuition covers everything you need for an incredible five-day experience: all lessons, workshops, one-on-one sessions, materials, and post-program resources. The only additional costs you'll need to consider are your accommodation and travel to Limassol.`
     },
     {
-      question: "How does the payment structure work?",
-      answer: "Our payment structure is designed to be flexible and manageable: 1) Initial €100 commitment fee to secure your spot upon acceptance, 2) The remaining €899 is divided into three equal payments of €299.67, which can be scheduled to suit your financial planning. All payments must be completed before the program starts."
+      question: "How does the payment plan work?",
+      answer: "We've made it easy to manage the tuition payments: Start with a €100 deposit to secure your spot once you're accepted. Then, the remaining €899 is split into three payments of €299.67, which we can schedule to work best for you. All payments need to be completed before the program begins."
     },
     {
-      question: "Are there any scholarships or financial aid available?",
-      answer: "Yes, we offer merit-based scholarships for exceptional candidates. If you'd like to be considered for a scholarship, please indicate this in your application. Our team will provide additional information about the scholarship application process."
+      question: "Are scholarships available?",
+      answer: "Yes! We believe talent should be supported. We offer merit-based scholarships to help exceptional students join our program. Just check the scholarship box in your application, and we'll guide you through the process."
     },
     {
-      question: "What is the refund policy?",
-      answer: "We offer a full refund (minus the €100 commitment fee) for cancellations made at least 30 days before the event. For cancellations made within 30 days of the event, refunds are assessed on a case-by-case basis. The commitment fee is non-refundable as it represents your dedication to participating in the program."
+      question: "What's your refund policy?",
+      answer: "We understand plans can change. You'll receive a full refund (minus the €100 deposit) if you need to withdraw at least 30 days before the program starts. For withdrawals closer to the start date, we'll work with you on a case-by-case basis. The deposit is non-refundable as it reserves your spot in our limited-size program."
     },
     {
       question: "Are there any hidden costs?",
-      answer: "No. We believe in complete transparency. The €999 covers the full program cost, including all sessions, materials, and resources. You'll only need to budget separately for your travel, accommodation, and personal expenses during your stay in Limassol."
+      answer: "Not at all! Your €999 tuition covers everything in the program: all lessons, materials, and resources. You'll just need to plan for your travel to Limassol and accommodation during your stay."
     },
     {
-      question: "What happens if I miss a payment deadline?",
-      answer: "We understand that circumstances can vary. If you anticipate difficulty meeting a payment deadline, please contact our admissions team immediately. We can work with you to adjust the payment schedule or explore alternative arrangements to ensure your participation."
+      question: "What if I miss a payment deadline?",
+      answer: "Life happens! If you're concerned about making a payment, just reach out to our team. We're here to help and can work with you to adjust the payment schedule so you can still participate in the program."
     },
     {
-      question: "Can I transfer my registration to another person?",
-      answer: "Due to the curated nature of our cohort and our rigorous application process, registrations are non-transferable. Each participant is carefully selected to ensure the right mix of experiences and perspectives in the room."
+      question: "Can I transfer my spot to someone else?",
+      answer: "Since we carefully select each participant to create the perfect group dynamic, spots aren't transferable. Each student goes through our application process to ensure they'll benefit from and contribute to the program."
     },
     {
       question: "When do I need to complete all payments?",
-      answer: `All payments must be completed by ${paymentDeadline}, two weeks before the program begins on ${programStartDate}.`
+      answer: `To ensure everything's set for your arrival, all payments need to be completed by ${paymentDeadline}, two weeks before we begin on ${programStartDate}.`
     }
   ];
 
@@ -65,10 +63,10 @@ const PricingFAQ = () => {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-medium text-apple-text mb-6">
-            Frequently Asked Questions
+            Common Questions
           </h2>
           <p className="text-lg text-apple-grey">
-            Everything you need to know about our pricing and payment structure
+            Everything you need to know about joining our program
           </p>
         </motion.div>
         
@@ -100,8 +98,8 @@ const PricingFAQ = () => {
           className="mt-16 text-center"
         >
           <p className="text-apple-grey">
-            Still have questions about pricing?{" "}
-            <a href="mailto:admissions@vocalexcellence.com" className="text-apple-blue hover:underline">Contact our admissions team</a>
+            Have more questions about the program?{" "}
+            <a href="mailto:admissions@vocalexcellence.com" className="text-apple-blue hover:underline">Get in touch with our team</a>
           </p>
         </motion.div>
       </div>

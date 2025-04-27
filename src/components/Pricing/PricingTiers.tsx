@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
@@ -19,11 +20,11 @@ const PricingTiers = () => {
       <div className="max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-medium text-apple-text mb-6">
-            The Investment
+            Program Tuition
           </h2>
           <p className="text-lg text-apple-grey">
-            Our pricing structure is designed to be simple and accessible,
-            allowing you to focus on what matters most — your growth.
+            We believe in making exceptional vocal education accessible.
+            Our program offers flexible payment options to support your journey.
           </p>
         </div>
         
@@ -38,21 +39,21 @@ const PricingTiers = () => {
             <CardHeader className="bg-white px-8 py-10 border-b border-apple-border">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div>
-                  <CardTitle className="text-3xl font-medium text-apple-text">The Threshold Experience</CardTitle>
+                  <CardTitle className="text-3xl font-medium text-apple-text">Summer 2025 Program</CardTitle>
                   <CardDescription className="text-lg mt-2 text-apple-grey">
-                    A transformative five-day immersion
+                    Five days of transformative vocal training
                   </CardDescription>
                 </div>
                 <div className="text-right">
                   <p className="text-3xl font-medium text-apple-text">€999</p>
-                  <p className="text-sm text-apple-grey mt-1">Total investment</p>
+                  <p className="text-sm text-apple-grey mt-1">Total tuition</p>
                 </div>
               </div>
             </CardHeader>
             <CardContent className="bg-white px-8 py-10">
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <h3 className="text-xl font-medium text-apple-text mb-4">What's included</h3>
+                  <h3 className="text-xl font-medium text-apple-text mb-4">Program highlights</h3>
                   <ul className="space-y-3">
                     {[
                       'Comprehensive 360° approach to vocal training',
@@ -78,17 +79,17 @@ const PricingTiers = () => {
                   </ul>
                 </div>
                 <div>
-                  <h3 className="text-xl font-medium text-apple-text mb-4">Payment structure</h3>
+                  <h3 className="text-xl font-medium text-apple-text mb-4">Payment plan</h3>
                   <div className="space-y-4">
                     <div className="p-4 rounded-lg bg-apple-light border border-apple-border">
-                      <p className="font-medium text-apple-text">Initial commitment fee</p>
+                      <p className="font-medium text-apple-text">Initial deposit</p>
                       <p className="text-2xl font-medium text-apple-text mt-1">€100</p>
-                      <p className="text-sm text-apple-grey mt-1">Due upon application approval</p>
+                      <p className="text-sm text-apple-grey mt-1">Secures your place upon acceptance</p>
                     </div>
                     <div className="p-4 rounded-lg bg-apple-light border border-apple-border">
-                      <p className="font-medium text-apple-text">Three simple payments of</p>
+                      <p className="font-medium text-apple-text">Three installments of</p>
                       <p className="text-2xl font-medium text-apple-text mt-1">€299.67</p>
-                      <p className="text-sm text-apple-grey mt-1">Flexible payment schedule</p>
+                      <p className="text-sm text-apple-grey mt-1">Flexible payment schedule available</p>
                     </div>
                   </div>
                 </div>
@@ -100,10 +101,10 @@ const PricingTiers = () => {
                 onClick={handleApplyClick}
                 className="w-full sm:w-auto px-8 py-6 text-lg font-medium"
               >
-                Apply Now
+                Start Your Application
               </Button>
               <p className="text-sm text-apple-grey mt-4">
-                Applications close on May 15, 2025. Only 20 spots available.
+                Limited to 20 students for Summer 2025. Applications close on May 15, 2025.
               </p>
             </CardFooter>
           </Card>
