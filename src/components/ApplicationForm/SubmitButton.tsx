@@ -5,28 +5,17 @@ import Spinner from '@/components/ui/spinner';
 
 interface SubmitButtonProps {
   isSubmitting: boolean;
-  onClick?: () => void;
 }
 
-const SubmitButton = ({ isSubmitting, onClick }: SubmitButtonProps) => {
-  const handleClick = (e: React.MouseEvent) => {
-    // Don't call onClick if form is submitting to prevent multiple submissions
-    if (isSubmitting) return;
-    
-    if (onClick) {
-      onClick();
-    }
-  };
-
+const SubmitButton = ({ isSubmitting }: SubmitButtonProps) => {
   return (
     <button 
       type="submit" 
       disabled={isSubmitting}
-      className="px-6 py-3 bg-blue-700 hover:bg-blue-800 text-white text-lg font-medium rounded-full
+      className="px-6 py-3 bg-apple-blue hover:bg-apple-blue-hover text-white text-lg font-medium rounded-full
                 relative overflow-hidden transition-all duration-300 disabled:opacity-70 
-                disabled:cursor-not-allowed disabled:hover:bg-blue-700 shadow-sm"
+                disabled:cursor-not-allowed disabled:hover:bg-apple-blue shadow-sm"
       aria-label={isSubmitting ? "Submitting application" : "Submit application"}
-      onClick={handleClick}
     >
       <span className="flex items-center gap-3">
         {isSubmitting ? (

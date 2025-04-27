@@ -1,23 +1,18 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useState, useEffect } from 'react';
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
 
-// Import pages using lazy loading
+// Import pages using proper default imports
 const Index = lazy(() => import('./pages/Index'));
 const Application = lazy(() => import('./pages/Application'));
 const CancellationPolicy = lazy(() => import('./pages/CancellationPolicy'));
 const TermsAndConditions = lazy(() => import('./pages/TermsAndConditions'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const Auth = lazy(() => import('./pages/Auth'));
-const SummerProgramme = lazy(() => import('./pages/SummerProgramme'));
-const AdminPage = lazy(() => import('./pages/AdminPage'));
 
-// Import LiveChat component
-import LiveChat from './components/LiveChat';
-
-// Optimized loading fallback
+// Optimized loading fallback that doesn't block rendering
 const PageLoader = () => (
   <div className="min-h-screen w-full flex items-center justify-center bg-slate-950">
     <div className="space-y-4 text-center">
@@ -27,82 +22,93 @@ const PageLoader = () => (
 );
 
 function App() {
-  // Router configuration
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: (
-        <Suspense fallback={<PageLoader />}>
-          <Index />
-        </Suspense>
-      ),
-    },
-    {
-      path: "/apply",
-      element: (
-        <Suspense fallback={<PageLoader />}>
-          <Application />
-        </Suspense>
-      ),
-    },
-    {
-      path: "/auth",
-      element: (
-        <Suspense fallback={<PageLoader />}>
-          <Auth />
-        </Suspense>
-      ),
-    },
-    {
-      path: "/cancellation-policy",
-      element: (
-        <Suspense fallback={<PageLoader />}>
-          <CancellationPolicy />
-        </Suspense>
-      ),
-    },
-    {
-      path: "/terms-and-conditions",
-      element: (
-        <Suspense fallback={<PageLoader />}>
-          <TermsAndConditions />
-        </Suspense>
-      ),
-    },
-    {
-      path: "/privacy-policy",
-      element: (
-        <Suspense fallback={<PageLoader />}>
-          <PrivacyPolicy />
-        </Suspense>
-      ),
-    },
-    {
-      path: "/summer-programme",
-      element: (
-        <Suspense fallback={<PageLoader />}>
-          <SummerProgramme />
-        </Suspense>
-      ),
-    },
-    {
-      path: "/admin",
-      element: (
-        <Suspense fallback={<PageLoader />}>
-          <AdminPage />
-        </Suspense>
-      ),
-    },
-  ]);
-
-  return (
-    <>
-      <RouterProvider router={router} />
+  const [router, setRouter] = useState<any>(null);
+  
+  useEffect(() => {
+    // Create router asynchronously
+    const initRouter = () => {
+      const router = createBrowserRouter([
+        {
+          path: "/",
+          element: (
+            <Suspense fallback={<PageLoader />}>
+              <Index />
+            </Suspense>
+          ),
+        },
+        {
+          path: "/apply",
+          element: (
+            <Suspense fallback={<PageLoader />}>
+              <Application />
+            </Suspense>
+          ),
+        },
+        {
+          path: "/auth",
+          element: (
+            <Suspense fallback={<PageLoader />}>
+              <Auth />
+            </Suspense>
+          ),
+        },
+        {
+          path: "/cancellation-policy",
+          element: (
+            <Suspense fallback={<PageLoader />}>
+              <CancellationPolicy />
+            </Suspense>
+          ),
+        },
+        {
+          path: "/terms-and-conditions",
+          element: (
+            <Suspense fallback={<PageLoader />}>
+              <TermsAndConditions />
+            </Suspense>
+          ),
+        },
+        {
+          path: "/privacy-policy",
+          element: (
+            <Suspense fallback={<PageLoader />}>
+              <PrivacyPolicy />
+            </Suspense>
+          ),
+        },
+      ]);
       
-      {/* Add LiveChat component */}
-      <LiveChat />
-    </>
-  );
+      setRouter(router);
+    };
+    
+    initRouter();
+    
+    // Preload other routes after initial page load
+    const preloadRoutes = () => {
+      if ('requestIdleCallback' in window) {
+        (window as any).requestIdleCallback(() => {
+          const routes = [
+            import('./pages/Application'),
+            import('./pages/Auth'),
+            import('./pages/CancellationPolicy'),
+            import('./pages/TermsAndConditions'),
+            import('./pages/PrivacyPolicy')
+          ];
+          
+          Promise.all(routes).catch(console.error);
+        });
+      }
+    };
+    
+    // Start preloading after a short delay
+    setTimeout(preloadRoutes, 2000);
+  }, []);
+  
+  if (!router) {
+    return <PageLoader />;
+  }
+
+  return <RouterProvider router={router} />;
 }
 
 export default App;

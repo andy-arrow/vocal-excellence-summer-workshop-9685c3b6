@@ -16,7 +16,7 @@ preloadResources();
 let lastErrorTime = 0;
 const ERROR_THROTTLE_MS = 1000;
 
-// Lazily load non-critical UI components
+// Lazily load non-critical UI components with better code splitting
 const Toaster = lazy(() => 
   import('./components/ui/toaster').then(module => ({
     default: module.Toaster
@@ -24,7 +24,7 @@ const Toaster = lazy(() =>
 );
 
 const Sonner = lazy(() => 
-  import('sonner').then(module => ({
+  import('./components/ui/sonner').then(module => ({
     default: module.Toaster
   }))
 );
@@ -87,7 +87,7 @@ const reportWebVitals = () => {
   }
 };
 
-// Initialize app
+// Initialize app with optimized loading
 const initializeApp = async () => {
   const rootElement = document.getElementById('root');
   if (!rootElement) return;
@@ -96,11 +96,8 @@ const initializeApp = async () => {
   setupErrorHandlers();
   
   try {
-    // Import AuthProvider from context if it exists
-    const { AuthProvider } = await import('./contexts/AuthContext').catch(() => ({
-      // Fallback if import fails
-      AuthProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>
-    }));
+    // Import AuthProvider from context
+    const { AuthProvider } = await import('./contexts/AuthContext');
     
     const root = ReactDOM.createRoot(rootElement);
     
@@ -119,6 +116,8 @@ const initializeApp = async () => {
         </ErrorBoundary>
       </React.StrictMode>
     );
+    
+    console.log('App rendered with AuthProvider and ThemeProvider');
     
     // Start monitoring after initial render
     reportWebVitals();
@@ -141,5 +140,12 @@ const initializeApp = async () => {
   }
 };
 
-// Start initialization
-initializeApp();
+// Use requestIdleCallback for non-critical initialization
+if ('requestIdleCallback' in window) {
+  (window as any).requestIdleCallback(() => {
+    initializeApp();
+  });
+} else {
+  // Fallback for browsers that don't support requestIdleCallback
+  setTimeout(initializeApp, 1);
+}

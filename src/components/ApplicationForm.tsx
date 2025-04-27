@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useEffect, lazy, Suspense } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -6,7 +7,6 @@ import { toast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
 import { Sparkles, CheckCircle2, Hourglass } from 'lucide-react';
 import { generateCsrfToken } from '@/utils/security';
-import { useAnalytics } from '@/hooks/useAnalytics';
 
 import { applicationSchema, ApplicationFormValues } from '@/components/ApplicationForm/schema';
 import { submitApplicationWithFiles } from '@/utils/fileUpload';
@@ -52,7 +52,6 @@ const ApplicationForm = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [activeSection, setActiveSection] = useState(0);
   const [csrfToken, setCsrfToken] = useState('');
-  const analytics = useAnalytics();
   
   useEffect(() => {
     const token = generateCsrfToken();
@@ -65,8 +64,6 @@ const ApplicationForm = () => {
       console.log('Initialized window.applicationFiles');
     }
     
-    analytics.trackEvent('Form', 'start', 'Application Form', undefined, false);
-    
     return () => {
       if (typeof window !== 'undefined' && window.applicationFiles) {
         Object.keys(window.applicationFiles).forEach(key => {
@@ -74,13 +71,7 @@ const ApplicationForm = () => {
         });
       }
     };
-  }, [analytics]);
-  
-  useEffect(() => {
-    if (activeSection > 0) {
-      analytics.trackForm.step('application', activeSection, getSectionName(activeSection));
-    }
-  }, [activeSection, analytics]);
+  }, []);
   
   const form = useForm<ApplicationFormValues>({
     resolver: zodResolver(applicationSchema),
@@ -110,22 +101,9 @@ const ApplicationForm = () => {
     mode: 'onChange'
   });
 
-  const getSectionName = (sectionIndex: number) => {
-    const sectionNames = [
-      'Personal Info',
-      'Musical Background',
-      'Programme',
-      'Materials',
-      'Terms'
-    ];
-    return sectionNames[sectionIndex] || `Section ${sectionIndex + 1}`;
-  };
-
   const onSubmit = useCallback(async (values: ApplicationFormValues) => {
     console.log('Form submission started with values:', values);
     setIsSubmitting(true);
-    
-    analytics.trackEvent('Form', 'submit_attempt', 'Application Form', undefined, false);
     
     try {
       const files: {[key: string]: File} = {};
@@ -141,11 +119,6 @@ const ApplicationForm = () => {
           if (file !== null) {
             files[key] = file;
             console.log(`Added ${key} for submission: ${file.name}, ${file.size} bytes`);
-            
-            analytics.trackForm.fileUpload(
-              key,
-              Math.round(file.size / 1024) // Convert bytes to KB
-            );
           }
         });
       } else {
@@ -160,14 +133,6 @@ const ApplicationForm = () => {
       if (!response.success) {
         throw new Error(response.error?.message || 'Submission failed');
       }
-
-      analytics.trackForm.submission('application', true, {
-        vocal_range: values.vocalRange,
-        years_experience: values.yearsOfExperience,
-        scholarship_interest: values.scholarshipInterest,
-        nationality: values.nationality,
-        files_count: Object.keys(files).length
-      });
       
       if (response.fileError) {
         console.warn('Application submitted but had file processing error:', response.fileError);
@@ -198,11 +163,6 @@ const ApplicationForm = () => {
     } catch (error: any) {
       console.error('Error submitting application:', error);
       
-      analytics.trackForm.submission('application', false, {
-        error_message: error.message || 'Unknown error',
-        error_code: error.code || 'unknown'
-      });
-      
       const errorDetails = [];
       if (error.message) errorDetails.push(`Error: ${error.message}`);
       if (error.details) errorDetails.push(`Details: ${error.details}`);
@@ -231,7 +191,7 @@ const ApplicationForm = () => {
     } finally {
       setIsSubmitting(false);
     }
-  }, [analytics]);
+  }, []);
 
   if (isSubmitted) {
     return (
@@ -297,9 +257,6 @@ const ApplicationForm = () => {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
-        onViewportEnter={() => {
-          analytics.trackEvent('Visibility', 'form_in_view', 'Application Form Container', undefined, true);
-        }}
       >
         <motion.div 
           className="text-center mb-16 space-y-6"
@@ -341,15 +298,6 @@ const ApplicationForm = () => {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   viewport={{ once: true, margin: "-100px" }}
                   className="bg-white rounded-2xl p-6 md:p-8 border border-apple-border/40 hover:border-apple-border/60 transition-colors shadow-sm hover:shadow-md"
-                  onViewportEnter={() => {
-                    if (index > activeSection) {
-                      setActiveSection(index);
-                    }
-                    analytics.trackEvent('Visibility', 'section_in_view', `Form Section: ${section.title}`, undefined, true);
-                  }}
-                  onClick={() => {
-                    analytics.trackEvent('Interaction', 'section_click', `Form Section: ${section.title}`, undefined, false);
-                  }}
                 >
                   <div className="flex items-center gap-4 mb-6">
                     {section.icon}
@@ -365,12 +313,7 @@ const ApplicationForm = () => {
                 viewport={{ once: true }}
                 className="flex justify-center pt-6"
               >
-                <SubmitButton 
-                  isSubmitting={isSubmitting} 
-                  onClick={() => {
-                    analytics.trackEvent('Interaction', 'button_click', 'Submit Application', undefined, false);
-                  }}
-                />
+                <SubmitButton isSubmitting={isSubmitting} />
               </motion.div>
             </div>
           </form>
@@ -382,13 +325,7 @@ const ApplicationForm = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
         >
-          <p>Need help? Email us at <a 
-            href="mailto:help@vocalexcellence.com" 
-            className="text-apple-blue hover:underline"
-            onClick={() => {
-              analytics.trackEvent('Interaction', 'email_link_click', 'Help Email', undefined, false);
-            }}  
-          >help@vocalexcellence.com</a></p>
+          <p>Need help? Email us at <a href="mailto:help@vocalexcellence.com" className="text-apple-blue hover:underline">help@vocalexcellence.com</a></p>
         </motion.div>
       </motion.div>
     </section>
