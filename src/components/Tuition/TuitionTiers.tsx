@@ -20,7 +20,7 @@ const TuitionTiers = () => {
   };
 
   return (
-    <section className="py-16 md:py-24 px-6 bg-apple-light">
+    <section className="py-20 md:py-28 px-6 bg-apple-light">
       <div className="max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-medium text-apple-text mb-6">
@@ -38,7 +38,7 @@ const TuitionTiers = () => {
           transition={{ duration: 0.6 }}
           className="max-w-4xl mx-auto"
         >
-          <Card className="shadow-lg border-0 overflow-hidden">
+          <Card className="shadow-xl border-0 overflow-hidden rounded-2xl">
             <CardHeader className="bg-white px-8 py-10 border-b border-apple-border">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div>
@@ -54,10 +54,10 @@ const TuitionTiers = () => {
               </div>
             </CardHeader>
             <CardContent className="bg-white px-8 py-10">
-              <div className="grid md:grid-cols-2 gap-8">
+              <div className="grid md:grid-cols-2 gap-12">
                 <div>
-                  <h3 className="text-xl font-medium text-apple-text mb-4">Program highlights</h3>
-                  <ul className="space-y-3">
+                  <h3 className="text-xl font-medium text-apple-text mb-6">Program highlights</h3>
+                  <ul className="space-y-4">
                     {[
                       'Comprehensive 360° approach to vocal training',
                       'World-class teachers from top universities',
@@ -73,7 +73,7 @@ const TuitionTiers = () => {
                       'Post-event support materials'
                     ].map((item, i) => (
                       <li key={i} className="flex items-start">
-                        <span className="mr-3 mt-0.5">
+                        <span className="mr-3 mt-0.5 flex-shrink-0">
                           <Check className="h-5 w-5 text-apple-blue" />
                         </span>
                         <span className="text-apple-text">{item}</span>
@@ -82,46 +82,46 @@ const TuitionTiers = () => {
                   </ul>
                 </div>
                 <div>
-                  <h3 className="text-xl font-medium text-apple-text mb-4">Ways to Save</h3>
+                  <h3 className="text-xl font-medium text-apple-text mb-6">Ways to Save</h3>
                   <div className="space-y-6">
-                    <div className="p-6 rounded-lg bg-gradient-to-r from-apple-light to-white border border-apple-border">
+                    <div className="p-6 rounded-xl bg-gradient-to-r from-apple-light to-white border border-apple-border">
                       <h4 className="font-medium text-apple-text flex items-center gap-2">
                         <Tag className="h-5 w-5 text-apple-blue" />
                         Standard Payment Plan
                       </h4>
-                      <ul className="mt-3 space-y-2">
+                      <ul className="mt-3 space-y-2 pl-7">
                         <li className="text-apple-grey">€100 deposit upon acceptance</li>
                         <li className="text-apple-grey">Three installments of €299.67</li>
                         <li className="text-apple-grey">Final payment by {tuitionDeadline}</li>
                       </ul>
                     </div>
 
-                    <div className="p-6 rounded-lg bg-gradient-to-r from-blue-50 to-white border border-blue-100">
+                    <div className="p-6 rounded-xl bg-gradient-to-r from-blue-50 to-white border border-blue-100">
                       <h4 className="font-medium text-apple-text flex items-center gap-2">
                         <Tag className="h-5 w-5 text-apple-blue" />
                         Early Bird Discount
                       </h4>
-                      <p className="text-apple-grey mt-2">
+                      <p className="text-apple-grey mt-2 pl-7">
                         Save €50 when you enroll by {earlyBirdDate}
                       </p>
                     </div>
 
-                    <div className="p-6 rounded-lg bg-gradient-to-r from-blue-50 to-white border border-blue-100">
+                    <div className="p-6 rounded-xl bg-gradient-to-r from-blue-50 to-white border border-blue-100">
                       <h4 className="font-medium text-apple-text flex items-center gap-2">
                         <Tag className="h-5 w-5 text-apple-blue" />
                         Upfront Payment Benefit
                       </h4>
-                      <p className="text-apple-grey mt-2">
+                      <p className="text-apple-grey mt-2 pl-7">
                         Save €49 when you pay the full tuition at once
                       </p>
                     </div>
 
-                    <div className="p-6 rounded-lg bg-gradient-to-r from-violet-50 to-white border border-violet-100">
+                    <div className="p-6 rounded-xl bg-gradient-to-r from-violet-50 to-white border border-violet-100">
                       <h4 className="font-medium text-violet-800 flex items-center gap-2">
                         <Tag className="h-5 w-5 text-violet-600" />
                         Best Value - Early Bird + Upfront
                       </h4>
-                      <p className="text-violet-700 mt-2">
+                      <p className="text-violet-700 mt-2 pl-7">
                         Maximum savings of €99 when you pay in full by {earlyBirdDate}
                       </p>
                     </div>
@@ -129,11 +129,11 @@ const TuitionTiers = () => {
                 </div>
               </div>
             </CardContent>
-            <CardFooter className="bg-white px-8 py-10 flex flex-col items-center">
+            <CardFooter className="bg-white px-8 py-10 flex flex-col items-center border-t border-apple-border">
               <Button 
                 size="lg"
                 onClick={handleApplyClick}
-                className="w-full sm:w-auto px-8 py-6 text-lg font-medium"
+                className="w-full sm:w-auto px-12 py-6 text-lg font-medium bg-apple-blue hover:bg-apple-blue-hover"
               >
                 Start Your Application
               </Button>

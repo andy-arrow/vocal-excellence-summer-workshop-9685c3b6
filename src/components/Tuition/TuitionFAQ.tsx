@@ -49,7 +49,7 @@ const TuitionFAQ = () => {
   ];
 
   return (
-    <section className="py-16 md:py-24 px-6">
+    <section className="py-20 md:py-28 px-6">
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -71,14 +71,15 @@ const TuitionFAQ = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
+          className="rounded-2xl bg-white shadow-lg border border-gray-100 overflow-hidden"
         >
           <Accordion type="single" collapsible className="w-full">
             {faqItems.map((item, i) => (
-              <AccordionItem key={i} value={`item-${i}`}>
-                <AccordionTrigger className="text-left text-lg font-medium text-apple-text py-6">
+              <AccordionItem key={i} value={`item-${i}`} className={i === 0 ? "" : "border-t border-gray-100"}>
+                <AccordionTrigger className="text-left text-lg font-medium text-apple-text py-6 px-8 hover:no-underline">
                   {item.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-apple-grey text-lg pb-6">
+                <AccordionContent className="text-apple-grey text-lg pb-8 pt-2 px-8">
                   {item.answer}
                 </AccordionContent>
               </AccordionItem>

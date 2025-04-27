@@ -34,10 +34,10 @@ const Tuition = () => {
   return (
     <>
       <Helmet>
-        <title>Tuition - Vocal Excellence</title>
+        <title>Tuition & Financial Information - Vocal Excellence</title>
         <meta 
           name="description" 
-          content="Tuition options for Vocal Excellence - a transformative vocal training experience." 
+          content="Learn about tuition options, payment plans, and financial assistance for our transformative vocal training program." 
         />
       </Helmet>
       <Navbar />
