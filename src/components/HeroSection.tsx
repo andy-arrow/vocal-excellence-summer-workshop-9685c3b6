@@ -4,14 +4,10 @@ import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';
-import { format } from 'date-fns';
-import { APPLICATION_DATES } from './ApplicationTimeline';
 
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const [hasReducedMotion, setHasReducedMotion] = useState(false);
-  const today = new Date();
-  const applicationsClosed = today > APPLICATION_DATES.DEADLINE;
   
   useEffect(() => {
     const savedPreference = localStorage.getItem('reduced-motion') === 'true';
@@ -96,16 +92,10 @@ const HeroSection = () => {
             <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-6">
               <Link 
                 to="/apply" 
-                className={`group px-8 py-4 ${
-                  applicationsClosed 
-                    ? 'bg-gray-400 cursor-not-allowed' 
-                    : 'bg-apple-blue hover:bg-apple-blue-hover'
-                } text-white rounded-full text-lg font-medium transition-all duration-300 shadow-sm`}
+                className="group px-8 py-4 bg-apple-blue text-white rounded-full text-lg font-medium transition-all duration-300 hover:bg-apple-blue-hover shadow-sm"
               >
-                {applicationsClosed ? 'Applications Closed' : 'Apply Now'}
-                {!applicationsClosed && (
-                  <ArrowUpRight className="inline-block ml-2 w-5 h-5 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                )}
+                Apply Now
+                <ArrowUpRight className="inline-block ml-2 w-5 h-5 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </Link>
               
               <button 
@@ -124,13 +114,7 @@ const HeroSection = () => {
             >
               <div className="w-2 h-2 rounded-full bg-apple-blue animate-pulse-slow"></div>
               <p className="text-apple-grey text-sm font-light">
-                {applicationsClosed ? (
-                  <span className="text-apple-text font-medium">Applications for {format(APPLICATION_DATES.PROGRAM_START, 'yyyy')} are now closed</span>
-                ) : (
-                  <>
-                    Applications close <span className="text-apple-text font-medium">{format(APPLICATION_DATES.DEADLINE, 'MMMM d, yyyy')}</span> — Only 20 spots available
-                  </>
-                )}
+                Applications close <span className="text-apple-text font-medium">May 15, 2025</span> — Only 20 spots available
               </p>
               <div className="w-2 h-2 rounded-full bg-apple-blue animate-pulse-slow"></div>
             </motion.div>
