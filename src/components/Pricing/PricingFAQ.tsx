@@ -1,5 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { format } from 'date-fns';
+import { APPLICATION_DATES } from '../ApplicationTimeline';
 
 import {
   Accordion,
@@ -9,38 +11,39 @@ import {
 } from "@/components/ui/accordion";
 
 const PricingFAQ = () => {
+  const programYear = format(APPLICATION_DATES.PROGRAM_START, 'yyyy');
+  const programDates = `${format(APPLICATION_DATES.PROGRAM_START, 'MMMM d')}-${format(new Date(APPLICATION_DATES.PROGRAM_START.getTime() + 4 * 24 * 60 * 60 * 1000), 'MMMM d, yyyy')}`;
+  const paymentDeadline = format(APPLICATION_DATES.TUITION_DEADLINE, 'MMMM d, yyyy');
+  const programStartDate = format(APPLICATION_DATES.PROGRAM_START, 'MMMM d, yyyy');
+
   const faqItems = [
     {
-      question: "What's included in the program tuition?",
-      answer: "Your tuition covers everything you need for an enriching five-day experience: expert-led workshops, personal coaching sessions, performance opportunities, and study materials. You'll have access to world-class instructors, accompanists, and specialized workshops. The only additional costs to consider are your travel and accommodation."
+      question: "What's included in the tuition?",
+      answer: `Your €999 tuition covers everything you need for an incredible five-day experience: personalized vocal training, workshops, one-on-one sessions with expert instructors, professional accompaniment, and comprehensive study materials. The only additional costs you'll need to consider are your accommodation and travel to Limassol.`
     },
     {
-      question: "How do the payment plans work?",
-      answer: "We've designed our payment structure to be student-friendly: Start with a €100 deposit to secure your spot once you're accepted, then spread the remaining €899 over three manageable payments of €299.67. We can work with you to set up a schedule that fits your needs."
+      question: "Tell me about the payment options",
+      answer: `We offer flexible ways to manage your tuition that fit your needs: Start with a €100 deposit to secure your spot once you're accepted. Then, either pay the remaining balance in three installments of €299.67, or take advantage of our discount options. Choose from Early Bird savings (€50 off), upfront payment benefits (€49 off), or combine both for maximum savings of €99!`
     },
     {
-      question: "Are there any scholarships available?",
-      answer: "Absolutely! We believe talent should be nurtured regardless of financial circumstances. We offer merit-based scholarships for exceptional candidates. Just indicate your interest in financial aid during your application, and we'll guide you through the process."
+      question: "How do the discounts work?",
+      answer: `We're excited to offer several ways to save on your tuition! Enroll early by ${format(APPLICATION_DATES.EARLY_BIRD_DEADLINE, 'MMMM d, yyyy')} to save €50 (Early Bird Discount), or pay your full tuition at once to save €49. Want the best deal? Combine both by paying in full by the Early Bird deadline to save €99!`
     },
     {
-      question: "What happens if I need to cancel?",
-      answer: "Life happens, and we understand that plans can change. If you need to cancel more than 30 days before the program starts, we'll refund your full tuition minus the €100 deposit. For cancellations within 30 days, we'll work with you to find the best solution. The deposit helps us maintain our commitment to keeping our class sizes small and personal."
+      question: "Are scholarships available?",
+      answer: "Absolutely! We believe talent deserves support. We offer merit-based scholarships to help exceptional students join our program. Simply check the scholarship box in your application, and we'll guide you through the process."
     },
     {
-      question: "Are there any hidden fees?",
-      answer: "Not at all! We believe in complete transparency. Your €999 tuition covers all program activities, materials, and resources. You'll only need to plan for your travel to Limassol and accommodation during your stay."
+      question: "What's your refund policy?",
+      answer: "We understand plans can change. You'll receive a full refund (minus the €100 deposit) if you need to withdraw at least 30 days before the program starts. For withdrawals closer to the start date, we'll work with you on a case-by-case basis. The deposit is non-refundable as it reserves your spot in our limited-size program."
     },
     {
-      question: "What if I'm having trouble with a payment deadline?",
-      answer: "We're here to help! If you're facing any challenges with the payment schedule, just reach out to our friendly admissions team. We can explore different payment arrangements to ensure you can participate in the program."
-    },
-    {
-      question: "Can someone else take my place if I can't attend?",
-      answer: "Since we carefully select each participant to create a balanced and supportive learning environment, we can't transfer registrations. However, if you can't attend, please let us know as soon as possible so we can work with you to find the best solution."
+      question: "What if I miss a payment deadline?",
+      answer: "Life happens! If you're concerned about making a payment, just reach out to our team. We're here to help and can work with you to adjust the payment schedule so you can still participate in the program."
     },
     {
       question: "When do I need to complete all payments?",
-      answer: "To ensure everything's ready for your arrival, all payments should be completed two weeks before the program begins. This gives us time to prepare all your materials and arrange for your individual sessions."
+      answer: `To ensure everything's set for your arrival, all tuition payments need to be completed by ${format(APPLICATION_DATES.TUITION_DEADLINE, 'MMMM d, yyyy')}, two weeks before we begin on ${format(APPLICATION_DATES.PROGRAM_START, 'MMMM d, yyyy')}.`
     }
   ];
 
@@ -58,7 +61,7 @@ const PricingFAQ = () => {
             Common Questions
           </h2>
           <p className="text-lg text-apple-grey">
-            Here to help you understand everything about joining our program
+            Everything you need to know about joining our program
           </p>
         </motion.div>
         
@@ -90,10 +93,8 @@ const PricingFAQ = () => {
           className="mt-16 text-center"
         >
           <p className="text-apple-grey">
-            Have other questions about joining us?{" "}
-            <a href="mailto:admissions@vocalexcellence.com" className="text-apple-blue hover:underline">
-              Our admissions team is here to help
-            </a>
+            Have more questions about the program?{" "}
+            <a href="mailto:admissions@vocalexcellence.com" className="text-apple-blue hover:underline">Get in touch with our team</a>
           </p>
         </motion.div>
       </div>

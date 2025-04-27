@@ -9,6 +9,7 @@ import { format, differenceInDays } from 'date-fns';
 export const APPLICATION_DATES = {
   OPEN_DATE: new Date('2025-03-01'),
   DEADLINE: new Date('2025-05-15'),
+  EARLY_BIRD_DEADLINE: new Date('2025-04-30'),
   NOTIFICATIONS: new Date('2025-06-01'),
   TUITION_DEADLINE: new Date('2025-06-15'),
   PROGRAM_START: new Date('2025-07-14')
