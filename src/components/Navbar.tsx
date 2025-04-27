@@ -59,6 +59,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
     { id: 'about', label: 'About' },
     { id: 'curriculum', label: 'Curriculum' },
     { id: 'instructors', label: 'Instructors' },
+    { href: '/pricing', label: 'Tuition' },
   ];
 
   return (
@@ -93,22 +94,35 @@ const Navbar = ({ activeSection }: NavbarProps) => {
         <nav className="hidden md:flex items-center flex-grow justify-center">
           <ul className="flex space-x-2 items-center">
             {navLinks.map((link) => (
-              <li key={link.id}>
-                <a
-                  href={`#${link.id}`}
-                  onClick={(e) => handleSmoothScroll(e, link.id)}
-                  className={cn(
-                    "relative py-2 px-3 text-sm font-medium transition-colors duration-300",
-                    "hover:text-apple-blue",
-                    activeSection === link.id 
-                      ? "text-apple-blue" 
-                      : "text-apple-text"
-                  )}
-                >
-                  <span className="relative z-10">
-                    {link.label}
-                  </span>
-                </a>
+              <li key={link.id || link.href}>
+                {link.href ? (
+                  <NavLink
+                    to={link.href}
+                    className={({ isActive }) => cn(
+                      "relative py-2 px-3 text-sm font-medium transition-colors duration-300",
+                      "hover:text-apple-blue",
+                      isActive ? "text-apple-blue" : "text-apple-text"
+                    )}
+                  >
+                    <span className="relative z-10">
+                      {link.label}
+                    </span>
+                  </NavLink>
+                ) : (
+                  <a
+                    href={`#${link.id}`}
+                    onClick={(e) => handleSmoothScroll(e, link.id!)}
+                    className={cn(
+                      "relative py-2 px-3 text-sm font-medium transition-colors duration-300",
+                      "hover:text-apple-blue",
+                      activeSection === link.id ? "text-apple-blue" : "text-apple-text"
+                    )}
+                  >
+                    <span className="relative z-10">
+                      {link.label}
+                    </span>
+                  </a>
+                )}
               </li>
             ))}
           </ul>
@@ -185,7 +199,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                 <ul className="space-y-[2px] px-2">
                   {navLinks.map((link, idx) => (
                     <motion.li 
-                      key={link.id}
+                      key={link.id || link.href}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.1 + idx * 0.05, duration: 0.3 }}
@@ -208,7 +222,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                         ) : (
                           <a
                             href={`#${link.id}`}
-                            onClick={(e) => handleSmoothScroll(e, link.id)}
+                            onClick={(e) => handleSmoothScroll(e, link.id!)}
                             className={cn(
                               "flex items-center justify-between py-3 px-4",
                               "text-[17px] font-normal text-apple-text",
