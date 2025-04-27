@@ -5,100 +5,22 @@ import App from './App'
 import './index.css'
 import './styles/animations.css'
 import ErrorBoundary from '@/utils/ErrorBoundary'
-import { trackError } from '@/utils/monitoring'
 import { preloadResources } from '@/utils/PreloadResources'
 import { ThemeProvider } from 'next-themes'
 
-// Run preloading immediately
+// Preload critical resources immediately
 preloadResources();
 
-// Initialize performance monitoring
-let lastErrorTime = 0;
-const ERROR_THROTTLE_MS = 1000;
+// Lazy load non-critical UI components
+const Toaster = lazy(() => import('./components/ui/toaster'));
+const Sonner = lazy(() => import('./components/ui/sonner'));
 
-// Lazily load non-critical UI components with better code splitting
-const Toaster = lazy(() => 
-  import('./components/ui/toaster').then(module => ({
-    default: module.Toaster
-  }))
-);
-
-const Sonner = lazy(() => 
-  import('./components/ui/sonner').then(module => ({
-    default: module.Toaster
-  }))
-);
-
-// Error handler setup
-const setupErrorHandlers = () => {
-  window.addEventListener('error', (event) => {
-    const now = Date.now();
-    if (now - lastErrorTime > ERROR_THROTTLE_MS) {
-      lastErrorTime = now;
-      trackError('error', event.error || new Error(event.message), {
-        source: event.filename,
-        line: event.lineno,
-        column: event.colno,
-      });
-    }
-  });
-
-  window.addEventListener('unhandledrejection', (event) => {
-    const now = Date.now();
-    if (now - lastErrorTime > ERROR_THROTTLE_MS) {
-      lastErrorTime = now;
-      trackError('error', 
-        event.reason instanceof Error 
-          ? event.reason 
-          : new Error(`Unhandled promise rejection: ${JSON.stringify(event.reason)}`),
-        { type: 'unhandledrejection' }
-      );
-    }
-  });
-};
-
-// Performance monitoring
-const reportWebVitals = () => {
-  if ('performance' in window && 'getEntriesByType' in performance) {
-    const report = () => {
-      const navEntry = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
-      if (navEntry) {
-        console.log(`Page load time: ${navEntry.loadEventEnd - navEntry.startTime}ms`);
-        
-        // Report FCP
-        const fcpEntry = performance.getEntriesByName('first-contentful-paint')[0];
-        if (fcpEntry) {
-          console.log(`First Contentful Paint: ${fcpEntry.startTime}ms`);
-        }
-        
-        // Report LCP
-        const lcpEntry = performance.getEntriesByName('largest-contentful-paint')[0];
-        if (lcpEntry) {
-          console.log(`Largest Contentful Paint: ${lcpEntry.startTime}ms`);
-        }
-      }
-    };
-
-    if ('requestIdleCallback' in window) {
-      (window as any).requestIdleCallback(() => setTimeout(report, 0));
-    } else {
-      setTimeout(report, 0);
-    }
-  }
-};
-
-// Initialize app with optimized loading
 const initializeApp = async () => {
   const rootElement = document.getElementById('root');
   if (!rootElement) return;
-
-  // Setup error handlers
-  setupErrorHandlers();
   
   try {
-    // Import AuthProvider from context
     const { AuthProvider } = await import('./contexts/AuthContext');
-    
     const root = ReactDOM.createRoot(rootElement);
     
     root.render(
@@ -117,15 +39,17 @@ const initializeApp = async () => {
       </React.StrictMode>
     );
     
-    console.log('App rendered with AuthProvider and ThemeProvider');
-    
-    // Start monitoring after initial render
-    reportWebVitals();
+    // Report web vitals after initial render in idle time
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(() => {
+        import('@/utils/monitoring').then(({ reportWebVitals }) => {
+          reportWebVitals();
+        });
+      });
+    }
     
   } catch (error) {
     console.error('Failed to load application:', error);
-    
-    // Fallback rendering without providers
     const root = ReactDOM.createRoot(rootElement);
     root.render(
       <React.StrictMode>
@@ -142,10 +66,7 @@ const initializeApp = async () => {
 
 // Use requestIdleCallback for non-critical initialization
 if ('requestIdleCallback' in window) {
-  (window as any).requestIdleCallback(() => {
-    initializeApp();
-  });
+  (window as any).requestIdleCallback(initializeApp);
 } else {
-  // Fallback for browsers that don't support requestIdleCallback
   setTimeout(initializeApp, 1);
 }
