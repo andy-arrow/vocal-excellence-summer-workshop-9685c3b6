@@ -1,4 +1,3 @@
-
 import React, { lazy, Suspense } from 'react';
 import {
   createBrowserRouter,
@@ -13,6 +12,7 @@ const TermsAndConditions = lazy(() => import('./pages/TermsAndConditions'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const Auth = lazy(() => import('./pages/Auth'));
 const SummerProgramme = lazy(() => import('./pages/SummerProgramme'));
+const AdminPage = lazy(() => import('./pages/AdminPage'));
 
 // Import LiveChat component
 import LiveChat from './components/LiveChat';
@@ -82,6 +82,14 @@ function App() {
       element: (
         <Suspense fallback={<PageLoader />}>
           <SummerProgramme />
+        </Suspense>
+      ),
+    },
+    {
+      path: "/admin",
+      element: (
+        <Suspense fallback={<PageLoader />}>
+          <AdminPage />
         </Suspense>
       ),
     },

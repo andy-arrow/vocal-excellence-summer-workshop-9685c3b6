@@ -3,14 +3,23 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
 
 const HeroSection = () => {
   const [videoError, setVideoError] = useState(false);
+  const [videoUrl, setVideoUrl] = useState<string | null>(null);
   
+  useEffect(() => {
+    const { data: { publicUrl } } = supabase.storage
+      .from('public_videos')
+      .getPublicUrl('performance.mp4');
+    setVideoUrl(publicUrl);
+  }, []);
+
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center text-white overflow-hidden">
       <div className="absolute inset-0 bg-black">
-        {!videoError ? (
+        {!videoError && videoUrl ? (
           <video
             autoPlay
             muted
@@ -20,7 +29,7 @@ const HeroSection = () => {
             onError={() => setVideoError(true)}
             poster="/lovable-uploads/masterclass-singers.jpg"
           >
-            <source src="/lovable-uploads/performance.mp4" type="video/mp4" />
+            <source src={videoUrl} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         ) : (
