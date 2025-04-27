@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
@@ -55,18 +56,12 @@ const PricingTiers = () => {
                   <h3 className="text-xl font-medium text-apple-text mb-4">What's included</h3>
                   <ul className="space-y-3">
                     {[
-                      'Comprehensive 360° approach to vocal training',
-                      'World-class teachers from top universities',
-                      'Professional audition preparation',
-                      '45-minute private lesson for each student',
-                      'Alexander Technique workshops',
-                      '30-minute dedicated accompanist session',
-                      'Mock auditions with final performance',
-                      'Professional recording of final performance',
-                      'Industry networking opportunities',
-                      'Stage anxiety management workshops',
-                      'Vocal health seminar by medical professional',
-                      'Post-event support materials'
+                      'Five days of immersive experience',
+                      'Expert-led sessions and workshops',
+                      'Personalized feedback and guidance',
+                      'Community of like-minded peers',
+                      'Post-event support materials',
+                      'Certificate of completion'
                     ].map((item, i) => (
                       <li key={i} className="flex items-start">
                         <span className="mr-3 mt-0.5">
