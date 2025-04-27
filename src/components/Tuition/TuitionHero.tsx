@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 const TuitionHero = () => {
   return (
-    <section className="py-28 md:py-36 px-6 bg-gradient-to-b from-white to-apple-light">
+    <section className="py-20 md:py-24 px-6 bg-gradient-to-b from-white to-apple-light">
       <div className="max-w-3xl mx-auto text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

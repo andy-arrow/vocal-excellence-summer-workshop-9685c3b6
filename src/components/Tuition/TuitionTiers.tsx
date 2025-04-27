@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
@@ -20,7 +19,7 @@ const TuitionTiers = () => {
   };
 
   return (
-    <section className="py-20 md:py-28 px-6 bg-apple-light">
+    <section className="py-16 md:py-20 px-6 bg-apple-light">
       <div className="max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-medium text-apple-text mb-6">
