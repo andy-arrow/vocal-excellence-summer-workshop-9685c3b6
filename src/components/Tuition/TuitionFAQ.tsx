@@ -49,19 +49,19 @@ const TuitionFAQ = () => {
   ];
 
   return (
-    <section className="py-20 md:py-28 px-6">
-      <div className="max-w-4xl mx-auto">
+    <section className="py-16 md:py-20 px-6 md:px-12 bg-[#f9fafa]">
+      <div className="max-w-3xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center mb-12"
         >
-          <h2 className="text-3xl md:text-4xl font-medium text-apple-text mb-6">
+          <h2 className="font-serif text-3xl md:text-4xl font-light text-[#141414] mb-4">
             Common Questions
           </h2>
-          <p className="text-lg text-apple-grey">
+          <p className="font-sans text-lg text-[#141414]/70">
             Everything you need to know about joining our program
           </p>
         </motion.div>
@@ -70,16 +70,19 @@ const TuitionFAQ = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="rounded-2xl bg-white shadow-lg border border-gray-100 overflow-hidden"
+          transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
         >
           <Accordion type="single" collapsible className="w-full">
             {faqItems.map((item, i) => (
-              <AccordionItem key={i} value={`item-${i}`} className={i === 0 ? "" : "border-t border-gray-100"}>
-                <AccordionTrigger className="text-left text-lg font-medium text-apple-text py-6 px-8 hover:no-underline">
+              <AccordionItem 
+                key={i} 
+                value={`item-${i}`} 
+                className={`mb-4 border border-[#f0f0f0] rounded-xl bg-white overflow-hidden shadow-[0_2px_10px_rgb(0,0,0,0.02)]`}
+              >
+                <AccordionTrigger className="text-left font-serif text-lg px-6 py-5 hover:no-underline text-[#141414]">
                   {item.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-apple-grey text-lg pb-8 pt-2 px-8">
+                <AccordionContent className="font-sans text-base text-[#141414]/70 px-6 pb-6 pt-0">
                   {item.answer}
                 </AccordionContent>
               </AccordionItem>
@@ -91,12 +94,14 @@ const TuitionFAQ = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-16 text-center"
+          transition={{ duration: 0.6, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-12 text-center"
         >
-          <p className="text-apple-grey">
+          <p className="font-sans text-[#141414]/70">
             Have more questions about the program?{" "}
-            <a href="mailto:admissions@vocalexcellence.com" className="text-apple-blue hover:underline">Get in touch with our team</a>
+            <a href="mailto:admissions@vocalexcellence.com" className="text-[#4f6e72] hover:underline transition-all">
+              Get in touch with our team
+            </a>
           </p>
         </motion.div>
       </div>

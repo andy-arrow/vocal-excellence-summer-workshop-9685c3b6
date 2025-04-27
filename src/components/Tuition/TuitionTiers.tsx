@@ -1,11 +1,10 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Check, Tag } from 'lucide-react';
 import { format } from 'date-fns';
 import { APPLICATION_DATES } from '../ApplicationTimeline';
-
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
 const TuitionTiers = () => {
@@ -19,14 +18,14 @@ const TuitionTiers = () => {
   };
 
   return (
-    <section className="py-16 md:py-20 px-6 bg-apple-light">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl md:text-4xl font-medium text-apple-text mb-6">
-            Tuition Information & Special Offers
+    <section className="py-16 px-6 md:px-12 bg-white">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <h2 className="font-serif text-3xl md:text-4xl font-light text-[#141414] mb-6">
+            Program Details & Savings Options
           </h2>
-          <p className="text-lg text-apple-grey">
-            Join our transformative program with flexible payment options designed to support your journey.
+          <p className="text-lg text-[#141414]/70 font-sans">
+            Everything you need to know about our Summer 2025 vocal training program
           </p>
         </div>
         
@@ -34,29 +33,37 @@ const TuitionTiers = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="max-w-4xl mx-auto"
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="max-w-5xl mx-auto"
         >
-          <Card className="shadow-xl border-0 overflow-hidden rounded-2xl">
-            <CardHeader className="bg-white px-8 py-10 border-b border-apple-border">
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div className="bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-2xl overflow-hidden border border-[#f0f0f0]">
+            {/* Program Header */}
+            <div className="px-8 py-10 border-b border-[#f0f0f0]">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
                 <div>
-                  <CardTitle className="text-3xl font-medium text-apple-text">Summer 2025 Program</CardTitle>
-                  <CardDescription className="text-lg mt-2 text-apple-grey">
+                  <h3 className="font-serif text-2xl md:text-3xl font-light text-[#141414]">
+                    Summer 2025 Program
+                  </h3>
+                  <p className="font-sans text-base mt-2 text-[#141414]/70">
                     Five days of transformative vocal training
-                  </CardDescription>
+                  </p>
                 </div>
-                <div className="text-right">
-                  <p className="text-3xl font-medium text-apple-text">€999</p>
-                  <p className="text-sm text-apple-grey mt-1">Total tuition</p>
+                <div className="text-left md:text-right">
+                  <p className="text-2xl md:text-3xl font-serif font-light text-[#141414]">€999</p>
+                  <p className="font-sans text-sm text-[#141414]/70 mt-1">Total tuition</p>
                 </div>
               </div>
-            </CardHeader>
-            <CardContent className="bg-white px-8 py-10">
+            </div>
+            
+            {/* Content Grid */}
+            <div className="p-8 md:p-10">
               <div className="grid md:grid-cols-2 gap-12">
+                {/* Program Highlights */}
                 <div>
-                  <h3 className="text-xl font-medium text-apple-text mb-6">Program highlights</h3>
-                  <ul className="space-y-4">
+                  <h4 className="font-serif text-xl font-light text-[#141414] mb-6">
+                    Program Highlights
+                  </h4>
+                  <ul className="space-y-4 font-sans">
                     {[
                       'Comprehensive 360° approach to vocal training',
                       'World-class teachers from top universities',
@@ -73,74 +80,83 @@ const TuitionTiers = () => {
                     ].map((item, i) => (
                       <li key={i} className="flex items-start">
                         <span className="mr-3 mt-0.5 flex-shrink-0">
-                          <Check className="h-5 w-5 text-apple-blue" />
+                          <Check className="h-5 w-5 text-[#4f6e72]" />
                         </span>
-                        <span className="text-apple-text">{item}</span>
+                        <span className="text-[#141414]/80">{item}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
+                
+                {/* Payment Options */}
                 <div>
-                  <h3 className="text-xl font-medium text-apple-text mb-6">Ways to Save</h3>
+                  <h4 className="font-serif text-xl font-light text-[#141414] mb-6">
+                    Ways to Save
+                  </h4>
                   <div className="space-y-6">
-                    <div className="p-6 rounded-xl bg-gradient-to-r from-apple-light to-white border border-apple-border">
-                      <h4 className="font-medium text-apple-text flex items-center gap-2">
-                        <Tag className="h-5 w-5 text-apple-blue" />
+                    {/* Standard Payment */}
+                    <div className="p-6 rounded-xl bg-[#f9fafa] border border-[#f0f0f0]">
+                      <h5 className="font-sans font-medium text-[#141414] flex items-center gap-2">
+                        <Tag className="h-5 w-5 text-[#4f6e72]" />
                         Standard Payment Plan
-                      </h4>
-                      <ul className="mt-3 space-y-2 pl-7">
-                        <li className="text-apple-grey">€100 deposit upon acceptance</li>
-                        <li className="text-apple-grey">Three installments of €299.67</li>
-                        <li className="text-apple-grey">Final payment by {tuitionDeadline}</li>
+                      </h5>
+                      <ul className="mt-3 space-y-2 pl-7 text-[#141414]/70 font-sans text-sm">
+                        <li>€100 deposit upon acceptance</li>
+                        <li>Three installments of €299.67</li>
+                        <li>Final payment by {tuitionDeadline}</li>
                       </ul>
                     </div>
 
-                    <div className="p-6 rounded-xl bg-gradient-to-r from-blue-50 to-white border border-blue-100">
-                      <h4 className="font-medium text-apple-text flex items-center gap-2">
-                        <Tag className="h-5 w-5 text-apple-blue" />
+                    {/* Early Bird */}
+                    <div className="p-6 rounded-xl bg-[#f2f7f7] border border-[#e5eeef]">
+                      <h5 className="font-sans font-medium text-[#141414] flex items-center gap-2">
+                        <Tag className="h-5 w-5 text-[#4f6e72]" />
                         Early Bird Discount
-                      </h4>
-                      <p className="text-apple-grey mt-2 pl-7">
+                      </h5>
+                      <p className="text-[#141414]/70 mt-2 pl-7 font-sans text-sm">
                         Save €50 when you enroll by {earlyBirdDate}
                       </p>
                     </div>
 
-                    <div className="p-6 rounded-xl bg-gradient-to-r from-blue-50 to-white border border-blue-100">
-                      <h4 className="font-medium text-apple-text flex items-center gap-2">
-                        <Tag className="h-5 w-5 text-apple-blue" />
+                    {/* Upfront Payment */}
+                    <div className="p-6 rounded-xl bg-[#f2f7f7] border border-[#e5eeef]">
+                      <h5 className="font-sans font-medium text-[#141414] flex items-center gap-2">
+                        <Tag className="h-5 w-5 text-[#4f6e72]" />
                         Upfront Payment Benefit
-                      </h4>
-                      <p className="text-apple-grey mt-2 pl-7">
+                      </h5>
+                      <p className="text-[#141414]/70 mt-2 pl-7 font-sans text-sm">
                         Save €49 when you pay the full tuition at once
                       </p>
                     </div>
 
-                    <div className="p-6 rounded-xl bg-gradient-to-r from-violet-50 to-white border border-violet-100">
-                      <h4 className="font-medium text-violet-800 flex items-center gap-2">
-                        <Tag className="h-5 w-5 text-violet-600" />
+                    {/* Best Value */}
+                    <div className="p-6 rounded-xl bg-[#4f6e72]/10 border border-[#4f6e72]/20">
+                      <h5 className="font-sans font-medium text-[#4f6e72] flex items-center gap-2">
+                        <Tag className="h-5 w-5 text-[#4f6e72]" />
                         Best Value - Early Bird + Upfront
-                      </h4>
-                      <p className="text-violet-700 mt-2 pl-7">
+                      </h5>
+                      <p className="text-[#4f6e72]/90 mt-2 pl-7 font-sans text-sm">
                         Maximum savings of €99 when you pay in full by {earlyBirdDate}
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
-            </CardContent>
-            <CardFooter className="bg-white px-8 py-10 flex flex-col items-center border-t border-apple-border">
+            </div>
+            
+            {/* Call to Action */}
+            <div className="px-8 py-10 border-t border-[#f0f0f0] flex flex-col items-center text-center">
               <Button 
-                size="lg"
                 onClick={handleApplyClick}
-                className="w-full sm:w-auto px-12 py-6 text-lg font-medium bg-apple-blue hover:bg-apple-blue-hover"
+                className="w-full sm:w-auto px-12 py-6 text-base font-medium bg-[#4f6e72] hover:bg-[#41595c] text-white rounded-full transition-all duration-300"
               >
                 Start Your Application
               </Button>
-              <p className="text-sm text-apple-grey mt-4">
-                Limited to 20 students for Summer 2025. Applications close on {format(APPLICATION_DATES.DEADLINE, 'MMMM d, yyyy')}.
+              <p className="font-sans text-sm text-[#141414]/60 mt-4">
+                Limited to 20 students. Applications close on {format(APPLICATION_DATES.DEADLINE, 'MMMM d, yyyy')}.
               </p>
-            </CardFooter>
-          </Card>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
