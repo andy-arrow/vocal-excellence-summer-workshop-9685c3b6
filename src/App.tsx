@@ -1,3 +1,4 @@
+
 import React, { lazy, Suspense, useState, useEffect } from 'react';
 import {
   createBrowserRouter,
@@ -7,6 +8,7 @@ import {
 // Import pages using proper default imports
 const Index = lazy(() => import('./pages/Index'));
 const Application = lazy(() => import('./pages/Application'));
+const Pricing = lazy(() => import('./pages/Pricing'));
 const CancellationPolicy = lazy(() => import('./pages/CancellationPolicy'));
 const TermsAndConditions = lazy(() => import('./pages/TermsAndConditions'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
@@ -41,6 +43,14 @@ function App() {
           element: (
             <Suspense fallback={<PageLoader />}>
               <Application />
+            </Suspense>
+          ),
+        },
+        {
+          path: "/pricing",
+          element: (
+            <Suspense fallback={<PageLoader />}>
+              <Pricing />
             </Suspense>
           ),
         },
@@ -89,6 +99,7 @@ function App() {
         (window as any).requestIdleCallback(() => {
           const routes = [
             import('./pages/Application'),
+            import('./pages/Pricing'),
             import('./pages/Auth'),
             import('./pages/CancellationPolicy'),
             import('./pages/TermsAndConditions'),

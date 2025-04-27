@@ -2,6 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 const CTASection = () => {
   const navigate = useNavigate();
@@ -9,6 +10,12 @@ const CTASection = () => {
   const handleApplyClick = (e: React.MouseEvent) => {
     e.preventDefault();
     navigate('/apply');
+    window.scrollTo(0, 0);
+  };
+
+  const handlePricingClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate('/pricing');
     window.scrollTo(0, 0);
   };
 
@@ -50,34 +57,28 @@ const CTASection = () => {
             The investment for this transformative week is <strong>€999</strong>.
           </p>
           
-          <p className="text-lg text-apple-grey mb-8">
-            To ensure your place among the chosen few, once your application is approved, a <strong>€100 commitment fee</strong> secures your seat immediately.
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
+            <Button 
+              onClick={handleApplyClick}
+              size="lg"
+              className="min-w-[180px]"
+            >
+              Apply Now
+            </Button>
+            
+            <Button 
+              onClick={handlePricingClick}
+              variant="outline" 
+              size="lg"
+              className="min-w-[180px]"
+            >
+              View Pricing
+            </Button>
+          </div>
+          
+          <p className="text-sm text-apple-grey mt-6">
+            Applications close on <strong>May 15, 2025</strong>. Only 20 spots available.
           </p>
-          
-          <p className="text-lg text-apple-grey mb-8">
-            The remaining investment? We've structured the final <strong>€899</strong> into <strong>three simple payments</strong> to make your path forward clear and manageable.
-          </p>
-          
-          <h3 className="text-3xl font-medium text-apple-text mt-12 mb-6">
-            The Window is Narrow.
-          </h3>
-          
-          <p className="text-lg text-apple-grey mb-8">
-            Opportunity doesn't wait. The door closes on <strong>May 15, 2025</strong>. Less than two months to decide if you're one of the 20.
-          </p>
-          
-          <h3 className="text-3xl font-medium text-apple-text mt-12 mb-6">
-            Are you ready to apply?
-          </h3>
-          
-          <button
-            onClick={handleApplyClick}
-            className="px-8 py-4 bg-apple-blue text-white rounded-full text-lg font-medium 
-                       hover:bg-apple-blue-hover transition-all duration-300 focus:outline-none 
-                       focus:ring-2 focus:ring-apple-blue focus:ring-offset-2"
-          >
-            Apply Now
-          </button>
         </motion.div>
       </div>
     </section>
