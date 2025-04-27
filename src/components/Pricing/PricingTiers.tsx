@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
@@ -19,11 +20,11 @@ const PricingTiers = () => {
       <div className="max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-medium text-apple-text mb-6">
-            The Investment
+            Your Investment in Excellence
           </h2>
           <p className="text-lg text-apple-grey">
-            Our pricing structure is designed to be simple and accessible,
-            allowing you to focus on what matters most — your growth.
+            We believe in making exceptional vocal training accessible to talented artists.
+            Our program offers flexible payment options to support your musical journey.
           </p>
         </div>
         
@@ -40,33 +41,33 @@ const PricingTiers = () => {
                 <div>
                   <CardTitle className="text-3xl font-medium text-apple-text">The Threshold Experience</CardTitle>
                   <CardDescription className="text-lg mt-2 text-apple-grey">
-                    A transformative five-day immersion
+                    Five days of immersive vocal training
                   </CardDescription>
                 </div>
                 <div className="text-right">
                   <p className="text-3xl font-medium text-apple-text">€999</p>
-                  <p className="text-sm text-apple-grey mt-1">Total investment</p>
+                  <p className="text-sm text-apple-grey mt-1">Full program tuition</p>
                 </div>
               </div>
             </CardHeader>
             <CardContent className="bg-white px-8 py-10">
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <h3 className="text-xl font-medium text-apple-text mb-4">What's included</h3>
+                  <h3 className="text-xl font-medium text-apple-text mb-4">Program Highlights</h3>
                   <ul className="space-y-3">
                     {[
-                      'Comprehensive 360° approach to vocal training',
-                      'World-class teachers from top universities',
-                      'Professional audition preparation',
-                      '45-minute private lesson for each student',
-                      'Alexander Technique workshops',
-                      '30-minute dedicated accompanist session',
-                      'Mock auditions with final performance',
-                      'Professional recording of final performance',
-                      'Industry networking opportunities',
-                      'Stage anxiety management workshops',
-                      'Vocal health seminar by medical professional',
-                      'Post-event support materials'
+                      'Personalized vocal technique development',
+                      'Learn from world-renowned vocal coaches',
+                      'Expert audition preparation guidance',
+                      'One-on-one 45-minute coaching session',
+                      'Alexander Technique movement workshops',
+                      'Dedicated accompanist rehearsal time',
+                      'Performance opportunity with feedback',
+                      'Professional recording of your performance',
+                      'Connect with industry professionals',
+                      'Performance anxiety management tools',
+                      'Vocal health guidance from specialists',
+                      'Take-home practice materials'
                     ].map((item, i) => (
                       <li key={i} className="flex items-start">
                         <span className="mr-3 mt-0.5">
@@ -78,17 +79,17 @@ const PricingTiers = () => {
                   </ul>
                 </div>
                 <div>
-                  <h3 className="text-xl font-medium text-apple-text mb-4">Payment structure</h3>
+                  <h3 className="text-xl font-medium text-apple-text mb-4">Flexible Payment Options</h3>
                   <div className="space-y-4">
                     <div className="p-4 rounded-lg bg-apple-light border border-apple-border">
-                      <p className="font-medium text-apple-text">Initial commitment fee</p>
+                      <p className="font-medium text-apple-text">Initial deposit</p>
                       <p className="text-2xl font-medium text-apple-text mt-1">€100</p>
-                      <p className="text-sm text-apple-grey mt-1">Due upon application approval</p>
+                      <p className="text-sm text-apple-grey mt-1">Secures your place upon acceptance</p>
                     </div>
                     <div className="p-4 rounded-lg bg-apple-light border border-apple-border">
-                      <p className="font-medium text-apple-text">Three simple payments of</p>
+                      <p className="font-medium text-apple-text">Monthly installments</p>
                       <p className="text-2xl font-medium text-apple-text mt-1">€299.67</p>
-                      <p className="text-sm text-apple-grey mt-1">Flexible payment schedule</p>
+                      <p className="text-sm text-apple-grey mt-1">Three easy payments to suit your budget</p>
                     </div>
                   </div>
                 </div>
@@ -100,10 +101,10 @@ const PricingTiers = () => {
                 onClick={handleApplyClick}
                 className="w-full sm:w-auto px-8 py-6 text-lg font-medium"
               >
-                Apply Now
+                Begin Your Journey
               </Button>
               <p className="text-sm text-apple-grey mt-4">
-                Applications close on May 15, 2025. Only 20 spots available.
+                Join us this summer! Only 20 spots available. Applications close May 15, 2025.
               </p>
             </CardFooter>
           </Card>

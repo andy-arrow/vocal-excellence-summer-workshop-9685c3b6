@@ -1,8 +1,5 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
-import { format } from 'date-fns';
-import { APPLICATION_DATES } from '../ApplicationTimeline';
 
 import {
   Accordion,
@@ -12,45 +9,38 @@ import {
 } from "@/components/ui/accordion";
 
 const PricingFAQ = () => {
-  // Get the program year
-  const programYear = format(APPLICATION_DATES.PROGRAM_START, 'yyyy');
-  // Get formatted dates
-  const programDates = `${format(APPLICATION_DATES.PROGRAM_START, 'MMMM d')}-${format(new Date(APPLICATION_DATES.PROGRAM_START.getTime() + 4 * 24 * 60 * 60 * 1000), 'MMMM d, yyyy')}`;
-  const paymentDeadline = format(APPLICATION_DATES.TUITION_DEADLINE, 'MMMM d, yyyy');
-  const programStartDate = format(APPLICATION_DATES.PROGRAM_START, 'MMMM d, yyyy');
-
   const faqItems = [
     {
-      question: "What does the pricing include?",
-      answer: `The €999 investment covers your entire five-day Threshold experience, including all expert-led sessions, workshops, materials, and resources. You'll also receive personalized feedback, guidance, and post-event support materials. Accommodation and travel expenses are not included.`
+      question: "What's included in the program tuition?",
+      answer: "Your tuition covers everything you need for an enriching five-day experience: expert-led workshops, personal coaching sessions, performance opportunities, and study materials. You'll have access to world-class instructors, accompanists, and specialized workshops. The only additional costs to consider are your travel and accommodation."
     },
     {
-      question: "How does the payment structure work?",
-      answer: "Our payment structure is designed to be flexible and manageable: 1) Initial €100 commitment fee to secure your spot upon acceptance, 2) The remaining €899 is divided into three equal payments of €299.67, which can be scheduled to suit your financial planning. All payments must be completed before the program starts."
+      question: "How do the payment plans work?",
+      answer: "We've designed our payment structure to be student-friendly: Start with a €100 deposit to secure your spot once you're accepted, then spread the remaining €899 over three manageable payments of €299.67. We can work with you to set up a schedule that fits your needs."
     },
     {
-      question: "Are there any scholarships or financial aid available?",
-      answer: "Yes, we offer merit-based scholarships for exceptional candidates. If you'd like to be considered for a scholarship, please indicate this in your application. Our team will provide additional information about the scholarship application process."
+      question: "Are there any scholarships available?",
+      answer: "Absolutely! We believe talent should be nurtured regardless of financial circumstances. We offer merit-based scholarships for exceptional candidates. Just indicate your interest in financial aid during your application, and we'll guide you through the process."
     },
     {
-      question: "What is the refund policy?",
-      answer: "We offer a full refund (minus the €100 commitment fee) for cancellations made at least 30 days before the event. For cancellations made within 30 days of the event, refunds are assessed on a case-by-case basis. The commitment fee is non-refundable as it represents your dedication to participating in the program."
+      question: "What happens if I need to cancel?",
+      answer: "Life happens, and we understand that plans can change. If you need to cancel more than 30 days before the program starts, we'll refund your full tuition minus the €100 deposit. For cancellations within 30 days, we'll work with you to find the best solution. The deposit helps us maintain our commitment to keeping our class sizes small and personal."
     },
     {
-      question: "Are there any hidden costs?",
-      answer: "No. We believe in complete transparency. The €999 covers the full program cost, including all sessions, materials, and resources. You'll only need to budget separately for your travel, accommodation, and personal expenses during your stay in Limassol."
+      question: "Are there any hidden fees?",
+      answer: "Not at all! We believe in complete transparency. Your €999 tuition covers all program activities, materials, and resources. You'll only need to plan for your travel to Limassol and accommodation during your stay."
     },
     {
-      question: "What happens if I miss a payment deadline?",
-      answer: "We understand that circumstances can vary. If you anticipate difficulty meeting a payment deadline, please contact our admissions team immediately. We can work with you to adjust the payment schedule or explore alternative arrangements to ensure your participation."
+      question: "What if I'm having trouble with a payment deadline?",
+      answer: "We're here to help! If you're facing any challenges with the payment schedule, just reach out to our friendly admissions team. We can explore different payment arrangements to ensure you can participate in the program."
     },
     {
-      question: "Can I transfer my registration to another person?",
-      answer: "Due to the curated nature of our cohort and our rigorous application process, registrations are non-transferable. Each participant is carefully selected to ensure the right mix of experiences and perspectives in the room."
+      question: "Can someone else take my place if I can't attend?",
+      answer: "Since we carefully select each participant to create a balanced and supportive learning environment, we can't transfer registrations. However, if you can't attend, please let us know as soon as possible so we can work with you to find the best solution."
     },
     {
       question: "When do I need to complete all payments?",
-      answer: `All payments must be completed by ${paymentDeadline}, two weeks before the program begins on ${programStartDate}.`
+      answer: "To ensure everything's ready for your arrival, all payments should be completed two weeks before the program begins. This gives us time to prepare all your materials and arrange for your individual sessions."
     }
   ];
 
@@ -65,10 +55,10 @@ const PricingFAQ = () => {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-medium text-apple-text mb-6">
-            Frequently Asked Questions
+            Common Questions
           </h2>
           <p className="text-lg text-apple-grey">
-            Everything you need to know about our pricing and payment structure
+            Here to help you understand everything about joining our program
           </p>
         </motion.div>
         
@@ -100,8 +90,10 @@ const PricingFAQ = () => {
           className="mt-16 text-center"
         >
           <p className="text-apple-grey">
-            Still have questions about pricing?{" "}
-            <a href="mailto:admissions@vocalexcellence.com" className="text-apple-blue hover:underline">Contact our admissions team</a>
+            Have other questions about joining us?{" "}
+            <a href="mailto:admissions@vocalexcellence.com" className="text-apple-blue hover:underline">
+              Our admissions team is here to help
+            </a>
           </p>
         </motion.div>
       </div>

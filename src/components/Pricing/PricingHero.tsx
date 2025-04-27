@@ -12,10 +12,10 @@ const PricingHero = () => {
           transition={{ duration: 0.6 }}
         >
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium text-apple-text tracking-tight mb-6">
-            Simple, transparent pricing
+            Program Tuition
           </h1>
           <p className="text-xl md:text-2xl text-apple-grey max-w-2xl mx-auto">
-            Invest in your growth with our carefully structured payment options
+            Join our transformative program with flexible payment options designed for aspiring vocalists
           </p>
         </motion.div>
       </div>
