@@ -12,8 +12,8 @@ import { ThemeProvider } from 'next-themes'
 preloadResources();
 
 // Import non-lazy components directly
-import { Toaster } from './components/ui/toaster';
-import { Toaster as Sonner } from './components/ui/sonner';
+import { Toaster } from '@/components/ui/toaster';
+import { Toaster as Sonner } from '@/components/ui/sonner';
 
 const initializeApp = async () => {
   const rootElement = document.getElementById('root');

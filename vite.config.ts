@@ -36,7 +36,7 @@ export default defineConfig(({ mode }) => ({
         },
       },
     },
-    // Reduce chunk size
+    // Reduce chunk size warning limit
     chunkSizeWarningLimit: 1000,
   },
   optimizeDeps: {
