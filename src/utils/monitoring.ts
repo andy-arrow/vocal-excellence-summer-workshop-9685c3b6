@@ -93,17 +93,18 @@ export function startPerfTimer(label: string): () => void {
 export function reportWebVitals(): void {
   // Check if the browser supports the web vitals API
   try {
-    import('web-vitals').then((webVitals) => {
-      // Using the correct import method for web-vitals v4+
-      webVitals.onCLS(sendToAnalytics);
-      webVitals.onFID(sendToAnalytics);
-      webVitals.onFCP(sendToAnalytics);
-      webVitals.onLCP(sendToAnalytics);
-      webVitals.onTTFB(sendToAnalytics);
+    // Import web-vitals correctly using the modern API
+    import('web-vitals').then(({ onCLS, onFID, onFCP, onLCP, onTTFB, onINP }) => {
+      // Register the web vitals metrics
+      onCLS(sendToAnalytics);
+      onFID(sendToAnalytics);
+      onFCP(sendToAnalytics);
+      onLCP(sendToAnalytics);
+      onTTFB(sendToAnalytics);
       
-      // Also track INP (Interaction to Next Paint) which is newer
-      if ('onINP' in webVitals) {
-        webVitals.onINP(sendToAnalytics);
+      // Track INP (Interaction to Next Paint) if available
+      if (onINP) {
+        onINP(sendToAnalytics);
       }
     }).catch(err => {
       console.error('Failed to load web-vitals:', err);

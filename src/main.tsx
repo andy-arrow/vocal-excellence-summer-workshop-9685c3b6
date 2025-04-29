@@ -11,7 +11,7 @@ import { ThemeProvider } from 'next-themes'
 // Preload critical resources immediately
 preloadResources();
 
-// Import non-lazy components
+// Import non-lazy components directly
 import { Toaster } from './components/ui/toaster';
 import { Toaster as Sonner } from './components/ui/sonner';
 
