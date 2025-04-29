@@ -25,7 +25,9 @@ export default defineConfig(({ mode }) => ({
     // Enable minification and tree shaking
     minify: 'terser',
     target: 'esnext',
-    // Split chunks for better caching
+    // Configure asset handling
+    assetsInlineLimit: 4096, // 4kb - files smaller than this will be inlined
+    // Improve asset handling
     rollupOptions: {
       output: {
         manualChunks: {
@@ -40,4 +42,6 @@ export default defineConfig(({ mode }) => ({
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom'],
   },
+  // Improve asset handling for images
+  publicDir: 'public',
 }));
