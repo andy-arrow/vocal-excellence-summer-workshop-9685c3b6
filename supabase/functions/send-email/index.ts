@@ -1,4 +1,3 @@
-
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 import { supabase } from "./supabaseClient.ts";
@@ -57,8 +56,8 @@ serve(async (req) => {
     let subject, htmlContent;
     let toEmail = email || "";
     let attachments = [];
-    // Use Gmail format for the from address since you're using Gmail
-    let fromEmail = "Vocal Excellence Summer Workshop <info@gmail.com>";
+    // Use your actual domain for the from address since you're using Gmail aliases
+    let fromEmail = "Vocal Excellence Summer Workshop <info@vocalexcellence.cy>";
 
     // Determine which template to use based on the type
     switch (type) {
@@ -87,8 +86,8 @@ serve(async (req) => {
         if (applicantData) {
           subject = "**Vocal Excellence Summer Workshop** New Application Submission";
           htmlContent = getDetailedAdminNotificationTemplate(applicantData);
-          // If you're using Gmail, use your Gmail address for admin notifications
-          toEmail = "info@gmail.com";
+          // Use your actual domain address for admin notifications
+          toEmail = "info@vocalexcellence.cy";
           
           // If we have an applicationId, attempt to retrieve file attachments
           if (applicationId) {
@@ -103,8 +102,8 @@ serve(async (req) => {
         } else {
           subject = "New Application Submission - Vocal Excellence Summer Workshop";
           htmlContent = getSimpleAdminNotificationTemplate(name || "", email || "");
-          // If you're using Gmail, use your Gmail address for admin notifications
-          toEmail = "info@gmail.com";
+          // Use your actual domain address for admin notifications
+          toEmail = "info@vocalexcellence.cy";
         }
         break;
       default:
@@ -116,8 +115,7 @@ serve(async (req) => {
     console.log(`From: ${fromEmail}`);
 
     try {
-      // Since you're using Gmail, we'll still use Resend for the edge function but with gmail addresses
-      // You may want to set up a proper Gmail integration in the future, but this is a simple fix for now
+      // We'll use Resend to send the email, but with your actual domain addresses
       const emailResponse = await resend.emails.send({
         from: fromEmail,
         to: [toEmail],
@@ -138,16 +136,16 @@ serve(async (req) => {
     } catch (emailError) {
       console.error("Error sending email via Resend:", emailError);
       
-      // If this is a domain verification error, provide a more helpful message for Gmail users
+      // If this is a domain verification error, provide a more helpful message
       const errorMessage = emailError.message || "Unknown error";
       const helpfulMessage = errorMessage.includes("domain") 
-        ? "Email sending error: Since you're using Gmail, you might need to configure Gmail's SMTP settings or use Google Workspace for sending emails from your domain." 
+        ? "Email sending error: Make sure your domain (vocalexcellence.cy) is properly configured for email sending. You may need to update DNS records for this domain." 
         : errorMessage;
       
       return new Response(
         JSON.stringify({ 
           error: helpfulMessage,
-          details: "Consider setting up Gmail SMTP or Google Workspace for sending emails from your domain"
+          details: "Ensure your domain has proper MX, SPF, DKIM, and DMARC records set up"
         }),
         {
           status: 500,
