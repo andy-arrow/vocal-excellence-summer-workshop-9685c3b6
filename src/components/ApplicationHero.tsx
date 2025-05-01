@@ -17,7 +17,7 @@ const ApplicationHero = () => {
   };
 
   return (
-    <section className="relative py-24 md:py-32 overflow-hidden bg-apple-text">
+    <section className="relative py-32 md:py-40 overflow-hidden bg-apple-text"> {/* Increased padding */}
       <div className="absolute inset-0 bg-gradient-to-b from-apple-text to-apple-text/90 pointer-events-none"></div>
       
       <div className="container mx-auto px-6 relative z-10">

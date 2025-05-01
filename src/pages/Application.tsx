@@ -1,3 +1,4 @@
+
 import React, { useEffect, lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
@@ -56,7 +57,7 @@ const Application = () => {
         
         <main className="flex-grow">
           <div className="bg-gradient-to-b from-white to-[#f5f5f7] border-b border-apple-border/10">
-            <div className="max-w-5xl mx-auto px-6 md:px-8 py-24 md:py-32">
+            <div className="max-w-5xl mx-auto px-6 md:px-8 py-32 md:py-40"> {/* Increased padding */}
               <motion.div 
                 className="text-center"
                 initial={{ opacity: 0, y: 20 }}

@@ -11,7 +11,7 @@ const TuitionHero = React.memo(() => {
   };
 
   return (
-    <section className="pt-20 pb-10 md:pt-28 md:pb-12 px-6 bg-gradient-to-b from-white to-[#fafafa]">
+    <section className="pt-28 pb-10 md:pt-36 md:pb-12 px-6 bg-gradient-to-b from-white to-[#fafafa]"> {/* Increased padding top */}
       <div className="max-w-4xl mx-auto text-center">
         <motion.div
           {...animationConfig}
