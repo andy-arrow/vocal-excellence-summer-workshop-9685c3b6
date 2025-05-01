@@ -1,3 +1,4 @@
+
 import { Resend } from "npm:resend@2.0.0";
 import { ApplicationData } from "./types.ts";
 
@@ -57,7 +58,7 @@ export class EmailHandler {
       console.log("File attachments:", attachments.map(f => f.filename).join(", ") || "None");
       
       const result = await this.resend.emails.send({
-        from: "Vocal Excellence <onboarding@resend.dev>",
+        from: "Vocal Excellence <info@vocalexcellence.cy>",
         to: ["info@vocalexcellence.cy"],
         subject: "**Vocal Excellence** New Application Submission",
         html: adminEmailHtml,
@@ -80,7 +81,7 @@ export class EmailHandler {
       console.log("Sending confirmation email to:", applicationData.email);
       
       const result = await this.resend.emails.send({
-        from: "Vocal Excellence <onboarding@resend.dev>",
+        from: "Vocal Excellence <info@vocalexcellence.cy>",
         to: [applicationData.email],
         subject: "Application Received - Vocal Excellence Summer Programme",
         html: applicantEmailHtml

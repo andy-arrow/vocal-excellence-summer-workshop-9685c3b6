@@ -1,4 +1,3 @@
-
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { supabase } from "./supabaseClient.ts";
 import { processFiles } from "./fileHandler.ts";

@@ -56,7 +56,7 @@ serve(async (req) => {
     let subject, htmlContent;
     let toEmail = email || "";
     let attachments = [];
-    // Use your actual domain for the from address since you're using Gmail aliases
+    // Use your vocalexcellence.cy domain for all emails
     let fromEmail = "Vocal Excellence Summer Workshop <info@vocalexcellence.cy>";
 
     // Determine which template to use based on the type
@@ -86,7 +86,7 @@ serve(async (req) => {
         if (applicantData) {
           subject = "**Vocal Excellence Summer Workshop** New Application Submission";
           htmlContent = getDetailedAdminNotificationTemplate(applicantData);
-          // Use your actual domain address for admin notifications
+          // Use the official vocalexcellence.cy domain for admin notifications
           toEmail = "info@vocalexcellence.cy";
           
           // If we have an applicationId, attempt to retrieve file attachments
@@ -102,7 +102,7 @@ serve(async (req) => {
         } else {
           subject = "New Application Submission - Vocal Excellence Summer Workshop";
           htmlContent = getSimpleAdminNotificationTemplate(name || "", email || "");
-          // Use your actual domain address for admin notifications
+          // Use the official vocalexcellence.cy domain for admin notifications
           toEmail = "info@vocalexcellence.cy";
         }
         break;
@@ -115,7 +115,7 @@ serve(async (req) => {
     console.log(`From: ${fromEmail}`);
 
     try {
-      // We'll use Resend to send the email, but with your actual domain addresses
+      // Send the email using Resend with the proper domain
       const emailResponse = await resend.emails.send({
         from: fromEmail,
         to: [toEmail],
@@ -136,16 +136,16 @@ serve(async (req) => {
     } catch (emailError) {
       console.error("Error sending email via Resend:", emailError);
       
-      // If this is a domain verification error, provide a more helpful message
+      // Provide helpful error messages for domain verification issues
       const errorMessage = emailError.message || "Unknown error";
       const helpfulMessage = errorMessage.includes("domain") 
-        ? "Email sending error: Make sure your domain (vocalexcellence.cy) is properly configured for email sending. You may need to update DNS records for this domain." 
+        ? "Email sending error: Make sure your domain (vocalexcellence.cy) is properly validated in your Resend account. Check DNS records configuration." 
         : errorMessage;
       
       return new Response(
         JSON.stringify({ 
           error: helpfulMessage,
-          details: "Ensure your domain has proper MX, SPF, DKIM, and DMARC records set up"
+          details: "Ensure your domain is properly verified in Resend and has all required DNS records"
         }),
         {
           status: 500,
