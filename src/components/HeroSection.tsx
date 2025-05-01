@@ -52,10 +52,10 @@ const HeroSection = () => {
     }
   };
   
-  // Calculate padding based on device
+  // Significantly increase padding for mobile devices
   const paddingClasses = isMobile 
-    ? "pt-32 pb-16" // Less padding-top for mobile
-    : "pt-48 md:pt-52"; // Keep existing desktop padding
+    ? "pt-48 pb-16" // Much more padding-top for mobile
+    : "pt-56 md:pt-64"; // Increase desktop padding too
   
   return (
     <section 

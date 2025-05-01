@@ -1,3 +1,4 @@
+
 import React, { useEffect, lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
@@ -46,10 +47,10 @@ const Application = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Calculate padding based on device
+  // Significantly increase padding for mobile devices
   const paddingClasses = isMobile 
-    ? "py-36" // Less padding for mobile
-    : "py-48 md:py-56"; // Keep existing desktop padding
+    ? "pt-48 pb-20" // Much more padding-top for mobile
+    : "pt-56 pb-24 md:pt-64"; // Increase desktop padding too
 
   return (
     <div className="bg-[#f5f5f7] text-apple-text min-h-screen font-sans antialiased">

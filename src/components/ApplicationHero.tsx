@@ -18,10 +18,10 @@ const ApplicationHero = () => {
     }
   };
 
-  // Calculate padding based on device
+  // Significantly increase padding for mobile devices
   const paddingClasses = isMobile 
-    ? "py-36" // Less padding for mobile
-    : "py-48 md:py-56"; // Keep existing desktop padding
+    ? "pt-48 pb-20" // Much more padding-top for mobile
+    : "pt-56 pb-24 md:pt-64"; // Increase desktop padding too
 
   return (
     <section className={`relative ${paddingClasses} overflow-hidden bg-apple-text`}>

@@ -13,10 +13,10 @@ const TuitionHero = React.memo(() => {
 
   const isMobile = useIsMobile();
   
-  // Calculate padding based on device
+  // Significantly increase padding for mobile devices
   const paddingClasses = isMobile 
-    ? "pt-32 pb-10" // Less padding-top for mobile
-    : "pt-48 pb-10 md:pt-56 md:pb-12"; // Keep existing desktop padding
+    ? "pt-48 pb-10" // Much more padding-top for mobile
+    : "pt-56 pb-10 md:pt-64"; // Increase desktop padding too
 
   return (
     <section className={`${paddingClasses} px-6 bg-gradient-to-b from-white to-[#fafafa]`}>
