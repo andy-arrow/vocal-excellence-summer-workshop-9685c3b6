@@ -8,7 +8,7 @@ import { format, differenceInDays } from 'date-fns';
 // Define key dates as constants that can be reused throughout the application
 export const APPLICATION_DATES = {
   OPEN_DATE: new Date('2025-03-01'),
-  DEADLINE: new Date('2025-05-15'),
+  DEADLINE: new Date('2025-05-30'),
   EARLY_BIRD_DEADLINE: new Date('2025-04-30'),
   NOTIFICATIONS: new Date('2025-06-01'),
   TUITION_DEADLINE: new Date('2025-06-15'),
