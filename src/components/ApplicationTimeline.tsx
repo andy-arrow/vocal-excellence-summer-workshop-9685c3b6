@@ -11,7 +11,7 @@ export const APPLICATION_DATES = {
   DEADLINE: new Date('2025-05-30'),
   EARLY_BIRD_DEADLINE: new Date('2025-04-30'),
   NOTIFICATIONS: new Date('2025-06-01'),
-  TUITION_DEADLINE: new Date('2025-06-15'),
+  TUITION_DEADLINE: new Date('2025-07-07'),
   PROGRAM_START: new Date('2025-07-14')
 };
 
