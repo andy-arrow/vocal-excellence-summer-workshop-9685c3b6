@@ -22,7 +22,7 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
-    // Enable minification and tree shaking
+    // Enable minification with terser
     minify: 'terser',
     target: 'esnext',
     // Configure asset handling
@@ -42,6 +42,6 @@ export default defineConfig(({ mode }) => ({
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom'],
   },
-  // Improve asset handling for images
+  // Set publicDir to correctly handle static assets
   publicDir: 'public',
 }));

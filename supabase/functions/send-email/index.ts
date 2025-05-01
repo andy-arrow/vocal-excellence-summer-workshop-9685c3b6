@@ -1,3 +1,4 @@
+
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 import { supabase } from "./supabaseClient.ts";
@@ -56,6 +57,7 @@ serve(async (req) => {
     let subject, htmlContent;
     let toEmail = email || "";
     let attachments = [];
+    let fromEmail = "Vocal Excellence Summer Workshop <info@vocalexcellence.cy>";
 
     // Determine which template to use based on the type
     switch (type) {
@@ -108,24 +110,46 @@ serve(async (req) => {
 
     console.log(`Sending email to ${toEmail} with subject "${subject}"`);
     console.log(`With ${attachments.length} attachments`);
+    console.log(`From: ${fromEmail}`);
 
-    const emailResponse = await resend.emails.send({
-      from: "Vocal Excellence Summer Workshop <onboarding@resend.dev>", // Changed to use Resend's default domain
-      to: [toEmail],
-      subject: subject,
-      html: htmlContent,
-      attachments: attachments,
-    });
+    try {
+      const emailResponse = await resend.emails.send({
+        from: fromEmail,
+        to: [toEmail],
+        subject: subject,
+        html: htmlContent,
+        attachments: attachments,
+      });
 
-    console.log("Email sent successfully:", emailResponse);
+      console.log("Email sent successfully:", emailResponse);
 
-    return new Response(JSON.stringify(emailResponse), {
-      status: 200,
-      headers: {
-        "Content-Type": "application/json",
-        ...corsHeaders,
-      },
-    });
+      return new Response(JSON.stringify(emailResponse), {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+          ...corsHeaders,
+        },
+      });
+    } catch (emailError) {
+      console.error("Error sending email via Resend:", emailError);
+      
+      // If this is a domain verification error, provide a more helpful message
+      const errorMessage = emailError.message || "Unknown error";
+      const helpfulMessage = errorMessage.includes("domain") 
+        ? "Domain verification error: Please verify your domain at https://resend.com/domains" 
+        : errorMessage;
+      
+      return new Response(
+        JSON.stringify({ 
+          error: helpfulMessage,
+          details: "Please verify your domain is properly configured in Resend"
+        }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
   } catch (error) {
     console.error("Error sending email:", error);
     return new Response(

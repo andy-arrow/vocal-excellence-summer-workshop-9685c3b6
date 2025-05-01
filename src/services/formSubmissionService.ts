@@ -201,7 +201,11 @@ async function sendEmailsDirectly(data: ApplicationFormValues, applicationId: st
       },
     });
     
-    console.log('Admin notification sent directly:', adminResponse);
+    if (adminResponse.error) {
+      console.error('Error sending admin notification:', adminResponse.error);
+    } else {
+      console.log('Admin notification sent directly:', adminResponse);
+    }
     
     // Send applicant confirmation
     const applicantResponse = await supabase.functions.invoke('send-email', {
@@ -212,7 +216,11 @@ async function sendEmailsDirectly(data: ApplicationFormValues, applicationId: st
       },
     });
     
-    console.log('Applicant confirmation sent directly:', applicantResponse);
+    if (applicantResponse.error) {
+      console.error('Error sending applicant confirmation:', applicantResponse.error);
+    } else {
+      console.log('Applicant confirmation sent directly:', applicantResponse);
+    }
     
     return {
       admin: adminResponse,
