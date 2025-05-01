@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const TuitionHero = React.memo(() => {
   // Optimized animation configuration
@@ -10,8 +11,15 @@ const TuitionHero = React.memo(() => {
     transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
   };
 
+  const isMobile = useIsMobile();
+  
+  // Calculate padding based on device
+  const paddingClasses = isMobile 
+    ? "pt-32 pb-10" // Less padding-top for mobile
+    : "pt-48 pb-10 md:pt-56 md:pb-12"; // Keep existing desktop padding
+
   return (
-    <section className="pt-48 pb-10 md:pt-56 md:pb-12 px-6 bg-gradient-to-b from-white to-[#fafafa]"> {/* Significantly increased padding top */}
+    <section className={`${paddingClasses} px-6 bg-gradient-to-b from-white to-[#fafafa]`}>
       <div className="max-w-4xl mx-auto text-center">
         <motion.div
           {...animationConfig}

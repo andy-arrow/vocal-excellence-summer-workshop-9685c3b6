@@ -6,12 +6,14 @@ import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import { APPLICATION_DATES } from './ApplicationTimeline';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const [hasReducedMotion, setHasReducedMotion] = useState(false);
   const today = new Date();
   const applicationsClosed = today > APPLICATION_DATES.DEADLINE;
+  const isMobile = useIsMobile();
   
   useEffect(() => {
     const savedPreference = localStorage.getItem('reduced-motion') === 'true';
@@ -50,12 +52,18 @@ const HeroSection = () => {
     }
   };
   
+  // Calculate padding based on device
+  const paddingClasses = isMobile 
+    ? "pt-32 pb-16" // Less padding-top for mobile
+    : "pt-48 md:pt-52"; // Keep existing desktop padding
+  
   return (
     <section 
       id="home" 
       ref={heroRef} 
       className={cn(
-        "relative min-h-screen flex items-center justify-center overflow-hidden pt-48 md:pt-52", // Significantly increased padding-top
+        "relative min-h-screen flex items-center justify-center overflow-hidden",
+        paddingClasses,
         "bg-apple-light border-b border-apple-border",
         hasReducedMotion ? "reduced-motion" : ""
       )}

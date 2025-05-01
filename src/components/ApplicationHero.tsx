@@ -4,10 +4,12 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { format } from 'date-fns';
 import { APPLICATION_DATES } from './ApplicationTimeline';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const ApplicationHero = () => {
   const today = new Date();
   const applicationsClosed = today > APPLICATION_DATES.DEADLINE;
+  const isMobile = useIsMobile();
   
   const scrollToForm = () => {
     const formElement = document.getElementById('application-form');
@@ -16,8 +18,13 @@ const ApplicationHero = () => {
     }
   };
 
+  // Calculate padding based on device
+  const paddingClasses = isMobile 
+    ? "py-36" // Less padding for mobile
+    : "py-48 md:py-56"; // Keep existing desktop padding
+
   return (
-    <section className="relative py-48 md:py-56 overflow-hidden bg-apple-text"> {/* Significantly increased padding */}
+    <section className={`relative ${paddingClasses} overflow-hidden bg-apple-text`}>
       <div className="absolute inset-0 bg-gradient-to-b from-apple-text to-apple-text/90 pointer-events-none"></div>
       
       <div className="container mx-auto px-6 relative z-10">

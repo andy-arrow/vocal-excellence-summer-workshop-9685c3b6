@@ -1,9 +1,9 @@
-
 import React, { useEffect, lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 // Lazily load less critical components
 const ApplicationForm = lazy(() => import('@/components/ApplicationForm'));
@@ -31,6 +31,8 @@ const fadeIn = {
 
 const Application = () => {
   const [showScrollToTop, setShowScrollToTop] = React.useState(false);
+  const isMobile = useIsMobile();
+  
   useEffect(() => {
     window.scrollTo(0, 0);
     const handleScroll = () => {
@@ -43,6 +45,11 @@ const Application = () => {
     });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Calculate padding based on device
+  const paddingClasses = isMobile 
+    ? "py-36" // Less padding for mobile
+    : "py-48 md:py-56"; // Keep existing desktop padding
 
   return (
     <div className="bg-[#f5f5f7] text-apple-text min-h-screen font-sans antialiased">
@@ -57,7 +64,7 @@ const Application = () => {
         
         <main className="flex-grow">
           <div className="bg-gradient-to-b from-white to-[#f5f5f7] border-b border-apple-border/10">
-            <div className="max-w-5xl mx-auto px-6 md:px-8 py-48 md:py-56"> {/* Significantly increased padding */}
+            <div className={`max-w-5xl mx-auto px-6 md:px-8 ${paddingClasses}`}>
               <motion.div 
                 className="text-center"
                 initial={{ opacity: 0, y: 20 }}
