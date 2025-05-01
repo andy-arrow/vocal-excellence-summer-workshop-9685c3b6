@@ -57,7 +57,8 @@ serve(async (req) => {
     let subject, htmlContent;
     let toEmail = email || "";
     let attachments = [];
-    let fromEmail = "Vocal Excellence Summer Workshop <info@vocalexcellence.cy>";
+    // Use Gmail format for the from address since you're using Gmail
+    let fromEmail = "Vocal Excellence Summer Workshop <info@gmail.com>";
 
     // Determine which template to use based on the type
     switch (type) {
@@ -86,7 +87,8 @@ serve(async (req) => {
         if (applicantData) {
           subject = "**Vocal Excellence Summer Workshop** New Application Submission";
           htmlContent = getDetailedAdminNotificationTemplate(applicantData);
-          toEmail = "info@vocalexcellence.cy";
+          // If you're using Gmail, use your Gmail address for admin notifications
+          toEmail = "info@gmail.com";
           
           // If we have an applicationId, attempt to retrieve file attachments
           if (applicationId) {
@@ -101,7 +103,8 @@ serve(async (req) => {
         } else {
           subject = "New Application Submission - Vocal Excellence Summer Workshop";
           htmlContent = getSimpleAdminNotificationTemplate(name || "", email || "");
-          toEmail = "info@vocalexcellence.cy";
+          // If you're using Gmail, use your Gmail address for admin notifications
+          toEmail = "info@gmail.com";
         }
         break;
       default:
@@ -113,6 +116,8 @@ serve(async (req) => {
     console.log(`From: ${fromEmail}`);
 
     try {
+      // Since you're using Gmail, we'll still use Resend for the edge function but with gmail addresses
+      // You may want to set up a proper Gmail integration in the future, but this is a simple fix for now
       const emailResponse = await resend.emails.send({
         from: fromEmail,
         to: [toEmail],
@@ -133,16 +138,16 @@ serve(async (req) => {
     } catch (emailError) {
       console.error("Error sending email via Resend:", emailError);
       
-      // If this is a domain verification error, provide a more helpful message
+      // If this is a domain verification error, provide a more helpful message for Gmail users
       const errorMessage = emailError.message || "Unknown error";
       const helpfulMessage = errorMessage.includes("domain") 
-        ? "Domain verification error: Please verify your domain at https://resend.com/domains" 
+        ? "Email sending error: Since you're using Gmail, you might need to configure Gmail's SMTP settings or use Google Workspace for sending emails from your domain." 
         : errorMessage;
       
       return new Response(
         JSON.stringify({ 
           error: helpfulMessage,
-          details: "Please verify your domain is properly configured in Resend"
+          details: "Consider setting up Gmail SMTP or Google Workspace for sending emails from your domain"
         }),
         {
           status: 500,
