@@ -1,9 +1,9 @@
-
 import React, { useEffect, lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { Toaster } from '@/components/ui/toaster';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 // Lazily load less critical components
@@ -47,10 +47,10 @@ const Application = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Significantly increase padding for mobile devices
+  // Dramatically increase padding for mobile devices
   const paddingClasses = isMobile 
-    ? "pt-48 pb-20" // Much more padding-top for mobile
-    : "pt-56 pb-24 md:pt-64"; // Increase desktop padding too
+    ? "pt-64 pb-20" // Extreme padding-top for mobile to ensure content is visible
+    : "pt-56 pb-24 md:pt-64"; // Maintain desktop padding
 
   return (
     <div className="bg-[#f5f5f7] text-apple-text min-h-screen font-sans antialiased">
