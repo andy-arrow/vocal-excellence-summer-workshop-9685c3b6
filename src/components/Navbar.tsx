@@ -68,8 +68,8 @@ const Navbar = ({ activeSection }: NavbarProps) => {
       className={cn(
         "fixed top-0 left-0 w-full z-50 transition-all duration-300",
         scrolled 
-          ? "backdrop-blur-md border-b border-apple-border" 
-          : "backdrop-blur-sm"
+          ? "bg-white/95 backdrop-blur-md border-b border-apple-border" 
+          : "bg-apple-light/90 backdrop-blur-md"
       )}
     >
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 flex items-center justify-between">
@@ -169,7 +169,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
             side="left"
             className={cn(
               "w-[100vw] max-w-full p-0 border-none",
-              "bg-transparent backdrop-blur-xl"
+              "bg-white/[0.985] backdrop-blur-xl"
             )}
           >
             <div className="px-6 py-4 space-y-6 h-full flex flex-col">
