@@ -149,7 +149,7 @@ const TuitionTiers = () => {
                           </h5>
                           <ul className="mt-3 space-y-2 pl-6 text-[#141414]/70 font-sans text-sm">
                             <li>€100 deposit upon acceptance</li>
-                            <li>Three installments of €216.33</li>
+                            <li>Three installments of €249.67</li>
                             <li>Final payment by {tuitionDeadline}</li>
                           </ul>
                         </CardContent>
@@ -158,21 +158,21 @@ const TuitionTiers = () => {
                       {/* Early Bird */}
                       <DiscountCard 
                         title="Early Bird Discount"
-                        description={`Save €150 when you enroll by ${earlyBirdDate}`}
-                      />
-
-                      {/* Upfront Payment */}
-                      <DiscountCard 
-                        title="Upfront Payment Benefit"
-                        description="Save €100 when you pay the full tuition at once"
-                      />
-
-                      {/* Best Value */}
-                      <DiscountCard 
-                        title="Best Value - Early Bird + Upfront"
-                        description={`Maximum savings of €250 when you pay in full by ${earlyBirdDate} - only €499!`}
+                        description={`Save €50 when you register and pay in full by ${earlyBirdDate}`}
                         highlighted={true}
                       />
+                      
+                      <Card className="overflow-hidden border-[#4f6e72]/20 bg-[#f7fafa] hover:bg-white transition-colors duration-300">
+                        <CardContent className="p-6">
+                          <h5 className="font-sans font-medium text-[#4f6e72] flex items-center gap-2">
+                            <Tag className="h-4 w-4 text-[#4f6e72]" />
+                            Early Bird Price
+                          </h5>
+                          <p className="text-[#4f6e72]/90 mt-2 pl-6 font-sans text-sm">
+                            Only €699 when you register and pay in full by {earlyBirdDate}
+                          </p>
+                        </CardContent>
+                      </Card>
                     </div>
                   </div>
                 </div>

@@ -33,6 +33,7 @@ const TuitionFAQ = () => {
   const programDates = `${format(APPLICATION_DATES.PROGRAM_START, 'MMMM d')}-${format(new Date(APPLICATION_DATES.PROGRAM_START.getTime() + 4 * 24 * 60 * 60 * 1000), 'MMMM d, yyyy')}`;
   const paymentDeadline = format(APPLICATION_DATES.TUITION_DEADLINE, 'MMMM d, yyyy');
   const programStartDate = format(APPLICATION_DATES.PROGRAM_START, 'MMMM d, yyyy');
+  const earlyBirdDate = format(APPLICATION_DATES.EARLY_BIRD_DEADLINE, 'MMMM d, yyyy');
   
   // Memoize FAQ items to prevent unnecessary re-renders
   const faqItems = useMemo(() => [
@@ -42,11 +43,11 @@ const TuitionFAQ = () => {
     },
     {
       question: "Tell me about the payment options",
-      answer: `We offer flexible ways to manage your tuition that fit your needs: Start with a €100 deposit to secure your spot once you're accepted. Then, either pay the remaining balance in three installments of €216.33, or take advantage of our discount options. Choose from Early Bird savings (€150 off), upfront payment benefits (€100 off), or combine both for maximum savings of €250!`
+      answer: `We offer flexible ways to manage your tuition that fit your needs: Start with a €100 deposit to secure your spot once you're accepted. Then, either pay the remaining balance in three installments of €249.67, or take advantage of our Early Bird discount of €50 by registering and paying in full by ${earlyBirdDate}, bringing your total to just €699!`
     },
     {
-      question: "How do the discounts work?",
-      answer: `We're excited to offer several ways to save on your tuition! Enroll early by ${format(APPLICATION_DATES.EARLY_BIRD_DEADLINE, 'MMMM d, yyyy')} to save €150 (Early Bird Discount), or pay your full tuition at once to save €100. Want the best deal? Combine both by paying in full by the Early Bird deadline to save €250 and pay only €499!`
+      question: "How does the Early Bird discount work?",
+      answer: `Register and pay your full tuition by ${earlyBirdDate} to receive our Early Bird discount of €50, reducing your total program cost from €749 to €699. This discount is only available for those who pay the full amount upfront before the Early Bird deadline.`
     },
     {
       question: "Are scholarships available?",
@@ -62,9 +63,9 @@ const TuitionFAQ = () => {
     },
     {
       question: "When do I need to complete all payments?",
-      answer: `To ensure everything's set for your arrival, all tuition payments need to be completed by ${format(APPLICATION_DATES.TUITION_DEADLINE, 'MMMM d, yyyy')}, two weeks before we begin on ${format(APPLICATION_DATES.PROGRAM_START, 'MMMM d, yyyy')}.`
+      answer: `To ensure everything's set for your arrival, all tuition payments need to be completed by ${paymentDeadline}, two weeks before we begin on ${programStartDate}.`
     }
-  ], []);
+  ], [earlyBirdDate, paymentDeadline, programStartDate]);
 
   return (
     <LazyMotion features={domAnimation}>
