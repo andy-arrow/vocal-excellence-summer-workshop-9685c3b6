@@ -62,20 +62,21 @@ const TuitionTiers = () => {
     window.scrollTo(0, 0);
   }, [navigate]);
 
-  // Features list extracted as a constant to avoid re-creation
+  // Updated Program Features with corrected list
   const PROGRAM_FEATURES = [
-    'Comprehensive 360° approach to vocal training',
-    'World-class teachers from top universities',
-    'Professional audition preparation',
-    '45-minute private lesson for each student',
-    'Alexander Technique workshops',
-    '30-minute dedicated accompanist session',
-    'Mock auditions with final performance',
-    'Professional recording of final performance',
-    'Industry networking opportunities',
-    'Stage anxiety management workshops',
-    'Vocal health seminar by medical professional',
-    'Post-event support materials'
+    'Comprehensive 360° Approach to Vocal Training',
+    'World-class Teachers from Top Universities',
+    'Professional Audition Preparation',
+    'Masterclasses (2 hours each day)',
+    'Ensemble Workshops',
+    'Acting Workshops',
+    'One Private Lesson for Each Student',
+    'One Dedicated Accompanist Session per Student',
+    'Alexander Technique Workshops',
+    'Mock Auditions and Final Performance',
+    'Professional 4K Video Recording of Final Performance',
+    'Stage Anxiety Management Workshops',
+    'Lunch Included in Tuition'
   ];
 
   return (
