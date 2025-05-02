@@ -14,6 +14,7 @@ const TermsAndConditions = lazy(() => import('./pages/TermsAndConditions'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const Auth = lazy(() => import('./pages/Auth'));
 const TuitionRedirect = lazy(() => import('./components/TuitionRedirect'));
+const SummerProgramme = lazy(() => import('./pages/SummerProgramme'));
 
 // Optimized loading fallback that doesn't block rendering
 const PageLoader = () => (
@@ -52,6 +53,14 @@ function App() {
           element: (
             <Suspense fallback={<PageLoader />}>
               <Tuition />
+            </Suspense>
+          ),
+        },
+        {
+          path: "/summer-programme",
+          element: (
+            <Suspense fallback={<PageLoader />}>
+              <SummerProgramme />
             </Suspense>
           ),
         },
@@ -112,7 +121,8 @@ function App() {
             import('./pages/Auth'),
             import('./pages/CancellationPolicy'),
             import('./pages/TermsAndConditions'),
-            import('./pages/PrivacyPolicy')
+            import('./pages/PrivacyPolicy'),
+            import('./pages/SummerProgramme')
           ];
           
           Promise.all(routes).catch(console.error);
