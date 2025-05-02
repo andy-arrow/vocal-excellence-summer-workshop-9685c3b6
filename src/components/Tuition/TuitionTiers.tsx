@@ -169,7 +169,7 @@ const TuitionTiers = () => {
                       {/* Best Value */}
                       <DiscountCard 
                         title="Best Value - Early Bird + Upfront"
-                        description={`Maximum savings of €250 when you pay in full by ${earlyBirdDate}`}
+                        description={`Maximum savings of €250 when you pay in full by ${earlyBirdDate} - only €499!`}
                         highlighted={true}
                       />
                     </div>

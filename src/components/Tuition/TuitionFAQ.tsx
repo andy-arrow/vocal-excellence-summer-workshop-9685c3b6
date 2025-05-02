@@ -46,7 +46,7 @@ const TuitionFAQ = () => {
     },
     {
       question: "How do the discounts work?",
-      answer: `We're excited to offer several ways to save on your tuition! Enroll early by ${format(APPLICATION_DATES.EARLY_BIRD_DEADLINE, 'MMMM d, yyyy')} to save €150 (Early Bird Discount), or pay your full tuition at once to save €100. Want the best deal? Combine both by paying in full by the Early Bird deadline to save €250!`
+      answer: `We're excited to offer several ways to save on your tuition! Enroll early by ${format(APPLICATION_DATES.EARLY_BIRD_DEADLINE, 'MMMM d, yyyy')} to save €150 (Early Bird Discount), or pay your full tuition at once to save €100. Want the best deal? Combine both by paying in full by the Early Bird deadline to save €250 and pay only €499!`
     },
     {
       question: "Are scholarships available?",
