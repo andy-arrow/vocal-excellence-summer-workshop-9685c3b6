@@ -112,7 +112,7 @@ const TuitionTiers = () => {
                     </p>
                   </div>
                   <div className="text-left md:text-right">
-                    <p className="text-2xl md:text-3xl font-serif font-light text-[#141414]">€999</p>
+                    <p className="text-2xl md:text-3xl font-serif font-light text-[#141414]">€749</p>
                     <p className="font-sans text-sm text-[#141414]/70 mt-1">Total tuition</p>
                   </div>
                 </div>
@@ -148,7 +148,7 @@ const TuitionTiers = () => {
                           </h5>
                           <ul className="mt-3 space-y-2 pl-6 text-[#141414]/70 font-sans text-sm">
                             <li>€100 deposit upon acceptance</li>
-                            <li>Three installments of €299.67</li>
+                            <li>Three installments of €216.33</li>
                             <li>Final payment by {tuitionDeadline}</li>
                           </ul>
                         </CardContent>
@@ -157,19 +157,19 @@ const TuitionTiers = () => {
                       {/* Early Bird */}
                       <DiscountCard 
                         title="Early Bird Discount"
-                        description={`Save €50 when you enroll by ${earlyBirdDate}`}
+                        description={`Save €150 when you enroll by ${earlyBirdDate}`}
                       />
 
                       {/* Upfront Payment */}
                       <DiscountCard 
                         title="Upfront Payment Benefit"
-                        description="Save €49 when you pay the full tuition at once"
+                        description="Save €100 when you pay the full tuition at once"
                       />
 
                       {/* Best Value */}
                       <DiscountCard 
                         title="Best Value - Early Bird + Upfront"
-                        description={`Maximum savings of €99 when you pay in full by ${earlyBirdDate}`}
+                        description={`Maximum savings of €250 when you pay in full by ${earlyBirdDate}`}
                         highlighted={true}
                       />
                     </div>

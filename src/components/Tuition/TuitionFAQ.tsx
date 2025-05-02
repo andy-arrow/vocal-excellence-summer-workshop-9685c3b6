@@ -38,15 +38,15 @@ const TuitionFAQ = () => {
   const faqItems = useMemo(() => [
     {
       question: "What's included in the tuition?",
-      answer: `Your €999 tuition covers everything you need for an incredible five-day experience: personalized vocal training, workshops, one-on-one sessions with expert instructors, professional accompaniment, and comprehensive study materials. The only additional costs you'll need to consider are your accommodation and travel to Limassol.`
+      answer: `Your €749 tuition covers everything you need for an incredible five-day experience: personalized vocal training, workshops, one-on-one sessions with expert instructors, professional accompaniment, and comprehensive study materials. The only additional costs you'll need to consider are your accommodation and travel to Limassol.`
     },
     {
       question: "Tell me about the payment options",
-      answer: `We offer flexible ways to manage your tuition that fit your needs: Start with a €100 deposit to secure your spot once you're accepted. Then, either pay the remaining balance in three installments of €299.67, or take advantage of our discount options. Choose from Early Bird savings (€50 off), upfront payment benefits (€49 off), or combine both for maximum savings of €99!`
+      answer: `We offer flexible ways to manage your tuition that fit your needs: Start with a €100 deposit to secure your spot once you're accepted. Then, either pay the remaining balance in three installments of €216.33, or take advantage of our discount options. Choose from Early Bird savings (€150 off), upfront payment benefits (€100 off), or combine both for maximum savings of €250!`
     },
     {
       question: "How do the discounts work?",
-      answer: `We're excited to offer several ways to save on your tuition! Enroll early by ${format(APPLICATION_DATES.EARLY_BIRD_DEADLINE, 'MMMM d, yyyy')} to save €50 (Early Bird Discount), or pay your full tuition at once to save €49. Want the best deal? Combine both by paying in full by the Early Bird deadline to save €99!`
+      answer: `We're excited to offer several ways to save on your tuition! Enroll early by ${format(APPLICATION_DATES.EARLY_BIRD_DEADLINE, 'MMMM d, yyyy')} to save €150 (Early Bird Discount), or pay your full tuition at once to save €100. Want the best deal? Combine both by paying in full by the Early Bird deadline to save €250!`
     },
     {
       question: "Are scholarships available?",

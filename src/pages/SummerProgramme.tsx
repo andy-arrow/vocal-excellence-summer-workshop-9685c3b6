@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Calendar, MapPin, Users, Clock, Star, ChevronRight, Music } from 'lucide-react';
@@ -374,11 +375,11 @@ const SummerProgramme = () => {
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
-                  <span className="text-slate-700">Early Bird: €949 (until March 15, 2025)</span>
+                  <span className="text-slate-700">Early Bird: €599 (until March 15, 2025)</span>
                 </li>
                 <li className="flex items-start">
                   <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
-                  <span className="text-slate-700">Regular Rate: €999</span>
+                  <span className="text-slate-700">Regular Rate: €749</span>
                 </li>
                 <li className="flex items-start">
                   <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
