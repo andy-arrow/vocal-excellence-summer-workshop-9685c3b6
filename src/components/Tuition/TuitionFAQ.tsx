@@ -43,11 +43,11 @@ const TuitionFAQ = () => {
     },
     {
       question: "Tell me about the payment options",
-      answer: `We offer flexible ways to manage your tuition that fit your needs: Start with a €100 deposit to secure your spot once you're accepted. Then, either pay the remaining balance in three installments of €249.67, or take advantage of our Early Bird discount of €50 by registering and paying in full by ${earlyBirdDate}, bringing your total to just €699!`
+      answer: `We offer flexible ways to manage your tuition that fit your needs: Start with a €100 deposit to secure your spot once you're accepted. Then, either pay the remaining balance in three equal installments of €249.67 each (totaling €749), or take advantage of our Early Bird discount of €50 by registering and paying in full by ${earlyBirdDate}, bringing your total to just €699!`
     },
     {
       question: "How does the Early Bird discount work?",
-      answer: `Register and pay your full tuition by ${earlyBirdDate} to receive our Early Bird discount of €50, reducing your total program cost from €749 to €699. This discount is only available for those who pay the full amount upfront before the Early Bird deadline.`
+      answer: `Register and pay your full tuition by ${earlyBirdDate} to receive our Early Bird discount of €50, reducing your total program cost from €749 to €699. This discount is only available for those who register before the deadline and pay the full amount upfront.`
     },
     {
       question: "Are scholarships available?",

@@ -149,8 +149,9 @@ const TuitionTiers = () => {
                           </h5>
                           <ul className="mt-3 space-y-2 pl-6 text-[#141414]/70 font-sans text-sm">
                             <li>€100 deposit upon acceptance</li>
-                            <li>Three installments of €249.67</li>
+                            <li>Three equal installments of €249.67 each</li>
                             <li>Final payment by {tuitionDeadline}</li>
+                            <li>Total tuition: €749</li>
                           </ul>
                         </CardContent>
                       </Card>
@@ -158,7 +159,7 @@ const TuitionTiers = () => {
                       {/* Early Bird */}
                       <DiscountCard 
                         title="Early Bird Discount"
-                        description={`Save €50 when you register and pay in full by ${earlyBirdDate}`}
+                        description={`Save €50 when you register before ${earlyBirdDate} and pay in full`}
                         highlighted={true}
                       />
                       
@@ -169,7 +170,7 @@ const TuitionTiers = () => {
                             Early Bird Price
                           </h5>
                           <p className="text-[#4f6e72]/90 mt-2 pl-6 font-sans text-sm">
-                            Only €699 when you register and pay in full by {earlyBirdDate}
+                            Only €699 when you register before {earlyBirdDate} and pay in full
                           </p>
                         </CardContent>
                       </Card>
