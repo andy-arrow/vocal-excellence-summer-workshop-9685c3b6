@@ -13,8 +13,9 @@ const AboutSection = lazy(() =>
 const CurriculumSection = lazy(() => 
   import(/* webpackChunkName: "curriculum" */ '@/components/CurriculumSection')
 );
-const InstructorsSection = lazy(() => 
-  import(/* webpackChunkName: "instructors" */ '@/components/InstructorsSection')
+// Replace the original InstructorsSection with our custom one
+const CustomInstructorsSection = lazy(() => 
+  import(/* webpackChunkName: "instructors" */ '@/components/CustomInstructorsSection')
 );
 const CTASection = lazy(() => 
   import(/* webpackChunkName: "cta" */ '@/components/CTASection')
@@ -74,7 +75,7 @@ const Index = () => {
       </Suspense>
       
       <Suspense fallback={<SectionLoader />}>
-        <InstructorsSection />
+        <CustomInstructorsSection />
       </Suspense>
       
       <Suspense fallback={<SectionLoader />}>
