@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Security-Policy" content="
       default-src 'self';
-      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.gpteng.co https://*.supabase.co;
+      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.gpteng.co https://*.supabase.co https://openfpcdn.io;
       style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
       font-src 'self' https://fonts.gstatic.com;
       img-src 'self' data: blob: https://*.supabase.co;
-      connect-src 'self' https://*.supabase.co wss://*.supabase.co;
+      connect-src 'self' https://*.supabase.co wss://*.supabase.co https://openfpcdn.io;
       frame-src 'self' https://*.supabase.co;
       media-src 'self';
       object-src 'none';
@@ -28,6 +28,8 @@
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="preconnect" href="https://cdn.gpteng.co">
     <link rel="dns-prefetch" href="https://cdn.gpteng.co">
+    <link rel="preconnect" href="https://openfpcdn.io">
+    <link rel="dns-prefetch" href="https://openfpcdn.io">
     
     <!-- Add resource hints for faster navigation -->
     <link rel="preload" href="/src/main.tsx" as="script" fetchpriority="high">
