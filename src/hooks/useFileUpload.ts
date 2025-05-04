@@ -84,7 +84,7 @@ export const useFileUpload = (fileType: string) => {
           error: null
         });
         
-        toast({
+        toast.toast({
           title: "File uploaded successfully",
           description: `${file.name} is ready to be submitted with your application.`,
           className: "bg-green-600 text-white border-green-700",
@@ -99,7 +99,7 @@ export const useFileUpload = (fileType: string) => {
         error: error.message
       });
       
-      toast({
+      toast.toast({
         title: "Upload Failed",
         description: error.message,
         variant: "destructive",

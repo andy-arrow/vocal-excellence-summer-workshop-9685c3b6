@@ -124,14 +124,14 @@ const ApplicationForm = () => {
       
       if (response.fileError) {
         console.warn('Application submitted but had file processing error:', response.fileError);
-        toast({
+        toast.toast({
           title: "Application Submitted with Warning",
           description: `Your application data was saved, but we had trouble processing your files: ${response.fileError}. Our team will contact you for the files if needed.`,
           className: "bg-amber-600 text-white border-amber-700",
           duration: 8000,
         });
       } else {
-        toast({
+        toast.toast({
           title: "Application Submitted Successfully! 🎉",
           description: "Your application has been received. You'll receive a confirmation email shortly.",
           className: "bg-gradient-to-r from-green-600 to-emerald-600 text-white border-green-700",
@@ -156,7 +156,7 @@ const ApplicationForm = () => {
       if (error.details) errorDetails.push(`Details: ${error.details}`);
       if (error.code) errorDetails.push(`Error Code: ${error.code}`);
       
-      toast({
+      toast.toast({
         title: "Application Submission Failed",
         description: (
           <div className="space-y-2">

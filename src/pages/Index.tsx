@@ -1,4 +1,3 @@
-
 import React, { useEffect, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
@@ -41,7 +40,7 @@ const Index = () => {
   useEffect(() => {
     if (!localStorage.getItem('visitedBefore')) {
       const timeoutId = setTimeout(() => {
-        toast({
+        toast.toast({
           title: "Welcome to Vocal Excellence Summer Workshop",
           description: "Applications for our 2025 program are now open!",
           duration: 5000,
@@ -51,7 +50,7 @@ const Index = () => {
       
       return () => clearTimeout(timeoutId);
     }
-  }, [toast]);
+  }, []);
 
   return (
     <motion.div 

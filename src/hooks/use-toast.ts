@@ -1,13 +1,10 @@
 
+import * as React from "react";
 import {
   Toast,
   ToastActionElement,
   ToastProps,
 } from '@/components/ui/toast';
-
-import {
-  useToast as useToastPrimitive,
-} from '@radix-ui/react-toast';
 
 type ToasterToast = ToastProps & {
   id: string;
@@ -56,7 +53,17 @@ function dismissToast(toastId?: string) {
 }
 
 export function useToast() {
-  const hookProps = useToastPrimitive();
+  const [state, setState] = React.useState<ToasterToast[]>([]);
+
+  React.useEffect(() => {
+    const unsubscribe = subscribe((toasts) => {
+      setState([...toasts]);
+    });
+    
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   function subscribe(listener: (toasts: ToasterToast[]) => void) {
     listeners.push(listener);
@@ -69,14 +76,13 @@ export function useToast() {
   }
 
   return {
-    ...hookProps,
-    toasts,
-    subscribe,
+    toasts: state,
     toast: (props: Omit<ToasterToast, "id">) => addToast(props),
     dismiss: (toastId?: string) => dismissToast(toastId),
   };
 }
 
+// Export a toast function for direct usage
 export const toast = {
   toast: (props: Omit<ToasterToast, "id">) => addToast(props),
   dismiss: (toastId?: string) => dismissToast(toastId),
