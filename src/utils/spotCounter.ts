@@ -61,7 +61,7 @@ const generateSimpleFingerprint = async (): Promise<string> => {
     screen.colorDepth,
     screen.width + 'x' + screen.height,
     navigator.hardwareConcurrency,
-    navigator.deviceMemory,
+    // Removed the problematic navigator.deviceMemory property
     navigator.platform
   ];
   
