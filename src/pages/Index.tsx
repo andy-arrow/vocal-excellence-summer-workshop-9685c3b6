@@ -13,9 +13,9 @@ const AboutSection = lazy(() =>
 const CurriculumSection = lazy(() => 
   import(/* webpackChunkName: "curriculum" */ '@/components/CurriculumSection')
 );
-// Replace the original InstructorsSection with our custom one
-const CustomInstructorsSection = lazy(() => 
-  import(/* webpackChunkName: "instructors" */ '@/components/CustomInstructorsSection')
+// Use the original InstructorsSection instead of CustomInstructorsSection
+const InstructorsSection = lazy(() => 
+  import(/* webpackChunkName: "instructors" */ '@/components/InstructorsSection')
 );
 const CTASection = lazy(() => 
   import(/* webpackChunkName: "cta" */ '@/components/CTASection')
@@ -40,7 +40,7 @@ const Index = () => {
   useEffect(() => {
     if (!localStorage.getItem('visitedBefore')) {
       const timeoutId = setTimeout(() => {
-        toast.toast({
+        toast({
           title: "Welcome to Vocal Excellence Summer Workshop",
           description: "Applications for our 2025 program are now open!",
           duration: 5000,
@@ -74,7 +74,7 @@ const Index = () => {
       </Suspense>
       
       <Suspense fallback={<SectionLoader />}>
-        <CustomInstructorsSection />
+        <InstructorsSection />
       </Suspense>
       
       <Suspense fallback={<SectionLoader />}>
