@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import { APPLICATION_DATES } from './ApplicationTimeline';
+import SpotsRemainingIndicator from './SpotsRemainingIndicator';
 
 const CTASection = () => {
   const navigate = useNavigate();
@@ -67,13 +68,18 @@ const CTASection = () => {
             <Button onClick={handleTuitionClick} variant="outline" size="lg" className="border-apple-border text-apple-text hover:bg-apple-light-hover text-lg px-8 rounded-full">Tuition</Button>
           </motion.div>
           
-          {!applicationsClosed && <p className="text-apple-grey text-sm">
-              Limited to 20 participants. Applications close on {new Intl.DateTimeFormat('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-          }).format(APPLICATION_DATES.DEADLINE)}
-            </p>}
+          {!applicationsClosed && (
+            <div className="flex flex-col items-center">
+              <SpotsRemainingIndicator className="mb-2" />
+              <p className="text-apple-grey text-sm">
+                Applications close on {new Intl.DateTimeFormat('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                }).format(APPLICATION_DATES.DEADLINE)}
+              </p>
+            </div>
+          )}
         </motion.div>
       </div>
     </section>;

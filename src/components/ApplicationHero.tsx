@@ -5,6 +5,7 @@ import { ArrowRight } from 'lucide-react';
 import { format } from 'date-fns';
 import { APPLICATION_DATES } from './ApplicationTimeline';
 import { useIsMobile } from '@/hooks/use-mobile';
+import SpotsRemainingIndicator from './SpotsRemainingIndicator';
 
 const ApplicationHero = () => {
   const today = new Date();
@@ -77,6 +78,7 @@ const ApplicationHero = () => {
             )}
             
             <div className="text-sm">
+              {!applicationsClosed && <SpotsRemainingIndicator className="mb-1 justify-center" />}
               <span className="inline-block px-3 py-1 bg-apple-text/60 backdrop-blur border border-apple-grey/20 rounded-full text-xs font-medium text-apple-grey">
                 Limited Capacity
               </span>
