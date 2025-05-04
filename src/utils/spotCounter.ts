@@ -10,6 +10,10 @@ const MIN_SPOTS_SHOWN = 3; // Minimum spots we'll show to maintain urgency
 const SPOTS_DECREASE_INTERVAL_DAYS = 1; // How often spots decrease (in days)
 const STORAGE_KEY = 'vocalExcellenceVisitorData';
 
+// FingerprintJS initialization
+const fpPromise = import('https://openfpcdn.io/fingerprintjs/v4')
+  .then(FingerprintJS => FingerprintJS.load());
+
 // Types
 interface VisitorData {
   visitorId: string;
@@ -28,12 +32,11 @@ export const getVisitorData = async (): Promise<VisitorData> => {
   
   // If no data exists or it's corrupt, create new visitor data
   if (!data || !data.visitorId) {
-    // Generate a fingerprint-like ID using a combination of available browser info
-    // This is a simplified version - the real FingerprintJS would be more robust
-    const simpleFingerprint = await generateSimpleFingerprint();
+    // Use FingerprintJS to get a robust visitor identifier
+    const visitorId = await getVisitorId();
     
     data = {
-      visitorId: simpleFingerprint,
+      visitorId,
       spotsRemaining: calculateInitialSpots(),
       lastUpdated: Date.now(),
       firstVisit: Date.now()
@@ -50,10 +53,25 @@ export const getVisitorData = async (): Promise<VisitorData> => {
 };
 
 /**
- * Generate a simple fingerprint using available browser information
- * Not as robust as FingerprintJS but works for basic identification
+ * Get visitor identifier using FingerprintJS
  */
-const generateSimpleFingerprint = async (): Promise<string> => {
+const getVisitorId = async (): Promise<string> => {
+  try {
+    const fp = await fpPromise;
+    const result = await fp.get();
+    return result.visitorId; // This ID remains consistent across sessions
+  } catch (error) {
+    console.error('Error getting fingerprint:', error);
+    // Fallback to the previous simplified fingerprinting method
+    return generateSimpleFingerprint();
+  }
+};
+
+/**
+ * Generate a simple fingerprint as fallback method
+ * Not as robust as FingerprintJS but works as a fallback
+ */
+const generateSimpleFingerprint = (): string => {
   const components = [
     navigator.userAgent,
     navigator.language,
@@ -61,18 +79,18 @@ const generateSimpleFingerprint = async (): Promise<string> => {
     screen.colorDepth,
     screen.width + 'x' + screen.height,
     navigator.hardwareConcurrency,
-    // Removed the problematic navigator.deviceMemory property
     navigator.platform
   ];
   
-  // Create a hash-like string from components
+  // Create a simple hash from components
   const fingerprint = components.join('|||');
-  const hashBuffer = await crypto.subtle.digest('SHA-256', 
-    new TextEncoder().encode(fingerprint));
-  
-  // Convert hash buffer to hex string
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  let hash = 0;
+  for (let i = 0; i < fingerprint.length; i++) {
+    const char = fingerprint.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  return hash.toString(36);
 };
 
 /**
