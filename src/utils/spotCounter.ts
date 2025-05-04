@@ -9,6 +9,9 @@ const MIN_SPOTS_SHOWN = 3; // Minimum spots we'll show to maintain urgency
 const SPOTS_DECREASE_INTERVAL_DAYS = 1; // How often spots decrease (in days)
 const STORAGE_KEY = 'vocalExcellenceVisitorData';
 const SERVER_SYNC_ENDPOINT = '/api/sync-counter'; // Server endpoint for syncing
+const FINGERPRINT_CACHE_KEY = 'cachedVisitorId';
+const FINGERPRINT_CACHE_DURATION = 7 * 24 * 60 * 60 * 1000; // 7 days in ms
+const SESSION_SYNC_FLAG = 'syncedThisSession';
 
 // Types
 interface VisitorData {
@@ -20,9 +23,10 @@ interface VisitorData {
 
 /**
  * Load visitor data from storage with fallbacks
+ * @param forceSync - Whether to force a server sync regardless of throttling
  */
-export const getVisitorData = async (): Promise<VisitorData> => {
-  // Get visitor ID with enhanced fingerprinting
+export const getVisitorData = async (forceSync = false): Promise<VisitorData> => {
+  // Get visitor ID with enhanced fingerprinting (lazy-loaded)
   const visitorId = await getEnhancedVisitorId();
   
   // Try to get existing data from storage
@@ -42,7 +46,7 @@ export const getVisitorData = async (): Promise<VisitorData> => {
     storeData(STORAGE_KEY, JSON.stringify(data));
   } else {
     // Check if we need to decrease the spots count
-    data = await updateSpotsIfNeeded(data);
+    data = await updateSpotsIfNeeded(data, forceSync);
   }
   
   return data;
@@ -50,11 +54,53 @@ export const getVisitorData = async (): Promise<VisitorData> => {
 
 /**
  * Enhanced visitor identification with fingerprinting and fallbacks
+ * Now with lazy loading and caching for better performance
  */
 const getEnhancedVisitorId = async (): Promise<string> => {
+  // First check if we've already cached the visitor ID this session
   try {
-    // Try basic fingerprinting first (fallback to our simple method)
-    return generateSimpleFingerprint();
+    const cachedData = getStoredData(FINGERPRINT_CACHE_KEY);
+    if (cachedData) {
+      const { id, timestamp } = JSON.parse(cachedData);
+      // Check if the cached ID is still valid (not expired)
+      if (Date.now() - timestamp < FINGERPRINT_CACHE_DURATION) {
+        return id;
+      }
+    }
+  } catch (e) {
+    // Ignore cache read errors and continue to generation
+  }
+  
+  // If no valid cache, try fingerprinting
+  try {
+    // Lazy-load the fingerprinting library only when needed
+    const generateFingerprint = async () => {
+      try {
+        // Dynamic import for better performance - only loads when needed
+        const FingerprintJS = await import(
+          /* webpackChunkName: "fingerprintjs" */ 
+          'https://openfpcdn.io/fingerprintjs/v4'
+        );
+        const fp = await FingerprintJS.load();
+        const result = await fp.get();
+        return result.visitorId;
+      } catch (e) {
+        // Fallback to our simpler method
+        return generateSimpleFingerprint();
+      }
+    };
+    
+    // Generate fingerprint asynchronously
+    const fingerprintId = await generateFingerprint();
+    
+    // Cache the generated ID to avoid recalculation
+    const cacheData = JSON.stringify({
+      id: fingerprintId,
+      timestamp: Date.now()
+    });
+    storeData(FINGERPRINT_CACHE_KEY, cacheData);
+    
+    return fingerprintId;
   } catch (e) {
     // If fingerprinting fails, use stored ID or generate a new one
     let fallbackId = null;
@@ -150,9 +196,22 @@ const calculateInitialSpots = (): number => {
 
 /**
  * Attempt to synchronize counter data with the server
- * Falls back to local data if the server is unavailable
+ * Now with throttling to limit server requests
  */
-const syncWithServer = async (data: VisitorData): Promise<VisitorData> => {
+const syncWithServer = async (data: VisitorData, forceSync = false): Promise<VisitorData> => {
+  // Check if we've already synced this session (unless force sync is requested)
+  if (!forceSync) {
+    try {
+      const hasAlreadySynced = sessionStorage.getItem(SESSION_SYNC_FLAG);
+      if (hasAlreadySynced === 'true') {
+        // Skip sync if already done this session
+        return data;
+      }
+    } catch (e) {
+      // Ignore sessionStorage errors and continue with sync
+    }
+  }
+  
   try {
     // Send visitor ID and counter data to server
     const response = await fetch(SERVER_SYNC_ENDPOINT, {
@@ -164,6 +223,14 @@ const syncWithServer = async (data: VisitorData): Promise<VisitorData> => {
     if (response.ok) {
       // Get the server's canonical version of the counter
       const serverData = await response.json();
+      
+      // Mark that we've synced this session
+      try {
+        sessionStorage.setItem(SESSION_SYNC_FLAG, 'true');
+      } catch (e) {
+        // Ignore sessionStorage errors
+      }
+      
       return serverData;
     }
   } catch (e) {
@@ -176,8 +243,9 @@ const syncWithServer = async (data: VisitorData): Promise<VisitorData> => {
 
 /**
  * Update spots if enough time has passed since last update
+ * @param forceSync - Whether to force server sync regardless of throttling
  */
-const updateSpotsIfNeeded = async (data: VisitorData): Promise<VisitorData> => {
+const updateSpotsIfNeeded = async (data: VisitorData, forceSync = false): Promise<VisitorData> => {
   const now = Date.now();
   const lastUpdate = data.lastUpdated;
   const daysPassed = Math.floor((now - lastUpdate) / (86400000)); // milliseconds in a day
@@ -191,10 +259,14 @@ const updateSpotsIfNeeded = async (data: VisitorData): Promise<VisitorData> => {
     // Save the updated data
     storeData(STORAGE_KEY, JSON.stringify(data));
     
-    // Try to sync with server to get canonical data
-    // This happens after local update to ensure we still have updated data even if sync fails
+    // Always sync with server when spots change
+    forceSync = true;
+  }
+  
+  // Try to sync with server if forced or throttled conditions allow
+  if (forceSync) {
     try {
-      data = await syncWithServer(data);
+      data = await syncWithServer(data, forceSync);
       // Save the synced data
       storeData(STORAGE_KEY, JSON.stringify(data));
     } catch (e) {
@@ -208,9 +280,10 @@ const updateSpotsIfNeeded = async (data: VisitorData): Promise<VisitorData> => {
 
 /**
  * Get the spots remaining to display to the user
+ * @param forceSync - Whether to force a server sync
  */
-export const getRemainingSpots = async (): Promise<number> => {
-  const data = await getVisitorData();
+export const getRemainingSpots = async (forceSync = false): Promise<number> => {
+  const data = await getVisitorData(forceSync);
   return data.spotsRemaining;
 };
 
@@ -221,10 +294,13 @@ export const resetVisitorData = (): void => {
   try {
     localStorage.removeItem(STORAGE_KEY);
     localStorage.removeItem('visitorId');
+    localStorage.removeItem(FINGERPRINT_CACHE_KEY);
+    sessionStorage.removeItem(SESSION_SYNC_FLAG);
   } catch (e) {
     // If localStorage fails, also try to clear the cookies
     document.cookie = `${STORAGE_KEY}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
     document.cookie = `visitorId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    document.cookie = `${FINGERPRINT_CACHE_KEY}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
   }
 };
 
