@@ -114,19 +114,17 @@ const calculateInitialSpots = (): number => {
 
 /**
  * Update spots if enough time has passed since last update
+ * Uses the provided updateCounter implementation
  */
 const updateSpotsIfNeeded = (data: VisitorData): VisitorData => {
   const now = Date.now();
-  const daysSinceUpdate = (now - data.lastUpdated) / (1000 * 60 * 60 * 24);
+  const lastUpdate = data.lastUpdated;
+  const daysPassed = Math.floor((now - lastUpdate) / (86400000)); // milliseconds in a day
   
-  // If at least one day has passed since the last update
-  if (daysSinceUpdate >= SPOTS_DECREASE_INTERVAL_DAYS) {
-    // Calculate how many days have passed and decrease accordingly
-    const daysToCount = Math.floor(daysSinceUpdate / SPOTS_DECREASE_INTERVAL_DAYS);
-    const newSpots = Math.max(data.spotsRemaining - daysToCount, MIN_SPOTS_SHOWN);
-    
-    // Update the data
-    data.spotsRemaining = newSpots;
+  // Only update if at least one day has passed
+  if (daysPassed >= 1) {
+    // Decrease spots by the number of days passed, but not below MIN_SPOTS_SHOWN
+    data.spotsRemaining = Math.max(MIN_SPOTS_SHOWN, data.spotsRemaining - daysPassed);
     data.lastUpdated = now;
     
     // Save the updated data
@@ -162,7 +160,7 @@ export const resetVisitorData = (): void => {
 function createCookie(key: string, value: string, expirationDays: number): void {
   const date = new Date();
   date.setTime(date.getTime() + (expirationDays * 24 * 60 * 60 * 1000));
-  const expires = `; expires=${date.toGMTString()}`;
+  const expires = `; expires=${date.toUTCString()}`; // Fixed: Using toUTCString instead of toGMTString
   document.cookie = `${key}=${value}${expires}; path=/`;
 }
 
