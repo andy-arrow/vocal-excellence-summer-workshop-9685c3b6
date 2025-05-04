@@ -1,8 +1,9 @@
+
 import React, { useEffect, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from '@/hooks/use-toast';
 import { useScrollPosition } from '@/hooks/use-scroll-position';
 
 // Optimized lazy loading with explicit chunk names
@@ -34,7 +35,6 @@ const SectionLoader = () => (
 );
 
 const Index = () => {
-  const { toast } = useToast();
   const scrolled = useScrollPosition();
   
   useEffect(() => {
