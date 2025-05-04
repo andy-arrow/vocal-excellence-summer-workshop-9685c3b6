@@ -1,3 +1,4 @@
+
 /**
  * Spot counter utility for creating personalized urgency
  * by showing a decreasing number of available spots to each visitor
@@ -20,6 +21,13 @@ interface VisitorData {
   lastUpdated: number; // timestamp
   firstVisit: number; // timestamp
 }
+
+// Define a minimal type for FingerprintJS to satisfy TypeScript
+declare const FingerprintJS: {
+  load: () => Promise<{
+    get: () => Promise<{ visitorId: string }>
+  }>
+};
 
 /**
  * Load visitor data from storage with fallbacks
@@ -76,14 +84,41 @@ const getEnhancedVisitorId = async (): Promise<string> => {
     // Lazy-load the fingerprinting library only when needed
     const generateFingerprint = async () => {
       try {
-        // Dynamic import for better performance - only loads when needed
-        const FingerprintJS = await import(
-          /* webpackChunkName: "fingerprintjs" */ 
-          'https://openfpcdn.io/fingerprintjs/v4'
-        );
-        const fp = await FingerprintJS.load();
-        const result = await fp.get();
-        return result.visitorId;
+        // Instead of dynamic import, use a script injection approach
+        // This avoids TypeScript issues with URL imports
+        const fingerprintPromise = new Promise<string>((resolve, reject) => {
+          if (typeof window === 'undefined') {
+            return reject(new Error('Cannot generate fingerprint in non-browser environment'));
+          }
+
+          // Check if FingerprintJS is already loaded
+          if (window.hasOwnProperty('FingerprintJS')) {
+            FingerprintJS.load()
+              .then(fp => fp.get())
+              .then(result => resolve(result.visitorId))
+              .catch(reject);
+            return;
+          }
+
+          // Create script element to load FingerprintJS
+          const script = document.createElement('script');
+          script.src = 'https://openfpcdn.io/fingerprintjs/v4';
+          script.async = true;
+          script.onload = () => {
+            if (window.hasOwnProperty('FingerprintJS')) {
+              FingerprintJS.load()
+                .then(fp => fp.get())
+                .then(result => resolve(result.visitorId))
+                .catch(reject);
+            } else {
+              reject(new Error('FingerprintJS failed to load properly'));
+            }
+          };
+          script.onerror = () => reject(new Error('Failed to load FingerprintJS'));
+          document.head.appendChild(script);
+        });
+
+        return await fingerprintPromise;
       } catch (e) {
         // Fallback to our simpler method
         return generateSimpleFingerprint();
