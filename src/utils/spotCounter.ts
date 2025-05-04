@@ -22,15 +22,15 @@ interface VisitorData {
  * Load visitor data from storage with fallbacks
  */
 export const getVisitorData = async (): Promise<VisitorData> => {
+  // Get visitor ID with enhanced fingerprinting
+  const visitorId = await getEnhancedVisitorId();
+  
   // Try to get existing data from storage
   const storedData = getStoredData(STORAGE_KEY);
   let data: VisitorData | null = storedData ? JSON.parse(storedData) : null;
   
   // If no data exists or it's corrupt, create new visitor data
   if (!data || !data.visitorId) {
-    // Generate a fingerprint using a combination of available browser info
-    const visitorId = generateSimpleFingerprint();
-    
     data = {
       visitorId,
       spotsRemaining: calculateInitialSpots(),
@@ -46,6 +46,42 @@ export const getVisitorData = async (): Promise<VisitorData> => {
   }
   
   return data;
+};
+
+/**
+ * Enhanced visitor identification with fingerprinting and fallbacks
+ */
+const getEnhancedVisitorId = async (): Promise<string> => {
+  try {
+    // Try basic fingerprinting first (fallback to our simple method)
+    return generateSimpleFingerprint();
+  } catch (e) {
+    // If fingerprinting fails, use stored ID or generate a new one
+    let fallbackId = null;
+    
+    try {
+      fallbackId = localStorage.getItem('visitorId');
+    } catch (e) {
+      // Ignore error and try cookies
+    }
+    
+    if (!fallbackId) {
+      fallbackId = readCookie('visitorId');
+    }
+    
+    if (!fallbackId) {
+      fallbackId = `user_${Math.random().toString(36).substring(2, 15)}`;
+    }
+    
+    // Try to store for future use
+    try { 
+      localStorage.setItem('visitorId', fallbackId); 
+    } catch(e) { 
+      createCookie('visitorId', fallbackId, 365);
+    }
+    
+    return fallbackId;
+  }
 };
 
 /**
@@ -148,9 +184,11 @@ export const getRemainingSpots = async (): Promise<number> => {
 export const resetVisitorData = (): void => {
   try {
     localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem('visitorId');
   } catch (e) {
-    // If localStorage fails, also try to clear the cookie
+    // If localStorage fails, also try to clear the cookies
     document.cookie = `${STORAGE_KEY}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    document.cookie = `visitorId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
   }
 };
 
