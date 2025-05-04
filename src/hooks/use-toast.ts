@@ -82,7 +82,7 @@ export function useToast() {
   };
 }
 
-// Export a toast function for direct usage
+// Export a toast object for direct usage
 export const toast = {
   toast: (props: Omit<ToasterToast, "id">) => addToast(props),
   dismiss: (toastId?: string) => dismissToast(toastId),

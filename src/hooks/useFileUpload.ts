@@ -70,7 +70,7 @@ export const useFileUpload = (fileType: string) => {
         window.applicationFiles[fileType] = file;
         console.log(`useFileUpload: Stored file in window.applicationFiles.${fileType}:`, file.name, file.size, 'bytes');
         console.log('Current applicationFiles state:', Object.keys(window.applicationFiles).map(key => 
-          `${key}: ${window.applicationFiles[fileType] ? window.applicationFiles[fileType].name : 'null'}`
+          `${key}: ${window.applicationFiles[key] ? window.applicationFiles[key].name : 'null'}`
         ));
       }
       
