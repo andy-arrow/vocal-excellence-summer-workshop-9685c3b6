@@ -10,10 +10,6 @@ const MIN_SPOTS_SHOWN = 3; // Minimum spots we'll show to maintain urgency
 const SPOTS_DECREASE_INTERVAL_DAYS = 1; // How often spots decrease (in days)
 const STORAGE_KEY = 'vocalExcellenceVisitorData';
 
-// FingerprintJS initialization
-const fpPromise = import('https://openfpcdn.io/fingerprintjs/v4')
-  .then(FingerprintJS => FingerprintJS.load());
-
 // Types
 interface VisitorData {
   visitorId: string;
@@ -27,13 +23,13 @@ interface VisitorData {
  */
 export const getVisitorData = async (): Promise<VisitorData> => {
   // Try to get existing data from storage
-  const storedData = localStorage.getItem(STORAGE_KEY);
+  const storedData = getStoredData(STORAGE_KEY);
   let data: VisitorData | null = storedData ? JSON.parse(storedData) : null;
   
   // If no data exists or it's corrupt, create new visitor data
   if (!data || !data.visitorId) {
-    // Use FingerprintJS to get a robust visitor identifier
-    const visitorId = await getVisitorId();
+    // Generate a fingerprint using a combination of available browser info
+    const visitorId = generateSimpleFingerprint();
     
     data = {
       visitorId,
@@ -43,7 +39,7 @@ export const getVisitorData = async (): Promise<VisitorData> => {
     };
     
     // Save the new data
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    storeData(STORAGE_KEY, JSON.stringify(data));
   } else {
     // Check if we need to decrease the spots count
     data = updateSpotsIfNeeded(data);
@@ -53,23 +49,36 @@ export const getVisitorData = async (): Promise<VisitorData> => {
 };
 
 /**
- * Get visitor identifier using FingerprintJS
+ * Store data with fallbacks (localStorage -> cookies)
  */
-const getVisitorId = async (): Promise<string> => {
+const storeData = (key: string, value: string): void => {
   try {
-    const fp = await fpPromise;
-    const result = await fp.get();
-    return result.visitorId; // This ID remains consistent across sessions
-  } catch (error) {
-    console.error('Error getting fingerprint:', error);
-    // Fallback to the previous simplified fingerprinting method
-    return generateSimpleFingerprint();
+    // Primary: Try localStorage first
+    localStorage.setItem(key, value);
+  } catch (e) {
+    // Fallback: Use cookies if localStorage fails
+    createCookie(key, value, 365);
   }
 };
 
 /**
- * Generate a simple fingerprint as fallback method
- * Not as robust as FingerprintJS but works as a fallback
+ * Get stored data with fallbacks (localStorage -> cookies)
+ */
+const getStoredData = (key: string): string | null => {
+  // Try localStorage first
+  try {
+    const data = localStorage.getItem(key);
+    if (data) return data;
+  } catch (e) {
+    // Ignore error and try cookies
+  }
+  
+  // Try cookies next
+  return readCookie(key);
+};
+
+/**
+ * Generate a simple fingerprint using available browser information
  */
 const generateSimpleFingerprint = (): string => {
   const components = [
@@ -121,7 +130,7 @@ const updateSpotsIfNeeded = (data: VisitorData): VisitorData => {
     data.lastUpdated = now;
     
     // Save the updated data
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    storeData(STORAGE_KEY, JSON.stringify(data));
   }
   
   return data;
@@ -139,5 +148,31 @@ export const getRemainingSpots = async (): Promise<number> => {
  * For debugging purposes - reset the visitor data
  */
 export const resetVisitorData = (): void => {
-  localStorage.removeItem(STORAGE_KEY);
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (e) {
+    // If localStorage fails, also try to clear the cookie
+    document.cookie = `${STORAGE_KEY}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  }
 };
+
+/**
+ * Cookie helper functions
+ */
+function createCookie(key: string, value: string, expirationDays: number): void {
+  const date = new Date();
+  date.setTime(date.getTime() + (expirationDays * 24 * 60 * 60 * 1000));
+  const expires = `; expires=${date.toGMTString()}`;
+  document.cookie = `${key}=${value}${expires}; path=/`;
+}
+
+function readCookie(key: string): string | null {
+  const nameEQ = `${key}=`;
+  const ca = document.cookie.split(';');
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+  }
+  return null;
+}
