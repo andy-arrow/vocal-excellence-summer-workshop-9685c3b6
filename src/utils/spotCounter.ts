@@ -1,4 +1,3 @@
-
 /**
  * Spot counter utility for creating personalized urgency
  * by showing a decreasing number of available spots to each visitor
@@ -9,6 +8,7 @@ const TOTAL_SPOTS = 20; // Total spots in the program
 const MIN_SPOTS_SHOWN = 3; // Minimum spots we'll show to maintain urgency
 const SPOTS_DECREASE_INTERVAL_DAYS = 1; // How often spots decrease (in days)
 const STORAGE_KEY = 'vocalExcellenceVisitorData';
+const SERVER_SYNC_ENDPOINT = '/api/sync-counter'; // Server endpoint for syncing
 
 // Types
 interface VisitorData {
@@ -42,7 +42,7 @@ export const getVisitorData = async (): Promise<VisitorData> => {
     storeData(STORAGE_KEY, JSON.stringify(data));
   } else {
     // Check if we need to decrease the spots count
-    data = updateSpotsIfNeeded(data);
+    data = await updateSpotsIfNeeded(data);
   }
   
   return data;
@@ -149,10 +149,35 @@ const calculateInitialSpots = (): number => {
 };
 
 /**
- * Update spots if enough time has passed since last update
- * Uses the provided updateCounter implementation
+ * Attempt to synchronize counter data with the server
+ * Falls back to local data if the server is unavailable
  */
-const updateSpotsIfNeeded = (data: VisitorData): VisitorData => {
+const syncWithServer = async (data: VisitorData): Promise<VisitorData> => {
+  try {
+    // Send visitor ID and counter data to server
+    const response = await fetch(SERVER_SYNC_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    
+    if (response.ok) {
+      // Get the server's canonical version of the counter
+      const serverData = await response.json();
+      return serverData;
+    }
+  } catch (e) {
+    console.error('Server sync failed:', e);
+  }
+  
+  // If server sync fails, use local data
+  return data;
+};
+
+/**
+ * Update spots if enough time has passed since last update
+ */
+const updateSpotsIfNeeded = async (data: VisitorData): Promise<VisitorData> => {
   const now = Date.now();
   const lastUpdate = data.lastUpdated;
   const daysPassed = Math.floor((now - lastUpdate) / (86400000)); // milliseconds in a day
@@ -165,6 +190,17 @@ const updateSpotsIfNeeded = (data: VisitorData): VisitorData => {
     
     // Save the updated data
     storeData(STORAGE_KEY, JSON.stringify(data));
+    
+    // Try to sync with server to get canonical data
+    // This happens after local update to ensure we still have updated data even if sync fails
+    try {
+      data = await syncWithServer(data);
+      // Save the synced data
+      storeData(STORAGE_KEY, JSON.stringify(data));
+    } catch (e) {
+      console.error('Error during server sync:', e);
+      // Continue with local data
+    }
   }
   
   return data;
@@ -198,7 +234,7 @@ export const resetVisitorData = (): void => {
 function createCookie(key: string, value: string, expirationDays: number): void {
   const date = new Date();
   date.setTime(date.getTime() + (expirationDays * 24 * 60 * 60 * 1000));
-  const expires = `; expires=${date.toUTCString()}`; // Fixed: Using toUTCString instead of toGMTString
+  const expires = `; expires=${date.toUTCString()}`; 
   document.cookie = `${key}=${value}${expires}; path=/`;
 }
 
