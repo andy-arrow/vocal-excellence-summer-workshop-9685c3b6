@@ -13,20 +13,8 @@ const instructors = [
     image: "/lovable-uploads/a10cf0f4-c46f-4599-b410-6e1c715c92d5.png",
     socials: {
       instagram: "https://www.instagram.com/andreasaroditis/",
-      linkedin: "https://www.linkedin.com/in/andreasaroditis/"
-    }
-  },
-  {
-    name: "Carolyn Michelle-Smith",
-    role: "Acting Coach",
-    bio: "Carolyn Michelle-Smith is an actress, producer, and educator known for her roles in House of Cards, Luke Cage, Russian Doll, and The Chi. A Juilliard graduate, she has performed on Broadway (Romeo and Juliet) and with renowned theater companies. She is also a Visiting Lecturer at Cornell University and Co-Director of Lena Waithe's Hillman Grad Mentorship Lab, empowering BIPOC creatives. Carolyn develops original content inspired by her heritage and operates AspireHigher Coaching Services to mentor actors. Her entrepreneurial artistry focuses on elevating diverse voices in Hollywood through acting, producing, and education.",
-    image: "/lovable-uploads/5f2b13ba-7279-45da-86e2-af6b9c336634.png",
-    socials: {
-      instagram: "https://www.instagram.com/that_carolynmichelle11",
-      linkedin: "https://www.linkedin.com/in/carolyn-michelle-smith-1243545115",
-      facultyPage: "https://pma.cornell.edu/carolyn-michelle-smith4",
-      imdb: "https://www.imdb.com/name/nm18292715",
-      wikipedia: "https://en.wikipedia.org/wiki/Carolyn_Michelle_Smith"
+      linkedin: "https://www.linkedin.com/in/andreasaroditis/",
+      website: "https://www.andreasaroditis.com/"
     }
   },
   {
@@ -38,6 +26,19 @@ const instructors = [
       instagram: "https://www.instagram.com/weebatter",
       linkedin: "https://www.linkedin.com/in/kate-batter-6b114118b/?originalSubdomain=uk",
       website: "https://www.singwimbledon.co.uk/"
+    }
+  },
+  {
+    name: "Carolyn Michelle Smith",
+    role: "Acting Coach",
+    bio: "Carolyn Michelle Smith is an actress, producer, and educator known for her roles in House of Cards, Luke Cage, Russian Doll, and The Chi. A Juilliard graduate, she has performed on Broadway (Romeo and Juliet) and with renowned theater companies. She is also a Visiting Lecturer at Cornell University and Co-Director of Lena Waithe's Hillman Grad Mentorship Lab, empowering BIPOC creatives. Carolyn develops original content inspired by her heritage and operates AspireHigher Coaching Services to mentor actors. Her entrepreneurial artistry focuses on elevating diverse voices in Hollywood through acting, producing, and education.",
+    image: "/lovable-uploads/5f2b13ba-7279-45da-86e2-af6b9c336634.png",
+    socials: {
+      instagram: "https://www.instagram.com/that_carolynmichelle11",
+      linkedin: "https://www.linkedin.com/in/carolyn-michelle-smith-1243545115",
+      facultyPage: "https://pma.cornell.edu/carolyn-michelle-smith4",
+      imdb: "https://www.imdb.com/name/nm18292715",
+      wikipedia: "https://en.wikipedia.org/wiki/Carolyn_Michelle_Smith"
     }
   },
   {
@@ -53,7 +54,7 @@ const instructors = [
     }
   },
   {
-    name: "Emmelia Pericleous",
+    name: "Emmeleia Pericleous",
     role: "Choir Director",
     bio: "Choir Director and Musicologist who graduated at the top of her master's class from the prestigious Sorbonne University, France. She directs choirs at 3 Paris Conservatoires, combining classical and contemporary approaches while bridging Cypriot and French musical traditions.",
     image: "/lovable-uploads/c503aee8-1c6f-4045-bcd9-46e1da3dc853.png",
