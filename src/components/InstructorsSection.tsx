@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Instagram, Linkedin, ChevronDown, ChevronUp } from 'lucide-react';
+import { Instagram, Linkedin, ChevronDown, ChevronUp, Globe, FileText, Video, BookOpen } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -22,8 +22,11 @@ const instructors = [
     bio: "Carolyn Michelle-Smith is an actress, producer, and educator known for her roles in House of Cards, Luke Cage, Russian Doll, and The Chi. A Juilliard graduate, she has performed on Broadway (Romeo and Juliet) and with renowned theater companies. She is also a Visiting Lecturer at Cornell University and Co-Director of Lena Waithe's Hillman Grad Mentorship Lab, empowering BIPOC creatives. Carolyn develops original content inspired by her heritage and operates AspireHigher Coaching Services to mentor actors. Her entrepreneurial artistry focuses on elevating diverse voices in Hollywood through acting, producing, and education.",
     image: "/lovable-uploads/5f2b13ba-7279-45da-86e2-af6b9c336634.png",
     socials: {
-      instagram: "https://www.instagram.com/that_carolynmichelle?igsh=MWluZGpwb2pqMm4yeQ==",
-      linkedin: "https://www.linkedin.com/in/carolyn-michelle-smith-12435451"
+      instagram: "https://www.instagram.com/that_carolynmichelle11",
+      linkedin: "https://www.linkedin.com/in/carolyn-michelle-smith-1243545115",
+      facultyPage: "https://pma.cornell.edu/carolyn-michelle-smith4",
+      imdb: "https://www.imdb.com/name/nm18292715",
+      wikipedia: "https://en.wikipedia.org/wiki/Carolyn_Michelle_Smith"
     }
   },
   {
@@ -32,8 +35,9 @@ const instructors = [
     bio: "Kate Batter is a highly experienced vocal coach, performer, and founder of Sing Wimbledon. With over 20 years of teaching experience, she specializes in vocal technique, musicality, and acting through song, working with beginners and professionals alike. A graduate of the Royal Birmingham Conservatoire and Royal Academy of Music, Kate has performed in West End productions (The Sound of Music, The Phantom of the Opera) and TV shows (Top Boy, Call the Midwife). Based in Cambridge, she offers private lessons, masterclasses, and drama school audition prep. As Musical Director of Sing Space Choir, she champions vocal excellence and confidence-building.",
     image: "/lovable-uploads/e26c0944-dc77-4d19-8059-c61e7800b8d1.png",
     socials: {
-      instagram: "#",
-      linkedin: "#"
+      instagram: "https://www.instagram.com/weebatter",
+      linkedin: "https://www.linkedin.com/in/kate-batter-6b114118b/?originalSubdomain=uk",
+      website: "https://www.singwimbledon.co.uk/"
     }
   },
   {
@@ -42,8 +46,10 @@ const instructors = [
     bio: "Praised for his ability to immerse audiences in \"a world of sound\" (The National Herald, NYC), Aris Antoniades is a Cypriot composer, arranger, and music director whose work spans symphonic, jazz, theatrical, and cinematic mediums. Collaborating with icons like Grammy nominee Bobby Sanabria and platinum artist Alkistis Protopsalti, his creations range from orchestral works like Chiaroscuro to Afro-Cuban jazz arrangements. As Artistic Director of the TrakArt Pops Orchestra, Antoniades continues to shape Cyprus's musical landscape while pursuing a Ph.D. His music blends emotional depth with structural clarity, resonating globally across genres and cultures.",
     image: "/lovable-uploads/23077377-fca0-46d4-b7c8-83c2a2edcb19.png",
     socials: {
-      instagram: "#",
-      linkedin: "#"
+      instagram: "https://www.instagram.com/aris.antoniades",
+      linkedin: "https://cy.linkedin.com/in/arisantoniadescomposer",
+      twitter: "https://twitter.com/ArisAntoniades19",
+      wikipedia: "https://en.wikipedia.org/wiki/Aris_Antoniades"
     }
   },
   {
@@ -52,8 +58,9 @@ const instructors = [
     bio: "Choir Director and Musicologist who graduated at the top of her master's class from the prestigious Sorbonne University, France. She directs choirs at 3 Paris Conservatoires, combining classical and contemporary approaches while bridging Cypriot and French musical traditions.",
     image: "/lovable-uploads/c503aee8-1c6f-4045-bcd9-46e1da3dc853.png",
     socials: {
-      instagram: "#",
-      linkedin: "#"
+      instagram: "https://www.instagram.com/itsbritneybitch394?igsh=NTk1cGY2aXUxOHBp",
+      linkedin: "https://www.linkedin.com/in/emmeleia-perikleous/?originalSubdomain=fr",
+      tiktok: "https://www.tiktok.com/@itsbritneybitch394?_t=ZN-8u55aN44EsA&_r=1"
     }
   }
 ];
@@ -96,6 +103,33 @@ const InstructorsSection = () => {
       instructorElements.forEach((el) => observer.unobserve(el));
     };
   }, []);
+
+  const renderSocialIcon = (type: string) => {
+    switch (type) {
+      case 'instagram':
+        return <Instagram size={18} />;
+      case 'linkedin':
+        return <Linkedin size={18} />;
+      case 'website':
+        return <Globe size={18} />;
+      case 'facultyPage':
+        return <FileText size={18} />;
+      case 'imdb':
+        return <Video size={18} />;
+      case 'wikipedia':
+        return <BookOpen size={18} />;
+      case 'twitter':
+        return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14.2833 10.1151L22.0166 1H20.2L13.5333 8.88486L8.2 1H1L9.06667 13.3849L1 22.9H2.81667L9.81667 14.6151L15.4 22.9H22.6L14.2833 10.1151ZM10.6833 13.4983L9.85 12.2899L3.73333 2.89163H7.1L11.9833 10.4216L12.8167 11.63L19.2 21.5083H15.8333L10.6833 13.4983Z" fill="currentColor"/>
+        </svg>;
+      case 'tiktok':
+        return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19.321 5.562a5.124 5.124 0 0 1-2.15-2.15 7.866 7.866 0 0 1-.789-3.412h-3.727v14.55c0 .86-.699 1.575-1.559 1.575a1.56 1.56 0 0 1-1.55-1.559 1.56 1.56 0 0 1 1.55-1.559c.15 0 .285.016.42.06v-3.727a5.28 5.28 0 0 0-.42-.016c-2.904 0-5.276 2.371-5.276 5.276 0 2.904 2.372 5.276 5.276 5.276 2.904 0 5.276-2.372 5.276-5.276V8.84a9.45 9.45 0 0 0 5.276 1.56V6.682a5.421 5.421 0 0 1-2.327-.62z" fill="currentColor"/>
+        </svg>;
+      default:
+        return <Globe size={18} />;
+    }
+  };
 
   return (
     <section id="faculty" className="py-24 md:py-32 bg-white overflow-hidden">
@@ -156,26 +190,21 @@ const InstructorsSection = () => {
                     "transform transition-transform duration-500 ease-out",
                     hoveredInstructor === index ? "translate-y-0" : "translate-y-full opacity-0"
                   )}>
-                    <div className="flex space-x-3">
-                      {instructor.socials.instagram && instructor.socials.instagram !== "#" && (
-                        <a 
-                          href={instructor.socials.instagram} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
-                          className="w-9 h-9 rounded-full bg-white/90 flex items-center justify-center backdrop-blur-sm text-apple-text hover:bg-white transition-colors"
-                        >
-                          <Instagram size={18} />
-                        </a>
-                      )}
-                      {instructor.socials.linkedin && instructor.socials.linkedin !== "#" && (
-                        <a 
-                          href={instructor.socials.linkedin} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
-                          className="w-9 h-9 rounded-full bg-white/90 flex items-center justify-center backdrop-blur-sm text-apple-text hover:bg-white transition-colors"
-                        >
-                          <Linkedin size={18} />
-                        </a>
+                    <div className="flex flex-wrap gap-3">
+                      {Object.entries(instructor.socials).map(([platform, url]) => 
+                        url !== "#" && (
+                          <a 
+                            key={platform}
+                            href={url} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="w-9 h-9 rounded-full bg-white/90 flex items-center justify-center backdrop-blur-sm text-apple-text hover:bg-white transition-colors"
+                            aria-label={`${instructor.name}'s ${platform}`}
+                            title={platform.charAt(0).toUpperCase() + platform.slice(1)}
+                          >
+                            {renderSocialIcon(platform)}
+                          </a>
+                        )
                       )}
                     </div>
                   </div>
