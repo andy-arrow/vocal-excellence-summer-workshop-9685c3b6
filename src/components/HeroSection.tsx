@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef, useState } from 'react';
-import { ArrowDown, ArrowUpRight, Calendar, Clock } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, Calendar } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';
@@ -70,18 +70,18 @@ const HeroSection = () => {
     >
       <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-5xl mx-auto">
         <motion.div 
-          className="space-y-8" // Reduced spacing for better fit
+          className="space-y-8" 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
           <motion.h1 
-            className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-apple-text mb-4 tracking-tight" // Reduced margin
+            className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-apple-text mb-4 tracking-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
           >
-            <span className="block mb-2">Unlock Your</span> {/* Reduced margin */}
+            <span className="block mb-2">Unlock Your</span>
             <span className="text-apple-blue">Vocal Potential</span>
           </motion.h1>
           
@@ -95,42 +95,32 @@ const HeroSection = () => {
             private coaching, and performance opportunities with world-class faculty
           </motion.p>
 
-          {/* Key dates highlight box - New addition */}
+          {/* Refined, more elegant dates indicator */}
           <motion.div 
-            className="bg-white/80 backdrop-blur-sm border border-apple-border rounded-xl p-4 max-w-md mx-auto"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
+            className="inline-flex items-center gap-2 text-apple-text/80 text-sm font-medium mx-auto"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 1.0 }}
           >
-            <h3 className="text-lg font-medium text-apple-text mb-3">Key Program Dates</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-left">
-              <div className="flex items-center gap-2">
-                <Calendar className="w-5 h-5 text-apple-blue" />
-                <div>
-                  <p className="text-sm font-medium text-apple-text">Applications Close</p>
-                  <p className="text-xs text-apple-grey">{format(APPLICATION_DATES.DEADLINE, 'MMMM d, yyyy')}</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <Clock className="w-5 h-5 text-apple-blue" />
-                <div>
-                  <p className="text-sm font-medium text-apple-text">Program Begins</p>
-                  <p className="text-xs text-apple-grey">{format(APPLICATION_DATES.PROGRAM_START, 'MMMM d, yyyy')}</p>
-                </div>
-              </div>
-            </div>
+            <Calendar className="w-4 h-4 text-apple-blue" />
+            <span>
+              {applicationsClosed 
+                ? `Applications closed • Next program begins ${format(APPLICATION_DATES.PROGRAM_START, 'MMM d, yyyy')}`
+                : `Applications close ${format(APPLICATION_DATES.DEADLINE, 'MMM d')} • Program begins ${format(APPLICATION_DATES.PROGRAM_START, 'MMM d, yyyy')}`
+              }
+            </span>
           </motion.div>
 
           <motion.div 
-            className="pt-6" // Reduced padding
+            className="pt-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.1 }}
           >
-            <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-4"> {/* Reduced gap */}
+            <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link 
                 to="/apply" 
-                className={`group px-7 py-3 ${  // Reduced padding
+                className={`group px-7 py-3 ${
                   applicationsClosed 
                     ? 'bg-gray-400 cursor-not-allowed' 
                     : 'bg-apple-blue hover:bg-apple-blue-hover'
@@ -151,22 +141,20 @@ const HeroSection = () => {
             </motion.div>
             
             <motion.div 
-              className="flex items-center justify-center mt-8 space-x-4" // Reduced margin
+              className="flex items-center justify-center mt-8 space-x-1"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.3, duration: 0.5 }}
             >
-              <div className="w-2 h-2 rounded-full bg-apple-blue animate-pulse-slow"></div>
-              <p className="text-apple-grey text-sm font-light">
+              <div className="w-1.5 h-1.5 rounded-full bg-apple-blue animate-pulse-slow"></div>
+              <p className="text-apple-grey text-xs font-light">
                 {applicationsClosed ? (
-                  <span className="text-apple-text font-medium">Applications for {format(APPLICATION_DATES.PROGRAM_START, 'yyyy')} are now closed</span>
+                  <span>Applications for {format(APPLICATION_DATES.PROGRAM_START, 'yyyy')} are now closed</span>
                 ) : (
-                  <>
-                    Applications close <span className="text-apple-text font-medium">{format(APPLICATION_DATES.DEADLINE, 'MMMM d, yyyy')}</span> — Only 20 spots available
-                  </>
+                  <>Only 20 spots available</>
                 )}
               </p>
-              <div className="w-2 h-2 rounded-full bg-apple-blue animate-pulse-slow"></div>
+              <div className="w-1.5 h-1.5 rounded-full bg-apple-blue animate-pulse-slow"></div>
             </motion.div>
           </motion.div>
         </motion.div>
