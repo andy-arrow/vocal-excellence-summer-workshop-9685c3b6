@@ -13,10 +13,10 @@ const TuitionHero = React.memo(() => {
 
   const isMobile = useIsMobile();
   
-  // Dramatically increase padding for mobile devices to account for navbar
+  // Adjusted padding to match main hero and ensure content visibility
   const paddingClasses = isMobile 
-    ? "pt-64 pb-10" // Extreme padding-top for mobile to ensure content is visible
-    : "pt-56 pb-10 md:pt-64"; // Keep desktop padding consistent
+    ? "pt-40 pb-10" // Reduced padding for mobile to match main hero
+    : "pt-40 pb-10 md:pt-48"; // Adjusted desktop padding to match main hero
 
   return (
     <section className={`${paddingClasses} px-6 bg-gradient-to-b from-white to-[#fafafa]`}>
