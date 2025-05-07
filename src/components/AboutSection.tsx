@@ -1,30 +1,31 @@
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Star, Mic, Video, UserCheck, Stethoscope } from 'lucide-react';
+import { Star, Mic, Video, UserCheck, Stethoscope, CheckCircle, Quote } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
+import { FeatureCard } from '@/components/ui/feature-card';
 
 const features = [
   {
-    icon: <UserCheck className="w-5 h-5 text-energy-purple" />,
+    icon: <UserCheck className="w-5 h-5 text-apple-blue" />,
     title: "Personalized Coaching",
-    description: "45-minute private lessons tailored to your goals, plus 30-minute sessions with professional accompanists for your repertoire."
+    description: "Private lessons tailored to your goals, with professional accompanists for your repertoire."
   }, 
   {
-    icon: <Video className="w-5 h-5 text-energy-pink" />,
+    icon: <Video className="w-5 h-5 text-apple-blue" />,
     title: "Professional Recording",
-    description: "Take home professionally recorded footage of your mock auditions—a valuable asset for your career portfolio."
+    description: "Take home professionally recorded footage of your mock auditions—a valuable portfolio asset."
   }, 
   {
-    icon: <Mic className="w-5 h-5 text-energy-cyan" />,
+    icon: <Mic className="w-5 h-5 text-apple-blue" />,
     title: "Performance Mastery",
-    description: "Transform your stage presence through Alexander Technique workshops and targeted performance coaching."
+    description: "Transform your stage presence through Alexander Technique and performance coaching."
   }, 
   {
-    icon: <Stethoscope className="w-5 h-5 text-energy-yellow" />,
+    icon: <Stethoscope className="w-5 h-5 text-apple-blue" />,
     title: "Expert Health Focus",
-    description: "Learn from physicians specializing in vocal health, ensuring your instrument stays in peak condition."
+    description: "Learn from physicians specializing in vocal health to keep your instrument in peak condition."
   }
 ];
 
@@ -56,119 +57,136 @@ const AboutSection = () => {
   }, []);
   
   return (
-    <section id="about" ref={sectionRef} className="py-24 md:py-32 bg-[#fbfbfd] overflow-hidden">
-      <div className="max-w-[980px] mx-auto px-6 md:px-8">
-        <div className="flex flex-col items-center text-center mb-16">
-          <h2 className="text-[40px] md:text-[48px] font-medium text-apple-text mb-4 tracking-tight leading-tight">
-            Your Voice, Your Future: <br />
-            Why This Workshop Changes Everything
+    <section id="about" ref={sectionRef} className="py-24 md:py-32 bg-gradient-to-b from-[#fbfbfd] to-[#f5f5f7] overflow-hidden">
+      <div className="max-w-[1100px] mx-auto px-6 md:px-8">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="flex flex-col items-center text-center mb-16"
+        >
+          <div className="inline-flex items-center justify-center mb-3">
+            <div className="w-8 h-0.5 bg-apple-blue opacity-30"></div>
+            <span className="mx-2 text-apple-blue font-medium text-sm tracking-wide">WHY CHOOSE US</span>
+            <div className="w-8 h-0.5 bg-apple-blue opacity-30"></div>
+          </div>
+          
+          <h2 className="text-[40px] md:text-[48px] font-medium text-apple-text mb-6 tracking-tight leading-tight">
+            Your Voice, Your Future
           </h2>
-          <div className="w-16 h-0.5 bg-apple-blue mb-6 opacity-30"></div>
-        </div>
+          
+          <p className="max-w-2xl text-[21px] leading-relaxed font-light text-apple-text">
+            Work with world-class teachers who understand your artistic journey—from technique to presence, confidence, and career goals.
+          </p>
+        </motion.div>
 
-        <div className="grid md:grid-cols-5 gap-12 md:gap-16 items-start">
-          <div className="md:col-span-2 space-y-8">
-            <div className="prose prose-apple max-w-none space-y-6">
-              <p className="text-[21px] leading-[1.381] font-light text-apple-text">Work with world-class teachers who understand your artistic journey—not just your technique, but your presence, confidence, and career goals.</p>
+        <div className="grid md:grid-cols-12 gap-12 md:gap-16 items-start">
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="md:col-span-5 space-y-8"
+          >
+            <div className="relative p-8 bg-white shadow-lg rounded-2xl border border-[#d2d2d7]/40">
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-apple-blue to-[#06c] rounded-t-2xl"></div>
               
-              <p className="text-[19px] leading-[1.4211] text-apple-text font-light">Our workshop delivers what others don't: personalized coaching, practical skill development, and industry connections that matter.</p>
-              
-              <div className="space-y-4 mt-6">
-                <div className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-apple-blue mt-2.5"></div>
-                  <p className="text-[17px] leading-[1.4706] text-apple-text">Private lessons tailored to your specific goals</p>
+              <div className="prose prose-apple max-w-none space-y-6">
+                <div className="space-y-4 mb-6">
+                  {[
+                    "Private lessons tailored to specific goals",
+                    "Expert-led vocal health seminars",
+                    "Alexander Technique workshops",
+                    "Professional recordings of performances"
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-apple-blue mt-0.5 flex-shrink-0" />
+                      <p className="text-[17px] leading-tight text-apple-text m-0">{item}</p>
+                    </div>
+                  ))}
                 </div>
-                <div className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-apple-blue mt-2.5"></div>
-                  <p className="text-[17px] leading-[1.4706] text-apple-text">Alexander Technique workshops for enhanced stage presence</p>
-                </div>
-                <div className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-apple-blue mt-2.5"></div>
-                  <p className="text-[17px] leading-[1.4706] text-apple-text">Expert-led vocal health seminars with practicing physicians</p>
-                </div>
-                <div className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-apple-blue mt-2.5"></div>
-                  <p className="text-[17px] leading-[1.4706] text-apple-text">Professional recordings of your performances—a lasting career asset</p>
+                
+                <div className="relative">
+                  <div className="absolute -left-3 -top-1 text-[60px] text-apple-blue/20 font-serif">
+                    <Quote className="w-10 h-10" />
+                  </div>
+                  <blockquote className="pl-8 py-4 border-l-0 italic text-[22px] text-apple-text font-light leading-tight">
+                    The best musicians know something others don't: 
+                    <span className="block mt-1 font-medium text-apple-blue">success happens through connections.</span>
+                  </blockquote>
                 </div>
               </div>
               
-              <blockquote className="pl-6 border-l-2 border-apple-blue/30 my-8 italic text-[24px] text-apple-text font-light leading-[1.33]">
-                "The best musicians know something others don't: success happens through connections."
-              </blockquote>
-              
-              <p className="text-[21px] font-medium text-apple-blue">Connect with industry professionals who are active in the spaces you want to enter.</p>
-              
-              <p className="text-[24px] font-light text-apple-text mt-6 leading-[1.33]">
-                Isn't it time your voice got the platform it deserves?
-              </p>
+              <div className="mt-8 flex justify-center">
+                <motion.div
+                  whileHover={{ scale: 1.03 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
+                  <a 
+                    href="/apply" 
+                    className="inline-flex items-center gap-2 px-8 py-4 bg-apple-blue text-white rounded-full text-[17px] font-medium 
+                              transition-all duration-300 hover:bg-apple-blue-hover hover:shadow-lg"
+                  >
+                    Apply Now
+                    <span className="text-white">→</span>
+                  </a>
+                </motion.div>
+              </div>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:col-span-3">
+          <div className="md:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
             {features.map((feature, index) => (
-              <motion.div 
+              <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.5, delay: 0.1 * (index + 3) }}
                 viewport={{ once: true }}
-                className={cn(
-                  "bg-white/60 backdrop-blur-sm p-6 rounded-2xl",
-                  "border border-[#d2d2d7]",
-                  "transition-all duration-300",
-                  "hover:bg-white",
-                  "group cursor-pointer"
-                )}
               >
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[#f5f5f7] mb-4 group-hover:scale-110 transition-transform">
-                  {feature.icon}
-                </div>
-                <h3 className="text-[21px] font-semibold mb-2 text-apple-text group-hover:text-apple-blue transition-colors">
-                  {feature.title}
-                </h3>
-                <p className="text-[17px] leading-[1.4706] text-apple-grey">{feature.description}</p>
-                
-                {!hasReducedMotion && (
-                  <div className="relative h-6 mt-2">
-                    <div className="absolute right-0 -top-2 opacity-0 group-hover:opacity-100 transition-opacity text-apple-blue text-sm">
-                      <span className="inline-block animate-float animation-delay-100">♪</span>
-                      <span className="inline-block animate-float animation-delay-300">♩</span>
+                <Card className="h-full overflow-hidden border-[#d2d2d7]/40 bg-white/70 backdrop-blur-sm hover:shadow-md transition-all duration-300">
+                  <CardContent className="p-6">
+                    <div className="w-12 h-12 rounded-xl bg-[#f5f5f7] flex items-center justify-center mb-4">
+                      {feature.icon}
                     </div>
-                  </div>
-                )}
+                    <h3 className="text-[20px] font-semibold mb-3 text-apple-text">
+                      {feature.title}
+                    </h3>
+                    <p className="text-[16px] leading-relaxed text-apple-grey">
+                      {feature.description}
+                    </p>
+                  </CardContent>
+                </Card>
               </motion.div>
             ))}
-
-            <div className="md:col-span-2">
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-                viewport={{ once: true }}
-                className="p-8 bg-[#f5f5f7] rounded-2xl border border-[#d2d2d7] hover:bg-white transition-colors duration-300"
-              >
-                <div className="flex flex-col md:flex-row md:items-center gap-6">
-                  <div className="flex-shrink-0">
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-apple-blue to-[#06c] flex items-center justify-center text-white">
-                      <Star className="w-8 h-8" />
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.7 }}
+              viewport={{ once: true }}
+              className="sm:col-span-2"
+            >
+              <Card className="border-[#d2d2d7]/40 bg-gradient-to-br from-[#f5f5f7] to-white overflow-hidden">
+                <CardContent className="p-6 md:p-8">
+                  <div className="flex flex-col md:flex-row md:items-center gap-6">
+                    <div className="flex-shrink-0">
+                      <div className="w-16 h-16 rounded-full bg-gradient-to-br from-apple-blue to-[#06c] flex items-center justify-center text-white">
+                        <Star className="w-8 h-8" />
+                      </div>
+                    </div>
+                    
+                    <div className="flex-1">
+                      <h3 className="text-[24px] font-semibold text-apple-text mb-2">Isn't it time your voice got the platform it deserves?</h3>
+                      <p className="text-[17px] leading-relaxed text-apple-grey mb-0">
+                        Connect with industry professionals who are active in the spaces you want to enter.
+                      </p>
                     </div>
                   </div>
-                  
-                  <div className="flex-1">
-                    <h3 className="text-[24px] font-semibold text-apple-text mb-2">Ready to transform your voice?</h3>
-                    <p className="text-[17px] leading-[1.4706] text-apple-grey mb-6">
-                      Join a community of dedicated artists and take your first step towards vocal excellence. Limited spots available.
-                    </p>
-                    
-                    <a href="/apply" className="inline-flex items-center gap-2 px-6 py-3 bg-apple-blue text-white rounded-full text-[17px] font-medium 
-                               transition-all duration-300 hover:bg-apple-blue-hover">
-                      Apply Now
-                      <span className="text-white">→</span>
-                    </a>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
+                </CardContent>
+              </Card>
+            </motion.div>
           </div>
         </div>
       </div>
