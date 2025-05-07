@@ -19,10 +19,10 @@ const ApplicationHero = () => {
     }
   };
 
-  // Dramatically increased padding to match TuitionHero
+  // Adjusted padding for better visibility
   const paddingClasses = isMobile 
-    ? "pt-48 pb-16" // Extremely increased padding for mobile
-    : "pt-60 pb-20"; // Extremely increased desktop padding
+    ? "pt-24 pb-16" 
+    : "pt-60 pb-20";
 
   return (
     <section className={`relative ${paddingClasses} overflow-hidden bg-apple-text`}>
@@ -35,7 +35,7 @@ const ApplicationHero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
         >
-          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white">
+          <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl font-light tracking-tight text-white">
             Your Journey to<br />
             <span className="text-apple-blue">
               Vocal Mastery
@@ -43,7 +43,7 @@ const ApplicationHero = () => {
           </h1>
           
           <motion.p 
-            className="text-lg md:text-xl text-apple-grey max-w-2xl mx-auto leading-relaxed font-light"
+            className="text-base md:text-xl text-apple-grey max-w-2xl mx-auto leading-relaxed font-light"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.7 }}
@@ -60,17 +60,17 @@ const ApplicationHero = () => {
             {!applicationsClosed ? (
               <motion.button
                 onClick={scrollToForm}
-                className="px-8 py-4 rounded-full bg-apple-blue text-white hover:bg-apple-blue-hover transition-all duration-300 font-medium text-lg shadow-sm"
+                className="px-8 py-4 rounded-full bg-apple-blue text-white hover:bg-apple-blue-hover transition-all duration-300 font-medium text-lg shadow-sm w-full sm:w-auto"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <span className="flex items-center gap-2">
+                <span className="flex items-center justify-center gap-2">
                   Begin Your Application
                   <ArrowRight className="h-5 w-5" />
                 </span>
               </motion.button>
             ) : (
-              <div className="px-8 py-4 rounded-full bg-gray-400 text-white font-medium text-lg shadow-sm">
+              <div className="px-8 py-4 rounded-full bg-gray-400 text-white font-medium text-lg shadow-sm w-full sm:w-auto">
                 <span className="flex items-center gap-2">
                   Applications Closed
                 </span>
@@ -79,15 +79,17 @@ const ApplicationHero = () => {
             
             <div className="text-sm">
               {!applicationsClosed && <SpotsRemainingIndicator className="mb-1 justify-center" />}
-              <span className="inline-block px-3 py-1 bg-apple-text/60 backdrop-blur border border-apple-grey/20 rounded-full text-xs font-medium text-apple-grey">
-                Limited Capacity
-              </span>
-              <span className="text-apple-grey ml-2">
-                {applicationsClosed 
-                  ? `Applications for ${format(APPLICATION_DATES.PROGRAM_START, 'yyyy')} are now closed`
-                  : `Only 20 spots available for Summer ${format(APPLICATION_DATES.PROGRAM_START, 'yyyy')}`
-                }
-              </span>
+              <div className="flex flex-wrap items-center justify-center gap-2">
+                <span className="inline-block px-3 py-1 bg-apple-text/60 backdrop-blur border border-apple-grey/20 rounded-full text-xs font-medium text-apple-grey">
+                  Limited Capacity
+                </span>
+                <span className="text-apple-grey">
+                  {applicationsClosed 
+                    ? `Applications for ${format(APPLICATION_DATES.PROGRAM_START, 'yyyy')} are now closed`
+                    : `Only 20 spots available for Summer ${format(APPLICATION_DATES.PROGRAM_START, 'yyyy')}`
+                  }
+                </span>
+              </div>
             </div>
             
             {applicationsClosed && (

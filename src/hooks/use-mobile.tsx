@@ -1,22 +1,31 @@
 
 import * as React from "react"
 
-// Increase the mobile breakpoint to ensure smaller devices are properly detected
-const MOBILE_BREAKPOINT = 768 // This ensures tablets are also considered mobile for layout purposes
+// Adjusted mobile breakpoint for better device detection
+const MOBILE_BREAKPOINT = 768
 
 export function useIsMobile() {
-  const [isMobile, setIsMobile] = React.useState<boolean>(false)
+  const [isMobile, setIsMobile] = React.useState<boolean>(
+    // Initialize with a check to prevent layout shift
+    typeof window !== "undefined" ? window.innerWidth < MOBILE_BREAKPOINT : false
+  )
 
   React.useEffect(() => {
     // Function to check if the device is mobile
-    const checkMobile = () => setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+    const checkMobile = () => {
+      const isMobileView = window.innerWidth < MOBILE_BREAKPOINT
+      setIsMobile(isMobileView)
+    }
     
-    // Run immediately to prevent layout shift
-    checkMobile()
-    
-    // More responsive resize handler
+    // More efficient resize handler with throttling
+    let resizeTimer: number | null = null
     const handleResize = () => {
-      checkMobile()
+      if (!resizeTimer) {
+        resizeTimer = window.setTimeout(() => {
+          resizeTimer = null
+          checkMobile()
+        }, 100) // Throttle to improve performance
+      }
     }
     
     // Add event listener with passive flag for better performance
@@ -26,6 +35,7 @@ export function useIsMobile() {
     checkMobile()
     
     return () => {
+      if (resizeTimer) window.clearTimeout(resizeTimer)
       window.removeEventListener("resize", handleResize)
     }
   }, [])
