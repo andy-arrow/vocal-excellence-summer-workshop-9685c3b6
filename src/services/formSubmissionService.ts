@@ -1,3 +1,4 @@
+
 import { supabase } from "@/integrations/supabase/client";
 import { trackError } from "@/utils/monitoring";
 import { ApplicationFormValues } from "@/components/ApplicationForm/schema";
@@ -47,11 +48,10 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
       country: data.country,
       postalcode: data.postalCode,
       vocalrange: data.vocalRange,
-      yearsofexperience: data.yearsOfExperience,
+      yearsofsinging: data.yearsOfSinging,
       musicalbackground: data.musicalBackground,
       teachername: data.teacherName || null,
       teacheremail: data.teacherEmail || null,
-      performanceexperience: data.performanceExperience,
       reasonforapplying: data.reasonForApplying,
       heardaboutus: data.heardAboutUs,
       scholarshipinterest: data.scholarshipInterest,
