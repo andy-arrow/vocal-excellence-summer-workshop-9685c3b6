@@ -69,7 +69,7 @@ const MusicalBackgroundSection = () => {
         {/* Years of Singing */}
         <FormField
           control={form.control}
-          name="yearsOfExperience"
+          name="yearsOfSinging"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-apple-text font-medium text-base">

@@ -11,11 +11,10 @@ export interface ApplicationData {
   country: string;
   postalCode: string;
   vocalRange: string;
-  yearsOfExperience: string;
+  yearsOfSinging: string;
   musicalBackground: string;
   teacherName?: string;
   teacherEmail?: string;
-  performanceExperience: string;
   reasonForApplying: string;
   heardAboutUs: string;
   scholarshipInterest: boolean;
