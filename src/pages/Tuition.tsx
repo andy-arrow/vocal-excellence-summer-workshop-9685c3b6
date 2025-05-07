@@ -7,6 +7,7 @@ import Footer from '@/components/Footer';
 import TuitionHero from '@/components/Tuition/TuitionHero';
 import ScrollToTopButton from '@/components/ScrollToTopButton';
 import { Toaster } from '@/components/ui/toaster';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 // Lazy load non-critical components
 const TuitionTiers = lazy(() => import('@/components/Tuition/TuitionTiers'));
@@ -21,6 +22,7 @@ const LoadingFallback = () => (
 
 const Tuition = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const isMobile = useIsMobile();
   
   // Optimized scroll handler with throttling
   useEffect(() => {
@@ -60,7 +62,7 @@ const Tuition = () => {
       <div className="min-h-screen flex flex-col">
         <Navbar />
         
-        <main className="flex-grow bg-white overflow-hidden"> {/* Removed fixed padding-top */}
+        <main className="flex-grow bg-white overflow-visible">
           <TuitionHero />
           
           <Suspense fallback={<LoadingFallback />}>

@@ -8,8 +8,11 @@ export function useIsMobile() {
   const [isMobile, setIsMobile] = React.useState<boolean>(false)
 
   React.useEffect(() => {
-    // Initial check on mount
-    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+    // Initial check on mount - immediate check to prevent flicker
+    const checkMobile = () => setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+    
+    // Run immediately to prevent layout shift
+    checkMobile()
     
     // Debounced resize handler for better performance
     let timeoutId: ReturnType<typeof setTimeout> | null = null
@@ -20,7 +23,7 @@ export function useIsMobile() {
       }
       
       timeoutId = setTimeout(() => {
-        setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+        checkMobile()
       }, 100)
     }
     
