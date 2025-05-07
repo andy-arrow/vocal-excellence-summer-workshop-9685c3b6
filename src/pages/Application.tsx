@@ -59,7 +59,7 @@ const Application = () => {
       <div className="min-h-screen flex flex-col">
         <Navbar />
         
-        <main className="flex-grow pt-16"> {/* Add padding-top to account for navbar height */}
+        <main className="flex-grow pt-16">
           <div className="bg-gradient-to-b from-white to-[#f5f5f7] border-b border-apple-border/10">
             <div className="max-w-5xl mx-auto px-6 md:px-8 pt-12 md:pt-20 pb-16 md:pb-20">
               <motion.div 

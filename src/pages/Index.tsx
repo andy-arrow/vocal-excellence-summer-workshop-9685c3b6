@@ -61,7 +61,7 @@ const Index = () => {
     >
       <Navbar />
       
-      <div style={{ paddingTop: '64px' }}>
+      <div className="pt-16">
         {/* Hero Section - loads immediately */}
         <HeroSection />
         
@@ -94,10 +94,6 @@ const Index = () => {
       </div>
       
       <Suspense fallback={null}>
-        <ScrollToTopButton visible={scrolled} />
-      </Suspense>
-      
-      <Suspense fallback={<SectionLoader />}>
         <Footer />
       </Suspense>
     </motion.div>
