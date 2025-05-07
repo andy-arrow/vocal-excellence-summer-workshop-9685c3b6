@@ -50,17 +50,17 @@ const HeroSection = () => {
     }
   };
   
-  // Dramatically increased padding classes to match TuitionHero and ApplicationHero
+  // Adjusted padding classes for better mobile viewing
   const paddingClasses = isMobile 
-    ? "pt-48 pb-16" // Extremely increased padding for mobile devices
-    : "pt-60 pb-20"; // Extremely increased desktop padding
+    ? "pt-28 pb-16" // Reduced top padding for mobile to ensure content is visible
+    : "pt-60 pb-20"; // Keep desktop padding as is
   
   return (
     <section 
       id="home" 
       ref={heroRef} 
       className={cn(
-        "relative min-h-[90vh] flex items-center justify-center overflow-hidden",
+        "relative min-h-screen flex items-center justify-center overflow-hidden",
         paddingClasses,
         "bg-apple-light border-b border-apple-border",
         hasReducedMotion ? "reduced-motion" : ""
@@ -68,13 +68,13 @@ const HeroSection = () => {
     >
       <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-5xl mx-auto">
         <motion.div 
-          className="space-y-8" 
+          className="space-y-6" // Reduced space between elements on mobile
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
           <motion.h1 
-            className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-apple-text mb-4 tracking-tight"
+            className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-apple-text mb-4 tracking-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
@@ -84,7 +84,7 @@ const HeroSection = () => {
           </motion.h1>
           
           <motion.p 
-            className="font-sans text-lg md:text-xl text-apple-grey max-w-2xl mx-auto leading-relaxed"
+            className="font-sans text-base sm:text-lg md:text-xl text-apple-grey max-w-2xl mx-auto leading-relaxed"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.9 }}
@@ -103,9 +103,9 @@ const HeroSection = () => {
             <span>14-18 July | Limassol, Cyprus</span>
           </motion.div>
           
-          {/* Features highlight */}
+          {/* Features highlight - made more compact on mobile */}
           <motion.div 
-            className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs font-medium text-apple-grey/80"
+            className="flex flex-wrap justify-center gap-x-3 gap-y-1 text-xs font-medium text-apple-grey/80"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 1.1 }}
@@ -117,36 +117,36 @@ const HeroSection = () => {
           </motion.div>
 
           <motion.div 
-            className="pt-6"
+            className="pt-4 sm:pt-6" // Reduced top padding on mobile
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.1 }}
           >
-            <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
               <Link 
                 to="/apply" 
-                className={`group px-7 py-3 ${
+                className={`group px-5 sm:px-7 py-3 ${
                   applicationsClosed 
                     ? 'bg-gray-400 cursor-not-allowed' 
                     : 'bg-apple-blue hover:bg-apple-blue-hover'
-                } text-white rounded-full text-lg font-medium transition-all duration-300 shadow-sm`}
+                } text-white rounded-full text-base sm:text-lg font-medium transition-all duration-300 shadow-sm`}
               >
                 {applicationsClosed ? 'Applications Closed' : 'Register Now'}
                 {!applicationsClosed && (
-                  <ArrowUpRight className="inline-block ml-2 w-5 h-5 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  <ArrowUpRight className="inline-block ml-2 w-4 h-4 sm:w-5 sm:h-5 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 )}
               </Link>
               
               <button 
                 onClick={scrollToDiscoverSection} 
-                className="text-apple-text hover:text-apple-grey px-7 py-3 rounded-full border border-apple-border backdrop-blur-sm transition-all hover:bg-apple-light-hover text-lg font-light"
+                className="text-apple-text hover:text-apple-grey px-5 sm:px-7 py-3 rounded-full border border-apple-border backdrop-blur-sm transition-all hover:bg-apple-light-hover text-base sm:text-lg font-light"
               >
                 Learn More
               </button>
             </motion.div>
             
             <motion.div 
-              className="flex items-center justify-center mt-8 space-x-1"
+              className="flex items-center justify-center mt-6 sm:mt-8 space-x-1"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.3, duration: 0.5 }}
