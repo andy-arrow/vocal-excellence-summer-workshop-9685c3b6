@@ -57,8 +57,8 @@ const HeroSection = () => {
       className={cn(
         "relative overflow-visible",
         isMobile 
-          ? "pt-24 mt-20 pb-12" // Dramatically increased top padding for mobile
-          : "pt-48 pb-20 min-h-[80vh]", // Dramatically increased desktop padding
+          ? "pt-32 mt-24 pb-12" // Significantly increased top padding for mobile
+          : "pt-64 pb-20 min-h-[80vh]", // Significantly increased desktop padding
         "bg-apple-light border-b border-apple-border",
         hasReducedMotion ? "reduced-motion" : ""
       )}

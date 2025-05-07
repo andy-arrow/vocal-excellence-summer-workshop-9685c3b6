@@ -48,10 +48,10 @@ const Application = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Dramatically increased padding to push content much lower
+  // Significantly increased padding to push content much lower
   const paddingClasses = isMobile 
-    ? "pt-24 mt-20 pb-16" // Dramatically increased top padding for mobile
-    : "pt-48 pb-20"; // Dramatically increased desktop padding
+    ? "pt-32 mt-24 pb-16" // Significantly increased top padding for mobile
+    : "pt-64 pb-20"; // Significantly increased desktop padding
 
   return (
     <div className="bg-[#f5f5f7] text-apple-text min-h-screen font-sans antialiased">
