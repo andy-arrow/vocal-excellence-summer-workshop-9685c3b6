@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowDown, ArrowUpRight, Calendar } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -56,12 +57,11 @@ const HeroSection = () => {
       id="home" 
       ref={heroRef} 
       className={cn(
-        "relative min-h-[85vh] flex items-center justify-center overflow-hidden",
+        "relative min-h-[85vh] flex items-center justify-center overflow-visible",
         "pt-24 md:pt-32 pb-16 md:pb-20", 
         "bg-apple-light border-b border-apple-border",
         hasReducedMotion ? "reduced-motion" : ""
       )}
-      style={{ paddingTop: 'calc(64px + 2rem)' }}
     >
       <div className="hero-content relative z-20 text-center px-6 transition-all duration-500 ease-out max-w-5xl mx-auto">
         <motion.div 

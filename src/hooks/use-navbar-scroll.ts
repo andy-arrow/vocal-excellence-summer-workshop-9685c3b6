@@ -9,15 +9,18 @@ export function useNavbarScroll() {
     let lastScrollY = window.scrollY;
     let ticking = false;
     
+    // Make navbar visible initially
+    setVisible(true);
+    
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          // Make navbar visible when:
+          // Show navbar when:
           // 1. User scrolls up
-          // 2. User is at the top of the page
-          if (currentScrollY < lastScrollY || currentScrollY < 10) {
+          // 2. User is at the top of the page (< 50px)
+          if (currentScrollY < lastScrollY || currentScrollY < 50) {
             setVisible(true);
           } else if (currentScrollY > 100 && currentScrollY > lastScrollY) {
             // Hide when scrolling down and not at the top

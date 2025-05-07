@@ -54,14 +54,14 @@ const Index = () => {
 
   return (
     <motion.div 
-      className="min-h-screen overflow-hidden"
+      className="min-h-screen overflow-visible"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
       <Navbar />
       
-      <div className="pt-16">
+      <div>
         {/* Hero Section - loads immediately */}
         <HeroSection />
         
