@@ -1,3 +1,4 @@
+
 import { supabase } from "@/integrations/supabase/client";
 import { trackError } from "@/utils/monitoring";
 import { ApplicationFormValues } from "@/components/ApplicationForm/schema";
@@ -34,7 +35,7 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
       }
     }
 
-    // Prepare form data for database
+    // Prepare form data for database - fixed by ensuring we're passing a single object, not an array
     const formData = {
       firstname: data.firstName,
       lastname: data.lastName,
@@ -63,10 +64,10 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
 
     console.log('Prepared form data for database:', JSON.stringify(formData, null, 2));
 
-    // Insert application data into database
+    // Insert application data into database - fixed by removing the array brackets
     const { data: result, error } = await supabase
       .from('applications')
-      .insert([formData])
+      .insert(formData)
       .select();
 
     console.log('Supabase insert result:', { result, error });
@@ -254,7 +255,7 @@ export const submitContactForm = async (data: {
 
     const { data: result, error } = await supabase
       .from('contact_submissions')
-      .insert([formData])
+      .insert(formData)
       .select();
 
     console.log('Supabase contact form insert result:', { result, error });

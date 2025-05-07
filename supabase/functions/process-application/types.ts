@@ -1,3 +1,4 @@
+
 export interface ApplicationData {
   firstName: string;
   lastName: string;
@@ -10,7 +11,7 @@ export interface ApplicationData {
   country: string;
   postalCode: string;
   vocalRange: string;
-  yearsOfSinging: string; // Changed from yearsOfExperience to yearsOfSinging
+  yearsOfSinging: string; // This is consistent with schema.ts
   musicalBackground: string;
   teacherName?: string;
   teacherEmail?: string;
@@ -45,4 +46,5 @@ export interface SuccessResponse {
   message: string;
   applicationId: string;
   uploadedFiles?: ProcessedFile[];
+  emailStatus?: { error?: any; success?: boolean };
 }
