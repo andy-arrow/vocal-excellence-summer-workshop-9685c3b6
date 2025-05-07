@@ -48,10 +48,10 @@ const Application = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Increased padding to ensure content is fully visible below navbar
+  // Dramatically increased padding to match TuitionHero and ensure content is fully visible
   const paddingClasses = isMobile 
-    ? "pt-36 pb-16" // Increased top padding for mobile to ensure content is visible
-    : "pt-44 pb-20"; // Increased desktop padding for better visibility
+    ? "pt-48 pb-16" // Extremely increased top padding for mobile
+    : "pt-60 pb-20"; // Extremely increased desktop padding
 
   return (
     <div className="bg-[#f5f5f7] text-apple-text min-h-screen font-sans antialiased">
@@ -61,10 +61,10 @@ const Application = () => {
         <meta name="theme-color" content="#ffffff" />
       </Helmet>
       
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col relative z-10">
         <Navbar />
         
-        <main className="flex-grow">
+        <main className="flex-grow relative z-10">
           <div className="bg-gradient-to-b from-white to-[#f5f5f7] border-b border-apple-border/10">
             <div className={`max-w-5xl mx-auto px-6 md:px-8 ${paddingClasses}`}>
               <motion.div 

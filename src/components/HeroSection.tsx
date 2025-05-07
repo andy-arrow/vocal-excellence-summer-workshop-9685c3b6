@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowDown, ArrowUpRight, Calendar } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -49,10 +50,10 @@ const HeroSection = () => {
     }
   };
   
-  // Increased padding classes for better visibility below navbar
+  // Dramatically increased padding classes to match TuitionHero and ApplicationHero
   const paddingClasses = isMobile 
-    ? "pt-36 pb-16" // Increased top padding for mobile devices
-    : "pt-44 pb-20"; // Increased desktop padding
+    ? "pt-48 pb-16" // Extremely increased padding for mobile devices
+    : "pt-60 pb-20"; // Extremely increased desktop padding
   
   return (
     <section 

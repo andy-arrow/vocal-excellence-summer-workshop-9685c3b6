@@ -54,7 +54,7 @@ const Index = () => {
 
   return (
     <motion.div 
-      className="min-h-screen overflow-hidden"
+      className="min-h-screen overflow-hidden relative"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -62,24 +62,28 @@ const Index = () => {
       <Navbar />
       
       {/* Hero Section - loads immediately */}
-      <HeroSection />
+      <div className="relative z-10">
+        <HeroSection />
+      </div>
       
       {/* Lazy loaded sections with optimized suspense boundaries */}
-      <Suspense fallback={<SectionLoader />}>
-        <AboutSection />
-      </Suspense>
-      
-      <Suspense fallback={<SectionLoader />}>
-        <CurriculumSection />
-      </Suspense>
-      
-      <Suspense fallback={<SectionLoader />}>
-        <InstructorsSection />
-      </Suspense>
-      
-      <Suspense fallback={<SectionLoader />}>
-        <CTASection />
-      </Suspense>
+      <div className="relative z-10">
+        <Suspense fallback={<SectionLoader />}>
+          <AboutSection />
+        </Suspense>
+        
+        <Suspense fallback={<SectionLoader />}>
+          <CurriculumSection />
+        </Suspense>
+        
+        <Suspense fallback={<SectionLoader />}>
+          <InstructorsSection />
+        </Suspense>
+        
+        <Suspense fallback={<SectionLoader />}>
+          <CTASection />
+        </Suspense>
+      </div>
       
       {/* Progress indicator */}
       <div className="fixed top-0 left-0 w-full h-1 z-50">
