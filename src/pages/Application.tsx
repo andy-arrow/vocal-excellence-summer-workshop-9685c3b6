@@ -48,10 +48,10 @@ const Application = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Adjusted padding classes to bring the content down much less
+  // Dramatically increased padding to push content much lower
   const paddingClasses = isMobile 
-    ? "pt-6 mt-14 pb-16" // Reduced top padding
-    : "pt-32 pb-20"; // Reduced from pt-60 to pt-32
+    ? "pt-24 mt-20 pb-16" // Dramatically increased top padding for mobile
+    : "pt-48 pb-20"; // Dramatically increased desktop padding
 
   return (
     <div className="bg-[#f5f5f7] text-apple-text min-h-screen font-sans antialiased">

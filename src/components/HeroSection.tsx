@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowDown, ArrowUpRight, Calendar } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -56,8 +57,8 @@ const HeroSection = () => {
       className={cn(
         "relative overflow-visible",
         isMobile 
-          ? "pt-6 mt-14 pb-12" // Reduced top padding to make content visible
-          : "pt-32 pb-20 min-h-[80vh]", // Reduced desktop padding from pt-60 to pt-32
+          ? "pt-24 mt-20 pb-12" // Dramatically increased top padding for mobile
+          : "pt-48 pb-20 min-h-[80vh]", // Dramatically increased desktop padding
         "bg-apple-light border-b border-apple-border",
         hasReducedMotion ? "reduced-motion" : ""
       )}
