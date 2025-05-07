@@ -15,6 +15,7 @@ const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const Auth = lazy(() => import('./pages/Auth'));
 const TuitionRedirect = lazy(() => import('./components/TuitionRedirect'));
 const SummerProgramme = lazy(() => import('./pages/SummerProgramme'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 // Optimized loading fallback that doesn't block rendering
 const PageLoader = () => (
@@ -96,6 +97,14 @@ const router = createBrowserRouter([
     element: (
       <Suspense fallback={<PageLoader />}>
         <PrivacyPolicy />
+      </Suspense>
+    ),
+  },
+  {
+    path: "*",
+    element: (
+      <Suspense fallback={<PageLoader />}>
+        <NotFound />
       </Suspense>
     ),
   },

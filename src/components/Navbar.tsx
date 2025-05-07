@@ -15,8 +15,8 @@ interface NavbarProps {
 
 interface NavLink {
   id?: string;
-  label: string;
   href?: string;
+  label: string;
 }
 
 const Navbar = ({ activeSection }: NavbarProps) => {
@@ -61,6 +61,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
     { id: 'curriculum', label: 'Curriculum' },
     { id: 'instructors', label: 'Instructors' },
     { href: '/tuition', label: 'Tuition' },
+    { href: '/summer-programme', label: 'Summer Programme' },
   ];
 
   return (
