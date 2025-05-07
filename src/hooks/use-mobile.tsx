@@ -8,29 +8,24 @@ export function useIsMobile() {
   const [isMobile, setIsMobile] = React.useState<boolean>(false)
 
   React.useEffect(() => {
-    // Initial check on mount - immediate check to prevent flicker
+    // Function to check if the device is mobile
     const checkMobile = () => setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
     
     // Run immediately to prevent layout shift
     checkMobile()
     
-    // Debounced resize handler for better performance
-    let timeoutId: ReturnType<typeof setTimeout> | null = null
-    
+    // More responsive resize handler
     const handleResize = () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId)
-      }
-      
-      timeoutId = setTimeout(() => {
-        checkMobile()
-      }, 100)
+      checkMobile()
     }
     
-    window.addEventListener("resize", handleResize)
+    // Add event listener with passive flag for better performance
+    window.addEventListener("resize", handleResize, { passive: true })
+    
+    // Initial check to ensure correct rendering
+    checkMobile()
     
     return () => {
-      if (timeoutId) clearTimeout(timeoutId)
       window.removeEventListener("resize", handleResize)
     }
   }, [])

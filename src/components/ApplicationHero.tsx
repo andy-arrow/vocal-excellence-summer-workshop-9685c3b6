@@ -19,10 +19,10 @@ const ApplicationHero = () => {
     }
   };
 
-  // Significantly increased padding to ensure content is fully visible
+  // Dramatically increased padding to match TuitionHero
   const paddingClasses = isMobile 
-    ? "pt-40 pb-16" // Significantly increased padding for mobile
-    : "pt-52 pb-20"; // Significantly increased desktop padding
+    ? "pt-48 pb-16" // Extremely increased padding for mobile
+    : "pt-60 pb-20"; // Extremely increased desktop padding
 
   return (
     <section className={`relative ${paddingClasses} overflow-hidden bg-apple-text`}>

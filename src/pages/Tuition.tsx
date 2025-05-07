@@ -59,7 +59,7 @@ const Tuition = () => {
         <link rel="preload" as="image" href="/og-image.png" />
       </Helmet>
       
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col relative">
         <Navbar />
         
         <main className="flex-grow bg-white overflow-visible">
