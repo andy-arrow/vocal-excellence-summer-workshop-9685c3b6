@@ -64,7 +64,7 @@ const ApplicationTimeline = () => {
     {
       date: format(APPLICATION_DATES.TUITION_DEADLINE, "MMMM d, yyyy"),
       title: "Tuition Deadline",
-      description: "Full payment (€999) due to secure your place.",
+      description: "Full payment (€749) due to secure your place.",
       icon: <Wallet className="text-apple-blue" />,
       status: getTimelineItemStatus(APPLICATION_DATES.TUITION_DEADLINE)
     },
