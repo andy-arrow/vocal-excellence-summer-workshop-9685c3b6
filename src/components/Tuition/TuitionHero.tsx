@@ -2,6 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { Calendar } from 'lucide-react';
 
 const TuitionHero = React.memo(() => {
   // Optimized animation configuration
@@ -28,9 +29,17 @@ const TuitionHero = React.memo(() => {
           <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-[#141414] tracking-tight leading-tight">
             Tuition & Financial Information
           </h1>
+          
           <p className="text-lg md:text-xl text-[#141414]/70 max-w-2xl mx-auto font-sans">
             Join our transformative program with options designed to support your musical journey
           </p>
+          
+          {/* Program dates with location */}
+          <div className="inline-flex items-center gap-2 text-[#141414]/60 text-sm font-medium mx-auto">
+            <Calendar className="w-4 h-4 text-[#4f6e72]" />
+            <span>14-18 July | Limassol, Cyprus</span>
+          </div>
+          
           <div className="pt-3">
             <motion.div 
               className="h-1 w-16 bg-gradient-to-r from-[#4f6e72] to-[#6a8d91] rounded-full mx-auto"

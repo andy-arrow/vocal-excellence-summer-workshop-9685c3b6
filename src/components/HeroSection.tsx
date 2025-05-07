@@ -81,8 +81,8 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
           >
-            <span className="block mb-2">Unlock Your</span>
-            <span className="text-apple-blue">Vocal Potential</span>
+            <span className="block mb-2">5 Full Days of</span>
+            <span className="text-apple-blue">Exclusive Vocal Training</span>
           </motion.h1>
           
           <motion.p 
@@ -91,11 +91,10 @@ const HeroSection = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.9 }}
           >
-            A transformative 5-day vocal intensive for advancing singers, featuring masterclasses, 
-            private coaching, and performance opportunities with world-class faculty
+            With coaches from London's West End, Netflix & the world's top universities
           </motion.p>
 
-          {/* Refined, more elegant dates indicator */}
+          {/* Program dates with location */}
           <motion.div 
             className="inline-flex items-center gap-2 text-apple-text/80 text-sm font-medium mx-auto"
             initial={{ opacity: 0 }}
@@ -103,12 +102,20 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 1.0 }}
           >
             <Calendar className="w-4 h-4 text-apple-blue" />
-            <span>
-              {applicationsClosed 
-                ? `Applications closed • Next program begins ${format(APPLICATION_DATES.PROGRAM_START, 'MMM d, yyyy')}`
-                : `Applications close ${format(APPLICATION_DATES.DEADLINE, 'MMM d')} • Program begins ${format(APPLICATION_DATES.PROGRAM_START, 'MMM d, yyyy')}`
-              }
-            </span>
+            <span>14-18 July | Limassol, Cyprus</span>
+          </motion.div>
+          
+          {/* Features highlight */}
+          <motion.div 
+            className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs font-medium text-apple-grey/80"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 1.1 }}
+          >
+            <span className="flex items-center"><span className="w-1.5 h-1.5 bg-apple-blue rounded-full mr-2"></span>Masterclasses</span>
+            <span className="flex items-center"><span className="w-1.5 h-1.5 bg-apple-blue rounded-full mr-2"></span>Private Coaching</span>
+            <span className="flex items-center"><span className="w-1.5 h-1.5 bg-apple-blue rounded-full mr-2"></span>Audition Preparation</span>
+            <span className="flex items-center"><span className="w-1.5 h-1.5 bg-apple-blue rounded-full mr-2"></span>Stage Anxiety Techniques</span>
           </motion.div>
 
           <motion.div 
@@ -126,7 +133,7 @@ const HeroSection = () => {
                     : 'bg-apple-blue hover:bg-apple-blue-hover'
                 } text-white rounded-full text-lg font-medium transition-all duration-300 shadow-sm`}
               >
-                {applicationsClosed ? 'Applications Closed' : 'Apply Now'}
+                {applicationsClosed ? 'Applications Closed' : 'Register Now'}
                 {!applicationsClosed && (
                   <ArrowUpRight className="inline-block ml-2 w-5 h-5 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 )}
@@ -136,7 +143,7 @@ const HeroSection = () => {
                 onClick={scrollToDiscoverSection} 
                 className="text-apple-text hover:text-apple-grey px-7 py-3 rounded-full border border-apple-border backdrop-blur-sm transition-all hover:bg-apple-light-hover text-lg font-light"
               >
-                Discover More
+                Learn More
               </button>
             </motion.div>
             
@@ -151,7 +158,7 @@ const HeroSection = () => {
                 {applicationsClosed ? (
                   <span>Applications for {format(APPLICATION_DATES.PROGRAM_START, 'yyyy')} are now closed</span>
                 ) : (
-                  <>Only 20 spots available</>
+                  <>Limited Places Available</>
                 )}
               </p>
               <div className="w-1.5 h-1.5 rounded-full bg-apple-blue animate-pulse-slow"></div>
