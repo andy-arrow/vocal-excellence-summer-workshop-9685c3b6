@@ -60,7 +60,7 @@ const Tuition = () => {
       <div className="min-h-screen flex flex-col">
         <Navbar />
         
-        <main className="flex-grow bg-white overflow-hidden">
+        <main className="flex-grow bg-white overflow-hidden pt-16"> {/* Add padding-top to account for navbar height */}
           <TuitionHero />
           
           <Suspense fallback={<LoadingFallback />}>
