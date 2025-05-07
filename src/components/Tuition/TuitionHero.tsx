@@ -14,17 +14,17 @@ const TuitionHero = React.memo(() => {
 
   const isMobile = useIsMobile();
   
-  // Completely removed top padding for mobile
-  const paddingClasses = isMobile 
-    ? "pt-4 pb-8" // Minimal padding for mobile
+  // Complete rework of padding strategy
+  const containerClasses = isMobile 
+    ? "pt-16 pb-6" // Add padding-top to position below navbar
     : "pt-60 pb-20"; // Keep desktop padding
 
   return (
-    <section className={`${paddingClasses} px-4 bg-gradient-to-b from-white to-[#fafafa] relative z-10`}>
+    <section className={`${containerClasses} px-4 bg-gradient-to-b from-white to-[#fafafa] relative z-10`}>
       <div className="max-w-4xl mx-auto text-center">
         <motion.div
           {...animationConfig}
-          className="space-y-3 md:space-y-5" // Reduced spacing on mobile
+          className="space-y-2 md:space-y-5" // Further reduced spacing on mobile
         >
           <h1 className="font-serif text-2xl md:text-5xl lg:text-6xl font-light text-[#141414] tracking-tight leading-tight">
             Tuition & Financial Information

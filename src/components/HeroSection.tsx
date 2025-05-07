@@ -50,25 +50,28 @@ const HeroSection = () => {
     }
   };
   
-  // CRITICAL FIX: Remove all top padding for mobile
-  const paddingClasses = isMobile 
-    ? "pt-2" // Almost no padding at top for mobile
-    : "pt-60 pb-20"; // Keep desktop padding as is
+  // CRITICAL FIX: Completely different layout approach for mobile vs. desktop
+  const containerClasses = isMobile 
+    ? "py-0 relative flex items-start justify-center" // Remove ALL padding and height constraints for mobile
+    : "pt-60 pb-20 min-h-[80vh] flex items-center justify-center"; // Keep desktop layout
   
   return (
     <section 
       id="home" 
       ref={heroRef} 
       className={cn(
-        "relative min-h-[80vh] flex items-center justify-center overflow-hidden", // Changed to items-center
-        paddingClasses,
+        "relative overflow-hidden", 
+        containerClasses,
         "bg-apple-light border-b border-apple-border",
         hasReducedMotion ? "reduced-motion" : ""
       )}
     >
-      <div className="hero-content relative z-20 text-center px-4 transition-all duration-500 ease-out max-w-5xl mx-auto">
+      <div className={cn(
+        "hero-content relative z-20 text-center px-4 transition-all duration-500 ease-out max-w-5xl mx-auto",
+        isMobile ? "pt-16" : "" // Add padding-top only on mobile to position below navbar
+      )}>
         <motion.div 
-          className="space-y-2 md:space-y-6" // Even more reduced space between elements on mobile
+          className="space-y-1 md:space-y-6" // Further reduce space between elements on mobile
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}

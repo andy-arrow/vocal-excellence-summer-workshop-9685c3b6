@@ -2,7 +2,7 @@
 import * as React from "react"
 
 // Increase the mobile breakpoint to ensure smaller devices are properly detected
-const MOBILE_BREAKPOINT = 768
+const MOBILE_BREAKPOINT = 768 // This ensures tablets are also considered mobile for layout purposes
 
 export function useIsMobile() {
   const [isMobile, setIsMobile] = React.useState<boolean>(false)
