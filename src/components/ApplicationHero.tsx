@@ -19,10 +19,10 @@ const ApplicationHero = () => {
     }
   };
 
-  // Optimized padding to ensure content is fully visible
+  // Increased padding to ensure content is fully visible
   const paddingClasses = isMobile 
-    ? "pt-32 pb-16" // Reduced padding for mobile
-    : "pt-40 pb-20"; // Adjusted desktop padding
+    ? "pt-36 pb-16" // Increased padding for mobile
+    : "pt-44 pb-20"; // Increased desktop padding
 
   return (
     <section className={`relative ${paddingClasses} overflow-hidden bg-apple-text`}>

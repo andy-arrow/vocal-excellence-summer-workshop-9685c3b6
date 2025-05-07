@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowDown, ArrowUpRight, Calendar } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -46,16 +45,14 @@ const HeroSection = () => {
   const scrollToDiscoverSection = () => {
     const aboutSection = document.getElementById('about');
     if (aboutSection) {
-      aboutSection.scrollIntoView({
-        behavior: 'smooth'
-      });
+      aboutSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
   
-  // Updated padding classes for better visibility
+  // Increased padding classes for better visibility below navbar
   const paddingClasses = isMobile 
-    ? "pt-32 pb-16" // Reduced top padding for mobile devices to ensure content is visible
-    : "pt-36 pb-20"; // Adjusted desktop padding for better visibility
+    ? "pt-36 pb-16" // Increased top padding for mobile devices
+    : "pt-44 pb-20"; // Increased desktop padding
   
   return (
     <section 

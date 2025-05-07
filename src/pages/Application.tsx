@@ -48,10 +48,10 @@ const Application = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Optimized padding for better hero section visibility
+  // Increased padding to ensure content is fully visible below navbar
   const paddingClasses = isMobile 
-    ? "pt-32 pb-16" // Reduced top padding for mobile to ensure content is visible
-    : "pt-40 pb-20"; // Adjusted desktop padding
+    ? "pt-36 pb-16" // Increased top padding for mobile to ensure content is visible
+    : "pt-44 pb-20"; // Increased desktop padding for better visibility
 
   return (
     <div className="bg-[#f5f5f7] text-apple-text min-h-screen font-sans antialiased">
