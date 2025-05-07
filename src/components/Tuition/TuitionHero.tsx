@@ -14,10 +14,10 @@ const TuitionHero = React.memo(() => {
 
   const isMobile = useIsMobile();
   
-  // Dramatically increased padding to ensure all content is visible
+  // Significantly reduced padding to ensure content is visible on mobile
   const paddingClasses = isMobile 
-    ? "pt-48 pb-12" // Extremely increased padding for mobile
-    : "pt-60 pb-20"; // Extremely increased desktop padding
+    ? "pt-24 pb-12" // Fixed padding for mobile
+    : "pt-60 pb-20"; // Keep desktop padding
 
   return (
     <section className={`${paddingClasses} px-6 bg-gradient-to-b from-white to-[#fafafa] relative z-10`}>
@@ -26,11 +26,11 @@ const TuitionHero = React.memo(() => {
           {...animationConfig}
           className="space-y-5"
         >
-          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-[#141414] tracking-tight leading-tight">
+          <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl font-light text-[#141414] tracking-tight leading-tight">
             Tuition & Financial Information
           </h1>
           
-          <p className="text-lg md:text-xl text-[#141414]/70 max-w-2xl mx-auto font-sans">
+          <p className="text-base md:text-xl text-[#141414]/70 max-w-2xl mx-auto font-sans">
             Join our transformative program with options designed to support your musical journey
           </p>
           
