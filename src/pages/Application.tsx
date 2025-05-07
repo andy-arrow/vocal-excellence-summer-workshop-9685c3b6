@@ -48,10 +48,10 @@ const Application = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Dramatically increased padding to match TuitionHero and ensure content is fully visible
+  // Adjusted padding classes to bring the content down much less
   const paddingClasses = isMobile 
-    ? "pt-48 pb-16" // Extremely increased top padding for mobile
-    : "pt-60 pb-20"; // Extremely increased desktop padding
+    ? "pt-6 mt-14 pb-16" // Reduced top padding
+    : "pt-32 pb-20"; // Reduced from pt-60 to pt-32
 
   return (
     <div className="bg-[#f5f5f7] text-apple-text min-h-screen font-sans antialiased">
