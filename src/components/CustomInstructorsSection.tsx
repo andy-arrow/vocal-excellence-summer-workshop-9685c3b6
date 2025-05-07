@@ -28,11 +28,11 @@ const INSTRUCTORS = [
     bio: "Broadway performer turned educator, specializing in stage presence and dramatic interpretation for singers."
   },
   {
-    name: "Dr. Jonathan Rivera",
+    name: "Aris Antoniades",
     title: "Vocal Health Specialist",
     institution: "University College Hospital",
     image: "/lovable-uploads/e980c9b0-8cdc-423d-a726-2f677be33737.png",
-    bio: "ENT physician specializing in performers' vocal health with 15 years of experience treating professional singers."
+    bio: "Aris Antoniades is a Cypriot composer, arranger, and music director whose acclaimed work bridges the worlds of symphonic, jazz, theatrical, and film music. Praised for its emotional depth and structural clarity, his music has been performed by symphony orchestras, big bands, and celebrated soloists around the world. He has collaborated with iconic artists such as nine-time Grammy nominee Bobby Sanabria, legendary Greek musicians Alkistis Protopsalti and George Hatzinassios, and Broadway and West End stars in major productions. As artistic director and principal conductor of the TrakArt Pops Orchestra, he has led high-profile national concerts in Cyprus, while his compositions have been featured at international festivals, on commercial albums, and on global streaming platforms. A Fulbright Scholar with degrees from the Manhattan School of Music, Aris continues to craft imaginative, storytelling-driven music that resonates across genres and cultures."
   }
 ];
 
