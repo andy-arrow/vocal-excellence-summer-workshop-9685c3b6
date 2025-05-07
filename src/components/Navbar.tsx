@@ -71,6 +71,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
           ? "bg-white/95 backdrop-blur-md border-b border-apple-border" 
           : "bg-apple-light/90 backdrop-blur-md"
       )}
+      style={{ height: '64px' }} // Fixed height for navbar to make calculations easier
     >
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 flex items-center justify-between">
         <Link 

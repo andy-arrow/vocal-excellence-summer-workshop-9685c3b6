@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowDown, ArrowUpRight, Calendar } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -62,7 +61,8 @@ const HeroSection = () => {
       id="home" 
       ref={heroRef} 
       className={cn(
-        "relative min-h-[90vh] flex items-center justify-center overflow-hidden",
+        "relative min-h-[85vh] flex items-center justify-center overflow-hidden",
+        "mt-16 pt-16 md:pt-20 pb-16 md:pb-20", // Add margin-top to account for navbar height
         paddingClasses,
         "bg-apple-light border-b border-apple-border",
         hasReducedMotion ? "reduced-motion" : ""

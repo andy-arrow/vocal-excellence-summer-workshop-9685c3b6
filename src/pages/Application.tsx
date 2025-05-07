@@ -1,4 +1,3 @@
-
 import React, { useEffect, lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
@@ -48,11 +47,6 @@ const Application = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Optimized padding for better hero section visibility
-  const paddingClasses = isMobile 
-    ? "pt-32 pb-16" // Reduced top padding for mobile to ensure content is visible
-    : "pt-40 pb-20"; // Adjusted desktop padding
-
   return (
     <div className="bg-[#f5f5f7] text-apple-text min-h-screen font-sans antialiased">
       <Helmet>
@@ -66,7 +60,7 @@ const Application = () => {
         
         <main className="flex-grow">
           <div className="bg-gradient-to-b from-white to-[#f5f5f7] border-b border-apple-border/10">
-            <div className={`max-w-5xl mx-auto px-6 md:px-8 ${paddingClasses}`}>
+            <div className="max-w-5xl mx-auto px-6 md:px-8 mt-16 pt-16 md:pt-20 pb-16 md:pb-20">
               <motion.div 
                 className="text-center"
                 initial={{ opacity: 0, y: 20 }}
