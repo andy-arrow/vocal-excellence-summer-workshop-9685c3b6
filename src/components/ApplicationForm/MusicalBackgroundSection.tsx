@@ -28,7 +28,7 @@ const MusicalBackgroundSection = () => {
     <div className="space-y-8">
       <div className="flex items-center gap-3">
         <Music className="h-5 w-5 text-apple-blue" />
-        <h3 className="text-xl font-bold text-apple-text">Musical Background</h3>
+        <h3 className="text-xl font-bold text-apple-text">Vocal Information</h3>
       </div>
       
       <div className="space-y-8 bg-slate-50 p-6 rounded-xl border border-slate-200 shadow-sm">
@@ -66,18 +66,18 @@ const MusicalBackgroundSection = () => {
           )}
         />
 
-        {/* Years of Experience */}
+        {/* Years of Singing */}
         <FormField
           control={form.control}
           name="yearsOfExperience"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-apple-text font-medium text-base">
-                Years of Experience
+                Years of Singing
                 <span className="text-red-700 ml-1">*</span>
               </FormLabel>
               <FormDescription className="text-apple-grey mt-0.5 mb-1.5">
-                How many years have you been singing/performing?
+                How many years have you been singing? (Enter 0 if you're just starting)
               </FormDescription>
               <FormControl>
                 <Input 
@@ -93,24 +93,24 @@ const MusicalBackgroundSection = () => {
           )}
         />
 
-        {/* Musical Background */}
+        {/* Vocal Background */}
         <FormField
           control={form.control}
           name="musicalBackground"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-apple-text font-medium text-base">
-                Musical Background
+                Your Singing Journey
                 <span className="text-red-700 ml-1">*</span>
               </FormLabel>
               <FormDescription className="text-apple-grey mt-0.5 mb-1.5">
-                Describe your musical education, training, and experience
+                Tell us about your relationship with singing (formal or informal)
               </FormDescription>
               <FormControl>
                 <Textarea 
                   {...field}
                   className="bg-white border-apple-border text-apple-text placeholder:text-apple-grey min-h-[120px] resize-y"
-                  placeholder="Tell us about your musical education, training, and experience..."
+                  placeholder="Share anything about your singing journey so far..."
                 />
               </FormControl>
               <FormMessage className="text-red-700 font-medium" />

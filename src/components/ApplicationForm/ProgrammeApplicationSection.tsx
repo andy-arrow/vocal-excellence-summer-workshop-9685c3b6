@@ -40,7 +40,7 @@ const ProgrammeApplicationSection = () => {
                 </FormLabel>
                 <FormControl>
                   <Textarea 
-                    placeholder="Please explain your interest in the programme and what you hope to achieve"
+                    placeholder="Please explain why you're interested in the programme and what you hope to achieve"
                     className="min-h-[150px] rounded-xl border-apple-border focus:border-apple-blue focus:ring-0 text-apple-text placeholder:text-apple-grey"
                     {...field}
                   />
