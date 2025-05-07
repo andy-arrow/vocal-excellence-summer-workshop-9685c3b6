@@ -15,7 +15,7 @@ const TuitionHero = React.memo(() => {
   const isMobile = useIsMobile();
 
   return (
-    <section className="pt-28 md:pt-36 pb-10 px-6 bg-gradient-to-b from-white to-[#fafafa]">
+    <section className="pt-24 md:pt-36 pb-10 px-6 bg-gradient-to-b from-white to-[#fafafa]">
       <div className="max-w-4xl mx-auto text-center">
         <motion.div
           {...animationConfig}

@@ -61,25 +61,27 @@ const Index = () => {
     >
       <Navbar />
       
-      {/* Hero Section - loads immediately */}
-      <HeroSection />
-      
-      {/* Lazy loaded sections with optimized suspense boundaries */}
-      <Suspense fallback={<SectionLoader />}>
-        <AboutSection />
-      </Suspense>
-      
-      <Suspense fallback={<SectionLoader />}>
-        <CurriculumSection />
-      </Suspense>
-      
-      <Suspense fallback={<SectionLoader />}>
-        <InstructorsSection />
-      </Suspense>
-      
-      <Suspense fallback={<SectionLoader />}>
-        <CTASection />
-      </Suspense>
+      <div style={{ paddingTop: '64px' }}>
+        {/* Hero Section - loads immediately */}
+        <HeroSection />
+        
+        {/* Lazy loaded sections with optimized suspense boundaries */}
+        <Suspense fallback={<SectionLoader />}>
+          <AboutSection />
+        </Suspense>
+        
+        <Suspense fallback={<SectionLoader />}>
+          <CurriculumSection />
+        </Suspense>
+        
+        <Suspense fallback={<SectionLoader />}>
+          <InstructorsSection />
+        </Suspense>
+        
+        <Suspense fallback={<SectionLoader />}>
+          <CTASection />
+        </Suspense>
+      </div>
       
       {/* Progress indicator */}
       <div className="fixed top-0 left-0 w-full h-1 z-50">
