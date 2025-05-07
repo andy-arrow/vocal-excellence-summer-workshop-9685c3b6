@@ -14,10 +14,10 @@ const TuitionHero = React.memo(() => {
 
   const isMobile = useIsMobile();
   
-  // Adjusted padding to match main hero and ensure content visibility
+  // Adjusted padding for better visibility
   const paddingClasses = isMobile 
-    ? "pt-40 pb-10" // Reduced padding for mobile to match main hero
-    : "pt-40 pb-10 md:pt-48"; // Adjusted desktop padding to match main hero
+    ? "pt-32 pb-10" // Reduced padding for mobile to match main hero and ensure content visibility
+    : "pt-36 pb-10"; // Adjusted desktop padding
 
   return (
     <section className={`${paddingClasses} px-6 bg-gradient-to-b from-white to-[#fafafa]`}>

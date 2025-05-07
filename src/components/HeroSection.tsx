@@ -52,17 +52,17 @@ const HeroSection = () => {
     }
   };
   
-  // Optimized padding for better visibility, reduced top padding on mobile
+  // Updated padding classes for better visibility
   const paddingClasses = isMobile 
-    ? "pt-40 pb-16" // Reduced padding-top for mobile to ensure content is visible
-    : "pt-36 md:pt-48"; // Adjusted desktop padding
+    ? "pt-32 pb-16" // Reduced top padding for mobile devices to ensure content is visible
+    : "pt-36 pb-20"; // Adjusted desktop padding for better visibility
   
   return (
     <section 
       id="home" 
       ref={heroRef} 
       className={cn(
-        "relative min-h-screen flex items-center justify-center overflow-hidden",
+        "relative min-h-[90vh] flex items-center justify-center overflow-hidden",
         paddingClasses,
         "bg-apple-light border-b border-apple-border",
         hasReducedMotion ? "reduced-motion" : ""

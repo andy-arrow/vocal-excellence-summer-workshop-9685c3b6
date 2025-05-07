@@ -48,10 +48,10 @@ const Application = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Dramatically increase padding for mobile devices
+  // Optimized padding for better hero section visibility
   const paddingClasses = isMobile 
-    ? "pt-64 pb-20" // Extreme padding-top for mobile to ensure content is visible
-    : "pt-56 pb-24 md:pt-64"; // Maintain desktop padding
+    ? "pt-32 pb-16" // Reduced top padding for mobile to ensure content is visible
+    : "pt-40 pb-20"; // Adjusted desktop padding
 
   return (
     <div className="bg-[#f5f5f7] text-apple-text min-h-screen font-sans antialiased">
