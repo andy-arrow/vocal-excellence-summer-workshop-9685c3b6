@@ -149,7 +149,7 @@ const TuitionTiers = () => {
                           </h5>
                           <ul className="mt-3 space-y-2 pl-6 text-[#141414]/70 font-sans text-sm">
                             <li>€100 deposit upon acceptance</li>
-                            <li>Three equal installments of €249.67 each</li>
+                            <li>Three equal installments of €216.33 each</li>
                             <li>Final payment by {tuitionDeadline}</li>
                             <li>Total tuition: €749</li>
                           </ul>
