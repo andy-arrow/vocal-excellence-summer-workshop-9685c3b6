@@ -13,9 +13,14 @@ const TuitionHero = React.memo(() => {
   };
 
   const isMobile = useIsMobile();
+  
+  // Adjusted padding for better visibility
+  const paddingClasses = isMobile 
+    ? "pt-32 pb-10" // Reduced padding for mobile to match main hero and ensure content visibility
+    : "pt-36 pb-10"; // Adjusted desktop padding
 
   return (
-    <section className="pt-24 md:pt-28 pb-10 px-6 bg-gradient-to-b from-white to-[#fafafa]">
+    <section className={`${paddingClasses} px-6 bg-gradient-to-b from-white to-[#fafafa]`}>
       <div className="max-w-4xl mx-auto text-center">
         <motion.div
           {...animationConfig}

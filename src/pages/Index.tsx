@@ -54,34 +54,32 @@ const Index = () => {
 
   return (
     <motion.div 
-      className="min-h-screen overflow-visible"
+      className="min-h-screen overflow-hidden"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
       <Navbar />
       
-      <div>
-        {/* Hero Section - loads immediately */}
-        <HeroSection />
-        
-        {/* Lazy loaded sections with optimized suspense boundaries */}
-        <Suspense fallback={<SectionLoader />}>
-          <AboutSection />
-        </Suspense>
-        
-        <Suspense fallback={<SectionLoader />}>
-          <CurriculumSection />
-        </Suspense>
-        
-        <Suspense fallback={<SectionLoader />}>
-          <InstructorsSection />
-        </Suspense>
-        
-        <Suspense fallback={<SectionLoader />}>
-          <CTASection />
-        </Suspense>
-      </div>
+      {/* Hero Section - loads immediately */}
+      <HeroSection />
+      
+      {/* Lazy loaded sections with optimized suspense boundaries */}
+      <Suspense fallback={<SectionLoader />}>
+        <AboutSection />
+      </Suspense>
+      
+      <Suspense fallback={<SectionLoader />}>
+        <CurriculumSection />
+      </Suspense>
+      
+      <Suspense fallback={<SectionLoader />}>
+        <InstructorsSection />
+      </Suspense>
+      
+      <Suspense fallback={<SectionLoader />}>
+        <CTASection />
+      </Suspense>
       
       {/* Progress indicator */}
       <div className="fixed top-0 left-0 w-full h-1 z-50">
@@ -94,6 +92,10 @@ const Index = () => {
       </div>
       
       <Suspense fallback={null}>
+        <ScrollToTopButton visible={scrolled} />
+      </Suspense>
+      
+      <Suspense fallback={<SectionLoader />}>
         <Footer />
       </Suspense>
     </motion.div>
