@@ -79,10 +79,11 @@ async function saveApplicationToDatabase(data: ApplicationData): Promise<string>
       country: data.country,
       postalcode: data.postalCode,
       vocalrange: data.vocalRange,
-      yearsofSinging: data.yearsOfSinging,
+      yearsofexperience: data.yearsOfSinging, // Map from yearsOfSinging to yearsofexperience
       musicalbackground: data.musicalBackground,
       teachername: data.teacherName || null,
       teacheremail: data.teacherEmail || null,
+      performanceexperience: '', // Provide an empty string for the required field
       reasonforapplying: data.reasonForApplying,
       heardaboutus: data.heardAboutUs,
       scholarshipinterest: data.scholarshipInterest,

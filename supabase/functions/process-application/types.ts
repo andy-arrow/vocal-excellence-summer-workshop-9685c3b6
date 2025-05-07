@@ -1,4 +1,3 @@
-
 export interface ApplicationData {
   firstName: string;
   lastName: string;
@@ -11,7 +10,7 @@ export interface ApplicationData {
   country: string;
   postalCode: string;
   vocalRange: string;
-  yearsOfSinging: string;
+  yearsOfSinging: string; // Changed from yearsOfExperience to yearsOfSinging
   musicalBackground: string;
   teacherName?: string;
   teacherEmail?: string;
