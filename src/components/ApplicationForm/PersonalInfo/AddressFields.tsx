@@ -6,7 +6,8 @@ import {
   FormItem, 
   FormLabel, 
   FormControl, 
-  FormMessage 
+  FormMessage,
+  FormDescription
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import {
@@ -30,7 +31,10 @@ const AddressFields = () => {
           name="address"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-gray-900 font-medium" htmlFor="address">Address</FormLabel>
+              <FormLabel className="text-apple-text font-medium text-base" htmlFor="address">
+                Address
+                <span className="text-red-700 ml-1">*</span>
+              </FormLabel>
               <FormControl>
                 <Input 
                   {...field}
@@ -38,7 +42,7 @@ const AddressFields = () => {
                   placeholder="Street address"
                   autoComplete="street-address"
                   aria-required="true"
-                  className="text-gray-900 placeholder:text-gray-500"
+                  className="text-apple-text placeholder:text-apple-grey"
                 />
               </FormControl>
               <FormMessage className="text-red-700" />
@@ -53,7 +57,10 @@ const AddressFields = () => {
           name="city"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-gray-900 font-medium" htmlFor="city">City</FormLabel>
+              <FormLabel className="text-apple-text font-medium text-base" htmlFor="city">
+                City
+                <span className="text-red-700 ml-1">*</span>
+              </FormLabel>
               <FormControl>
                 <Input 
                   {...field}
@@ -61,7 +68,7 @@ const AddressFields = () => {
                   placeholder="City"
                   autoComplete="address-level2"
                   aria-required="true"
-                  className="text-gray-900 placeholder:text-gray-500"
+                  className="text-apple-text placeholder:text-apple-grey"
                 />
               </FormControl>
               <FormMessage className="text-red-700" />
@@ -74,25 +81,27 @@ const AddressFields = () => {
           name="country"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-gray-900 font-medium">Country</FormLabel>
-              <Select onValueChange={field.onChange} value={field.value || ""}>
-                <FormControl>
-                  <SelectTrigger className="text-gray-900">
-                    <SelectValue placeholder="Select your country" className="text-gray-900" />
+              <FormLabel className="text-apple-text font-medium text-base">
+                Country
+                <span className="text-red-700 ml-1">*</span>
+              </FormLabel>
+              <FormControl>
+                <Select onValueChange={field.onChange} value={field.value || ""}>
+                  <SelectTrigger className="bg-white text-apple-text">
+                    <SelectValue placeholder="Select your country" />
                   </SelectTrigger>
-                </FormControl>
-                <SelectContent className="text-gray-900">
-                  {countries.map((country) => (
-                    <SelectItem 
-                      key={country.value} 
-                      value={country.value}
-                      className="text-gray-900"
-                    >
-                      {country.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                  <SelectContent className="max-h-[280px]">
+                    {countries.map((country) => (
+                      <SelectItem 
+                        key={country.value} 
+                        value={country.value}
+                      >
+                        {country.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </FormControl>
               <FormMessage className="text-red-700" />
             </FormItem>
           )}
@@ -103,7 +112,10 @@ const AddressFields = () => {
           name="postalCode"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-gray-900 font-medium" htmlFor="postalCode">Postal/Zip Code</FormLabel>
+              <FormLabel className="text-apple-text font-medium text-base" htmlFor="postalCode">
+                Postal/Zip Code
+                <span className="text-red-700 ml-1">*</span>
+              </FormLabel>
               <FormControl>
                 <Input 
                   {...field}
@@ -111,7 +123,7 @@ const AddressFields = () => {
                   placeholder="Postal/Zip code"
                   autoComplete="postal-code"
                   aria-required="true"
-                  className="text-gray-900 placeholder:text-gray-500"
+                  className="text-apple-text placeholder:text-apple-grey"
                 />
               </FormControl>
               <FormMessage className="text-red-700" />

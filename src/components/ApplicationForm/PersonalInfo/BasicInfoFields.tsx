@@ -6,7 +6,8 @@ import {
   FormItem, 
   FormLabel, 
   FormControl, 
-  FormMessage 
+  FormMessage,
+  FormDescription 
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import {
@@ -29,7 +30,10 @@ const BasicInfoFields = () => {
         name="firstName"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-gray-900 font-medium" htmlFor="firstName">First Name</FormLabel>
+            <FormLabel className="text-apple-text font-medium text-base" htmlFor="firstName">
+              First Name
+              <span className="text-red-700 ml-1">*</span>
+            </FormLabel>
             <FormControl>
               <Input 
                 {...field}
@@ -37,7 +41,7 @@ const BasicInfoFields = () => {
                 placeholder="First name"
                 autoComplete="given-name"
                 aria-required="true"
-                className="text-gray-900 placeholder:text-gray-500"
+                className="text-apple-text placeholder:text-apple-grey"
               />
             </FormControl>
             <FormMessage className="text-red-700" />
@@ -50,7 +54,10 @@ const BasicInfoFields = () => {
         name="lastName"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-gray-900 font-medium" htmlFor="lastName">Last Name</FormLabel>
+            <FormLabel className="text-apple-text font-medium text-base" htmlFor="lastName">
+              Last Name
+              <span className="text-red-700 ml-1">*</span>
+            </FormLabel>
             <FormControl>
               <Input 
                 {...field}
@@ -58,7 +65,7 @@ const BasicInfoFields = () => {
                 placeholder="Last name"
                 autoComplete="family-name"
                 aria-required="true"
-                className="text-gray-900 placeholder:text-gray-500"
+                className="text-apple-text placeholder:text-apple-grey"
               />
             </FormControl>
             <FormMessage className="text-red-700" />
@@ -71,7 +78,10 @@ const BasicInfoFields = () => {
         name="dateOfBirth"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-gray-900 font-medium" htmlFor="dateOfBirth">Date of Birth</FormLabel>
+            <FormLabel className="text-apple-text font-medium text-base" htmlFor="dateOfBirth">
+              Date of Birth
+              <span className="text-red-700 ml-1">*</span>
+            </FormLabel>
             <FormControl>
               <Input 
                 {...field}
@@ -79,7 +89,7 @@ const BasicInfoFields = () => {
                 id="dateOfBirth"
                 autoComplete="bday"
                 aria-required="true"
-                className="text-gray-900"
+                className="text-apple-text bg-white"
               />
             </FormControl>
             <FormMessage className="text-red-700" />
@@ -92,25 +102,27 @@ const BasicInfoFields = () => {
         name="nationality"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-gray-900 font-medium">Nationality</FormLabel>
-            <Select onValueChange={field.onChange} value={field.value || ""}>
-              <FormControl>
-                <SelectTrigger className="text-gray-900">
-                  <SelectValue placeholder="Select your nationality" className="text-gray-900" />
+            <FormLabel className="text-apple-text font-medium text-base">
+              Nationality
+              <span className="text-red-700 ml-1">*</span>
+            </FormLabel>
+            <FormControl>
+              <Select onValueChange={field.onChange} value={field.value || ""}>
+                <SelectTrigger className="bg-white text-apple-text">
+                  <SelectValue placeholder="Select your nationality" />
                 </SelectTrigger>
-              </FormControl>
-              <SelectContent className="text-gray-900">
-                {nationalities.map((nationality) => (
-                  <SelectItem 
-                    key={nationality.value} 
-                    value={nationality.value}
-                    className="text-gray-900"
-                  >
-                    {nationality.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+                <SelectContent className="max-h-[280px]">
+                  {nationalities.map((nationality) => (
+                    <SelectItem 
+                      key={nationality.value} 
+                      value={nationality.value}
+                    >
+                      {nationality.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </FormControl>
             <FormMessage className="text-red-700" />
           </FormItem>
         )}
