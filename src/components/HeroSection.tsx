@@ -50,9 +50,9 @@ const HeroSection = () => {
     }
   };
   
-  // Drastically reduced top padding for mobile to fix visibility issues
+  // CRITICAL FIX: Remove all top padding for mobile
   const paddingClasses = isMobile 
-    ? "pt-8 pb-10" // Significantly reduced padding for mobile
+    ? "pt-2" // Almost no padding at top for mobile
     : "pt-60 pb-20"; // Keep desktop padding as is
   
   return (
@@ -60,31 +60,31 @@ const HeroSection = () => {
       id="home" 
       ref={heroRef} 
       className={cn(
-        "relative min-h-[90vh] flex items-start justify-center overflow-hidden", // Changed to items-start for mobile
+        "relative min-h-[80vh] flex items-center justify-center overflow-hidden", // Changed to items-center
         paddingClasses,
         "bg-apple-light border-b border-apple-border",
         hasReducedMotion ? "reduced-motion" : ""
       )}
     >
-      <div className="hero-content relative z-20 text-center px-4 transition-all duration-500 ease-out max-w-5xl mx-auto mt-12 md:mt-0">
+      <div className="hero-content relative z-20 text-center px-4 transition-all duration-500 ease-out max-w-5xl mx-auto">
         <motion.div 
-          className="space-y-3 md:space-y-6" // Reduced space between elements on mobile
+          className="space-y-2 md:space-y-6" // Even more reduced space between elements on mobile
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
           <motion.h1 
-            className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-light text-apple-text mb-2 md:mb-4 tracking-tight"
+            className="font-serif text-xl sm:text-3xl md:text-4xl lg:text-6xl font-light text-apple-text mb-1 md:mb-4 tracking-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
           >
-            <span className="block mb-1 md:mb-2">5 Full Days of</span>
+            <span className="block mb-0 md:mb-2">5 Full Days of</span>
             <span className="text-apple-blue">Exclusive Vocal Training</span>
           </motion.h1>
           
           <motion.p 
-            className="font-sans text-sm sm:text-base md:text-lg lg:text-xl text-apple-grey max-w-2xl mx-auto leading-relaxed"
+            className="font-sans text-xs sm:text-base md:text-lg lg:text-xl text-apple-grey max-w-2xl mx-auto leading-relaxed"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.9 }}
@@ -117,7 +117,7 @@ const HeroSection = () => {
           </motion.div>
 
           <motion.div 
-            className="pt-3 md:pt-6" // Reduced top padding on mobile
+            className="pt-2 md:pt-6" // Reduced top padding further on mobile
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.1 }}
@@ -146,7 +146,7 @@ const HeroSection = () => {
             </motion.div>
             
             <motion.div 
-              className="flex items-center justify-center mt-4 sm:mt-6 md:mt-8 space-x-1"
+              className="flex items-center justify-center mt-3 sm:mt-6 md:mt-8 space-x-1"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.3, duration: 0.5 }}
@@ -165,22 +165,25 @@ const HeroSection = () => {
         </motion.div>
       </div>
       
-      <motion.button 
-        onClick={scrollToDiscoverSection} 
-        className="absolute bottom-4 md:bottom-8 left-0 right-0 mx-auto w-8 h-8 md:w-12 md:h-12 cursor-pointer z-20 flex items-center justify-center"
-        aria-label="Scroll down"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.5, duration: 0.8 }}
-      >
-        <motion.div 
-          className="rounded-full bg-apple-border/20 backdrop-blur-sm border border-apple-border p-2 md:p-3 hover:bg-apple-border/40 transition-all"
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity, repeatType: "loop" }}
+      {/* Hide the scroll button on mobile to save space */}
+      {!isMobile && (
+        <motion.button 
+          onClick={scrollToDiscoverSection} 
+          className="absolute bottom-4 md:bottom-8 left-0 right-0 mx-auto w-8 h-8 md:w-12 md:h-12 cursor-pointer z-20 flex items-center justify-center"
+          aria-label="Scroll down"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.5, duration: 0.8 }}
         >
-          <ArrowDown className="text-apple-text w-3 h-3 md:w-5 md:h-5" />
-        </motion.div>
-      </motion.button>
+          <motion.div 
+            className="rounded-full bg-apple-border/20 backdrop-blur-sm border border-apple-border p-2 md:p-3 hover:bg-apple-border/40 transition-all"
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 2, repeat: Infinity, repeatType: "loop" }}
+          >
+            <ArrowDown className="text-apple-text w-3 h-3 md:w-5 md:h-5" />
+          </motion.div>
+        </motion.button>
+      )}
     </section>
   );
 };
