@@ -84,14 +84,14 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-center">
                 <Mail className="w-4 h-4 text-[#424245] mr-2" />
-                <a href="mailto:info@vocalexcellence.com" className="text-[12px] leading-[1.33337] text-[#424245] hover:text-[#1d1d1f] transition-colors duration-300">
-                  info@vocalexcellence.com
+                <a href="mailto:info@vocalexcellence.cy" className="text-[12px] leading-[1.33337] text-[#424245] hover:text-[#1d1d1f] transition-colors duration-300">
+                  info@vocalexcellence.cy
                 </a>
               </li>
               <li className="flex items-center">
                 <Phone className="w-4 h-4 text-[#424245] mr-2" />
-                <a href="tel:+35799123456" className="text-[12px] leading-[1.33337] text-[#424245] hover:text-[#1d1d1f] transition-colors duration-300">
-                  +357 99 123 456
+                <a href="tel:+35725775885" className="text-[12px] leading-[1.33337] text-[#424245] hover:text-[#1d1d1f] transition-colors duration-300">
+                  +357 25 775 885
                 </a>
               </li>
               <li className="flex items-center">

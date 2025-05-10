@@ -27,7 +27,7 @@ const ContactInfoFields = () => {
                 {...field}
                 type="email"
                 id="email"
-                placeholder="Your email"
+                placeholder="your.email@example.com"
                 autoComplete="email"
                 aria-required="true"
                 className="text-gray-900 placeholder:text-gray-500"
@@ -49,7 +49,7 @@ const ContactInfoFields = () => {
                 {...field}
                 type="tel"
                 id="phone"
-                placeholder="Your phone number"
+                placeholder="+357 XX XXX XXX"
                 autoComplete="tel"
                 aria-required="true"
                 className="text-gray-900 placeholder:text-gray-500"
