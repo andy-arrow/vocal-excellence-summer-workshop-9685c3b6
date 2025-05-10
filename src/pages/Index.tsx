@@ -5,7 +5,6 @@ import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import { toast } from '@/hooks/use-toast';
 import { useScrollPosition } from '@/hooks/use-scroll-position';
-import { useLocation } from 'react-router-dom';
 
 // Optimized lazy loading with explicit chunk names
 const AboutSection = lazy(() => 
@@ -14,6 +13,7 @@ const AboutSection = lazy(() =>
 const CurriculumSection = lazy(() => 
   import(/* webpackChunkName: "curriculum" */ '@/components/CurriculumSection')
 );
+// Use the original InstructorsSection instead of CustomInstructorsSection
 const InstructorsSection = lazy(() => 
   import(/* webpackChunkName: "instructors" */ '@/components/InstructorsSection')
 );
@@ -36,7 +36,6 @@ const SectionLoader = () => (
 
 const Index = () => {
   const scrolled = useScrollPosition();
-  const location = useLocation();
   
   useEffect(() => {
     if (!localStorage.getItem('visitedBefore')) {
@@ -52,25 +51,6 @@ const Index = () => {
       return () => clearTimeout(timeoutId);
     }
   }, []);
-
-  // Handle scrolling to sections when navigating with hash
-  useEffect(() => {
-    // Extract the hash from the URL
-    const hash = location.hash.replace('#', '');
-    
-    if (hash) {
-      // Add a small delay to ensure all components are loaded
-      setTimeout(() => {
-        const element = document.getElementById(hash);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 300);
-    } else {
-      // If no hash, scroll to top when navigating to the page
-      window.scrollTo(0, 0);
-    }
-  }, [location.hash]);
 
   return (
     <motion.div 

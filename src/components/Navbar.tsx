@@ -47,13 +47,11 @@ const Navbar = ({ activeSection }: NavbarProps) => {
     setIsMenuOpen(false);
     
     if (location.pathname === '/') {
-      // On home page, scroll to the section
       const element = document.getElementById(id);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
       }
     } else {
-      // On other pages, navigate to home page with hash
       window.location.href = `/#${id}`;
     }
   };
