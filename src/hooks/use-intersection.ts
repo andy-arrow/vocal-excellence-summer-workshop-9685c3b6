@@ -1,36 +1,45 @@
 
-import { useState, useEffect, useRef, RefObject } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
-interface IntersectionOptions {
+interface UseIntersectionObserverProps {
   threshold?: number;
   rootMargin?: string;
+  triggerOnce?: boolean;
 }
 
-export function useIntersection<T extends HTMLElement = HTMLElement>(
-  options: IntersectionOptions = {}
-): [RefObject<T>, boolean] {
-  const [isVisible, setIsVisible] = useState(false);
-  const elementRef = useRef<T>(null);
+export const useIntersectionObserver = ({
+  threshold = 0,
+  rootMargin = '0px',
+  triggerOnce = false,
+}: UseIntersectionObserverProps = {}) => {
+  const [isInView, setIsInView] = useState(false);
+  const ref = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    const element = elementRef.current;
-    if (!element) return;
-
     const observer = new IntersectionObserver(
       ([entry]) => {
-        requestAnimationFrame(() => {
-          setIsVisible(entry.isIntersecting);
-        });
+        const isIntersecting = entry.isIntersecting;
+        setIsInView(isIntersecting);
+        
+        // If triggerOnce is true and the element is intersecting, disconnect the observer
+        if (triggerOnce && isIntersecting && ref.current) {
+          observer.unobserve(ref.current);
+        }
       },
-      {
-        threshold: options.threshold || 0,
-        rootMargin: options.rootMargin || '0px'
-      }
+      { threshold, rootMargin }
     );
 
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, [options.threshold, options.rootMargin]);
+    const currentRef = ref.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
 
-  return [elementRef, isVisible];
-}
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [threshold, rootMargin, triggerOnce]);
+
+  return { ref, isInView };
+};

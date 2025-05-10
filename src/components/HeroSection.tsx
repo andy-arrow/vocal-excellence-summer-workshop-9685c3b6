@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import SpotsRemainingIndicator from './SpotsRemainingIndicator';
-import { AlertBanner } from './AlertBanner';
+import AlertBanner from './AlertBanner';
 
 const HeroSection = () => {
   return (
@@ -76,7 +76,11 @@ const HeroSection = () => {
         transition={{ duration: 1, delay: 1 }}
         className="absolute bottom-0 left-0 w-full"
       >
-        <AlertBanner />
+        <AlertBanner 
+          title="Limited spots available" 
+          message="Reserve your place in the Vocal Excellence Summer Workshop today!"
+          type="info"
+        />
       </motion.div>
       
       {/* Background decorative elements */}
