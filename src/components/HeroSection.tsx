@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import { APPLICATION_DATES } from './ApplicationTimeline';
 import { useIsMobile } from '@/hooks/use-mobile';
+import AlertBanner from './AlertBanner';
 
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -128,7 +129,7 @@ const HeroSection = () => {
                     : 'bg-apple-blue hover:bg-apple-blue-hover'
                 } text-white rounded-full text-base font-medium transition-all duration-300 text-center`}
               >
-                {applicationsClosed ? 'Applications Closed' : 'Register Now'}
+                {applicationsClosed ? 'Applications Closed' : 'Apply in 3 Steps'}
                 {!applicationsClosed && (
                   <ArrowUpRight className="inline-block ml-2 w-4 h-4 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 )}

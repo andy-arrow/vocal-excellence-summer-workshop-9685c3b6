@@ -50,8 +50,8 @@ const Application = () => {
 
   // Significantly increased padding to push content much lower
   const paddingClasses = isMobile 
-    ? "pt-32 mt-24 pb-16" // Significantly increased top padding for mobile
-    : "pt-64 pb-20"; // Significantly increased desktop padding
+    ? "pt-24 pb-16" // Reduced top padding for mobile
+    : "pt-32 pb-20"; // Reduced desktop padding to get to form faster
 
   return (
     <div className="bg-[#f5f5f7] text-apple-text min-h-screen font-sans antialiased">
@@ -76,20 +76,40 @@ const Application = () => {
                 <span className="inline-block text-apple-grey text-sm tracking-wide uppercase mb-4 font-medium">
                   Summer Workshop 2025
                 </span>
-                <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-apple-text mb-6 tracking-tight">
-                  Your Journey To
-                  <span className="block mt-2">Vocal Mastery</span>
+                <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-apple-text mb-4 tracking-tight">
+                  Application Form
                 </h1>
-                <p className="font-sans text-lg md:text-xl text-apple-grey max-w-2xl mx-auto leading-relaxed">
-                  Join our exclusive 5-day Workshop where world-class mentors will transform your voice and elevate your technique to new heights.
+                <p className="font-sans text-lg md:text-xl text-apple-grey max-w-2xl mx-auto leading-relaxed mb-6">
+                  Join our exclusive 5-day workshop. Complete the form below to apply.
                 </p>
+                <a 
+                  href="#application-form-section"
+                  className="inline-flex items-center justify-center px-6 py-3 bg-apple-blue text-white rounded-full hover:bg-apple-blue-hover transition-colors font-medium"
+                >
+                  Get Started
+                </a>
               </motion.div>
             </div>
           </div>
           
-          <div className="py-12 md:py-24 bg-[#f5f5f7]">
+          <div className="py-6 md:py-12 bg-[#f5f5f7]">
             <div className="max-w-7xl mx-auto px-6 md:px-8">
-              <div className="space-y-16 md:space-y-24">
+              <div className="space-y-12 md:space-y-16">
+                <motion.section 
+                  key="form" 
+                  initial="hidden" 
+                  whileInView="visible" 
+                  viewport={{ once: true, margin: "-100px" }} 
+                  id="application-form-section"
+                  className="bg-white rounded-2xl shadow-sm overflow-hidden"
+                  aria-label="Application Form Section"
+                  variants={fadeIn}
+                >
+                  <Suspense fallback={<SectionLoader />}>
+                    <ApplicationForm />
+                  </Suspense>
+                </motion.section>
+                
                 <motion.section 
                   key="requirements" 
                   initial="hidden" 
@@ -111,20 +131,6 @@ const Application = () => {
                 >
                   <Suspense fallback={<SectionLoader />}>
                     <ApplicationTimeline />
-                  </Suspense>
-                </motion.section>
-                
-                <motion.section 
-                  key="form" 
-                  initial="hidden" 
-                  whileInView="visible" 
-                  viewport={{ once: true, margin: "-100px" }} 
-                  id="application-form-section"
-                  className="bg-white rounded-2xl shadow-sm overflow-hidden"
-                  aria-label="Application Form Section"
-                >
-                  <Suspense fallback={<SectionLoader />}>
-                    <ApplicationForm />
                   </Suspense>
                 </motion.section>
                 

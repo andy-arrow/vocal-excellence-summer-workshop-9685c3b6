@@ -6,7 +6,8 @@ import {
   FormItem, 
   FormLabel, 
   FormControl, 
-  FormMessage 
+  FormMessage,
+  FormDescription
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -19,12 +20,11 @@ const ProgrammeApplicationSection = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h3 className="text-xl font-bold text-apple-text">Programme Application</h3>
-        <div className="flex items-center text-sm text-apple-grey gap-1.5 font-medium">
-          <Info className="w-4 h-4" />
-          <span>All fields are required unless marked optional</span>
-        </div>
+      <div className="mb-6">
+        <h4 className="text-lg text-apple-text font-medium mb-2">Why Join Our Programme?</h4>
+        <p className="text-apple-grey">
+          Tell us about your aspirations and what you hope to achieve.
+        </p>
       </div>
       
       <div className="space-y-6">
@@ -38,9 +38,12 @@ const ProgrammeApplicationSection = () => {
                   Why do you want to join this programme?
                   <span className="text-red-700">*</span>
                 </FormLabel>
+                <FormDescription className="text-sm text-apple-grey">
+                  Share your vocal goals and what attracts you to our workshop.
+                </FormDescription>
                 <FormControl>
                   <Textarea 
-                    placeholder="Please explain why you're interested in the programme and what you hope to achieve"
+                    placeholder="I want to join this programme because..."
                     className="min-h-[150px] rounded-xl border-apple-border focus:border-apple-blue focus:ring-0 text-apple-text placeholder:text-apple-grey"
                     {...field}
                   />
@@ -93,7 +96,7 @@ const ProgrammeApplicationSection = () => {
                   </FormLabel>
                   {field.value && (
                     <p className="text-sm text-apple-grey mt-2 font-medium">
-                      If selected, we will contact you with further instructions on how to complete the financial aid application.
+                      If selected, we will contact you with further instructions.
                     </p>
                   )}
                 </div>
@@ -109,11 +112,14 @@ const ProgrammeApplicationSection = () => {
             render={({ field }) => (
               <FormItem className="space-y-2">
                 <FormLabel className="text-apple-text font-medium">
-                  Accessibility Needs or Special Accommodations (Optional)
+                  Accessibility Requirements (Optional)
                 </FormLabel>
+                <FormDescription className="text-sm text-apple-grey">
+                  Tell us about any accommodations or special needs.
+                </FormDescription>
                 <FormControl>
                   <Textarea 
-                    placeholder="Please inform us of any accessibility requirements or accommodations you may need"
+                    placeholder="e.g., dietary restrictions, accessibility requirements"
                     className="min-h-[100px] rounded-xl border-apple-border focus:border-apple-blue focus:ring-0 text-apple-text placeholder:text-apple-grey"
                     {...field}
                   />

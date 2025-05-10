@@ -10,6 +10,7 @@ import { generateCsrfToken } from '@/utils/security';
 
 import { applicationSchema, ApplicationFormValues } from '@/components/ApplicationForm/schema';
 import { submitApplicationWithFiles } from '@/utils/fileUpload';
+import ApplicationProgressIndicator from './ApplicationForm/ApplicationProgressIndicator';
 
 const PersonalInfoSection = lazy(() => import('@/components/ApplicationForm/PersonalInfoSection'));
 const MusicalBackgroundSection = lazy(() => import('@/components/ApplicationForm/MusicalBackgroundSection'));
@@ -192,6 +193,20 @@ const ApplicationForm = () => {
     }
   }, []);
 
+  const handleNextSection = () => {
+    if (activeSection < sections.length - 1) {
+      setActiveSection(activeSection + 1);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handlePrevSection = () => {
+    if (activeSection > 0) {
+      setActiveSection(activeSection - 1);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   if (isSubmitted) {
     return (
       <Suspense fallback={<SectionLoader />}>
@@ -280,41 +295,59 @@ const ApplicationForm = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
           >
-            Begin your journey in vocal artistry. Every voice has a story to tell — let yours be heard.
+            Begin your journey in vocal artistry. Complete one section at a time.
           </motion.p>
+
+          <ApplicationProgressIndicator 
+            steps={sections.map(s => s.title)} 
+            currentStep={activeSection} 
+            onStepClick={setActiveSection}
+          />
         </motion.div>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <input type="hidden" name="csrfToken" value={csrfToken} />
             
-            <div className="space-y-6">
-              {sections.map((section, index) => (
-                <motion.div
-                  key={section.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  className="bg-white rounded-2xl p-6 md:p-8 border border-apple-border/40 hover:border-apple-border/60 transition-colors shadow-sm hover:shadow-md"
-                >
-                  <div className="flex items-center gap-4 mb-6">
-                    {section.icon}
-                    <h3 className="text-xl font-semibold text-apple-text">{section.title}</h3>
-                  </div>
-                  {section.component}
-                </motion.div>
-              ))}
+            <motion.div
+              key={`section-${activeSection}`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="bg-white rounded-2xl p-6 md:p-8 border border-apple-border/40 hover:border-apple-border/60 transition-colors shadow-sm"
+            >
+              <div className="flex items-center gap-4 mb-6">
+                {sections[activeSection].icon}
+                <h3 className="text-xl font-semibold text-apple-text">{sections[activeSection].title}</h3>
+              </div>
               
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                className="flex justify-center pt-6"
-              >
-                <SubmitButton isSubmitting={isSubmitting} />
-              </motion.div>
-            </div>
+              {sections[activeSection].component}
+              
+              <div className="flex justify-between mt-8 pt-4 border-t border-apple-border/20">
+                <button
+                  type="button"
+                  onClick={handlePrevSection}
+                  disabled={activeSection === 0}
+                  className={`px-5 py-2 rounded-lg ${activeSection === 0 ? 'text-apple-grey cursor-not-allowed' : 'text-apple-text hover:bg-apple-light-hover'}`}
+                >
+                  Back
+                </button>
+                
+                {activeSection < sections.length - 1 ? (
+                  <button
+                    type="button"
+                    onClick={handleNextSection}
+                    className="px-5 py-2 bg-apple-blue text-white rounded-lg hover:bg-apple-blue-hover"
+                  >
+                    Continue
+                  </button>
+                ) : (
+                  <Suspense fallback={<div>Loading...</div>}>
+                    <SubmitButton isSubmitting={isSubmitting} />
+                  </Suspense>
+                )}
+              </div>
+            </motion.div>
           </form>
         </Form>
 
