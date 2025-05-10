@@ -50,8 +50,8 @@ const Application = () => {
 
   // Significantly increased padding to push content much lower
   const paddingClasses = isMobile 
-    ? "pt-24 pb-16" // Reduced top padding for mobile
-    : "pt-32 pb-20"; // Reduced desktop padding to get to form faster
+    ? "pt-40 pb-16" // Increased from pt-24 for mobile
+    : "pt-56 pb-20"; // Increased from pt-32 for desktop
 
   return (
     <div className="bg-[#f5f5f7] text-apple-text min-h-screen font-sans antialiased">
