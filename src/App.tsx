@@ -117,11 +117,10 @@ const preloadRoutes = () => {
       const routes = [
         import('./pages/Application'),
         import('./pages/Tuition'),
-        import('./pages/Auth'),
         import('./pages/CancellationPolicy'),
         import('./pages/TermsAndConditions'),
-        import('./pages/PrivacyPolicy'),
-        import('./pages/SummerProgramme')
+        import('./pages/PrivacyPolicy')
+        // Removed Auth and SummerProgramme from preloading for non-admin users
       ];
       
       Promise.all(routes).catch(console.error);

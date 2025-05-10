@@ -8,6 +8,8 @@ import AuthButtonsPlaceholder from './AuthButtonsPlaceholder';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useAuth } from '@/contexts/AuthContext';
+import { isAuthorizedAdmin } from '@/utils/accessControl';
 
 interface NavbarProps {
   activeSection?: string;
@@ -17,6 +19,7 @@ interface NavLink {
   id?: string;
   href?: string;
   label: string;
+  adminOnly?: boolean;
 }
 
 const Navbar = ({ activeSection }: NavbarProps) => {
@@ -24,6 +27,8 @@ const Navbar = ({ activeSection }: NavbarProps) => {
   const [scrolled, setScrolled] = useState(false);
   const isMobile = useIsMobile();
   const location = useLocation();
+  const { user } = useAuth();
+  const isAdmin = user ? isAuthorizedAdmin(user.email) : false;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -61,8 +66,11 @@ const Navbar = ({ activeSection }: NavbarProps) => {
     { id: 'curriculum', label: 'Curriculum' },
     { id: 'instructors', label: 'Instructors' },
     { href: '/tuition', label: 'Tuition' },
-    { href: '/summer-programme', label: 'Summer Programme' },
+    { href: '/summer-programme', label: 'Summer Programme', adminOnly: true },
   ];
+
+  // Filter links based on admin status
+  const visibleNavLinks = navLinks.filter(link => !link.adminOnly || (link.adminOnly && isAdmin));
 
   return (
     <header 
@@ -95,7 +103,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
 
         <nav className="hidden md:flex items-center flex-grow justify-center">
           <ul className="flex space-x-2 items-center">
-            {navLinks.map((link) => (
+            {visibleNavLinks.map((link) => (
               <li key={link.id || link.href}>
                 {link.href ? (
                   <NavLink
@@ -144,7 +152,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
             <ArrowUpRight size={14} className="opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </NavLink>
           
-          {(() => {
+          {isAdmin && (() => {
             try {
               return <AuthButtons />;
             } catch (error) {
@@ -199,7 +207,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
               
               <nav className="flex-1 -mx-6">
                 <ul className="space-y-[2px] px-2">
-                  {navLinks.map((link, idx) => (
+                  {visibleNavLinks.map((link, idx) => (
                     <motion.li 
                       key={link.id || link.href}
                       initial={{ opacity: 0, x: -20 }}
@@ -265,14 +273,16 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                   </NavLink>
                 </SheetClose>
                 
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.4 }}
-                  className="flex justify-center"
-                >
-                  <AuthButtonsPlaceholder />
-                </motion.div>
+                {isAdmin && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.4 }}
+                    className="flex justify-center"
+                  >
+                    <AuthButtonsPlaceholder />
+                  </motion.div>
+                )}
               </motion.div>
             </div>
           </SheetContent>
