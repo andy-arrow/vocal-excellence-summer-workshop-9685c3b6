@@ -1,3 +1,4 @@
+
 import React, { FC } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -8,12 +9,11 @@ interface AboutSectionProps {
 }
 
 const AboutSection: FC<AboutSectionProps> = ({ className }) => {
-  const { ref, isInView } = useIntersectionObserver({ threshold: 0.2, triggerOnce: true });
+  const { ref, isInView } = useIntersectionObserver<HTMLDivElement>({ threshold: 0.2, triggerOnce: true });
   
   return (
     <section
       id="about" // Adding id for navigation
-      ref={ref}
       className={cn(
         "py-20 md:py-32 overflow-hidden bg-white",
         className
