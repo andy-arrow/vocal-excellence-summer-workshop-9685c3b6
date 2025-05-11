@@ -13,7 +13,7 @@ import { Input } from '@/components/ui/input';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { DietaryRestrictionType, ApplicationFormValues } from './schema';
-import { Vegan, Vegetarian } from 'lucide-react';
+import { Salad, Vegan } from 'lucide-react';
 
 const DietaryRestrictions = () => {
   const form = useFormContext<ApplicationFormValues>();
@@ -54,7 +54,7 @@ const DietaryRestrictions = () => {
                 <div className="flex items-center space-x-2 rounded-md border border-slate-200 p-3 hover:bg-slate-100">
                   <RadioGroupItem value="vegetarian" id="vegetarian" />
                   <Label htmlFor="vegetarian" className="flex items-center space-x-2 flex-grow cursor-pointer">
-                    <Vegetarian className="h-4 w-4" />
+                    <Salad className="h-4 w-4" />
                     <span>Vegetarian</span>
                   </Label>
                 </div>

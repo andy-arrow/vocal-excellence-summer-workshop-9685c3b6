@@ -43,10 +43,10 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
       phone: data.phone,
       dateofbirth: data.dateOfBirth,
       nationality: data.nationality,
-      address: data.address,
-      city: data.city,
-      country: data.country,
-      postalcode: data.postalCode,
+      address: data.whereFrom, // Using whereFrom as the address field
+      city: '', // Set empty string as we don't collect this anymore
+      country: '', // Set empty string as we don't collect this anymore
+      postalcode: '', // Set empty string as we don't collect this anymore
       vocalrange: data.vocalRange,
       yearsofexperience: data.yearsOfSinging, // Map to the field name expected by the database
       musicalbackground: data.musicalBackground,
