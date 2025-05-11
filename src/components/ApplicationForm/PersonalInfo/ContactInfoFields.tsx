@@ -78,7 +78,7 @@ const ContactInfoFields = () => {
                       <SelectValue placeholder="+1" />
                     </SelectTrigger>
                     <SelectContent 
-                      className="max-h-[300px] z-50 bg-white" 
+                      className="max-h-[300px] bg-white" 
                       position="popper"
                     >
                       {countryPhoneCodes.map((country) => (
