@@ -30,7 +30,7 @@ export interface ApplicationData {
 export interface FileUpload {
   name: string;
   file: File;
-  type: 'audio' | 'document';
+  type: 'document';
 }
 
 export interface ProcessedFile {

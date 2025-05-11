@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Music, FileText, File, Info } from 'lucide-react';
+import { File, Info } from 'lucide-react';
 import { FileUploadSection } from './FileUploadSection';
 
 // Declare global window interface extension
@@ -17,9 +17,6 @@ declare global {
 // Initialize global applicationFiles object
 if (typeof window !== 'undefined') {
   window.applicationFiles = window.applicationFiles || {
-    audioFile1: null,
-    audioFile2: null,
-    cvFile: null,
     recommendationFile: null,
   };
 }
@@ -29,9 +26,6 @@ const SupportingMaterialsSection = () => {
     // Ensure window.applicationFiles is initialized when this component mounts
     if (typeof window !== 'undefined') {
       window.applicationFiles = window.applicationFiles || {
-        audioFile1: null,
-        audioFile2: null,
-        cvFile: null,
         recommendationFile: null,
       };
       console.log('SupportingMaterialsSection: Initialized window.applicationFiles', window.applicationFiles);
@@ -49,44 +43,8 @@ const SupportingMaterialsSection = () => {
         <h3 className="text-xl font-bold text-apple-text">Supporting Materials</h3>
         <div className="flex items-center text-sm text-apple-grey gap-1.5 font-medium">
           <Info className="w-4 h-4" />
-          <span>MP3, WAV, or PDF files only</span>
+          <span>PDF files only</span>
         </div>
-      </div>
-      
-      <div className="bg-white rounded-xl p-4 border border-apple-border shadow-sm">
-        <FileUploadSection
-          label="First Audition Recording"
-          description="Upload your first piece (3-5 minutes) in MP3 or WAV format."
-          icon={Music}
-          fileType="audioFile1"
-          acceptedFormats=".mp3,.wav"
-          required={true}
-          iconColor="text-apple-text"
-        />
-      </div>
-      
-      <div className="bg-white rounded-xl p-4 border border-apple-border shadow-sm">
-        <FileUploadSection
-          label="Second Audition Recording"
-          description="Upload your second contrasting piece (3-5 minutes) in MP3 or WAV format."
-          icon={Music}
-          fileType="audioFile2"
-          acceptedFormats=".mp3,.wav"
-          required={true}
-          iconColor="text-apple-text"
-        />
-      </div>
-      
-      <div className="bg-white rounded-xl p-4 border border-apple-border shadow-sm">
-        <FileUploadSection
-          label="CV/Resume"
-          description="Upload your musical CV/Resume in PDF format."
-          icon={FileText}
-          fileType="cvFile"
-          acceptedFormats=".pdf"
-          required={true}
-          iconColor="text-apple-text"
-        />
       </div>
       
       <div className="bg-white rounded-xl p-4 border border-apple-border shadow-sm">
