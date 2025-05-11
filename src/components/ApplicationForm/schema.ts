@@ -24,10 +24,12 @@ export const applicationSchema = z.object({
     .max(100, { message: 'Email must not exceed 100 characters' })
     .regex(EMAIL_REGEX, { message: 'Please enter a valid email address' }),
   
+  phoneCountryCode: z.string().default("+1"),
+
   phone: z.string()
-    .min(7, { message: 'Phone number must be at least 7 digits' })
-    .max(20, { message: 'Phone number must not exceed 20 characters' })
-    .regex(/^[+]?[\d\s-()]+$/, { message: 'Please enter a valid phone number' }),
+    .min(5, { message: 'Phone number must be at least 5 digits' })
+    .max(15, { message: 'Phone number must not exceed 15 characters' })
+    .regex(/^[\d\s-()]+$/, { message: 'Please enter a valid phone number (digits, spaces, and -() only)' }),
   
   whereFrom: z.string().min(1, { message: 'Please tell us where you are from' }),
   
