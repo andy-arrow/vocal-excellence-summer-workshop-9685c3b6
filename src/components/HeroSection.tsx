@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
-import { APPLICATION_DATES } from './ApplicationTimeline';
+import { APPLICATION_DATES } from '@/constants/applicationDates';
 import { useIsMobile } from '@/hooks/use-mobile';
 import AlertBanner from './AlertBanner';
 

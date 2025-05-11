@@ -2,6 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Send, CheckCircle2, Calendar, Clock, Users, GraduationCap } from 'lucide-react';
+import { APPLICATION_DATES } from '@/constants/applicationDates';
 
 const timelineSteps = [
   {

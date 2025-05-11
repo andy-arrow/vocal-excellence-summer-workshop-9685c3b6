@@ -2,7 +2,7 @@
 import React, { useMemo } from 'react';
 import { motion, LazyMotion, domAnimation } from 'framer-motion';
 import { format } from 'date-fns';
-import { APPLICATION_DATES } from '../ApplicationTimeline';
+import { APPLICATION_DATES } from '@/constants/applicationDates';
 
 import {
   Accordion,

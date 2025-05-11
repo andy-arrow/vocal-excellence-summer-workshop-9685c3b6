@@ -3,7 +3,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { format } from 'date-fns';
-import { APPLICATION_DATES } from './ApplicationTimeline';
+import { APPLICATION_DATES } from '@/constants/applicationDates';
 import { useIsMobile } from '@/hooks/use-mobile';
 import SpotsRemainingIndicator from './SpotsRemainingIndicator';
 

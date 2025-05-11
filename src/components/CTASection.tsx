@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
-import { APPLICATION_DATES } from './ApplicationTimeline';
+import { APPLICATION_DATES } from '@/constants/applicationDates';
 import SpotsRemainingIndicator from './SpotsRemainingIndicator';
 
 const CTASection = () => {

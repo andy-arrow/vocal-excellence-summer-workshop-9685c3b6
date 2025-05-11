@@ -4,7 +4,7 @@ import { motion, LazyMotion, domAnimation } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Check, Tag, ArrowDown } from 'lucide-react';
 import { format } from 'date-fns';
-import { APPLICATION_DATES } from '../ApplicationTimeline';
+import { APPLICATION_DATES } from '@/constants/applicationDates';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardFooter } from '@/components/ui/card';
 
