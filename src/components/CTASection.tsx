@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
@@ -55,7 +56,7 @@ const CTASection = () => {
                 size="lg" 
                 className="bg-apple-blue hover:bg-apple-blue-hover text-white text-lg px-8 rounded-full group"
               >
-                Apply in 3 Steps
+                Register Now
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             ) : (

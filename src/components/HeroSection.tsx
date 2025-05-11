@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowDown, ArrowUpRight, Calendar } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -129,7 +128,7 @@ const HeroSection = () => {
                     : 'bg-apple-blue hover:bg-apple-blue-hover'
                 } text-white rounded-full text-base font-medium transition-all duration-300 text-center`}
               >
-                {applicationsClosed ? 'Applications Closed' : 'Apply in 3 Steps'}
+                {applicationsClosed ? 'Applications Closed' : 'Register Now'}
                 {!applicationsClosed && (
                   <ArrowUpRight className="inline-block ml-2 w-4 h-4 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 )}
