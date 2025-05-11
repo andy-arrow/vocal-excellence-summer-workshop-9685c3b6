@@ -104,13 +104,13 @@ const MusicalBackgroundSection = () => {
                 <span className="text-red-700 ml-1">*</span>
               </FormLabel>
               <FormDescription className="text-apple-grey mt-0.5 mb-1.5">
-                Tell us about your relationship with singing (formal or informal)
+                Tell us about your singing journey so far (formal or informal). Have you ever had formal voice lessons or coaching? If yes, for how long and with what methodology (e.g., MVT, SLS, classical)?
               </FormDescription>
               <FormControl>
                 <Textarea 
                   {...field}
                   className="bg-white border-apple-border text-apple-text placeholder:text-apple-grey min-h-[120px] resize-y"
-                  placeholder="Share anything about your singing journey so far..."
+                  placeholder="Share your vocal background, training experience, and methodology if applicable..."
                 />
               </FormControl>
               <FormMessage className="text-red-700 font-medium" />

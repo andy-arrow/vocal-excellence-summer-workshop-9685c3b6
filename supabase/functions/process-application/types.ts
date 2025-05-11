@@ -4,20 +4,24 @@ export interface ApplicationData {
   lastName: string;
   email: string;
   phone: string;
+  whereFrom: string;
+  age: number;
+  socialMedia?: string;
   dateOfBirth: string;
   nationality: string;
-  address: string;
-  city: string;
-  country: string;
-  postalCode: string;
   vocalRange: string;
-  yearsOfSinging: string; // This is consistent with schema.ts
+  yearsOfSinging: string;
   musicalBackground: string;
   teacherName?: string;
   teacherEmail?: string;
   reasonForApplying: string;
   heardAboutUs: string;
   scholarshipInterest: boolean;
+  dietaryRestrictions: {
+    type: string;
+    details?: string;
+  };
+  areasOfInterest?: string;
   specialNeeds?: string;
   termsAgreed: boolean;
   [key: string]: any; // Allow for additional fields

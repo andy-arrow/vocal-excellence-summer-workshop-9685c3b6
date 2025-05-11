@@ -1,4 +1,3 @@
-
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { supabase } from "./supabaseClient.ts";
 import { processFiles } from "./fileHandler.ts";
@@ -68,6 +67,11 @@ async function saveApplicationToDatabase(data: ApplicationData): Promise<string>
   try {
     console.log("Attempting to save application to database for:", `${data.firstName} ${data.lastName}`);
     
+    // Create dietary restrictions string
+    const dietaryRestrictionText = data.dietaryRestrictions.type === 'other' && data.dietaryRestrictions.details 
+      ? `${data.dietaryRestrictions.type}: ${data.dietaryRestrictions.details}`
+      : data.dietaryRestrictions.type;
+    
     const formData = {
       firstname: data.firstName,
       lastname: data.lastName,
@@ -75,20 +79,22 @@ async function saveApplicationToDatabase(data: ApplicationData): Promise<string>
       phone: data.phone,
       dateofbirth: data.dateOfBirth,
       nationality: data.nationality,
-      address: data.address,
-      city: data.city,
-      country: data.country,
-      postalcode: data.postalCode,
+      address: data.whereFrom, // Using the whereFrom field for address
+      city: '', // No longer used but required by DB schema
+      country: '', // No longer used but required by DB schema
+      postalcode: '', // No longer used but required by DB schema
       vocalrange: data.vocalRange,
-      yearsofexperience: data.yearsOfSinging, // Map from yearsOfSinging to yearsofexperience
+      yearsofexperience: data.yearsOfSinging,
       musicalbackground: data.musicalBackground,
       teachername: data.teacherName || null,
       teacheremail: data.teacherEmail || null,
-      performanceexperience: '', // Provide an empty string for the required field
+      performanceexperience: data.areasOfInterest || '', // Store areas of interest in performanceexperience
       reasonforapplying: data.reasonForApplying,
       heardaboutus: data.heardAboutUs,
       scholarshipinterest: data.scholarshipInterest,
-      specialneeds: data.specialNeeds || null,
+      specialneeds: data.specialNeeds 
+        ? `${data.specialNeeds}\n\nDietary Restrictions: ${dietaryRestrictionText}`
+        : `Dietary Restrictions: ${dietaryRestrictionText}`,
       termsagreed: data.termsAgreed,
       timestamp: new Date().toISOString(),
       source: "website",
@@ -185,7 +191,7 @@ serve(async (req) => {
     );
 
     // Validate required fields
-    const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'dateOfBirth'];
+    const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'whereFrom', 'age'];
     const missingFields = requiredFields.filter(field => !applicationData[field]);
     
     if (missingFields.length > 0) {

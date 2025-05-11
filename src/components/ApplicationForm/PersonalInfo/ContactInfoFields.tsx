@@ -6,7 +6,8 @@ import {
   FormItem, 
   FormLabel, 
   FormControl, 
-  FormMessage 
+  FormMessage,
+  FormDescription 
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { ApplicationFormValues } from '../schema';
@@ -21,7 +22,10 @@ const ContactInfoFields = () => {
         name="email"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-gray-900 font-medium" htmlFor="email">Email Address</FormLabel>
+            <FormLabel className="text-gray-900 font-medium" htmlFor="email">
+              Email Address
+              <span className="text-red-700 ml-1">*</span>
+            </FormLabel>
             <FormControl>
               <Input 
                 {...field}
@@ -43,7 +47,13 @@ const ContactInfoFields = () => {
         name="phone"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-gray-900 font-medium" htmlFor="phone">Phone Number</FormLabel>
+            <FormLabel className="text-gray-900 font-medium" htmlFor="phone">
+              Phone Number
+              <span className="text-red-700 ml-1">*</span>
+            </FormLabel>
+            <FormDescription className="text-sm text-apple-grey mt-0.5 mb-1.5">
+              Please include your country code (e.g. +357)
+            </FormDescription>
             <FormControl>
               <Input 
                 {...field}
@@ -52,6 +62,28 @@ const ContactInfoFields = () => {
                 placeholder="+357 XX XXX XXX"
                 autoComplete="tel"
                 aria-required="true"
+                className="text-gray-900 placeholder:text-gray-500"
+              />
+            </FormControl>
+            <FormMessage className="text-red-700" />
+          </FormItem>
+        )}
+      />
+      
+      <FormField
+        control={form.control}
+        name="socialMedia"
+        render={({ field }) => (
+          <FormItem className="sm:col-span-2">
+            <FormLabel className="text-gray-900 font-medium" htmlFor="socialMedia">
+              Social Media or Website (Optional)
+            </FormLabel>
+            <FormControl>
+              <Input 
+                {...field}
+                type="text"
+                id="socialMedia"
+                placeholder="Instagram, Facebook, personal website, etc."
                 className="text-gray-900 placeholder:text-gray-500"
               />
             </FormControl>

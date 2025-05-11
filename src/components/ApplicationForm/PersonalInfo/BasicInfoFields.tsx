@@ -75,19 +75,22 @@ const BasicInfoFields = () => {
 
       <FormField
         control={form.control}
-        name="dateOfBirth"
+        name="age"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-apple-text font-medium text-base" htmlFor="dateOfBirth">
-              Date of Birth
+            <FormLabel className="text-apple-text font-medium text-base" htmlFor="age">
+              How old are you?
               <span className="text-red-700 ml-1">*</span>
             </FormLabel>
             <FormControl>
               <Input 
                 {...field}
-                type="date"
-                id="dateOfBirth"
-                autoComplete="bday"
+                id="age"
+                type="number"
+                min="16"
+                max="100"
+                onChange={e => field.onChange(parseInt(e.target.value))}
+                placeholder="Enter your age"
                 aria-required="true"
                 className="text-apple-text bg-white"
               />
@@ -122,6 +125,29 @@ const BasicInfoFields = () => {
                   ))}
                 </SelectContent>
               </Select>
+            </FormControl>
+            <FormMessage className="text-red-700" />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
+        name="whereFrom"
+        render={({ field }) => (
+          <FormItem className="sm:col-span-2">
+            <FormLabel className="text-apple-text font-medium text-base" htmlFor="whereFrom">
+              Where are you from?
+              <span className="text-red-700 ml-1">*</span>
+            </FormLabel>
+            <FormControl>
+              <Input 
+                {...field}
+                id="whereFrom"
+                placeholder="City, Country or Region"
+                aria-required="true" 
+                className="text-apple-text placeholder:text-apple-grey"
+              />
             </FormControl>
             <FormMessage className="text-red-700" />
           </FormItem>

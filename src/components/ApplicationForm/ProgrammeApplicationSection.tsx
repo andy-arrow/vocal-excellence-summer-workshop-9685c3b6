@@ -14,6 +14,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { ApplicationFormValues } from './schema';
 import { Info } from 'lucide-react';
+import DietaryRestrictions from './DietaryRestrictions';
 
 const ProgrammeApplicationSection = () => {
   const form = useFormContext<ApplicationFormValues>();
@@ -76,6 +77,35 @@ const ProgrammeApplicationSection = () => {
             )}
           />
         </div>
+
+        <div className="bg-white rounded-xl p-4 border border-apple-border shadow-sm">
+          <FormField
+            control={form.control}
+            name="areasOfInterest"
+            render={({ field }) => (
+              <FormItem className="space-y-2">
+                <FormLabel className="text-apple-text font-medium">
+                  Areas of Vocal Interest (Optional)
+                </FormLabel>
+                <FormDescription className="text-sm text-apple-grey">
+                  Are there specific styles or techniques you're interested in exploring?
+                </FormDescription>
+                <FormControl>
+                  <Textarea 
+                    placeholder="e.g., jazz improvisation, extended vocal techniques, classical repertoire"
+                    className="min-h-[100px] rounded-xl border-apple-border focus:border-apple-blue focus:ring-0 text-apple-text placeholder:text-apple-grey"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage className="text-red-700 font-medium" />
+              </FormItem>
+            )}
+          />
+        </div>
+        
+        <div className="bg-white rounded-xl p-4 border border-apple-border shadow-sm">
+          <DietaryRestrictions />
+        </div>
         
         <div className="bg-apple-light rounded-xl p-4 border border-apple-border">
           <FormField
@@ -119,7 +149,7 @@ const ProgrammeApplicationSection = () => {
                 </FormDescription>
                 <FormControl>
                   <Textarea 
-                    placeholder="e.g., dietary restrictions, accessibility requirements"
+                    placeholder="e.g., mobility accommodations, accessibility requirements"
                     className="min-h-[100px] rounded-xl border-apple-border focus:border-apple-blue focus:ring-0 text-apple-text placeholder:text-apple-grey"
                     {...field}
                   />

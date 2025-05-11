@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useEffect, lazy, Suspense } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -81,12 +80,11 @@ const ApplicationForm = () => {
       lastName: '',
       email: '',
       phone: '',
+      whereFrom: '',
+      age: undefined,
+      socialMedia: '',
       dateOfBirth: '',
       nationality: '',
-      address: '',
-      city: '',
-      country: '',
-      postalCode: '',
       vocalRange: 'soprano',
       yearsOfSinging: '',
       musicalBackground: '',
@@ -95,6 +93,11 @@ const ApplicationForm = () => {
       reasonForApplying: '',
       heardAboutUs: '',
       scholarshipInterest: false,
+      dietaryRestrictions: {
+        type: 'none',
+        details: ''
+      },
+      areasOfInterest: '',
       specialNeeds: '',
       termsAgreed: false,
     },
