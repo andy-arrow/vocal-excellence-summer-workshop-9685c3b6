@@ -30,7 +30,7 @@ const itemVariants = {
 
 const TuitionFAQ = () => {
   const programYear = format(APPLICATION_DATES.PROGRAM_START, 'yyyy');
-  const programDates = `${format(APPLICATION_DATES.PROGRAM_START, 'MMMM d')}-${format(new Date(APPLICATION_DATES.PROGRAM_START.getTime() + 4 * 24 * 60 * 60 * 1000), 'MMMM d, yyyy')}`;
+  const programDates = `${format(APPLICATION_DATES.PROGRAM_START, 'MMMM d')}-${format(APPLICATION_DATES.PROGRAM_END, 'MMMM d, yyyy')}`;
   const paymentDeadline = format(APPLICATION_DATES.TUITION_DEADLINE, 'MMMM d, yyyy');
   const programStartDate = format(APPLICATION_DATES.PROGRAM_START, 'MMMM d, yyyy');
   const earlyBirdDate = format(APPLICATION_DATES.EARLY_BIRD_DEADLINE, 'MMMM d, yyyy');
