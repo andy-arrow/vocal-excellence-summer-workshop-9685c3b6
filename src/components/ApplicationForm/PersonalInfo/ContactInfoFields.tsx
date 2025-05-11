@@ -74,16 +74,18 @@ const ContactInfoFields = () => {
                     <SelectTrigger 
                       className="w-[120px] flex-shrink-0 bg-white shadow-sm" 
                       id="phoneCountryCode"
+                      aria-label="Select country code"
                     >
                       <SelectValue placeholder="+1" />
                     </SelectTrigger>
                     <SelectContent 
-                      className="max-h-[300px] bg-white" 
+                      className="max-h-[300px]" 
                       position="popper"
+                      sideOffset={5}
                     >
                       {countryPhoneCodes.map((country) => (
                         <SelectItem 
-                          key={`${country.name}-${country.code}-${country.dial_code}`} 
+                          key={`${country.name}-${country.code}`}
                           value={country.dial_code}
                         >
                           <span className="flex items-center">
