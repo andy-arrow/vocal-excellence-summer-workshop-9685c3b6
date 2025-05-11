@@ -82,7 +82,10 @@ const ContactInfoFields = () => {
                       position="popper"
                     >
                       {countryPhoneCodes.map((country) => (
-                        <SelectItem key={country.code} value={country.dial_code}>
+                        <SelectItem 
+                          key={`${country.code}-${country.dial_code}`} 
+                          value={country.dial_code}
+                        >
                           <span className="flex items-center">
                             <span className="mr-1">{country.flag}</span>
                             <span>{country.dial_code}</span>

@@ -224,8 +224,8 @@ const rawCountryCodes: CountryCode[] = [
   { name: "Vietnam", dial_code: "+84", code: "VN", flag: "🇻🇳" },
   { name: "Yemen", dial_code: "+967", code: "YE", flag: "🇾🇪" },
   { name: "Zambia", dial_code: "+260", code: "ZM", flag: "🇿🇲" },
-  { name: "Zimbabwe", dial_code: "+263", code: "ZW", flag: "🇿🇼" },
-  { name: "Cyprus", dial_code: "+357", code: "CY", flag: "🇨🇾" }
+  { name: "Zimbabwe", dial_code: "+263", code: "ZW", flag: "🇿🇼" }
+  // Removed the duplicate Cyprus entry
 ];
 
 // Process the raw data to add display names with abbreviations and sort
