@@ -1,220 +1,108 @@
 
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, Check, ChevronRight, Wallet, PartyPopper } from 'lucide-react';
-import { useInView } from 'framer-motion';
-import { format, differenceInDays } from 'date-fns';
+import { Send, CheckCircle2, Calendar, Clock, Users, GraduationCap } from 'lucide-react';
 
-// Define key dates as constants that can be reused throughout the application
-export const APPLICATION_DATES = {
-  OPEN_DATE: new Date('2025-03-01'),
-  DEADLINE: new Date('2025-05-30'),
-  EARLY_BIRD_DEADLINE: new Date('2025-05-15'),
-  NOTIFICATIONS: new Date('2025-06-01'),
-  TUITION_DEADLINE: new Date('2025-07-07'),
-  PROGRAM_START: new Date('2025-07-14')
-};
+const timelineSteps = [
+  {
+    icon: <Send className="w-5 h-5 text-purple-500" />,
+    title: "Submit Application",
+    description: "Complete the online application form with your personal information and vocal background.",
+    date: "By May 1, 2025",
+  },
+  {
+    icon: <CheckCircle2 className="w-5 h-5 text-green-600" />,
+    title: "Application Review",
+    description: "Our faculty will review your application and materials.",
+    date: "May 2-14, 2025",
+  },
+  {
+    icon: <Calendar className="w-5 h-5 text-blue-500" />,
+    title: "Acceptance Notifications",
+    description: "Successful applicants will receive an acceptance email with further instructions.",
+    date: "May 15, 2025",
+  },
+  {
+    icon: <Clock className="w-5 h-5 text-amber-500" />,
+    title: "Confirm Participation",
+    description: "Secure your place by confirming your attendance and arranging payment.",
+    date: "By June 1, 2025",
+  },
+  {
+    icon: <Users className="w-5 h-5 text-rose-500" />,
+    title: "Workshop Week",
+    description: "Participate in our intensive 5-day vocal excellence workshop.",
+    date: "July 10-15, 2025",
+  },
+  {
+    icon: <GraduationCap className="w-5 h-5 text-emerald-600" />,
+    title: "Final Performance",
+    description: "Showcase your growth in our closing performance event.",
+    date: "July 15, 2025",
+  }
+];
 
 const ApplicationTimeline = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
-  const today = new Date();
-  
-  const getTimelineItemStatus = (date: Date) => {
-    const isPast = today > date;
-    const isToday = today.toDateString() === date.toDateString();
-    
-    if (isPast && !isToday) {
-      return "completed";
-    } else if (isToday) {
-      return "active";
-    } else {
-      return "upcoming";
-    }
-  };
-  
-  const calculateDaysRemaining = (deadline: Date) => {
-    return Math.max(0, differenceInDays(deadline, today));
-  };
-  
-  const timelineItems = [
-    {
-      date: format(APPLICATION_DATES.OPEN_DATE, "MMMM d, yyyy"),
-      title: "Applications Open",
-      description: "Early application is encouraged as spaces fill quickly.",
-      icon: <Calendar className="text-apple-blue" />,
-      status: getTimelineItemStatus(APPLICATION_DATES.OPEN_DATE)
-    },
-    {
-      date: format(APPLICATION_DATES.DEADLINE, "MMMM d, yyyy"),
-      title: "Application Deadline",
-      description: "All applications must be submitted by this date.",
-      icon: <Clock className="text-apple-blue" />,
-      status: getTimelineItemStatus(APPLICATION_DATES.DEADLINE),
-      highlight: true,
-      deadlineDate: APPLICATION_DATES.DEADLINE
-    },
-    {
-      date: format(APPLICATION_DATES.NOTIFICATIONS, "MMMM d, yyyy"),
-      title: "Final Notifications",
-      description: "All applicants will be notified of their acceptance status.",
-      icon: <Check className="text-apple-blue" />,
-      status: getTimelineItemStatus(APPLICATION_DATES.NOTIFICATIONS)
-    },
-    {
-      date: format(APPLICATION_DATES.TUITION_DEADLINE, "MMMM d, yyyy"),
-      title: "Tuition Deadline",
-      description: "Full payment (€749) due to secure your place.",
-      icon: <Wallet className="text-apple-blue" />,
-      status: getTimelineItemStatus(APPLICATION_DATES.TUITION_DEADLINE)
-    },
-    {
-      date: format(APPLICATION_DATES.PROGRAM_START, "MMMM d, yyyy"),
-      title: "Programme Begins",
-      description: "Welcome reception and orientation.",
-      icon: <PartyPopper className="text-apple-blue" />,
-      status: getTimelineItemStatus(APPLICATION_DATES.PROGRAM_START)
-    }
-  ];
-
   return (
-    <section 
-      ref={sectionRef}
-      className="py-24 md:py-32 bg-white"
-    >
-      <div className="max-w-4xl mx-auto px-6">
-        <motion.div 
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-        >
-          <h2 className="font-serif text-4xl md:text-5xl text-apple-text font-light mb-6 tracking-tight">
-            Application Timeline
-          </h2>
-          <p className="text-lg md:text-xl text-apple-grey max-w-2xl mx-auto leading-relaxed">
-            Mark these important dates in your calendar to stay on track with your application.
-          </p>
-        </motion.div>
-
+    <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+      <div className="p-8 md:p-10 border-b border-apple-border/10">
+        <h2 className="text-2xl md:text-3xl font-semibold text-apple-text mb-4">Application Timeline</h2>
+        <p className="text-apple-grey text-lg leading-relaxed">
+          The journey from application to participation in our summer workshop.
+        </p>
+      </div>
+      
+      <div className="p-8 md:p-10">
         <div className="relative">
-          <motion.div 
-            className="absolute left-8 top-0 bottom-0 w-px bg-apple-border"
-            style={{ height: '0%' }}
-            animate={isInView ? { height: '100%' } : {}}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-          />
+          {/* Timeline connector */}
+          <div className="absolute left-9 top-0 bottom-0 w-0.5 bg-gradient-to-b from-purple-500 via-blue-500 to-emerald-600 hidden md:block"></div>
           
-          <div className="space-y-10">
-            {timelineItems.map((item, index) => (
+          {/* Timeline steps */}
+          <div className="space-y-10 md:space-y-12 relative">
+            {timelineSteps.map((step, index) => (
               <motion.div 
-                key={index} 
-                className="relative pl-20"
-                initial={{ opacity: 0, x: -10 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ delay: index * 0.15, duration: 0.5 }}
+                key={index}
+                className="md:grid md:grid-cols-6 gap-4 items-start"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ delay: index * 0.1 }}
               >
-                <motion.div 
-                  className={`absolute left-8 w-6 h-6 rounded-full border-2 bg-white flex items-center justify-center transform -translate-x-3 ${
-                    item.highlight 
-                      ? 'border-apple-blue' 
-                      : item.status === 'completed' 
-                        ? 'border-green-500' 
-                        : item.status === 'active' 
-                          ? 'border-apple-blue' 
-                          : 'border-apple-border'
-                  }`}
-                  initial={{ scale: 0 }}
-                  animate={isInView ? { scale: 1 } : {}}
-                  transition={{ delay: index * 0.15 + 0.3, duration: 0.5 }}
-                >
-                  {item.icon}
-                </motion.div>
+                {/* Icon */}
+                <div className="hidden md:flex md:col-span-1 justify-center">
+                  <div className="w-20 h-20 rounded-full bg-white shadow-md flex items-center justify-center z-10">
+                    <div className="w-12 h-12 rounded-full bg-apple-light flex items-center justify-center">
+                      {step.icon}
+                    </div>
+                  </div>
+                </div>
                 
-                <div>
-                  <span className={`block ${
-                    item.highlight ? 'text-apple-blue font-medium' : 'text-apple-grey'
-                  } text-sm mb-1`}>
-                    {item.date}
-                  </span>
-                  <h3 className="text-xl font-serif text-apple-text mb-2 flex items-center gap-2">
-                    {item.title}
-                    {item.status === 'active' && (
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-50 text-green-700 border border-green-200">
-                        Current
-                      </span>
-                    )}
-                    {item.status === 'completed' && (
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-50 text-green-700 border border-green-200">
-                        Completed
-                      </span>
-                    )}
-                    {item.highlight && item.status === 'upcoming' && (
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-50 text-apple-blue border border-blue-200">
-                        Important
-                      </span>
-                    )}
-                  </h3>
-                  <p className="text-apple-grey leading-relaxed">
-                    {item.description}
-                  </p>
-                  
-                  {item.highlight && item.status === 'upcoming' && 'deadlineDate' in item && (
-                    <div className="mt-3 p-4 bg-gradient-to-br from-blue-50 to-white rounded-xl border border-blue-100">
-                      <p className="text-sm text-apple-text font-medium">
-                        <strong>{calculateDaysRemaining(item.deadlineDate as Date)} days remaining</strong> to complete your application
-                      </p>
+                {/* Content - wide card on mobile, content box on desktop */}
+                <div className="md:col-span-5 bg-apple-light rounded-xl p-6 shadow-sm">
+                  <div className="flex md:hidden items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center shrink-0">
+                      {step.icon}
                     </div>
-                  )}
-
-                  {item.highlight && item.status === 'active' && (
-                    <div className="mt-3 p-4 bg-gradient-to-br from-amber-50 to-white rounded-xl border border-amber-100">
-                      <p className="text-sm text-amber-700 font-medium">
-                        <strong>Application deadline is today!</strong> Submit your application as soon as possible.
-                      </p>
+                    <h3 className="text-lg font-semibold text-apple-text">{step.title}</h3>
+                  </div>
+                  <div className="md:flex md:items-start md:justify-between">
+                    <div className="space-y-2 md:space-y-3">
+                      <h3 className="text-xl font-semibold text-apple-text hidden md:block">{step.title}</h3>
+                      <p className="text-apple-grey">{step.description}</p>
                     </div>
-                  )}
-
-                  {item.highlight && item.status === 'completed' && (
-                    <div className="mt-3 p-4 bg-gradient-to-br from-red-50 to-white rounded-xl border border-red-100">
-                      <p className="text-sm text-red-700 font-medium">
-                        <strong>Application deadline has passed.</strong> Contact admissions for late application options.
-                      </p>
+                    <div className="mt-4 md:mt-0 md:ml-4">
+                      <span className="inline-block px-3 py-1.5 bg-white rounded-lg text-apple-blue font-medium text-sm shadow-sm">
+                        {step.date}
+                      </span>
                     </div>
-                  )}
+                  </div>
                 </div>
               </motion.div>
             ))}
           </div>
         </div>
-        
-        <motion.div 
-          className="mt-16 text-center"
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5, delay: 1 }}
-        >
-          <motion.a 
-            href="#application-form"
-            className={`inline-flex items-center gap-2 px-8 py-4 ${
-              today > APPLICATION_DATES.DEADLINE
-                ? 'bg-gray-400 cursor-not-allowed' 
-                : 'bg-apple-blue hover:bg-apple-blue-hover cursor-pointer'
-            } text-white rounded-full font-medium transition-all duration-300 shadow-sm`}
-            whileHover={today <= APPLICATION_DATES.DEADLINE ? { scale: 1.02 } : {}}
-            whileTap={today <= APPLICATION_DATES.DEADLINE ? { scale: 0.98 } : {}}
-          >
-            {today > APPLICATION_DATES.DEADLINE ? 'Applications Closed' : 'Apply Now'}
-            {today <= APPLICATION_DATES.DEADLINE && <ChevronRight size={18} />}
-          </motion.a>
-          {today > APPLICATION_DATES.DEADLINE && (
-            <p className="mt-3 text-apple-grey">
-              The application deadline has passed. Contact us for late application options.
-            </p>
-          )}
-        </motion.div>
       </div>
-    </section>
+    </div>
   );
 };
 

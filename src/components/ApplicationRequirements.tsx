@@ -1,109 +1,101 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FileText, Mic, Music, Sparkles, ScrollText } from 'lucide-react';
-
-const requirementItems = [
-  {
-    icon: <FileText className="text-apple-blue" />,
-    title: "Personal Information",
-    description: "Basic contact details and background information"
-  },
-  {
-    icon: <Music className="text-apple-blue" />,
-    title: "Musical Experience",
-    description: "Details about your vocal training and performance history"
-  },
-  {
-    icon: <Mic className="text-apple-blue" />,
-    title: "Repertoire Recordings",
-    description: "Two contrasting pieces that showcase your range"
-  },
-  {
-    icon: <Sparkles className="text-apple-blue" />,
-    title: "Personal Statement",
-    description: "A brief explanation of your goals and aspirations"
-  },
-  {
-    icon: <ScrollText className="text-apple-blue" />,
-    title: "Supporting Documents",
-    description: "CV/resume and optional recommendation letters"
-  }
-];
+import { CheckCircle2, Clock, Info } from 'lucide-react';
 
 const ApplicationRequirements = () => {
   return (
-    <section className="py-16 md:py-24">
-      <div className="max-w-4xl mx-auto px-6">
+    <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+      <div className="p-8 md:p-10 border-b border-apple-border/10">
+        <h2 className="text-2xl md:text-3xl font-semibold text-apple-text mb-4">Application Requirements</h2>
+        <p className="text-apple-grey text-lg leading-relaxed">
+          Please ensure your application meets the following requirements before submission.
+        </p>
+      </div>
+      
+      <div className="grid md:grid-cols-2 gap-6 p-8 md:p-10">
         <motion.div 
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          className="bg-apple-light rounded-xl p-6"
+          whileHover={{ scale: 1.02 }}
+          transition={{ type: "spring", stiffness: 300 }}
         >
-          <h2 className="font-serif text-4xl md:text-5xl text-apple-text font-light mb-6 tracking-tight">
-            Application Requirements
-          </h2>
-          <p className="text-lg md:text-xl text-apple-grey max-w-2xl mx-auto leading-relaxed">
-            Prepare these materials for a complete application. Each element helps us understand your unique voice and potential.
-          </p>
+          <div className="flex items-center gap-4 mb-4">
+            <div className="bg-white rounded-full p-2 shadow-sm">
+              <Info className="w-6 h-6 text-apple-blue" />
+            </div>
+            <h3 className="text-xl font-semibold text-apple-text">Personal Information</h3>
+          </div>
+          <div className="space-y-3 pl-4 border-l-2 border-apple-border/30">
+            <div className="flex items-start gap-2">
+              <CheckCircle2 className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+              <p className="text-apple-text text-sm">Complete all required personal and contact information fields</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <CheckCircle2 className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+              <p className="text-apple-text text-sm">Ensure your email address is correct as it will be our primary method of contact</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <CheckCircle2 className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+              <p className="text-apple-text text-sm">Include your vocal range and singing experience</p>
+            </div>
+          </div>
         </motion.div>
         
         <motion.div 
-          className="grid md:grid-cols-2 gap-6"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ staggerChildren: 0.1 }}
+          className="bg-apple-light rounded-xl p-6"
+          whileHover={{ scale: 1.02 }}
+          transition={{ type: "spring", stiffness: 300 }}
         >
-          {requirementItems.map((item, index) => (
-            <motion.div 
-              key={index} 
-              className="bg-white rounded-2xl p-6 md:p-8 border border-apple-border/40 hover:border-apple-border/60 transition-all duration-300 shadow-sm hover:shadow-md"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-            >
-              <div className="flex items-start gap-4">
-                <div className="bg-[#f5f5f7] p-3 rounded-xl border border-apple-border/40">
-                  {item.icon}
-                </div>
-                <div>
-                  <h3 className="font-serif text-xl text-apple-text mb-2">{item.title}</h3>
-                  <p className="text-apple-grey leading-relaxed">{item.description}</p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+          <div className="flex items-center gap-4 mb-4">
+            <div className="bg-white rounded-full p-2 shadow-sm">
+              <Info className="w-6 h-6 text-apple-blue" />
+            </div>
+            <h3 className="text-xl font-semibold text-apple-text">Programme Details</h3>
+          </div>
+          <div className="space-y-3 pl-4 border-l-2 border-apple-border/30">
+            <div className="flex items-start gap-2">
+              <CheckCircle2 className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+              <p className="text-apple-text text-sm">Tell us why you want to join the workshop (100+ characters)</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <CheckCircle2 className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+              <p className="text-apple-text text-sm">Share your dietary restrictions if applicable</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <CheckCircle2 className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+              <p className="text-apple-text text-sm">Provide any accessibility requirements if needed</p>
+            </div>
+          </div>
         </motion.div>
         
         <motion.div 
-          className="mt-16 bg-[#f5f5f7] rounded-2xl p-8 border border-apple-border/40"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
+          className="bg-apple-light rounded-xl p-6 md:col-span-2"
+          whileHover={{ scale: 1.01 }}
+          transition={{ type: "spring", stiffness: 300 }}
         >
-          <h3 className="font-serif text-2xl text-apple-text mb-4">Pro Tips</h3>
-          <ul className="space-y-4">
-            <li className="flex items-start gap-3">
-              <span className="text-apple-blue text-lg">•</span>
-              <span className="text-apple-grey">Start your application early to allow time for gathering materials</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-apple-blue text-lg">•</span>
-              <span className="text-apple-grey">Choose repertoire that highlights your strengths and versatility</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-apple-blue text-lg">•</span>
-              <span className="text-apple-grey">Be authentic in your personal statement—we want to understand your unique voice</span>
-            </li>
-          </ul>
+          <div className="flex items-center gap-4 mb-4">
+            <div className="bg-white rounded-full p-2 shadow-sm">
+              <Clock className="w-6 h-6 text-apple-blue" />
+            </div>
+            <h3 className="text-xl font-semibold text-apple-text">Application Timeline</h3>
+          </div>
+          <div className="grid sm:grid-cols-3 gap-6">
+            <div className="bg-white rounded-xl p-4 shadow-sm">
+              <p className="font-semibold text-apple-text mb-2">Application Deadline</p>
+              <p className="text-apple-grey text-sm">May 1, 2025</p>
+            </div>
+            <div className="bg-white rounded-xl p-4 shadow-sm">
+              <p className="font-semibold text-apple-text mb-2">Acceptance Notifications</p>
+              <p className="text-apple-grey text-sm">May 15, 2025</p>
+            </div>
+            <div className="bg-white rounded-xl p-4 shadow-sm">
+              <p className="font-semibold text-apple-text mb-2">Workshop Dates</p>
+              <p className="text-apple-grey text-sm">July 10-15, 2025</p>
+            </div>
+          </div>
         </motion.div>
       </div>
-    </section>
+    </div>
   );
 };
 
