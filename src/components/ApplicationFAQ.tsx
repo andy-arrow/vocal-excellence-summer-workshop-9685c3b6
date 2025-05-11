@@ -81,8 +81,8 @@ const ApplicationFAQ = () => {
         <div className="mt-10 text-center">
           <p className="text-apple-grey">
             Have more questions? Contact us at{' '}
-            <a href="mailto:info@vocalexcellence.com" className="text-apple-blue hover:underline">
-              info@vocalexcellence.com
+            <a href="mailto:info@vocalexcellence.cy" className="text-apple-blue hover:underline">
+              info@vocalexcellence.cy
             </a>
           </p>
         </div>

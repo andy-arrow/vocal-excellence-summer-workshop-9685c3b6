@@ -360,7 +360,7 @@ const ApplicationForm = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
         >
-          <p>Need help? Email us at <a href="mailto:help@vocalexcellence.com" className="text-apple-blue hover:underline">help@vocalexcellence.com</a></p>
+          <p>Need help? Email us at <a href="mailto:info@vocalexcellence.cy" className="text-apple-blue hover:underline">info@vocalexcellence.cy</a></p>
         </motion.div>
       </motion.div>
     </section>

@@ -4,9 +4,21 @@ export interface CountryCode {
   dial_code: string;
   code: string;
   flag: string;
+  display?: string; // Combined display name with abbreviation
 }
 
-export const countryPhoneCodes: CountryCode[] = [
+// Function to sort country codes primarily by numeric value
+const sortCountryCodes = (codes: CountryCode[]): CountryCode[] => {
+  return [...codes].sort((a, b) => {
+    // Extract numeric part from dial codes for comparison
+    const numA = parseInt(a.dial_code.replace(/\D/g, ''));
+    const numB = parseInt(b.dial_code.replace(/\D/g, ''));
+    return numA - numB;
+  });
+};
+
+// First define all country codes
+const rawCountryCodes: CountryCode[] = [
   { name: "United States", dial_code: "+1", code: "US", flag: "🇺🇸" },
   { name: "United Kingdom", dial_code: "+44", code: "GB", flag: "🇬🇧" },
   { name: "Afghanistan", dial_code: "+93", code: "AF", flag: "🇦🇫" },
@@ -215,3 +227,11 @@ export const countryPhoneCodes: CountryCode[] = [
   { name: "Zimbabwe", dial_code: "+263", code: "ZW", flag: "🇿🇼" },
   { name: "Cyprus", dial_code: "+357", code: "CY", flag: "🇨🇾" }
 ];
+
+// Process the raw data to add display names with abbreviations and sort
+export const countryPhoneCodes: CountryCode[] = sortCountryCodes(
+  rawCountryCodes.map(country => ({
+    ...country,
+    display: `${country.flag} ${country.dial_code} (${country.code})`
+  }))
+);

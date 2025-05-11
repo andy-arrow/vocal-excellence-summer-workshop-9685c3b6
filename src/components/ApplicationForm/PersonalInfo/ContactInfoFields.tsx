@@ -69,7 +69,7 @@ const ContactInfoFields = () => {
                 value={field.value}
               >
                 <FormControl>
-                  <SelectTrigger className="w-[110px] flex-shrink-0" id="phoneCountryCode">
+                  <SelectTrigger className="w-[120px] flex-shrink-0" id="phoneCountryCode">
                     <SelectValue placeholder="+1" />
                   </SelectTrigger>
                 </FormControl>
@@ -79,6 +79,7 @@ const ContactInfoFields = () => {
                       <span className="flex items-center">
                         <span className="mr-1">{country.flag}</span>
                         <span>{country.dial_code}</span>
+                        <span className="ml-1 text-gray-500 text-xs">({country.code})</span>
                       </span>
                     </SelectItem>
                   ))}
