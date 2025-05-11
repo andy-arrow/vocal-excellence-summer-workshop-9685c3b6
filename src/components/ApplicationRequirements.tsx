@@ -2,8 +2,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2, Clock, Info } from 'lucide-react';
+import { APPLICATION_DATES } from '@/constants/applicationDates';
+import { format } from 'date-fns';
 
 const ApplicationRequirements = () => {
+  const deadlineDate = format(APPLICATION_DATES.DEADLINE, 'MMMM d, yyyy');
+  const notificationDate = format(APPLICATION_DATES.NOTIFICATION_DATE, 'MMMM d, yyyy');
+  const programPeriod = `${format(APPLICATION_DATES.PROGRAM_START, 'MMMM d')}-${format(APPLICATION_DATES.PROGRAM_END, 'MMMM d, yyyy')}`;
+
   return (
     <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
       <div className="p-8 md:p-10 border-b border-apple-border/10">
@@ -82,15 +88,15 @@ const ApplicationRequirements = () => {
           <div className="grid sm:grid-cols-3 gap-6">
             <div className="bg-white rounded-xl p-4 shadow-sm">
               <p className="font-semibold text-apple-text mb-2">Application Deadline</p>
-              <p className="text-apple-grey text-sm">May 1, 2025</p>
+              <p className="text-apple-grey text-sm">{deadlineDate}</p>
             </div>
             <div className="bg-white rounded-xl p-4 shadow-sm">
               <p className="font-semibold text-apple-text mb-2">Acceptance Notifications</p>
-              <p className="text-apple-grey text-sm">May 15, 2025</p>
+              <p className="text-apple-grey text-sm">{notificationDate}</p>
             </div>
             <div className="bg-white rounded-xl p-4 shadow-sm">
               <p className="font-semibold text-apple-text mb-2">Workshop Dates</p>
-              <p className="text-apple-grey text-sm">July 10-15, 2025</p>
+              <p className="text-apple-grey text-sm">{programPeriod}</p>
             </div>
           </div>
         </motion.div>

@@ -3,47 +3,56 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Send, CheckCircle2, Calendar, Clock, Users, GraduationCap } from 'lucide-react';
 import { APPLICATION_DATES } from '@/constants/applicationDates';
-
-const timelineSteps = [
-  {
-    icon: <Send className="w-5 h-5 text-purple-500" />,
-    title: "Submit Application",
-    description: "Complete the online application form with your personal information and vocal background.",
-    date: "By May 1, 2025",
-  },
-  {
-    icon: <CheckCircle2 className="w-5 h-5 text-green-600" />,
-    title: "Application Review",
-    description: "Our faculty will review your application and materials.",
-    date: "May 2-14, 2025",
-  },
-  {
-    icon: <Calendar className="w-5 h-5 text-blue-500" />,
-    title: "Acceptance Notifications",
-    description: "Successful applicants will receive an acceptance email with further instructions.",
-    date: "May 15, 2025",
-  },
-  {
-    icon: <Clock className="w-5 h-5 text-amber-500" />,
-    title: "Confirm Participation",
-    description: "Secure your place by confirming your attendance and arranging payment.",
-    date: "By June 1, 2025",
-  },
-  {
-    icon: <Users className="w-5 h-5 text-rose-500" />,
-    title: "Workshop Week",
-    description: "Participate in our intensive 5-day vocal excellence workshop.",
-    date: "July 10-15, 2025",
-  },
-  {
-    icon: <GraduationCap className="w-5 h-5 text-emerald-600" />,
-    title: "Final Performance",
-    description: "Showcase your growth in our closing performance event.",
-    date: "July 15, 2025",
-  }
-];
+import { format } from 'date-fns';
 
 const ApplicationTimeline = () => {
+  // Format dates for display
+  const deadlineDate = format(APPLICATION_DATES.DEADLINE, 'MMMM d, yyyy');
+  const reviewPeriod = `${format(APPLICATION_DATES.REVIEW_PERIOD_START, 'MMMM d')}-${format(APPLICATION_DATES.REVIEW_PERIOD_END, 'MMMM d, yyyy')}`;
+  const notificationDate = format(APPLICATION_DATES.NOTIFICATION_DATE, 'MMMM d, yyyy');
+  const tuitionDeadline = format(APPLICATION_DATES.TUITION_DEADLINE, 'MMMM d, yyyy');
+  const workshopPeriod = `${format(APPLICATION_DATES.PROGRAM_START, 'MMMM d')}-${format(APPLICATION_DATES.PROGRAM_END, 'MMMM d, yyyy')}`;
+  const finalPerformance = format(APPLICATION_DATES.FINAL_PERFORMANCE, 'MMMM d, yyyy');
+
+  const timelineSteps = [
+    {
+      icon: <Send className="w-5 h-5 text-purple-500" />,
+      title: "Submit Application",
+      description: "Complete the online application form with your personal information and vocal background.",
+      date: `By ${deadlineDate}`,
+    },
+    {
+      icon: <CheckCircle2 className="w-5 h-5 text-green-600" />,
+      title: "Application Review",
+      description: "Our faculty will review your application and materials.",
+      date: reviewPeriod,
+    },
+    {
+      icon: <Calendar className="w-5 h-5 text-blue-500" />,
+      title: "Acceptance Notifications",
+      description: "Successful applicants will receive an acceptance email with further instructions.",
+      date: notificationDate,
+    },
+    {
+      icon: <Clock className="w-5 h-5 text-amber-500" />,
+      title: "Confirm Participation",
+      description: "Secure your place by confirming your attendance and arranging payment.",
+      date: `By ${tuitionDeadline}`,
+    },
+    {
+      icon: <Users className="w-5 h-5 text-rose-500" />,
+      title: "Workshop Week",
+      description: "Participate in our intensive 5-day vocal excellence workshop.",
+      date: workshopPeriod,
+    },
+    {
+      icon: <GraduationCap className="w-5 h-5 text-emerald-600" />,
+      title: "Final Performance",
+      description: "Showcase your growth in our closing performance event.",
+      date: finalPerformance,
+    }
+  ];
+
   return (
     <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
       <div className="p-8 md:p-10 border-b border-apple-border/10">

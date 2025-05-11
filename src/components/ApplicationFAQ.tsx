@@ -2,43 +2,50 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-
-const faqs = [
-  {
-    question: "What are the eligibility requirements for the workshop?",
-    answer: "Applicants must be at least 16 years old. While we welcome singers of all experience levels, we look for a demonstrated passion for vocal development and a willingness to engage deeply with the workshop curriculum."
-  },
-  {
-    question: "Do I need to have formal vocal training to apply?",
-    answer: "No, formal training is not required. We welcome singers with a range of backgrounds, from self-taught vocalists to those with extensive classical training. What matters most is your enthusiasm and commitment to developing your vocal skills."
-  },
-  {
-    question: "Is there any financial aid available for the workshop?",
-    answer: "Yes, we offer a limited number of scholarships based on financial need and artistic merit. To be considered, check the scholarship interest box in the application form. If selected, we will contact you with further instructions."
-  },
-  {
-    question: "Do I need to include a recommendation letter with my application?",
-    answer: "A recommendation letter is optional but can strengthen your application. Consider including one from a vocal coach, music teacher, or other professional who can speak to your musical abilities and commitment."
-  },
-  {
-    question: "What happens after I submit my application?",
-    answer: "After the application deadline (May 1, 2025), our faculty will review all submissions. Acceptance notifications will be sent out by May 15, 2025. If accepted, you'll need to confirm your participation and arrange payment by June 1, 2025."
-  },
-  {
-    question: "Is accommodation provided during the workshop?",
-    answer: "Accommodation is not included in the tuition fee. However, we can provide recommendations for local accommodations at various price points, including special rates negotiated with nearby hotels and homestay options."
-  },
-  {
-    question: "What dietary options will be available during the workshop?",
-    answer: "We cater to various dietary requirements including vegetarian, vegan, gluten-free, and lactose-free options. Please specify your dietary needs in the application form so we can make appropriate arrangements."
-  },
-  {
-    question: "Can I attend only part of the workshop?",
-    answer: "The workshop is designed as an immersive experience, and we strongly encourage attendance for the full duration. Partial attendance may be considered in exceptional circumstances, but the full tuition fee still applies."
-  }
-];
+import { APPLICATION_DATES } from '@/constants/applicationDates';
+import { format } from 'date-fns';
 
 const ApplicationFAQ = () => {
+  const deadlineDate = format(APPLICATION_DATES.DEADLINE, 'MMMM d, yyyy');
+  const notificationDate = format(APPLICATION_DATES.NOTIFICATION_DATE, 'MMMM d, yyyy');
+  const tuitionDeadline = format(APPLICATION_DATES.TUITION_DEADLINE, 'MMMM d, yyyy');
+  const programYear = format(APPLICATION_DATES.PROGRAM_START, 'yyyy');
+
+  const faqs = [
+    {
+      question: "What are the eligibility requirements for the workshop?",
+      answer: "Applicants must be at least 16 years old. While we welcome singers of all experience levels, we look for a demonstrated passion for vocal development and a willingness to engage deeply with the workshop curriculum."
+    },
+    {
+      question: "Do I need to have formal vocal training to apply?",
+      answer: "No, formal training is not required. We welcome singers with a range of backgrounds, from self-taught vocalists to those with extensive classical training. What matters most is your enthusiasm and commitment to developing your vocal skills."
+    },
+    {
+      question: "Is there any financial aid available for the workshop?",
+      answer: "Yes, we offer a limited number of scholarships based on financial need and artistic merit. To be considered, check the scholarship interest box in the application form. If selected, we will contact you with further instructions."
+    },
+    {
+      question: "Do I need to include a recommendation letter with my application?",
+      answer: "A recommendation letter is optional but can strengthen your application. Consider including one from a vocal coach, music teacher, or other professional who can speak to your musical abilities and commitment."
+    },
+    {
+      question: "What happens after I submit my application?",
+      answer: `After the application deadline (${deadlineDate}), our faculty will review all submissions. Acceptance notifications will be sent out by ${notificationDate}. If accepted, you'll need to confirm your participation and arrange payment by ${tuitionDeadline}.`
+    },
+    {
+      question: "Is accommodation provided during the workshop?",
+      answer: "Accommodation is not included in the tuition fee. However, we can provide recommendations for local accommodations at various price points, including special rates negotiated with nearby hotels and homestay options."
+    },
+    {
+      question: "What dietary options will be available during the workshop?",
+      answer: "We cater to various dietary requirements including vegetarian, vegan, gluten-free, and lactose-free options. Please specify your dietary needs in the application form so we can make appropriate arrangements."
+    },
+    {
+      question: "Can I attend only part of the workshop?",
+      answer: "The workshop is designed as an immersive experience, and we strongly encourage attendance for the full duration. Partial attendance may be considered in exceptional circumstances, but the full tuition fee still applies."
+    }
+  ];
+
   return (
     <motion.div 
       className="bg-white rounded-2xl shadow-sm overflow-hidden"

@@ -3,8 +3,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { CheckCircle2, ChevronRight } from 'lucide-react';
+import { APPLICATION_DATES } from '@/constants/applicationDates';
+import { format } from 'date-fns';
 
 const SubmissionSuccessMessage = () => {
+  const notificationDate = format(APPLICATION_DATES.NOTIFICATION_DATE, 'MMMM d, yyyy');
+  const tuitionDeadline = format(APPLICATION_DATES.TUITION_DEADLINE, 'MMMM d, yyyy');
+  const programYear = format(APPLICATION_DATES.PROGRAM_START, 'yyyy');
+
   return (
     <div className="py-16 md:py-20">
       <motion.div 
@@ -25,7 +31,7 @@ const SubmissionSuccessMessage = () => {
         
         <div className="bg-white rounded-xl p-8 mb-8 shadow-sm border border-apple-border/40">
           <p className="text-lg text-apple-grey mb-6 leading-relaxed">
-            Thank you for applying to the Vocal Excellence Summer Workshop 2025. 
+            Thank you for applying to the Vocal Excellence Summer Workshop {programYear}. 
             We have received your application and will review it carefully.
           </p>
           
@@ -48,13 +54,13 @@ const SubmissionSuccessMessage = () => {
                 <div className="w-6 h-6 rounded-full bg-apple-blue flex items-center justify-center shrink-0">
                   <span className="text-white text-sm font-medium">2</span>
                 </div>
-                <span className="text-apple-grey">You'll receive our decision by May 15, 2025</span>
+                <span className="text-apple-grey">You'll receive our decision by {notificationDate}</span>
               </li>
               <li className="flex items-center gap-3">
                 <div className="w-6 h-6 rounded-full bg-apple-blue flex items-center justify-center shrink-0">
                   <span className="text-white text-sm font-medium">3</span>
                 </div>
-                <span className="text-apple-grey">If accepted, you'll need to confirm your participation by June 1, 2025</span>
+                <span className="text-apple-grey">If accepted, you'll need to confirm your participation by {tuitionDeadline}</span>
               </li>
             </ul>
           </div>
