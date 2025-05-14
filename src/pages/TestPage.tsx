@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { isAuthorizedAdmin, logAdminAccessAttempt } from '@/utils/accessControl';
@@ -9,11 +9,12 @@ import ScrollToTopButton from '@/components/ScrollToTopButton';
 import { AlertTriangle, ChevronLeft } from 'lucide-react';
 import { useExitIntent } from '@/hooks/use-exit-intent';
 import { VocalUpgradePopup } from '@/components/VocalUpgradePopup';
+import { toast } from '@/hooks/use-toast';
 
 const TestPage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const isAdmin = user ? isAuthorizedAdmin(user.email) : false;
+  const [isAdmin, setIsAdmin] = useState(false);
   
   const { 
     showExitIntent: showPopup, 
@@ -24,19 +25,44 @@ const TestPage = () => {
     maxDisplays: 1
   });
 
-  // Log access attempt
+  // Check admin status and log access attempt
   useEffect(() => {
-    logAdminAccessAttempt(user?.email, isAdmin);
+    const adminStatus = user ? isAuthorizedAdmin(user.email) : false;
+    setIsAdmin(adminStatus);
+    logAdminAccessAttempt(user?.email, adminStatus);
     
-    // If not an admin, redirect to home
-    if (!isAdmin) {
-      navigate('/', { replace: true });
+    // If not an admin, redirect to home after a short delay
+    if (!adminStatus) {
+      toast({
+        title: "Access Denied",
+        description: "You do not have permission to view this page.",
+        variant: "destructive",
+      });
+      
+      setTimeout(() => {
+        navigate('/', { replace: true });
+      }, 1500);
     }
-  }, [user, isAdmin, navigate]);
+  }, [user, navigate]);
 
-  // Show nothing during redirect if not admin
+  // If checking admin status, show loading
+  if (user && isAdmin === null) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
+  // If not admin, show nothing during redirect
   if (!isAdmin) {
-    return null;
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center">
+        <AlertTriangle className="h-12 w-12 text-amber-500 mb-4" />
+        <h2 className="text-xl font-bold">Access Restricted</h2>
+        <p className="text-gray-600">Redirecting to homepage...</p>
+      </div>
+    );
   }
 
   return (

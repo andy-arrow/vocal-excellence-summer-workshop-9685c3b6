@@ -10,11 +10,6 @@ const AuthButtons = memo(() => {
   const { user, signOut } = useAuth();
   const isAdmin = user ? isAuthorizedAdmin(user.email) : false;
 
-  // Only render for admins
-  if (!isAdmin) {
-    return null;
-  }
-
   if (user) {
     return (
       <div className="flex items-center gap-4">
