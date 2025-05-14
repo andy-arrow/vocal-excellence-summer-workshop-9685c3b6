@@ -18,12 +18,13 @@ const AuthButtons = memo(() => {
             <Link to="/admin" className="text-white/90 hover:text-white transition-colors flex items-center gap-1">
               <span className="hidden md:inline">Admin</span>
             </Link>
-            <Link to="/test" className="text-white/90 hover:text-white transition-colors flex items-center gap-1">
-              <Settings size={16} />
-              <span className="hidden md:inline">Test</span>
-            </Link>
           </div>
         )}
+        {/* Test page link is now visible to all users */}
+        <Link to="/test" className="text-white/90 hover:text-white transition-colors flex items-center gap-1">
+          <Settings size={16} />
+          <span className="hidden md:inline">Test</span>
+        </Link>
         <button
           onClick={() => signOut()}
           className="flex items-center gap-1 text-white/90 hover:text-white transition-colors"
@@ -36,10 +37,17 @@ const AuthButtons = memo(() => {
   }
 
   return (
-    <Link to="/auth" className="text-white/90 hover:text-white transition-colors flex items-center gap-1">
-      <LogIn size={16} />
-      <span>Login</span>
-    </Link>
+    <div className="flex items-center gap-4">
+      {/* Test page link visible for non-logged in users too */}
+      <Link to="/test" className="text-white/90 hover:text-white transition-colors flex items-center gap-1">
+        <Settings size={16} />
+        <span className="hidden md:inline">Test</span>
+      </Link>
+      <Link to="/auth" className="text-white/90 hover:text-white transition-colors flex items-center gap-1">
+        <LogIn size={16} />
+        <span>Login</span>
+      </Link>
+    </div>
   );
 });
 

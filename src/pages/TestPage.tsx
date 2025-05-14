@@ -1,20 +1,16 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext';
-import { isAuthorizedAdmin, logAdminAccessAttempt } from '@/utils/accessControl';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ScrollToTopButton from '@/components/ScrollToTopButton';
-import { AlertTriangle, ChevronLeft } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 import { useExitIntent } from '@/hooks/use-exit-intent';
 import { VocalUpgradePopup } from '@/components/VocalUpgradePopup';
-import { toast } from '@/hooks/use-toast';
+import { toast } from '@/components/ui/use-toast';
 
 const TestPage = () => {
-  const { user } = useAuth();
   const navigate = useNavigate();
-  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
   
   const { 
     showExitIntent: showPopup, 
@@ -24,62 +20,6 @@ const TestPage = () => {
     scrollThreshold: 50, // Show after 50% scroll
     maxDisplays: 1
   });
-
-  // Check admin status and log access attempt
-  useEffect(() => {
-    if (user) {
-      const adminStatus = isAuthorizedAdmin(user.email);
-      setIsAdmin(adminStatus);
-      logAdminAccessAttempt(user.email, adminStatus);
-      
-      // If not an admin, redirect to home after a short delay
-      if (!adminStatus) {
-        toast({
-          title: "Access Denied",
-          description: "You do not have permission to view this page.",
-          variant: "destructive",
-        });
-        
-        setTimeout(() => {
-          navigate('/', { replace: true });
-        }, 1500);
-      }
-    } else {
-      // User is not logged in
-      setIsAdmin(false);
-      logAdminAccessAttempt(null, false);
-      
-      toast({
-        title: "Authentication Required",
-        description: "Please log in to access this page.",
-        variant: "destructive",
-      });
-      
-      setTimeout(() => {
-        navigate('/auth', { replace: true });
-      }, 1500);
-    }
-  }, [user, navigate]);
-
-  // If checking admin status, show loading
-  if (isAdmin === null) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p>Loading...</p>
-      </div>
-    );
-  }
-
-  // If not admin, show nothing during redirect
-  if (!isAdmin) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center">
-        <AlertTriangle className="h-12 w-12 text-amber-500 mb-4" />
-        <h2 className="text-xl font-bold">Access Restricted</h2>
-        <p className="text-gray-600">Redirecting to homepage...</p>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50">
@@ -96,26 +36,14 @@ const TestPage = () => {
 
         <div className="bg-white p-6 rounded-lg shadow-sm border border-slate-200">
           <header className="mb-8">
-            <div className="inline-block bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-xs font-medium mb-3">
-              Admin Only
+            <div className="inline-block bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium mb-3">
+              Public Test Page
             </div>
             <h1 className="text-3xl font-bold text-slate-900">Test Page</h1>
             <p className="text-slate-500 mt-2">
-              This page is only visible to administrators.
+              This page is now accessible to everyone.
             </p>
           </header>
-
-          <div className="p-4 bg-blue-50 border border-blue-100 rounded-lg mb-8">
-            <div className="flex items-start">
-              <AlertTriangle className="h-5 w-5 text-blue-600 mr-3 mt-0.5" />
-              <div>
-                <h3 className="font-medium text-blue-700">Admin Access Only</h3>
-                <p className="text-sm text-blue-600 mt-1">
-                  This page is restricted to administrative users. Your access has been logged.
-                </p>
-              </div>
-            </div>
-          </div>
 
           <section className="space-y-8">
             <div className="mb-6">
@@ -150,7 +78,7 @@ const TestPage = () => {
             <div className="bg-green-50 border border-green-100 p-6 rounded-lg mb-8">
               <h3 className="text-lg font-semibold text-green-800 mb-2">Test Controls</h3>
               <p className="text-green-700 mb-4">
-                As an admin, you can manually trigger the popup to review its functionality.
+                You can manually trigger the popup to review its functionality.
               </p>
               <button
                 onClick={() => setShowPopup(true)}
