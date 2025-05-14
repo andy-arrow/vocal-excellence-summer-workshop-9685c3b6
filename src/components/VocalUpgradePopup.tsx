@@ -4,7 +4,7 @@ import { X, Send, Music, FileText, Video } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from '@/components/ui/use-toast'; // Updated import path
 
 type VoiceType = 'Soprano' | 'Alto' | 'Tenor' | 'Baritone' | 'Bass';
 
