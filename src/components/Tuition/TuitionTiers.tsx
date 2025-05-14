@@ -1,4 +1,3 @@
-
 import React, { useCallback } from 'react';
 import { motion, LazyMotion, domAnimation } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
@@ -62,12 +61,12 @@ const TuitionTiers = () => {
     window.scrollTo(0, 0);
   }, [navigate]);
 
-  // Updated Program Features with corrected list
+  // Updated Program Features with corrected list and removed duration mentions
   const PROGRAM_FEATURES = [
     'Comprehensive 360° Approach to Vocal Training',
     'World-class Teachers from Top Universities',
     'Professional Audition Preparation',
-    'Masterclasses (2 hours each day)',
+    'Masterclasses',
     'Ensemble Workshops',
     'Acting Workshops',
     'One Private Lesson for Each Student',

@@ -1,5 +1,10 @@
 
-// Re-export the ApplicationForm component
-import ApplicationForm from '../ApplicationForm';
+import React from 'react';
+import ApplicationFormComponent from '../ApplicationForm';
+
+// Re-export the ApplicationForm component with proper naming
+const ApplicationForm = () => {
+  return <ApplicationFormComponent />;
+};
 
 export default ApplicationForm;
