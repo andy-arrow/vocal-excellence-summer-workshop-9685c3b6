@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { isAuthorizedAdmin, logAdminAccessAttempt } from '@/utils/accessControl';
@@ -7,14 +7,25 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ScrollToTopButton from '@/components/ScrollToTopButton';
 import { AlertTriangle, ChevronLeft } from 'lucide-react';
+import { useExitIntent } from '@/hooks/use-exit-intent';
+import { VocalUpgradePopup } from '@/components/VocalUpgradePopup';
 
 const TestPage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const isAdmin = user ? isAuthorizedAdmin(user.email) : false;
+  
+  const { 
+    showExitIntent: showPopup, 
+    setShowExitIntent: setShowPopup
+  } = useExitIntent({
+    threshold: 20,
+    scrollThreshold: 50, // Show after 50% scroll
+    maxDisplays: 1
+  });
 
   // Log access attempt
-  React.useEffect(() => {
+  useEffect(() => {
     logAdminAccessAttempt(user?.email, isAdmin);
     
     // If not an admin, redirect to home
@@ -64,32 +75,56 @@ const TestPage = () => {
             </div>
           </div>
 
-          <section className="space-y-6">
-            <div>
-              <h2 className="text-xl font-semibold text-slate-800 mb-3">Test Section</h2>
+          <section className="space-y-8">
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold text-slate-800 mb-3">Lead Magnet Implementation</h2>
               <p className="text-slate-600">
-                This is a private test page that you can use for testing new features 
-                or configurations before making them public.
+                This page showcases our "1-Minute Vocal Upgrade Kit" lead magnet pop-up. It appears on exit intent or when you scroll 50% down the page.
               </p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-slate-100 p-4 rounded-lg">
-                <h3 className="font-medium text-slate-700 mb-2">Content Block 1</h3>
-                <p className="text-sm text-slate-600">
-                  Use this space for testing new content, features, or layouts.
-                </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <div className="bg-slate-100 p-6 rounded-lg">
+                <h3 className="font-medium text-slate-700 mb-3">Why This Works</h3>
+                <ul className="space-y-3 text-sm text-slate-600 list-disc pl-5">
+                  <li>Targeted at young singers seeking immediate improvement</li>
+                  <li>Provides actionable warmups they can try today</li>
+                  <li>Uses exit-intent to avoid interrupting the user experience</li>
+                  <li>Voice type quiz increases engagement and segmentation</li>
+                </ul>
               </div>
               
-              <div className="bg-slate-100 p-4 rounded-lg">
-                <h3 className="font-medium text-slate-700 mb-2">Content Block 2</h3>
-                <p className="text-sm text-slate-600">
-                  Another test area for experimental features or content.
-                </p>
+              <div className="bg-slate-100 p-6 rounded-lg">
+                <h3 className="font-medium text-slate-700 mb-3">Lead Magnet Contents</h3>
+                <ul className="space-y-3 text-sm text-slate-600 list-disc pl-5">
+                  <li>3 West-End vocal warm-ups (30-second audio)</li>
+                  <li>PDF cheat-sheet: "Fix Your Top 3 Pitch Problems"</li>
+                  <li>2-minute video on beating audition nerves</li>
+                  <li>Personalized by voice type (soprano, tenor, etc)</li>
+                </ul>
               </div>
             </div>
             
+            <div className="bg-green-50 border border-green-100 p-6 rounded-lg mb-8">
+              <h3 className="text-lg font-semibold text-green-800 mb-2">Test Controls</h3>
+              <p className="text-green-700 mb-4">
+                As an admin, you can manually trigger the popup to review its functionality.
+              </p>
+              <button
+                onClick={() => setShowPopup(true)}
+                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded transition-colors"
+              >
+                Show Popup Manually
+              </button>
+            </div>
+            
             <div className="border-t border-slate-200 pt-6">
+              <h3 className="font-medium text-slate-700 mb-3">Implementation Notes</h3>
+              <p className="text-sm text-slate-600 mb-4">
+                This implementation uses React hooks for exit intent detection and scroll position tracking.
+                In a production environment, this would be connected to a CRM or email marketing system.
+              </p>
+              
               <p className="text-sm text-slate-500 italic">
                 Last updated: {new Date().toLocaleDateString()}
               </p>
@@ -100,6 +135,12 @@ const TestPage = () => {
       
       <Footer />
       <ScrollToTopButton visible={true} />
+      
+      {/* The Vocal Upgrade Kit Popup */}
+      <VocalUpgradePopup 
+        open={showPopup} 
+        onOpenChange={setShowPopup}
+      />
     </div>
   );
 };
