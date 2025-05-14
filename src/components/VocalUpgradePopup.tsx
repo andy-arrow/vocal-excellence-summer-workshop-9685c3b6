@@ -35,6 +35,7 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
       
       // Success state
       setIsSubmitted(true);
+      // This is correct because we're using the toast function from the useToast hook
       toast({
         title: "Success!",
         description: "Your Vocal Upgrade Kit is on its way to your inbox!",
