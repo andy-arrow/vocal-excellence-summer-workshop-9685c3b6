@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Calendar, MapPin, Users, Clock, Star, ChevronRight, Music } from 'lucide-react';
