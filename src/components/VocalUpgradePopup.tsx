@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { X, Send, Music, FileText, Video } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -17,19 +18,17 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
   const [name, setName] = useState('');
   const [showQuiz, setShowQuiz] = useState(false);
   const [voiceType, setVoiceType] = useState<VoiceType | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
+  const handleSubscribe = async () => {
     if (!email) return;
     
     setIsSubmitting(true);
     
-    // Simulate API call
     try {
-      await new Promise(r => setTimeout(r, 800));
+      // In production, this would send the data to your CRM/email marketing system
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
       // Success state
       setIsSubmitted(true);
@@ -37,190 +36,204 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
       toast({
         title: "Success!",
         description: "Your Vocal Upgrade Kit is on its way to your inbox!",
-        duration: 5000,
+        className: "bg-green-700 text-white border-green-800",
       });
-      
-      // In a real implementation, you would send this data to your backend
-      console.log('Subscription data:', { email, name, voiceType });
-      
-      // Reset form in 5 seconds or close immediately based on UI needs
-      setTimeout(() => {
-        onOpenChange(false);
-        // Reset state after modal is closed
-        setTimeout(() => {
-          setIsSubmitted(false);
-          setShowQuiz(false);
-          setVoiceType(null);
-          setEmail('');
-          setName('');
-        }, 300);
-      }, 5000);
     } catch (error) {
       toast({
         title: "Something went wrong",
-        description: "Unable to subscribe. Please try again.",
+        description: "Please try again later.",
         variant: "destructive",
-        duration: 5000,
       });
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleVoiceTypeSelect = (type: VoiceType) => {
-    setVoiceType(type);
-    setShowQuiz(false);
+  const handleNext = () => {
+    if (!email || !name) return;
+    setShowQuiz(true);
   };
 
+  const handleClose = () => {
+    // Reset state on close
+    onOpenChange(false);
+    setTimeout(() => {
+      if (!isSubmitted) {
+        setEmail('');
+        setName('');
+        setShowQuiz(false);
+        setVoiceType(null);
+      }
+    }, 300);
+  };
+
+  const handleSelectVoiceType = (type: VoiceType) => {
+    setVoiceType(type);
+    handleSubscribe();
+  };
+
+  const renderContent = () => {
+    if (isSubmitted) {
+      return (
+        <div className="text-center p-4">
+          <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
+            <Send className="h-8 w-8 text-green-600" />
+          </div>
+          <h3 className="text-xl font-semibold mb-2">Thank You!</h3>
+          <p className="text-gray-600 mb-6">
+            Your Vocal Upgrade Kit has been sent to your inbox. Please check your email!
+          </p>
+          <div className="space-y-4">
+            <div className="flex items-start gap-3 bg-slate-50 p-3 rounded-lg">
+              <Music className="h-5 w-5 text-violet-600 mt-0.5" />
+              <div className="text-left">
+                <h4 className="font-medium text-slate-900">3 Professional Warm-ups</h4>
+                <p className="text-sm text-slate-600">30-second audio files selected for your voice type</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3 bg-slate-50 p-3 rounded-lg">
+              <FileText className="h-5 w-5 text-violet-600 mt-0.5" />
+              <div className="text-left">
+                <h4 className="font-medium text-slate-900">Pitch Perfect Cheat-sheet</h4>
+                <p className="text-sm text-slate-600">PDF guide to fix your top 3 pitch problems</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3 bg-slate-50 p-3 rounded-lg">
+              <Video className="h-5 w-5 text-violet-600 mt-0.5" />
+              <div className="text-left">
+                <h4 className="font-medium text-slate-900">Audition Confidence Video</h4>
+                <p className="text-sm text-slate-600">2-minute master class on beating nerves</p>
+              </div>
+            </div>
+          </div>
+          <Button 
+            onClick={handleClose} 
+            className="mt-6 w-full bg-slate-900"
+          >
+            Close
+          </Button>
+        </div>
+      );
+    }
+
+    if (showQuiz) {
+      return (
+        <>
+          <DialogHeader>
+            <DialogTitle>What's Your Voice Type?</DialogTitle>
+            <DialogDescription>
+              Select your voice type to receive tailored warm-ups.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid grid-cols-2 gap-3 pt-4">
+            <Button 
+              variant="outline" 
+              className="h-auto py-3 flex flex-col"
+              onClick={() => handleSelectVoiceType('Soprano')}
+            >
+              <span className="font-semibold">Soprano</span>
+              <span className="text-xs text-slate-500 mt-1">High female voice</span>
+            </Button>
+            <Button 
+              variant="outline" 
+              className="h-auto py-3 flex flex-col"
+              onClick={() => handleSelectVoiceType('Alto')}
+            >
+              <span className="font-semibold">Alto</span>
+              <span className="text-xs text-slate-500 mt-1">Lower female voice</span>
+            </Button>
+            <Button 
+              variant="outline" 
+              className="h-auto py-3 flex flex-col"
+              onClick={() => handleSelectVoiceType('Tenor')}
+            >
+              <span className="font-semibold">Tenor</span>
+              <span className="text-xs text-slate-500 mt-1">High male voice</span>
+            </Button>
+            <Button 
+              variant="outline" 
+              className="h-auto py-3 flex flex-col"
+              onClick={() => handleSelectVoiceType('Baritone')}
+            >
+              <span className="font-semibold">Baritone</span>
+              <span className="text-xs text-slate-500 mt-1">Middle male voice</span>
+            </Button>
+            <Button 
+              variant="outline" 
+              className="h-auto py-3 col-span-2"
+              onClick={() => handleSelectVoiceType('Bass')}
+            >
+              <span className="font-semibold">Bass</span>
+              <span className="text-xs text-slate-500 ml-1">(Lower male voice)</span>
+            </Button>
+          </div>
+          <div className="flex justify-between mt-6">
+            <Button 
+              variant="outline" 
+              onClick={() => setShowQuiz(false)}
+            >
+              Back
+            </Button>
+          </div>
+        </>
+      );
+    }
+
+    return (
+      <>
+        <DialogHeader>
+          <DialogTitle>Get Your 1-Minute Vocal Upgrade Kit</DialogTitle>
+          <DialogDescription>
+            Join over 500 singers who have improved their technique with our free vocal toolkit.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="space-y-4 py-4">
+          <div className="space-y-2">
+            <label htmlFor="name" className="text-sm font-medium">
+              Your Name
+            </label>
+            <Input
+              id="name"
+              placeholder="Enter your name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <label htmlFor="email" className="text-sm font-medium">
+              Email Address
+            </label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+        </div>
+        <Button 
+          onClick={handleNext} 
+          className="w-full"
+          disabled={!email || !name}
+        >
+          Get Free Vocal Toolkit
+        </Button>
+      </>
+    );
+  };
+  
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
-        {!isSubmitted ? (
-          <>
-            {!showQuiz && !voiceType ? (
-              <>
-                <DialogHeader>
-                  <DialogTitle className="text-xl sm:text-2xl font-bold text-center">
-                    🚀 Ready for a 1-minute vocal glow-up?
-                  </DialogTitle>
-                  <DialogDescription className="text-center mt-2">
-                    Get 3 pro warm-ups + a pitch-fix cheat-sheet, free.
-                  </DialogDescription>
-                </DialogHeader>
-                
-                <div className="grid gap-6 py-4">
-                  <div className="flex flex-col items-center space-y-4 text-center">
-                    <div className="grid grid-cols-3 gap-4 w-full">
-                      <div className="flex flex-col items-center gap-1 bg-blue-50 p-3 rounded-lg">
-                        <Music className="h-8 w-8 text-blue-500" />
-                        <p className="text-xs font-medium">3 Pro Warm-ups</p>
-                      </div>
-                      <div className="flex flex-col items-center gap-1 bg-green-50 p-3 rounded-lg">
-                        <FileText className="h-8 w-8 text-green-500" />
-                        <p className="text-xs font-medium">Pitch-Fix PDF</p>
-                      </div>
-                      <div className="flex flex-col items-center gap-1 bg-purple-50 p-3 rounded-lg">
-                        <Video className="h-8 w-8 text-purple-500" />
-                        <p className="text-xs font-medium">Audition Tips</p>
-                      </div>
-                    </div>
-                    
-                    <Button 
-                      onClick={() => setShowQuiz(true)} 
-                      className="w-full"
-                    >
-                      What's your voice type?
-                    </Button>
-                    
-                    <p className="text-sm text-muted-foreground mt-2">
-                      🎧 Already downloaded by 2,147 singers prepping for auditions.
-                    </p>
-                  </div>
-                </div>
-              </>
-            ) : showQuiz ? (
-              <>
-                <DialogHeader>
-                  <DialogTitle className="text-xl font-bold text-center">
-                    What's your voice type?
-                  </DialogTitle>
-                  <DialogDescription className="text-center mt-2">
-                    We'll customize your warm-ups accordingly.
-                  </DialogDescription>
-                </DialogHeader>
-                
-                <div className="grid grid-cols-2 gap-3 py-4">
-                  {(['Soprano', 'Alto', 'Tenor', 'Baritone', 'Bass'] as VoiceType[]).map((type) => (
-                    <Button 
-                      key={type} 
-                      variant="outline" 
-                      onClick={() => handleVoiceTypeSelect(type)}
-                      className="py-6"
-                    >
-                      {type}
-                    </Button>
-                  ))}
-                </div>
-              </>
-            ) : (
-              <>
-                <DialogHeader>
-                  <DialogTitle className="text-xl font-bold">
-                    Cool! Want exercises tailored to a {voiceType}?
-                  </DialogTitle>
-                </DialogHeader>
-                
-                <form onSubmit={handleSubmit} className="grid gap-4 py-4">
-                  <div className="grid gap-2">
-                    <Input
-                      id="name"
-                      placeholder="Your name (optional)"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      className="col-span-3"
-                    />
-                  </div>
-                  
-                  <div className="grid grid-cols-4 items-center gap-2">
-                    <Input
-                      id="email"
-                      placeholder="Your email"
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="col-span-3"
-                      required
-                    />
-                    <Button type="submit" disabled={isSubmitting} className="w-full">
-                      {isSubmitting ? (
-                        <div className="animate-spin">↻</div>
-                      ) : (
-                        <>SEND MY KIT</>
-                      )}
-                    </Button>
-                  </div>
-                  
-                  <p className="text-xs text-muted-foreground text-center">
-                    We'll send you singing tips; unsubscribe anytime.
-                  </p>
-                  
-                  <p className="text-sm text-muted-foreground text-center mt-2">
-                    🎧 Already downloaded by 2,147 singers prepping for auditions.
-                  </p>
-                </form>
-              </>
-            )}
-          </>
-        ) : (
-          <div className="flex flex-col items-center text-center py-6 space-y-4">
-            <div className="h-16 w-16 rounded-full bg-green-100 flex items-center justify-center">
-              <svg className="h-8 w-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <h2 className="text-xl font-bold">Thank you!</h2>
-            <p>Your Vocal Upgrade Kit is on the way!</p>
-            
-            <div className="bg-slate-100 p-4 rounded-lg w-full">
-              <h3 className="font-medium text-sm">Try this warm-up now:</h3>
-              <div className="mt-3 bg-white p-3 rounded flex items-center gap-3">
-                <button className="bg-blue-500 text-white rounded-full p-2 h-10 w-10 flex items-center justify-center">
-                  <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </button>
-                <div className="text-left">
-                  <p className="text-sm font-medium">Quick Vocal Resonance</p>
-                  <p className="text-xs text-slate-500">30 sec • Beginner</p>
-                </div>
-              </div>
-            </div>
-            
-            <p className="text-sm text-muted-foreground">
-              Check your inbox in the next 5 minutes for the complete kit!
-            </p>
-          </div>
-        )}
+        <button
+          onClick={handleClose}
+          className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-950 focus:ring-offset-2"
+        >
+          <X className="h-4 w-4" />
+          <span className="sr-only">Close</span>
+        </button>
+        {renderContent()}
       </DialogContent>
     </Dialog>
   );

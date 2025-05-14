@@ -19,7 +19,7 @@ export const AUTHORIZED_ADMIN_EMAILS = [
  */
 export const isAuthorizedAdmin = (email: string | undefined | null): boolean => {
   if (!email) return false;
-  return AUTHORIZED_ADMIN_EMAILS.includes(email.toLowerCase());
+  return AUTHORIZED_ADMIN_EMAILS.includes(email.toLowerCase().trim());
 };
 
 /**

@@ -14,7 +14,7 @@ import { toast } from '@/hooks/use-toast';
 const TestPage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
   
   const { 
     showExitIntent: showPopup, 
@@ -27,27 +27,42 @@ const TestPage = () => {
 
   // Check admin status and log access attempt
   useEffect(() => {
-    const adminStatus = user ? isAuthorizedAdmin(user.email) : false;
-    setIsAdmin(adminStatus);
-    logAdminAccessAttempt(user?.email, adminStatus);
-    
-    // If not an admin, redirect to home after a short delay
-    if (!adminStatus) {
-      // Now directly calling the toast function
+    if (user) {
+      const adminStatus = isAuthorizedAdmin(user.email);
+      setIsAdmin(adminStatus);
+      logAdminAccessAttempt(user.email, adminStatus);
+      
+      // If not an admin, redirect to home after a short delay
+      if (!adminStatus) {
+        toast({
+          title: "Access Denied",
+          description: "You do not have permission to view this page.",
+          variant: "destructive",
+        });
+        
+        setTimeout(() => {
+          navigate('/', { replace: true });
+        }, 1500);
+      }
+    } else {
+      // User is not logged in
+      setIsAdmin(false);
+      logAdminAccessAttempt(null, false);
+      
       toast({
-        title: "Access Denied",
-        description: "You do not have permission to view this page.",
+        title: "Authentication Required",
+        description: "Please log in to access this page.",
         variant: "destructive",
       });
       
       setTimeout(() => {
-        navigate('/', { replace: true });
+        navigate('/auth', { replace: true });
       }, 1500);
     }
   }, [user, navigate]);
 
   // If checking admin status, show loading
-  if (user && isAdmin === null) {
+  if (isAdmin === null) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <p>Loading...</p>

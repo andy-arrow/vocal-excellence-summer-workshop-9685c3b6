@@ -14,7 +14,7 @@ const AuthButtons = memo(() => {
     return (
       <div className="flex items-center gap-4">
         {isAdmin && (
-          <>
+          <div className="flex items-center gap-4">
             <Link to="/admin" className="text-white/90 hover:text-white transition-colors flex items-center gap-1">
               <span className="hidden md:inline">Admin</span>
             </Link>
@@ -22,7 +22,7 @@ const AuthButtons = memo(() => {
               <Settings size={16} />
               <span className="hidden md:inline">Test</span>
             </Link>
-          </>
+          </div>
         )}
         <button
           onClick={() => signOut()}
