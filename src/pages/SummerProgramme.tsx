@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Calendar, MapPin, Users, Clock, Star, ChevronRight, Music } from 'lucide-react';
@@ -46,7 +45,7 @@ const SummerProgramme = () => {
           </motion.div>
         </div>
       </section>
-
+      
       {/* Main Content */}
       <div className="container mx-auto max-w-[1000px] px-6 py-20">
         
