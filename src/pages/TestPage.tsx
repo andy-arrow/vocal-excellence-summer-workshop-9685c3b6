@@ -5,7 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { isAuthorizedAdmin, logAdminAccessAttempt } from '@/utils/accessControl';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { ScrollToTopButton } from '@/components/ScrollToTopButton';
+import ScrollToTopButton from '@/components/ScrollToTopButton';
 import { AlertTriangle, ChevronLeft } from 'lucide-react';
 
 const TestPage = () => {
@@ -99,7 +99,7 @@ const TestPage = () => {
       </main>
       
       <Footer />
-      <ScrollToTopButton />
+      <ScrollToTopButton visible={true} />
     </div>
   );
 };
