@@ -1,10 +1,9 @@
-
 import React, { useState } from 'react';
 import { X, Send, Music, FileText, Video } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast'; // Fixed import path
+import { toast } from '@/hooks/use-toast'; // Direct toast import
 
 type VoiceType = 'Soprano' | 'Alto' | 'Tenor' | 'Baritone' | 'Bass';
 
@@ -14,7 +13,6 @@ interface VocalUpgradePopupProps {
 }
 
 export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps) {
-  const { toast } = useToast();
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [showQuiz, setShowQuiz] = useState(false);
@@ -35,7 +33,7 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
       
       // Success state
       setIsSubmitted(true);
-      // This is correct because we're using the toast function from the useToast hook
+      // Now directly calling the toast function
       toast({
         title: "Success!",
         description: "Your Vocal Upgrade Kit is on its way to your inbox!",

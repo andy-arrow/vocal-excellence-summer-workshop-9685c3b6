@@ -1,9 +1,9 @@
-
 import React, { lazy, Suspense } from 'react';
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import { Toaster } from "@/components/ui/toaster";
 
 // Import pages using proper default imports
 const Index = lazy(() => import('./pages/Index'));
@@ -141,7 +141,12 @@ const preloadRoutes = () => {
 setTimeout(preloadRoutes, 2000);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+      <Toaster />
+    </>
+  );
 }
 
 export default App;

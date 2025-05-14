@@ -82,8 +82,10 @@ export function useToast() {
   };
 }
 
-// Export a toast object for direct usage
-export const toast = {
-  toast: (props: Omit<ToasterToast, "id">) => addToast(props),
-  dismiss: (toastId?: string) => dismissToast(toastId),
-};
+// Make the toast function directly callable while maintaining its methods
+const toastFn = (props: Omit<ToasterToast, "id">) => addToast(props);
+toastFn.toast = addToast;
+toastFn.dismiss = dismissToast;
+
+// Export a callable toast function
+export const toast = toastFn;

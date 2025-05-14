@@ -33,8 +33,8 @@ const TestPage = () => {
     
     // If not an admin, redirect to home after a short delay
     if (!adminStatus) {
-      // Fix: Use toast.toast() instead of calling toast directly
-      toast.toast({
+      // Now directly calling the toast function
+      toast({
         title: "Access Denied",
         description: "You do not have permission to view this page.",
         variant: "destructive",
