@@ -22,6 +22,8 @@ export const useFileUpload = (fileType: string) => {
   });
 
   const handleFileUpload = async (file: File) => {
+    console.log(`useFileUpload: Starting upload for ${fileType}: ${file.name}, ${file.size} bytes, ${file.type}`);
+    
     setUploadState({
       file,
       status: 'uploading',
@@ -42,7 +44,21 @@ export const useFileUpload = (fileType: string) => {
       );
       
       if (validationError) {
+        console.error(`useFileUpload: Validation error for ${fileType}:`, validationError);
         throw new Error(validationError);
+      }
+      
+      // Ensure window.applicationFiles exists
+      if (typeof window !== 'undefined') {
+        if (!window.applicationFiles) {
+          window.applicationFiles = {
+            audioFile1: null,
+            audioFile2: null,
+            cvFile: null,
+            recommendationFile: null
+          };
+          console.log('useFileUpload: Created missing window.applicationFiles object');
+        }
       }
       
       // Simulate upload progress for better UX
@@ -95,6 +111,8 @@ export const useFileUpload = (fileType: string) => {
       }, 2000);
       
     } catch (error: any) {
+      console.error(`useFileUpload: Error processing ${fileType}:`, error);
+      
       setUploadState({
         file: null,
         status: 'error',
