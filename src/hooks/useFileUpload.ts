@@ -48,7 +48,7 @@ export const useFileUpload = (fileType: string) => {
         throw new Error(validationError);
       }
       
-      // Ensure window.applicationFiles exists
+      // Initialize window.applicationFiles if it doesn't exist
       if (typeof window !== 'undefined') {
         if (!window.applicationFiles) {
           window.applicationFiles = {
@@ -74,17 +74,6 @@ export const useFileUpload = (fileType: string) => {
       
       // Store file in the global object for later submission
       if (typeof window !== 'undefined') {
-        // Create the object if it doesn't exist
-        if (!window.applicationFiles) {
-          window.applicationFiles = {
-            audioFile1: null,
-            audioFile2: null,
-            cvFile: null,
-            recommendationFile: null,
-          };
-          console.log('useFileUpload: Had to create missing window.applicationFiles');
-        }
-        
         // Store the file
         window.applicationFiles[fileType] = file;
         console.log(`useFileUpload: Stored file in window.applicationFiles.${fileType}:`, file.name, file.size, 'bytes', file.type);
