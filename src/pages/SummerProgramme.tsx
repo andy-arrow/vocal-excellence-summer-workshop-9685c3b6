@@ -200,19 +200,19 @@ const SummerProgramme = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-                name: "Maria Callas",
-                role: "Vocal Technique",
-                image: "/lovable-uploads/5a4b7bc3-bc7e-42cc-b5bf-fd69555887e3.png"
+                name: "Andreas Aroditis",
+                role: "Founder & Director",
+                image: "/lovable-uploads/a10cf0f4-c46f-4599-b410-6e1c715c92d5.png"
               },
               {
-                name: "Luciano Pavarotti",
-                role: "Performance Coach",
-                image: "/lovable-uploads/29cad38e-a84c-40f7-9ddb-3c11c159ea6d.png"
+                name: "Kate Batter",
+                role: "Vocal Coach",
+                image: "/lovable-uploads/e26c0944-dc77-4d19-8059-c61e7800b8d1.png"
               },
               {
-                name: "Renée Fleming",
-                role: "Repertoire Development",
-                image: "/lovable-uploads/23077377-fca0-46d4-b7c8-83c2a2edcb19.png"
+                name: "Carolyn Michelle Smith",
+                role: "Acting Coach",
+                image: "/lovable-uploads/5f2b13ba-7279-45da-86e2-af6b9c336634.png"
               }
             ].map((faculty, index) => (
               <motion.div
