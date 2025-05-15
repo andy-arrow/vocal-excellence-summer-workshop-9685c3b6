@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { File, Info } from 'lucide-react';
+import { File, Info, FileText } from 'lucide-react';
 import { FileUploadSection } from './FileUploadSection';
 
 // Declare global window interface extension
@@ -17,7 +17,10 @@ declare global {
 // Initialize global applicationFiles object
 if (typeof window !== 'undefined') {
   window.applicationFiles = window.applicationFiles || {
-    recommendationFile: null,
+    audioFile1: null,
+    audioFile2: null,
+    cvFile: null,
+    recommendationFile: null
   };
 }
 
@@ -26,7 +29,10 @@ const SupportingMaterialsSection = () => {
     // Ensure window.applicationFiles is initialized when this component mounts
     if (typeof window !== 'undefined') {
       window.applicationFiles = window.applicationFiles || {
-        recommendationFile: null,
+        audioFile1: null,
+        audioFile2: null,
+        cvFile: null,
+        recommendationFile: null
       };
       console.log('SupportingMaterialsSection: Initialized window.applicationFiles', window.applicationFiles);
     }
@@ -48,6 +54,18 @@ const SupportingMaterialsSection = () => {
       </div>
       
       <div className="bg-white rounded-xl p-4 border border-apple-border shadow-sm">
+        <FileUploadSection
+          label="CV / Resume"
+          description="Upload your CV or Resume in PDF format. This helps us understand your experience better."
+          icon={FileText}
+          fileType="cvFile"
+          acceptedFormats=".pdf"
+          required={true}
+          iconColor="text-apple-blue"
+        />
+      </div>
+      
+      <div className="mt-6 bg-white rounded-xl p-4 border border-apple-border shadow-sm">
         <FileUploadSection
           label="Recommendation Letter (Optional)"
           description="Upload your recommendation letter in PDF format. This is optional."
