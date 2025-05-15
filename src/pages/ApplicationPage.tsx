@@ -10,6 +10,12 @@ const ApplicationPage = () => {
   const navigate = useNavigate();
   
   useEffect(() => {
+    // Ensure window.applicationFiles is initialized
+    if (typeof window !== 'undefined') {
+      window.applicationFiles = window.applicationFiles || {};
+    }
+    
+    // Navigate to the application page
     navigate('/apply', { replace: true });
   }, [navigate]);
   

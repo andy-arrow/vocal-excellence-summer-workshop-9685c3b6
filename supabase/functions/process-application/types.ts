@@ -30,7 +30,7 @@ export interface ApplicationData {
 export interface FileUpload {
   name: string;
   file: File;
-  type: 'document';
+  type: 'audio' | 'document';
 }
 
 export interface ProcessedFile {
@@ -51,4 +51,5 @@ export interface SuccessResponse {
   applicationId: string;
   uploadedFiles?: ProcessedFile[];
   emailStatus?: { error?: any; success?: boolean };
+  submissionId?: string;
 }

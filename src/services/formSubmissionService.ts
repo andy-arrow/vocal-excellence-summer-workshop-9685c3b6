@@ -35,7 +35,11 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
       }
     }
 
-    // Prepare form data for database - fixed by ensuring we're passing a single object, not an array
+    // Create submission ID for tracking
+    const submissionId = Math.random().toString(36).substring(2, 15);
+    console.log('Generated submission ID for database submission:', submissionId);
+
+    // Prepare form data for database
     const formData = {
       firstname: data.firstName,
       lastname: data.lastName,
@@ -52,7 +56,7 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
       musicalbackground: data.musicalBackground,
       teachername: data.teacherName || null,
       teacheremail: data.teacherEmail || null,
-      performanceexperience: '', // Provide an empty string for the required field
+      performanceexperience: data.areasOfInterest || '', // Use areasOfInterest for performance experience
       reasonforapplying: data.reasonForApplying,
       heardaboutus: data.heardAboutUs,
       scholarshipinterest: data.scholarshipInterest,
@@ -64,7 +68,7 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
 
     console.log('Prepared form data for database:', JSON.stringify(formData, null, 2));
 
-    // Insert application data into database - fixed by removing the array brackets
+    // Insert application data into database
     const { data: result, error } = await supabase
       .from('applications')
       .insert(formData)
@@ -103,6 +107,7 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
         const formData = new FormData();
         formData.append('applicationData', JSON.stringify(data));
         formData.append('applicationId', applicationId);
+        formData.append('submissionId', submissionId);
         
         // Log all files being added to FormData
         Object.entries(files).forEach(([key, file]) => {
@@ -112,15 +117,15 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
           }
         });
         
-        // Log all form data entries for debugging
-        console.log('FormData entries before edge function call:');
-        for (const entry of formData.entries()) {
-          console.log(entry[0], entry[1] instanceof File ? `File: ${(entry[1] as File).name} (${(entry[1] as File).size} bytes)` : entry[1]);
-        }
+        // Add headers to the request
+        const headers = {
+          'X-Submission-ID': submissionId
+        };
         
         // Call edge function to process files
         const response = await supabase.functions.invoke('process-application', {
           body: formData,
+          headers: headers
         });
         
         console.log('File processing response:', response);
@@ -145,7 +150,7 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
           }
           fileProcessingSuccess = true;
         }
-      } catch (fileError) {
+      } catch (fileError: any) {
         console.error('Error processing files:', fileError);
         trackError('component_error', fileError, {
           formType: 'application',

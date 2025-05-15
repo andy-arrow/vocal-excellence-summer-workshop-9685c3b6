@@ -1,3 +1,4 @@
+
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { supabase } from "./supabaseClient.ts";
 import { processFiles } from "./fileHandler.ts";
@@ -6,7 +7,7 @@ import { ApplicationData, ErrorResponse, SuccessResponse } from "./types.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-submission-id, x-csrf-token",
   "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
   "Access-Control-Max-Age": "86400"
 };
@@ -97,7 +98,7 @@ async function saveApplicationToDatabase(data: ApplicationData): Promise<string>
         : `Dietary Restrictions: ${dietaryRestrictionText}`,
       termsagreed: data.termsAgreed,
       timestamp: new Date().toISOString(),
-      source: "website",
+      source: "edge_function",
     };
 
     console.log("Prepared application data for database insertion:", formData);
@@ -128,6 +129,11 @@ async function saveApplicationToDatabase(data: ApplicationData): Promise<string>
 serve(async (req) => {
   console.log("Process-application function invoked with method:", req.method);
   console.log("Content-Type:", req.headers.get("content-type"));
+  console.log("Headers:", Object.fromEntries([...req.headers.entries()]));
+  
+  // Get submission ID if provided
+  const submissionId = req.headers.get("x-submission-id") || "unknown";
+  console.log("Submission ID:", submissionId);
   
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
@@ -158,21 +164,28 @@ serve(async (req) => {
     
     // Parse request data
     const contentType = req.headers.get("content-type") || "";
-    console.log("Processing request with content type:", contentType);
+    console.log(`[${submissionId}] Processing request with content type:`, contentType);
     
     let applicationData: ApplicationData;
+    let applicationId: string | undefined;
     
     try {
+      // Check if applicationId was provided in the form data
       if (contentType.includes("multipart/form-data")) {
         const formData = await req.formData();
         applicationData = await processFormData(formData);
+        applicationId = formData.get("applicationId") as string;
+        console.log(`[${submissionId}] Application ID from form data:`, applicationId);
       } else if (contentType.includes("application/json")) {
         applicationData = await processJsonData(req);
+        const jsonBody = await req.json();
+        applicationId = jsonBody.applicationId;
+        console.log(`[${submissionId}] Application ID from JSON:`, applicationId);
       } else {
         throw new Error(`Unsupported content type: ${contentType}`);
       }
     } catch (parseError) {
-      console.error("Error parsing request data:", parseError);
+      console.error(`[${submissionId}] Error parsing request data:`, parseError);
       return new Response(
         JSON.stringify({ 
           success: false, 
@@ -185,17 +198,17 @@ serve(async (req) => {
       );
     }
 
-    console.log("Processing application for:", 
+    console.log(`[${submissionId}] Processing application for:`, 
       `${applicationData.firstName} ${applicationData.lastName}`,
       applicationData.email
     );
 
     // Validate required fields
-    const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'whereFrom', 'age'];
+    const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'whereFrom'];
     const missingFields = requiredFields.filter(field => !applicationData[field]);
     
     if (missingFields.length > 0) {
-      console.error("Missing required fields:", missingFields);
+      console.error(`[${submissionId}] Missing required fields:`, missingFields);
       return new Response(
         JSON.stringify({ 
           success: false, 
@@ -208,23 +221,26 @@ serve(async (req) => {
       );
     }
 
-    // Save to database
-    let applicationId: string;
-    try {
-      applicationId = await saveApplicationToDatabase(applicationData);
-      console.log("Application saved with ID:", applicationId);
-    } catch (dbError) {
-      console.error("Database error:", dbError);
-      return new Response(
-        JSON.stringify({ 
-          success: false, 
-          error: `Database error: ${dbError.message}` 
-        }),
-        { 
-          status: 500, 
-          headers: { ...corsHeaders, "Content-Type": "application/json" } 
-        }
-      );
+    // Save to database if applicationId was not provided
+    if (!applicationId) {
+      try {
+        applicationId = await saveApplicationToDatabase(applicationData);
+        console.log(`[${submissionId}] Application saved with ID:`, applicationId);
+      } catch (dbError) {
+        console.error(`[${submissionId}] Database error:`, dbError);
+        return new Response(
+          JSON.stringify({ 
+            success: false, 
+            error: `Database error: ${dbError.message}` 
+          }),
+          { 
+            status: 500, 
+            headers: { ...corsHeaders, "Content-Type": "application/json" } 
+          }
+        );
+      }
+    } else {
+      console.log(`[${submissionId}] Using provided application ID:`, applicationId);
     }
 
     // Process files if present
@@ -235,7 +251,7 @@ serve(async (req) => {
       try {
         const formData = await reqClone.formData();
         uploadedFiles = await processFiles(formData, applicationId);
-        console.log("Processed files:", uploadedFiles);
+        console.log(`[${submissionId}] Processed files:`, uploadedFiles);
         
         // Create file attachments for email
         if (uploadedFiles.length > 0) {
@@ -249,13 +265,13 @@ serve(async (req) => {
                   .download(file.path);
                 
                 if (fileError || !fileData) {
-                  console.error(`Error downloading file ${file.path}:`, fileError);
+                  console.error(`[${submissionId}] Error downloading file ${file.path}:`, fileError);
                   return null;
                 }
                 
                 // Convert blob to ArrayBuffer
                 const buffer = await fileData.arrayBuffer();
-                console.log(`Created attachment for ${file.name}: ${fileName} (${buffer.byteLength} bytes)`);
+                console.log(`[${submissionId}] Created attachment for ${file.name}: ${fileName} (${buffer.byteLength} bytes)`);
                 
                 return {
                   filename: fileName,
@@ -263,17 +279,17 @@ serve(async (req) => {
                   type: file.type.includes('audio') ? 'audio' : 'document'
                 };
               } catch (error) {
-                console.error(`Error creating attachment for ${file.name}:`, error);
+                console.error(`[${submissionId}] Error creating attachment for ${file.name}:`, error);
                 return null;
               }
             })
           );
           
           fileAttachments = fileAttachments.filter(Boolean);
-          console.log(`Created ${fileAttachments.length} attachments for email`);
+          console.log(`[${submissionId}] Created ${fileAttachments.length} attachments for email`);
         }
       } catch (fileError) {
-        console.error("Error processing files:", fileError);
+        console.error(`[${submissionId}] Error processing files:`, fileError);
         // Continue despite file errors - we've already saved the application
       }
     }
@@ -284,22 +300,22 @@ serve(async (req) => {
       // Check if RESEND_API_KEY is set
       const resendApiKey = Deno.env.get("RESEND_API_KEY");
       if (!resendApiKey) {
-        console.error("RESEND_API_KEY not set in environment");
+        console.error(`[${submissionId}] RESEND_API_KEY not set in environment`);
         throw new Error("RESEND_API_KEY not configured");
       }
       
-      console.log("Initializing EmailHandler with API key");
+      console.log(`[${submissionId}] Initializing EmailHandler with API key`);
       const emailHandler = new EmailHandler(resendApiKey);
       
       // Send emails with attachments
       await emailHandler.sendNotifications(applicationData, fileAttachments);
-      console.log("Email notifications sent successfully with attachments");
-    } catch (emailError) {
-      console.error("Error sending email notifications:", emailError);
+      console.log(`[${submissionId}] Email notifications sent successfully with attachments`);
+    } catch (error) {
+      console.error(`[${submissionId}] Error sending email notifications:`, error);
       // Store the error but continue - we don't want to fail the whole request
       emailError = {
-        message: emailError.message,
-        stack: emailError.stack
+        message: error.message,
+        stack: error.stack
       };
     }
 
@@ -307,18 +323,19 @@ serve(async (req) => {
       success: true,
       message: "Application processed successfully",
       applicationId,
+      submissionId,
       uploadedFiles: uploadedFiles.length > 0 ? uploadedFiles : undefined,
       emailStatus: emailError ? { error: emailError } : { success: true }
     };
 
-    console.log("Returning success response");
+    console.log(`[${submissionId}] Returning success response`);
     return new Response(JSON.stringify(response), {
       status: 200,
       headers: { ...corsHeaders, "Content-Type": "application/json" }
     });
     
   } catch (error) {
-    console.error("Unhandled error in process-application function:", error);
+    console.error(`[${submissionId}] Unhandled error in process-application function:`, error);
     const errorResponse = handleError(error);
     return new Response(JSON.stringify(errorResponse), {
       status: 500,

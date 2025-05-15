@@ -82,6 +82,10 @@ export const submitApplicationWithFiles = async (
     console.log('submitApplicationWithFiles: Starting submission with files for', formData.email);
     console.log('Files to upload:', Object.keys(files).map(key => `${key}: ${files[key]?.name || 'null'} (${files[key]?.size || 0} bytes)`));
     
+    // Generate a random ID to identify this submission 
+    const submissionId = Math.random().toString(36).substring(2, 15);
+    console.log('Generated submission ID:', submissionId);
+    
     // Get CSRF token if available
     const csrfToken = sessionStorage.getItem('formCsrfToken');
     
@@ -91,6 +95,7 @@ export const submitApplicationWithFiles = async (
     // Add application data as JSON
     formDataObject.append('applicationData', JSON.stringify(formData));
     formDataObject.append('source', window.location.href);
+    formDataObject.append('submissionId', submissionId);
     
     // Add the CSRF token if available
     if (csrfToken) {
@@ -114,7 +119,10 @@ export const submitApplicationWithFiles = async (
     }
     
     // Create custom headers
-    const headers: Record<string, string> = {};
+    const headers: Record<string, string> = {
+      'X-Submission-ID': submissionId
+    };
+    
     if (csrfToken) {
       headers['x-csrf-token'] = csrfToken;
     }
@@ -131,7 +139,8 @@ export const submitApplicationWithFiles = async (
     
     if (response.error) {
       console.error('Edge function error:', response.error);
-      throw new Error(response.error.message || 'Failed to process application');
+      // Try direct submission as a fallback
+      return await fallbackSubmission(formData, files);
     }
     
     // Clear CSRF token after successful submission
@@ -145,34 +154,45 @@ export const submitApplicationWithFiles = async (
   } catch (error: any) {
     console.error("Error submitting application with files:", error);
     
-    // Let's try the fallback mechanism
-    try {
-      console.log('Attempting direct form submission as fallback');
-      
-      // Add files directly to window.applicationFiles just in case it wasn't set
-      if (typeof window !== 'undefined') {
-        window.applicationFiles = window.applicationFiles || {};
-        Object.entries(files).forEach(([key, file]) => {
-          if (file) window.applicationFiles[key] = file;
-        });
-      }
-      
-      const result = await import('@/services/formSubmissionService').then(module => {
-        return module.submitApplicationForm(formData);
-      });
-      
-      if (result.success) {
-        return { 
-          success: true, 
-          data: result.data,
-          fileError: 'Files were not processed through the edge function, but your application was submitted'
-        };
-      }
-      
-      return { success: false, error };
-    } catch (fallbackError) {
-      console.error("Even fallback submission failed:", fallbackError);
-      return { success: false, error };
-    }
+    // Try the fallback mechanism
+    return await fallbackSubmission(formData, files);
   }
 };
+
+// Fallback submission when edge function fails
+async function fallbackSubmission(formData: ApplicationFormValues, files: { [key: string]: File }) {
+  console.log('Attempting direct form submission as fallback');
+  
+  try {
+    // Add files directly to window.applicationFiles just in case it wasn't set
+    if (typeof window !== 'undefined') {
+      window.applicationFiles = window.applicationFiles || {};
+      Object.entries(files).forEach(([key, file]) => {
+        if (file) window.applicationFiles[key] = file;
+      });
+    }
+    
+    const result = await import('@/services/formSubmissionService').then(module => {
+      return module.submitApplicationForm(formData);
+    });
+    
+    if (result.success) {
+      return { 
+        success: true, 
+        data: result.data,
+        fileError: 'Files were not processed through the edge function, but your application was submitted'
+      };
+    }
+    
+    return { 
+      success: false, 
+      error: "Application submission failed through both main and fallback methods."
+    };
+  } catch (fallbackError) {
+    console.error("Even fallback submission failed:", fallbackError);
+    return { 
+      success: false, 
+      error: fallbackError 
+    };
+  }
+}

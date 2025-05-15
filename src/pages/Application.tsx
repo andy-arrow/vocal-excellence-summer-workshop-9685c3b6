@@ -45,13 +45,18 @@ const Application = () => {
     window.addEventListener('scroll', handleScroll, {
       passive: true
     });
+    
+    // Initialize application files object
+    if (typeof window !== 'undefined') {
+      window.applicationFiles = window.applicationFiles || {};
+    }
+    
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Further increased padding to push content much lower
   const paddingClasses = isMobile 
-    ? "pt-64 pb-16" // Significantly increased from pt-40 for mobile
-    : "pt-80 pb-20"; // Significantly increased from pt-56 for desktop
+    ? "pt-32 pb-16" // Reduced from pt-64 for mobile
+    : "pt-40 pb-20"; // Reduced from pt-80 for desktop
 
   return (
     <div className="bg-[#f5f5f7] text-apple-text min-h-screen font-sans antialiased">
@@ -155,6 +160,7 @@ const Application = () => {
         </Suspense>
         
         <Footer />
+        <Toaster />
       </div>
     </div>
   );
