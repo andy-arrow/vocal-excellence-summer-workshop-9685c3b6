@@ -22,16 +22,16 @@ const SummerProgramme = () => {
             className="space-y-8"
           >
             <h1 className="text-5xl md:text-7xl font-serif font-light leading-tight tracking-tight">
-              Summer Intensive
+              Vocal Excellence
               <span className="block text-xl md:text-2xl font-sans font-light tracking-wide mt-4">
-                July 15-20, 2025 • Limassol, Cyprus
+                July 14-18, 2025 • Limassol, Cyprus
               </span>
             </h1>
             
             <div className="w-24 h-px bg-white/30 mx-auto"></div>
             
             <p className="text-xl md:text-2xl font-light max-w-2xl mx-auto leading-relaxed text-white/90">
-              An immersive five-day vocal training programme designed to take your performance skills to the next level
+              5 full days of exclusive vocal training with coaches from London's West End, Netflix & the world's top universities
             </p>
             
             <div className="pt-8">
@@ -60,7 +60,7 @@ const SummerProgramme = () => {
           </div>
           
           <p className="text-lg text-apple-grey leading-relaxed mb-8 max-w-3xl mx-auto">
-            The Vocal Excellence Summer Intensive is a comprehensive programme designed for serious vocalists looking to refine their technique, expand their repertoire, and connect with industry professionals. Over five transformative days, participants will engage in personalized coaching, masterclasses, and performance opportunities.
+            The Vocal Excellence Workshop is a comprehensive programme designed for serious vocalists looking to refine their technique, expand their repertoire, and connect with industry professionals. Over five transformative days, participants will engage in personalized coaching, masterclasses, and performance opportunities.
           </p>
           
           <div className="grid md:grid-cols-3 gap-8 mt-12">
@@ -189,7 +189,7 @@ const SummerProgramme = () => {
         <section className="mb-20">
           <div className="flex flex-col items-center text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-serif font-light text-apple-text mb-4">
-              Meet the 2025 Faculty
+              Meet Your Instructors
             </h2>
             <div className="w-16 h-px bg-apple-border mx-auto"></div>
             <p className="text-lg text-apple-grey max-w-2xl mt-6">
@@ -357,7 +357,7 @@ const SummerProgramme = () => {
                 </li>
                 <li className="flex items-start">
                   <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
-                  <span className="text-slate-700">Minimum 2 years of formal vocal training</span>
+                  <span className="text-slate-700">All levels of experience welcome</span>
                 </li>
                 <li className="flex items-start">
                   <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
@@ -365,7 +365,7 @@ const SummerProgramme = () => {
                 </li>
                 <li className="flex items-start">
                   <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
-                  <span className="text-slate-700">Intermediate to advanced skill level</span>
+                  <span className="text-slate-700">International applicants encouraged</span>
                 </li>
               </ul>
             </div>
@@ -379,11 +379,11 @@ const SummerProgramme = () => {
                 </li>
                 <li className="flex items-start">
                   <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
-                  <span className="text-slate-700">Early Bird: €699 (until May 15, 2025)</span>
+                  <span className="text-slate-700">Early Bird: €699 (until May 1, 2025)</span>
                 </li>
                 <li className="flex items-start">
                   <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
-                  <span className="text-slate-700">Payment Plan: 3 installments of €249.67</span>
+                  <span className="text-slate-700">Payment Plan: 3 installments available</span>
                 </li>
                 <li className="flex items-start">
                   <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
@@ -418,7 +418,7 @@ const SummerProgramme = () => {
           <div className="grid md:grid-cols-2 gap-8">
             {[
               {
-                quote: "The Summer Intensive transformed my approach to performance. The individual coaching sessions were invaluable, and I left with renewed confidence and technique.",
+                quote: "The Summer Workshop transformed my approach to performance. The individual coaching sessions were invaluable, and I left with renewed confidence and technique.",
                 name: "SOPHIA MARTINEZ",
                 role: "Soprano, 2024 Participant"
               },
@@ -468,7 +468,7 @@ const SummerProgramme = () => {
             <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
           </Link>
           <p className="text-sm text-apple-grey mt-4">
-            Early bird pricing ends May 15, 2025
+            Early bird pricing ends May 1, 2025
           </p>
         </div>
       </section>
