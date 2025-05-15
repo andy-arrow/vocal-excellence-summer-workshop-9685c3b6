@@ -33,6 +33,8 @@ export const useFileUpload = (fileType: string) => {
       const isAudio = fileType.includes('audio');
       const allowedTypes = isAudio ? ALLOWED_AUDIO_TYPES : ALLOWED_DOCUMENT_TYPES;
       
+      console.log(`useFileUpload: Validating ${fileType}, isAudio: ${isAudio}, file type: ${file.type}`);
+      
       const validationError = validateFileUpload(
         file, 
         allowedTypes,

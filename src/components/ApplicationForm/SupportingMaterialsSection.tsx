@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { File, Info, FileText } from 'lucide-react';
+import { File, Info, FileText, Music } from 'lucide-react';
 import { FileUploadSection } from './FileUploadSection';
 
 // Declare global window interface extension
@@ -74,6 +74,38 @@ const SupportingMaterialsSection = () => {
           acceptedFormats=".pdf"
           required={false}
           iconColor="text-apple-text"
+        />
+      </div>
+
+      <div className="flex items-center justify-between mt-6">
+        <h3 className="text-xl font-bold text-apple-text">Audio Samples</h3>
+        <div className="flex items-center text-sm text-apple-grey gap-1.5 font-medium">
+          <Info className="w-4 h-4" />
+          <span>MP3/WAV files only</span>
+        </div>
+      </div>
+      
+      <div className="bg-white rounded-xl p-4 border border-apple-border shadow-sm">
+        <FileUploadSection
+          label="Audio Sample 1"
+          description="Upload your first audio sample in MP3 or WAV format (max 5 minutes). This helps us understand your vocal abilities."
+          icon={Music}
+          fileType="audioFile1"
+          acceptedFormats=".mp3,.wav"
+          required={true}
+          iconColor="text-purple-500"
+        />
+      </div>
+      
+      <div className="mt-6 bg-white rounded-xl p-4 border border-apple-border shadow-sm">
+        <FileUploadSection
+          label="Audio Sample 2 (Optional)"
+          description="Upload an optional second audio sample in MP3 or WAV format (max 5 minutes)."
+          icon={Music}
+          fileType="audioFile2"
+          acceptedFormats=".mp3,.wav"
+          required={false}
+          iconColor="text-purple-400"
         />
       </div>
     </div>

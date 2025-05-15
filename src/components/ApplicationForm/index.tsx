@@ -17,6 +17,21 @@ const ApplicationForm = () => {
         console.log('ApplicationForm/index: Initialized window.applicationFiles with default structure');
       } else {
         console.log('ApplicationForm/index: Found existing window.applicationFiles');
+        
+        // Make sure all required keys exist
+        const requiredKeys = ['audioFile1', 'audioFile2', 'cvFile', 'recommendationFile'];
+        let updated = false;
+        
+        requiredKeys.forEach(key => {
+          if (!(key in window.applicationFiles)) {
+            window.applicationFiles[key] = null;
+            updated = true;
+          }
+        });
+        
+        if (updated) {
+          console.log('ApplicationForm/index: Updated window.applicationFiles with missing keys');
+        }
       }
     }
   }, []);
