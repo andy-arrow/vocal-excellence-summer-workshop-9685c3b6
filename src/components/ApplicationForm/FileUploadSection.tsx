@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { motion } from 'framer-motion';
@@ -27,6 +27,14 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
   iconColor = "text-[#1d1d1f]"
 }) => {
   const { uploadState, handleFileUpload, reset } = useFileUpload(fileType);
+
+  // Check if a file is already uploaded when component mounts
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.applicationFiles && window.applicationFiles[fileType]) {
+      console.log(`FileUploadSection: Found existing file for ${fileType} on mount:`, 
+        window.applicationFiles[fileType]?.name);
+    }
+  }, [fileType]);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from '@/hooks/use-toast';
 import { validateFileUpload } from '@/utils/security';
 
@@ -31,6 +31,22 @@ export const useFileUpload = (fileType: string) => {
     progress: 0,
     error: null
   });
+
+  // Check if there's already a file in applicationFiles when the hook mounts
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.applicationFiles && window.applicationFiles[fileType]) {
+      const existingFile = window.applicationFiles[fileType];
+      if (existingFile) {
+        console.log(`useFileUpload: Found existing file for ${fileType} on hook mount:`, existingFile.name);
+        setUploadState({
+          file: existingFile,
+          status: 'success',
+          progress: 100,
+          error: null
+        });
+      }
+    }
+  }, [fileType]);
 
   const handleFileUpload = async (file: File) => {
     console.log(`useFileUpload: Starting upload for ${fileType}: ${file.name}, ${file.size} bytes, ${file.type}`);
@@ -103,7 +119,7 @@ export const useFileUpload = (fileType: string) => {
           error: null
         });
         
-        toast.toast({
+        toast({
           title: "File uploaded successfully",
           description: `${file.name} is ready to be submitted with your application.`,
           className: "bg-green-600 text-white border-green-700",
@@ -120,7 +136,7 @@ export const useFileUpload = (fileType: string) => {
         error: error.message
       });
       
-      toast.toast({
+      toast({
         title: "Upload Failed",
         description: error.message,
         variant: "destructive",

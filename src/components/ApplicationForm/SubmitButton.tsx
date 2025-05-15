@@ -17,6 +17,7 @@ const SubmitButton = ({ isSubmitting }: SubmitButtonProps) => {
                 disabled:cursor-not-allowed disabled:hover:bg-apple-blue shadow-sm 
                 min-w-[200px] min-h-[48px]"
       aria-label={isSubmitting ? "Submitting application" : "Submit application"}
+      data-testid="submit-application-button"
     >
       <span className="flex items-center justify-center gap-3">
         {isSubmitting ? (

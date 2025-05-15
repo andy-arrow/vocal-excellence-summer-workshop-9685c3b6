@@ -111,6 +111,17 @@ export const submitApplicationWithFiles = async (
     console.log('submitApplicationWithFiles: Starting submission with files for', formData.email);
     console.log('Files to upload:', Object.keys(files).map(key => `${key}: ${files[key]?.name || 'null'} (${files[key]?.size || 0} bytes)`));
     
+    // Validate required files
+    if (!files.cvFile || !files.audioFile1) {
+      console.error('Required files missing:', !files.cvFile ? 'CV/Resume' : '', !files.audioFile1 ? 'Audio Sample 1' : '');
+      return { 
+        success: false, 
+        error: {
+          message: 'Required files are missing. Please upload your CV/Resume and Audio Sample 1.'
+        }
+      };
+    }
+    
     // Generate a random ID to identify this submission 
     const submissionId = Math.random().toString(36).substring(2, 15);
     console.log('Generated submission ID:', submissionId);
