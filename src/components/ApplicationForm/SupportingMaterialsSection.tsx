@@ -14,27 +14,47 @@ declare global {
   }
 }
 
-// Initialize global applicationFiles object
+// Initialize global applicationFiles object if it doesn't exist
 if (typeof window !== 'undefined') {
-  window.applicationFiles = window.applicationFiles || {
-    audioFile1: null,
-    audioFile2: null,
-    cvFile: null,
-    recommendationFile: null
-  };
+  if (!window.applicationFiles) {
+    window.applicationFiles = {
+      audioFile1: null,
+      audioFile2: null,
+      cvFile: null,
+      recommendationFile: null
+    };
+    console.log('SupportingMaterialsSection global init: Created window.applicationFiles');
+  }
 }
 
 const SupportingMaterialsSection = () => {
   useEffect(() => {
     // Ensure window.applicationFiles is initialized when this component mounts
     if (typeof window !== 'undefined') {
-      window.applicationFiles = window.applicationFiles || {
-        audioFile1: null,
-        audioFile2: null,
-        cvFile: null,
-        recommendationFile: null
-      };
-      console.log('SupportingMaterialsSection: Initialized window.applicationFiles', window.applicationFiles);
+      if (!window.applicationFiles) {
+        window.applicationFiles = {
+          audioFile1: null,
+          audioFile2: null,
+          cvFile: null,
+          recommendationFile: null
+        };
+        console.log('SupportingMaterialsSection: Initialized window.applicationFiles');
+      } else {
+        // Ensure all required keys exist
+        const requiredKeys = ['audioFile1', 'audioFile2', 'cvFile', 'recommendationFile'];
+        let updated = false;
+        
+        requiredKeys.forEach(key => {
+          if (!(key in window.applicationFiles)) {
+            window.applicationFiles[key] = null;
+            updated = true;
+          }
+        });
+        
+        if (updated) {
+          console.log('SupportingMaterialsSection: Updated window.applicationFiles with missing keys');
+        }
+      }
     }
     
     // Cleanup on unmount

@@ -13,6 +13,17 @@ export interface UploadState {
 const ALLOWED_AUDIO_TYPES = ['audio/mp3', 'audio/mpeg', 'audio/wav'];
 const ALLOWED_DOCUMENT_TYPES = ['application/pdf'];
 
+// Ensure window.applicationFiles is always defined globally
+if (typeof window !== 'undefined') {
+  window.applicationFiles = window.applicationFiles || {
+    audioFile1: null,
+    audioFile2: null,
+    cvFile: null,
+    recommendationFile: null
+  };
+  console.log('useFileUpload global init: Initialized window.applicationFiles');
+}
+
 export const useFileUpload = (fileType: string) => {
   const [uploadState, setUploadState] = useState<UploadState>({
     file: null,
