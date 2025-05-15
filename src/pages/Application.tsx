@@ -64,10 +64,10 @@ const Application = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Significantly increased padding for better spacing below navbar
+  // Even more dramatically increased padding for better spacing below navbar
   const paddingClasses = isMobile 
-    ? "pt-32 pb-16" // Increased padding for mobile (was pt-24)
-    : "pt-48 pb-20"; // Significantly increased padding for desktop (was pt-36)
+    ? "pt-56 pb-16" // Dramatically increased padding for mobile (was pt-32)
+    : "pt-72 pb-20"; // Dramatically increased padding for desktop (was pt-48)
 
   return (
     <div className="bg-[#f5f5f7] text-apple-text min-h-screen font-sans antialiased">
