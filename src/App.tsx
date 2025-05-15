@@ -1,4 +1,3 @@
-
 import React, { lazy, Suspense } from 'react';
 import {
   createBrowserRouter,

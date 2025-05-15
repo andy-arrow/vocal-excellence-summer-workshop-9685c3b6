@@ -20,7 +20,7 @@ const AuthButtons = memo(() => {
             </Link>
           </div>
         )}
-        {/* Test page link is now visible to all users */}
+        {/* Test page link is visible to all users */}
         <Link to="/test" className="text-white/90 hover:text-white transition-colors flex items-center gap-1">
           <Settings size={16} />
           <span className="hidden md:inline">Test</span>

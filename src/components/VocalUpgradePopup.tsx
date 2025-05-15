@@ -1,10 +1,9 @@
-
 import React, { useState } from 'react';
 import { X, Send, Music, FileText, Video } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { toast } from '@/hooks/use-toast'; // Direct toast import
+import { toast } from '@/components/ui/use-toast'; // Use the re-exported toast
 
 type VoiceType = 'Soprano' | 'Alto' | 'Tenor' | 'Baritone' | 'Bass';
 
@@ -32,7 +31,6 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
       
       // Success state
       setIsSubmitted(true);
-      // Now directly calling the toast function
       toast({
         title: "Success!",
         description: "Your Vocal Upgrade Kit is on its way to your inbox!",
