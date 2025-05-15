@@ -19,10 +19,10 @@ const ApplicationHero = () => {
     }
   };
 
-  // Further increased padding for mobile and desktop to ensure content starts below navigation
+  // Significantly increased padding for mobile and desktop to ensure content starts below navigation
   const paddingClasses = isMobile 
-    ? "pt-40 mt-24 pb-16" // Increased from pt-32 for mobile
-    : "pt-72 pb-20"; // Increased from pt-64 for desktop
+    ? "pt-48 mt-24 pb-16" // Increased from pt-40 for mobile
+    : "pt-80 pb-20"; // Increased from pt-72 for desktop
 
   return (
     <section className={`relative ${paddingClasses} overflow-hidden bg-apple-text`}>
