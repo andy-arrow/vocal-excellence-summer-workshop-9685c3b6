@@ -64,11 +64,12 @@ export const useFileUpload = (fileType: string) => {
             cvFile: null,
             recommendationFile: null,
           };
+          console.log('useFileUpload: Had to create missing window.applicationFiles');
         }
         
         // Store the file
         window.applicationFiles[fileType] = file;
-        console.log(`useFileUpload: Stored file in window.applicationFiles.${fileType}:`, file.name, file.size, 'bytes');
+        console.log(`useFileUpload: Stored file in window.applicationFiles.${fileType}:`, file.name, file.size, 'bytes', file.type);
         console.log('Current applicationFiles state:', Object.keys(window.applicationFiles).map(key => 
           `${key}: ${window.applicationFiles[key] ? window.applicationFiles[key].name : 'null'}`
         ));
@@ -105,6 +106,12 @@ export const useFileUpload = (fileType: string) => {
         variant: "destructive",
         className: "bg-rose-600 text-white border-rose-700",
       });
+      
+      // In case of error, clear the file from applicationFiles
+      if (typeof window !== 'undefined' && window.applicationFiles) {
+        window.applicationFiles[fileType] = null;
+        console.log(`useFileUpload: Cleared file from window.applicationFiles.${fileType} due to error`);
+      }
     }
   };
   

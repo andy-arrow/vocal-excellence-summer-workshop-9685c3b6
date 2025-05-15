@@ -48,15 +48,26 @@ const Application = () => {
     
     // Initialize application files object
     if (typeof window !== 'undefined') {
-      window.applicationFiles = window.applicationFiles || {};
+      if (!window.applicationFiles) {
+        window.applicationFiles = {
+          audioFile1: null,
+          audioFile2: null,
+          cvFile: null,
+          recommendationFile: null
+        };
+        console.log('Application.tsx: Initialized window.applicationFiles');
+      } else {
+        console.log('Application.tsx: Found existing window.applicationFiles');
+      }
     }
     
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Adjusted padding classes for better mobile experience
   const paddingClasses = isMobile 
-    ? "pt-32 pb-16" // Reduced from pt-64 for mobile
-    : "pt-40 pb-20"; // Reduced from pt-80 for desktop
+    ? "pt-24 pb-16" // Reduced padding for mobile
+    : "pt-36 pb-20"; // Reduced padding for desktop
 
   return (
     <div className="bg-[#f5f5f7] text-apple-text min-h-screen font-sans antialiased">

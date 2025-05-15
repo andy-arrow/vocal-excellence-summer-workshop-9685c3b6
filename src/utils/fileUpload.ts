@@ -43,20 +43,49 @@ export const uploadFile = async (
       await supabase.storage.createBucket('application_materials', { public: true });
     }
     
-    const { data, error } = await supabase.storage
-      .from('application_materials')
-      .upload(fileName, file, {
-        cacheControl: '3600',
-        upsert: true // Allow overwriting
-      });
+    // Upload with retry mechanism
+    let attempts = 0;
+    const maxAttempts = 3;
+    let lastError = null;
+    
+    while (attempts < maxAttempts) {
+      try {
+        const { data, error } = await supabase.storage
+          .from('application_materials')
+          .upload(fileName, file, {
+            cacheControl: '3600',
+            upsert: true // Allow overwriting
+          });
 
-    if (error) {
-      console.error('uploadFile: Supabase storage error:', error);
-      throw error;
+        if (error) {
+          console.error(`uploadFile: Supabase storage error (attempt ${attempts + 1}):`, error);
+          lastError = error;
+          attempts++;
+          
+          if (attempts < maxAttempts) {
+            // Wait before retrying
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            continue;
+          } else {
+            throw error;
+          }
+        }
+        
+        console.log(`uploadFile: Success on attempt ${attempts + 1}. Path: ${data.path}`);
+        return { path: data.path, error: null };
+      } catch (error) {
+        console.error(`uploadFile: Error on attempt ${attempts + 1}:`, error);
+        lastError = error as Error;
+        attempts++;
+        
+        if (attempts < maxAttempts) {
+          // Wait before retrying
+          await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+      }
     }
     
-    console.log(`uploadFile: Success. Path: ${data.path}`);
-    return { path: data.path, error: null };
+    throw lastError || new Error("Failed to upload file after multiple attempts");
   } catch (error) {
     console.error('Error uploading file:', error);
     return { path: '', error: error as Error };
@@ -102,11 +131,11 @@ export const submitApplicationWithFiles = async (
       formDataObject.append('csrfToken', csrfToken);
     }
     
-    // Add files to FormData
+    // Add files to FormData - carefully validate each file
     Object.entries(files).forEach(([key, file]) => {
-      if (file && file.size > 0) {
-        console.log(`Adding file to formData: ${key}, ${file.name}, ${file.size} bytes`);
-        formDataObject.append(key, file);
+      if (file && file instanceof File && file.size > 0) {
+        console.log(`Adding file to formData: ${key}, ${file.name}, ${file.size} bytes, ${file.type}`);
+        formDataObject.append(key, file, file.name);
       } else {
         console.warn(`Skipping file ${key}: Invalid file object or zero size`);
       }
@@ -115,7 +144,11 @@ export const submitApplicationWithFiles = async (
     // Log form data entries for debugging
     console.log('FormData entries:');
     for (const entry of formDataObject.entries()) {
-      console.log(entry[0], entry[1] instanceof File ? `File: ${(entry[1] as File).name} (${(entry[1] as File).size} bytes)` : entry[1]);
+      if (entry[1] instanceof File) {
+        console.log(`${entry[0]}: File: ${(entry[1] as File).name} (${(entry[1] as File).size} bytes, ${(entry[1] as File).type})`);
+      } else {
+        console.log(`${entry[0]}: ${typeof entry[1] === 'string' && entry[1].length > 100 ? entry[1].substring(0, 100) + '...' : entry[1]}`);
+      }
     }
     
     // Create custom headers
@@ -129,28 +162,60 @@ export const submitApplicationWithFiles = async (
     
     console.log('Calling process-application edge function with files');
     
-    // Call the Supabase Edge Function to process the application
-    const response = await supabase.functions.invoke('process-application', {
-      body: formDataObject,
-      headers: headers
-    });
+    // Call the Supabase Edge Function to process the application with retry logic
+    let attempts = 0;
+    const maxAttempts = 3;
+    let lastError = null;
     
-    console.log('Edge function response:', response);
-    
-    if (response.error) {
-      console.error('Edge function error:', response.error);
-      // Try direct submission as a fallback
-      return await fallbackSubmission(formData, files);
-    }
-    
-    // Clear CSRF token after successful submission
-    if (csrfToken) {
-      sessionStorage.removeItem('formCsrfToken');
-    }
+    while (attempts < maxAttempts) {
+      try {
+        console.log(`Edge function attempt ${attempts + 1}`);
+        const response = await supabase.functions.invoke('process-application', {
+          body: formDataObject,
+          headers: headers
+        });
+        
+        console.log(`Edge function response (attempt ${attempts + 1}):`, response);
+        
+        if (response.error) {
+          console.error(`Edge function error (attempt ${attempts + 1}):`, response.error);
+          lastError = response.error;
+          attempts++;
+          
+          if (attempts < maxAttempts) {
+            // Wait before retrying
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            continue;
+          } else {
+            // Try direct submission as a fallback after all retries failed
+            return await fallbackSubmission(formData, files);
+          }
+        }
+        
+        // Clear CSRF token after successful submission
+        if (csrfToken) {
+          sessionStorage.removeItem('formCsrfToken');
+        }
 
-    console.log('Application submitted successfully with files!');
+        console.log('Application submitted successfully with files!');
+        
+        return { success: true, data: response.data };
+      } catch (error) {
+        console.error(`Error in edge function call (attempt ${attempts + 1}):`, error);
+        lastError = error;
+        attempts++;
+        
+        if (attempts < maxAttempts) {
+          // Wait before retrying
+          await new Promise(resolve => setTimeout(resolve, 2000));
+        } else {
+          // Try the fallback mechanism after all retries failed
+          return await fallbackSubmission(formData, files);
+        }
+      }
+    }
     
-    return { success: true, data: response.data };
+    throw lastError || new Error("Failed to submit application after multiple attempts");
   } catch (error: any) {
     console.error("Error submitting application with files:", error);
     

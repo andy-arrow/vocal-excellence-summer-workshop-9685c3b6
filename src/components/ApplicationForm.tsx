@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useEffect, lazy, Suspense } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -53,22 +54,35 @@ const ApplicationForm = () => {
   const [activeSection, setActiveSection] = useState(0);
   const [csrfToken, setCsrfToken] = useState('');
   
+  // Ensure applicationFiles is initialized as early as possible
   useEffect(() => {
+    // Generate CSRF token for form security
     const token = generateCsrfToken();
     setCsrfToken(token);
-    
     sessionStorage.setItem('formCsrfToken', token);
     
-    if (typeof window !== 'undefined' && !window.applicationFiles) {
-      window.applicationFiles = {};
-      console.log('Initialized window.applicationFiles');
+    // Initialize applicationFiles global object if it doesn't exist
+    if (typeof window !== 'undefined') {
+      if (!window.applicationFiles) {
+        window.applicationFiles = {
+          audioFile1: null,
+          audioFile2: null,
+          cvFile: null,
+          recommendationFile: null
+        };
+        console.log('ApplicationForm: Initialized window.applicationFiles with null files');
+      } else {
+        console.log('ApplicationForm: Found existing window.applicationFiles');
+      }
     }
     
+    // Clean up function
     return () => {
       if (typeof window !== 'undefined' && window.applicationFiles) {
         Object.keys(window.applicationFiles).forEach(key => {
           window.applicationFiles[key] = null;
         });
+        console.log('ApplicationForm: Cleaned up window.applicationFiles on unmount');
       }
     };
   }, []);
@@ -111,13 +125,25 @@ const ApplicationForm = () => {
     try {
       const files: {[key: string]: File} = {};
       
-      if (typeof window !== 'undefined' && window.applicationFiles) {
+      // Ensure window.applicationFiles exists before trying to use it
+      if (typeof window !== 'undefined') {
+        if (!window.applicationFiles) {
+          window.applicationFiles = {
+            audioFile1: null,
+            audioFile2: null,
+            cvFile: null,
+            recommendationFile: null
+          };
+          console.log('onSubmit: Had to initialize missing window.applicationFiles');
+        }
+        
         console.log('Application files before submission:', 
           Object.keys(window.applicationFiles).map(key => 
             `${key}: ${window.applicationFiles[key] ? `${window.applicationFiles[key].name} (${window.applicationFiles[key].size} bytes)` : 'null'}`
           )
         );
         
+        // Add all non-null files to the submission
         Object.entries(window.applicationFiles).forEach(([key, file]) => {
           if (file !== null) {
             files[key] = file;
@@ -131,6 +157,7 @@ const ApplicationForm = () => {
       const hasFiles = Object.keys(files).length > 0;
       console.log(`Submitting form with ${hasFiles ? Object.keys(files).length : 'no'} files`);
       
+      // Submit the application with files
       const response = await submitApplicationWithFiles(values, files);
       
       if (!response.success) {
@@ -156,6 +183,7 @@ const ApplicationForm = () => {
       setIsSubmitted(true);
       window.scrollTo({ top: 0, behavior: 'smooth' });
       
+      // Clear applicationFiles after successful submission
       if (typeof window !== 'undefined' && window.applicationFiles) {
         Object.keys(window.applicationFiles).forEach(key => {
           window.applicationFiles[key] = null;

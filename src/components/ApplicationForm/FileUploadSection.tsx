@@ -34,11 +34,30 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
       console.log(`FileUploadSection: Processing file ${file.name} of type ${file.type} and size ${file.size} bytes`);
       await handleFileUpload(file);
       
-      // Ensure window.applicationFiles exists
+      // Double check that window.applicationFiles exists and the file was properly stored
       if (typeof window !== 'undefined') {
-        window.applicationFiles = window.applicationFiles || {};
-        console.log(`FileUploadSection: Stored file ${fileType} in window.applicationFiles`, 
-          file.name, file.size, file.type);
+        if (!window.applicationFiles) {
+          window.applicationFiles = {
+            audioFile1: null,
+            audioFile2: null,
+            cvFile: null,
+            recommendationFile: null
+          };
+          console.log('FileUploadSection: Had to create missing window.applicationFiles');
+          
+          // Store the file again just to be safe
+          window.applicationFiles[fileType] = file;
+        }
+        
+        if (!window.applicationFiles[fileType]) {
+          console.warn(`FileUploadSection: File ${fileType} wasn't stored properly, storing it now`);
+          window.applicationFiles[fileType] = file;
+        }
+        
+        console.log(`FileUploadSection: Verified file ${fileType} in window.applicationFiles:`, 
+          window.applicationFiles[fileType]?.name || 'not found', 
+          window.applicationFiles[fileType]?.size || 0, 'bytes',
+          window.applicationFiles[fileType]?.type || '');
       }
     }
     // Reset the input value to allow uploading the same file again if needed

@@ -12,7 +12,17 @@ const ApplicationPage = () => {
   useEffect(() => {
     // Ensure window.applicationFiles is initialized
     if (typeof window !== 'undefined') {
-      window.applicationFiles = window.applicationFiles || {};
+      if (!window.applicationFiles) {
+        window.applicationFiles = {
+          audioFile1: null,
+          audioFile2: null, 
+          cvFile: null,
+          recommendationFile: null
+        };
+        console.log('ApplicationPage: Initialized window.applicationFiles');
+      } else {
+        console.log('ApplicationPage: Found existing window.applicationFiles');
+      }
     }
     
     // Navigate to the application page
