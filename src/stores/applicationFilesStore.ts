@@ -6,19 +6,23 @@
  * to ensure consistent access and prevent race conditions.
  */
 
-// Define the allowed file types
+// Define the allowed file types using the ApplicationFiles interface from vite-env.d.ts
 type ApplicationFileType = 'audioFile1' | 'audioFile2' | 'cvFile' | 'recommendationFile';
 
-// File store interface
-export interface ApplicationFilesStore {
+// File store interface - using the ApplicationFiles interface structure
+interface ApplicationFilesStore {
   [key: string]: File | null;
+  audioFile1: File | null;
+  audioFile2: File | null;
+  cvFile: File | null;
+  recommendationFile: File | null;
 }
 
 // Initialize the store with nulls
 const initialStore: ApplicationFilesStore = {
   audioFile1: null,
   audioFile2: null,
-  cvFile: null,
+  cvFile: File | null,
   recommendationFile: null
 };
 

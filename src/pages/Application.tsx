@@ -1,4 +1,3 @@
-
 import React, { useEffect, lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
@@ -32,14 +31,7 @@ const fadeIn = {
   }
 };
 
-// Declare global window interface extension
-declare global {
-  interface Window {
-    applicationFiles: {
-      [key: string]: File | null;
-    };
-  }
-}
+// We don't need to redeclare the global interface since it's defined in vite-env.d.ts
 
 const Application = () => {
   const [showScrollToTop, setShowScrollToTop] = React.useState(false);

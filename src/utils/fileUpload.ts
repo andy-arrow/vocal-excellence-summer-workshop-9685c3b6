@@ -233,9 +233,17 @@ async function fallbackSubmission(formData: ApplicationFormValues, files: { [key
   try {
     // Add files directly to window.applicationFiles just in case it wasn't set
     if (typeof window !== 'undefined') {
-      window.applicationFiles = window.applicationFiles || {};
+      window.applicationFiles = window.applicationFiles || {
+        audioFile1: null,
+        audioFile2: null,
+        cvFile: null,
+        recommendationFile: null
+      };
+      
       Object.entries(files).forEach(([key, file]) => {
-        if (file) window.applicationFiles[key] = file;
+        if (file && (key in window.applicationFiles)) {
+          window.applicationFiles[key] = file;
+        }
       });
     }
     

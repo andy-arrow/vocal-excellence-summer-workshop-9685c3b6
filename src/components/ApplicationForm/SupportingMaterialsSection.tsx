@@ -4,14 +4,7 @@ import { Info, FileText, Music, File } from 'lucide-react';
 import { FileUploadSection } from './FileUploadSection';
 import { applicationFilesStore } from '@/stores/applicationFilesStore';
 
-// Declare global window interface extension
-declare global {
-  interface Window {
-    applicationFiles: {
-      [key: string]: File | null;
-    };
-  }
-}
+// We don't need to redeclare the global interface since it's defined in vite-env.d.ts
 
 const SupportingMaterialsSection = () => {
   useEffect(() => {
