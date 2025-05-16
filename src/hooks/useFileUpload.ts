@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { toast } from '@/hooks/use-toast';
 import { validateFileUpload } from '@/utils/security';
+import { applicationFilesStore } from '@/stores/applicationFilesStore';
 
 export interface UploadState {
   file: File | null;
@@ -14,17 +15,6 @@ const ALLOWED_AUDIO_TYPES = ['audio/mp3', 'audio/mpeg', 'audio/wav'];
 const ALLOWED_DOCUMENT_TYPES = ['application/pdf'];
 const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB max size
 
-// Ensure window.applicationFiles is always defined globally
-if (typeof window !== 'undefined') {
-  window.applicationFiles = window.applicationFiles || {
-    audioFile1: null,
-    audioFile2: null,
-    cvFile: null,
-    recommendationFile: null
-  };
-  console.log('useFileUpload global init: Initialized window.applicationFiles');
-}
-
 export const useFileUpload = (fileType: string) => {
   const [uploadState, setUploadState] = useState<UploadState>({
     file: null,
@@ -33,19 +23,17 @@ export const useFileUpload = (fileType: string) => {
     error: null
   });
 
-  // Check if there's already a file in applicationFiles when the hook mounts
+  // Check if there's already a file in applicationFilesStore when the hook mounts
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.applicationFiles && window.applicationFiles[fileType]) {
-      const existingFile = window.applicationFiles[fileType];
-      if (existingFile) {
-        console.log(`useFileUpload: Found existing file for ${fileType} on hook mount:`, existingFile.name);
-        setUploadState({
-          file: existingFile,
-          status: 'success',
-          progress: 100,
-          error: null
-        });
-      }
+    const existingFile = applicationFilesStore.getFile(fileType as any);
+    if (existingFile) {
+      console.log(`useFileUpload: Found existing file for ${fileType} on hook mount:`, existingFile.name);
+      setUploadState({
+        file: existingFile,
+        status: 'success',
+        progress: 100,
+        error: null
+      });
     }
   }, [fileType]);
 
@@ -76,18 +64,9 @@ export const useFileUpload = (fileType: string) => {
         throw new Error(validationError);
       }
       
-      // Initialize window.applicationFiles if it doesn't exist
-      if (typeof window !== 'undefined') {
-        if (!window.applicationFiles) {
-          window.applicationFiles = {
-            audioFile1: null,
-            audioFile2: null,
-            cvFile: null,
-            recommendationFile: null
-          };
-          console.log('useFileUpload: Created missing window.applicationFiles object');
-        }
-      }
+      // Store file in our central store
+      applicationFilesStore.setFile(fileType as any, file);
+      console.log(`useFileUpload: Stored file in applicationFilesStore.${fileType}:`, file.name, file.size, 'bytes', file.type);
       
       // Simulate upload progress for better UX
       const interval = setInterval(() => {
@@ -99,16 +78,6 @@ export const useFileUpload = (fileType: string) => {
           return { ...prev, progress: prev.progress + 10 };
         });
       }, 300);
-      
-      // Store file in the global object for later submission
-      if (typeof window !== 'undefined') {
-        // Store the file
-        window.applicationFiles[fileType] = file;
-        console.log(`useFileUpload: Stored file in window.applicationFiles.${fileType}:`, file.name, file.size, 'bytes', file.type);
-        console.log('Current applicationFiles state:', Object.keys(window.applicationFiles).map(key => 
-          `${key}: ${window.applicationFiles[key] ? window.applicationFiles[key].name : 'null'}`
-        ));
-      }
       
       // Simulate completion after progress
       setTimeout(() => {
@@ -144,20 +113,16 @@ export const useFileUpload = (fileType: string) => {
         className: "bg-rose-600 text-white border-rose-700",
       });
       
-      // In case of error, clear the file from applicationFiles
-      if (typeof window !== 'undefined' && window.applicationFiles) {
-        window.applicationFiles[fileType] = null;
-        console.log(`useFileUpload: Cleared file from window.applicationFiles.${fileType} due to error`);
-      }
+      // In case of error, clear the file from store
+      applicationFilesStore.setFile(fileType as any, null);
+      console.log(`useFileUpload: Cleared file from applicationFilesStore.${fileType} due to error`);
     }
   };
   
   const reset = () => {
-    // Remove the file from the global object when reset
-    if (typeof window !== 'undefined' && window.applicationFiles) {
-      window.applicationFiles[fileType] = null;
-      console.log(`useFileUpload: Reset file in window.applicationFiles.${fileType}`);
-    }
+    // Remove the file from our store
+    applicationFilesStore.setFile(fileType as any, null);
+    console.log(`useFileUpload: Reset file in applicationFilesStore.${fileType}`);
     
     setUploadState({
       file: null,

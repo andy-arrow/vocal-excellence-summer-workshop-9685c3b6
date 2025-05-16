@@ -2,6 +2,7 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import Spinner from '@/components/ui/spinner';
+import { Button } from '@/components/ui/button';
 
 interface SubmitButtonProps {
   isSubmitting: boolean;
@@ -9,13 +10,14 @@ interface SubmitButtonProps {
 
 const SubmitButton = ({ isSubmitting }: SubmitButtonProps) => {
   return (
-    <button 
+    <Button 
       type="submit" 
       disabled={isSubmitting}
+      size="lg"
       className="px-6 py-3 bg-apple-blue hover:bg-apple-blue-hover text-white text-lg font-medium rounded-full
                 relative overflow-hidden transition-all duration-300 disabled:opacity-70 
                 disabled:cursor-not-allowed disabled:hover:bg-apple-blue shadow-sm 
-                min-w-[200px] min-h-[48px]"
+                min-w-[200px] min-h-[48px] focus:ring-2 focus:ring-offset-2 focus:ring-apple-blue"
       aria-label={isSubmitting ? "Submitting application" : "Submit application"}
       data-testid="submit-application-button"
     >
@@ -23,16 +25,16 @@ const SubmitButton = ({ isSubmitting }: SubmitButtonProps) => {
         {isSubmitting ? (
           <>
             <Spinner size="sm" color="white" speed={1} />
-            <span className="text-white">Sending application...</span>
+            <span className="text-white font-medium">Sending application...</span>
           </>
         ) : (
           <>
-            <span className="text-white">Submit Your Application</span>
+            <span className="text-white font-medium">Submit Your Application</span>
             <ArrowRight className="w-5 h-5 text-white" />
           </>
         )}
       </span>
-    </button>
+    </Button>
   );
 };
 

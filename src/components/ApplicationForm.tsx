@@ -5,8 +5,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
 import { toast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
-import { Sparkles, CheckCircle2, Hourglass } from 'lucide-react';
+import { Sparkles, CheckCircle2, Hourglass, AlertCircle } from 'lucide-react';
 import { generateCsrfToken } from '@/utils/security';
+import { applicationFilesStore } from '@/stores/applicationFilesStore';
 
 import { applicationSchema, ApplicationFormValues } from '@/components/ApplicationForm/schema';
 import { submitApplicationWithFiles } from '@/utils/fileUpload';
@@ -53,37 +54,18 @@ const ApplicationForm = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [activeSection, setActiveSection] = useState(0);
   const [csrfToken, setCsrfToken] = useState('');
+  const [validationErrors, setValidationErrors] = useState<string[]>([]);
   
-  // Ensure applicationFiles is initialized as early as possible
+  // Generate CSRF token for form security
   useEffect(() => {
-    // Generate CSRF token for form security
     const token = generateCsrfToken();
     setCsrfToken(token);
     sessionStorage.setItem('formCsrfToken', token);
     
-    // Initialize applicationFiles global object if it doesn't exist
-    if (typeof window !== 'undefined') {
-      if (!window.applicationFiles) {
-        window.applicationFiles = {
-          audioFile1: null,
-          audioFile2: null,
-          cvFile: null,
-          recommendationFile: null
-        };
-        console.log('ApplicationForm: Initialized window.applicationFiles with null files');
-      } else {
-        console.log('ApplicationForm: Found existing window.applicationFiles');
-      }
-    }
+    console.log('ApplicationForm: Component mounted, CSRF token generated');
     
-    // Clean up function
     return () => {
-      if (typeof window !== 'undefined' && window.applicationFiles) {
-        Object.keys(window.applicationFiles).forEach(key => {
-          window.applicationFiles[key] = null;
-        });
-        console.log('ApplicationForm: Cleaned up window.applicationFiles on unmount');
-      }
+      console.log('ApplicationForm: Component unmounted');
     };
   }, []);
   
@@ -118,8 +100,31 @@ const ApplicationForm = () => {
     mode: 'onChange'
   });
 
+  const validateFiles = useCallback((): boolean => {
+    const errors: string[] = [];
+    const files = applicationFilesStore.getFiles();
+    
+    if (!files.cvFile) {
+      errors.push('Please upload your CV/Resume before submitting');
+    }
+    
+    if (!files.audioFile1) {
+      errors.push('Please upload Audio Sample 1 before submitting');
+    }
+    
+    setValidationErrors(errors);
+    return errors.length === 0;
+  }, []);
+  
+  const clearValidationErrors = () => {
+    if (validationErrors.length > 0) {
+      setValidationErrors([]);
+    }
+  };
+
   const onSubmit = useCallback(async (values: ApplicationFormValues) => {
     console.log('Form submission started with values:', values);
+    clearValidationErrors();
     setIsSubmitting(true);
     
     try {
@@ -133,51 +138,36 @@ const ApplicationForm = () => {
         throw new Error('You must agree to the terms and conditions to continue');
       }
       
-      const files: {[key: string]: File} = {};
-      
-      // Ensure window.applicationFiles exists before trying to use it
-      if (typeof window !== 'undefined') {
-        if (!window.applicationFiles) {
-          window.applicationFiles = {
-            audioFile1: null,
-            audioFile2: null,
-            cvFile: null,
-            recommendationFile: null
-          };
-          console.log('onSubmit: Had to initialize missing window.applicationFiles');
-        }
-        
-        console.log('Application files before submission:', 
-          Object.keys(window.applicationFiles).map(key => 
-            `${key}: ${window.applicationFiles[key] ? `${window.applicationFiles[key].name} (${window.applicationFiles[key].size} bytes)` : 'null'}`
-          )
-        );
-        
-        // Add all non-null files to the submission
-        Object.entries(window.applicationFiles).forEach(([key, file]) => {
-          if (file !== null) {
-            files[key] = file;
-            console.log(`Added ${key} for submission: ${file.name}, ${file.size} bytes`);
-          }
+      // Validate files
+      if (!validateFiles()) {
+        // Display validation errors as toast messages
+        validationErrors.forEach(error => {
+          toast({
+            title: "Required Files Missing",
+            description: error,
+            className: "bg-amber-600 text-white border-amber-700",
+          });
         });
-      } else {
-        console.warn('window.applicationFiles is not initialized before submission');
+        throw new Error('Please upload all required files before submitting');
       }
       
-      // Check for required files
-      if (!files.cvFile) {
-        throw new Error('Please upload your CV/Resume before submitting');
-      }
+      // Collect files from our store
+      const files = applicationFilesStore.getFiles();
+      const filesToSubmit: {[key: string]: File} = {};
       
-      if (!files.audioFile1) {
-        throw new Error('Please upload Audio Sample 1 before submitting');
-      }
+      // Add all non-null files to the submission
+      Object.entries(files).forEach(([key, file]) => {
+        if (file !== null) {
+          filesToSubmit[key] = file;
+          console.log(`Added ${key} for submission: ${file.name}, ${file.size} bytes`);
+        }
+      });
       
-      const hasFiles = Object.keys(files).length > 0;
-      console.log(`Submitting form with ${hasFiles ? Object.keys(files).length : 'no'} files`);
+      const hasFiles = Object.keys(filesToSubmit).length > 0;
+      console.log(`Submitting form with ${hasFiles ? Object.keys(filesToSubmit).length : 'no'} files`);
       
       // Submit the application with files
-      const response = await submitApplicationWithFiles(values, files);
+      const response = await submitApplicationWithFiles(values, filesToSubmit);
       
       if (!response.success) {
         throw new Error(response.error?.message || 'Submission failed');
@@ -203,12 +193,7 @@ const ApplicationForm = () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       
       // Clear applicationFiles after successful submission
-      if (typeof window !== 'undefined' && window.applicationFiles) {
-        Object.keys(window.applicationFiles).forEach(key => {
-          window.applicationFiles[key] = null;
-        });
-        console.log('Cleared applicationFiles after successful submission');
-      }
+      applicationFilesStore.clearFiles();
       
     } catch (error: any) {
       console.error('Error submitting application:', error);
@@ -241,10 +226,11 @@ const ApplicationForm = () => {
     } finally {
       setIsSubmitting(false);
     }
-  }, []);
+  }, [validateFiles, validationErrors]);
 
   const handleNextSection = () => {
     if (activeSection < sections.length - 1) {
+      clearValidationErrors();
       setActiveSection(activeSection + 1);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -252,6 +238,7 @@ const ApplicationForm = () => {
 
   const handlePrevSection = () => {
     if (activeSection > 0) {
+      clearValidationErrors();
       setActiveSection(activeSection - 1);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -358,6 +345,27 @@ const ApplicationForm = () => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <input type="hidden" name="csrfToken" value={csrfToken} />
+            
+            {validationErrors.length > 0 && (
+              <motion.div 
+                className="bg-red-50 border border-red-200 rounded-xl p-4 mb-4 text-red-800"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="flex items-start gap-2">
+                  <AlertCircle className="w-5 h-5 text-red-500 mt-0.5" />
+                  <div>
+                    <h4 className="font-medium">Please fix the following issues:</h4>
+                    <ul className="mt-2 text-sm space-y-1 list-disc list-inside">
+                      {validationErrors.map((error, index) => (
+                        <li key={index}>{error}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </motion.div>
+            )}
             
             <motion.div
               key={`section-${activeSection}`}

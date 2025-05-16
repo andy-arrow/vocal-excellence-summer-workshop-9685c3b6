@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { LucideIcon } from 'lucide-react';
 import { useFileUpload } from '@/hooks/useFileUpload';
 import { UploadStatus } from './UploadStatus';
+import { applicationFilesStore } from '@/stores/applicationFilesStore';
 
 interface FileUploadSectionProps {
   label: string;
@@ -30,9 +31,9 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
 
   // Check if a file is already uploaded when component mounts
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.applicationFiles && window.applicationFiles[fileType]) {
-      console.log(`FileUploadSection: Found existing file for ${fileType} on mount:`, 
-        window.applicationFiles[fileType]?.name);
+    const existingFile = applicationFilesStore.getFile(fileType as any);
+    if (existingFile) {
+      console.log(`FileUploadSection: Found existing file for ${fileType} on mount:`, existingFile.name);
     }
   }, [fileType]);
 
@@ -41,27 +42,6 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
     if (file) {
       console.log(`FileUploadSection: Processing file ${file.name} of type ${file.type} and size ${file.size} bytes`);
       await handleFileUpload(file);
-      
-      // Double check that window.applicationFiles exists and the file was properly stored
-      if (typeof window !== 'undefined') {
-        if (!window.applicationFiles) {
-          window.applicationFiles = {
-            audioFile1: null,
-            audioFile2: null,
-            cvFile: null,
-            recommendationFile: null
-          };
-          console.log('FileUploadSection: Had to create missing window.applicationFiles');
-        }
-        
-        // Store the file again just to be safe
-        window.applicationFiles[fileType] = file;
-        
-        console.log(`FileUploadSection: Verified file ${fileType} in window.applicationFiles:`, 
-          window.applicationFiles[fileType]?.name || 'not found', 
-          window.applicationFiles[fileType]?.size || 0, 'bytes',
-          window.applicationFiles[fileType]?.type || '');
-      }
     }
     // Reset the input value to allow uploading the same file again if needed
     e.target.value = '';

@@ -6,6 +6,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Toaster } from '@/components/ui/toaster';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { applicationFilesStore } from '@/stores/applicationFilesStore';
 
 // Lazily load less critical components
 const ApplicationForm = lazy(() => import('@/components/ApplicationForm'));
@@ -31,6 +32,7 @@ const fadeIn = {
   }
 };
 
+// Declare global window interface extension
 declare global {
   interface Window {
     applicationFiles: {
@@ -54,22 +56,14 @@ const Application = () => {
       passive: true
     });
     
-    // Initialize application files object
-    if (typeof window !== 'undefined') {
-      if (!window.applicationFiles) {
-        window.applicationFiles = {
-          audioFile1: null,
-          audioFile2: null,
-          cvFile: null,
-          recommendationFile: null
-        };
-        console.log('Application.tsx: Initialized window.applicationFiles');
-      } else {
-        console.log('Application.tsx: Found existing window.applicationFiles');
-      }
-    }
+    // Initialize applicationFilesStore on mount
+    // This will also initialize window.applicationFiles via our store
+    console.log('Application.tsx: Page mounted, applicationFilesStore ready');
     
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      console.log('Application.tsx: Page unmounted');
+    };
   }, []);
 
   // Even more dramatically increased padding for better spacing below navbar

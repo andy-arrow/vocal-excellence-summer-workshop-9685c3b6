@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { Info, FileText, Music, File } from 'lucide-react';
 import { FileUploadSection } from './FileUploadSection';
+import { applicationFilesStore } from '@/stores/applicationFilesStore';
 
 // Declare global window interface extension
 declare global {
@@ -12,50 +13,10 @@ declare global {
   }
 }
 
-// Initialize global applicationFiles object if it doesn't exist
-if (typeof window !== 'undefined') {
-  if (!window.applicationFiles) {
-    window.applicationFiles = {
-      audioFile1: null,
-      audioFile2: null,
-      cvFile: null,
-      recommendationFile: null
-    };
-    console.log('SupportingMaterialsSection global init: Created window.applicationFiles');
-  }
-}
-
 const SupportingMaterialsSection = () => {
   useEffect(() => {
-    // Ensure window.applicationFiles is initialized when this component mounts
-    if (typeof window !== 'undefined') {
-      if (!window.applicationFiles) {
-        window.applicationFiles = {
-          audioFile1: null,
-          audioFile2: null,
-          cvFile: null,
-          recommendationFile: null
-        };
-        console.log('SupportingMaterialsSection: Initialized window.applicationFiles');
-      } else {
-        // Ensure all required keys exist
-        const requiredKeys = ['audioFile1', 'audioFile2', 'cvFile', 'recommendationFile'];
-        let updated = false;
-        
-        requiredKeys.forEach(key => {
-          if (!(key in window.applicationFiles)) {
-            window.applicationFiles[key] = null;
-            updated = true;
-          }
-        });
-        
-        if (updated) {
-          console.log('SupportingMaterialsSection: Updated window.applicationFiles with missing keys');
-        }
-      }
-    }
+    console.log('SupportingMaterialsSection: Component mounted');
     
-    // Cleanup on unmount
     return () => {
       console.log('SupportingMaterialsSection: Component unmounted');
     };
