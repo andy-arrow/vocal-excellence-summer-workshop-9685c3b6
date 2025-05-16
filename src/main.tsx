@@ -1,3 +1,4 @@
+
 import React, { Suspense, lazy } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
@@ -12,7 +13,6 @@ preloadResources();
 
 // Import non-lazy components directly
 import { Toaster } from '@/components/ui/toaster';
-import { Toaster as SonnerToaster } from '@/components/ui/sonner';
 
 const initializeApp = async () => {
   const rootElement = document.getElementById('root');
@@ -28,7 +28,7 @@ const initializeApp = async () => {
           <ThemeProvider attribute="class" defaultTheme="light">
             <AuthProvider>
               <App />
-              <SonnerToaster position="top-right" closeButton />
+              <Toaster />
             </AuthProvider>
           </ThemeProvider>
         </ErrorBoundary>
