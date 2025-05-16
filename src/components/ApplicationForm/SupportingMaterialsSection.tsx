@@ -34,12 +34,12 @@ const SupportingMaterialsSection = () => {
       
       <div className="bg-white rounded-xl p-4 border border-apple-border shadow-sm">
         <FileUploadSection
-          label="CV / Resume"
+          label="CV / Resume (Optional)"
           description="Upload your CV or Resume in PDF format. This helps us understand your experience better."
           icon={FileText}
           fileType="cvFile"
           acceptedFormats=".pdf"
-          required={true}
+          required={false}
           iconColor="text-apple-blue"
         />
       </div>
@@ -66,12 +66,12 @@ const SupportingMaterialsSection = () => {
       
       <div className="bg-white rounded-xl p-4 border border-apple-border shadow-sm">
         <FileUploadSection
-          label="Audio Sample 1"
+          label="Audio Sample 1 (Optional)"
           description="Upload your first audio sample in MP3 or WAV format (max 5 minutes). This helps us understand your vocal abilities."
           icon={Music}
           fileType="audioFile1"
           acceptedFormats=".mp3,.wav"
-          required={true}
+          required={false}
           iconColor="text-purple-500"
         />
       </div>

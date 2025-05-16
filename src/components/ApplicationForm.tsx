@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useEffect, lazy, Suspense } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -101,19 +100,8 @@ const ApplicationForm = () => {
   });
 
   const validateFiles = useCallback((): boolean => {
-    const errors: string[] = [];
-    const files = applicationFilesStore.getFiles();
-    
-    if (!files.cvFile) {
-      errors.push('Please upload your CV/Resume before submitting');
-    }
-    
-    if (!files.audioFile1) {
-      errors.push('Please upload Audio Sample 1 before submitting');
-    }
-    
-    setValidationErrors(errors);
-    return errors.length === 0;
+    // All files are now optional, so no validation errors
+    return true;
   }, []);
   
   const clearValidationErrors = () => {
@@ -138,18 +126,7 @@ const ApplicationForm = () => {
         throw new Error('You must agree to the terms and conditions to continue');
       }
       
-      // Validate files
-      if (!validateFiles()) {
-        // Display validation errors as toast messages
-        validationErrors.forEach(error => {
-          toast({
-            title: "Required Files Missing",
-            description: error,
-            className: "bg-amber-600 text-white border-amber-700",
-          });
-        });
-        throw new Error('Please upload all required files before submitting');
-      }
+      // No file validation needed as all files are optional now
       
       // Collect files from our store
       const files = applicationFilesStore.getFiles();
