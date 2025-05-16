@@ -1,11 +1,22 @@
 
 /// <reference types="vite/client" />
 
-// Add FingerprintJS global type definition
+interface ImportMetaEnv {
+  readonly VITE_APP_TITLE: string;
+  // Add other env variables here
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}
+
 interface Window {
-  FingerprintJS?: {
-    load: () => Promise<{
-      get: () => Promise<{ visitorId: string }>
-    }>
-  }
+  applicationFiles: {
+    audioFile1: File | null;
+    audioFile2: File | null;
+    cvFile: File | null;
+    recommendationFile: File | null;
+    [key: string]: File | null;
+  };
+  // Add other global window properties here
 }

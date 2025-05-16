@@ -1,3 +1,4 @@
+
 import { supabase } from "@/integrations/supabase/client";
 import { ApplicationFormValues } from "@/components/ApplicationForm/schema";
 import { toast } from '@/hooks/use-toast';

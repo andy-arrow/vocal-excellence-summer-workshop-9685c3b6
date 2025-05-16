@@ -1,10 +1,11 @@
 
 import React, { useEffect } from 'react';
 import ApplicationFormComponent from '../ApplicationForm';
+import { applicationFilesStore } from '@/stores/applicationFilesStore';
 
 // Re-export the ApplicationForm component with proper naming
 const ApplicationForm = () => {
-  // Ensure application files are initialized at the index level too
+  // Ensure application files are initialized at the index level
   useEffect(() => {
     if (typeof window !== 'undefined') {
       if (!window.applicationFiles) {
@@ -33,6 +34,14 @@ const ApplicationForm = () => {
           console.log('ApplicationForm/index: Updated window.applicationFiles with missing keys');
         }
       }
+      
+      // Initialize the application files store
+      const existingFiles = applicationFilesStore.getFiles();
+      console.log('ApplicationForm/index: Current files in store:', 
+        Object.keys(existingFiles).map(key => 
+          `${key}: ${existingFiles[key] ? `${existingFiles[key]?.name} (${existingFiles[key]?.size} bytes)` : 'null'}`
+        )
+      );
     }
   }, []);
   

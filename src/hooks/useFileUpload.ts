@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { applicationFilesStore } from '@/stores/applicationFilesStore';
 import { toast } from '@/hooks/use-toast';
 import { validateFileUpload } from '@/utils/security';
@@ -20,15 +20,18 @@ export const useFileUpload = (fileType: string) => {
   });
 
   // Check if there's already a file in the store when the component mounts
-  const existingFile = applicationFilesStore.getFile(fileType as any);
-  if (existingFile && uploadState.status === 'idle' && !uploadState.file) {
-    setUploadState({
-      file: existingFile,
-      status: 'success',
-      error: null,
-      progress: 100,
-    });
-  }
+  useEffect(() => {
+    const existingFile = applicationFilesStore.getFile(fileType as any);
+    if (existingFile && uploadState.status === 'idle' && !uploadState.file) {
+      console.log(`useFileUpload(${fileType}): Found existing file on mount:`, existingFile.name);
+      setUploadState({
+        file: existingFile,
+        status: 'success',
+        error: null,
+        progress: 100,
+      });
+    }
+  }, [fileType, uploadState.status, uploadState.file]);
 
   const handleFileUpload = async (file: File) => {
     try {

@@ -30,16 +30,36 @@ class ApplicationFiles {
 
   private constructor() {
     // Initialize from window.applicationFiles if it exists
-    if (typeof window !== 'undefined' && window.applicationFiles) {
-      Object.entries(window.applicationFiles).forEach(([key, file]) => {
-        if (this.isValidFileType(key) && file instanceof File) {
-          this.files[key] = file;
+    if (typeof window !== 'undefined') {
+      if (!window.applicationFiles) {
+        window.applicationFiles = { ...initialStore };
+        console.log('ApplicationFilesStore: Initialized window.applicationFiles with default structure');
+      } else {
+        console.log('ApplicationFilesStore: Found existing window.applicationFiles');
+        
+        // Make sure all required keys exist
+        const requiredKeys = ['audioFile1', 'audioFile2', 'cvFile', 'recommendationFile'];
+        let updated = false;
+        
+        requiredKeys.forEach(key => {
+          if (!(key in window.applicationFiles)) {
+            window.applicationFiles[key] = null;
+            updated = true;
+          }
+        });
+        
+        // Copy from window object to our store
+        Object.entries(window.applicationFiles).forEach(([key, file]) => {
+          if (this.isValidFileType(key) && file instanceof File) {
+            this.files[key] = file;
+          }
+        });
+        
+        if (updated) {
+          console.log('ApplicationFilesStore: Updated window.applicationFiles with missing keys');
         }
-      });
+      }
     }
-    
-    // Sync with window.applicationFiles
-    this.syncWithWindowObject();
     
     console.log('ApplicationFilesStore: Initialized store with', 
       Object.keys(this.files).map(key => 
