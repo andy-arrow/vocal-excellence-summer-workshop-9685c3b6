@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ArrowRight, Check, Loader } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Spinner from '@/components/ui/spinner';
 
 interface SubmitButtonProps {

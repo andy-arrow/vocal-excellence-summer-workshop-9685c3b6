@@ -123,6 +123,16 @@ const ApplicationForm = () => {
     setIsSubmitting(true);
     
     try {
+      // Validate form data
+      if (!values.firstName || !values.lastName || !values.email) {
+        throw new Error('Please complete all required fields before submitting');
+      }
+      
+      // Explicitly check terms agreement
+      if (!values.termsAgreed) {
+        throw new Error('You must agree to the terms and conditions to continue');
+      }
+      
       const files: {[key: string]: File} = {};
       
       // Ensure window.applicationFiles exists before trying to use it
@@ -154,6 +164,15 @@ const ApplicationForm = () => {
         console.warn('window.applicationFiles is not initialized before submission');
       }
       
+      // Check for required files
+      if (!files.cvFile) {
+        throw new Error('Please upload your CV/Resume before submitting');
+      }
+      
+      if (!files.audioFile1) {
+        throw new Error('Please upload Audio Sample 1 before submitting');
+      }
+      
       const hasFiles = Object.keys(files).length > 0;
       console.log(`Submitting form with ${hasFiles ? Object.keys(files).length : 'no'} files`);
       
@@ -166,14 +185,14 @@ const ApplicationForm = () => {
       
       if (response.fileError) {
         console.warn('Application submitted but had file processing error:', response.fileError);
-        toast.toast({
+        toast({
           title: "Application Submitted with Warning",
           description: `Your application data was saved, but we had trouble processing your files: ${response.fileError}. Our team will contact you for the files if needed.`,
           className: "bg-amber-600 text-white border-amber-700",
           duration: 8000,
         });
       } else {
-        toast.toast({
+        toast({
           title: "Application Submitted Successfully! 🎉",
           description: "Your application has been received. You'll receive a confirmation email shortly.",
           className: "bg-gradient-to-r from-green-600 to-emerald-600 text-white border-green-700",
@@ -199,7 +218,7 @@ const ApplicationForm = () => {
       if (error.details) errorDetails.push(`Details: ${error.details}`);
       if (error.code) errorDetails.push(`Error Code: ${error.code}`);
       
-      toast.toast({
+      toast({
         title: "Application Submission Failed",
         description: (
           <div className="space-y-2">
@@ -295,7 +314,7 @@ const ApplicationForm = () => {
   ];
 
   return (
-    <section className="py-16 md:py-24">
+    <section className="py-16 md:py-24" id="application-form">
       <motion.div 
         className="max-w-3xl mx-auto px-6"
         variants={formVariants}

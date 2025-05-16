@@ -1,8 +1,6 @@
 
 import React, { useEffect } from 'react';
-import { FormLabel } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { File, Info, FileText, Music } from 'lucide-react';
+import { Info, FileText, Music, File } from 'lucide-react';
 import { FileUploadSection } from './FileUploadSection';
 
 // Declare global window interface extension

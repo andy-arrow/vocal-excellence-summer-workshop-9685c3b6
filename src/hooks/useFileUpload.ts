@@ -12,6 +12,7 @@ export interface UploadState {
 
 const ALLOWED_AUDIO_TYPES = ['audio/mp3', 'audio/mpeg', 'audio/wav'];
 const ALLOWED_DOCUMENT_TYPES = ['application/pdf'];
+const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB max size
 
 // Ensure window.applicationFiles is always defined globally
 if (typeof window !== 'undefined') {
@@ -67,7 +68,7 @@ export const useFileUpload = (fileType: string) => {
       const validationError = validateFileUpload(
         file, 
         allowedTypes,
-        Number.MAX_VALUE // Remove size limit for testing
+        MAX_FILE_SIZE
       );
       
       if (validationError) {

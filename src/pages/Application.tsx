@@ -31,6 +31,14 @@ const fadeIn = {
   }
 };
 
+declare global {
+  interface Window {
+    applicationFiles: {
+      [key: string]: File | null;
+    };
+  }
+}
+
 const Application = () => {
   const [showScrollToTop, setShowScrollToTop] = React.useState(false);
   const isMobile = useIsMobile();
@@ -66,8 +74,8 @@ const Application = () => {
 
   // Even more dramatically increased padding for better spacing below navbar
   const paddingClasses = isMobile 
-    ? "pt-56 pb-16" // Dramatically increased padding for mobile (was pt-32)
-    : "pt-72 pb-20"; // Dramatically increased padding for desktop (was pt-48)
+    ? "pt-64 pb-16" // Dramatically increased padding for mobile (was pt-56)
+    : "pt-96 pb-20"; // Dramatically increased padding for desktop (was pt-72)
 
   return (
     <div className="bg-[#f5f5f7] text-apple-text min-h-screen font-sans antialiased">
@@ -99,7 +107,7 @@ const Application = () => {
                   Join our exclusive 5-day workshop. Complete the form below to apply.
                 </p>
                 <a 
-                  href="#application-form-section"
+                  href="#application-form"
                   className="inline-flex items-center justify-center px-6 py-3 bg-apple-blue text-white rounded-full hover:bg-apple-blue-hover transition-colors font-medium"
                 >
                   Get Started

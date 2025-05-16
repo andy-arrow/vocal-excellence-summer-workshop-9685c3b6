@@ -52,15 +52,10 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
             recommendationFile: null
           };
           console.log('FileUploadSection: Had to create missing window.applicationFiles');
-          
-          // Store the file again just to be safe
-          window.applicationFiles[fileType] = file;
         }
         
-        if (!window.applicationFiles[fileType]) {
-          console.warn(`FileUploadSection: File ${fileType} wasn't stored properly, storing it now`);
-          window.applicationFiles[fileType] = file;
-        }
+        // Store the file again just to be safe
+        window.applicationFiles[fileType] = file;
         
         console.log(`FileUploadSection: Verified file ${fileType} in window.applicationFiles:`, 
           window.applicationFiles[fileType]?.name || 'not found', 
