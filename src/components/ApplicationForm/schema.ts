@@ -1,50 +1,40 @@
 
 import * as z from 'zod';
 import { EMAIL_REGEX } from '@/utils/security';
-import { countries, nationalities } from '@/data/countries';
 
 // Create type-safe arrays of valid values
-const countryValues = countries.map(c => c.value);
-const nationalityValues = nationalities.map(n => n.value);
 const dietaryValues = ['none', 'vegetarian', 'vegan', 'gluten-free', 'lactose-free', 'other'] as const;
 
 export const applicationSchema = z.object({
   firstName: z.string()
     .min(2, { message: 'First name must be at least 2 characters long' })
-    .max(50, { message: 'First name must not exceed 50 characters' })
-    .regex(/^[a-zA-Z\s-']+$/, { message: 'First name can only contain letters, spaces, hyphens, and apostrophes' }),
+    .max(50, { message: 'First name must not exceed 50 characters' }),
   
   lastName: z.string()
     .min(2, { message: 'Last name must be at least 2 characters long' })
-    .max(50, { message: 'Last name must not exceed 50 characters' })
-    .regex(/^[a-zA-Z\s-']+$/, { message: 'Last name can only contain letters, spaces, hyphens, and apostrophes' }),
+    .max(50, { message: 'Last name must not exceed 50 characters' }),
   
   email: z.string()
     .min(5, { message: 'Email is required' })
     .max(100, { message: 'Email must not exceed 100 characters' })
     .regex(EMAIL_REGEX, { message: 'Please enter a valid email address' }),
   
-  phoneCountryCode: z.string().default("+1"),
-
   phone: z.string()
-    .min(5, { message: 'Phone number must be at least 5 digits' })
-    .max(15, { message: 'Phone number must not exceed 15 characters' })
-    .regex(/^[\d\s-()]+$/, { message: 'Please enter a valid phone number (digits, spaces, and -() only)' }),
+    .min(5, { message: 'Phone number is required' })
+    .max(20, { message: 'Phone number must not exceed 20 characters' }),
   
   whereFrom: z.string().min(1, { message: 'Please tell us where you are from' }),
   
   age: z.number({
     required_error: "Age is required",
     invalid_type_error: "Age must be a number"
-  }).int().positive().min(16, { message: 'You must be at least 16 years old' }).max(100),
+  }).int().positive().min(16, { message: 'You must be at least 16 years old' }).max(100).optional(),
   
   socialMedia: z.string().optional(),
   
   dateOfBirth: z.string().min(1, { message: 'Date of birth is required' }),
   
-  nationality: z.enum(nationalityValues as [string, ...string[]], {
-    required_error: 'Please select your nationality',
-  }),
+  nationality: z.string().min(1, { message: 'Nationality is required' }),
 
   vocalRange: z.enum(['soprano', 'mezzo-soprano', 'alto', 'tenor', 'baritone', 'bass', 'other'], {
     required_error: 'Please select your vocal range',
@@ -59,7 +49,7 @@ export const applicationSchema = z.object({
   teacherEmail: z.string().email({ message: 'Please enter a valid email' }).optional().or(z.literal('')),
   
   reasonForApplying: z.string()
-    .min(100, { message: 'Please provide at least 100 characters explaining why you want to join the programme' })
+    .min(50, { message: 'Please provide at least 50 characters explaining why you want to join the programme' })
     .max(2000, { message: 'Your explanation must not exceed 2000 characters' }),
   
   heardAboutUs: z.string()

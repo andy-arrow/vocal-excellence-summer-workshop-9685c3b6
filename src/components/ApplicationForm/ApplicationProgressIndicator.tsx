@@ -1,8 +1,7 @@
 
 import React from 'react';
-import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
-import { Check, Circle } from 'lucide-react';
+import { Check } from 'lucide-react';
 
 interface ApplicationProgressIndicatorProps {
   steps: string[];
@@ -10,65 +9,85 @@ interface ApplicationProgressIndicatorProps {
   onStepClick: (step: number) => void;
 }
 
-const ApplicationProgressIndicator = ({
-  steps,
+const ApplicationProgressIndicator: React.FC<ApplicationProgressIndicatorProps> = ({ 
+  steps, 
   currentStep,
   onStepClick
-}: ApplicationProgressIndicatorProps) => {
+}) => {
   return (
-    <div className="flex justify-center my-8">
-      <div className="flex items-center space-x-1 md:space-x-2">
-        {steps.map((step, index) => {
-          const isCompleted = index < currentStep;
-          const isCurrent = index === currentStep;
+    <motion.div 
+      className="flex justify-center"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.3 }}
+    >
+      <div className="w-full max-w-3xl">
+        <div className="hidden md:flex items-center justify-between relative mb-2">
+          {/* Progress bar background */}
+          <div className="absolute h-1 w-full bg-[#e6e6e6]"></div>
           
-          return (
-            <React.Fragment key={`step-${index}`}>
-              {index > 0 && (
-                <div 
-                  className={cn(
-                    "h-0.5 w-5 md:w-8", 
-                    index <= currentStep ? "bg-apple-blue" : "bg-gray-200"
-                  )}
-                />
-              )}
-              <motion.button
-                whileHover={{ scale: 1.1 }}
+          {/* Progress bar filled */}
+          <motion.div 
+            className="absolute h-1 bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-400"
+            initial={{ width: '0%' }}
+            animate={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
+            transition={{ duration: 0.3 }}
+          ></motion.div>
+          
+          {/* Steps indicators */}
+          {steps.map((step, index) => {
+            const isActive = index <= currentStep;
+            const isCompleted = index < currentStep;
+            
+            return (
+              <motion.div 
+                key={step}
+                className="relative"
+                onClick={() => onStepClick(index)} 
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => onStepClick(index)}
-                className={cn(
-                  "flex flex-col items-center cursor-pointer group transition-all",
-                  (isCompleted || isCurrent) ? "opacity-100" : "opacity-60 hover:opacity-80"
-                )}
-                type="button"
               >
-                <div className={cn(
-                  "w-8 h-8 rounded-full flex items-center justify-center border-2 transition-all",
-                  isCompleted ? "bg-apple-blue border-apple-blue" : 
-                  isCurrent ? "border-apple-blue" : "border-gray-300"
-                )}>
-                  {isCompleted ? (
-                    <Check className="w-4 h-4 text-white" />
-                  ) : (
-                    <Circle className={cn(
-                      "w-2 h-2", 
-                      isCurrent ? "text-apple-blue" : "text-gray-300"
-                    )} />
-                  )}
+                <div className="flex flex-col items-center cursor-pointer">
+                  <div className={`rounded-full transition-colors duration-300 flex items-center justify-center w-10 h-10 z-10 ${
+                    isCompleted 
+                      ? 'bg-gradient-to-r from-purple-500 to-indigo-500 text-white' 
+                      : isActive 
+                        ? 'bg-gradient-to-r from-pink-400 to-purple-400 text-white' 
+                        : 'bg-[#e6e6e6] text-[#9e9e9e]'
+                  }`}>
+                    {isCompleted ? <Check className="w-5 h-5" /> : index + 1}
+                  </div>
+                  <span className={`text-xs mt-2 font-medium ${
+                    isActive ? 'text-[#1d1d1f]' : 'text-[#9e9e9e]'
+                  }`}>
+                    {step}
+                  </span>
                 </div>
-                <span className={cn(
-                  "text-xs mt-1 font-medium transition-all", 
-                  isCompleted ? "text-apple-blue" : 
-                  isCurrent ? "text-apple-text" : "text-gray-400 group-hover:text-gray-600"
-                )}>
-                  {step}
-                </span>
-              </motion.button>
-            </React.Fragment>
-          );
-        })}
+              </motion.div>
+            );
+          })}
+        </div>
+        
+        {/* Mobile version */}
+        <div className="flex md:hidden items-center justify-between mb-4">
+          <span className="text-sm font-medium text-apple-blue">
+            Step {currentStep + 1} of {steps.length}: {steps[currentStep]}
+          </span>
+          <span className="text-sm text-apple-grey">
+            {Math.round((currentStep / (steps.length - 1)) * 100)}% Complete
+          </span>
+        </div>
+        
+        <div className="w-full h-2 bg-[#e6e6e6] rounded-full md:hidden overflow-hidden">
+          <motion.div
+            className="h-full bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-400 rounded-full"
+            initial={{ width: '0%' }}
+            animate={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
+            transition={{ duration: 0.3 }}
+          />
+        </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

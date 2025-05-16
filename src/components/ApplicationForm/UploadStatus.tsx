@@ -1,7 +1,6 @@
 
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Upload, CheckCircle, AlertCircle, X } from 'lucide-react';
+import { Check, XCircle, Loader2, FileTextIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { UploadState } from '@/hooks/useFileUpload';
 
@@ -11,86 +10,67 @@ interface UploadStatusProps {
 }
 
 export const UploadStatus: React.FC<UploadStatusProps> = ({ uploadState, onRemove }) => {
-  if (uploadState.status === 'idle') return null;
+  if (uploadState.status === 'idle') {
+    return null;
+  }
 
-  const fileName = uploadState.file?.name || 'File';
-
-  if (uploadState.status === 'uploading') {
-    return (
-      <motion.div 
-        className="mt-2 bg-apple-light rounded-xl p-3 flex items-center"
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
-        <div className="flex-1 mr-3">
-          <div className="flex justify-between text-xs text-apple-text font-medium mb-1">
-            <span className="truncate max-w-[150px]">{fileName}</span>
-            <span>{Math.round(uploadState.progress)}%</span>
-          </div>
-          <div className="h-1.5 bg-apple-border rounded-full overflow-hidden">
-            <motion.div 
-              className="h-full bg-apple-blue rounded-full"
-              animate={{ width: `${uploadState.progress}%` }}
-            />
+  return (
+    <div className="mt-4">
+      {uploadState.status === 'uploading' && (
+        <div className="bg-[#f5f5f7] p-4 rounded-xl flex items-center gap-3">
+          <Loader2 className="w-5 h-5 text-[#0066cc] animate-spin" />
+          <div className="flex-grow">
+            <p className="text-sm font-medium text-[#1d1d1f]">Preparing {uploadState.file?.name}</p>
+            <div className="w-full bg-[#e6e6e6] h-1.5 rounded-full mt-2">
+              <div 
+                className="h-full bg-[#0066cc] rounded-full transition-all duration-300" 
+                style={{ width: `${uploadState.progress}%` }}
+              />
+            </div>
           </div>
         </div>
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-        >
-          <Upload size={16} className="text-apple-blue" />
-        </motion.div>
-      </motion.div>
-    );
-  }
-
-  if (uploadState.status === 'success') {
-    return (
-      <motion.div 
-        className="mt-2 bg-green-50 border border-green-200 rounded-xl p-3 flex items-center justify-between"
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
-        <div className="flex items-center">
-          <CheckCircle size={16} className="text-green-700 mr-2" />
-          <span className="text-sm text-apple-text font-medium truncate max-w-[200px]">{fileName}</span>
+      )}
+      
+      {uploadState.status === 'success' && (
+        <div className="bg-[#f2f7f2] border border-[#d1e7dd] p-4 rounded-xl flex items-center gap-3">
+          <div className="bg-[#d1e7dd] p-1.5 rounded-full">
+            <Check className="w-4 h-4 text-[#0f5132]" />
+          </div>
+          <div className="flex-grow">
+            <p className="text-sm font-medium text-[#0f5132]">File ready for submission</p>
+            <p className="text-xs text-[#486958] mt-1 flex items-center gap-1.5">
+              <FileTextIcon className="w-3.5 h-3.5" />
+              {uploadState.file?.name} ({Math.round(uploadState.file?.size / 1024)} KB)
+            </p>
+          </div>
+          <Button 
+            onClick={onRemove}
+            variant="ghost" 
+            size="sm"
+            className="text-[#0f5132] hover:text-[#0a3622] hover:bg-[#d1e7dd]/50"
+          >
+            Remove
+          </Button>
         </div>
-        <Button 
-          variant="ghost" 
-          size="sm" 
-          className="h-7 w-7 p-0 text-apple-grey hover:text-apple-text"
-          onClick={onRemove}
-        >
-          <X size={14} />
-          <span className="sr-only">Remove file</span>
-        </Button>
-      </motion.div>
-    );
-  }
-
-  if (uploadState.status === 'error') {
-    return (
-      <motion.div 
-        className="mt-2 bg-red-50 border border-red-200 rounded-xl p-3 flex items-center justify-between"
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
-        <div className="flex items-center">
-          <AlertCircle size={16} className="text-red-700 mr-2" />
-          <span className="text-sm text-apple-text font-medium">Upload failed. Please try again.</span>
+      )}
+      
+      {uploadState.status === 'error' && (
+        <div className="bg-[#fff5f5] border border-[#f8d7da] p-4 rounded-xl flex items-center gap-3">
+          <XCircle className="w-5 h-5 text-[#842029]" />
+          <div className="flex-grow">
+            <p className="text-sm font-medium text-[#842029]">Upload failed</p>
+            <p className="text-xs text-[#842029]/80 mt-1">{uploadState.error}</p>
+          </div>
+          <Button 
+            onClick={onRemove}
+            variant="ghost" 
+            size="sm"
+            className="text-[#842029] hover:text-[#5c1620] hover:bg-[#f8d7da]/50"
+          >
+            Try Again
+          </Button>
         </div>
-        <Button 
-          variant="ghost" 
-          size="sm" 
-          className="h-7 w-7 p-0 text-apple-grey hover:text-apple-text"
-          onClick={onRemove}
-        >
-          <X size={14} />
-          <span className="sr-only">Dismiss</span>
-        </Button>
-      </motion.div>
-    );
-  }
-
-  return null;
+      )}
+    </div>
+  );
 };

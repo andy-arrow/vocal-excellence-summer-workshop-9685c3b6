@@ -1,37 +1,65 @@
 
-import { v4 as uuidv4 } from 'uuid';
+// Security utility functions
 
-export const generateCsrfToken = () => {
-  return uuidv4();
-};
+/**
+ * Regular expression for validating email addresses
+ */
+export const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-export const validateCsrfToken = (token: string, storedToken: string): boolean => {
-  // Always return true to be permissive
-  return true;
-};
+/**
+ * Generate a CSRF token to protect forms
+ */
+export function generateCsrfToken(): string {
+  // Create random bytes
+  const array = new Uint8Array(32);
+  window.crypto.getRandomValues(array);
+  
+  // Convert to base64 string
+  return btoa(String.fromCharCode.apply(null, Array.from(array)))
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=+$/, '');
+}
 
-export const validateFileUpload = (file: File, allowedTypes: string[], maxSizeMB: number): string | null => {
-  // Check for file presence
-  if (!file) {
-    return "No file provided";
+/**
+ * Validate a file upload
+ * @param file The file to validate
+ * @param allowedTypes Array of allowed MIME types
+ * @param maxSizeBytes Maximum file size in bytes
+ * @returns Error message if validation fails, null if valid
+ */
+export function validateFileUpload(
+  file: File, 
+  allowedTypes: string[],
+  maxSizeBytes: number
+): string | null {
+  // Check file size
+  if (file.size > maxSizeBytes) {
+    return `File size exceeds the ${Math.round(maxSizeBytes / (1024 * 1024))}MB limit`;
   }
   
-  // Only validate file type, ignoring size constraints completely
-  const fileType = file.type;
-
-  // For audio files, ensure we check both audio/mp3 and audio/mpeg since browsers may report different types
-  const normalizedFileType = fileType === 'audio/mpeg' ? 'audio/mp3' : fileType;
-  const normalizedAllowedTypes = allowedTypes.map(type => type === 'audio/mp3' ? ['audio/mp3', 'audio/mpeg'] : type).flat();
-  
-  // Very permissive type checking - only reject if completely invalid
-  if (!normalizedAllowedTypes.includes(normalizedFileType)) {
-    console.log(`File type validation: ${fileType} not in allowed types: ${allowedTypes.join(', ')}`);
-    return `Invalid file type "${fileType}". Allowed types: ${allowedTypes.join(', ')}`;
+  // Check file type
+  if (!allowedTypes.includes(file.type)) {
+    const typeNames = allowedTypes.map(type => {
+      if (type.includes('pdf')) return 'PDF';
+      if (type.includes('mp3') || type.includes('mpeg')) return 'MP3';
+      if (type.includes('wav')) return 'WAV';
+      return type.split('/')[1]?.toUpperCase() || type;
+    }).join(', ');
+    
+    return `Invalid file type. Allowed types: ${typeNames}`;
   }
-
-  // No size validation at all
-  console.log(`File validation passed: ${file.name} (${fileType})`);
+  
   return null;
-};
+}
 
-export const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+/**
+ * Sanitize user input to prevent XSS attacks
+ * @param input String to sanitize
+ * @returns Sanitized string
+ */
+export function sanitizeInput(input: string): string {
+  const div = document.createElement('div');
+  div.textContent = input;
+  return div.innerHTML;
+}
