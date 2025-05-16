@@ -84,7 +84,6 @@ export function useToast() {
 
 // Create a callable toast function
 const toast = (props: Omit<ToasterToast, "id">) => addToast(props);
-toast.toast = addToast;
 toast.dismiss = dismissToast;
 
 // Export the callable toast function
