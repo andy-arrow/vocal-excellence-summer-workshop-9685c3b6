@@ -28,13 +28,9 @@ const Spinner: React.FC<SpinnerProps> = ({
     black: 'border-t-black'
   };
   
-  const baseClasses = 'rounded-full border-2 border-gray-300/30 animate-spin';
-  const sizeClass = `w-[${sizeMap[size]}] h-[${sizeMap[size]}]`;
-  const colorClass = colorMap[color];
-  
   return (
     <div 
-      className={`${baseClasses} ${colorClass} ${className}`} 
+      className={`rounded-full border-2 border-gray-300/30 animate-spin ${colorMap[color]} ${className}`} 
       style={{ 
         width: sizeMap[size], 
         height: sizeMap[size],

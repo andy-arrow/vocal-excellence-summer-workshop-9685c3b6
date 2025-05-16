@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { applicationFilesStore } from '@/stores/applicationFilesStore';
 import { toast } from '@/hooks/use-toast';
+import { validateFileUpload } from '@/utils/security';
 
 export type UploadState = {
   file: File | null;
@@ -18,7 +19,7 @@ export const useFileUpload = (fileType: string) => {
     progress: 0,
   });
 
-  // Check if there's already a file in the store
+  // Check if there's already a file in the store when the component mounts
   const existingFile = applicationFilesStore.getFile(fileType as any);
   if (existingFile && uploadState.status === 'idle' && !uploadState.file) {
     setUploadState({
@@ -31,66 +32,30 @@ export const useFileUpload = (fileType: string) => {
 
   const handleFileUpload = async (file: File) => {
     try {
-      // Validate file size and type
-      const maxSizeMB = 50;
-      const maxSizeBytes = maxSizeMB * 1024 * 1024;
+      // Define accepted file types based on fileType
+      const acceptedTypes = fileType.includes('audio') 
+        ? ['audio/mp3', 'audio/mpeg', 'audio/wav'] 
+        : ['application/pdf'];
       
-      if (file.size > maxSizeBytes) {
+      // Validate file size (50MB limit) and type
+      const maxSizeBytes = 50 * 1024 * 1024;
+      const validationError = validateFileUpload(file, acceptedTypes, maxSizeBytes);
+      
+      if (validationError) {
         setUploadState({
           file: null,
           status: 'error',
-          error: `File size exceeds the ${maxSizeMB}MB limit`,
+          error: validationError,
           progress: 0,
         });
         
         toast({
-          title: "File too large",
-          description: `Maximum file size is ${maxSizeMB}MB. Please upload a smaller file.`,
+          title: "File validation error",
+          description: validationError,
           variant: "destructive",
         });
         
         return;
-      }
-      
-      // Audio files validation
-      if (fileType.includes('audio')) {
-        const validAudioTypes = ['audio/mp3', 'audio/mpeg', 'audio/wav'];
-        if (!validAudioTypes.includes(file.type)) {
-          setUploadState({
-            file: null,
-            status: 'error',
-            error: 'Invalid audio format. Please upload MP3 or WAV files only.',
-            progress: 0,
-          });
-          
-          toast({
-            title: "Invalid audio format",
-            description: "Please upload MP3 or WAV files only.",
-            variant: "destructive",
-          });
-          
-          return;
-        }
-      }
-      
-      // Document validation
-      if (fileType.includes('cv') || fileType.includes('recommendation')) {
-        if (file.type !== 'application/pdf') {
-          setUploadState({
-            file: null,
-            status: 'error',
-            error: 'Invalid document format. Please upload PDF files only.',
-            progress: 0,
-          });
-          
-          toast({
-            title: "Invalid document format",
-            description: "Please upload PDF files only.",
-            variant: "destructive",
-          });
-          
-          return;
-        }
       }
 
       // Start upload
@@ -109,8 +74,7 @@ export const useFileUpload = (fileType: string) => {
         }));
       }, 300);
       
-      // We're not actually uploading to Supabase here - we're just storing in memory
-      // This file will be uploaded when the form is submitted
+      // Store the file for later submission
       setTimeout(() => {
         clearInterval(progressInterval);
         
