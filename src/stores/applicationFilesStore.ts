@@ -22,7 +22,7 @@ interface ApplicationFilesStore {
 const initialStore: ApplicationFilesStore = {
   audioFile1: null,
   audioFile2: null,
-  cvFile: File | null,
+  cvFile: null,
   recommendationFile: null
 };
 
