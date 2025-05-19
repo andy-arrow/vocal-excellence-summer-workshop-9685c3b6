@@ -1,9 +1,11 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useEffect } from 'react';
 import {
   createBrowserRouter,
   RouterProvider,
+  useLocation,
 } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
+import { trackPageView } from "./utils/analytics";
 
 // Import pages using proper default imports
 const Index = lazy(() => import('./pages/Index'));
@@ -27,11 +29,30 @@ const PageLoader = () => (
   </div>
 );
 
+// Analytics wrapper component to track route changes
+const RouteChangeTracker = ({ children }: { children: React.ReactNode }) => {
+  const location = useLocation();
+  
+  useEffect(() => {
+    // Track page view on route change
+    trackPageView(location.pathname);
+  }, [location]);
+  
+  return <>{children}</>;
+};
+
+// Wrap each route element with the RouteChangeTracker
+const wrapWithTracker = (element: JSX.Element) => (
+  <RouteChangeTracker>
+    {element}
+  </RouteChangeTracker>
+);
+
 // Create router outside of component to avoid hook issues
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
+    element: wrapWithTracker(
       <Suspense fallback={<PageLoader />}>
         <Index />
       </Suspense>
@@ -39,7 +60,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/apply",
-    element: (
+    element: wrapWithTracker(
       <Suspense fallback={<PageLoader />}>
         <Application />
       </Suspense>
@@ -47,7 +68,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/tuition",
-    element: (
+    element: wrapWithTracker(
       <Suspense fallback={<PageLoader />}>
         <Tuition />
       </Suspense>
@@ -55,7 +76,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/summer-programme",
-    element: (
+    element: wrapWithTracker(
       <Suspense fallback={<PageLoader />}>
         <SummerProgramme />
       </Suspense>
@@ -63,7 +84,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/pricing",
-    element: (
+    element: wrapWithTracker(
       <Suspense fallback={<PageLoader />}>
         <TuitionRedirect />
       </Suspense>
@@ -71,7 +92,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/auth",
-    element: (
+    element: wrapWithTracker(
       <Suspense fallback={<PageLoader />}>
         <Auth />
       </Suspense>
@@ -79,7 +100,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/cancellation-policy",
-    element: (
+    element: wrapWithTracker(
       <Suspense fallback={<PageLoader />}>
         <CancellationPolicy />
       </Suspense>
@@ -87,7 +108,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/terms-and-conditions",
-    element: (
+    element: wrapWithTracker(
       <Suspense fallback={<PageLoader />}>
         <TermsAndConditions />
       </Suspense>
@@ -95,7 +116,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/privacy-policy",
-    element: (
+    element: wrapWithTracker(
       <Suspense fallback={<PageLoader />}>
         <PrivacyPolicy />
       </Suspense>
@@ -103,7 +124,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/test",
-    element: (
+    element: wrapWithTracker(
       <Suspense fallback={<PageLoader />}>
         <TestPage />
       </Suspense>
@@ -111,7 +132,7 @@ const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: (
+    element: wrapWithTracker(
       <Suspense fallback={<PageLoader />}>
         <NotFound />
       </Suspense>

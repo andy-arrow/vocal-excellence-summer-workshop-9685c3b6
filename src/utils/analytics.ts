@@ -39,7 +39,8 @@ export const trackPageView = (pagePath?: string, pageTitle?: string) => {
   
   trackEvent('page_view', {
     page_path: path,
-    page_title: title
+    page_title: title,
+    page_location: window.location.href
   });
 };
 
@@ -51,4 +52,17 @@ export const initializeAnalytics = () => {
   trackPageView();
   
   console.log('Google Tag Manager initialized');
+};
+
+/**
+ * Setup page view tracking for React Router
+ * This function should be called whenever the route changes
+ */
+export const setupRouteChangeTracking = () => {
+  // Function to handle route changes
+  const handleRouteChange = () => {
+    trackPageView();
+  };
+
+  return handleRouteChange;
 };

@@ -12,10 +12,8 @@ import { initializeAnalytics } from '@/utils/analytics'
 // Preload critical resources immediately
 preloadResources();
 
-// Initialize analytics
-if (typeof window !== 'undefined') {
-  initializeAnalytics();
-}
+// Initialize analytics immediately to ensure GTM is ready for all pages
+initializeAnalytics();
 
 // Import non-lazy components directly
 import { Toaster } from '@/components/ui/toaster';
