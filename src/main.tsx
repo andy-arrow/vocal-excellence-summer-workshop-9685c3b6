@@ -18,6 +18,33 @@ initializeAnalytics();
 // Import non-lazy components directly
 import { Toaster } from '@/components/ui/toaster';
 
+// Setup error tracking for uncaught exceptions
+if (typeof window !== 'undefined') {
+  const originalOnError = window.onerror;
+  window.onerror = (message, source, lineno, colno, error) => {
+    // Track the error with GTM
+    if (window.dataLayer) {
+      window.dataLayer.push({
+        'event': 'javascript_error',
+        'error_message': message,
+        'error_source': source,
+        'error_line': lineno,
+        'error_column': colno,
+        'error_stack': error?.stack || 'N/A',
+        'page_url': window.location.href
+      });
+    }
+    
+    // Call original handler if exists
+    if (originalOnError) {
+      return originalOnError(message, source, lineno, colno, error);
+    }
+    
+    // Return false to allow default browser error handling
+    return false;
+  };
+}
+
 const initializeApp = async () => {
   const rootElement = document.getElementById('root');
   if (!rootElement) return;

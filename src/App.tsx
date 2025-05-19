@@ -1,11 +1,7 @@
-import React, { lazy, Suspense, useEffect } from 'react';
-import {
-  createBrowserRouter,
-  RouterProvider,
-  useLocation,
-} from "react-router-dom";
+import React, { lazy, Suspense } from 'react';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
-import { trackPageView } from "./utils/analytics";
+import RouteChangeTracker from "@/components/RouteChangeTracker";
 
 // Import pages using proper default imports
 const Index = lazy(() => import('./pages/Index'));
@@ -28,18 +24,6 @@ const PageLoader = () => (
     </div>
   </div>
 );
-
-// Analytics wrapper component to track route changes
-const RouteChangeTracker = ({ children }: { children: React.ReactNode }) => {
-  const location = useLocation();
-  
-  useEffect(() => {
-    // Track page view on route change
-    trackPageView(location.pathname);
-  }, [location]);
-  
-  return <>{children}</>;
-};
 
 // Wrap each route element with the RouteChangeTracker
 const wrapWithTracker = (element: JSX.Element) => (
