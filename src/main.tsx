@@ -7,9 +7,15 @@ import './styles/animations.css'
 import ErrorBoundary from '@/utils/ErrorBoundary'
 import { preloadResources } from '@/utils/PreloadResources'
 import { ThemeProvider } from 'next-themes'
+import { initializeAnalytics } from '@/utils/analytics'
 
 // Preload critical resources immediately
 preloadResources();
+
+// Initialize analytics
+if (typeof window !== 'undefined') {
+  initializeAnalytics();
+}
 
 // Import non-lazy components directly
 import { Toaster } from '@/components/ui/toaster';
