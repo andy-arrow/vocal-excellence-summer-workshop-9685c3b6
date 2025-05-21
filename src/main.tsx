@@ -1,3 +1,4 @@
+
 import React, { Suspense, lazy } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
@@ -64,8 +65,8 @@ if (typeof window !== 'undefined') {
     return false;
   };
   
-  // Enhanced promise rejection tracking
-  window.onunhandledrejection = (event) => {
+  // Enhanced promise rejection tracking - fixed binding
+  window.onunhandledrejection = function(event) {
     console.error('Unhandled promise rejection:', event.reason);
     
     // Track the rejection with GTM
@@ -81,7 +82,7 @@ if (typeof window !== 'undefined') {
     
     // Call original handler if exists
     if (originalOnUnhandledRejection) {
-      return originalOnUnhandledRejection(event);
+      return originalOnUnhandledRejection.call(window, event);
     }
   };
 }

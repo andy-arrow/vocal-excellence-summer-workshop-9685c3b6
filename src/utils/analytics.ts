@@ -7,6 +7,8 @@
 // Track page views
 export const trackPageView = (path: string, title?: string) => {
   try {
+    if (typeof window === 'undefined') return;
+    
     if (!window.dataLayer) {
       console.warn("Analytics: dataLayer not found, initializing...");
       window.dataLayer = window.dataLayer || [];
@@ -36,6 +38,8 @@ export const trackUserInteraction = (
   value?: number
 ) => {
   try {
+    if (typeof window === 'undefined') return;
+    
     if (!window.dataLayer) {
       console.warn("Analytics: dataLayer not found, initializing...");
       window.dataLayer = window.dataLayer || [];
@@ -64,6 +68,8 @@ export const trackFormSubmission = (
   success?: boolean
 ) => {
   try {
+    if (typeof window === 'undefined') return;
+    
     if (!window.dataLayer) {
       console.warn("Analytics: dataLayer not found, initializing...");
       window.dataLayer = window.dataLayer || [];
@@ -90,6 +96,8 @@ export const trackFeatureUsage = (
   params: Record<string, any> = {}
 ) => {
   try {
+    if (typeof window === 'undefined') return;
+    
     if (!window.dataLayer) {
       console.warn("Analytics: dataLayer not found, initializing...");
       window.dataLayer = window.dataLayer || [];
@@ -116,6 +124,8 @@ export const trackError = (
   details?: Record<string, any>
 ) => {
   try {
+    if (typeof window === 'undefined') return;
+    
     if (!window.dataLayer) {
       console.warn("Analytics: dataLayer not found, initializing...");
       window.dataLayer = window.dataLayer || [];
@@ -143,6 +153,8 @@ export const trackEvent = (
   eventParams: Record<string, any> = {}
 ) => {
   try {
+    if (typeof window === 'undefined') return;
+    
     if (!window.dataLayer) {
       console.warn("Analytics: dataLayer not found, initializing...");
       window.dataLayer = window.dataLayer || [];
@@ -164,6 +176,8 @@ export const trackEvent = (
 // Initialize analytics and load GTM if needed
 export const initializeAnalytics = () => {
   try {
+    if (typeof window === 'undefined') return false;
+    
     console.log("Initializing analytics...");
     if (!window.dataLayer) {
       window.dataLayer = [];
@@ -192,6 +206,8 @@ export const trackApplicationFormEvent = (
   details?: Record<string, any>
 ) => {
   try {
+    if (typeof window === 'undefined') return;
+    
     trackEvent('application_form', {
       step,
       action,

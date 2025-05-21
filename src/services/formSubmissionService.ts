@@ -3,6 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { trackError } from "@/utils/monitoring";
 import { ApplicationFormValues } from "@/components/ApplicationForm/schema";
 import { toast } from '@/hooks/use-toast';
+import { EventType } from '@/hooks/use-analytics';
 
 /**
  * Submit application form data to Supabase
@@ -99,11 +100,11 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
     
     if (hasFiles) {
       try {
-        const { success, error } = await processFilesAndSendEmails(data, applicationId, applicationFiles, submissionId);
-        fileStatus = { success, error: error || null };
+        const result = await processFilesAndSendEmails(data, applicationId, applicationFiles, submissionId);
+        fileStatus = { success: result.success, error: result.error || null };
         
         // If edge function was successful, it also sent emails
-        if (success) {
+        if (result.success) {
           emailStatus = { success: true, error: null };
         } else {
           // Try direct email sending as fallback
@@ -142,7 +143,7 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
     
   } catch (error: any) {
     console.error("Unhandled error submitting application form:", error);
-    trackError('submission_error', error, {
+    trackError('form_submission_error' as EventType, error, {
       formType: 'application',
       errorType: 'unhandled'
     });
@@ -403,7 +404,7 @@ export const submitContactForm = async (data: {
     }
     
     // If all retries failed
-    trackError('component_error', lastError, {
+    trackError('component_error' as EventType, lastError, {
       formType: 'contact',
       email: data.email
     });
