@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useEffect, lazy, Suspense } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -283,6 +282,17 @@ const ApplicationForm = () => {
     );
   }
 
+  // Get files from store for passing to SupportingMaterialsSection
+  const files = applicationFilesStore.getFiles();
+  
+  // Create updateFile function for SupportingMaterialsSection
+  const updateFile = (fileType: string, file: File | null) => {
+    if (fileType === 'audioFile1' || fileType === 'audioFile2' || 
+        fileType === 'cvFile' || fileType === 'recommendationFile') {
+      applicationFilesStore.setFile(fileType, file);
+    }
+  };
+
   const sections = [
     { 
       title: "Personal Info", 
@@ -315,7 +325,10 @@ const ApplicationForm = () => {
       title: "Materials", 
       component: (
         <Suspense fallback={<SectionLoader />}>
-          <SupportingMaterialsSection />
+          <SupportingMaterialsSection 
+            updateFile={updateFile}
+            files={files}
+          />
         </Suspense>
       ),
       icon: <motion.div whileHover={{ scale: 1.1 }} className="bg-purple-500/30 p-2 rounded-full"><CheckCircle2 size={18} className="text-purple-400" /></motion.div>

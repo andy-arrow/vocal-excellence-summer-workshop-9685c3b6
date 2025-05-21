@@ -10,6 +10,11 @@ interface Window {
     recommendationFile: File | null;
     [key: string]: File | null;
   };
+  FingerprintJS?: {
+    load: () => Promise<{
+      get: () => Promise<{ visitorId: string }>;
+    }>;
+  };
 }
 
 // Define the toast theme

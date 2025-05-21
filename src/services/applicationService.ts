@@ -1,4 +1,3 @@
-
 import { supabase } from "@/integrations/supabase/client";
 import { ApplicationFormValues } from "@/components/ApplicationForm/schema";
 import { toast } from "@/hooks/use-toast";
@@ -47,6 +46,9 @@ export async function submitApplication(
         dateofbirth: formData.dateOfBirth,
         nationality: formData.nationality,
         address: formData.whereFrom,
+        city: "", // Added missing required fields with defaults
+        country: "", // Added missing required fields with defaults
+        postalcode: "", // Added missing required fields with defaults
         vocalrange: formData.vocalRange,
         yearsofexperience: formData.yearsOfSinging,
         musicalbackground: formData.musicalBackground,

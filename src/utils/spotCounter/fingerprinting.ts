@@ -80,8 +80,8 @@ const generateFingerprint = async (): Promise<string> => {
       }
 
       // Check if FingerprintJS is already loaded
-      if (window.hasOwnProperty('FingerprintJS')) {
-        window.FingerprintJS!.load()
+      if (window.FingerprintJS) {
+        window.FingerprintJS.load()
           .then(fp => fp.get())
           .then(result => resolve(result.visitorId))
           .catch(reject);
@@ -93,8 +93,8 @@ const generateFingerprint = async (): Promise<string> => {
       script.src = 'https://openfpcdn.io/fingerprintjs/v4';
       script.async = true;
       script.onload = () => {
-        if (window.hasOwnProperty('FingerprintJS')) {
-          window.FingerprintJS!.load()
+        if (window.FingerprintJS) {
+          window.FingerprintJS.load()
             .then(fp => fp.get())
             .then(result => resolve(result.visitorId))
             .catch(reject);
