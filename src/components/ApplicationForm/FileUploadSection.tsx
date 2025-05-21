@@ -1,12 +1,10 @@
 
-import React, { useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { motion } from 'framer-motion';
-import { LucideIcon } from 'lucide-react';
-import { useFileUpload } from '@/hooks/useFileUpload';
-import { UploadStatus } from './UploadStatus';
-import { applicationFilesStore } from '@/stores/applicationFilesStore';
+import { LucideIcon, Check, X, Upload, Loader2, FileTextIcon } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface FileUploadSectionProps {
   label: string;
@@ -16,7 +14,11 @@ interface FileUploadSectionProps {
   acceptedFormats: string;
   required?: boolean;
   iconColor?: string;
+  updateFile: (file: File | null) => void;
+  currentFile: File | null | undefined;
 }
+
+type FileStatus = 'idle' | 'ready' | 'error';
 
 export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
   label,
@@ -25,28 +27,63 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
   fileType,
   acceptedFormats,
   required = false,
-  iconColor = "text-[#1d1d1f]"
+  iconColor = "text-[#1d1d1f]",
+  updateFile,
+  currentFile
 }) => {
-  const { uploadState, handleFileUpload, reset } = useFileUpload(fileType);
-
-  // Check if a file is already uploaded when component mounts
-  useEffect(() => {
-    const existingFile = applicationFilesStore.getFile(fileType as any);
-    if (existingFile) {
-      console.log(`FileUploadSection: Found existing file for ${fileType} on mount:`, existingFile.name);
-    }
-  }, [fileType]);
+  const [status, setStatus] = useState<FileStatus>(currentFile ? 'ready' : 'idle');
+  const [error, setError] = useState<string | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      console.log(`FileUploadSection: Processing file ${file.name} of type ${file.type} and size ${file.size} bytes`);
-      await handleFileUpload(file);
+    
+    if (!file) {
+      return;
     }
-    // Reset the input value to allow uploading the same file again if needed
-    e.target.value = '';
+    
+    try {
+      // Validate file
+      if (!acceptedFormats.split(',').some(format => file.name.toLowerCase().endsWith(format.replace('.', '')))) {
+        setError(`File must be in ${acceptedFormats} format`);
+        setStatus('error');
+        return;
+      }
+      
+      // Check file size (max 15MB)
+      if (file.size > 15 * 1024 * 1024) {
+        setError('File must be smaller than 15MB');
+        setStatus('error');
+        return;
+      }
+      
+      // File is valid
+      updateFile(file);
+      setStatus('ready');
+      setError(null);
+      
+    } catch (error) {
+      console.error(`Error processing file ${file.name}:`, error);
+      setError('Error processing file');
+      setStatus('error');
+    } finally {
+      // Reset input to allow selecting the same file again
+      if (inputRef.current) {
+        inputRef.current.value = '';
+      }
+    }
   };
-  
+
+  const handleRemoveFile = () => {
+    updateFile(null);
+    setStatus('idle');
+    setError(null);
+    
+    if (inputRef.current) {
+      inputRef.current.value = '';
+    }
+  };
+
   return (
     <div>
       <div className="flex items-center justify-between mb-3">
@@ -64,34 +101,69 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
         {description}
       </p>
       
-      <motion.div 
-        className="relative group"
-        whileHover={{ scale: 1.005 }}
-        whileTap={{ scale: 0.995 }}
-      >
-        <Input 
-          type="file" 
-          accept={acceptedFormats}
-          className={`
-            file:mr-5 file:py-2 file:px-4 
-            file:border-0 file:text-sm file:font-medium
-            file:bg-[#f5f5f7] file:text-[#1d1d1f] 
-            hover:file:bg-[#e6e6e7] file:rounded-lg
-            border-[#e6e6e6] hover:border-[#d2d2d7] 
-            focus:border-[#0066cc] focus:ring-1 focus:ring-[#0066cc]
-            rounded-xl transition-colors text-sm
-            ${uploadState.status !== 'idle' ? 'opacity-60 pointer-events-none' : ''}
-          `}
-          disabled={uploadState.status !== 'idle'}
-          onChange={handleFileChange}
-          aria-label={`Upload ${label}`}
-        />
-      </motion.div>
-      
-      <UploadStatus 
-        uploadState={uploadState}
-        onRemove={reset}
-      />
+      {status === 'idle' ? (
+        <motion.div 
+          className="relative group"
+          whileHover={{ scale: 1.005 }}
+          whileTap={{ scale: 0.995 }}
+        >
+          <Input 
+            ref={inputRef}
+            type="file" 
+            accept={acceptedFormats}
+            onChange={handleFileChange}
+            className={`
+              file:mr-5 file:py-2 file:px-4 
+              file:border-0 file:text-sm file:font-medium
+              file:bg-[#f5f5f7] file:text-[#1d1d1f] 
+              hover:file:bg-[#e6e6e7] file:rounded-lg
+              border-[#e6e6e6] hover:border-[#d2d2d7] 
+              focus:border-[#0066cc] focus:ring-1 focus:ring-[#0066cc]
+              rounded-xl transition-colors text-sm
+            `}
+            aria-label={`Upload ${label}`}
+          />
+        </motion.div>
+      ) : status === 'ready' && currentFile ? (
+        <div className="bg-[#f2f7f2] border border-[#d1e7dd] p-4 rounded-xl flex items-center gap-3">
+          <div className="bg-[#d1e7dd] p-1.5 rounded-full">
+            <Check className="w-4 h-4 text-[#0f5132]" />
+          </div>
+          <div className="flex-grow">
+            <p className="text-sm font-medium text-[#0f5132]">File ready for submission</p>
+            <p className="text-xs text-[#486958] mt-1 flex items-center gap-1.5">
+              <FileTextIcon className="w-3.5 h-3.5" />
+              {currentFile.name} ({Math.round(currentFile.size / 1024)} KB)
+            </p>
+          </div>
+          <Button 
+            onClick={handleRemoveFile}
+            variant="ghost" 
+            size="sm"
+            className="text-[#0f5132] hover:text-[#0a3622] hover:bg-[#d1e7dd]/50"
+          >
+            Remove
+          </Button>
+        </div>
+      ) : status === 'error' ? (
+        <div className="bg-[#fff5f5] border border-[#f8d7da] p-4 rounded-xl flex items-center gap-3">
+          <div className="bg-[#f8d7da] p-1.5 rounded-full">
+            <X className="w-4 h-4 text-[#842029]" />
+          </div>
+          <div className="flex-grow">
+            <p className="text-sm font-medium text-[#842029]">Upload failed</p>
+            <p className="text-xs text-[#842029]/80 mt-1">{error || 'Error uploading file'}</p>
+          </div>
+          <Button 
+            onClick={handleRemoveFile}
+            variant="ghost" 
+            size="sm"
+            className="text-[#842029] hover:text-[#5c1620] hover:bg-[#f8d7da]/50"
+          >
+            Try Again
+          </Button>
+        </div>
+      ) : null}
     </div>
   );
 };

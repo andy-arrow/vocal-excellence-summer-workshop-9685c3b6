@@ -1,11 +1,10 @@
+
 import React, { useEffect, lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Toaster } from '@/components/ui/toaster';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { applicationFilesStore } from '@/stores/applicationFilesStore';
 
 // Lazily load less critical components
 const ApplicationForm = lazy(() => import('@/components/ApplicationForm'));
@@ -13,9 +12,13 @@ const ApplicationRequirements = lazy(() => import('@/components/ApplicationRequi
 const ApplicationTimeline = lazy(() => import('@/components/ApplicationTimeline'));
 const ApplicationFAQ = lazy(() => import('@/components/ApplicationFAQ'));
 const ScrollToTopButton = lazy(() => import('@/components/ScrollToTopButton'));
-const SectionLoader = () => <div className="flex justify-center py-16">
+
+const SectionLoader = () => (
+  <div className="flex justify-center py-16">
     <div className="w-8 h-8 border-4 border-coral-300 border-t-coral-500 rounded-full animate-spin"></div>
-  </div>;
+  </div>
+);
+
 const fadeIn = {
   hidden: {
     opacity: 0,
@@ -31,37 +34,31 @@ const fadeIn = {
   }
 };
 
-// We don't need to redeclare the global interface since it's defined in vite-env.d.ts
-
 const Application = () => {
   const [showScrollToTop, setShowScrollToTop] = React.useState(false);
-  const isMobile = useIsMobile();
   
   useEffect(() => {
+    // Scroll to top when component mounts
     window.scrollTo(0, 0);
+    
+    // Add scroll event listener
     const handleScroll = () => {
       requestAnimationFrame(() => {
         setShowScrollToTop(window.scrollY > 500);
       });
     };
+    
     window.addEventListener('scroll', handleScroll, {
       passive: true
     });
     
-    // Initialize applicationFilesStore on mount
-    // This will also initialize window.applicationFiles via our store
-    console.log('Application.tsx: Page mounted, applicationFilesStore ready');
+    console.log('Application.tsx: Page mounted');
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
       console.log('Application.tsx: Page unmounted');
     };
   }, []);
-
-  // Even more dramatically increased padding for better spacing below navbar
-  const paddingClasses = isMobile 
-    ? "pt-64 pb-16" // Dramatically increased padding for mobile (was pt-56)
-    : "pt-96 pb-20"; // Dramatically increased padding for desktop (was pt-72)
 
   return (
     <div className="bg-[#f5f5f7] text-apple-text min-h-screen font-sans antialiased">
@@ -76,7 +73,7 @@ const Application = () => {
         
         <main className="flex-grow relative z-10">
           <div className="bg-gradient-to-b from-white to-[#f5f5f7] border-b border-apple-border/10">
-            <div className={`max-w-5xl mx-auto px-6 md:px-8 ${paddingClasses}`}>
+            <div className="max-w-5xl mx-auto px-6 md:px-8 pt-32 md:pt-40 pb-16 md:pb-20">
               <motion.div 
                 className="text-center"
                 initial={{ opacity: 0, y: 20 }}
@@ -110,7 +107,7 @@ const Application = () => {
                   initial="hidden" 
                   whileInView="visible" 
                   viewport={{ once: true, margin: "-100px" }} 
-                  id="application-form-section"
+                  id="application-form"
                   className="bg-white rounded-2xl shadow-sm overflow-hidden"
                   aria-label="Application Form Section"
                   variants={fadeIn}

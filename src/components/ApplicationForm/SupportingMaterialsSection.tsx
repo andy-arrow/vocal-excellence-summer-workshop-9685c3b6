@@ -1,20 +1,18 @@
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Info, FileText, Music, File } from 'lucide-react';
 import { FileUploadSection } from './FileUploadSection';
-import { applicationFilesStore } from '@/stores/applicationFilesStore';
+import { ApplicationFiles } from '@/services/applicationService';
 
-// We don't need to redeclare the global interface since it's defined in vite-env.d.ts
+interface SupportingMaterialsSectionProps {
+  updateFile: (fileType: keyof ApplicationFiles, file: File | null) => void;
+  files: ApplicationFiles;
+}
 
-const SupportingMaterialsSection = () => {
-  useEffect(() => {
-    console.log('SupportingMaterialsSection: Component mounted');
-    
-    return () => {
-      console.log('SupportingMaterialsSection: Component unmounted');
-    };
-  }, []);
-
+const SupportingMaterialsSection: React.FC<SupportingMaterialsSectionProps> = ({ 
+  updateFile,
+  files
+}) => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -34,6 +32,8 @@ const SupportingMaterialsSection = () => {
           acceptedFormats=".pdf"
           required={false}
           iconColor="text-apple-blue"
+          updateFile={(file) => updateFile('cvFile', file)}
+          currentFile={files.cvFile}
         />
       </div>
       
@@ -46,6 +46,8 @@ const SupportingMaterialsSection = () => {
           acceptedFormats=".pdf"
           required={false}
           iconColor="text-apple-text"
+          updateFile={(file) => updateFile('recommendationFile', file)}
+          currentFile={files.recommendationFile}
         />
       </div>
 
@@ -66,6 +68,8 @@ const SupportingMaterialsSection = () => {
           acceptedFormats=".mp3,.wav"
           required={false}
           iconColor="text-purple-500"
+          updateFile={(file) => updateFile('audioFile1', file)}
+          currentFile={files.audioFile1}
         />
       </div>
       
@@ -78,6 +82,8 @@ const SupportingMaterialsSection = () => {
           acceptedFormats=".mp3,.wav"
           required={false}
           iconColor="text-purple-400"
+          updateFile={(file) => updateFile('audioFile2', file)}
+          currentFile={files.audioFile2}
         />
       </div>
     </div>
