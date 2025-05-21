@@ -1,4 +1,3 @@
-
 /**
  * Analytics utilities for tracking user behavior
  * Uses Google Tag Manager for implementation
@@ -117,7 +116,7 @@ export const trackFeatureUsage = (
   }
 };
 
-// Track errors
+// Track errors - updated to accept string type for more flexibility
 export const trackError = (
   type: string,
   message: string,

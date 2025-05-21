@@ -3,7 +3,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { trackError } from "@/utils/monitoring";
 import { ApplicationFormValues } from "@/components/ApplicationForm/schema";
 import { toast } from '@/hooks/use-toast';
-import { EventType } from '@/hooks/use-analytics';
+import { useAnalytics } from '@/hooks/use-analytics';
+import type { EventType } from '@/hooks/use-analytics'; // Import the EventType type
 
 /**
  * Submit application form data to Supabase
@@ -143,7 +144,9 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
     
   } catch (error: any) {
     console.error("Unhandled error submitting application form:", error);
-    trackError('form_submission_error' as EventType, error, {
+    
+    // Use proper string literal type for EventType
+    trackError('form_submission_error' as string, error, {
       formType: 'application',
       errorType: 'unhandled'
     });
@@ -404,7 +407,7 @@ export const submitContactForm = async (data: {
     }
     
     // If all retries failed
-    trackError('component_error' as EventType, lastError, {
+    trackError('component_error' as string, lastError, {
       formType: 'contact',
       email: data.email
     });
