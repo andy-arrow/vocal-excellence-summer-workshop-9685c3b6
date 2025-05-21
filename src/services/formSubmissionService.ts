@@ -1,3 +1,4 @@
+
 import { supabase } from "@/integrations/supabase/client";
 import { trackError } from "@/utils/monitoring";
 import { ApplicationFormValues } from "@/components/ApplicationForm/schema";
@@ -144,8 +145,8 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
   } catch (error: any) {
     console.error("Unhandled error submitting application form:", error);
     
-    // Use proper string literal type for EventType
-    trackError('form_submission_error' as MonitoringEventType, error, {
+    // Use string type for EventType to match the updated type in utils/monitoring.ts
+    trackError('form_submission_error', error, {
       formType: 'application',
       errorType: 'unhandled'
     });
@@ -396,7 +397,7 @@ export const submitContactForm = async (data: {
         }
 
         console.log('Contact form saved successfully:', result);
-        return { success: true, error: undefined };
+        return { success: true };
       } catch (error) {
         console.error(`Unexpected error during contact form submission (attempts left: ${retries - 1}):`, error);
         lastError = error;
@@ -406,7 +407,7 @@ export const submitContactForm = async (data: {
     }
     
     // If all retries failed
-    trackError('component_error' as MonitoringEventType, lastError, {
+    trackError('component_error', lastError, {
       formType: 'contact',
       email: data.email
     });

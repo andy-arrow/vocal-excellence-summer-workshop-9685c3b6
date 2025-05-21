@@ -1,3 +1,4 @@
+
 /**
  * Analytics utilities for tracking user behavior
  * Uses Google Tag Manager for implementation
@@ -119,7 +120,7 @@ export const trackFeatureUsage = (
 // Track errors - updated to accept string type for more flexibility
 export const trackError = (
   type: string,
-  message: string,
+  message: string | Error,
   details?: Record<string, any>
 ) => {
   try {
@@ -130,11 +131,15 @@ export const trackError = (
       window.dataLayer = window.dataLayer || [];
     }
     
+    // Extract message from Error object if needed
+    const errorMessage = typeof message === 'string' ? message : message.message;
+    
     const event = {
       event: "error_occurred",
       error_type: type,
-      error_message: message,
+      error_message: errorMessage,
       error_details: details ? JSON.stringify(details) : undefined,
+      error_stack: message instanceof Error ? message.stack : undefined,
       page_url: window.location.href,
       timestamp: new Date().toISOString()
     };

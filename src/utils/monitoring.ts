@@ -16,7 +16,7 @@ interface EventPayload {
  * Track an application event
  */
 export function trackEvent(
-  type: EventType,
+  type: EventType | string,  // Allow string type for more flexibility
   severity: EventSeverity,
   payload: EventPayload
 ) {
@@ -43,7 +43,7 @@ export function trackEvent(
  * Track an error event with stack trace
  */
 export function trackError(
-  type: EventType | string,
+  type: EventType | string,  // Allow string type for more flexibility
   error: Error | string,
   details?: Record<string, any>,
   user?: string | null,
@@ -60,7 +60,7 @@ export function trackError(
     errorStack = error.stack;
   }
   
-  trackEvent(type as EventType, severity, {
+  trackEvent(type, severity, {
     message: errorMessage,
     details: {
       ...details,

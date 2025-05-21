@@ -8,7 +8,7 @@ import {
   trackError 
 } from '@/utils/analytics';
 
-// Define acceptable error types 
+// Define acceptable error types - made more flexible to accept string for future expansion
 export type EventType = 
   | 'component_error'
   | 'api_error'
@@ -18,7 +18,8 @@ export type EventType =
   | 'upload_error'
   | 'navigation_error'
   | 'feature_error'
-  | 'system_error';
+  | 'system_error'
+  | string; // Allow any string for flexibility
 
 /**
  * Hook for tracking analytics events throughout the application
@@ -49,11 +50,12 @@ export const useAnalytics = () => {
   }, []);
 
   // Track errors with detailed information
-  const trackAppError = useCallback((type: EventType, message: string, details?: Record<string, any>) => {
-    console.log(`Analytics: Tracking error "${type}" - ${message}`, details);
+  const trackAppError = useCallback((type: EventType, message: string | Error, details?: Record<string, any>) => {
+    const errorMessage = typeof message === 'string' ? message : message.message;
+    console.log(`Analytics: Tracking error "${type}" - ${errorMessage}`, details);
     
     // Track in console for debugging
-    console.error(`[ERROR-TRACKING] ${type}: ${message}`, details);
+    console.error(`[ERROR-TRACKING] ${type}: ${errorMessage}`, details);
     
     // Send to analytics
     trackError(type, message, details);
@@ -61,7 +63,7 @@ export const useAnalytics = () => {
     // Also track as a custom event for better visibility in analytics tools
     trackEvent('application_error', {
       error_type: type,
-      error_message: message,
+      error_message: errorMessage,
       ...details
     });
   }, []);
