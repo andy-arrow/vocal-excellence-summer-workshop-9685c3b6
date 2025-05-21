@@ -169,7 +169,7 @@ async function processFilesAndSendEmails(
   applicationId: string,
   files: { [key: string]: File },
   submissionId: string
-): Promise<{ success: boolean; error?: any; }> {
+): Promise<{ success: boolean; error?: any; data?: any; }> {
   console.log(`Processing files and sending emails for application ${applicationId}`);
   
   try {
