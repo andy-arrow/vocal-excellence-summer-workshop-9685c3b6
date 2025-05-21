@@ -7,6 +7,9 @@ import { validateFileUpload } from "./security";
 const ALLOWED_AUDIO_TYPES = ['audio/mp3', 'audio/mpeg', 'audio/wav'];
 const ALLOWED_DOCUMENT_TYPES = ['application/pdf'];
 
+/**
+ * Upload a file to Supabase storage with validation and retry logic
+ */
 export const uploadFile = async (
   file: File,
   userId: string,
@@ -15,7 +18,7 @@ export const uploadFile = async (
   try {
     console.log(`uploadFile: Starting upload for ${file.name}, size: ${file.size} bytes, type: ${file.type}`);
     
-    // Very permissive validation, only check file type
+    // Basic validation to prevent server errors
     const isAudio = category.includes('audio');
     const validationError = validateFileUpload(
       file,
@@ -28,9 +31,10 @@ export const uploadFile = async (
       throw new Error(validationError);
     }
 
-    // Create a unique file path including user ID to maintain isolation
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${userId}/${category}/${Math.random().toString(36).substring(2)}.${fileExt}`;
+    // Create a unique file path including user ID for isolation
+    const fileExt = file.name.split('.').pop() || 'bin';
+    const timestamp = Date.now(); // Add timestamp to prevent collisions
+    const fileName = `${userId}/${category}/${Math.random().toString(36).substring(2)}_${timestamp}.${fileExt}`;
     
     console.log(`uploadFile: Uploading to path ${fileName}`);
     
@@ -40,19 +44,31 @@ export const uploadFile = async (
       console.log('uploadFile: Bucket exists', bucketData);
     } catch (error) {
       console.log('uploadFile: Creating application_materials bucket');
-      await supabase.storage.createBucket('application_materials', { public: true });
+      try {
+        await supabase.storage.createBucket('application_materials', { public: true });
+      } catch (bucketError) {
+        console.error('uploadFile: Error creating bucket:', bucketError);
+        // Continue anyway, the bucket might already exist
+      }
     }
     
-    // Upload with retry mechanism
+    // Upload with improved retry mechanism
     let attempts = 0;
     const maxAttempts = 3;
     let lastError = null;
     
     while (attempts < maxAttempts) {
       try {
+        console.log(`uploadFile: Attempt ${attempts + 1} of ${maxAttempts}`);
+        
+        // Convert file to ArrayBuffer for more reliable uploads
+        const arrayBuffer = await file.arrayBuffer();
+        console.log(`uploadFile: Converted file to ArrayBuffer (${arrayBuffer.byteLength} bytes)`);
+        
         const { data, error } = await supabase.storage
           .from('application_materials')
-          .upload(fileName, file, {
+          .upload(fileName, arrayBuffer, {
+            contentType: file.type,
             cacheControl: '3600',
             upsert: true // Allow overwriting
           });
@@ -80,7 +96,7 @@ export const uploadFile = async (
         
         if (attempts < maxAttempts) {
           // Wait before retrying
-          await new Promise(resolve => setTimeout(resolve, 1000));
+          await new Promise(resolve => setTimeout(resolve, 2000)); // Increased timeout
         }
       }
     }
@@ -92,6 +108,9 @@ export const uploadFile = async (
   }
 };
 
+/**
+ * Get a public URL for a file in Supabase storage
+ */
 export const getFileUrl = (path: string): string => {
   const { data } = supabase.storage
     .from('application_materials')
@@ -101,7 +120,8 @@ export const getFileUrl = (path: string): string => {
 };
 
 /**
- * Submit application form with files
+ * Submit application form with files to Supabase directly or via edge function
+ * This is a more streamlined version of the submission function
  */
 export const submitApplicationWithFiles = async (
   formData: ApplicationFormValues,
@@ -111,127 +131,7 @@ export const submitApplicationWithFiles = async (
     console.log('submitApplicationWithFiles: Starting submission with files for', formData.email);
     console.log('Files to upload:', Object.keys(files).map(key => `${key}: ${files[key]?.name || 'null'} (${files[key]?.size || 0} bytes)`));
     
-    // All files are now optional - no validation needed
-    
-    // Generate a random ID to identify this submission 
-    const submissionId = Math.random().toString(36).substring(2, 15);
-    console.log('Generated submission ID:', submissionId);
-    
-    // Get CSRF token if available
-    const csrfToken = sessionStorage.getItem('formCsrfToken');
-    
-    // Create FormData for the submission
-    const formDataObject = new FormData();
-    
-    // Add application data as JSON
-    formDataObject.append('applicationData', JSON.stringify(formData));
-    formDataObject.append('source', window.location.href);
-    formDataObject.append('submissionId', submissionId);
-    
-    // Add the CSRF token if available
-    if (csrfToken) {
-      formDataObject.append('csrfToken', csrfToken);
-    }
-    
-    // Add files to FormData - carefully validate each file
-    Object.entries(files).forEach(([key, file]) => {
-      if (file && file instanceof File && file.size > 0) {
-        console.log(`Adding file to formData: ${key}, ${file.name}, ${file.size} bytes, ${file.type}`);
-        formDataObject.append(key, file, file.name);
-      } else {
-        console.warn(`Skipping file ${key}: Invalid file object or zero size`);
-      }
-    });
-    
-    // Log form data entries for debugging
-    console.log('FormData entries:');
-    for (const entry of formDataObject.entries()) {
-      if (entry[1] instanceof File) {
-        console.log(`${entry[0]}: File: ${(entry[1] as File).name} (${(entry[1] as File).size} bytes, ${(entry[1] as File).type})`);
-      } else {
-        console.log(`${entry[0]}: ${typeof entry[1] === 'string' && entry[1].length > 100 ? entry[1].substring(0, 100) + '...' : entry[1]}`);
-      }
-    }
-    
-    // Create custom headers
-    const headers: Record<string, string> = {
-      'X-Submission-ID': submissionId
-    };
-    
-    if (csrfToken) {
-      headers['x-csrf-token'] = csrfToken;
-    }
-    
-    console.log('Calling process-application edge function with files');
-    
-    // Call the Supabase Edge Function to process the application with retry logic
-    let attempts = 0;
-    const maxAttempts = 3;
-    let lastError = null;
-    
-    while (attempts < maxAttempts) {
-      try {
-        console.log(`Edge function attempt ${attempts + 1}`);
-        const response = await supabase.functions.invoke('process-application', {
-          body: formDataObject,
-          headers: headers
-        });
-        
-        console.log(`Edge function response (attempt ${attempts + 1}):`, response);
-        
-        if (response.error) {
-          console.error(`Edge function error (attempt ${attempts + 1}):`, response.error);
-          lastError = response.error;
-          attempts++;
-          
-          if (attempts < maxAttempts) {
-            // Wait before retrying
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            continue;
-          } else {
-            // Try direct submission as a fallback after all retries failed
-            return await fallbackSubmission(formData, files);
-          }
-        }
-        
-        // Clear CSRF token after successful submission
-        if (csrfToken) {
-          sessionStorage.removeItem('formCsrfToken');
-        }
-
-        console.log('Application submitted successfully with files!');
-        
-        return { success: true, data: response.data };
-      } catch (error) {
-        console.error(`Error in edge function call (attempt ${attempts + 1}):`, error);
-        lastError = error;
-        attempts++;
-        
-        if (attempts < maxAttempts) {
-          // Wait before retrying
-          await new Promise(resolve => setTimeout(resolve, 2000));
-        } else {
-          // Try the fallback mechanism after all retries failed
-          return await fallbackSubmission(formData, files);
-        }
-      }
-    }
-    
-    throw lastError || new Error("Failed to submit application after multiple attempts");
-  } catch (error: any) {
-    console.error("Error submitting application with files:", error);
-    
-    // Try the fallback mechanism
-    return await fallbackSubmission(formData, files);
-  }
-};
-
-// Fallback submission when edge function fails
-async function fallbackSubmission(formData: ApplicationFormValues, files: { [key: string]: File }) {
-  console.log('Attempting direct form submission as fallback');
-  
-  try {
-    // Add files directly to window.applicationFiles just in case it wasn't set
+    // Store files in window.applicationFiles for fallback methods
     if (typeof window !== 'undefined') {
       window.applicationFiles = window.applicationFiles || {
         audioFile1: null,
@@ -245,29 +145,116 @@ async function fallbackSubmission(formData: ApplicationFormValues, files: { [key
           window.applicationFiles[key] = file;
         }
       });
+      
+      console.log('Updated window.applicationFiles for fallback mechanisms');
     }
     
-    const result = await import('@/services/formSubmissionService').then(module => {
-      return module.submitApplicationForm(formData);
-    });
+    // Get CSRF token if available
+    const csrfToken = sessionStorage.getItem('formCsrfToken');
     
-    if (result.success) {
+    // Generate a submission ID for tracking
+    const submissionId = Math.random().toString(36).substring(2, 15);
+    console.log('Generated submission ID:', submissionId);
+    
+    // Try using the process-application edge function first (most reliable path)
+    let edgeFunctionSuccess = false;
+    let edgeFunctionError = null;
+    
+    try {
+      console.log('Attempting submission via edge function...');
+      
+      // Create FormData for the submission
+      const formDataObj = new FormData();
+      formDataObj.append('applicationData', JSON.stringify(formData));
+      formDataObj.append('source', window.location.href);
+      formDataObj.append('submissionId', submissionId);
+      
+      // Add the CSRF token if available
+      if (csrfToken) {
+        formDataObj.append('csrfToken', csrfToken);
+      }
+      
+      // Add files to FormData
+      Object.entries(files).forEach(([key, file]) => {
+        if (file && file instanceof File && file.size > 0) {
+          console.log(`Adding file to formData: ${key}, ${file.name}, ${file.size} bytes, ${file.type}`);
+          formDataObj.append(key, file, file.name);
+        }
+      });
+      
+      // Create custom headers
+      const headers: Record<string, string> = {
+        'X-Submission-ID': submissionId
+      };
+      
+      if (csrfToken) {
+        headers['x-csrf-token'] = csrfToken;
+      }
+      
+      // Call the edge function with timeout handling
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => reject(new Error('Edge function timeout')), 30000);
+      });
+      
+      const responsePromise = supabase.functions.invoke('process-application', {
+        body: formDataObj,
+        headers: headers
+      });
+      
+      // Race the promises to handle timeouts
+      const response = await Promise.race([responsePromise, timeoutPromise]) as any;
+      
+      if (response.error) {
+        throw new Error(`Edge function error: ${response.error.message || JSON.stringify(response.error)}`);
+      }
+      
+      console.log('Edge function submission successful!', response);
+      
+      // Clear CSRF token after successful submission
+      if (csrfToken) {
+        sessionStorage.removeItem('formCsrfToken');
+      }
+      
+      edgeFunctionSuccess = true;
+      return { success: true, data: response.data };
+      
+    } catch (error: any) {
+      console.error('Edge function submission failed:', error);
+      edgeFunctionError = error;
+      // Continue to fallback method
+    }
+    
+    // If edge function failed, try the direct submission method
+    console.log('Falling back to direct form submission');
+    try {
+      const result = await import('@/services/formSubmissionService').then(module => {
+        return module.submitApplicationForm(formData, files);
+      });
+      
+      if (result.success) {
+        return { 
+          success: true, 
+          data: result.data,
+          fileError: edgeFunctionError ? 
+            `Edge function failed: ${edgeFunctionError.message}, but application was submitted via fallback` : 
+            undefined
+        };
+      }
+      
+      throw result.error || new Error('Fallback submission failed with unknown error');
+    } catch (fallbackError: any) {
+      console.error("Fallback submission failed:", fallbackError);
       return { 
-        success: true, 
-        data: result.data,
-        fileError: 'Files were not processed through the edge function, but your application was submitted'
+        success: false, 
+        error: fallbackError,
+        fileError: `Edge function failed: ${edgeFunctionError?.message}, and fallback also failed: ${fallbackError.message}`
       };
     }
-    
+  } catch (error: any) {
+    console.error("Error submitting application with files:", error);
     return { 
       success: false, 
-      error: "Application submission failed through both main and fallback methods."
-    };
-  } catch (fallbackError) {
-    console.error("Even fallback submission failed:", fallbackError);
-    return { 
-      success: false, 
-      error: fallbackError 
+      error: error 
     };
   }
-}
+};

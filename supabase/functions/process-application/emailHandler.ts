@@ -1,4 +1,3 @@
-
 import { Resend } from "npm:resend@2.0.0";
 import { ApplicationData } from "./types.ts";
 
@@ -7,9 +6,12 @@ export class EmailHandler {
 
   constructor(apiKey: string) {
     this.resend = new Resend(apiKey);
-    console.log("EmailHandler initialized");
+    console.log("EmailHandler initialized with API key");
   }
 
+  /**
+   * Send all notification emails with retry logic
+   */
   async sendNotifications(
     applicationData: ApplicationData, 
     fileAttachments: { filename: string; content: Uint8Array; type: string }[] = []
@@ -33,19 +35,64 @@ export class EmailHandler {
       
       console.log(`Prepared ${formattedAttachments.length} attachments for email`);
       
-      // Send admin notification
-      await this.sendAdminNotification(applicationData, formattedAttachments);
-      console.log("Admin notification email sent successfully");
+      // Send admin notification with retry logic
+      const adminResult = await this.sendWithRetry(() => 
+        this.sendAdminNotification(applicationData, formattedAttachments)
+      );
+      console.log("Admin notification email result:", adminResult ? "Success" : "Failed");
       
-      // Send applicant confirmation
-      await this.sendApplicantConfirmation(applicationData);
-      console.log("Applicant confirmation email sent successfully");
+      // Send applicant confirmation with retry logic
+      const applicantResult = await this.sendWithRetry(() =>  
+        this.sendApplicantConfirmation(applicationData)
+      );
+      console.log("Applicant confirmation email result:", applicantResult ? "Success" : "Failed");
+      
+      // If either email failed, throw an error
+      if (!adminResult || !applicantResult) {
+        throw new Error("One or more emails failed to send after multiple retries");
+      }
     } catch (error) {
       console.error("Error sending email notifications:", error);
       throw error;
     }
   }
 
+  /**
+   * Helper method to retry email sending operations
+   */
+  private async sendWithRetry(
+    sendFn: () => Promise<any>, 
+    maxRetries: number = 3,
+    initialBackoffMs: number = 1000
+  ): Promise<boolean> {
+    let retries = 0;
+    let backoffMs = initialBackoffMs;
+    
+    while (retries <= maxRetries) {
+      try {
+        await sendFn();
+        return true;
+      } catch (error) {
+        console.error(`Email sending failed (attempt ${retries + 1}/${maxRetries + 1}):`, error);
+        retries++;
+        
+        if (retries <= maxRetries) {
+          console.log(`Retrying in ${backoffMs}ms...`);
+          await new Promise(resolve => setTimeout(resolve, backoffMs));
+          backoffMs *= 2; // Exponential backoff
+        } else {
+          console.error("All retry attempts failed");
+          return false;
+        }
+      }
+    }
+    
+    return false;
+  }
+
+  /**
+   * Send admin notification email
+   */
   private async sendAdminNotification(
     applicationData: ApplicationData,
     attachments: { filename: string; content: Uint8Array }[]
@@ -73,6 +120,9 @@ export class EmailHandler {
     }
   }
 
+  /**
+   * Send applicant confirmation email
+   */
   private async sendApplicantConfirmation(applicationData: ApplicationData) {
     try {
       console.log("Preparing applicant confirmation email");
@@ -95,6 +145,9 @@ export class EmailHandler {
     }
   }
 
+  /**
+   * Get HTML template for admin notification email
+   */
   private getDetailedAdminNotificationTemplate(applicationData: ApplicationData): string {
     return `
     <!DOCTYPE html>
@@ -196,9 +249,7 @@ export class EmailHandler {
           <div class="field">
             <div class="field-label">Address</div>
             <div class="field-value">
-              ${applicationData.address}<br>
-              ${applicationData.city}, ${applicationData.country}<br>
-              ${applicationData.postalCode}
+              ${applicationData.whereFrom || 'Not provided'}
             </div>
           </div>
         </div>
@@ -211,7 +262,7 @@ export class EmailHandler {
           </div>
           <div class="field">
             <div class="field-label">Years of Experience</div>
-            <div class="field-value">${applicationData.yearsOfExperience}</div>
+            <div class="field-value">${applicationData.yearsOfSinging}</div>
           </div>
           <div class="field">
             <div class="field-label">Musical Background</div>
@@ -220,13 +271,13 @@ export class EmailHandler {
           <div class="field">
             <div class="field-label">Teacher Information</div>
             <div class="field-value">
-              ${applicationData.teacherName ? `Name: ${applicationData.teacherName}<br>` : ''}
+              ${applicationData.teacherName ? `Name: ${applicationData.teacherName}<br>` : 'Not provided<br>'}
               ${applicationData.teacherEmail ? `Email: ${applicationData.teacherEmail}` : 'Not provided'}
             </div>
           </div>
           <div class="field">
-            <div class="field-label">Performance Experience</div>
-            <div class="field-value">${applicationData.performanceExperience}</div>
+            <div class="field-label">Areas of Interest</div>
+            <div class="field-value">${applicationData.areasOfInterest || 'Not provided'}</div>
           </div>
         </div>
         
@@ -248,6 +299,14 @@ export class EmailHandler {
             <div class="field-label">Special Needs or Accommodations</div>
             <div class="field-value">${applicationData.specialNeeds || 'None specified'}</div>
           </div>
+          <div class="field">
+            <div class="field-label">Dietary Restrictions</div>
+            <div class="field-value">
+              ${applicationData.dietaryRestrictions?.type === 'other' && applicationData.dietaryRestrictions?.details
+                ? `${applicationData.dietaryRestrictions.type}: ${applicationData.dietaryRestrictions.details}`
+                : applicationData.dietaryRestrictions?.type || 'None specified'}
+            </div>
+          </div>
         </div>
         
         <div class="section">
@@ -267,6 +326,9 @@ export class EmailHandler {
   `;
   }
 
+  /**
+   * Get HTML template for applicant confirmation email
+   */
   private getApplicationConfirmationTemplate(firstName: string): string {
     return `
     <!DOCTYPE html>

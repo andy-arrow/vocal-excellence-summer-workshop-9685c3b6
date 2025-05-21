@@ -4,40 +4,22 @@ import { trackError } from "@/utils/monitoring";
 import { ApplicationFormValues } from "@/components/ApplicationForm/schema";
 import { toast } from '@/hooks/use-toast';
 
+/**
+ * Submit application form data to Supabase
+ * This is the primary submission function used when the edge function isn't available
+ */
 export const submitApplicationForm = async (data: ApplicationFormValues, files?: { [key: string]: File }): Promise<any> => {
   try {
     console.log('submitApplicationForm: Starting submission for', data.email);
     console.log('Received form data:', JSON.stringify(data, null, 2));
     
-    if (files) {
-      console.log('Files received directly:', Object.keys(files).map(key => `${key}: ${files[key]?.name || 'null'} (${files[key]?.size || 0} bytes)`));
-    } else {
-      console.log('No files received directly with submission');
-      // Try to get files from window.applicationFiles if available
-      if (typeof window !== 'undefined' && window.applicationFiles) {
-        const appFiles: { [key: string]: File } = {};
-        let hasFiles = false;
-        
-        Object.entries(window.applicationFiles).forEach(([key, file]) => {
-          if (file) {
-            appFiles[key] = file;
-            hasFiles = true;
-            console.log(`Retrieved ${key} from window.applicationFiles: ${file.name} (${file.size} bytes)`);
-          }
-        });
-        
-        if (hasFiles) {
-          files = appFiles;
-          console.log('Using files from window.applicationFiles');
-        } else {
-          console.log('No files found in window.applicationFiles');
-        }
-      }
-    }
+    // Collect files either from parameter or window object
+    const applicationFiles = files || (typeof window !== 'undefined' && window.applicationFiles) || {};
+    console.log('Available files:', Object.keys(applicationFiles).filter(key => applicationFiles[key]).map(key => key));
 
     // Create submission ID for tracking
     const submissionId = Math.random().toString(36).substring(2, 15);
-    console.log('Generated submission ID for database submission:', submissionId);
+    console.log('Generated submission ID:', submissionId);
 
     // Prepare form data for database
     const formData = {
@@ -63,126 +45,108 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
       specialneeds: data.specialNeeds || null,
       termsagreed: data.termsAgreed,
       timestamp: new Date().toISOString(),
-      source: window.location.href
+      source: typeof window !== 'undefined' ? window.location.href : 'direct_api'
     };
 
     console.log('Prepared form data for database:', JSON.stringify(formData, null, 2));
 
-    // Insert application data into database
-    const { data: result, error } = await supabase
-      .from('applications')
-      .insert(formData)
-      .select();
+    // Insert application data into database with retry logic
+    let applicationId = null;
+    let retries = 3;
+    let lastError = null;
+    
+    while (retries > 0) {
+      try {
+        const { data: result, error } = await supabase
+          .from('applications')
+          .insert(formData)
+          .select();
 
-    console.log('Supabase insert result:', { result, error });
+        if (error) {
+          console.error(`Database insertion error (attempts left: ${retries - 1}):`, error);
+          lastError = error;
+          retries--;
+          if (retries > 0) await new Promise(r => setTimeout(r, 1000)); // Wait before retrying
+          continue;
+        }
 
-    if (error) {
-      console.error('Database insertion error:', error);
-      trackError('component_error', error, {
-        formType: 'application',
-        email: data.email
-      });
-      
+        console.log('Application saved successfully:', result);
+        applicationId = result[0].id;
+        break; // Success, exit retry loop
+      } catch (error) {
+        console.error(`Unexpected error during database insertion (attempts left: ${retries - 1}):`, error);
+        lastError = error;
+        retries--;
+        if (retries > 0) await new Promise(r => setTimeout(r, 1000)); // Wait before retrying
+      }
+    }
+    
+    if (!applicationId) {
+      // If all retries failed
+      console.error('All database insertion attempts failed');
       return { 
         success: false, 
-        error: {
-          message: error.message,
-          details: error.details,
-          code: error.code || 'SUBMISSION_FAILED'
-        }
+        error: lastError || { message: 'Failed to save application after multiple attempts' }
       };
     }
 
-    console.log('Application saved successfully:', result);
-    const applicationId = result[0].id;
-
-    // Try to send emails directly if process-application fails
-    let emailSent = false;
-    let fileProcessingSuccess = false;
-
-    // Handle file processing if files exist
-    if (files && Object.keys(files).length > 0 && Object.values(files).some(f => f !== null)) {
-      console.log('Processing files using edge function');
+    // Process files and send emails via edge function if files exist
+    let emailStatus = { success: false, error: null };
+    let fileStatus = { success: false, error: null };
+    
+    // Check if there are any non-null files
+    const hasFiles = Object.values(applicationFiles).some(f => f !== null && f instanceof File);
+    
+    if (hasFiles) {
       try {
-        const formData = new FormData();
-        formData.append('applicationData', JSON.stringify(data));
-        formData.append('applicationId', applicationId);
-        formData.append('submissionId', submissionId);
+        const { success, error } = await processFilesAndSendEmails(data, applicationId, applicationFiles, submissionId);
+        fileStatus = { success, error: error || null };
         
-        // Log all files being added to FormData
-        Object.entries(files).forEach(([key, file]) => {
-          if (file) {
-            console.log(`Adding file to formData: ${key}, ${file.name}, ${file.size} bytes`);
-            formData.append(key, file);
-          }
-        });
-        
-        // Add headers to the request
-        const headers = {
-          'X-Submission-ID': submissionId
-        };
-        
-        // Call edge function to process files
-        const response = await supabase.functions.invoke('process-application', {
-          body: formData,
-          headers: headers
-        });
-        
-        console.log('File processing response:', response);
-        
-        if (response.error) {
-          console.error('File processing error:', response.error);
-          // If process-application fails, we'll try to send emails directly
-          await sendEmailsDirectly(data, applicationId);
-          emailSent = true;
+        // If edge function was successful, it also sent emails
+        if (success) {
+          emailStatus = { success: true, error: null };
         } else {
-          // Check if emails were sent successfully
-          if (response.data && response.data.emailStatus) {
-            if (response.data.emailStatus.error) {
-              console.error('Email error from process-application:', response.data.emailStatus.error);
-              // Try sending emails directly as a fallback
-              await sendEmailsDirectly(data, applicationId);
-              emailSent = true;
-            } else {
-              // Emails were sent successfully by process-application
-              emailSent = true;
-            }
-          }
-          fileProcessingSuccess = true;
+          // Try direct email sending as fallback
+          const emailResult = await sendEmailsDirectly(data, applicationId);
+          emailStatus = { 
+            success: !!emailResult, 
+            error: emailResult ? null : 'Failed to send emails via fallback method'
+          };
         }
-      } catch (fileError: any) {
-        console.error('Error processing files:', fileError);
-        trackError('component_error', fileError, {
-          formType: 'application',
-          email: data.email
-        });
+      } catch (error) {
+        console.error('Error processing files:', error);
+        fileStatus = { success: false, error };
         
-        // Try sending emails directly as a fallback
-        await sendEmailsDirectly(data, applicationId);
-        emailSent = true;
-        
-        return { 
-          success: true, 
-          data: result[0],
-          fileError: fileError.message || 'Error processing files'
+        // Try direct email sending as fallback
+        const emailResult = await sendEmailsDirectly(data, applicationId);
+        emailStatus = { 
+          success: !!emailResult, 
+          error: emailResult ? null : 'Failed to send emails via fallback method'
         };
       }
     } else {
-      console.log('No files to process with application');
-      // No files, so send emails directly
-      await sendEmailsDirectly(data, applicationId);
-      emailSent = true;
+      console.log('No files to process, sending emails directly');
+      const emailResult = await sendEmailsDirectly(data, applicationId);
+      emailStatus = { 
+        success: !!emailResult, 
+        error: emailResult ? null : 'Failed to send emails directly'
+      };
     }
     
     return { 
       success: true, 
-      data: result[0], 
-      emailSent, 
-      fileProcessingSuccess 
+      data: { id: applicationId },
+      fileStatus,
+      emailStatus
     };
     
   } catch (error: any) {
     console.error("Unhandled error submitting application form:", error);
+    trackError('submission_error', error, {
+      formType: 'application',
+      errorType: 'unhandled'
+    });
+    
     return { 
       success: false, 
       error: {
@@ -194,50 +158,201 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
   }
 };
 
-async function sendEmailsDirectly(data: ApplicationFormValues, applicationId: string) {
+/**
+ * Process application files and send emails using the edge function
+ */
+async function processFilesAndSendEmails(
+  data: ApplicationFormValues,
+  applicationId: string,
+  files: { [key: string]: File },
+  submissionId: string
+): Promise<{ success: boolean; error?: any }> {
+  console.log(`Processing files and sending emails for application ${applicationId}`);
+  
   try {
-    console.log('Attempting to send emails directly via send-email function');
+    // Create form data for the edge function
+    const formData = new FormData();
+    formData.append('applicationData', JSON.stringify(data));
+    formData.append('applicationId', applicationId);
+    formData.append('submissionId', submissionId);
     
-    // Send admin notification
-    const adminResponse = await supabase.functions.invoke('send-email', {
-      body: {
-        type: 'admin_notification',
-        applicantData: data,
-        applicationId: applicationId
-      },
-    });
-    
-    if (adminResponse.error) {
-      console.error('Error sending admin notification:', adminResponse.error);
-    } else {
-      console.log('Admin notification sent directly:', adminResponse);
+    // Add CSRF token if available
+    const csrfToken = sessionStorage.getItem('formCsrfToken');
+    if (csrfToken) {
+      formData.append('csrfToken', csrfToken);
     }
     
-    // Send applicant confirmation
-    const applicantResponse = await supabase.functions.invoke('send-email', {
-      body: {
-        type: 'application_confirmation',
-        name: data.firstName,
-        email: data.email
-      },
+    // Add files to FormData
+    Object.entries(files).forEach(([key, file]) => {
+      if (file && file instanceof File && file.size > 0) {
+        console.log(`Adding file to formData: ${key}, ${file.name}, ${file.size} bytes`);
+        formData.append(key, file);
+      }
     });
     
-    if (applicantResponse.error) {
-      console.error('Error sending applicant confirmation:', applicantResponse.error);
-    } else {
-      console.log('Applicant confirmation sent directly:', applicantResponse);
-    }
-    
-    return {
-      admin: adminResponse,
-      applicant: applicantResponse
+    // Add headers
+    const headers: Record<string, string> = {
+      'X-Submission-ID': submissionId
     };
+    
+    if (csrfToken) {
+      headers['x-csrf-token'] = csrfToken;
+    }
+    
+    console.log('Calling process-application edge function with retry logic');
+    
+    // Call the edge function with retry logic
+    let attempts = 0;
+    const maxAttempts = 3;
+    let lastError = null;
+    
+    while (attempts < maxAttempts) {
+      try {
+        console.log(`Edge function attempt ${attempts + 1}`);
+        
+        // Use timeout promise to handle potential timeouts
+        const timeoutPromise = new Promise((_, reject) => {
+          setTimeout(() => reject(new Error('Edge function timeout')), 30000);
+        });
+        
+        const responsePromise = supabase.functions.invoke('process-application', {
+          body: formData,
+          headers: headers
+        });
+        
+        // Race the promises to handle timeouts
+        const response: any = await Promise.race([responsePromise, timeoutPromise]);
+        
+        console.log(`Edge function response (attempt ${attempts + 1}):`, response);
+        
+        if (response.error) {
+          console.error(`Edge function error (attempt ${attempts + 1}):`, response.error);
+          lastError = response.error;
+          attempts++;
+          
+          if (attempts < maxAttempts) {
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            continue;
+          }
+          
+          return { success: false, error: lastError };
+        }
+        
+        // Clear CSRF token after successful submission
+        if (csrfToken) {
+          sessionStorage.removeItem('formCsrfToken');
+        }
+        
+        console.log('Files processed successfully');
+        return { success: true, data: response.data };
+      } catch (error) {
+        console.error(`Error calling edge function (attempt ${attempts + 1}):`, error);
+        lastError = error;
+        attempts++;
+        
+        if (attempts < maxAttempts) {
+          await new Promise(resolve => setTimeout(resolve, 2000));
+        } else {
+          return { success: false, error: lastError };
+        }
+      }
+    }
+    
+    return { success: false, error: lastError || new Error('Failed to process files after multiple attempts') };
   } catch (error) {
-    console.error('Error sending emails directly:', error);
-    throw error;
+    console.error('Unexpected error in processFilesAndSendEmails:', error);
+    return { success: false, error };
   }
 }
 
+/**
+ * Send confirmation emails directly via edge functions as a fallback
+ */
+async function sendEmailsDirectly(data: ApplicationFormValues, applicationId: string): Promise<boolean> {
+  try {
+    console.log('Attempting to send emails directly via send-email function');
+    let success = false;
+    
+    // Send admin notification with retry
+    let adminRetries = 2;
+    while (adminRetries >= 0) {
+      try {
+        const adminResponse = await supabase.functions.invoke('send-email', {
+          body: {
+            type: 'admin_notification',
+            applicantData: data,
+            applicationId: applicationId
+          },
+        });
+        
+        if (adminResponse.error) {
+          console.error('Error sending admin notification:', adminResponse.error);
+          if (adminRetries > 0) {
+            adminRetries--;
+            await new Promise(r => setTimeout(r, 1000));
+            continue;
+          }
+        } else {
+          console.log('Admin notification sent directly:', adminResponse);
+          success = true;
+          break;
+        }
+      } catch (error) {
+        console.error('Exception sending admin notification:', error);
+        if (adminRetries > 0) {
+          adminRetries--;
+          await new Promise(r => setTimeout(r, 1000));
+        } else {
+          break;
+        }
+      }
+    }
+    
+    // Send applicant confirmation with retry
+    let applicantRetries = 2;
+    while (applicantRetries >= 0) {
+      try {
+        const applicantResponse = await supabase.functions.invoke('send-email', {
+          body: {
+            type: 'application_confirmation',
+            name: data.firstName,
+            email: data.email
+          },
+        });
+        
+        if (applicantResponse.error) {
+          console.error('Error sending applicant confirmation:', applicantResponse.error);
+          if (applicantRetries > 0) {
+            applicantRetries--;
+            await new Promise(r => setTimeout(r, 1000));
+            continue;
+          }
+        } else {
+          console.log('Applicant confirmation sent directly:', applicantResponse);
+          success = true;
+          break;
+        }
+      } catch (error) {
+        console.error('Exception sending applicant confirmation:', error);
+        if (applicantRetries > 0) {
+          applicantRetries--;
+          await new Promise(r => setTimeout(r, 1000));
+        } else {
+          break;
+        }
+      }
+    }
+    
+    return success;
+  } catch (error) {
+    console.error('Error sending emails directly:', error);
+    return false;
+  }
+}
+
+/**
+ * Submit contact form to Supabase
+ */
 export const submitContactForm = async (data: {
   name: string;
   email: string;
@@ -253,38 +368,54 @@ export const submitContactForm = async (data: {
       vocal_type: data.vocal_type,
       message: data.message || null,
       timestamp: new Date().toISOString(),
-      source: window.location.href
+      source: typeof window !== 'undefined' ? window.location.href : 'direct_api'
     };
 
     console.log('Prepared contact form data:', JSON.stringify(formData, null, 2));
 
-    const { data: result, error } = await supabase
-      .from('contact_submissions')
-      .insert(formData)
-      .select();
-
-    console.log('Supabase contact form insert result:', { result, error });
-
-    if (error) {
-      console.error('Database insertion error:', error);
-      trackError('component_error', error, {
-        formType: 'contact',
-        email: data.email
-      });
-      
-      return { 
-        success: false, 
-        error: {
-          message: error.message,
-          details: error.details,
-          code: error.code || 'SUBMISSION_FAILED'
-        }
-      };
-    }
-
-    console.log('Contact form saved successfully:', result);
+    // Submit with retry logic
+    let retries = 3;
+    let lastError = null;
     
-    return { success: true, data: result[0] };
+    while (retries > 0) {
+      try {
+        const { data: result, error } = await supabase
+          .from('contact_submissions')
+          .insert(formData)
+          .select();
+
+        if (error) {
+          console.error(`Database insertion error (attempts left: ${retries - 1}):`, error);
+          lastError = error;
+          retries--;
+          if (retries > 0) await new Promise(r => setTimeout(r, 1000)); // Wait before retrying
+          continue;
+        }
+
+        console.log('Contact form saved successfully:', result);
+        return { success: true, data: result[0] };
+      } catch (error) {
+        console.error(`Unexpected error during contact form submission (attempts left: ${retries - 1}):`, error);
+        lastError = error;
+        retries--;
+        if (retries > 0) await new Promise(r => setTimeout(r, 1000)); // Wait before retrying
+      }
+    }
+    
+    // If all retries failed
+    trackError('component_error', lastError, {
+      formType: 'contact',
+      email: data.email
+    });
+    
+    return { 
+      success: false, 
+      error: {
+        message: lastError?.message || 'Failed to submit contact form after multiple attempts',
+        details: lastError?.details || {},
+        code: lastError?.code || 'SUBMISSION_FAILED'
+      }
+    };
     
   } catch (error: any) {
     console.error("Unhandled error submitting contact form:", error);

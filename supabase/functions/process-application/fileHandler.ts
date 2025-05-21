@@ -2,6 +2,9 @@
 import { supabase } from "./supabaseClient.ts";
 import { FileUpload, ProcessedFile } from "./types.ts";
 
+/**
+ * Process uploaded files and save them to storage
+ */
 export async function processFiles(
   formData: FormData, 
   applicationId: string
@@ -17,7 +20,7 @@ export async function processFiles(
   const audioFiles = ['audioFile1', 'audioFile2'];
   for (const name of audioFiles) {
     const file = formData.get(name) as File;
-    if (file && file.size > 0) {
+    if (file && file instanceof File && file.size > 0) {
       console.log(`[${submissionId}] Found ${name}:`, file.name, file.size, file.type);
       files.push({ name, file, type: 'audio' });
     } else {
@@ -29,7 +32,7 @@ export async function processFiles(
   const docFiles = ['cvFile', 'recommendationFile'];
   for (const name of docFiles) {
     const file = formData.get(name) as File;
-    if (file && file.size > 0) {
+    if (file && file instanceof File && file.size > 0) {
       console.log(`[${submissionId}] Found ${name}:`, file.name, file.size, file.type);
       files.push({ name, file, type: 'document' });
     } else {
@@ -46,10 +49,11 @@ export async function processFiles(
 
   // Ensure bucket exists by checking first
   try {
+    // First check if bucket exists
     const { data: buckets, error: bucketsError } = await supabase.storage
       .listBuckets();
     
-    console.log(`[${submissionId}] Checking if bucket exists:`, buckets);
+    console.log(`[${submissionId}] Checking if bucket exists:`, buckets?.map(b => b.name));
     
     let bucketExists = false;
     if (buckets) {
@@ -58,18 +62,30 @@ export async function processFiles(
     
     if (!bucketExists) {
       console.log(`[${submissionId}] Creating application_materials bucket`);
-      await supabase.storage.createBucket('application_materials', {
-        public: true,
-      });
+      try {
+        const { data, error } = await supabase.storage.createBucket('application_materials', {
+          public: true,
+        });
+        
+        if (error) {
+          console.error(`[${submissionId}] Error creating bucket:`, error);
+          // Continue anyway as the bucket might exist but not be visible
+        } else {
+          console.log(`[${submissionId}] Bucket created:`, data);
+        }
+      } catch (createError) {
+        console.error(`[${submissionId}] Exception creating bucket:`, createError);
+        // Continue anyway as the bucket might exist but not be visible
+      }
     } else {
       console.log(`[${submissionId}] application_materials bucket already exists`);
     }
   } catch (error) {
     console.error(`[${submissionId}] Error checking/creating bucket:`, error);
-    throw new Error('Failed to initialize storage bucket');
+    // Continue - we'll find out during the upload if there's a real issue
   }
 
-  // Upload files with retries
+  // Process each file with enhanced error handling and retries
   for (const fileObj of files) {
     try {
       // Create a more reliable file extension extraction
@@ -86,10 +102,11 @@ export async function processFiles(
       const arrayBuffer = await fileObj.file.arrayBuffer();
       console.log(`[${submissionId}] Converted ${fileObj.name} to ArrayBuffer of length: ${arrayBuffer.byteLength}`);
       
-      // Retry logic for uploads
+      // Retry logic for uploads with exponential backoff
       let retries = 3;
       let success = false;
       let uploadError = null;
+      let backoffMs = 1000;
       
       while (retries > 0 && !success) {
         try {
@@ -105,9 +122,10 @@ export async function processFiles(
             uploadError = error;
             retries--;
             
-            // Wait before retrying
+            // Wait before retrying with exponential backoff
             if (retries > 0) {
-              await new Promise(resolve => setTimeout(resolve, 1000));
+              await new Promise(resolve => setTimeout(resolve, backoffMs));
+              backoffMs *= 2; // Double the wait time for next retry
             }
           } else {
             success = true;
@@ -123,22 +141,24 @@ export async function processFiles(
           uploadError = error;
           retries--;
           
-          // Wait before retrying
+          // Wait before retrying with exponential backoff
           if (retries > 0) {
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise(resolve => setTimeout(resolve, backoffMs));
+            backoffMs *= 2; // Double the wait time for next retry
           }
         }
       }
       
       if (!success) {
-        throw uploadError || new Error(`Failed to upload ${fileObj.name} after multiple attempts`);
+        console.error(`[${submissionId}] All upload attempts failed for ${fileObj.name}`);
+        // Continue with other files rather than failing the entire process
       }
     } catch (error) {
       console.error(`[${submissionId}] Error processing file ${fileObj.name}:`, error);
-      throw error;
+      // Continue with other files
     }
   }
 
-  console.log(`[${submissionId}] Successfully processed ${uploadedFiles.length} files`);
+  console.log(`[${submissionId}] Successfully processed ${uploadedFiles.length} of ${files.length} files`);
   return uploadedFiles;
 }

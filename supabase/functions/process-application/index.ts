@@ -26,10 +26,14 @@ async function processFormData(formData: FormData): Promise<ApplicationData> {
   try {
     const appDataStr = formData.get("applicationData");
     console.log("Received form data with keys:", [...formData.keys()]);
-    console.log("applicationData as string:", appDataStr);
+    
+    if (!appDataStr) {
+      console.error("Missing applicationData in form data");
+      throw new Error("Missing applicationData in form data");
+    }
     
     if (typeof appDataStr !== 'string') {
-      console.error("Invalid applicationData format:", appDataStr);
+      console.error("Invalid applicationData format:", typeof appDataStr);
       throw new Error("Invalid applicationData format");
     }
     
@@ -68,10 +72,13 @@ async function saveApplicationToDatabase(data: ApplicationData): Promise<string>
   try {
     console.log("Attempting to save application to database for:", `${data.firstName} ${data.lastName}`);
     
+    const dietaryDetailsText = data.dietaryRestrictions?.details || '';
+    const dietaryTypeText = data.dietaryRestrictions?.type || 'none';
+    
     // Create dietary restrictions string
-    const dietaryRestrictionText = data.dietaryRestrictions.type === 'other' && data.dietaryRestrictions.details 
-      ? `${data.dietaryRestrictions.type}: ${data.dietaryRestrictions.details}`
-      : data.dietaryRestrictions.type;
+    const dietaryRestrictionText = dietaryTypeText === 'other' && dietaryDetailsText
+      ? `${dietaryTypeText}: ${dietaryDetailsText}`
+      : dietaryTypeText;
     
     const formData = {
       firstname: data.firstName,
@@ -103,23 +110,51 @@ async function saveApplicationToDatabase(data: ApplicationData): Promise<string>
 
     console.log("Prepared application data for database insertion:", formData);
 
-    const { data: applicationRecord, error: dbError } = await supabase
-      .from('applications')
-      .insert(formData)
-      .select();
+    // Add retry logic for database operations
+    let retries = 3;
+    let lastError = null;
+    
+    while (retries > 0) {
+      try {
+        const { data: applicationRecord, error: dbError } = await supabase
+          .from('applications')
+          .insert(formData)
+          .select();
 
-    if (dbError) {
-      console.error("Database error:", dbError);
-      throw new Error(`Failed to store application data: ${dbError.message}`);
+        if (dbError) {
+          console.error(`Database error (attempts left: ${retries - 1}):`, dbError);
+          lastError = dbError;
+          retries--;
+          
+          if (retries > 0) {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            continue;
+          }
+          
+          throw dbError;
+        }
+
+        if (!applicationRecord || applicationRecord.length === 0) {
+          console.error("No application record returned after insertion");
+          throw new Error("Failed to retrieve application record after insertion");
+        }
+
+        console.log("Application saved successfully with ID:", applicationRecord[0].id);
+        return applicationRecord[0].id;
+      } catch (error) {
+        console.error(`Error in saveApplicationToDatabase attempt ${4 - retries}:`, error);
+        lastError = error;
+        retries--;
+        
+        if (retries > 0) {
+          await new Promise(resolve => setTimeout(resolve, 1000));
+        } else {
+          throw error;
+        }
+      }
     }
-
-    if (!applicationRecord || applicationRecord.length === 0) {
-      console.error("No application record returned after insertion");
-      throw new Error("Failed to retrieve application record after insertion");
-    }
-
-    console.log("Application saved successfully with ID:", applicationRecord[0].id);
-    return applicationRecord[0].id;
+    
+    throw lastError || new Error("Failed to save application after multiple attempts");
   } catch (error) {
     console.error("Error in saveApplicationToDatabase:", error);
     throw error;
@@ -129,7 +164,6 @@ async function saveApplicationToDatabase(data: ApplicationData): Promise<string>
 serve(async (req) => {
   console.log("Process-application function invoked with method:", req.method);
   console.log("Content-Type:", req.headers.get("content-type"));
-  console.log("Headers:", Object.fromEntries([...req.headers.entries()]));
   
   // Get submission ID if provided
   const submissionId = req.headers.get("x-submission-id") || "unknown";
@@ -291,6 +325,7 @@ serve(async (req) => {
       } catch (fileError) {
         console.error(`[${submissionId}] Error processing files:`, fileError);
         // Continue despite file errors - we've already saved the application
+        // But we'll add this info to the response
       }
     }
 
@@ -307,11 +342,31 @@ serve(async (req) => {
       console.log(`[${submissionId}] Initializing EmailHandler with API key`);
       const emailHandler = new EmailHandler(resendApiKey);
       
-      // Send emails with attachments
-      await emailHandler.sendNotifications(applicationData, fileAttachments);
-      console.log(`[${submissionId}] Email notifications sent successfully with attachments`);
+      // Try sending emails with retry logic
+      let emailRetries = 2;
+      let emailSent = false;
+      
+      while (emailRetries >= 0 && !emailSent) {
+        try {
+          // Send emails with attachments
+          await emailHandler.sendNotifications(applicationData, fileAttachments);
+          console.log(`[${submissionId}] Email notifications sent successfully with attachments`);
+          emailSent = true;
+          break;
+        } catch (error) {
+          console.error(`[${submissionId}] Error sending email (attempts left: ${emailRetries}):`, error);
+          emailError = error;
+          
+          if (emailRetries > 0) {
+            emailRetries--;
+            await new Promise(resolve => setTimeout(resolve, 2000));
+          } else {
+            break;
+          }
+        }
+      }
     } catch (error) {
-      console.error(`[${submissionId}] Error sending email notifications:`, error);
+      console.error(`[${submissionId}] Error in email notification process:`, error);
       // Store the error but continue - we don't want to fail the whole request
       emailError = {
         message: error.message,

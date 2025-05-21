@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useEffect, lazy, Suspense } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -7,6 +8,7 @@ import { motion } from 'framer-motion';
 import { Sparkles, CheckCircle2, Hourglass, AlertCircle } from 'lucide-react';
 import { generateCsrfToken } from '@/utils/security';
 import { applicationFilesStore } from '@/stores/applicationFilesStore';
+import { useAnalytics } from '@/hooks/use-analytics';
 
 import { applicationSchema, ApplicationFormValues } from '@/components/ApplicationForm/schema';
 import { submitApplicationWithFiles } from '@/utils/fileUpload';
@@ -54,6 +56,8 @@ const ApplicationForm = () => {
   const [activeSection, setActiveSection] = useState(0);
   const [csrfToken, setCsrfToken] = useState('');
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
+  const [submissionAttempts, setSubmissionAttempts] = useState(0);
+  const { trackForm, trackAppError } = useAnalytics();
   
   // Generate CSRF token for form security
   useEffect(() => {
@@ -115,6 +119,10 @@ const ApplicationForm = () => {
     clearValidationErrors();
     setIsSubmitting(true);
     
+    // Track form submission attempt
+    setSubmissionAttempts(prev => prev + 1);
+    trackForm('application', 'submit', true);
+    
     try {
       // Validate form data
       if (!values.firstName || !values.lastName || !values.email) {
@@ -143,73 +151,116 @@ const ApplicationForm = () => {
       const hasFiles = Object.keys(filesToSubmit).length > 0;
       console.log(`Submitting form with ${hasFiles ? Object.keys(filesToSubmit).length : 'no'} files`);
       
-      // Submit the application with files
-      const response = await submitApplicationWithFiles(values, filesToSubmit);
+      // Attempt submission with retry logic
+      let attempts = 0;
+      const maxAttempts = 2; // Initial attempt + 2 retries
+      let lastError = null;
       
-      if (!response.success) {
-        throw new Error(response.error?.message || 'Submission failed');
+      while (attempts <= maxAttempts) {
+        try {
+          console.log(`Submission attempt ${attempts + 1} of ${maxAttempts + 1}`);
+          
+          // Submit the application with files
+          const response = await submitApplicationWithFiles(values, filesToSubmit);
+          
+          if (!response.success) {
+            throw new Error(response.error?.message || 'Submission failed');
+          }
+          
+          if (response.fileError) {
+            console.warn('Application submitted but had file processing error:', response.fileError);
+            toast({
+              title: "Application Submitted with Warning",
+              description: `Your application data was saved, but we had trouble processing your files. Our team will contact you for the files if needed.`,
+              className: "bg-amber-600 text-white border-amber-700",
+              duration: 8000,
+            });
+          } else {
+            toast({
+              title: "Application Submitted Successfully! 🎉",
+              description: "Your application has been received. You'll receive a confirmation email shortly.",
+              className: "bg-gradient-to-r from-green-600 to-emerald-600 text-white border-green-700",
+            });
+          }
+          
+          // Track successful form submission
+          trackForm('application', 'success', true);
+          
+          setIsSubmitted(true);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          
+          // Clear applicationFiles after successful submission
+          applicationFilesStore.clearFiles();
+          
+          // Success! Break out of retry loop
+          break;
+          
+        } catch (error: any) {
+          console.error(`Submission attempt ${attempts + 1} failed:`, error);
+          lastError = error;
+          
+          // Track the error
+          trackAppError('form_submission_error', error.message || 'Unknown error', {
+            attempt: attempts + 1,
+            totalAttempts: submissionAttempts
+          });
+          
+          if (attempts < maxAttempts) {
+            // Wait before retrying with exponential backoff
+            const backoffTime = Math.pow(2, attempts) * 1000;
+            console.log(`Retrying in ${backoffTime}ms...`);
+            await new Promise(resolve => setTimeout(resolve, backoffTime));
+            attempts++;
+          } else {
+            // All attempts failed
+            const errorDetails = [];
+            if (error.message) errorDetails.push(`Error: ${error.message}`);
+            if (error.details) errorDetails.push(`Details: ${error.details}`);
+            if (error.code) errorDetails.push(`Error Code: ${error.code}`);
+            
+            toast({
+              title: "Application Submission Failed",
+              description: (
+                <div className="space-y-2">
+                  <p className="font-medium text-red-200">We encountered an error while submitting your application:</p>
+                  {errorDetails.map((detail, index) => (
+                    <p key={index} className="text-sm opacity-90">{detail}</p>
+                  ))}
+                  <p className="text-sm mt-4">
+                    Please try again or contact our support team at{' '}
+                    <a href="mailto:support@vocalexcellence.com" className="underline">
+                      support@vocalexcellence.com
+                    </a>
+                  </p>
+                </div>
+              ),
+              variant: "destructive",
+              className: "bg-red-900 text-white border-red-700",
+              duration: 10000,
+            });
+            
+            // Track the final failure
+            trackForm('application', 'failure', false);
+            
+            throw error;
+          }
+        }
       }
-      
-      if (response.fileError) {
-        console.warn('Application submitted but had file processing error:', response.fileError);
-        toast({
-          title: "Application Submitted with Warning",
-          description: `Your application data was saved, but we had trouble processing your files: ${response.fileError}. Our team will contact you for the files if needed.`,
-          className: "bg-amber-600 text-white border-amber-700",
-          duration: 8000,
-        });
-      } else {
-        toast({
-          title: "Application Submitted Successfully! 🎉",
-          description: "Your application has been received. You'll receive a confirmation email shortly.",
-          className: "bg-gradient-to-r from-green-600 to-emerald-600 text-white border-green-700",
-        });
-      }
-      
-      setIsSubmitted(true);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      
-      // Clear applicationFiles after successful submission
-      applicationFilesStore.clearFiles();
-      
     } catch (error: any) {
       console.error('Error submitting application:', error);
-      
-      const errorDetails = [];
-      if (error.message) errorDetails.push(`Error: ${error.message}`);
-      if (error.details) errorDetails.push(`Details: ${error.details}`);
-      if (error.code) errorDetails.push(`Error Code: ${error.code}`);
-      
-      toast({
-        title: "Application Submission Failed",
-        description: (
-          <div className="space-y-2">
-            <p className="font-medium text-red-200">We encountered an error while submitting your application:</p>
-            {errorDetails.map((detail, index) => (
-              <p key={index} className="text-sm opacity-90">{detail}</p>
-            ))}
-            <p className="text-sm mt-4">
-              Please try again or contact our support team at{' '}
-              <a href="mailto:support@vocalexcellence.com" className="underline">
-                support@vocalexcellence.com
-              </a>
-            </p>
-          </div>
-        ),
-        variant: "destructive",
-        className: "bg-red-900 text-white border-red-700",
-        duration: 10000,
-      });
     } finally {
       setIsSubmitting(false);
     }
-  }, [validateFiles, validationErrors]);
+  }, [validateFiles, validationErrors, submissionAttempts, trackForm, trackAppError]);
 
   const handleNextSection = () => {
     if (activeSection < sections.length - 1) {
       clearValidationErrors();
       setActiveSection(activeSection + 1);
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+      // Track form section navigation
+      trackForm('application', `section_${activeSection + 2}`, true);
     }
   };
 
@@ -218,6 +269,9 @@ const ApplicationForm = () => {
       clearValidationErrors();
       setActiveSection(activeSection - 1);
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+      // Track form section navigation
+      trackForm('application', `section_${activeSection}`, true);
     }
   };
 
