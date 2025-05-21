@@ -1,10 +1,9 @@
-
 import { supabase } from "@/integrations/supabase/client";
 import { trackError } from "@/utils/monitoring";
 import { ApplicationFormValues } from "@/components/ApplicationForm/schema";
 import { toast } from '@/hooks/use-toast';
 import { useAnalytics } from '@/hooks/use-analytics';
-import type { EventType } from '@/hooks/use-analytics'; // Import the EventType type
+import { EventType as MonitoringEventType } from '@/utils/monitoring';
 
 /**
  * Submit application form data to Supabase
@@ -146,7 +145,7 @@ export const submitApplicationForm = async (data: ApplicationFormValues, files?:
     console.error("Unhandled error submitting application form:", error);
     
     // Use proper string literal type for EventType
-    trackError('form_submission_error' as string, error, {
+    trackError('form_submission_error' as MonitoringEventType, error, {
       formType: 'application',
       errorType: 'unhandled'
     });
@@ -170,7 +169,7 @@ async function processFilesAndSendEmails(
   applicationId: string,
   files: { [key: string]: File },
   submissionId: string
-): Promise<{ success: boolean; error?: any }> {
+): Promise<{ success: boolean; error?: any; }> {
   console.log(`Processing files and sending emails for application ${applicationId}`);
   
   try {
@@ -362,7 +361,7 @@ export const submitContactForm = async (data: {
   email: string;
   vocal_type: string;
   message?: string;
-}): Promise<any> => {
+}): Promise<{ success: boolean; error?: any; }> => {
   try {
     console.log('submitContactForm: Starting submission for', data.email);
     
@@ -397,7 +396,7 @@ export const submitContactForm = async (data: {
         }
 
         console.log('Contact form saved successfully:', result);
-        return { success: true, data: result[0] };
+        return { success: true, error: undefined };
       } catch (error) {
         console.error(`Unexpected error during contact form submission (attempts left: ${retries - 1}):`, error);
         lastError = error;
@@ -407,7 +406,7 @@ export const submitContactForm = async (data: {
     }
     
     // If all retries failed
-    trackError('component_error' as string, lastError, {
+    trackError('component_error' as MonitoringEventType, lastError, {
       formType: 'contact',
       email: data.email
     });

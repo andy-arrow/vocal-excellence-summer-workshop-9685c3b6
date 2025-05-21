@@ -3,7 +3,7 @@
  * Monitoring utility for tracking application events and errors
  */
 
-type EventType = 'auth' | 'api' | 'user_action' | 'error' | 'form_submission' | 'component_error';
+export type EventType = 'auth' | 'api' | 'user_action' | 'error' | 'form_submission' | 'component_error' | 'form_submission_error';
 type EventSeverity = 'info' | 'warning' | 'error' | 'critical';
 
 interface EventPayload {
@@ -43,18 +43,28 @@ export function trackEvent(
  * Track an error event with stack trace
  */
 export function trackError(
-  type: EventType,
-  error: Error,
+  type: EventType | string,
+  error: Error | string,
   details?: Record<string, any>,
   user?: string | null,
 ) {
   const severity = type === 'error' ? 'error' : 'warning';
   
-  trackEvent(type, severity, {
-    message: error.message,
+  let errorMessage: string;
+  let errorStack: string | undefined;
+  
+  if (typeof error === 'string') {
+    errorMessage = error;
+  } else {
+    errorMessage = error.message;
+    errorStack = error.stack;
+  }
+  
+  trackEvent(type as EventType, severity, {
+    message: errorMessage,
     details: {
       ...details,
-      stack: error.stack,
+      stack: errorStack,
     },
     user,
   });
