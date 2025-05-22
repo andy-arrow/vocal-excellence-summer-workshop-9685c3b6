@@ -1,4 +1,3 @@
-
 import * as z from 'zod';
 
 // Extremely permissive email regex that accepts almost any string with an @ symbol

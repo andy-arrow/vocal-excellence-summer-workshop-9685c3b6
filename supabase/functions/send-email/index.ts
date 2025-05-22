@@ -1,4 +1,3 @@
-
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.38.3";
 
@@ -21,6 +20,9 @@ const sendEmail = async (to: string, subject: string, htmlContent: string, from:
       console.error("RESEND_API_KEY is not available. Email cannot be sent.");
       return { success: false, error: "API key not configured" };
     }
+    
+    // Log the first few characters of the API key to verify it's loaded (don't log the full key)
+    console.log(`API key starts with: ${RESEND_API_KEY.substring(0, 4)}...`);
     
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
@@ -198,13 +200,16 @@ serve(async (req) => {
       });
       
       console.log(`Emergency email attempt response: ${emergencyResult.status}`);
+      const emergencyResponseText = await emergencyResult.text();
+      console.log(`Emergency email API response: ${emergencyResponseText}`);
       
       // Even if this fails, we'll return a success to not block the user
       return new Response(
         JSON.stringify({ 
           success: true, 
           warning: "Used emergency email fallback", 
-          originalError: lastError 
+          originalError: lastError,
+          emergencyResponse: emergencyResponseText
         }),
         { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
@@ -244,6 +249,9 @@ async function sendApplicationConfirmation({ name, email }: { name: string, emai
       console.error("No recipient email provided for application confirmation");
       return { success: false, error: "No recipient email provided" };
     }
+    
+    // Log more detailed information about the API key
+    console.log("Using RESEND_API_KEY with first few chars:", RESEND_API_KEY ? RESEND_API_KEY.substring(0, 4) + "..." : "No API key");
     
     const htmlContent = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
