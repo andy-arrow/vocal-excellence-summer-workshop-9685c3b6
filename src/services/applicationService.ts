@@ -7,10 +7,10 @@ import { toast } from "@/hooks/use-toast";
  * Interface for file uploads associated with an application
  */
 export interface ApplicationFiles {
-  audioFile1?: File | null;
-  audioFile2?: File | null;
-  cvFile?: File | null;
-  recommendationFile?: File | null;
+  audioFile1: File | null;
+  audioFile2: File | null;
+  cvFile: File | null;
+  recommendationFile: File | null;
 }
 
 /**
