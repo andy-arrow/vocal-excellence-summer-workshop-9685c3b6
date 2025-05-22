@@ -6,6 +6,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Toaster } from '@/components/ui/toaster';
 import { useIsMobile } from '@/hooks/use-mobile';
+import ApplicationPageHero from '@/components/ApplicationPageHero';
 
 // Lazily load less critical components
 const ApplicationForm = lazy(() => import('@/components/ApplicationForm'));
@@ -74,34 +75,9 @@ const Application = () => {
       <div className="min-h-screen flex flex-col relative z-10">
         <Navbar />
         
-        {/* Increased padding to ensure Hero Section appears below navbar */}
-        <main className="flex-grow relative z-10 pt-[180px] sm:pt-[130px] md:pt-[140px]">
-          <div className="bg-gradient-to-b from-white to-[#f5f5f7] border-b border-apple-border/10">
-            <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-8 pt-6 sm:pt-12 md:pt-16 pb-6 md:pb-10">
-              <motion.div 
-                className="text-center"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-              >
-                <span className="inline-block text-apple-grey text-xs sm:text-sm tracking-wide uppercase mb-2 sm:mb-3 font-medium">
-                  Summer Workshop 2025
-                </span>
-                <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-apple-text mb-3 sm:mb-4 tracking-tight">
-                  Application Form
-                </h1>
-                <p className="font-sans text-sm sm:text-base md:text-lg text-apple-grey max-w-2xl mx-auto leading-relaxed mb-4 sm:mb-6">
-                  Join our exclusive 5-day workshop. Complete the form below to apply.
-                </p>
-                <a 
-                  href="#application-form"
-                  className="inline-flex items-center justify-center px-4 sm:px-6 py-2.5 bg-apple-blue text-white rounded-full hover:bg-apple-blue-hover transition-colors font-medium text-sm sm:text-base"
-                >
-                  Get Started
-                </a>
-              </motion.div>
-            </div>
-          </div>
+        {/* Very significantly increased padding to ensure Hero Section is fully visible */}
+        <main className="flex-grow relative z-10 pt-[220px] sm:pt-[160px] md:pt-[170px]">
+          <ApplicationPageHero />
           
           <div className="py-4 sm:py-6 md:py-12 bg-[#f5f5f7]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
