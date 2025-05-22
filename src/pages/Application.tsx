@@ -15,8 +15,8 @@ const ApplicationFAQ = lazy(() => import('@/components/ApplicationFAQ'));
 const ScrollToTopButton = lazy(() => import('@/components/ScrollToTopButton'));
 
 const SectionLoader = () => (
-  <div className="flex justify-center py-12 sm:py-16">
-    <div className="w-8 h-8 border-4 border-apple-blue/30 border-t-apple-blue rounded-full animate-spin"></div>
+  <div className="flex justify-center py-8 sm:py-12">
+    <div className="w-7 h-7 sm:w-8 sm:h-8 border-4 border-apple-blue/30 border-t-apple-blue rounded-full animate-spin"></div>
   </div>
 );
 
@@ -68,7 +68,7 @@ const Application = () => {
         <title>Apply Now | Vocal Excellence Workshop</title>
         <meta name="description" content="Apply now for the Vocal Excellence Summer Workshop and discover your true potential with world-class vocal coaching. Limited spots available." />
         <meta name="theme-color" content="#ffffff" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
       </Helmet>
       
       <div className="min-h-screen flex flex-col relative z-10">
@@ -76,14 +76,14 @@ const Application = () => {
         
         <main className="flex-grow relative z-10">
           <div className="bg-gradient-to-b from-white to-[#f5f5f7] border-b border-apple-border/10">
-            <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-8 pt-16 sm:pt-24 md:pt-32 pb-8 md:pb-12">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-8 pt-12 sm:pt-16 md:pt-24 pb-6 md:pb-10">
               <motion.div 
                 className="text-center"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
               >
-                <span className="inline-block text-apple-grey text-xs sm:text-sm tracking-wide uppercase mb-2 sm:mb-4 font-medium">
+                <span className="inline-block text-apple-grey text-xs sm:text-sm tracking-wide uppercase mb-2 sm:mb-3 font-medium">
                   Summer Workshop 2025
                 </span>
                 <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-apple-text mb-3 sm:mb-4 tracking-tight">
@@ -94,7 +94,7 @@ const Application = () => {
                 </p>
                 <a 
                   href="#application-form"
-                  className="inline-flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 bg-apple-blue text-white rounded-full hover:bg-apple-blue-hover transition-colors font-medium text-sm sm:text-base"
+                  className="inline-flex items-center justify-center px-4 sm:px-6 py-2.5 bg-apple-blue text-white rounded-full hover:bg-apple-blue-hover transition-colors font-medium text-sm sm:text-base"
                 >
                   Get Started
                 </a>
@@ -104,12 +104,12 @@ const Application = () => {
           
           <div className="py-4 sm:py-6 md:py-12 bg-[#f5f5f7]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-              <div className="space-y-8 sm:space-y-10 md:space-y-16">
+              <div className="space-y-6 sm:space-y-8 md:space-y-12">
                 <motion.section 
                   key="form" 
                   initial="hidden" 
                   whileInView="visible" 
-                  viewport={{ once: true, margin: "-100px" }} 
+                  viewport={{ once: true, margin: "-50px" }} 
                   id="application-form"
                   className="bg-white rounded-xl sm:rounded-2xl shadow-sm overflow-hidden"
                   aria-label="Application Form Section"
@@ -124,7 +124,7 @@ const Application = () => {
                   key="requirements" 
                   initial="hidden" 
                   whileInView="visible" 
-                  viewport={{ once: true, margin: "-100px" }} 
+                  viewport={{ once: true, margin: "-50px" }} 
                   variants={fadeIn}
                 >
                   <Suspense fallback={<SectionLoader />}>
@@ -136,7 +136,7 @@ const Application = () => {
                   key="timeline" 
                   initial="hidden" 
                   whileInView="visible" 
-                  viewport={{ once: true, margin: "-100px" }} 
+                  viewport={{ once: true, margin: "-50px" }} 
                   variants={fadeIn}
                 >
                   <Suspense fallback={<SectionLoader />}>
@@ -148,7 +148,7 @@ const Application = () => {
                   key="faq" 
                   initial="hidden" 
                   whileInView="visible" 
-                  viewport={{ once: true, margin: "-100px" }} 
+                  viewport={{ once: true, margin: "-50px" }} 
                   variants={fadeIn}
                 >
                   <Suspense fallback={<SectionLoader />}>

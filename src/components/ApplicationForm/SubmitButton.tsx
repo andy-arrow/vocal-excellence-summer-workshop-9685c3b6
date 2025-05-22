@@ -19,7 +19,7 @@ const SubmitButton = ({ isSubmitting }: SubmitButtonProps) => {
       className="px-4 sm:px-6 py-2 sm:py-3 bg-apple-blue hover:bg-apple-blue-hover text-white font-medium rounded-full
                 relative overflow-hidden transition-all duration-300 disabled:opacity-70 
                 disabled:cursor-not-allowed disabled:hover:bg-apple-blue shadow-sm 
-                min-w-[180px] w-full sm:w-auto min-h-[48px] focus:ring-2 focus:ring-offset-2 focus:ring-apple-blue"
+                min-w-[160px] w-full sm:w-auto min-h-[44px] sm:min-h-[48px] focus:ring-2 focus:ring-offset-2 focus:ring-apple-blue"
       aria-label={isSubmitting ? "Submitting application" : "Submit application"}
       data-testid="submit-application-button"
     >
@@ -27,13 +27,13 @@ const SubmitButton = ({ isSubmitting }: SubmitButtonProps) => {
         {isSubmitting ? (
           <>
             <Spinner size="sm" color="white" speed={1} />
-            <span className="text-white font-medium">
+            <span className="text-white font-medium text-sm sm:text-base">
               {isMobile ? "Sending..." : "Submitting Application..."}
             </span>
           </>
         ) : (
           <>
-            <span className="text-white font-medium">
+            <span className="text-white font-medium text-sm sm:text-base">
               {isMobile ? "Submit" : "Submit Your Application"}
             </span>
             <ArrowRight className="w-4 sm:w-5 h-4 sm:h-5 text-white" />
