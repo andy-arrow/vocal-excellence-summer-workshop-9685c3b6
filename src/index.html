@@ -11,7 +11,7 @@
     <!-- End Google Tag Manager -->
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/lovable-uploads/fe2717b2-1ae0-403d-a357-a5961f677cc6.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <meta name="theme-color" content="#ffffff" />
     <meta name="description" content="Vocal Excellence Workshop - Summer 2025" />
     
@@ -52,7 +52,7 @@
       }
       /* Larger touch targets */
       button, a, input[type="checkbox"], input[type="radio"] {
-        min-height: 42px;
+        min-height: 44px;
       }
       /* Smooth animations for improved performance */
       @media (prefers-reduced-motion: no-preference) {
@@ -69,6 +69,12 @@
       label {
         color: #4b5563;
         font-weight: 500;
+      }
+      /* Fix for mobile Safari zoom issues */
+      @media screen and (max-width: 768px) {
+        input, select, textarea {
+          font-size: 16px;
+        }
       }
     </style>
     

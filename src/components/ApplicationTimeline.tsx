@@ -55,20 +55,20 @@ const ApplicationTimeline = () => {
 
   return (
     <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-      <div className="p-8 md:p-10 border-b border-apple-border/10">
+      <div className="p-6 sm:p-8 md:p-10 border-b border-apple-border/10">
         <h2 className="text-2xl md:text-3xl font-semibold text-apple-text mb-4">Application Timeline</h2>
-        <p className="text-apple-grey text-lg leading-relaxed">
+        <p className="text-apple-grey text-base sm:text-lg leading-relaxed">
           The journey from application to participation in our summer workshop.
         </p>
       </div>
       
-      <div className="p-8 md:p-10">
+      <div className="p-6 sm:p-8 md:p-10">
         <div className="relative">
-          {/* Timeline connector */}
+          {/* Timeline connector - only visible on desktop */}
           <div className="absolute left-9 top-0 bottom-0 w-0.5 bg-gradient-to-b from-purple-500 via-blue-500 to-emerald-600 hidden md:block"></div>
           
           {/* Timeline steps */}
-          <div className="space-y-10 md:space-y-12 relative">
+          <div className="space-y-8 md:space-y-12 relative">
             {timelineSteps.map((step, index) => (
               <motion.div 
                 key={index}
@@ -78,7 +78,7 @@ const ApplicationTimeline = () => {
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ delay: index * 0.1 }}
               >
-                {/* Icon */}
+                {/* Icon - hidden on mobile, shown on desktop */}
                 <div className="hidden md:flex md:col-span-1 justify-center">
                   <div className="w-20 h-20 rounded-full bg-white shadow-md flex items-center justify-center z-10">
                     <div className="w-12 h-12 rounded-full bg-apple-light flex items-center justify-center">
@@ -88,7 +88,7 @@ const ApplicationTimeline = () => {
                 </div>
                 
                 {/* Content - wide card on mobile, content box on desktop */}
-                <div className="md:col-span-5 bg-apple-light rounded-xl p-6 shadow-sm">
+                <div className="md:col-span-5 bg-apple-light rounded-xl p-5 sm:p-6 shadow-sm">
                   <div className="flex md:hidden items-center gap-3 mb-4">
                     <div className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center shrink-0">
                       {step.icon}
@@ -98,10 +98,10 @@ const ApplicationTimeline = () => {
                   <div className="md:flex md:items-start md:justify-between">
                     <div className="space-y-2 md:space-y-3">
                       <h3 className="text-xl font-semibold text-apple-text hidden md:block">{step.title}</h3>
-                      <p className="text-apple-grey">{step.description}</p>
+                      <p className="text-apple-grey text-sm sm:text-base">{step.description}</p>
                     </div>
-                    <div className="mt-4 md:mt-0 md:ml-4">
-                      <span className="inline-block px-3 py-1.5 bg-white rounded-lg text-apple-blue font-medium text-sm shadow-sm">
+                    <div className="mt-4 md:mt-0 md:ml-4 md:min-w-[120px] text-right">
+                      <span className="inline-block px-3 py-1.5 bg-white rounded-lg text-apple-blue font-medium text-xs sm:text-sm shadow-sm">
                         {step.date}
                       </span>
                     </div>

@@ -16,19 +16,20 @@ const ApplicationProgressIndicator: React.FC<ApplicationProgressIndicatorProps> 
 }) => {
   return (
     <motion.div 
-      className="flex justify-center"
+      className="flex justify-center w-full"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.3 }}
     >
       <div className="w-full max-w-3xl">
+        {/* Desktop progress indicator */}
         <div className="hidden md:flex items-center justify-between relative mb-2">
           {/* Progress bar background */}
-          <div className="absolute h-1 w-full bg-[#e6e6e6]"></div>
+          <div className="absolute h-1 w-full bg-[#e6e6e6] rounded-full"></div>
           
           {/* Progress bar filled */}
           <motion.div 
-            className="absolute h-1 bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-400"
+            className="absolute h-1 bg-gradient-to-r from-apple-blue via-apple-blue to-apple-blue rounded-full"
             initial={{ width: '0%' }}
             animate={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
             transition={{ duration: 0.3 }}
@@ -42,23 +43,23 @@ const ApplicationProgressIndicator: React.FC<ApplicationProgressIndicatorProps> 
             return (
               <motion.div 
                 key={step}
-                className="relative"
+                className="relative z-10"
                 onClick={() => onStepClick(index)} 
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <div className="flex flex-col items-center cursor-pointer">
-                  <div className={`rounded-full transition-colors duration-300 flex items-center justify-center w-10 h-10 z-10 ${
+                  <div className={`rounded-full transition-colors duration-300 flex items-center justify-center w-10 h-10 ${
                     isCompleted 
-                      ? 'bg-gradient-to-r from-purple-500 to-indigo-500 text-white' 
+                      ? 'bg-apple-blue text-white shadow-md' 
                       : isActive 
-                        ? 'bg-gradient-to-r from-pink-400 to-purple-400 text-white' 
-                        : 'bg-[#e6e6e6] text-[#9e9e9e]'
+                        ? 'bg-apple-blue text-white shadow-md' 
+                        : 'bg-[#e6e6e6] text-apple-grey'
                   }`}>
                     {isCompleted ? <Check className="w-5 h-5" /> : index + 1}
                   </div>
                   <span className={`text-xs mt-2 font-medium ${
-                    isActive ? 'text-[#1d1d1f]' : 'text-[#9e9e9e]'
+                    isActive ? 'text-apple-text' : 'text-apple-grey'
                   }`}>
                     {step}
                   </span>
@@ -68,7 +69,7 @@ const ApplicationProgressIndicator: React.FC<ApplicationProgressIndicatorProps> 
           })}
         </div>
         
-        {/* Mobile version */}
+        {/* Mobile progress indicator */}
         <div className="flex md:hidden items-center justify-between mb-4">
           <span className="text-sm font-medium text-apple-blue">
             Step {currentStep + 1} of {steps.length}: {steps[currentStep]}
@@ -80,7 +81,7 @@ const ApplicationProgressIndicator: React.FC<ApplicationProgressIndicatorProps> 
         
         <div className="w-full h-2 bg-[#e6e6e6] rounded-full md:hidden overflow-hidden">
           <motion.div
-            className="h-full bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-400 rounded-full"
+            className="h-full bg-apple-blue rounded-full"
             initial={{ width: '0%' }}
             animate={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
             transition={{ duration: 0.3 }}

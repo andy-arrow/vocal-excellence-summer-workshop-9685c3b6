@@ -15,7 +15,7 @@ const ScrollToTopButton = lazy(() => import('@/components/ScrollToTopButton'));
 
 const SectionLoader = () => (
   <div className="flex justify-center py-16">
-    <div className="w-8 h-8 border-4 border-coral-300 border-t-coral-500 rounded-full animate-spin"></div>
+    <div className="w-8 h-8 border-4 border-apple-blue/30 border-t-apple-blue rounded-full animate-spin"></div>
   </div>
 );
 
@@ -66,6 +66,7 @@ const Application = () => {
         <title>Apply Now | Vocal Excellence Workshop</title>
         <meta name="description" content="Apply now for the Vocal Excellence Summer Workshop and discover your true potential with world-class vocal coaching. Limited spots available." />
         <meta name="theme-color" content="#ffffff" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
       </Helmet>
       
       <div className="min-h-screen flex flex-col relative z-10">
@@ -73,7 +74,7 @@ const Application = () => {
         
         <main className="flex-grow relative z-10">
           <div className="bg-gradient-to-b from-white to-[#f5f5f7] border-b border-apple-border/10">
-            <div className="max-w-5xl mx-auto px-6 md:px-8 pt-32 md:pt-40 pb-16 md:pb-20">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-8 pt-24 sm:pt-28 md:pt-36 pb-12 md:pb-16">
               <motion.div 
                 className="text-center"
                 initial={{ opacity: 0, y: 20 }}
@@ -83,10 +84,10 @@ const Application = () => {
                 <span className="inline-block text-apple-grey text-sm tracking-wide uppercase mb-4 font-medium">
                   Summer Workshop 2025
                 </span>
-                <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-apple-text mb-4 tracking-tight">
+                <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-apple-text mb-4 tracking-tight">
                   Application Form
                 </h1>
-                <p className="font-sans text-lg md:text-xl text-apple-grey max-w-2xl mx-auto leading-relaxed mb-6">
+                <p className="font-sans text-base sm:text-lg md:text-xl text-apple-grey max-w-2xl mx-auto leading-relaxed mb-6">
                   Join our exclusive 5-day workshop. Complete the form below to apply.
                 </p>
                 <a 
@@ -100,8 +101,8 @@ const Application = () => {
           </div>
           
           <div className="py-6 md:py-12 bg-[#f5f5f7]">
-            <div className="max-w-7xl mx-auto px-6 md:px-8">
-              <div className="space-y-12 md:space-y-16">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+              <div className="space-y-10 md:space-y-16">
                 <motion.section 
                   key="form" 
                   initial="hidden" 

@@ -13,11 +13,10 @@ const SubmitButton = ({ isSubmitting }: SubmitButtonProps) => {
     <Button 
       type="submit" 
       disabled={isSubmitting}
-      size="lg"
-      className="px-6 py-3 bg-apple-blue hover:bg-apple-blue-hover text-white text-lg font-medium rounded-full
+      className="px-6 py-3 bg-apple-blue hover:bg-apple-blue-hover text-white font-medium rounded-full
                 relative overflow-hidden transition-all duration-300 disabled:opacity-70 
                 disabled:cursor-not-allowed disabled:hover:bg-apple-blue shadow-sm 
-                min-w-[200px] min-h-[48px] focus:ring-2 focus:ring-offset-2 focus:ring-apple-blue"
+                min-w-[180px] w-full sm:w-auto min-h-[48px] focus:ring-2 focus:ring-offset-2 focus:ring-apple-blue"
       aria-label={isSubmitting ? "Submitting application" : "Submit application"}
       data-testid="submit-application-button"
     >
@@ -25,7 +24,7 @@ const SubmitButton = ({ isSubmitting }: SubmitButtonProps) => {
         {isSubmitting ? (
           <>
             <Spinner size="sm" color="white" speed={1} />
-            <span className="text-white font-medium">Sending application...</span>
+            <span className="text-white font-medium">Sending...</span>
           </>
         ) : (
           <>
