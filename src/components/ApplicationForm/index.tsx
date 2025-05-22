@@ -129,6 +129,9 @@ const ApplicationForm: React.FC = () => {
         window.applicationFiles = { ...files };
       }
       
+      console.log('Submitting application with data:', data);
+      console.log('Files to be submitted:', files);
+      
       const result = await submitApplication(data, files);
       
       if (result.success) {
