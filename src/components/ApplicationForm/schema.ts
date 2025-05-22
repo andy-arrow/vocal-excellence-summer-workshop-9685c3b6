@@ -4,6 +4,7 @@ import { EMAIL_REGEX } from '@/utils/security';
 
 // Create type-safe arrays of valid values
 const dietaryValues = ['none', 'vegetarian', 'vegan', 'gluten-free', 'lactose-free', 'other'] as const;
+const vocalRangeValues = ['soprano', 'mezzo-soprano', 'alto', 'tenor', 'baritone', 'bass', 'other'] as const;
 
 export const applicationSchema = z.object({
   firstName: z.string()
@@ -36,7 +37,7 @@ export const applicationSchema = z.object({
   
   nationality: z.string().min(1, { message: 'Nationality is required' }),
 
-  vocalRange: z.enum(['soprano', 'mezzo-soprano', 'alto', 'tenor', 'baritone', 'bass', 'other'], {
+  vocalRange: z.enum(vocalRangeValues, {
     required_error: 'Please select your vocal range',
   }),
   
@@ -75,3 +76,4 @@ export const applicationSchema = z.object({
 export type ApplicationFormValues = z.infer<typeof applicationSchema>;
 
 export type DietaryRestrictionType = (typeof dietaryValues)[number];
+export type VocalRangeType = (typeof vocalRangeValues)[number];

@@ -44,7 +44,10 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
     
     try {
       // Validate file
-      if (!acceptedFormats.split(',').some(format => file.name.toLowerCase().endsWith(format.replace('.', '')))) {
+      const formatPatterns = acceptedFormats.split(',').map(format => format.trim().replace('.', ''));
+      const fileExtension = file.name.split('.').pop()?.toLowerCase() || '';
+      
+      if (!formatPatterns.some(format => fileExtension === format)) {
         setError(`File must be in ${acceptedFormats} format`);
         setStatus('error');
         return;

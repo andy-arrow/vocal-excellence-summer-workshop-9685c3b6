@@ -47,7 +47,11 @@ serve(async (req) => {
     // Ensure bucket exists
     try {
       const { data: buckets } = await supabase.storage.listBuckets();
-      let bucketExists = buckets.some(bucket => bucket.name === 'application_materials');
+      let bucketExists = false;
+      
+      if (buckets) {
+        bucketExists = buckets.some(bucket => bucket.name === 'application_materials');
+      }
       
       if (!bucketExists) {
         await supabase.storage.createBucket('application_materials', {
@@ -81,7 +85,7 @@ serve(async (req) => {
           
           if (error) {
             console.error(`Error uploading ${fileType}:`, error);
-          } else {
+          } else if (data) {
             uploadedFiles.push({
               name: fileType,
               path: data.path,

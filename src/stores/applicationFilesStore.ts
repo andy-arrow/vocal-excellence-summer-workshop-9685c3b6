@@ -6,10 +6,10 @@
  * to ensure consistent access and prevent race conditions.
  */
 
-// Define the allowed file types using the ApplicationFiles interface from vite-env.d.ts
+// Define the allowed file types 
 type ApplicationFileType = 'audioFile1' | 'audioFile2' | 'cvFile' | 'recommendationFile';
 
-// File store interface - using the ApplicationFiles interface structure
+// File store interface
 interface ApplicationFilesStore {
   [key: string]: File | null;
   audioFile1: File | null;
@@ -55,7 +55,7 @@ class ApplicationFiles {
         // Copy from window object to our store
         Object.entries(window.applicationFiles).forEach(([key, file]) => {
           if (this.isValidFileType(key) && file instanceof File) {
-            this.files[key] = file;
+            this.files[key as ApplicationFileType] = file;
           }
         });
         
@@ -67,7 +67,7 @@ class ApplicationFiles {
     
     console.log('ApplicationFilesStore: Initialized store with', 
       Object.keys(this.files).map(key => 
-        `${key}: ${this.files[key] ? `${this.files[key]?.name} (${this.files[key]?.size} bytes)` : 'null'}`
+        `${key}: ${this.files[key as keyof ApplicationFilesStore] ? `${this.files[key as keyof ApplicationFilesStore]?.name} (${this.files[key as keyof ApplicationFilesStore]?.size} bytes)` : 'null'}`
       )
     );
   }
@@ -119,7 +119,7 @@ class ApplicationFiles {
   public clearFiles(): void {
     Object.keys(this.files).forEach(key => {
       if (this.isValidFileType(key)) {
-        this.files[key] = null;
+        this.files[key as ApplicationFileType] = null;
       }
     });
     this.syncWithWindowObject();
