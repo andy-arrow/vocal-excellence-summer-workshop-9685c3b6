@@ -289,7 +289,7 @@ const ApplicationForm = () => {
   const updateFile = (fileType: string, file: File | null) => {
     if (fileType === 'audioFile1' || fileType === 'audioFile2' || 
         fileType === 'cvFile' || fileType === 'recommendationFile') {
-      applicationFilesStore.setFile(fileType, file);
+      applicationFilesStore.setFile(fileType as 'audioFile1' | 'audioFile2' | 'cvFile' | 'recommendationFile', file);
     }
   };
 

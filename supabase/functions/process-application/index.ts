@@ -46,17 +46,27 @@ serve(async (req) => {
     
     // Ensure bucket exists
     try {
-      const { data: buckets } = await supabase.storage.listBuckets();
-      let bucketExists = false;
+      const { data: buckets, error } = await supabase.storage.listBuckets();
       
+      if (error) {
+        console.error("Error listing buckets:", error);
+        throw error;
+      }
+      
+      let bucketExists = false;
       if (buckets) {
         bucketExists = buckets.some(bucket => bucket.name === 'application_materials');
       }
       
       if (!bucketExists) {
-        await supabase.storage.createBucket('application_materials', {
+        const { data, error: createError } = await supabase.storage.createBucket('application_materials', {
           public: true,
         });
+        
+        if (createError) {
+          console.error("Error creating bucket:", createError);
+          throw createError;
+        }
       }
     } catch (error) {
       console.error("Error checking/creating bucket:", error);

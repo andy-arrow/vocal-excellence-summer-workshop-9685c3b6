@@ -7,7 +7,7 @@
  */
 
 // Define the allowed file types 
-type ApplicationFileType = 'audioFile1' | 'audioFile2' | 'cvFile' | 'recommendationFile';
+export type ApplicationFileType = 'audioFile1' | 'audioFile2' | 'cvFile' | 'recommendationFile';
 
 // File store interface
 interface ApplicationFilesStore {

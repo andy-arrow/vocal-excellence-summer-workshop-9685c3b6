@@ -1,4 +1,3 @@
-
 import { supabase } from "@/integrations/supabase/client";
 import { ApplicationFormValues } from "@/components/ApplicationForm/schema";
 import { toast } from "@/hooks/use-toast";
@@ -40,6 +39,7 @@ export async function submitApplication(
     const { data: applicationData, error: applicationError } = await supabase
       .from("applications")
       .insert({
+        // Ensure these fields exactly match the database schema column names
         firstname: formData.firstName,
         lastname: formData.lastName,
         email: formData.email,
@@ -151,14 +151,26 @@ async function uploadApplicationFile(
     const timestamp = Date.now();
     const filePath = `applications/${applicationId}/${fileType}_${timestamp}.${fileExt}`;
     
-    // Ensure storage bucket exists
-    try {
-      await supabase.storage.getBucket('application_materials');
-    } catch (error) {
-      // Create bucket if it doesn't exist
-      await supabase.storage.createBucket('application_materials', {
+    // Check if storage bucket exists first
+    const { data: buckets, error: bucketError } = await supabase.storage.listBuckets();
+    
+    if (bucketError) {
+      console.error('Error checking buckets:', bucketError);
+      throw new Error(`Could not check storage buckets: ${bucketError.message}`);
+    }
+    
+    // Create bucket if it doesn't exist
+    const bucketExists = buckets?.some(bucket => bucket.name === 'application_materials');
+    
+    if (!bucketExists) {
+      const { error: createError } = await supabase.storage.createBucket('application_materials', {
         public: true
       });
+      
+      if (createError) {
+        console.error('Error creating bucket:', createError);
+        throw new Error(`Could not create storage bucket: ${createError.message}`);
+      }
     }
     
     // Upload the file
