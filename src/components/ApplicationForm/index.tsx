@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -14,7 +13,7 @@ import TermsAndConditionsSection from './TermsAndConditionsSection';
 import SubmitButton from './SubmitButton';
 import SubmissionSuccessMessage from './SubmissionSuccessMessage';
 import { ApplicationFiles, submitApplication } from '@/services/applicationService';
-import { toast } from '@/hooks/use-toast';
+import { toast } from "@/hooks/use-toast";
 
 // Steps in the application form
 const FORM_STEPS = [
