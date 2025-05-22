@@ -1,7 +1,7 @@
 
 import React from 'react';
-import { Form } from '@/components/ui/form';
 import { FileUploadSection } from './FileUploadSection';
+import { FileIcon, FileTextIcon, FileAudioIcon } from 'lucide-react';
 
 // Make sure this interface is consistent with others
 interface SupportingMaterialsSectionProps {
@@ -21,7 +21,7 @@ const SupportingMaterialsSection: React.FC<SupportingMaterialsSectionProps> = ({
       <FileUploadSection
         label="Audio File 1"
         description="Please upload your first audio file in mp3, mpeg, or wav format."
-        icon={File}
+        icon={FileAudioIcon}
         fileType="audioFile1"
         acceptedFormats=".mp3,.wav,.mpeg"
         updateFile={(file) => updateFile('audioFile1', file)}
@@ -32,7 +32,7 @@ const SupportingMaterialsSection: React.FC<SupportingMaterialsSectionProps> = ({
       <FileUploadSection
         label="Audio File 2"
         description="Please upload your second audio file in mp3, mpeg, or wav format."
-        icon={File}
+        icon={FileAudioIcon}
         fileType="audioFile2"
         acceptedFormats=".mp3,.wav,.mpeg"
         updateFile={(file) => updateFile('audioFile2', file)}
@@ -43,7 +43,7 @@ const SupportingMaterialsSection: React.FC<SupportingMaterialsSectionProps> = ({
       <FileUploadSection
         label="CV File"
         description="Please upload your CV in PDF format."
-        icon={File}
+        icon={FileTextIcon}
         fileType="cvFile"
         acceptedFormats=".pdf"
         updateFile={(file) => updateFile('cvFile', file)}
@@ -54,7 +54,7 @@ const SupportingMaterialsSection: React.FC<SupportingMaterialsSectionProps> = ({
       <FileUploadSection
         label="Letter of Recommendation"
         description="Please upload your letter of recommendation in PDF format."
-        icon={File}
+        icon={FileTextIcon}
         fileType="recommendationFile"
         acceptedFormats=".pdf"
         updateFile={(file) => updateFile('recommendationFile', file)}
