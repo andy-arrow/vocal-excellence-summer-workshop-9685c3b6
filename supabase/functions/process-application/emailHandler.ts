@@ -3,8 +3,15 @@ import { ApplicationData } from "./types.ts";
 
 export class EmailHandler {
   private resend: Resend;
+  private readonly fromEmail: string = "Vocal Excellence <info@vocalexcellence.cy>";
+  private readonly adminEmail: string = "info@vocalexcellence.cy";
 
   constructor(apiKey: string) {
+    if (!apiKey) {
+      console.error("EmailHandler initialized with empty API key");
+      throw new Error("EmailHandler requires a valid API key");
+    }
+    
     this.resend = new Resend(apiKey);
     console.log("EmailHandler initialized with API key");
   }
@@ -17,7 +24,7 @@ export class EmailHandler {
     fileAttachments: { filename: string; content: Uint8Array; type: string }[] = []
   ) {
     try {
-      console.log("Sending email notifications");
+      console.log("Starting email notification process");
       
       if (!this.resend) {
         throw new Error("Resend client not initialized");
@@ -26,6 +33,23 @@ export class EmailHandler {
       // Log RESEND_API_KEY value (masked) to verify it's set
       const apiKey = Deno.env.get("RESEND_API_KEY") || "";
       console.log("RESEND_API_KEY available:", apiKey ? "Yes (masked)" : "No");
+      
+      // Handle missing email which is a common issue
+      if (!applicationData.email) {
+        console.error("Application is missing email address, cannot send applicant confirmation");
+        // Still try to send admin notification
+        const adminResult = await this.sendWithRetry(() => 
+          this.sendAdminNotification(applicationData, fileAttachments)
+        );
+        console.log("Admin notification email result:", adminResult ? "Success" : "Failed");
+        
+        if (!adminResult) {
+          throw new Error("Failed to send admin notification and applicant email is missing");
+        } else {
+          console.log("Admin notification sent, but applicant email was missing");
+          return true;
+        }
+      }
       
       // Prepare attachments for email
       const formattedAttachments = fileAttachments.map(attachment => ({
@@ -47,12 +71,42 @@ export class EmailHandler {
       );
       console.log("Applicant confirmation email result:", applicantResult ? "Success" : "Failed");
       
-      // If either email failed, throw an error
-      if (!adminResult || !applicantResult) {
-        throw new Error("One or more emails failed to send after multiple retries");
+      // If both emails failed, try one more time with direct API fallback
+      if (!adminResult && !applicantResult) {
+        console.log("Both emails failed, trying direct API fallback");
+        
+        // Final fallback for admin
+        try {
+          const adminFallbackResult = await this.fallbackDirectSend(
+            this.adminEmail,
+            "**Vocal Excellence** New Application Submission",
+            this.getAdminFallbackTemplate(applicationData)
+          );
+          console.log("Admin fallback result:", adminFallbackResult ? "Success" : "Failed");
+        } catch (adminFallbackError) {
+          console.error("Admin fallback email failed:", adminFallbackError);
+        }
+        
+        // Final fallback for applicant
+        if (applicationData.email) {
+          try {
+            const applicantFallbackResult = await this.fallbackDirectSend(
+              applicationData.email,
+              "Application Received - Vocal Excellence Summer Programme",
+              this.getApplicantFallbackTemplate(applicationData.firstName)
+            );
+            console.log("Applicant fallback result:", applicantFallbackResult ? "Success" : "Failed");
+          } catch (applicantFallbackError) {
+            console.error("Applicant fallback email failed:", applicantFallbackError);
+          }
+        }
+        
+        throw new Error("Both primary email methods failed, attempted fallback send");
       }
+      
+      return true;
     } catch (error) {
-      console.error("Error sending email notifications:", error);
+      console.error("Error in email notification process:", error);
       throw error;
     }
   }
@@ -95,21 +149,26 @@ export class EmailHandler {
    */
   private async sendAdminNotification(
     applicationData: ApplicationData,
-    attachments: { filename: string; content: Uint8Array }[]
+    attachments: { filename: string; content: Uint8Array }[] = []
   ) {
     try {
       console.log("Preparing admin notification email");
+      
+      if (!this.adminEmail) {
+        throw new Error("Admin email address is not configured");
+      }
+      
       const adminEmailHtml = this.getDetailedAdminNotificationTemplate(applicationData);
       
-      console.log("Sending admin email to: info@vocalexcellence.cy");
+      console.log(`Sending admin email to: ${this.adminEmail}`);
       console.log("File attachments:", attachments.map(f => f.filename).join(", ") || "None");
       
       const result = await this.resend.emails.send({
-        from: "Vocal Excellence <info@vocalexcellence.cy>",
-        to: ["info@vocalexcellence.cy"],
+        from: this.fromEmail,
+        to: [this.adminEmail],
         subject: "**Vocal Excellence** New Application Submission",
         html: adminEmailHtml,
-        attachments: attachments,
+        attachments: attachments.length > 0 ? attachments : undefined,
       });
       
       console.log("Admin email send result:", result);
@@ -126,12 +185,17 @@ export class EmailHandler {
   private async sendApplicantConfirmation(applicationData: ApplicationData) {
     try {
       console.log("Preparing applicant confirmation email");
+      
+      if (!applicationData.email) {
+        throw new Error("Applicant email address is missing");
+      }
+      
       const applicantEmailHtml = this.getApplicationConfirmationTemplate(applicationData.firstName);
       
       console.log("Sending confirmation email to:", applicationData.email);
       
       const result = await this.resend.emails.send({
-        from: "Vocal Excellence <info@vocalexcellence.cy>",
+        from: this.fromEmail,
         to: [applicationData.email],
         subject: "Application Received - Vocal Excellence Summer Programme",
         html: applicantEmailHtml
@@ -143,6 +207,89 @@ export class EmailHandler {
       console.error("Error sending applicant confirmation email:", error);
       throw error;
     }
+  }
+
+  /**
+   * Fallback method using direct API call when Resend client fails
+   */
+  private async fallbackDirectSend(
+    to: string,
+    subject: string,
+    htmlContent: string
+  ): Promise<boolean> {
+    try {
+      console.log(`Attempting fallback email send to ${to}`);
+      
+      const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+      
+      if (!RESEND_API_KEY) {
+        throw new Error("Missing API key for fallback email");
+      }
+      
+      const response = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${RESEND_API_KEY}`
+        },
+        body: JSON.stringify({
+          from: this.fromEmail,
+          to: [to],
+          subject: subject,
+          html: htmlContent
+        })
+      });
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error(`Fallback email API error (${response.status}): ${errorText}`);
+        return false;
+      }
+      
+      const result = await response.json();
+      console.log("Fallback email send result:", result);
+      return true;
+    } catch (error) {
+      console.error("Error in fallback email sending:", error);
+      return false;
+    }
+  }
+  
+  /**
+   * Simple fallback template for admin notification
+   */
+  private getAdminFallbackTemplate(applicationData: ApplicationData): string {
+    const safeData = {
+      firstName: applicationData.firstName || 'Unknown',
+      lastName: applicationData.lastName || 'Applicant',
+      email: applicationData.email || 'No email provided',
+      phone: applicationData.phone || 'No phone provided'
+    };
+    
+    return `
+      <div style="font-family: Arial, sans-serif;">
+        <h1>New Application Submission</h1>
+        <p>A new application has been received from ${safeData.firstName} ${safeData.lastName}.</p>
+        <p>Email: ${safeData.email}</p>
+        <p>Phone: ${safeData.phone}</p>
+        <p>Please check the admin dashboard for complete details.</p>
+      </div>
+    `;
+  }
+  
+  /**
+   * Simple fallback template for applicant confirmation
+   */
+  private getApplicantFallbackTemplate(firstName: string): string {
+    return `
+      <div style="font-family: Arial, sans-serif;">
+        <h1>Application Received</h1>
+        <p>Dear ${firstName || 'Applicant'},</p>
+        <p>Thank you for your application to the Vocal Excellence Summer Programme 2025.</p>
+        <p>We've received your application and will be in touch soon.</p>
+        <p>Best regards,<br>The Vocal Excellence Team</p>
+      </div>
+    `;
   }
 
   /**
@@ -228,23 +375,23 @@ export class EmailHandler {
           <h2>Personal Information</h2>
           <div class="field">
             <div class="field-label">Full Name</div>
-            <div class="field-value">${applicationData.firstName} ${applicationData.lastName}</div>
+            <div class="field-value">${applicationData.firstName || 'Not provided'} ${applicationData.lastName || 'Not provided'}</div>
           </div>
           <div class="field">
             <div class="field-label">Email Address</div>
-            <div class="field-value">${applicationData.email}</div>
+            <div class="field-value">${applicationData.email || 'Not provided'}</div>
           </div>
           <div class="field">
             <div class="field-label">Phone Number</div>
-            <div class="field-value">${applicationData.phone}</div>
+            <div class="field-value">${applicationData.phone || 'Not provided'}</div>
           </div>
           <div class="field">
             <div class="field-label">Date of Birth</div>
-            <div class="field-value">${applicationData.dateOfBirth}</div>
+            <div class="field-value">${applicationData.dateOfBirth || 'Not provided'}</div>
           </div>
           <div class="field">
             <div class="field-label">Nationality</div>
-            <div class="field-value">${applicationData.nationality}</div>
+            <div class="field-value">${applicationData.nationality || 'Not provided'}</div>
           </div>
           <div class="field">
             <div class="field-label">Address</div>
@@ -258,15 +405,15 @@ export class EmailHandler {
           <h2>Musical Background</h2>
           <div class="field">
             <div class="field-label">Vocal Range</div>
-            <div class="field-value">${applicationData.vocalRange}</div>
+            <div class="field-value">${applicationData.vocalRange || 'Not provided'}</div>
           </div>
           <div class="field">
             <div class="field-label">Years of Experience</div>
-            <div class="field-value">${applicationData.yearsOfSinging}</div>
+            <div class="field-value">${applicationData.yearsOfSinging || 'Not provided'}</div>
           </div>
           <div class="field">
             <div class="field-label">Musical Background</div>
-            <div class="field-value">${applicationData.musicalBackground}</div>
+            <div class="field-value">${applicationData.musicalBackground || 'Not provided'}</div>
           </div>
           <div class="field">
             <div class="field-label">Teacher Information</div>
@@ -285,11 +432,11 @@ export class EmailHandler {
           <h2>Programme Application</h2>
           <div class="field">
             <div class="field-label">Reason for Applying</div>
-            <div class="field-value">${applicationData.reasonForApplying}</div>
+            <div class="field-value">${applicationData.reasonForApplying || 'Not provided'}</div>
           </div>
           <div class="field">
             <div class="field-label">How They Heard About Us</div>
-            <div class="field-value">${applicationData.heardAboutUs}</div>
+            <div class="field-value">${applicationData.heardAboutUs || 'Not provided'}</div>
           </div>
           <div class="field">
             <div class="field-label">Scholarship Interest</div>
@@ -391,7 +538,7 @@ export class EmailHandler {
       </div>
       <div class="content">
         <h1>Application Received</h1>
-        <p>Dear ${firstName},</p>
+        <p>Dear ${firstName || 'Applicant'},</p>
         <p>Thank you for applying to the Vocal Excellence Summer Programme 2025. We have successfully received your application.</p>
         
         <p>Here's what happens next:</p>

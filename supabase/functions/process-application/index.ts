@@ -1,6 +1,8 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { supabase } from "./supabaseClient.ts";
+import { EmailHandler } from "./emailHandler.ts";
+import { ApplicationData } from "./types.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -122,13 +124,50 @@ serve(async (req) => {
       }
     }
     
-    // Send confirmation emails (best-effort)
+    // Send confirmation emails with robust error handling and multiple fallbacks
     let emailStatus = { success: false, error: null };
     try {
-      emailStatus = await sendConfirmationEmails(finalApplicationId as string, applicationData);
+      // First try: Direct email handler
+      try {
+        console.log("Attempting to send confirmation emails via EmailHandler");
+        const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+        
+        if (!RESEND_API_KEY) {
+          console.error("RESEND_API_KEY is not set in environment variables");
+          throw new Error("Missing API key for email service");
+        }
+        
+        const emailHandler = new EmailHandler(RESEND_API_KEY);
+        await emailHandler.sendNotifications(applicationData as ApplicationData);
+        emailStatus = { success: true, error: null };
+        console.log("Successfully sent emails via EmailHandler");
+      } catch (primaryEmailError) {
+        console.error("Error with EmailHandler, trying fallback method:", primaryEmailError);
+        
+        // Second try: Using the send-email function as fallback
+        try {
+          emailStatus = await sendConfirmationEmails(finalApplicationId as string, applicationData);
+          console.log("Email status from fallback method:", emailStatus);
+        } catch (fallbackEmailError) {
+          console.error("Error with fallback email method:", fallbackEmailError);
+          emailStatus.error = fallbackEmailError.message || "Multiple email sending methods failed";
+          
+          // Third try: Direct Resend API call as extreme fallback
+          try {
+            console.log("Attempting final direct email sending method");
+            const result = await sendDirectEmail(applicationData);
+            if (result.success) {
+              emailStatus = { success: true, error: null };
+              console.log("Successfully sent email via direct API call");
+            }
+          } catch (directEmailError) {
+            console.error("All email sending methods failed:", directEmailError);
+          }
+        }
+      }
     } catch (emailError) {
-      console.error("Error sending emails:", emailError);
-      // Continue - don't fail submission due to email errors
+      console.error("Unhandled error in email sending process:", emailError);
+      emailStatus.error = emailError.message || "Unknown email error";
     }
     
     // Always return success regardless of errors
@@ -168,47 +207,147 @@ serve(async (req) => {
   }
 });
 
+// Send confirmation emails using the send-email edge function
 async function sendConfirmationEmails(applicationId: string, applicationData: any) {
   try {
-    // Send confirmation to applicant if email is available
+    const maxRetries = 3;
+    let applicantSuccess = false;
+    let adminSuccess = false;
+    
+    // Send confirmation to applicant with retries
     if (applicationData.email) {
-      try {
-        const applicantResponse = await supabase.functions.invoke('send-email', {
-          body: {
-            type: 'application_confirmation',
-            name: applicationData.firstName || 'Applicant',
-            email: applicationData.email
+      let retryCount = 0;
+      
+      while (retryCount < maxRetries && !applicantSuccess) {
+        try {
+          console.log(`Sending applicant email (attempt ${retryCount + 1})...`);
+          const applicantResponse = await supabase.functions.invoke('send-email', {
+            body: {
+              type: 'application_confirmation',
+              name: applicationData.firstName || 'Applicant',
+              email: applicationData.email
+            }
+          });
+          
+          console.log("Email function response for applicant:", applicantResponse);
+          
+          if (!applicantResponse.error) {
+            applicantSuccess = true;
+            console.log("Successfully sent email to applicant");
+          } else {
+            console.warn("Error in applicant email response:", applicantResponse.error);
+            retryCount++;
+            if (retryCount < maxRetries) await new Promise(r => setTimeout(r, 1000 * retryCount));
           }
-        });
-        console.log("Email sent to applicant:", applicantResponse);
-      } catch (error) {
-        console.error("Failed to send email to applicant:", error);
-        // Continue - don't fail due to email errors
+        } catch (error) {
+          console.error(`Failed to send email to applicant (attempt ${retryCount + 1}):`, error);
+          retryCount++;
+          if (retryCount < maxRetries) await new Promise(r => setTimeout(r, 1000 * retryCount));
+        }
       }
     }
     
-    // Send notification to admin
-    try {
-      const adminResponse = await supabase.functions.invoke('send-email', {
-        body: {
-          type: 'admin_notification',
-          applicationId,
-          applicantData: applicationData
+    // Send notification to admin with retries
+    let adminRetryCount = 0;
+    
+    while (adminRetryCount < maxRetries && !adminSuccess) {
+      try {
+        console.log(`Sending admin notification (attempt ${adminRetryCount + 1})...`);
+        const adminResponse = await supabase.functions.invoke('send-email', {
+          body: {
+            type: 'admin_notification',
+            applicationId,
+            applicantData: applicationData
+          }
+        });
+        
+        console.log("Email function response for admin:", adminResponse);
+        
+        if (!adminResponse.error) {
+          adminSuccess = true;
+          console.log("Successfully sent email to admin");
+        } else {
+          console.warn("Error in admin email response:", adminResponse.error);
+          adminRetryCount++;
+          if (adminRetryCount < maxRetries) await new Promise(r => setTimeout(r, 1000 * adminRetryCount));
         }
-      });
-      console.log("Email sent to admin:", adminResponse);
-    } catch (error) {
-      console.error("Failed to send email to admin:", error);
-      // Continue - don't fail due to email errors
+      } catch (error) {
+        console.error(`Failed to send email to admin (attempt ${adminRetryCount + 1}):`, error);
+        adminRetryCount++;
+        if (adminRetryCount < maxRetries) await new Promise(r => setTimeout(r, 1000 * adminRetryCount));
+      }
     }
     
     return {
-      success: true
+      success: applicantSuccess || adminSuccess,
+      applicantEmailSent: applicantSuccess,
+      adminEmailSent: adminSuccess
     };
   } catch (error) {
-    console.error("Error sending confirmation emails:", error);
+    console.error("Error in sendConfirmationEmails function:", error);
     return {
+      success: false,
       error: error.message || "Failed to send confirmation emails, but application was processed"
+    };
+  }
+}
+
+// Final fallback - direct email sending using Resend API
+async function sendDirectEmail(applicationData: any) {
+  try {
+    const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+    
+    if (!RESEND_API_KEY) {
+      throw new Error("Missing RESEND_API_KEY for direct email");
+    }
+    
+    const name = applicationData.firstName || 'Applicant';
+    const email = applicationData.email;
+    
+    if (!email) {
+      throw new Error("No recipient email address provided");
+    }
+    
+    const htmlContent = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <h1 style="color: #333; border-bottom: 1px solid #eee; padding-bottom: 10px;">Application Received</h1>
+        <p style="font-size: 16px; line-height: 1.5; color: #444;">Dear ${name},</p>
+        <p style="font-size: 16px; line-height: 1.5; color: #444;">Thank you for your application to the Vocal Excellence Summer Workshop 2025!</p>
+        <p style="font-size: 16px; line-height: 1.5; color: #444;">We have received your application and are currently reviewing it. We'll be in touch with you in the next 2 weeks regarding the next steps.</p>
+        <p style="font-size: 16px; line-height: 1.5; color: #444;">If you have any questions, please don't hesitate to contact us.</p>
+        <p style="font-size: 16px; line-height: 1.5; color: #444;">Best regards,</p>
+        <p style="font-size: 16px; line-height: 1.5; color: #444;">The Vocal Excellence Team</p>
+      </div>
+    `;
+    
+    console.log("Attempting direct Resend API call");
+    
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${RESEND_API_KEY}`
+      },
+      body: JSON.stringify({
+        from: "Vocal Excellence <no-reply@vocalexcellence.com>",
+        to: email,
+        subject: "Your Vocal Excellence Application",
+        html: htmlContent
+      })
+    });
+    
+    const result = await response.json();
+    console.log("Direct Resend API result:", result);
+    
+    return { 
+      success: response.ok,
+      data: result
+    };
+  } catch (error) {
+    console.error("Error in direct email sending:", error);
+    return { 
+      success: false, 
+      error: error.message 
     };
   }
 }

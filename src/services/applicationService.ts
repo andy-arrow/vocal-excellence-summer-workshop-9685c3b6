@@ -25,6 +25,7 @@ export interface ApplicationSubmissionResult {
     code?: string;
   };
   filesUploaded?: string[];
+  emailSent?: boolean;
 }
 
 /**
@@ -63,6 +64,15 @@ export async function submitApplication(
         } catch (fileError) {
           console.warn("File upload failed but application submitted:", fileError);
         }
+      }
+      
+      // Try to send emails directly
+      try {
+        await sendEmailsDirectly(formData, directResult.applicationId || "fallback-id");
+        directResult.emailSent = true;
+      } catch (emailError) {
+        console.warn("Email sending failed but application submitted:", emailError);
+        directResult.emailSent = false;
       }
       
       return directResult;
@@ -137,7 +147,8 @@ async function submitViaEdgeFunction(
     
     return { 
       success: true, 
-      applicationId: response.data?.applicationId || `edge-${Date.now()}`
+      applicationId: response.data?.applicationId || `edge-${Date.now()}`,
+      emailSent: response.data?.emailStatus?.success === true
     };
   } catch (error: any) {
     console.error("Edge function submission error:", error);
@@ -305,4 +316,79 @@ async function uploadFilesDirectly(
   await Promise.allSettled(fileUploadPromises);
   
   return uploadedFiles;
+}
+
+/**
+ * Send confirmation emails directly via the send-email function
+ */
+async function sendEmailsDirectly(formData: ApplicationFormValues, applicationId: string): Promise<boolean> {
+  try {
+    console.log("Sending emails directly via send-email function");
+    
+    const maxRetries = 3;
+    let success = false;
+    
+    // Try to send admin notification
+    for (let i = 0; i < maxRetries; i++) {
+      try {
+        console.log(`Sending admin notification (attempt ${i + 1}/${maxRetries})...`);
+        
+        const adminResponse = await supabase.functions.invoke('send-email', {
+          body: {
+            type: 'admin_notification',
+            applicantData: formData,
+            applicationId: applicationId
+          },
+        });
+        
+        if (!adminResponse.error) {
+          success = true;
+          console.log("Admin notification sent successfully");
+          break;
+        } else {
+          console.error(`Admin notification failed (attempt ${i + 1}):`, adminResponse.error);
+          await new Promise(r => setTimeout(r, 1000 * (i + 1)));
+        }
+      } catch (error) {
+        console.error(`Error sending admin notification (attempt ${i + 1}):`, error);
+        await new Promise(r => setTimeout(r, 1000 * (i + 1)));
+      }
+    }
+    
+    // Try to send applicant confirmation if we have an email
+    if (formData.email) {
+      for (let i = 0; i < maxRetries; i++) {
+        try {
+          console.log(`Sending applicant confirmation (attempt ${i + 1}/${maxRetries})...`);
+          
+          const applicantResponse = await supabase.functions.invoke('send-email', {
+            body: {
+              type: 'application_confirmation',
+              name: formData.firstName || "Applicant",
+              email: formData.email
+            },
+          });
+          
+          if (!applicantResponse.error) {
+            success = true;
+            console.log("Applicant confirmation sent successfully");
+            break;
+          } else {
+            console.error(`Applicant confirmation failed (attempt ${i + 1}):`, applicantResponse.error);
+            await new Promise(r => setTimeout(r, 1000 * (i + 1)));
+          }
+        } catch (error) {
+          console.error(`Error sending applicant confirmation (attempt ${i + 1}):`, error);
+          await new Promise(r => setTimeout(r, 1000 * (i + 1)));
+        }
+      }
+    } else {
+      console.warn("Cannot send applicant confirmation - no email provided");
+    }
+    
+    return success;
+  } catch (error) {
+    console.error("Error in sendEmailsDirectly function:", error);
+    return false;
+  }
 }
