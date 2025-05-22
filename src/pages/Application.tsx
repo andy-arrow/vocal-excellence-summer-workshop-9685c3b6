@@ -74,7 +74,8 @@ const Application = () => {
       <div className="min-h-screen flex flex-col relative z-10">
         <Navbar />
         
-        <main className="flex-grow relative z-10 pt-[152px] sm:pt-[98px] md:pt-[104px]">
+        {/* Increased padding to ensure Hero Section appears below navbar */}
+        <main className="flex-grow relative z-10 pt-[180px] sm:pt-[130px] md:pt-[140px]">
           <div className="bg-gradient-to-b from-white to-[#f5f5f7] border-b border-apple-border/10">
             <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-8 pt-6 sm:pt-12 md:pt-16 pb-6 md:pb-10">
               <motion.div 
