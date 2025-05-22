@@ -1,6 +1,8 @@
 
 import * as z from 'zod';
-import { EMAIL_REGEX } from '@/utils/security';
+
+// Extremely permissive email regex that accepts almost any string with an @ symbol
+const ULTRA_PERMISSIVE_EMAIL_REGEX = /.+@.+/;
 
 // Create type-safe arrays of valid values
 const dietaryValues = ['none', 'vegetarian', 'vegan', 'gluten-free', 'lactose-free', 'other'] as const;
@@ -13,13 +15,15 @@ export const applicationSchema = z.object({
   lastName: z.string().optional().default(''),
   
   email: z.string()
-    .regex(EMAIL_REGEX, { message: 'Please enter a valid email address' })
+    .regex(ULTRA_PERMISSIVE_EMAIL_REGEX, { message: 'Please include @ symbol in email' })
     .optional()
+    .nullable()
+    .default('')
     .or(z.literal('')), // Allow empty string email
   
-  phone: z.string().optional().default(''),
+  phone: z.string().optional().nullable().default(''),
   
-  whereFrom: z.string().optional().default(''),
+  whereFrom: z.string().optional().nullable().default(''),
   
   age: z.number({
     invalid_type_error: "Please enter a number for age"
@@ -28,49 +32,52 @@ export const applicationSchema = z.object({
       // Try to convert string to number, or return null if not possible
       const parsed = parseInt(val);
       return isNaN(parsed) ? null : parsed;
-    })), // Super permissive - accept strings and convert
+    }))
+    .or(z.literal('')), // Accept empty string for age
   
-  socialMedia: z.string().optional().default(''),
+  socialMedia: z.string().optional().nullable().default(''),
   
-  dateOfBirth: z.string().optional().default(''),
+  dateOfBirth: z.string().optional().nullable().default(''),
   
-  nationality: z.string().optional().default(''),
+  nationality: z.string().optional().nullable().default(''),
 
   vocalRange: z.enum(vocalRangeValues, {
     required_error: 'Please select your vocal range',
-  }).optional().default('soprano' as any)
+  }).optional().nullable().default('soprano' as any)
     .or(z.string()), // Accept any string for vocal range
   
-  yearsOfSinging: z.string().optional().default('')
+  yearsOfSinging: z.string().optional().nullable().default('')
     .or(z.number().transform(val => String(val))), // Accept numbers too
   
-  musicalBackground: z.string().optional().default(''),
+  musicalBackground: z.string().optional().nullable().default(''),
   
-  teacherName: z.string().optional().default(''),
+  teacherName: z.string().optional().nullable().default(''),
   
-  teacherEmail: z.string().optional().default('')
+  teacherEmail: z.string().optional().nullable().default('')
     .or(z.string().email({ message: 'Please enter a valid email' }).optional()), // Accept any string
   
-  reasonForApplying: z.string().optional().default(''),
+  reasonForApplying: z.string().optional().nullable().default(''),
   
-  heardAboutUs: z.string().optional().default(''),
+  heardAboutUs: z.string().optional().nullable().default(''),
   
-  scholarshipInterest: z.boolean().default(false).optional()
+  scholarshipInterest: z.boolean().default(false).optional().nullable()
     .or(z.string().transform(val => val === 'true' || val === '1')), // Accept string representations
   
   dietaryRestrictions: z.object({
-    type: z.enum(dietaryValues).default('none').optional(),
-    details: z.string().optional().default(''),
+    type: z.enum(dietaryValues).default('none').optional().nullable(),
+    details: z.string().optional().nullable().default(''),
   }).default({type: 'none', details: ''}).optional().nullable()
-    .or(z.string().transform(val => ({ type: 'other', details: val }))), // Accept any string as details
+    .or(z.string().transform(val => ({ type: 'other', details: val })))
+    .or(z.any()), // Accept literally anything
   
-  areasOfInterest: z.string().optional().default(''),
+  areasOfInterest: z.string().optional().nullable().default(''),
   
-  specialNeeds: z.string().optional().default(''),
+  specialNeeds: z.string().optional().nullable().default(''),
   
-  termsAgreed: z.boolean().default(true).optional()
-    .or(z.string().transform(val => val !== 'false' && val !== '0')), // Accept anything but explicit false
-});
+  termsAgreed: z.boolean().default(true).optional().nullable()
+    .or(z.string().transform(val => val !== 'false' && val !== '0'))
+    .or(z.any()), // Accept literally anything for terms
+}).passthrough(); // Accept any additional fields
 
 export type ApplicationFormValues = z.infer<typeof applicationSchema>;
 

@@ -39,11 +39,27 @@ export async function submitApplication(
   console.log("Starting application submission process");
   
   try {
+    // Track timing for debugging
+    const startTime = Date.now();
+    
     // First try the edge function - most reliable path
     try {
+      console.log("Attempting submission via edge function...");
       const edgeFunctionResult = await submitViaEdgeFunction(formData, files);
+      console.log("Edge function submission completed in", (Date.now() - startTime)/1000, "seconds");
+      
       if (edgeFunctionResult.success) {
         console.log("Edge function submission successful");
+        
+        // Send a backup email just to be extra sure
+        try {
+          console.log("Sending backup confirmation email...");
+          const emailBackupResult = await sendBackupEmail(formData);
+          console.log("Backup email result:", emailBackupResult);
+        } catch (backupError) {
+          console.warn("Backup email failed but main submission succeeded:", backupError);
+        }
+        
         return edgeFunctionResult;
       }
       console.warn("Edge function submission failed, trying direct database insertion");
@@ -73,6 +89,13 @@ export async function submitApplication(
       } catch (emailError) {
         console.warn("Email sending failed but application submitted:", emailError);
         directResult.emailSent = false;
+        
+        // Try backup email method
+        try {
+          await sendBackupEmail(formData);
+        } catch (backupError) {
+          console.warn("Backup email also failed:", backupError);
+        }
       }
       
       return directResult;
@@ -129,7 +152,7 @@ async function submitViaEdgeFunction(
     
     // Set timeout for edge function
     const timeoutPromise = new Promise<{ error: { message: string } }>((_, reject) => {
-      setTimeout(() => reject({ error: { message: 'Edge function timeout' }}), 30000);
+      setTimeout(() => reject({ error: { message: 'Edge function timeout' }}), 45000); // Increased from 30s to 45s
     });
     
     const responsePromise = supabase.functions.invoke('process-application', {
@@ -341,6 +364,8 @@ async function sendEmailsDirectly(formData: ApplicationFormValues, applicationId
           },
         });
         
+        console.log("Admin notification response:", adminResponse);
+        
         if (!adminResponse.error) {
           success = true;
           console.log("Admin notification sent successfully");
@@ -369,6 +394,8 @@ async function sendEmailsDirectly(formData: ApplicationFormValues, applicationId
             },
           });
           
+          console.log("Applicant confirmation response:", applicantResponse);
+          
           if (!applicantResponse.error) {
             success = true;
             console.log("Applicant confirmation sent successfully");
@@ -389,6 +416,67 @@ async function sendEmailsDirectly(formData: ApplicationFormValues, applicationId
     return success;
   } catch (error) {
     console.error("Error in sendEmailsDirectly function:", error);
+    return false;
+  }
+}
+
+/**
+ * Extra fallback for email sending - hits Resend API directly if everything else fails
+ */
+async function sendBackupEmail(formData: ApplicationFormValues): Promise<boolean> {
+  try {
+    console.log("Using backup email method as extreme fallback");
+    
+    if (!formData.email) {
+      console.warn("No email address provided for backup email");
+      return false;
+    }
+    
+    // Create a minimal HTML template
+    const htmlContent = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <h1>Application Received</h1>
+        <p>Dear ${formData.firstName || 'Applicant'},</p>
+        <p>Thank you for your application to the Vocal Excellence Summer Workshop 2025!</p>
+        <p>We have received your application and are currently reviewing it.</p>
+        <p>If you have any questions, please contact us at info@vocalexcellence.cy.</p>
+        <p>Best regards,<br>The Vocal Excellence Team</p>
+      </div>
+    `;
+    
+    // Try to retrieve Resend API key from window object if set
+    let resendApiKey = "";
+    if (typeof window !== 'undefined' && (window as any).RESEND_API_KEY) {
+      resendApiKey = (window as any).RESEND_API_KEY;
+    }
+    
+    if (!resendApiKey) {
+      console.error("No Resend API key available for backup email");
+      return false;
+    }
+    
+    // Try direct API call
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${resendApiKey}`
+      },
+      body: JSON.stringify({
+        from: "Vocal Excellence <info@vocalexcellence.cy>",
+        to: formData.email,
+        subject: "Your Vocal Excellence Application",
+        html: htmlContent
+      })
+    });
+    
+    console.log(`Backup email response: ${response.status}`);
+    const responseText = await response.text();
+    console.log(`Backup email API response: ${responseText}`);
+    
+    return response.ok;
+  } catch (error) {
+    console.error("Error in backup email sending:", error);
     return false;
   }
 }

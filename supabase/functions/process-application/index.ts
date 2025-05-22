@@ -18,14 +18,36 @@ serve(async (req) => {
   }
 
   try {
+    console.log("Process application function started");
+    console.log("Request method:", req.method);
+    
+    // Log headers for debugging
+    console.log("Request headers:", Object.fromEntries(req.headers.entries()));
+    
+    // Verify RESEND_API_KEY is available
+    const apiKey = Deno.env.get("RESEND_API_KEY") || "";
+    console.log("RESEND_API_KEY available:", apiKey ? "Yes (masked)" : "No");
+    
+    if (!apiKey) {
+      console.error("Missing RESEND_API_KEY environment variable");
+    }
+
     // Get the form data
     const formData = await req.formData();
+    console.log("FormData entries:", [...formData.entries()].map(e => Array.isArray(e[1]) ? `${e[0]}: [Array]` : `${e[0]}: ${typeof e[1]}`));
+    
     const applicationDataJson = formData.get('applicationData');
     const applicationId = formData.get('applicationId');
     
     // Super permissive - if no application data, create an empty object instead of failing
-    const applicationData = applicationDataJson ? JSON.parse(applicationDataJson as string) : {};
-    console.log("Processing application:", applicationData);
+    const applicationData = applicationDataJson 
+      ? JSON.parse(applicationDataJson as string) 
+      : {};
+      
+    console.log("Processing application:", 
+      applicationData ? 
+      `${applicationData.firstName || 'Unknown'} ${applicationData.lastName || 'Unknown'} (${applicationData.email || 'No email'})` : 
+      'No application data');
     
     // Create application ID if not provided
     const finalApplicationId = applicationId || crypto.randomUUID();
@@ -336,7 +358,17 @@ async function sendDirectEmail(applicationData: any) {
       })
     });
     
-    const result = await response.json();
+    const responseText = await response.text();
+    console.log(`Direct Resend API response (${response.status}): ${responseText}`);
+    
+    let result;
+    try {
+      result = JSON.parse(responseText);
+    } catch (parseError) {
+      console.error("Error parsing API response:", parseError);
+      result = { success: response.ok };
+    }
+    
     console.log("Direct Resend API result:", result);
     
     return { 
