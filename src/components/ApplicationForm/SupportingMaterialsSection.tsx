@@ -2,15 +2,16 @@
 import React from 'react';
 import { Info, FileText, Music, File } from 'lucide-react';
 import { FileUploadSection } from './FileUploadSection';
+import { ApplicationFileType } from '@/stores/applicationFilesStore';
 
 interface ApplicationFiles {
-  audioFile1?: File | null;
-  audioFile2?: File | null;
-  cvFile?: File | null;
-  recommendationFile?: File | null;
+  audioFile1: File | null;
+  audioFile2: File | null;
+  cvFile: File | null;
+  recommendationFile: File | null;
 }
 
-interface SupportingMaterialsSectionProps {
+export interface SupportingMaterialsSectionProps {
   updateFile: (fileType: string, file: File | null) => void;
   files: ApplicationFiles;
 }

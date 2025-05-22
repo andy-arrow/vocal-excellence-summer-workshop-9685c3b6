@@ -11,7 +11,9 @@ export type UploadState = {
   progress: number;
 };
 
-export const useFileUpload = (fileType: string) => {
+export type FileType = 'audioFile1' | 'audioFile2' | 'cvFile' | 'recommendationFile';
+
+export const useFileUpload = (fileType: FileType | string) => {
   const [uploadState, setUploadState] = useState<UploadState>({
     file: null,
     status: 'idle',
@@ -22,7 +24,7 @@ export const useFileUpload = (fileType: string) => {
   // Check if there's already a file in the store when the component mounts
   useEffect(() => {
     if (['audioFile1', 'audioFile2', 'cvFile', 'recommendationFile'].includes(fileType)) {
-      const existingFile = applicationFilesStore.getFile(fileType as 'audioFile1' | 'audioFile2' | 'cvFile' | 'recommendationFile');
+      const existingFile = applicationFilesStore.getFile(fileType as FileType);
       
       if (existingFile && uploadState.status === 'idle' && !uploadState.file) {
         console.log(`useFileUpload(${fileType}): Found existing file on mount:`, existingFile.name);
@@ -86,7 +88,7 @@ export const useFileUpload = (fileType: string) => {
         
         // Store the file in our application files store
         if (['audioFile1', 'audioFile2', 'cvFile', 'recommendationFile'].includes(fileType)) {
-          applicationFilesStore.setFile(fileType as 'audioFile1' | 'audioFile2' | 'cvFile' | 'recommendationFile', file);
+          applicationFilesStore.setFile(fileType as FileType, file);
         }
         
         // Update UI state
@@ -119,7 +121,7 @@ export const useFileUpload = (fileType: string) => {
   const reset = () => {
     // Clear the file from our store
     if (['audioFile1', 'audioFile2', 'cvFile', 'recommendationFile'].includes(fileType)) {
-      applicationFilesStore.setFile(fileType as 'audioFile1' | 'audioFile2' | 'cvFile' | 'recommendationFile', null);
+      applicationFilesStore.setFile(fileType as FileType, null);
     }
     
     setUploadState({
