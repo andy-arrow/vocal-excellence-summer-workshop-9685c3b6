@@ -1,8 +1,8 @@
 
 import React from 'react';
-import { FileAudio, FileText, FileQuestion } from 'lucide-react';
+import { FileAudio, FileText } from 'lucide-react';
 import { FileUploadSection } from './FileUploadSection';
-import { FormSection } from '@/components/ui/form';
+import { FormSection } from '@/components/ui/form-section';
 import { ApplicationFiles } from '@/services/applicationService';
 
 interface SupportingMaterialsSectionProps {
