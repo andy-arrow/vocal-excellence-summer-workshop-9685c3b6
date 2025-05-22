@@ -3,42 +3,39 @@ import React from 'react';
 
 interface SpinnerProps {
   size?: 'sm' | 'md' | 'lg';
-  color?: 'primary' | 'white' | 'black';
+  color?: 'white' | 'blue' | 'gray';
   speed?: number;
-  className?: string;
 }
 
 const Spinner: React.FC<SpinnerProps> = ({ 
-  size = 'md', 
-  color = 'primary',
-  speed = 0.75,
-  className = ''
+  size = 'md',
+  color = 'blue',
+  speed = 0.75
 }) => {
-  // Map size to pixel values
+  // Size mapping
   const sizeMap = {
-    sm: '16px',
-    md: '24px',
-    lg: '36px'
+    sm: 'w-4 h-4',
+    md: 'w-6 h-6',
+    lg: 'w-8 h-8'
   };
-  
-  // Map color to tailwind classes
+
+  // Color mapping
   const colorMap = {
-    primary: 'border-t-blue-600',
-    white: 'border-t-white',
-    black: 'border-t-black'
+    white: 'border-white/30 border-t-white',
+    blue: 'border-apple-blue/30 border-t-apple-blue',
+    gray: 'border-gray-300 border-t-gray-600'
   };
-  
+
+  // Animation duration mapping (in seconds)
+  const speedStyle = { animationDuration: `${0.6 / speed}s` };
+
   return (
     <div 
-      className={`rounded-full border-2 border-gray-300/30 animate-spin ${colorMap[color]} ${className}`} 
-      style={{ 
-        width: sizeMap[size], 
-        height: sizeMap[size],
-        animationDuration: `${speed}s`
-      }}
+      className={`inline-block ${sizeMap[size]} border-2 ${colorMap[color]} rounded-full animate-spin`}
+      style={speedStyle}
+      role="status" 
       aria-label="Loading"
-      data-testid="spinner"
-    ></div>
+    />
   );
 };
 

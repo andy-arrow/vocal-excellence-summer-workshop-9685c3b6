@@ -9,26 +9,30 @@ const vocalRangeValues = ['soprano', 'mezzo-soprano', 'alto', 'tenor', 'baritone
 export const applicationSchema = z.object({
   firstName: z.string()
     .min(1, { message: 'First name is required' })
-    .max(50, { message: 'First name must not exceed 50 characters' }),
+    .max(50, { message: 'First name must not exceed 50 characters' })
+    .or(z.literal('')), // Allow empty string too for maximum permissiveness
   
   lastName: z.string()
     .min(1, { message: 'Last name is required' })
-    .max(50, { message: 'Last name must not exceed 50 characters' }),
+    .max(50, { message: 'Last name must not exceed 50 characters' })
+    .or(z.literal('')), // Allow empty string too
   
   email: z.string()
     .min(1, { message: 'Email is required' })
     .max(100, { message: 'Email must not exceed 100 characters' })
-    .regex(EMAIL_REGEX, { message: 'Please enter a valid email address' }),
+    .regex(EMAIL_REGEX, { message: 'Please enter a valid email address' })
+    .or(z.literal('')), // Allow empty string even for email
   
   phone: z.string()
     .min(1, { message: 'Phone number is required' })
-    .max(20, { message: 'Phone number must not exceed 20 characters' }),
+    .max(20, { message: 'Phone number must not exceed 20 characters' })
+    .or(z.literal('')), // Allow empty string
   
   whereFrom: z.string().optional().default(''),
   
   age: z.number({
     invalid_type_error: "Age must be a number"
-  }).int().positive().optional(),
+  }).int().positive().optional().nullable(),
   
   socialMedia: z.string().optional().default(''),
   
@@ -51,18 +55,18 @@ export const applicationSchema = z.object({
   
   heardAboutUs: z.string().optional().default(''),
   
-  scholarshipInterest: z.boolean().default(false),
+  scholarshipInterest: z.boolean().default(false).optional(),
   
   dietaryRestrictions: z.object({
-    type: z.enum(dietaryValues).default('none'),
+    type: z.enum(dietaryValues).default('none').optional(),
     details: z.string().optional().default(''),
-  }).default({type: 'none', details: ''}),
+  }).default({type: 'none', details: ''}).optional().nullable(),
   
   areasOfInterest: z.string().optional().default(''),
   
   specialNeeds: z.string().optional().default(''),
   
-  termsAgreed: z.boolean().default(true),
+  termsAgreed: z.boolean().default(true).optional(),
 });
 
 export type ApplicationFormValues = z.infer<typeof applicationSchema>;

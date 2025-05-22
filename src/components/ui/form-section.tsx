@@ -1,31 +1,30 @@
 
-import React from "react"
-import { cn } from "@/lib/utils"
+import React, { ReactNode } from 'react';
 
-interface FormSectionProps extends React.HTMLAttributes<HTMLDivElement> {
-  title: string
-  description?: string
-  children: React.ReactNode
+interface FormSectionProps {
+  title: string;
+  description?: string;
+  children: ReactNode;
+  className?: string;
 }
 
-export function FormSection({
+export const FormSection = ({
   title,
   description,
   children,
-  className,
-  ...props
-}: FormSectionProps) {
+  className = "",
+}: FormSectionProps) => {
   return (
-    <div className={cn("space-y-6", className)} {...props}>
+    <div className={`space-y-4 ${className}`}>
       <div className="space-y-2">
-        <h3 className="text-xl font-semibold tracking-tight">{title}</h3>
+        <h3 className="text-lg font-medium text-apple-text">{title}</h3>
         {description && (
-          <p className="text-sm text-muted-foreground">{description}</p>
+          <p className="text-sm text-muted-foreground text-apple-grey">{description}</p>
         )}
       </div>
-      <div className="space-y-4">
+      <div className="space-y-6">
         {children}
       </div>
     </div>
-  )
-}
+  );
+};
