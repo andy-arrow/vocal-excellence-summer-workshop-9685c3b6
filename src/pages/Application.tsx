@@ -74,9 +74,9 @@ const Application = () => {
       <div className="min-h-screen flex flex-col relative z-10">
         <Navbar />
         
-        <main className="flex-grow relative z-10">
+        <main className="flex-grow relative z-10 pt-[152px] sm:pt-[98px] md:pt-[104px]">
           <div className="bg-gradient-to-b from-white to-[#f5f5f7] border-b border-apple-border/10">
-            <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-8 pt-12 sm:pt-16 md:pt-24 pb-6 md:pb-10">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-8 pt-6 sm:pt-12 md:pt-16 pb-6 md:pb-10">
               <motion.div 
                 className="text-center"
                 initial={{ opacity: 0, y: 20 }}
