@@ -256,9 +256,8 @@ const ApplicationForm = () => {
     if (activeSection < sections.length - 1) {
       clearValidationErrors();
       setActiveSection(activeSection + 1);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
       
-      // Track form section navigation
+      // Keep the analytics tracking
       trackForm('application', `section_${activeSection + 2}`, true);
     }
   };
@@ -267,9 +266,8 @@ const ApplicationForm = () => {
     if (activeSection > 0) {
       clearValidationErrors();
       setActiveSection(activeSection - 1);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
       
-      // Track form section navigation
+      // Keep the analytics tracking
       trackForm('application', `section_${activeSection}`, true);
     }
   };

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -63,13 +62,11 @@ const ApplicationForm: React.FC = () => {
   const handleNextStep = async () => {
     if (currentStep < FORM_STEPS.length - 1) {
       setCurrentStep(Math.min(currentStep + 1, FORM_STEPS.length - 1));
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   const handlePreviousStep = () => {
     setCurrentStep(Math.max(currentStep - 1, 0));
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleStepClick = (step: number) => {
