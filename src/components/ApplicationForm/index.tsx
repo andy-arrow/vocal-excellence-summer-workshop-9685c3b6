@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -122,6 +123,11 @@ const ApplicationForm: React.FC = () => {
         title: 'Submitting Application',
         description: 'Please wait while we process your application...',
       });
+      
+      // Store files in window object for potential fallback methods
+      if (typeof window !== 'undefined') {
+        window.applicationFiles = { ...files };
+      }
       
       const result = await submitApplication(data, files);
       
