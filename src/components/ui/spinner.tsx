@@ -11,10 +11,10 @@ interface SpinnerProps {
 
 const Spinner = ({ size = 'md', color = 'blue', speed = 1, className }: SpinnerProps) => {
   const sizeClasses = {
-    xs: 'h-3 w-3',
-    sm: 'h-4 w-4',
-    md: 'h-6 w-6',
-    lg: 'h-8 w-8',
+    xs: 'h-2 w-2 sm:h-3 sm:w-3',
+    sm: 'h-3 w-3 sm:h-4 sm:w-4',
+    md: 'h-5 w-5 sm:h-6 sm:w-6',
+    lg: 'h-6 w-6 sm:h-8 sm:w-8',
   };
   
   const colorClasses = {

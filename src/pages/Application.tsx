@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Toaster } from '@/components/ui/toaster';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 // Lazily load less critical components
 const ApplicationForm = lazy(() => import('@/components/ApplicationForm'));
@@ -14,7 +15,7 @@ const ApplicationFAQ = lazy(() => import('@/components/ApplicationFAQ'));
 const ScrollToTopButton = lazy(() => import('@/components/ScrollToTopButton'));
 
 const SectionLoader = () => (
-  <div className="flex justify-center py-16">
+  <div className="flex justify-center py-12 sm:py-16">
     <div className="w-8 h-8 border-4 border-apple-blue/30 border-t-apple-blue rounded-full animate-spin"></div>
   </div>
 );
@@ -36,6 +37,7 @@ const fadeIn = {
 
 const Application = () => {
   const [showScrollToTop, setShowScrollToTop] = React.useState(false);
+  const isMobile = useIsMobile();
   
   useEffect(() => {
     // Scroll to top when component mounts
@@ -74,25 +76,25 @@ const Application = () => {
         
         <main className="flex-grow relative z-10">
           <div className="bg-gradient-to-b from-white to-[#f5f5f7] border-b border-apple-border/10">
-            <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-8 pt-24 sm:pt-28 md:pt-36 pb-12 md:pb-16">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-8 pt-16 sm:pt-24 md:pt-32 pb-8 md:pb-12">
               <motion.div 
                 className="text-center"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
               >
-                <span className="inline-block text-apple-grey text-sm tracking-wide uppercase mb-4 font-medium">
+                <span className="inline-block text-apple-grey text-xs sm:text-sm tracking-wide uppercase mb-2 sm:mb-4 font-medium">
                   Summer Workshop 2025
                 </span>
-                <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-apple-text mb-4 tracking-tight">
+                <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-apple-text mb-3 sm:mb-4 tracking-tight">
                   Application Form
                 </h1>
-                <p className="font-sans text-base sm:text-lg md:text-xl text-apple-grey max-w-2xl mx-auto leading-relaxed mb-6">
+                <p className="font-sans text-sm sm:text-base md:text-lg text-apple-grey max-w-2xl mx-auto leading-relaxed mb-4 sm:mb-6">
                   Join our exclusive 5-day workshop. Complete the form below to apply.
                 </p>
                 <a 
                   href="#application-form"
-                  className="inline-flex items-center justify-center px-6 py-3 bg-apple-blue text-white rounded-full hover:bg-apple-blue-hover transition-colors font-medium"
+                  className="inline-flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 bg-apple-blue text-white rounded-full hover:bg-apple-blue-hover transition-colors font-medium text-sm sm:text-base"
                 >
                   Get Started
                 </a>
@@ -100,16 +102,16 @@ const Application = () => {
             </div>
           </div>
           
-          <div className="py-6 md:py-12 bg-[#f5f5f7]">
+          <div className="py-4 sm:py-6 md:py-12 bg-[#f5f5f7]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-              <div className="space-y-10 md:space-y-16">
+              <div className="space-y-8 sm:space-y-10 md:space-y-16">
                 <motion.section 
                   key="form" 
                   initial="hidden" 
                   whileInView="visible" 
                   viewport={{ once: true, margin: "-100px" }} 
                   id="application-form"
-                  className="bg-white rounded-2xl shadow-sm overflow-hidden"
+                  className="bg-white rounded-xl sm:rounded-2xl shadow-sm overflow-hidden"
                   aria-label="Application Form Section"
                   variants={fadeIn}
                 >

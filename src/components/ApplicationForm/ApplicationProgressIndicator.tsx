@@ -2,6 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ApplicationProgressIndicatorProps {
   steps: string[];
@@ -14,6 +15,8 @@ const ApplicationProgressIndicator: React.FC<ApplicationProgressIndicatorProps> 
   currentStep,
   onStepClick
 }) => {
+  const isMobile = useIsMobile();
+  
   return (
     <motion.div 
       className="flex justify-center w-full"
@@ -72,7 +75,7 @@ const ApplicationProgressIndicator: React.FC<ApplicationProgressIndicatorProps> 
         {/* Mobile progress indicator */}
         <div className="flex md:hidden items-center justify-between mb-4">
           <span className="text-sm font-medium text-apple-blue">
-            Step {currentStep + 1} of {steps.length}: {steps[currentStep]}
+            Step {currentStep + 1} of {steps.length}{isMobile ? "" : `: ${steps[currentStep]}`}
           </span>
           <span className="text-sm text-apple-grey">
             {Math.round((currentStep / (steps.length - 1)) * 100)}% Complete
