@@ -3,7 +3,7 @@ import React, { useState, useRef } from 'react';
 import { FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { motion } from 'framer-motion';
-import { LucideIcon, Check, X, Upload, Loader2, FileTextIcon } from 'lucide-react';
+import { LucideIcon, Check, X, Upload, Loader2, FileTextIcon, FileIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface FileUploadSectionProps {

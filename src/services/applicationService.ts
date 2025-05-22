@@ -11,6 +11,7 @@ export interface ApplicationFiles {
   audioFile2: File | null;
   cvFile: File | null;
   recommendationFile: File | null;
+  [key: string]: File | null;
 }
 
 /**
