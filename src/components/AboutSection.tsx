@@ -44,7 +44,7 @@ const AboutSection = () => {
           isMobile ? "" : "grid-cols-1 lg:grid-cols-2"
         )}>
           <motion.div 
-            className="space-y-4"
+            className="space-y-4 text-center"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -58,7 +58,7 @@ const AboutSection = () => {
               Work closely with experienced teachers who get your artistic path—from technique and confidence to navigating your career.
             </p>
             
-            <div className="pt-4">
+            <div className="pt-4 flex justify-center">
               <motion.div 
                 className="h-1 w-12 bg-apple-blue rounded-full"
                 initial={{ width: 0 }}
