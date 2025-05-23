@@ -16,7 +16,7 @@ const AboutSection = () => {
     },
     {
       title: 'Professional Recordings',
-      description: 'Get high-quality recordings of your performances—perfect for auditions, social media, or your portfolio.',
+      description: 'Your mock auditions and final performance will be professionally recorded, giving you high-quality footage that's perfect for audition submissions, social-media sharing, and building your portfolio.',
       icon: <CheckCircle2 className="h-5 w-5 text-apple-blue" />
     },
     {
