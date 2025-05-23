@@ -101,17 +101,7 @@ const AboutSection = () => {
               </motion.div>
             ))}
             
-            <motion.div 
-              className="pt-6 md:pt-8 text-center md:text-left"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.8 }}
-            >
-              <h3 className="text-xl font-medium text-apple-text mb-2">
-                Ready to level up your voice?
-              </h3>
-            </motion.div>
+            {/* Removed the "Ready to level up your voice?" text */}
           </motion.div>
         </div>
       </div>
