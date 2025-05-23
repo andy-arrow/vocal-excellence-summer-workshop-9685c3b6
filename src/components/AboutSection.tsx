@@ -31,7 +31,7 @@ const AboutSection = () => {
     },
     {
       title: 'Make Real Connections',
-      description: 'Meet and network with industry professionals already working in the areas you're passionate about.',
+      description: "Meet and network with industry professionals already working in the areas you're passionate about.",
       icon: <CheckCircle2 className="h-5 w-5 text-apple-blue" />
     }
   ];
