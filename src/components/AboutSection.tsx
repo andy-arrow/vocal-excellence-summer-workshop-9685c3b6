@@ -26,7 +26,7 @@ const AboutSection = () => {
     },
     {
       title: 'Vocal Health Essentials',
-      description: 'Keep your voice strong and healthy with guidance from expert vocal health specialists.',
+      description: 'Keep your voice strong and healthy with guidance from an expert vocal health specialist.',
       icon: <CheckCircle2 className="h-5 w-5 text-apple-blue" />
     },
     {
