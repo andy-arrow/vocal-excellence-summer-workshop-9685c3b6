@@ -173,7 +173,7 @@
     return response.json();
   }
 
-  // Submit to Supabase
+  // Submit to Supabase with returning: 'minimal' to avoid 401 on anonymous inserts
   async function submitToSupabase(email) {
     const supabaseUrl = window.VX_SUPABASE_URL;
     const supabaseKey = window.VX_SUPABASE_ANON_KEY;
@@ -188,14 +188,13 @@
         'apikey': supabaseKey,
         'Authorization': `Bearer ${supabaseKey}`,
         'Content-Type': 'application/json',
-        'Prefer': 'return=minimal',
+        'Prefer': 'return=minimal', // Avoid 401 error on anonymous inserts
       },
       body: JSON.stringify({
         email: email,
         source: 'popup',
         variant: variant,
         page_path: location.pathname,
-        created_at: new Date().toISOString(),
       }),
     });
     
