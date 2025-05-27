@@ -186,8 +186,8 @@
     `;
   }
 
-  // Submit to Supabase with enhanced error handling
-  async function submitToSupabase(email) {
+  // Submit to both Supabase and send email via Resend
+  async function submitEmail(email) {
     const supabaseUrl = window.VX_SUPABASE_URL;
     const supabaseKey = window.VX_SUPABASE_ANON_KEY;
     
@@ -195,8 +195,9 @@
       throw new Error('Supabase credentials not configured');
     }
     
-    debug('Submitting to Supabase', { email, variant, supabaseUrl: supabaseUrl.substring(0, 20) + '...' });
+    debug('Submitting email signup', { email, variant, supabaseUrl: supabaseUrl.substring(0, 20) + '...' });
     
+    // Step 1: Save to Supabase email_signups table
     const payload = {
       email: email,
       source: 'popup',
@@ -206,7 +207,7 @@
     
     debug('Supabase payload', payload);
     
-    const response = await fetch(`${supabaseUrl}/rest/v1/email_signups`, {
+    const supabaseResponse = await fetch(`${supabaseUrl}/rest/v1/email_signups`, {
       method: 'POST',
       headers: {
         'apikey': supabaseKey,
@@ -217,15 +218,52 @@
       body: JSON.stringify(payload),
     });
     
-    debug('Supabase response status', response.status);
+    debug('Supabase response status', supabaseResponse.status);
     
-    if (!response.ok) {
-      const errorText = await response.text();
-      debug('Supabase error response', { status: response.status, text: errorText });
-      throw new Error(`Supabase error (${response.status}): ${errorText}`);
+    if (!supabaseResponse.ok) {
+      const errorText = await supabaseResponse.text();
+      debug('Supabase error response', { status: supabaseResponse.status, text: errorText });
+      throw new Error(`Supabase error (${supabaseResponse.status}): ${errorText}`);
     }
     
     debug('Supabase submission successful');
+    
+    // Step 2: Send welcome email via Resend edge function
+    try {
+      debug('Sending welcome email via Resend');
+      
+      const emailPayload = {
+        type: 'popup_signup',
+        email: email,
+        name: email.split('@')[0], // Use email prefix as name fallback
+        variant: variant,
+        source: 'popup',
+        page_path: location.pathname
+      };
+      
+      const emailResponse = await fetch(`${supabaseUrl}/functions/v1/send-email`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${supabaseKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(emailPayload),
+      });
+      
+      debug('Email response status', emailResponse.status);
+      
+      if (!emailResponse.ok) {
+        const errorText = await emailResponse.text();
+        debug('Email sending failed', { status: emailResponse.status, text: errorText });
+        // Don't throw error here - email failure shouldn't break the signup
+      } else {
+        debug('Welcome email sent successfully');
+      }
+    } catch (emailError) {
+      debug('Email sending error (non-blocking)', emailError.message);
+      // Don't throw - email failure shouldn't break the signup process
+    }
+    
     return true;
   }
 
@@ -265,7 +303,7 @@
     submitBtn.style.opacity = '0.7';
     
     try {
-      await submitToSupabase(email);
+      await submitEmail(email);
       
       // Success
       debug('Email submission successful');

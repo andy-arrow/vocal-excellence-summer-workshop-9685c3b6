@@ -14,7 +14,7 @@ const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY") || "";
 console.log("Starting send-email function, RESEND_API_KEY available:", RESEND_API_KEY ? "Yes (masked)" : "No");
 
 // Initialize email service (using Resend)
-const sendEmail = async (to: string, subject: string, htmlContent: string, from: string = "Vocal Excellence <info@vocalexcellence.cy>") => {
+export const sendEmail = async (to: string, subject: string, htmlContent: string, from: string = "Vocal Excellence <info@vocalexcellence.cy>") => {
   try {
     console.log(`Attempting to send email to ${to} with subject "${subject}"`);
     
@@ -130,6 +130,11 @@ serve(async (req) => {
             
           case 'contact_form':
             emailResult = await sendContactFormNotification(emailData);
+            break;
+            
+          case 'popup_signup':
+            const { handlePopupSignup } = await import('./popup-signup-handler.ts');
+            emailResult = await handlePopupSignup(emailData);
             break;
             
           default:
