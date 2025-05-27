@@ -1,9 +1,10 @@
+
 import React, { useState } from 'react';
 import { X, Send, Music, FileText, Video } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { toast } from '@/components/ui/use-toast';
+import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 
 type VoiceType = 'Soprano' | 'Alto' | 'Tenor' | 'Baritone' | 'Bass';
@@ -22,7 +23,14 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubscribe = async () => {
-    if (!email || !name) return;
+    if (!email || !name) {
+      toast({
+        title: "Missing Information",
+        description: "Please provide both your name and email address.",
+        variant: "destructive",
+      });
+      return;
+    }
     
     setIsSubmitting(true);
     
@@ -100,7 +108,14 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
   };
 
   const handleNext = () => {
-    if (!email || !name) return;
+    if (!email || !name) {
+      toast({
+        title: "Missing Information",
+        description: "Please provide both your name and email address.",
+        variant: "destructive",
+      });
+      return;
+    }
     setShowQuiz(true);
   };
 
@@ -113,6 +128,7 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
         setName('');
         setShowQuiz(false);
         setVoiceType(null);
+        setIsSubmitted(false);
       }
     }, 300);
   };

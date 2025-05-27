@@ -162,6 +162,15 @@
             
             <form id="vx-popup-form" class="space-y-4">
               <input 
+                type="text" 
+                id="vx-popup-name" 
+                required 
+                placeholder="Enter your name"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-base"
+                aria-label="Your name"
+                style="font-size: 16px;"
+              >
+              <input 
                 type="email" 
                 id="vx-popup-email" 
                 required 
@@ -187,7 +196,7 @@
   }
 
   // Submit to both Supabase and send email via Resend
-  async function submitEmail(email) {
+  async function submitEmail(email, name) {
     const supabaseUrl = window.VX_SUPABASE_URL;
     const supabaseKey = window.VX_SUPABASE_ANON_KEY;
     
@@ -195,11 +204,11 @@
       throw new Error('Supabase credentials not configured');
     }
     
-    debug('Submitting email signup', { email, variant, supabaseUrl: supabaseUrl.substring(0, 20) + '...' });
+    debug('Submitting email signup', { email, name, variant, supabaseUrl: supabaseUrl.substring(0, 20) + '...' });
     
     // Step 1: Save to Supabase email_signups table
     const payload = {
-      email: email,
+      email: email.trim().toLowerCase(),
       source: 'popup',
       variant: variant,
       page_path: location.pathname,
@@ -234,12 +243,14 @@
       
       const emailPayload = {
         type: 'popup_signup',
-        email: email,
-        name: email.split('@')[0], // Use email prefix as name fallback
+        email: email.trim().toLowerCase(),
+        name: name.trim() || email.split('@')[0],
         variant: variant,
         source: 'popup',
         page_path: location.pathname
       };
+      
+      debug('Email payload being sent', emailPayload);
       
       const emailResponse = await fetch(`${supabaseUrl}/functions/v1/send-email`, {
         method: 'POST',
@@ -252,9 +263,11 @@
       
       debug('Email response status', emailResponse.status);
       
+      const emailResult = await emailResponse.text();
+      debug('Email response body', emailResult);
+      
       if (!emailResponse.ok) {
-        const errorText = await emailResponse.text();
-        debug('Email sending failed', { status: emailResponse.status, text: errorText });
+        debug('Email sending failed', { status: emailResponse.status, text: emailResult });
         // Don't throw error here - email failure shouldn't break the signup
       } else {
         debug('Welcome email sent successfully');
@@ -271,18 +284,20 @@
   async function handleSubmit(e) {
     e.preventDefault();
     
+    const nameInput = document.getElementById('vx-popup-name');
     const emailInput = document.getElementById('vx-popup-email');
     const submitBtn = document.getElementById('vx-popup-submit');
     
-    if (!emailInput || !submitBtn) {
+    if (!nameInput || !emailInput || !submitBtn) {
       debug('Form elements not found');
       return;
     }
     
+    const name = nameInput.value.trim();
     const email = emailInput.value.trim();
     
-    if (!email) {
-      debug('No email provided');
+    if (!email || !name) {
+      debug('Missing required fields');
       return;
     }
     
@@ -294,7 +309,7 @@
       return;
     }
     
-    debug('Form submitted', { email });
+    debug('Form submitted', { email, name });
     
     // Update button state
     const originalText = submitBtn.textContent;
@@ -303,12 +318,12 @@
     submitBtn.style.opacity = '0.7';
     
     try {
-      await submitEmail(email);
+      await submitEmail(email, name);
       
       // Success
       debug('Email submission successful');
       window.dispatchEvent(new CustomEvent('vx-popup-submitted', { 
-        detail: { email, variant, timestamp: new Date().toISOString() } 
+        detail: { email, name, variant, timestamp: new Date().toISOString() } 
       }));
       
       // Show success message
@@ -425,7 +440,7 @@
       const closeBtn = document.getElementById('vx-popup-close');
       const overlay = document.getElementById('vx-popup-overlay');
       const form = document.getElementById('vx-popup-form');
-      const emailInput = document.getElementById('vx-popup-email');
+      const nameInput = document.getElementById('vx-popup-name');
       
       if (closeBtn) {
         closeBtn.addEventListener('click', closePopup);
@@ -443,10 +458,10 @@
         form.addEventListener('submit', handleSubmit);
       }
       
-      // Focus email input after a short delay
-      if (emailInput) {
+      // Focus name input after a short delay
+      if (nameInput) {
         setTimeout(() => {
-          emailInput.focus();
+          nameInput.focus();
         }, 100);
       }
       

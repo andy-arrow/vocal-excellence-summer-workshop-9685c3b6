@@ -7,7 +7,7 @@ export async function handlePopupSignup({ email, name, variant, source, page_pat
   page_path: string
 }) {
   try {
-    console.log(`Processing popup signup for ${email} with variant ${variant}`);
+    console.log(`Processing popup signup for ${email} (${name}) with variant ${variant}`);
     
     if (!email) {
       console.error("No recipient email provided for popup signup");
@@ -66,8 +66,8 @@ export async function handlePopupSignup({ email, name, variant, source, page_pat
         
         <div style="background-color: #f7f9fc; border-left: 4px solid #0066cc; padding: 15px; margin: 20px 0;">
           <h2 style="color: #0066cc; margin-top: 0;">Signup Details</h2>
-          <p style="margin: 5px 0;"><strong>Email:</strong> ${email}</p>
           <p style="margin: 5px 0;"><strong>Name:</strong> ${name || 'Not provided'}</p>
+          <p style="margin: 5px 0;"><strong>Email:</strong> ${email}</p>
           <p style="margin: 5px 0;"><strong>Variant:</strong> ${variant}</p>
           <p style="margin: 5px 0;"><strong>Source:</strong> ${source}</p>
           <p style="margin: 5px 0;"><strong>Page:</strong> ${page_path}</p>
@@ -83,7 +83,7 @@ export async function handlePopupSignup({ email, name, variant, source, page_pat
     `;
     
     console.log(`Sending admin notification to: ${ADMIN_EMAIL}`);
-    const adminResult = await emailSender(ADMIN_EMAIL, `New Popup Signup: ${email}`, adminHtmlContent);
+    const adminResult = await emailSender(ADMIN_EMAIL, `New Popup Signup: ${name || 'Unknown'} (${email})`, adminHtmlContent);
     
     if (!adminResult.success) {
       console.error("Failed to send admin notification:", adminResult.error);
