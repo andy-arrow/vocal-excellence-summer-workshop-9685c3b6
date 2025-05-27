@@ -1,4 +1,3 @@
-
 /**
  * Vocal Excellence Email Popup
  * 
@@ -19,26 +18,22 @@
 
   console.log('[VX Popup] Script loading...');
 
-  // Configuration - Updated for better user experience
+  // Configuration - Scroll-only trigger
   const CONFIG = {
     STORAGE_KEY: 'vx_popup_seen',
     VARIANT_KEY: 'vx_popup_variant',
     TTL_DAYS: 7, // Show again after 7 days
     VARIANT_TTL_DAYS: 30,
-    TIME_DELAY: 45000, // 45 seconds - much more reasonable
     SCROLL_THRESHOLD: 0.4, // 40% scroll before triggering
     EXIT_INTENT_THRESHOLD: 15, // pixels from top
-    MIN_TIME_ON_PAGE: 20000, // Must be on page for at least 20 seconds
   };
 
   // State
   let popupShown = false;
-  let timeTriggered = false;
   let scrollTriggered = false;
   let exitTriggered = false;
   let variant = 'A';
   let isDebugMode = false;
-  let pageLoadTime = Date.now();
 
   // Enhanced debug function
   function debug(message, data = null) {
@@ -58,24 +53,12 @@
     debug('Debug mode enabled');
   }
 
-  // Check if user has been on page long enough
-  function hasMinimumTimeOnPage() {
-    const timeOnPage = Date.now() - pageLoadTime;
-    return timeOnPage >= CONFIG.MIN_TIME_ON_PAGE;
-  }
-
   // Check if popup should be shown
   function shouldShowPopup() {
     // Debug mode always shows popup
     if (isDebugMode) {
       debug('Debug mode: forcing popup to show');
       return true;
-    }
-
-    // Check minimum time on page first
-    if (!hasMinimumTimeOnPage()) {
-      debug('User has not been on page long enough');
-      return false;
     }
 
     const stored = localStorage.getItem(CONFIG.STORAGE_KEY);
@@ -449,26 +432,14 @@
       detail: { 
         variant, 
         timestamp: new Date().toISOString(),
-        triggers: { timeTriggered, scrollTriggered, exitTriggered }
+        triggers: { scrollTriggered, exitTriggered }
       } 
     }));
     
     debug('Popup shown successfully');
   }
 
-  // Time-based trigger - only after significant engagement
-  function setupTimeTrigger() {
-    debug('Setting up time trigger', `${CONFIG.TIME_DELAY}ms`);
-    setTimeout(() => {
-      if (!timeTriggered && !popupShown && hasMinimumTimeOnPage()) {
-        timeTriggered = true;
-        debug('Time trigger fired');
-        showPopup();
-      }
-    }, CONFIG.TIME_DELAY);
-  }
-
-  // Scroll-based trigger - more meaningful engagement
+  // Scroll-based trigger - only trigger for popup display
   function setupScrollTrigger() {
     debug('Setting up scroll trigger', `${CONFIG.SCROLL_THRESHOLD * 100}%`);
     
@@ -478,12 +449,6 @@
       if (!ticking) {
         requestAnimationFrame(() => {
           if (scrollTriggered || popupShown) {
-            ticking = false;
-            return;
-          }
-          
-          // Check minimum time on page before allowing scroll trigger
-          if (!hasMinimumTimeOnPage()) {
             ticking = false;
             return;
           }
@@ -509,7 +474,7 @@
     window.addEventListener('scroll', handleScroll, { passive: true });
   }
 
-  // Exit intent trigger (desktop only) - also requires minimum time
+  // Exit intent trigger (desktop only) - backup trigger
   function setupExitIntentTrigger() {
     if (window.innerWidth <= 768) {
       debug('Skipping exit intent (mobile device)');
@@ -520,9 +485,6 @@
     
     function handleMouseLeave(e) {
       if (exitTriggered || popupShown) return;
-      
-      // Check minimum time on page
-      if (!hasMinimumTimeOnPage()) return;
       
       if (e.clientY <= CONFIG.EXIT_INTENT_THRESHOLD && !e.relatedTarget) {
         exitTriggered = true;
@@ -540,7 +502,6 @@
     debug('Force showing popup (test mode)');
     localStorage.removeItem(CONFIG.STORAGE_KEY);
     popupShown = false;
-    timeTriggered = false;
     scrollTriggered = false;
     exitTriggered = false;
     showPopup();
@@ -557,13 +518,10 @@
       config: CONFIG,
       state: {
         popupShown,
-        timeTriggered,
         scrollTriggered,
         exitTriggered,
         variant,
-        shouldShow: shouldShowPopup(),
-        timeOnPage: Date.now() - pageLoadTime,
-        hasMinTime: hasMinimumTimeOnPage()
+        shouldShow: shouldShowPopup()
       },
       credentials: {
         supabaseUrl: !!window.VX_SUPABASE_URL,
@@ -618,12 +576,11 @@
       return;
     }
     
-    // Setup triggers - all now respect minimum time on page
-    setupTimeTrigger();
+    // Setup triggers - only scroll and exit intent
     setupScrollTrigger();
     setupExitIntentTrigger();
     
-    debug('All triggers set up successfully');
+    debug('Scroll and exit intent triggers set up successfully');
   }
 
   // Start when DOM is ready
