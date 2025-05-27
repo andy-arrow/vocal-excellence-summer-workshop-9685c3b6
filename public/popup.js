@@ -1,3 +1,4 @@
+
 /**
  * Vocal Excellence Email Popup
  * 
@@ -18,18 +19,20 @@
 
   console.log('[VX Popup] Script loading...');
 
-  // Configuration - Scroll-only trigger
+  // Configuration - Multiple triggers
   const CONFIG = {
     STORAGE_KEY: 'vx_popup_seen',
     VARIANT_KEY: 'vx_popup_variant',
     TTL_DAYS: 7, // Show again after 7 days
     VARIANT_TTL_DAYS: 30,
+    TIME_DELAY: 15000, // 15 seconds as fallback
     SCROLL_THRESHOLD: 0.4, // 40% scroll before triggering
     EXIT_INTENT_THRESHOLD: 15, // pixels from top
   };
 
   // State
   let popupShown = false;
+  let timeTriggered = false;
   let scrollTriggered = false;
   let exitTriggered = false;
   let variant = 'A';
@@ -485,14 +488,30 @@
       detail: { 
         variant, 
         timestamp: new Date().toISOString(),
-        triggers: { scrollTriggered, exitTriggered }
+        triggers: { timeTriggered, scrollTriggered, exitTriggered }
       } 
     }));
     
     debug('Popup shown successfully');
   }
 
-  // Scroll-based trigger - only trigger for popup display
+  // Time-based trigger - primary trigger
+  function setupTimeTrigger() {
+    debug('Setting up time trigger', `${CONFIG.TIME_DELAY}ms`);
+    
+    setTimeout(() => {
+      if (timeTriggered || popupShown) {
+        debug('Time trigger already fired or popup shown');
+        return;
+      }
+      
+      timeTriggered = true;
+      debug('Time trigger fired');
+      showPopup();
+    }, CONFIG.TIME_DELAY);
+  }
+
+  // Scroll-based trigger - secondary trigger
   function setupScrollTrigger() {
     debug('Setting up scroll trigger', `${CONFIG.SCROLL_THRESHOLD * 100}%`);
     
@@ -527,7 +546,7 @@
     window.addEventListener('scroll', handleScroll, { passive: true });
   }
 
-  // Exit intent trigger (desktop only) - backup trigger
+  // Exit intent trigger (desktop only) - tertiary trigger
   function setupExitIntentTrigger() {
     if (window.innerWidth <= 768) {
       debug('Skipping exit intent (mobile device)');
@@ -555,6 +574,7 @@
     debug('Force showing popup (test mode)');
     localStorage.removeItem(CONFIG.STORAGE_KEY);
     popupShown = false;
+    timeTriggered = false;
     scrollTriggered = false;
     exitTriggered = false;
     showPopup();
@@ -571,6 +591,7 @@
       config: CONFIG,
       state: {
         popupShown,
+        timeTriggered,
         scrollTriggered,
         exitTriggered,
         variant,
@@ -629,11 +650,12 @@
       return;
     }
     
-    // Setup triggers - only scroll and exit intent
+    // Setup triggers - time first, then scroll and exit intent as backups
+    setupTimeTrigger();
     setupScrollTrigger();
     setupExitIntentTrigger();
     
-    debug('Scroll and exit intent triggers set up successfully');
+    debug('All triggers set up successfully');
   }
 
   // Start when DOM is ready
