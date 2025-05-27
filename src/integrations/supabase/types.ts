@@ -120,6 +120,33 @@ export type Database = {
         }
         Relationships: []
       }
+      email_signups: {
+        Row: {
+          created_at: string | null
+          email: string
+          id: string
+          page_path: string | null
+          source: string | null
+          variant: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          id?: string
+          page_path?: string | null
+          source?: string | null
+          variant?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          id?: string
+          page_path?: string | null
+          source?: string | null
+          variant?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
