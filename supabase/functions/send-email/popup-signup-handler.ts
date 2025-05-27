@@ -14,7 +14,7 @@ export async function handlePopupSignup({ email, name, variant, source, page_pat
       return { success: false, error: "No recipient email provided" };
     }
     
-    const variantTitle = variant === 'A' ? 'Vocal Excellence Resources' : 'Unlock Your Voice';
+    const variantTitle = 'Master Your Vocal Craft';
     const ADMIN_EMAIL = "info@vocalexcellence.cy";
     
     // Use the same sendEmail function that other parts of the app use
@@ -25,26 +25,25 @@ export async function handlePopupSignup({ email, name, variant, source, page_pat
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
         <h1 style="color: #333; border-bottom: 1px solid #eee; padding-bottom: 10px;">${variantTitle}</h1>
         <p style="font-size: 16px; line-height: 1.5; color: #444;">Dear ${name || 'Vocalist'},</p>
-        <p style="font-size: 16px; line-height: 1.5; color: #444;">Thank you for joining our vocal excellence community!</p>
-        <p style="font-size: 16px; line-height: 1.5; color: #444;">We're excited to share our exclusive vocal techniques and resources with you. Watch your inbox for upcoming tips, workshop announcements, and special offers.</p>
+        <p style="font-size: 16px; line-height: 1.5; color: #444;">Welcome to our community of passionate vocalists! Thank you for joining us.</p>
+        <p style="font-size: 16px; line-height: 1.5; color: #444;">You've gained exclusive insights from world-class instructors and access to our comprehensive vocal toolkit. Watch your inbox for upcoming tips, workshop announcements, and special offers.</p>
         
         <div style="background-color: #f8f9fa; border-left: 4px solid #4f6e72; padding: 20px; margin: 20px 0;">
-          <h3 style="color: #4f6e72; margin-top: 0;">What's included in your free toolkit:</h3>
+          <h3 style="color: #4f6e72; margin-top: 0;">Your Free Vocal Toolkit includes:</h3>
           <ul style="font-size: 16px; line-height: 1.8; color: #444; margin: 10px 0;">
-            <li><strong>3 Professional Warm-ups:</strong> Audio files tailored for your voice</li>
-            <li><strong>Pitch Perfect Cheat Sheet:</strong> PDF guide to fix common pitch problems</li>
-            <li><strong>Audition Confidence Video:</strong> Master class on beating performance nerves</li>
-            <li><strong>Workshop Early Access:</strong> Be first to know about our programs</li>
+            <li><strong>✓ Quick-Read PDF Playbook:</strong> Essential vocal techniques and exercises</li>
+            <li><strong>✓ Pro Video: Unlock Your Voice:</strong> Grounding Tips for Singers That Actually Work!</li>
           </ul>
         </div>
         
-        <p style="font-size: 16px; line-height: 1.5; color: #444;">Keep an eye on your inbox - your toolkit will arrive within the next few minutes!</p>
+        <p style="font-size: 16px; line-height: 1.5; color: #444;">Your vocal toolkit will arrive within the next few minutes. Keep an eye on your inbox!</p>
         <p style="font-size: 16px; line-height: 1.5; color: #444;">Best regards,</p>
         <p style="font-size: 16px; line-height: 1.5; color: #444;"><strong>The Vocal Excellence Team</strong></p>
         
         <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; font-size: 14px; color: #666;">
           <p>Visit us at <a href="https://vocalexcellence.cy" style="color: #4f6e72;">vocalexcellence.cy</a></p>
           <p>Questions? Reply to this email or contact us at info@vocalexcellence.cy</p>
+          <p style="font-size: 12px; color: #999; margin-top: 15px;">We respect your privacy. You can unsubscribe at any time.</p>
         </div>
       </div>
     `;
@@ -109,7 +108,7 @@ export async function handlePopupSignup({ email, name, variant, source, page_pat
           <h3 style="color: #2f855a; margin: 0 0 10px 0; font-size: 16px; font-weight: 600;">✅ Actions Completed</h3>
           <ul style="color: #2f855a; margin: 0; padding-left: 20px; line-height: 1.6;">
             <li>Subscriber automatically added to your email list</li>
-            <li>Welcome email with vocal toolkit sent successfully</li>
+            <li>Welcome email with Free Vocal Toolkit sent successfully</li>
             <li>Lead captured and ready for follow-up</li>
           </ul>
         </div>
