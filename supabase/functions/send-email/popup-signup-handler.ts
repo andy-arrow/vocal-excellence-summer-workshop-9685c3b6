@@ -58,32 +58,79 @@ export async function handlePopupSignup({ email, name, variant, source, page_pat
       console.log("Welcome email sent successfully to user");
     }
     
-    // Send notification email to admin
+    // Send notification email to admin with professional copy
     const adminHtmlContent = `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-        <h1 style="color: #333; border-bottom: 1px solid #eee; padding-bottom: 10px;">New Popup Signup</h1>
-        <p style="font-size: 16px; line-height: 1.5; color: #444;">A new user has signed up via the popup on your website.</p>
-        
-        <div style="background-color: #f7f9fc; border-left: 4px solid #0066cc; padding: 15px; margin: 20px 0;">
-          <h2 style="color: #0066cc; margin-top: 0;">Signup Details</h2>
-          <p style="margin: 5px 0;"><strong>Name:</strong> ${name || 'Not provided'}</p>
-          <p style="margin: 5px 0;"><strong>Email:</strong> ${email}</p>
-          <p style="margin: 5px 0;"><strong>Variant:</strong> ${variant}</p>
-          <p style="margin: 5px 0;"><strong>Source:</strong> ${source}</p>
-          <p style="margin: 5px 0;"><strong>Page:</strong> ${page_path}</p>
-          <p style="margin: 5px 0;"><strong>Timestamp:</strong> ${new Date().toISOString()}</p>
+      <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 700px; margin: 0 auto; padding: 30px; background-color: #ffffff;">
+        <div style="text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 2px solid #f0f0f0;">
+          <h1 style="color: #2c3e50; font-size: 28px; margin: 0; font-weight: 600;">New Email Subscriber</h1>
+          <p style="color: #7f8c8d; font-size: 16px; margin: 8px 0 0 0;">Vocal Excellence Website</p>
         </div>
         
-        <p style="font-size: 16px; line-height: 1.5; color: #444;">The user has been automatically added to your email list and sent the welcome email with the vocal toolkit.</p>
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
+          <p style="font-size: 18px; margin: 0; font-weight: 500;">🎉 Great news! A new visitor has joined your email list through the website popup.</p>
+        </div>
         
-        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; font-size: 14px; color: #666;">
-          <p>This notification was sent automatically from your Vocal Excellence website popup.</p>
+        <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 25px; margin-bottom: 25px;">
+          <h2 style="color: #4a5568; margin: 0 0 20px 0; font-size: 20px; font-weight: 600;">Subscriber Information</h2>
+          
+          <div style="display: grid; gap: 12px;">
+            <div style="display: flex; padding: 8px 0; border-bottom: 1px solid #e2e8f0;">
+              <span style="font-weight: 600; color: #4a5568; width: 120px;">Name:</span>
+              <span style="color: #2d3748;">${name || 'Not provided'}</span>
+            </div>
+            <div style="display: flex; padding: 8px 0; border-bottom: 1px solid #e2e8f0;">
+              <span style="font-weight: 600; color: #4a5568; width: 120px;">Email:</span>
+              <span style="color: #2d3748;"><a href="mailto:${email}" style="color: #667eea; text-decoration: none;">${email}</a></span>
+            </div>
+            <div style="display: flex; padding: 8px 0; border-bottom: 1px solid #e2e8f0;">
+              <span style="font-weight: 600; color: #4a5568; width: 120px;">Page:</span>
+              <span style="color: #2d3748;">${page_path || 'Homepage'}</span>
+            </div>
+            <div style="display: flex; padding: 8px 0; border-bottom: 1px solid #e2e8f0;">
+              <span style="font-weight: 600; color: #4a5568; width: 120px;">Variant:</span>
+              <span style="color: #2d3748; background-color: #e2e8f0; padding: 2px 8px; border-radius: 4px; font-size: 14px;">${variant}</span>
+            </div>
+            <div style="display: flex; padding: 8px 0;">
+              <span style="font-weight: 600; color: #4a5568; width: 120px;">Date & Time:</span>
+              <span style="color: #2d3748;">${new Date().toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                timeZoneName: 'short'
+              })}</span>
+            </div>
+          </div>
+        </div>
+        
+        <div style="background-color: #f0fff4; border-left: 4px solid #38a169; padding: 20px; margin-bottom: 25px; border-radius: 0 8px 8px 0;">
+          <h3 style="color: #2f855a; margin: 0 0 10px 0; font-size: 16px; font-weight: 600;">✅ Actions Completed</h3>
+          <ul style="color: #2f855a; margin: 0; padding-left: 20px; line-height: 1.6;">
+            <li>Subscriber automatically added to your email list</li>
+            <li>Welcome email with vocal toolkit sent successfully</li>
+            <li>Lead captured and ready for follow-up</li>
+          </ul>
+        </div>
+        
+        <div style="background-color: #fffbf0; border: 1px solid #f6e05e; border-radius: 8px; padding: 20px; margin-bottom: 25px;">
+          <h3 style="color: #b7791f; margin: 0 0 10px 0; font-size: 16px; font-weight: 600;">💡 Next Steps</h3>
+          <p style="color: #744210; margin: 0; line-height: 1.6;">Consider reaching out personally within 24-48 hours to welcome them and offer additional value. This is a warm lead who showed interest in your vocal programs.</p>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
+          <p style="color: #718096; font-size: 14px; margin: 0;">
+            This notification was generated automatically by your Vocal Excellence website.<br>
+            <a href="https://vocalexcellence.cy" style="color: #667eea; text-decoration: none;">Visit website</a> | 
+            <a href="mailto:info@vocalexcellence.cy" style="color: #667eea; text-decoration: none;">Contact support</a>
+          </p>
         </div>
       </div>
     `;
     
     console.log(`Sending admin notification to: ${ADMIN_EMAIL}`);
-    const adminResult = await emailSender(ADMIN_EMAIL, `New Popup Signup: ${name || 'Unknown'} (${email})`, adminHtmlContent);
+    const adminResult = await emailSender(ADMIN_EMAIL, `🎵 New Lead: ${name || 'New Subscriber'} joined your email list`, adminHtmlContent);
     
     if (!adminResult.success) {
       console.error("Failed to send admin notification:", adminResult.error);
