@@ -114,7 +114,7 @@ const TuitionTiers = () => {
                   </div>
                   <div className="text-left md:text-right">
                     <p className="text-2xl md:text-3xl font-serif font-light text-[#141414]">€749</p>
-                    <p className="font-sans text-sm text-[#141414]/70 mt-1">Total tuition</p>
+                    <p className="font-sans text-sm text-[#141414]/70 mt-1">Total tuition (all inclusive)</p>
                   </div>
                 </div>
               </CardHeader>
@@ -148,10 +148,10 @@ const TuitionTiers = () => {
                             Standard Payment Plan
                           </h5>
                           <ul className="mt-3 space-y-2 pl-6 text-[#141414]/70 font-sans text-sm">
-                            <li>€100 deposit upon acceptance</li>
+                            <li>€100 registration fee (included in total tuition)</li>
                             <li>Three equal installments of €216.33 each</li>
                             <li>Final payment by {tuitionDeadline}</li>
-                            <li>Total tuition: €749</li>
+                            <li className="font-medium text-[#141414]">Total tuition: €749</li>
                           </ul>
                         </CardContent>
                       </Card>
@@ -170,7 +170,7 @@ const TuitionTiers = () => {
                             Early Bird Price
                           </h5>
                           <p className="text-[#4f6e72]/90 mt-2 pl-6 font-sans text-sm">
-                            Only €699 when you register before {earlyBirdDate} and pay in full
+                            Only €699 when you register before {earlyBirdDate} and pay in full (€100 registration fee included)
                           </p>
                         </CardContent>
                       </Card>
@@ -189,6 +189,9 @@ const TuitionTiers = () => {
                 </Button>
                 <p className="font-sans text-sm text-[#141414]/60 mt-4">
                   Limited to 20 students. Applications close on {format(APPLICATION_DATES.DEADLINE, 'MMMM d, yyyy')}.
+                </p>
+                <p className="font-sans text-xs text-[#141414]/50 mt-2">
+                  €100 registration fee is part of the total €749 tuition
                 </p>
               </CardFooter>
             </Card>

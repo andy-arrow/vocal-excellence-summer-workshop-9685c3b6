@@ -53,7 +53,7 @@ const Tuition = () => {
         <title>Tuition & Financial Options – Vocal Excellence</title>
         <meta 
           name="description" 
-          content="Explore our flexible tuition options, payment plans, and financial assistance for the Vocal Excellence Summer 2025 program." 
+          content="Total tuition €749 includes everything. Flexible payment plans available with €100 registration fee included in total cost. Early bird discount available." 
         />
         <meta name="keywords" content="vocal training tuition, music program costs, singing scholarship, vocal education financing" />
         <link rel="preload" as="image" href="/og-image.png" />

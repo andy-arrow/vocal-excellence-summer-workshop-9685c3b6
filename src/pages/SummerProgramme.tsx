@@ -375,7 +375,7 @@ const SummerProgramme = () => {
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
-                  <span className="text-slate-700">Full Tuition: €749</span>
+                  <span className="text-slate-700">Total Tuition: €749 (all inclusive)</span>
                 </li>
                 <li className="flex items-start">
                   <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
@@ -383,13 +383,18 @@ const SummerProgramme = () => {
                 </li>
                 <li className="flex items-start">
                   <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
-                  <span className="text-slate-700">Payment Plan: 3 installments available</span>
+                  <span className="text-slate-700">Payment Plan: €100 registration fee + 3 installments</span>
                 </li>
                 <li className="flex items-start">
                   <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
                   <span className="text-slate-700">Limited scholarships available</span>
                 </li>
               </ul>
+              <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                <p className="text-sm text-blue-800 font-medium">
+                  Note: The €100 registration fee is included in the total €749 tuition fee
+                </p>
+              </div>
             </div>
           </div>
           
@@ -468,7 +473,7 @@ const SummerProgramme = () => {
             <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
           </Link>
           <p className="text-sm text-apple-grey mt-4">
-            Early bird pricing ends May 1, 2025
+            Early bird pricing ends May 1, 2025 • Total tuition €749 (includes €100 registration fee)
           </p>
         </div>
       </section>
