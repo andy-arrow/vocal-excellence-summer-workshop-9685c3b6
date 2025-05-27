@@ -3,8 +3,6 @@
  * Vocal Excellence Email Popup
  * 
  * Configuration options (set before loading script):
- * - window.VX_MAILCHIMP_API_KEY: Mailchimp API key
- * - window.VX_MAILCHIMP_LIST_ID: Mailchimp list ID
  * - window.VX_SUPABASE_URL: Supabase project URL
  * - window.VX_SUPABASE_ANON_KEY: Supabase anon key
  * 
@@ -25,8 +23,8 @@
     VARIANT_KEY: 'vx_popup_variant',
     TTL_DAYS: 7, // Show again after 7 days
     VARIANT_TTL_DAYS: 30,
-    TIME_DELAY: 15000, // 15 seconds as fallback
-    SCROLL_THRESHOLD: 0.4, // 40% scroll before triggering
+    TIME_DELAY: 10000, // 10 seconds for faster testing
+    SCROLL_THRESHOLD: 0.3, // 30% scroll before triggering
     EXIT_INTENT_THRESHOLD: 15, // pixels from top
   };
 
@@ -198,7 +196,7 @@
     `;
   }
 
-  // Submit to both Supabase and send email via Resend
+  // Submit to Supabase and send email
   async function submitEmail(email, name) {
     const supabaseUrl = window.VX_SUPABASE_URL;
     const supabaseKey = window.VX_SUPABASE_ANON_KEY;
@@ -240,9 +238,9 @@
     
     debug('Supabase submission successful');
     
-    // Step 2: Send welcome email via Resend edge function
+    // Step 2: Send welcome email via edge function (matching React component structure)
     try {
-      debug('Sending welcome email via Resend');
+      debug('Sending welcome email via edge function');
       
       const emailPayload = {
         type: 'popup_signup',
@@ -271,19 +269,20 @@
       
       if (!emailResponse.ok) {
         debug('Email sending failed', { status: emailResponse.status, text: emailResult });
-        // Don't throw error here - email failure shouldn't break the signup
-      } else {
-        debug('Welcome email sent successfully');
+        throw new Error(`Email sending failed: ${emailResult}`);
       }
+      
+      debug('Welcome email sent successfully');
+      
     } catch (emailError) {
-      debug('Email sending error (non-blocking)', emailError.message);
-      // Don't throw - email failure shouldn't break the signup process
+      debug('Email sending error', emailError.message);
+      throw emailError;
     }
     
     return true;
   }
 
-  // Handle form submission with comprehensive error handling
+  // Handle form submission with proper error handling
   async function handleSubmit(e) {
     e.preventDefault();
     
@@ -301,6 +300,7 @@
     
     if (!email || !name) {
       debug('Missing required fields');
+      alert('Please fill in both name and email');
       return;
     }
     
@@ -308,6 +308,7 @@
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       debug('Invalid email format');
+      alert('Please enter a valid email address');
       emailInput.focus();
       return;
     }
@@ -354,23 +355,9 @@
       submitBtn.textContent = originalText;
       submitBtn.style.opacity = '1';
       
-      // Show error message but still thank the user
-      const form = document.getElementById('vx-popup-form');
-      if (form) {
-        form.innerHTML = `
-          <div class="text-center py-4">
-            <p class="text-gray-800 font-medium">Thanks for your interest!</p>
-            <p class="text-gray-600 text-sm mt-1">Please try again later or contact us directly.</p>
-            <button onclick="location.reload()" class="mt-3 px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition-colors">
-              Try Again
-            </button>
-          </div>
-        `;
-      }
+      // Show error message
+      alert('Something went wrong. Please try again or contact us directly.');
       
-      setTimeout(() => {
-        closePopup();
-      }, 4000);
     }
   }
 
@@ -600,8 +587,6 @@
       credentials: {
         supabaseUrl: !!window.VX_SUPABASE_URL,
         supabaseKey: !!window.VX_SUPABASE_ANON_KEY,
-        mailchimpKey: !!window.VX_MAILCHIMP_API_KEY,
-        mailchimpList: !!window.VX_MAILCHIMP_LIST_ID
       }
     };
   }
@@ -621,17 +606,15 @@
     
     // Check credentials
     const hasSupabase = !!(window.VX_SUPABASE_URL && window.VX_SUPABASE_ANON_KEY);
-    const hasMailchimp = !!(window.VX_MAILCHIMP_API_KEY && window.VX_MAILCHIMP_LIST_ID);
     
     debug('Credentials check', {
       supabase: hasSupabase,
-      mailchimp: hasMailchimp,
       supabaseUrl: window.VX_SUPABASE_URL ? `${window.VX_SUPABASE_URL.substring(0, 20)}...` : 'missing',
       supabaseKey: window.VX_SUPABASE_ANON_KEY ? 'present' : 'missing'
     });
     
-    if (!hasSupabase && !hasMailchimp) {
-      debug('ERROR: No valid credentials found. Please configure either Supabase or Mailchimp credentials.');
+    if (!hasSupabase) {
+      debug('ERROR: No valid Supabase credentials found. Please configure VX_SUPABASE_URL and VX_SUPABASE_ANON_KEY.');
       return;
     }
     
