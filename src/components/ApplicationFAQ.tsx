@@ -25,7 +25,7 @@ const ApplicationFAQ = () => {
     },
     {
       question: "How does the payment structure work?",
-      answer: "You can either pay the full €749 upfront or use our payment plan. The payment plan includes a €100 registration fee (which is part of the total tuition, not additional) followed by three equal installments of €217 each, for a total of €751. The registration fee secures your spot and goes directly toward your total tuition cost."
+      answer: "You can either pay the full €749 upfront or use our payment plan. The payment plan includes a €100 registration fee (which is part of the total tuition, not additional) followed by three equal installments of €216 each, for a total of €749. The registration fee secures your spot and goes directly toward your total tuition cost."
     },
     {
       question: "Is there any financial aid available for the workshop?",
