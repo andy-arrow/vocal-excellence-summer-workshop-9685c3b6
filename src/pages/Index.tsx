@@ -13,7 +13,6 @@ const AboutSection = lazy(() =>
 const CurriculumSection = lazy(() => 
   import(/* webpackChunkName: "curriculum" */ '@/components/CurriculumSection')
 );
-// Use the original InstructorsSection instead of CustomInstructorsSection
 const InstructorsSection = lazy(() => 
   import(/* webpackChunkName: "instructors" */ '@/components/InstructorsSection')
 );
@@ -38,7 +37,8 @@ const Index = () => {
   const scrolled = useScrollPosition();
   
   useEffect(() => {
-    if (!localStorage.getItem('visitedBefore')) {
+    const hasVisited = localStorage.getItem('visitedBefore');
+    if (!hasVisited) {
       const timeoutId = setTimeout(() => {
         toast({
           title: "Welcome to Vocal Excellence Summer Workshop",
@@ -57,22 +57,22 @@ const Index = () => {
     console.log('[Index] Page loaded, checking popup system...');
     
     // Add popup event listeners for debugging
-    const handlePopupShown = (e) => {
+    const handlePopupShown = (e: CustomEvent) => {
       console.log('[Index] Popup shown event received:', e.detail);
       // Optional: Track with analytics
-      if (window.gtag) {
-        window.gtag('event', 'popup_shown', {
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', 'popup_shown', {
           variant: e.detail.variant,
           page_path: window.location.pathname
         });
       }
     };
 
-    const handlePopupSubmitted = (e) => {
+    const handlePopupSubmitted = (e: CustomEvent) => {
       console.log('[Index] Popup submission event received:', e.detail);
       // Optional: Track with analytics
-      if (window.gtag) {
-        window.gtag('event', 'email_signup', {
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', 'email_signup', {
           method: 'popup',
           variant: e.detail.variant
         });
@@ -91,14 +91,14 @@ const Index = () => {
     };
 
     // Add event listeners
-    window.addEventListener('vx-popup-shown', handlePopupShown);
-    window.addEventListener('vx-popup-submitted', handlePopupSubmitted);
-    window.addEventListener('vx-popup-closed', handlePopupClosed);
+    window.addEventListener('vx-popup-shown', handlePopupShown as EventListener);
+    window.addEventListener('vx-popup-submitted', handlePopupSubmitted as EventListener);
+    window.addEventListener('vx-popup-closed', handlePopupClosed as EventListener);
 
     // Debug popup status after a short delay
-    setTimeout(() => {
-      if (window.VX_DEBUG) {
-        const status = window.VX_DEBUG.getStatus();
+    const debugTimeout = setTimeout(() => {
+      if (typeof window !== 'undefined' && (window as any).VX_DEBUG) {
+        const status = (window as any).VX_DEBUG.getStatus();
         console.log('[Index] Popup system status:', status);
         
         // Check if popup should show but hasn't
@@ -112,9 +112,10 @@ const Index = () => {
 
     // Cleanup
     return () => {
-      window.removeEventListener('vx-popup-shown', handlePopupShown);
-      window.removeEventListener('vx-popup-submitted', handlePopupSubmitted);
-      window.removeEventListener('vx-popup-closed', handlePopupClosed);
+      window.removeEventListener('vx-popup-shown', handlePopupShown as EventListener);
+      window.removeEventListener('vx-popup-submitted', handlePopupSubmitted as EventListener);
+      window.removeEventListener('vx-popup-closed', handlePopupClosed as EventListener);
+      clearTimeout(debugTimeout);
     };
   }, []);
 
