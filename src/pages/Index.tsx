@@ -52,6 +52,72 @@ const Index = () => {
     }
   }, []);
 
+  // Enhanced popup debugging and integration
+  useEffect(() => {
+    console.log('[Index] Page loaded, checking popup system...');
+    
+    // Add popup event listeners for debugging
+    const handlePopupShown = (e) => {
+      console.log('[Index] Popup shown event received:', e.detail);
+      // Optional: Track with analytics
+      if (window.gtag) {
+        window.gtag('event', 'popup_shown', {
+          variant: e.detail.variant,
+          page_path: window.location.pathname
+        });
+      }
+    };
+
+    const handlePopupSubmitted = (e) => {
+      console.log('[Index] Popup submission event received:', e.detail);
+      // Optional: Track with analytics
+      if (window.gtag) {
+        window.gtag('event', 'email_signup', {
+          method: 'popup',
+          variant: e.detail.variant
+        });
+      }
+      
+      // Show success toast
+      toast({
+        title: "Thank you for subscribing!",
+        description: "Check your inbox for exclusive content.",
+        duration: 5000,
+      });
+    };
+
+    const handlePopupClosed = () => {
+      console.log('[Index] Popup closed event received');
+    };
+
+    // Add event listeners
+    window.addEventListener('vx-popup-shown', handlePopupShown);
+    window.addEventListener('vx-popup-submitted', handlePopupSubmitted);
+    window.addEventListener('vx-popup-closed', handlePopupClosed);
+
+    // Debug popup status after a short delay
+    setTimeout(() => {
+      if (window.VX_DEBUG) {
+        const status = window.VX_DEBUG.getStatus();
+        console.log('[Index] Popup system status:', status);
+        
+        // Check if popup should show but hasn't
+        if (status.state.shouldShow && !status.state.popupShown) {
+          console.log('[Index] Popup should show but hasn\'t triggered yet');
+        }
+      } else {
+        console.log('[Index] VX_DEBUG not available - popup script may not be loaded');
+      }
+    }, 1000);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('vx-popup-shown', handlePopupShown);
+      window.removeEventListener('vx-popup-submitted', handlePopupSubmitted);
+      window.removeEventListener('vx-popup-closed', handlePopupClosed);
+    };
+  }, []);
+
   return (
     <motion.div 
       className="min-h-screen overflow-hidden relative"
