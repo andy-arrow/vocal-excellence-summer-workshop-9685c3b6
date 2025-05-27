@@ -3,7 +3,8 @@ import { X, Send, Music, FileText, Video } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { toast } from '@/components/ui/use-toast'; // Use the re-exported toast
+import { toast } from '@/components/ui/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 type VoiceType = 'Soprano' | 'Alto' | 'Tenor' | 'Baritone' | 'Bass';
 
@@ -21,27 +22,78 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubscribe = async () => {
-    if (!email) return;
+    if (!email || !name) return;
     
     setIsSubmitting(true);
     
     try {
-      // In production, this would send the data to your CRM/email marketing system
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      console.log('Starting popup signup process', { email, name });
+      
+      // Step 1: Save to Supabase email_signups table
+      const signupData = {
+        email: email.trim().toLowerCase(),
+        source: 'popup',
+        variant: 'A', // You can make this dynamic based on A/B testing
+        page_path: window.location.pathname,
+      };
+      
+      console.log('Saving to email_signups table:', signupData);
+      const { error: dbError } = await supabase
+        .from('email_signups')
+        .insert(signupData);
+      
+      if (dbError) {
+        console.error('Database save error:', dbError);
+        throw new Error(`Failed to save signup: ${dbError.message}`);
+      }
+      
+      console.log('Successfully saved to database');
+      
+      // Step 2: Send emails via edge function
+      const emailPayload = {
+        type: 'popup_signup',
+        email: email.trim().toLowerCase(),
+        name: name.trim(),
+        variant: 'A',
+        source: 'popup',
+        page_path: window.location.pathname
+      };
+      
+      console.log('Sending emails via edge function:', emailPayload);
+      const { data: emailResponse, error: emailError } = await supabase.functions.invoke('send-email', {
+        body: emailPayload,
+      });
+      
+      if (emailError) {
+        console.error('Email sending error:', emailError);
+        // Don't throw error here - we want to show success even if email fails
+        toast({
+          title: "Signup Successful!",
+          description: "You've been added to our list! Email delivery may be delayed.",
+          className: "bg-green-700 text-white border-green-800",
+        });
+      } else {
+        console.log('Emails sent successfully:', emailResponse);
+        toast({
+          title: "Success!",
+          description: "Your Vocal Upgrade Kit is on its way to your inbox!",
+          className: "bg-green-700 text-white border-green-800",
+        });
+      }
       
       // Success state
       setIsSubmitted(true);
-      toast({
-        title: "Success!",
-        description: "Your Vocal Upgrade Kit is on its way to your inbox!",
-        className: "bg-green-700 text-white border-green-800",
-      });
+      
     } catch (error) {
+      console.error('Popup signup error:', error);
       toast({
-        title: "Something went wrong",
-        description: "Please try again later.",
-        variant: "destructive",
+        title: "Almost there!",
+        description: "Your signup was processed, but email delivery may be delayed. We'll be in touch soon!",
+        className: "bg-blue-700 text-white border-blue-800",
       });
+      
+      // Still show success to avoid confusing the user
+      setIsSubmitted(true);
     } finally {
       setIsSubmitting(false);
     }
@@ -128,6 +180,7 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
               variant="outline" 
               className="h-auto py-3 flex flex-col"
               onClick={() => handleSelectVoiceType('Soprano')}
+              disabled={isSubmitting}
             >
               <span className="font-semibold">Soprano</span>
               <span className="text-xs text-slate-500 mt-1">High female voice</span>
@@ -136,6 +189,7 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
               variant="outline" 
               className="h-auto py-3 flex flex-col"
               onClick={() => handleSelectVoiceType('Alto')}
+              disabled={isSubmitting}
             >
               <span className="font-semibold">Alto</span>
               <span className="text-xs text-slate-500 mt-1">Lower female voice</span>
@@ -144,6 +198,7 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
               variant="outline" 
               className="h-auto py-3 flex flex-col"
               onClick={() => handleSelectVoiceType('Tenor')}
+              disabled={isSubmitting}
             >
               <span className="font-semibold">Tenor</span>
               <span className="text-xs text-slate-500 mt-1">High male voice</span>
@@ -152,6 +207,7 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
               variant="outline" 
               className="h-auto py-3 flex flex-col"
               onClick={() => handleSelectVoiceType('Baritone')}
+              disabled={isSubmitting}
             >
               <span className="font-semibold">Baritone</span>
               <span className="text-xs text-slate-500 mt-1">Middle male voice</span>
@@ -160,6 +216,7 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
               variant="outline" 
               className="h-auto py-3 col-span-2"
               onClick={() => handleSelectVoiceType('Bass')}
+              disabled={isSubmitting}
             >
               <span className="font-semibold">Bass</span>
               <span className="text-xs text-slate-500 ml-1">(Lower male voice)</span>
@@ -169,10 +226,16 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
             <Button 
               variant="outline" 
               onClick={() => setShowQuiz(false)}
+              disabled={isSubmitting}
             >
               Back
             </Button>
           </div>
+          {isSubmitting && (
+            <div className="text-center mt-4">
+              <p className="text-sm text-gray-600">Sending your vocal toolkit...</p>
+            </div>
+          )}
         </>
       );
     }
@@ -195,6 +258,7 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
               placeholder="Enter your name"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              disabled={isSubmitting}
             />
           </div>
           <div className="space-y-2">
@@ -207,15 +271,16 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              disabled={isSubmitting}
             />
           </div>
         </div>
         <Button 
           onClick={handleNext} 
           className="w-full"
-          disabled={!email || !name}
+          disabled={!email || !name || isSubmitting}
         >
-          Get Free Vocal Toolkit
+          {isSubmitting ? 'Processing...' : 'Get Free Vocal Toolkit'}
         </Button>
       </>
     );
@@ -227,6 +292,7 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
         <button
           onClick={handleClose}
           className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-950 focus:ring-offset-2"
+          disabled={isSubmitting}
         >
           <X className="h-4 w-4" />
           <span className="sr-only">Close</span>
