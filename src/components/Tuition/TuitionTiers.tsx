@@ -149,9 +149,9 @@ const TuitionTiers = () => {
                           </h5>
                           <ul className="mt-3 space-y-2 pl-6 text-[#141414]/70 font-sans text-sm">
                             <li>€100 registration fee (included in total tuition)</li>
-                            <li>Three equal installments of €216.33 each</li>
+                            <li>Three equal installments of €217 each</li>
                             <li>Final payment by {tuitionDeadline}</li>
-                            <li className="font-medium text-[#141414]">Total tuition: €749</li>
+                            <li className="font-medium text-[#141414]">Total tuition: €751</li>
                           </ul>
                         </CardContent>
                       </Card>
@@ -191,7 +191,7 @@ const TuitionTiers = () => {
                   Limited to 20 students. Applications close on {format(APPLICATION_DATES.DEADLINE, 'MMMM d, yyyy')}.
                 </p>
                 <p className="font-sans text-xs text-[#141414]/50 mt-2">
-                  €100 registration fee is part of the total €749 tuition
+                  €100 registration fee is part of the total tuition cost
                 </p>
               </CardFooter>
             </Card>
@@ -205,7 +205,7 @@ const TuitionTiers = () => {
             className="flex justify-center mt-8"
           >
             <ArrowDown className="h-6 w-6 text-[#4f6e72]/60 animate-bounce" />
-          </motion.div>
+          </div>
         </div>
       </section>
     </LazyMotion>
