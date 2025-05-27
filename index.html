@@ -13,8 +13,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Security-Policy" content="
       default-src 'self';
-      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.gpteng.co https://*.supabase.co https://openfpcdn.io https://www.googletagmanager.com;
-      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.gpteng.co https://*.supabase.co https://openfpcdn.io https://www.googletagmanager.com https://cdn.tailwindcss.com;
+      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.tailwindcss.com;
       font-src 'self' https://fonts.gstatic.com;
       img-src 'self' data: blob: https://*.supabase.co https://www.googletagmanager.com;
       connect-src 'self' https://*.supabase.co wss://*.supabase.co https://openfpcdn.io https://www.googletagmanager.com https://www.google-analytics.com;
@@ -137,6 +137,22 @@
         <div class="spinner"></div>
       </div>
     </div>
+    
+    <!-- Vocal Excellence Popup Configuration -->
+    <script>
+      // Configure popup credentials
+      window.VX_SUPABASE_URL = 'https://aualmslyjnapymacktzg.supabase.co';
+      window.VX_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF1YWxtc2x5am5hcHltYWNrdHpnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5NjkxMTEsImV4cCI6MjA1OTU0NTExMX0.0rzWB0-lRtjKRtjKRtmziqJdg_RzfxfTsjd0ovwHpdkGcUs';
+      
+      // Debug logging for popup initialization
+      console.log('VX Popup configuration loaded:', {
+        supabaseUrl: !!window.VX_SUPABASE_URL,
+        supabaseKey: !!window.VX_SUPABASE_ANON_KEY
+      });
+    </script>
+    
+    <!-- Load the popup script -->
+    <script src="/popup.js"></script>
     
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
