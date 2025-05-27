@@ -116,15 +116,9 @@
     const path = location.pathname;
     const isVariantB = variant === 'B';
     
-    let headline = isVariantB ? "Unlock Your Voice" : "Master Your Vocal Craft";
-    let body = "Join our community of passionate vocalists and receive exclusive insights from world-class instructors.";
-    let cta = isVariantB ? "Get Started" : "Join Community";
-    
-    if (path.includes('/curriculum')) {
-      body = "Experience our curriculum firsthand with an exclusive masterclass video.";
-    } else if (path.includes('/instructors')) {
-      body = "Learn directly from our renowned vocal coaches with personalized insights.";
-    }
+    let headline = "Master Your Vocal Craft";
+    let body = "Join our community of passionate vocalists and gain exclusive insights from world-class instructors.";
+    let cta = "Join Community";
     
     debug('Generated content', { path, variant, headline });
     return { headline, body, cta };
@@ -220,31 +214,16 @@
               ">${content.body}</p>
             </div>
 
-            <!-- Benefits -->
+            <!-- Free Vocal Toolkit Section -->
             <div style="margin-bottom: 32px;">
-              <div style="
-                display: flex;
-                align-items: center;
-                margin-bottom: 12px;
-                font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
-                font-size: 15px;
-                color: rgba(29, 29, 31, 0.8);
-              ">
-                <div style="
-                  width: 20px;
-                  height: 20px;
-                  border-radius: 50%;
-                  background: #34C759;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  margin-right: 12px;
-                  font-size: 12px;
-                  color: white;
-                  font-weight: 600;
-                ">✓</div>
-                <span>Exclusive vocal techniques from top instructors</span>
-              </div>
+              <h3 style="
+                font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+                font-size: 20px;
+                font-weight: 600;
+                color: #1d1d1f;
+                margin: 0 0 16px 0;
+                letter-spacing: -0.3px;
+              ">Free Vocal Toolkit</h3>
               
               <div style="
                 display: flex;
@@ -267,15 +246,16 @@
                   color: white;
                   font-weight: 600;
                 ">✓</div>
-                <span>Early access to workshops and masterclasses</span>
+                <span>Quick-Read PDF Playbook</span>
               </div>
               
               <div style="
                 display: flex;
-                align-items: center;
+                align-items: start;
                 font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
                 font-size: 15px;
                 color: rgba(29, 29, 31, 0.8);
+                line-height: 1.4;
               ">
                 <div style="
                   width: 20px;
@@ -289,8 +269,10 @@
                   font-size: 12px;
                   color: white;
                   font-weight: 600;
+                  margin-top: 2px;
+                  flex-shrink: 0;
                 ">✓</div>
-                <span>Free vocal toolkit with professional warm-ups</span>
+                <span>Pro Video: Unlock Your Voice—Grounding Tips for Singers That Actually Work!</span>
               </div>
             </div>
             
