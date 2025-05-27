@@ -1,4 +1,3 @@
-
 /**
  * Vocal Excellence Email Popup
  * 
@@ -117,82 +116,283 @@
     const path = location.pathname;
     const isVariantB = variant === 'B';
     
-    let headline = isVariantB ? "Unlock Vocal Mastery—Stay Updated!" : "🎤 Elevate Your Voice!";
-    let body = "Exclusive insights from top vocal coaches delivered straight to your inbox.";
-    let cta = isVariantB ? "Start Now" : "Join Now";
+    let headline = isVariantB ? "Unlock Your Voice" : "Master Your Vocal Craft";
+    let body = "Join our community of passionate vocalists and receive exclusive insights from world-class instructors.";
+    let cta = isVariantB ? "Get Started" : "Join Community";
     
     if (path.includes('/curriculum')) {
-      body = "Want to see our curriculum in action? Subscribe for a free master-class video.";
+      body = "Experience our curriculum firsthand with an exclusive masterclass video.";
     } else if (path.includes('/instructors')) {
-      body = "Learn directly from world-class vocal coaches—get their exclusive insights by email.";
+      body = "Learn directly from our renowned vocal coaches with personalized insights.";
     }
     
     debug('Generated content', { path, variant, headline });
     return { headline, body, cta };
   }
 
-  // Create popup HTML with enhanced styling
+  // Create popup HTML with Apple-inspired design
   function createPopupHTML() {
     const content = getContent();
     
     return `
-      <div id="vx-popup-overlay" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4" role="dialog" aria-labelledby="vx-popup-title" aria-modal="true" style="z-index: 999999;">
-        <div class="bg-white rounded-2xl p-8 w-full max-w-sm mx-auto relative shadow-2xl animate-in fade-in duration-300">
-          <button id="vx-popup-close" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 w-6 h-6 flex items-center justify-center text-xl leading-none" aria-label="Close popup" style="line-height: 1;">
-            ×
-          </button>
+      <div id="vx-popup-overlay" class="fixed inset-0 z-50 flex items-center justify-center p-6" 
+           style="z-index: 999999; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(20px);"
+           role="dialog" aria-labelledby="vx-popup-title" aria-modal="true">
+        
+        <div class="relative w-full max-w-md transform transition-all duration-500 ease-out" 
+             style="animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;">
           
-          <div class="text-center">
-            <h2 id="vx-popup-title" class="text-xl font-bold text-gray-800 mb-3">${content.headline}</h2>
-            <p class="text-gray-600 mb-4 text-sm leading-relaxed">${content.body}</p>
+          <!-- Main Card -->
+          <div style="
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(40px);
+            border-radius: 24px;
+            box-shadow: 
+              0 32px 64px rgba(0, 0, 0, 0.12),
+              0 16px 32px rgba(0, 0, 0, 0.08),
+              0 4px 8px rgba(0, 0, 0, 0.04),
+              inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 40px 32px 32px 32px;
+            position: relative;
+            overflow: hidden;
+          ">
             
-            <div class="text-left mb-6 space-y-1">
-              <div class="flex items-center text-sm text-gray-600">
-                <span class="mr-2">✔️</span>
-                <span>Professional vocal tips</span>
+            <!-- Close Button -->
+            <button id="vx-popup-close" 
+                    style="
+                      position: absolute;
+                      top: 16px;
+                      right: 16px;
+                      width: 32px;
+                      height: 32px;
+                      border: none;
+                      background: rgba(0, 0, 0, 0.05);
+                      border-radius: 50%;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      cursor: pointer;
+                      transition: all 0.2s ease;
+                      font-size: 18px;
+                      color: rgba(0, 0, 0, 0.6);
+                    "
+                    onmouseover="this.style.background='rgba(0, 0, 0, 0.1)'; this.style.transform='scale(1.1)'"
+                    onmouseout="this.style.background='rgba(0, 0, 0, 0.05)'; this.style.transform='scale(1)'"
+                    aria-label="Close popup">
+              ×
+            </button>
+
+            <!-- Header -->
+            <div style="text-align: center; margin-bottom: 32px;">
+              <div style="
+                width: 56px;
+                height: 56px;
+                margin: 0 auto 20px auto;
+                background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+                border-radius: 16px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 24px;
+                box-shadow: 0 8px 24px rgba(0, 122, 255, 0.3);
+              ">
+                🎤
               </div>
-              <div class="flex items-center text-sm text-gray-600">
-                <span class="mr-2">✔️</span>
-                <span>Workshop early access</span>
+              
+              <h2 id="vx-popup-title" style="
+                font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+                font-size: 28px;
+                font-weight: 600;
+                line-height: 1.2;
+                color: #1d1d1f;
+                margin: 0 0 12px 0;
+                letter-spacing: -0.5px;
+              ">${content.headline}</h2>
+              
+              <p style="
+                font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+                font-size: 17px;
+                line-height: 1.47;
+                color: rgba(29, 29, 31, 0.7);
+                margin: 0;
+                font-weight: 400;
+              ">${content.body}</p>
+            </div>
+
+            <!-- Benefits -->
+            <div style="margin-bottom: 32px;">
+              <div style="
+                display: flex;
+                align-items: center;
+                margin-bottom: 12px;
+                font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+                font-size: 15px;
+                color: rgba(29, 29, 31, 0.8);
+              ">
+                <div style="
+                  width: 20px;
+                  height: 20px;
+                  border-radius: 50%;
+                  background: #34C759;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  margin-right: 12px;
+                  font-size: 12px;
+                  color: white;
+                  font-weight: 600;
+                ">✓</div>
+                <span>Exclusive vocal techniques from top instructors</span>
               </div>
-              <div class="flex items-center text-sm text-gray-600">
-                <span class="mr-2">✔️</span>
-                <span>Free master-class sneak peeks</span>
+              
+              <div style="
+                display: flex;
+                align-items: center;
+                margin-bottom: 12px;
+                font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+                font-size: 15px;
+                color: rgba(29, 29, 31, 0.8);
+              ">
+                <div style="
+                  width: 20px;
+                  height: 20px;
+                  border-radius: 50%;
+                  background: #34C759;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  margin-right: 12px;
+                  font-size: 12px;
+                  color: white;
+                  font-weight: 600;
+                ">✓</div>
+                <span>Early access to workshops and masterclasses</span>
+              </div>
+              
+              <div style="
+                display: flex;
+                align-items: center;
+                font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+                font-size: 15px;
+                color: rgba(29, 29, 31, 0.8);
+              ">
+                <div style="
+                  width: 20px;
+                  height: 20px;
+                  border-radius: 50%;
+                  background: #34C759;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  margin-right: 12px;
+                  font-size: 12px;
+                  color: white;
+                  font-weight: 600;
+                ">✓</div>
+                <span>Free vocal toolkit with professional warm-ups</span>
               </div>
             </div>
             
-            <form id="vx-popup-form" class="space-y-4">
+            <!-- Form -->
+            <form id="vx-popup-form" style="display: flex; flex-direction: column; gap: 16px;">
               <input 
                 type="text" 
                 id="vx-popup-name" 
                 required 
-                placeholder="Enter your name"
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-base"
-                aria-label="Your name"
-                style="font-size: 16px;"
-              >
+                placeholder="Your name"
+                style="
+                  width: 100%;
+                  padding: 16px 20px;
+                  border: 2px solid rgba(0, 0, 0, 0.1);
+                  border-radius: 12px;
+                  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+                  font-size: 17px;
+                  background: rgba(255, 255, 255, 0.8);
+                  transition: all 0.2s ease;
+                  outline: none;
+                  box-sizing: border-box;
+                "
+                onfocus="this.style.borderColor='#007AFF'; this.style.background='rgba(255, 255, 255, 1)'; this.style.boxShadow='0 0 0 3px rgba(0, 122, 255, 0.1)'"
+                onblur="this.style.borderColor='rgba(0, 0, 0, 0.1)'; this.style.background='rgba(255, 255, 255, 0.8)'; this.style.boxShadow='none'"
+                aria-label="Your name">
+              
               <input 
                 type="email" 
                 id="vx-popup-email" 
                 required 
-                placeholder="Enter your email"
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-base"
-                aria-label="Email address"
-                style="font-size: 16px;"
-              >
+                placeholder="Your email address"
+                style="
+                  width: 100%;
+                  padding: 16px 20px;
+                  border: 2px solid rgba(0, 0, 0, 0.1);
+                  border-radius: 12px;
+                  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+                  font-size: 17px;
+                  background: rgba(255, 255, 255, 0.8);
+                  transition: all 0.2s ease;
+                  outline: none;
+                  box-sizing: border-box;
+                "
+                onfocus="this.style.borderColor='#007AFF'; this.style.background='rgba(255, 255, 255, 1)'; this.style.boxShadow='0 0 0 3px rgba(0, 122, 255, 0.1)'"
+                onblur="this.style.borderColor='rgba(0, 0, 0, 0.1)'; this.style.background='rgba(255, 255, 255, 0.8)'; this.style.boxShadow='none'"
+                aria-label="Email address">
+              
               <button 
                 type="submit" 
                 id="vx-popup-submit"
-                class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200"
-              >
+                style="
+                  width: 100%;
+                  padding: 16px 24px;
+                  background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+                  color: white;
+                  border: none;
+                  border-radius: 12px;
+                  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+                  font-size: 17px;
+                  font-weight: 600;
+                  cursor: pointer;
+                  transition: all 0.2s ease;
+                  box-shadow: 0 4px 16px rgba(0, 122, 255, 0.3);
+                  margin-top: 8px;
+                "
+                onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 6px 20px rgba(0, 122, 255, 0.4)'"
+                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 16px rgba(0, 122, 255, 0.3)'"
+                onmousedown="this.style.transform='translateY(0)'"
+                onmouseup="this.style.transform='translateY(-1px)'">
                 ${content.cta}
               </button>
             </form>
             
-            <p class="text-xs text-gray-500 mt-4">We respect your privacy—no spam, unsubscribe anytime.</p>
+            <!-- Privacy Note -->
+            <p style="
+              text-align: center;
+              font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+              font-size: 13px;
+              color: rgba(29, 29, 31, 0.5);
+              margin: 20px 0 0 0;
+              line-height: 1.4;
+            ">We respect your privacy. Unsubscribe at any time.</p>
           </div>
         </div>
       </div>
+
+      <style>
+        @keyframes slideUp {
+          0% {
+            opacity: 0;
+            transform: translateY(60px) scale(0.95);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+        
+        #vx-popup-overlay * {
+          box-sizing: border-box;
+        }
+      </style>
     `;
   }
 
@@ -318,7 +518,7 @@
     // Update button state
     const originalText = submitBtn.textContent;
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Joining...';
+    submitBtn.textContent = 'Sending...';
     submitBtn.style.opacity = '0.7';
     
     try {
@@ -330,22 +530,49 @@
         detail: { email, name, variant, timestamp: new Date().toISOString() } 
       }));
       
-      // Show success message
+      // Show success message with Apple-style design
       const form = document.getElementById('vx-popup-form');
       if (form) {
         form.innerHTML = `
-          <div class="text-center py-4">
-            <div class="text-green-600 text-lg mb-2">🎉</div>
-            <p class="text-gray-800 font-medium">Welcome aboard!</p>
-            <p class="text-gray-600 text-sm mt-1">Check your inbox for exclusive content.</p>
+          <div style="text-align: center; padding: 32px 0;">
+            <div style="
+              width: 64px;
+              height: 64px;
+              margin: 0 auto 20px auto;
+              background: linear-gradient(135deg, #34C759 0%, #30D158 100%);
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 28px;
+              color: white;
+              box-shadow: 0 8px 24px rgba(52, 199, 89, 0.3);
+            ">✓</div>
+            
+            <h3 style="
+              font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+              font-size: 22px;
+              font-weight: 600;
+              color: #1d1d1f;
+              margin: 0 0 8px 0;
+              letter-spacing: -0.3px;
+            ">Welcome to the Community!</h3>
+            
+            <p style="
+              font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+              font-size: 16px;
+              line-height: 1.4;
+              color: rgba(29, 29, 31, 0.7);
+              margin: 0;
+            ">Your vocal toolkit is on its way to your inbox.</p>
           </div>
         `;
       }
       
-      // Auto-close after 2 seconds
+      // Auto-close after 3 seconds
       setTimeout(() => {
         closePopup();
-      }, 2000);
+      }, 3000);
       
     } catch (error) {
       debug('Email submission failed', error.message);
@@ -366,6 +593,7 @@
     const overlay = document.getElementById('vx-popup-overlay');
     if (overlay) {
       overlay.style.opacity = '0';
+      overlay.style.transform = 'scale(0.95)';
       setTimeout(() => {
         overlay.remove();
         document.body.style.overflow = '';
@@ -406,19 +634,6 @@
     debug('Showing popup');
     popupShown = true;
     markPopupSeen();
-    
-    // Ensure Tailwind CSS is available
-    if (!document.querySelector('link[href*="tailwindcss"]') && 
-        !document.querySelector('script[src*="tailwindcss"]') &&
-        !document.querySelector('style[data-tailwind]')) {
-      debug('Loading Tailwind CSS');
-      const link = document.createElement('link');
-      link.href = 'https://cdn.tailwindcss.com';
-      link.rel = 'stylesheet';
-      link.onload = () => debug('Tailwind CSS loaded');
-      link.onerror = () => debug('Failed to load Tailwind CSS');
-      document.head.appendChild(link);
-    }
     
     // Create and inject popup
     const popupHTML = createPopupHTML();
