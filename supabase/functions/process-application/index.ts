@@ -336,7 +336,7 @@ async function sendDirectEmail(applicationData: any) {
         <p style="font-size: 16px; line-height: 1.5; color: #444;">Dear ${name},</p>
         <p style="font-size: 16px; line-height: 1.5; color: #444;">Thank you for your application to the Vocal Excellence Summer Workshop 2025!</p>
         <p style="font-size: 16px; line-height: 1.5; color: #444;">We have received your application and are currently reviewing it. We'll be in touch with you in the next 2 weeks regarding the next steps.</p>
-        <p style="font-size: 16px; line-height: 1.5; color: #444;">If you have any questions, please don't hesitate to contact us.</p>
+        <p style="font-size: 16px; line-height: 1.5; color: #444;">If you have any questions, please don't hesitate to contact us at info@vocalexcellence.cy.</p>
         <p style="font-size: 16px; line-height: 1.5; color: #444;">Best regards,</p>
         <p style="font-size: 16px; line-height: 1.5; color: #444;">The Vocal Excellence Team</p>
       </div>
@@ -351,7 +351,7 @@ async function sendDirectEmail(applicationData: any) {
         "Authorization": `Bearer ${RESEND_API_KEY}`
       },
       body: JSON.stringify({
-        from: "Vocal Excellence <no-reply@vocalexcellence.com>",
+        from: "Vocal Excellence <info@vocalexcellence.cy>",
         to: email,
         subject: "Your Vocal Excellence Application",
         html: htmlContent
