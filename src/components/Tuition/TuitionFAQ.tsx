@@ -1,4 +1,3 @@
-
 import React, { useMemo } from 'react';
 import { motion, LazyMotion, domAnimation } from 'framer-motion';
 import { format } from 'date-fns';
@@ -129,7 +128,7 @@ const TuitionFAQ = () => {
           >
             <p className="font-sans text-[#141414]/70">
               Have more questions about the program?{" "}
-              <a href="mailto:admissions@vocalexcellence.com" className="text-[#4f6e72] hover:text-[#41595c] hover:underline transition-all">
+              <a href="mailto:info@vocalexcellence.cy" className="text-[#4f6e72] hover:text-[#41595c] hover:underline transition-all">
                 Get in touch with our team
               </a>
             </p>
