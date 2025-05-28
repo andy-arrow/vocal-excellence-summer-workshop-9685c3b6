@@ -49,11 +49,11 @@ function App() {
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider delayDuration={300}>
-          <div className="min-h-screen bg-white">
-            <PreloadResources />
-            <PopupCredentialsLoader />
-            
-            <BrowserRouter>
+          <BrowserRouter>
+            <div className="min-h-screen bg-white">
+              <PreloadResources />
+              <PopupCredentialsLoader />
+              
               <Suspense fallback={<PageLoader />}>
                 <Routes>
                   <Route path="/" element={<Index />} />
@@ -67,10 +67,10 @@ function App() {
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>
-            </BrowserRouter>
-            
-            <Toaster />
-          </div>
+              
+              <Toaster />
+            </div>
+          </BrowserRouter>
         </TooltipProvider>
       </QueryClientProvider>
     </ErrorBoundary>
