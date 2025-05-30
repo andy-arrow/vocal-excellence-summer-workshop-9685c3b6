@@ -2,17 +2,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Users, Award } from 'lucide-react';
-import { APPLICATION_DATES } from '@/constants/applicationDates';
 
 const ApplicationPageHero = () => {
-  const currentDate = new Date();
-  const deadline = APPLICATION_DATES.DEADLINE;
-  const applicationsOpen = currentDate <= deadline;
-  
-  // Calculate days remaining
-  const timeUntilDeadline = deadline.getTime() - currentDate.getTime();
-  const daysRemaining = Math.ceil(timeUntilDeadline / (1000 * 60 * 60 * 24));
-
   return (
     <section className="relative min-h-[60vh] flex items-center justify-center bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 overflow-hidden">
       {/* Background Effects */}
@@ -48,56 +39,11 @@ const ApplicationPageHero = () => {
             </motion.p>
           </div>
 
-          {/* Application Status */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="inline-block"
-          >
-            {applicationsOpen ? (
-              <div className="bg-green-500/20 backdrop-blur-sm border border-green-400/30 rounded-2xl p-6 max-w-md mx-auto">
-                <div className="flex items-center justify-center gap-3 mb-3">
-                  <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-                  <span className="text-green-300 font-semibold text-lg">Applications Open</span>
-                </div>
-                <p className="text-white text-sm">
-                  {daysRemaining > 0 ? (
-                    <>
-                      <span className="font-bold text-green-300">{daysRemaining}</span> days remaining
-                    </>
-                  ) : (
-                    <>
-                      Deadline is <span className="font-bold text-green-300">today</span>!
-                    </>
-                  )}
-                </p>
-                <p className="text-blue-200 text-sm mt-1">
-                  Deadline: {deadline.toLocaleDateString('en-US', { 
-                    weekday: 'long', 
-                    month: 'long', 
-                    day: 'numeric' 
-                  })}
-                </p>
-              </div>
-            ) : (
-              <div className="bg-red-500/20 backdrop-blur-sm border border-red-400/30 rounded-2xl p-6 max-w-md mx-auto">
-                <div className="flex items-center justify-center gap-3 mb-3">
-                  <div className="w-3 h-3 bg-red-400 rounded-full"></div>
-                  <span className="text-red-300 font-semibold text-lg">Applications Closed</span>
-                </div>
-                <p className="text-white text-sm">
-                  The deadline has passed. Check back for future opportunities.
-                </p>
-              </div>
-            )}
-          </motion.div>
-
           {/* Quick Stats */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
             className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto"
           >
             {[
@@ -117,27 +63,25 @@ const ApplicationPageHero = () => {
           </motion.div>
 
           {/* Scroll Indicator */}
-          {applicationsOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="flex flex-col items-center gap-2 text-blue-200"
+          >
+            <span className="text-sm">Scroll down to apply</span>
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 1.2 }}
-              className="flex flex-col items-center gap-2 text-blue-200"
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="w-6 h-10 border-2 border-blue-300 rounded-full flex justify-center"
             >
-              <span className="text-sm">Scroll down to apply</span>
               <motion.div
-                animate={{ y: [0, 8, 0] }}
+                animate={{ y: [0, 12, 0] }}
                 transition={{ duration: 2, repeat: Infinity }}
-                className="w-6 h-10 border-2 border-blue-300 rounded-full flex justify-center"
-              >
-                <motion.div
-                  animate={{ y: [0, 12, 0] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="w-1 h-3 bg-blue-300 rounded-full mt-2"
-                />
-              </motion.div>
+                className="w-1 h-3 bg-blue-300 rounded-full mt-2"
+              />
             </motion.div>
-          )}
+          </motion.div>
         </motion.div>
       </div>
     </section>
