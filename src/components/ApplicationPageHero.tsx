@@ -1,94 +1,143 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowDown } from 'lucide-react';
-import { format } from 'date-fns';
+import { Calendar, Clock, Users, Award } from 'lucide-react';
 import { APPLICATION_DATES } from '@/constants/applicationDates';
-import { useIsMobile } from '@/hooks/use-mobile';
-import SpotsRemainingIndicator from './SpotsRemainingIndicator';
 
 const ApplicationPageHero = () => {
-  const today = new Date();
-  const applicationsClosed = today > APPLICATION_DATES.DEADLINE;
-  const isMobile = useIsMobile();
+  const currentDate = new Date();
+  const deadline = APPLICATION_DATES.DEADLINE;
+  const applicationsOpen = currentDate <= deadline;
   
-  const scrollToForm = () => {
-    const formElement = document.getElementById('application-form');
-    if (formElement) {
-      formElement.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  // Calculate days remaining
+  const timeUntilDeadline = deadline.getTime() - currentDate.getTime();
+  const daysRemaining = Math.ceil(timeUntilDeadline / (1000 * 60 * 60 * 24));
 
   return (
-    <section className="relative bg-gradient-to-b from-white to-[#f5f5f7] py-12 sm:py-16 md:py-20 overflow-hidden border-b border-apple-border/10">
-      <div className="container mx-auto px-4 sm:px-6 md:px-8 relative z-10">
-        <motion.div 
-          className="max-w-3xl mx-auto text-center space-y-6"
-          initial={{ opacity: 0, y: 20 }}
+    <section className="relative min-h-[60vh] flex items-center justify-center bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 overflow-hidden">
+      {/* Background Effects */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      </div>
+      
+      <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="space-y-8"
         >
-          <span className="inline-block text-apple-grey text-xs sm:text-sm tracking-wide uppercase mb-2 sm:mb-3 font-medium">
-            Summer Workshop 2025
-          </span>
-          
-          <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl font-light tracking-tight text-apple-text">
-            Your Application to<br />
-            <span className="text-apple-blue">
-              Vocal Excellence
-            </span>
-          </h1>
-          
-          <motion.p 
-            className="text-base md:text-xl text-apple-grey max-w-2xl mx-auto leading-relaxed font-light"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.7 }}
+          {/* Main Heading */}
+          <div className="space-y-4">
+            <motion.h1 
+              className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              Apply Now
+            </motion.h1>
+            <motion.p 
+              className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              Join the Vocal Excellence Summer Workshop 2025 and transform your voice into an instrument of artistry
+            </motion.p>
+          </div>
+
+          {/* Application Status */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            className="inline-block"
           >
-            Join our exclusive 5-day Workshop where world-class mentors will transform your voice and elevate your technique to new heights.
-          </motion.p>
-          
-          <motion.div 
-            className="flex flex-col items-center gap-5 pt-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.7 }}
-          >
-            {!applicationsClosed ? (
-              <motion.button
-                onClick={scrollToForm}
-                className="px-8 py-4 rounded-full bg-apple-blue text-white hover:bg-apple-blue-hover transition-all duration-300 font-medium text-lg shadow-sm w-full sm:w-auto"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <span className="flex items-center justify-center gap-2">
-                  Begin Your Application
-                  <ArrowDown className="h-5 w-5" />
-                </span>
-              </motion.button>
+            {applicationsOpen ? (
+              <div className="bg-green-500/20 backdrop-blur-sm border border-green-400/30 rounded-2xl p-6 max-w-md mx-auto">
+                <div className="flex items-center justify-center gap-3 mb-3">
+                  <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                  <span className="text-green-300 font-semibold text-lg">Applications Open</span>
+                </div>
+                <p className="text-white text-sm">
+                  {daysRemaining > 0 ? (
+                    <>
+                      <span className="font-bold text-green-300">{daysRemaining}</span> days remaining
+                    </>
+                  ) : (
+                    <>
+                      Deadline is <span className="font-bold text-green-300">today</span>!
+                    </>
+                  )}
+                </p>
+                <p className="text-blue-200 text-sm mt-1">
+                  Deadline: {deadline.toLocaleDateString('en-US', { 
+                    weekday: 'long', 
+                    month: 'long', 
+                    day: 'numeric' 
+                  })}
+                </p>
+              </div>
             ) : (
-              <div className="px-8 py-4 rounded-full bg-gray-400 text-white font-medium text-lg shadow-sm w-full sm:w-auto">
-                <span className="flex items-center gap-2">
-                  Applications Closed
-                </span>
+              <div className="bg-red-500/20 backdrop-blur-sm border border-red-400/30 rounded-2xl p-6 max-w-md mx-auto">
+                <div className="flex items-center justify-center gap-3 mb-3">
+                  <div className="w-3 h-3 bg-red-400 rounded-full"></div>
+                  <span className="text-red-300 font-semibold text-lg">Applications Closed</span>
+                </div>
+                <p className="text-white text-sm">
+                  The deadline has passed. Check back for future opportunities.
+                </p>
               </div>
             )}
-            
-            <div className="text-sm">
-              {!applicationsClosed && <SpotsRemainingIndicator className="mb-1 justify-center" />}
-              <div className="flex flex-wrap items-center justify-center gap-2">
-                <span className="inline-block px-3 py-1 bg-apple-light backdrop-blur border border-apple-grey/20 rounded-full text-xs font-medium text-apple-grey">
-                  Limited Capacity
-                </span>
-                <span className="text-apple-grey">
-                  {applicationsClosed 
-                    ? `Applications for ${format(APPLICATION_DATES.PROGRAM_START, 'yyyy')} are now closed`
-                    : `Only 20 spots available for Summer ${format(APPLICATION_DATES.PROGRAM_START, 'yyyy')}`
-                  }
-                </span>
-              </div>
-            </div>
           </motion.div>
+
+          {/* Quick Stats */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto"
+          >
+            {[
+              { icon: <Calendar className="w-6 h-6" />, label: "5 Days", desc: "Intensive Training" },
+              { icon: <Users className="w-6 h-6" />, label: "20 Spots", desc: "Limited Enrollment" },
+              { icon: <Award className="w-6 h-6" />, label: "Expert", desc: "World-Class Faculty" },
+              { icon: <Clock className="w-6 h-6" />, label: "July 14-18", desc: "2025 Dates" }
+            ].map((stat, index) => (
+              <div key={index} className="text-center">
+                <div className="flex justify-center mb-2 text-blue-300">
+                  {stat.icon}
+                </div>
+                <div className="text-white font-bold text-lg">{stat.label}</div>
+                <div className="text-blue-200 text-sm">{stat.desc}</div>
+              </div>
+            ))}
+          </motion.div>
+
+          {/* Scroll Indicator */}
+          {applicationsOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 1.2 }}
+              className="flex flex-col items-center gap-2 text-blue-200"
+            >
+              <span className="text-sm">Scroll down to apply</span>
+              <motion.div
+                animate={{ y: [0, 8, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="w-6 h-10 border-2 border-blue-300 rounded-full flex justify-center"
+              >
+                <motion.div
+                  animate={{ y: [0, 12, 0] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="w-1 h-3 bg-blue-300 rounded-full mt-2"
+                />
+              </motion.div>
+            </motion.div>
+          )}
         </motion.div>
       </div>
     </section>
