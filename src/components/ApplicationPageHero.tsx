@@ -1,93 +1,97 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, Users, Award } from 'lucide-react';
+import { Calendar } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const ApplicationPageHero = () => {
+  const isMobile = useIsMobile();
+  
   return (
-    <section className="relative min-h-[60vh] flex items-center justify-center bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-      </div>
-      
-      <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
-        <motion.div
+    <section 
+      className={cn(
+        "relative overflow-visible",
+        isMobile 
+          ? "pt-56 mt-24 pb-12" 
+          : "pt-96 pb-20 min-h-[80vh]", 
+        "bg-apple-light border-b border-apple-border"
+      )}
+    >
+      <div className="relative z-20 text-center px-4 transition-all duration-500 ease-out max-w-5xl mx-auto">
+        <motion.div 
+          className="space-y-4 md:space-y-6" 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="space-y-8"
+          transition={{ duration: 0.8, delay: 0.3 }}
         >
-          {/* Main Heading */}
-          <div className="space-y-4">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="space-y-2"
-            >
-              <p className="text-lg md:text-xl text-blue-200 font-medium tracking-wider uppercase">
-                SUMMER WORKSHOP 2025
-              </p>
-              <p className="text-xl md:text-2xl text-blue-100">
-                Your Application to
-              </p>
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
-                Vocal Excellence
-              </h1>
-            </motion.div>
-            <motion.p 
-              className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            >
-              Join our exclusive 5-day Workshop where world-class mentors will transform your voice and elevate your technique to new heights.
-            </motion.p>
-          </div>
-
-          {/* Quick Stats */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto"
+            transition={{ duration: 0.8, delay: 0.7 }}
+            className="space-y-2"
           >
-            {[
-              { icon: <Calendar className="w-6 h-6" />, label: "5 Days", desc: "Intensive Training" },
-              { icon: <Users className="w-6 h-6" />, label: "20 Spots", desc: "Limited Enrollment" },
-              { icon: <Award className="w-6 h-6" />, label: "Expert", desc: "World-Class Faculty" },
-              { icon: <Clock className="w-6 h-6" />, label: "July 14-18", desc: "2025 Dates" }
-            ].map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="flex justify-center mb-2 text-blue-300">
-                  {stat.icon}
-                </div>
-                <div className="text-white font-bold text-lg">{stat.label}</div>
-                <div className="text-blue-200 text-sm">{stat.desc}</div>
-              </div>
-            ))}
+            <p className="text-lg md:text-xl text-apple-grey font-medium tracking-wider uppercase">
+              SUMMER WORKSHOP 2025
+            </p>
+            <p className="text-xl md:text-2xl text-apple-text">
+              Your Application to
+            </p>
+            <h1 className="font-serif text-3xl sm:text-3xl md:text-4xl lg:text-6xl font-light text-apple-text tracking-tight">
+              <span className="text-apple-blue">Vocal Excellence</span>
+            </h1>
           </motion.div>
-
-          {/* Scroll Indicator */}
-          <motion.div
+          
+          <motion.p 
+            className="font-sans text-sm sm:text-base md:text-lg lg:text-xl text-apple-grey max-w-2xl mx-auto leading-relaxed"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="flex flex-col items-center gap-2 text-blue-200"
+            transition={{ duration: 0.8, delay: 0.9 }}
           >
-            <span className="text-sm">Scroll down to apply</span>
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="w-6 h-10 border-2 border-blue-300 rounded-full flex justify-center"
+            Join our exclusive 5-day Workshop where world-class mentors will transform your voice and elevate your technique to new heights.
+          </motion.p>
+
+          {/* Program dates with location */}
+          <motion.div 
+            className="inline-flex items-center gap-2 text-apple-text/80 text-sm font-medium mx-auto"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 1.0 }}
+          >
+            <Calendar className="w-4 h-4 text-apple-blue" />
+            <span>14-18 July | Limassol, Cyprus</span>
+          </motion.div>
+          
+          {/* Features highlight */}
+          <motion.div 
+            className="flex flex-wrap justify-center gap-x-3 gap-y-2 text-xs md:text-xs font-medium text-apple-grey/80"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 1.1 }}
+          >
+            <span className="flex items-center"><span className="w-1.5 h-1.5 bg-apple-blue rounded-full mr-2"></span>Masterclasses</span>
+            <span className="flex items-center"><span className="w-1.5 h-1.5 bg-apple-blue rounded-full mr-2"></span>Private Coaching</span>
+            <span className="flex items-center"><span className="w-1.5 h-1.5 bg-apple-blue rounded-full mr-2"></span>Audition Prep</span>
+            <span className="flex items-center"><span className="w-1.5 h-1.5 bg-apple-blue rounded-full mr-2"></span>Stage Anxiety</span>
+          </motion.div>
+
+          <motion.div 
+            className="pt-4 md:pt-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.1 }}
+          >
+            <motion.div 
+              className="flex items-center justify-center mt-4 sm:mt-6 md:mt-8 space-x-1"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.3, duration: 0.5 }}
             >
-              <motion.div
-                animate={{ y: [0, 12, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
-                className="w-1 h-3 bg-blue-300 rounded-full mt-2"
-              />
+              <div className="w-1.5 h-1.5 rounded-full bg-apple-blue animate-pulse-slow"></div>
+              <p className="text-apple-grey text-xs font-light">
+                Limited Places Available
+              </p>
+              <div className="w-1.5 h-1.5 rounded-full bg-apple-blue animate-pulse-slow"></div>
             </motion.div>
           </motion.div>
         </motion.div>
