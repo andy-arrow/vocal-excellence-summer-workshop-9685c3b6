@@ -21,21 +21,29 @@ const ApplicationPageHero = () => {
         >
           {/* Main Heading */}
           <div className="space-y-4">
-            <motion.h1 
-              className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight"
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
+              className="space-y-2"
             >
-              Apply Now
-            </motion.h1>
+              <p className="text-lg md:text-xl text-blue-200 font-medium tracking-wider uppercase">
+                SUMMER WORKSHOP 2025
+              </p>
+              <p className="text-xl md:text-2xl text-blue-100">
+                Your Application to
+              </p>
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
+                Vocal Excellence
+              </h1>
+            </motion.div>
             <motion.p 
               className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              Join the Vocal Excellence Summer Workshop 2025 and transform your voice into an instrument of artistry
+              Join our exclusive 5-day Workshop where world-class mentors will transform your voice and elevate your technique to new heights.
             </motion.p>
           </div>
 
