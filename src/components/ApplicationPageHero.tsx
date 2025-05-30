@@ -13,9 +13,9 @@ const ApplicationPageHero = () => {
       className={cn(
         "relative overflow-visible",
         isMobile 
-          ? "pt-56 mt-24 pb-12" 
-          : "pt-96 pb-20 min-h-[80vh]", 
-        "bg-apple-light border-b border-apple-border"
+          ? "pt-20 pb-12" 
+          : "pt-24 pb-20", 
+        "bg-white"
       )}
     >
       <div className="relative z-20 text-center px-4 transition-all duration-500 ease-out max-w-5xl mx-auto">
