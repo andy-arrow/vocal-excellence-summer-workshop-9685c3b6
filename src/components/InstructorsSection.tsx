@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Instagram, Linkedin, ChevronDown, ChevronUp, Globe, FileText, Video, BookOpen } from 'lucide-react';
@@ -146,7 +145,6 @@ const InstructorsSection = () => {
             Learn from internationally renowned teachers from top conservatories and universities
           </p>
           
-          {/* Faculty highlights - updated with exact user-requested changes */}
           <div className="grid md:grid-cols-2 gap-4 max-w-2xl mx-auto text-left">
             <div className="flex items-center text-apple-grey">
               <span className="w-2 h-2 bg-apple-blue rounded-full mr-3"></span>
