@@ -25,7 +25,7 @@
     TIME_DELAY: 45000, // 45 seconds as backup
     SCROLL_THRESHOLD: 0.4, // 40% scroll - PRIMARY TRIGGER
     EXIT_INTENT_THRESHOLD: 15,
-    FORCE_SHOW_ON_SCROLL: true, // Always show for testing
+    FORCE_SHOW_ON_SCROLL: false, // Normal behavior - only show at 40% scroll
   };
 
   // State
