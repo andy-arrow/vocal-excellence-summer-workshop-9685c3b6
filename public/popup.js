@@ -1,5 +1,5 @@
 /**
- * Vocal Excellence Email Popup
+ * Vocal Excellence Merit Scholarship Popup
  * 
  * Configuration options (set before loading script):
  * - window.VX_SUPABASE_URL: Supabase project URL
@@ -116,15 +116,15 @@
     const path = location.pathname;
     const isVariantB = variant === 'B';
     
-    let headline = "Master Your Vocal Craft";
-    let body = "Join our community of passionate vocalists and gain exclusive insights from world-class instructors.";
-    let cta = "Join Community";
+    let headline = "Merit-Based Scholarships Available";
+    let body = "Exceptional vocal talent deserves recognition. Apply for our merit-based scholarships and receive financial support for your vocal education.";
+    let cta = "Get Scholarship Information";
     
     debug('Generated content', { path, variant, headline });
     return { headline, body, cta };
   }
 
-  // Create popup HTML with Apple-inspired design
+  // Create popup HTML with scholarship-focused design
   function createPopupHTML() {
     const content = getContent();
     
@@ -183,15 +183,15 @@
                 width: 56px;
                 height: 56px;
                 margin: 0 auto 20px auto;
-                background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+                background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
                 border-radius: 16px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 font-size: 24px;
-                box-shadow: 0 8px 24px rgba(0, 122, 255, 0.3);
+                box-shadow: 0 8px 24px rgba(245, 158, 11, 0.3);
               ">
-                🎤
+                🏆
               </div>
               
               <h2 id="vx-popup-title" style="
@@ -214,7 +214,7 @@
               ">${content.body}</p>
             </div>
 
-            <!-- Free Vocal Toolkit Section -->
+            <!-- Merit-Based Scholarships Section -->
             <div style="margin-bottom: 32px;">
               <h3 style="
                 font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
@@ -223,7 +223,7 @@
                 color: #1d1d1f;
                 margin: 0 0 16px 0;
                 letter-spacing: -0.3px;
-              ">Free Vocal Toolkit</h3>
+              ">Merit-Based Awards</h3>
               
               <div style="
                 display: flex;
@@ -237,7 +237,7 @@
                   width: 20px;
                   height: 20px;
                   border-radius: 50%;
-                  background: #34C759;
+                  background: #f59e0b;
                   display: flex;
                   align-items: center;
                   justify-content: center;
@@ -246,7 +246,31 @@
                   color: white;
                   font-weight: 600;
                 ">✓</div>
-                <span>Quick-Read PDF Playbook</span>
+                <span>Awarded based on vocal talent and merit</span>
+              </div>
+              
+              <div style="
+                display: flex;
+                align-items: center;
+                margin-bottom: 12px;
+                font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+                font-size: 15px;
+                color: rgba(29, 29, 31, 0.8);
+              ">
+                <div style="
+                  width: 20px;
+                  height: 20px;
+                  border-radius: 50%;
+                  background: #f59e0b;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  margin-right: 12px;
+                  font-size: 12px;
+                  color: white;
+                  font-weight: 600;
+                ">✓</div>
+                <span>Partial and full program scholarships</span>
               </div>
               
               <div style="
@@ -261,7 +285,7 @@
                   width: 20px;
                   height: 20px;
                   border-radius: 50%;
-                  background: #34C759;
+                  background: #f59e0b;
                   display: flex;
                   align-items: center;
                   justify-content: center;
@@ -272,7 +296,7 @@
                   margin-top: 2px;
                   flex-shrink: 0;
                 ">✓</div>
-                <span>Pro Video: Unlock Your Voice—Grounding Tips for Singers That Actually Work!</span>
+                <span>No financial need requirements</span>
               </div>
             </div>
             
@@ -295,7 +319,7 @@
                   outline: none;
                   box-sizing: border-box;
                 "
-                onfocus="this.style.borderColor='#007AFF'; this.style.background='rgba(255, 255, 255, 1)'; this.style.boxShadow='0 0 0 3px rgba(0, 122, 255, 0.1)'"
+                onfocus="this.style.borderColor='#f59e0b'; this.style.background='rgba(255, 255, 255, 1)'; this.style.boxShadow='0 0 0 3px rgba(245, 158, 11, 0.1)'"
                 onblur="this.style.borderColor='rgba(0, 0, 0, 0.1)'; this.style.background='rgba(255, 255, 255, 0.8)'; this.style.boxShadow='none'"
                 aria-label="Your name">
               
@@ -316,7 +340,7 @@
                   outline: none;
                   box-sizing: border-box;
                 "
-                onfocus="this.style.borderColor='#007AFF'; this.style.background='rgba(255, 255, 255, 1)'; this.style.boxShadow='0 0 0 3px rgba(0, 122, 255, 0.1)'"
+                onfocus="this.style.borderColor='#f59e0b'; this.style.background='rgba(255, 255, 255, 1)'; this.style.boxShadow='0 0 0 3px rgba(245, 158, 11, 0.1)'"
                 onblur="this.style.borderColor='rgba(0, 0, 0, 0.1)'; this.style.background='rgba(255, 255, 255, 0.8)'; this.style.boxShadow='none'"
                 aria-label="Email address">
               
@@ -326,7 +350,7 @@
                 style="
                   width: 100%;
                   padding: 16px 24px;
-                  background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+                  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
                   color: white;
                   border: none;
                   border-radius: 12px;
@@ -335,11 +359,11 @@
                   font-weight: 600;
                   cursor: pointer;
                   transition: all 0.2s ease;
-                  box-shadow: 0 4px 16px rgba(0, 122, 255, 0.3);
+                  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
                   margin-top: 8px;
                 "
-                onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 6px 20px rgba(0, 122, 255, 0.4)'"
-                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 16px rgba(0, 122, 255, 0.3)'"
+                onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 6px 20px rgba(245, 158, 11, 0.4)'"
+                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 16px rgba(245, 158, 11, 0.3)'"
                 onmousedown="this.style.transform='translateY(0)'"
                 onmouseup="this.style.transform='translateY(-1px)'">
                 ${content.cta}
@@ -354,7 +378,7 @@
               color: rgba(29, 29, 31, 0.5);
               margin: 20px 0 0 0;
               line-height: 1.4;
-            ">We respect your privacy. Unsubscribe at any time.</p>
+            ">Free scholarship information • No spam • Unsubscribe anytime</p>
           </div>
         </div>
       </div>
@@ -387,13 +411,13 @@
       throw new Error('Supabase credentials not configured');
     }
     
-    debug('Submitting email signup', { email, name, variant, supabaseUrl: supabaseUrl.substring(0, 20) + '...' });
+    debug('Submitting scholarship inquiry', { email, name, variant, supabaseUrl: supabaseUrl.substring(0, 20) + '...' });
     
     // Step 1: Save to Supabase email_signups table
     const payload = {
       email: email.trim().toLowerCase(),
-      source: 'popup',
-      variant: variant,
+      source: 'merit_scholarship_popup',
+      variant: `merit_scholarship_${variant}`,
       page_path: location.pathname,
     };
     
@@ -420,16 +444,16 @@
     
     debug('Supabase submission successful');
     
-    // Step 2: Send welcome email via edge function (matching React component structure)
+    // Step 2: Send scholarship information email via edge function
     try {
-      debug('Sending welcome email via edge function');
+      debug('Sending scholarship information via edge function');
       
       const emailPayload = {
         type: 'popup_signup',
         email: email.trim().toLowerCase(),
         name: name.trim() || email.split('@')[0],
-        variant: variant,
-        source: 'popup',
+        variant: `merit_scholarship_${variant}`,
+        source: 'merit_scholarship_popup',
         page_path: location.pathname
       };
       
@@ -454,7 +478,7 @@
         throw new Error(`Email sending failed: ${emailResult}`);
       }
       
-      debug('Welcome email sent successfully');
+      debug('Scholarship information email sent successfully');
       
     } catch (emailError) {
       debug('Email sending error', emailError.message);
@@ -507,12 +531,12 @@
       await submitEmail(email, name);
       
       // Success
-      debug('Email submission successful');
+      debug('Scholarship inquiry submitted successfully');
       window.dispatchEvent(new CustomEvent('vx-popup-submitted', { 
         detail: { email, name, variant, timestamp: new Date().toISOString() } 
       }));
       
-      // Show success message with Apple-style design
+      // Show success message
       const form = document.getElementById('vx-popup-form');
       if (form) {
         form.innerHTML = `
@@ -521,14 +545,14 @@
               width: 64px;
               height: 64px;
               margin: 0 auto 20px auto;
-              background: linear-gradient(135deg, #34C759 0%, #30D158 100%);
+              background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
               border-radius: 50%;
               display: flex;
               align-items: center;
               justify-content: center;
               font-size: 28px;
               color: white;
-              box-shadow: 0 8px 24px rgba(52, 199, 89, 0.3);
+              box-shadow: 0 8px 24px rgba(245, 158, 11, 0.3);
             ">✓</div>
             
             <h3 style="
@@ -538,7 +562,7 @@
               color: #1d1d1f;
               margin: 0 0 8px 0;
               letter-spacing: -0.3px;
-            ">Welcome to the Community!</h3>
+            ">Scholarship Information Sent!</h3>
             
             <p style="
               font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
@@ -546,7 +570,7 @@
               line-height: 1.4;
               color: rgba(29, 29, 31, 0.7);
               margin: 0;
-            ">Your vocal toolkit is on its way to your inbox.</p>
+            ">Check your inbox for merit-based scholarship details and application guidance.</p>
           </div>
         `;
       }
@@ -557,7 +581,7 @@
       }, 3000);
       
     } catch (error) {
-      debug('Email submission failed', error.message);
+      debug('Scholarship inquiry submission failed', error.message);
       
       // Reset button state
       submitBtn.disabled = false;
