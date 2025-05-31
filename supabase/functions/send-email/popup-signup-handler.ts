@@ -103,10 +103,12 @@ export async function handlePopupSignup({ email, name, variant, source, page_pat
               </div>
               <div>
                 <h3 style="color: #92400e; font-size: 16px; font-weight: 600; margin: 0 0 5px 0;">
-                  Flexible Award Levels
+                  Three Scholarship Tiers
                 </h3>
                 <p style="color: #a16207; font-size: 14px; margin: 0; line-height: 1.4;">
-                  Partial scholarships (€200-€700) and significant awards (up to €1,200) available based on demonstrated excellence
+                  <strong>Full Scholarship:</strong> €749 (complete program coverage)<br>
+                  <strong>Partial Scholarship:</strong> €375 (50% program discount)<br>
+                  <strong>Masterclass Scholarship:</strong> Registration fee waived + all masterclasses included
                 </p>
               </div>
             </div>
@@ -232,11 +234,11 @@ export async function handlePopupSignup({ email, name, variant, source, page_pat
           <div style="display: grid; gap: 10px;">
             <p style="color: #1e40af; font-size: 14px; margin: 0; display: flex; align-items: center;">
               <span style="font-weight: 600; margin-right: 8px;">Priority Deadline:</span>
-              March 15, 2025 (Best chance for maximum awards)
+              March 15, 2025 (Best chance for full scholarships)
             </p>
             <p style="color: #1e40af; font-size: 14px; margin: 0; display: flex; align-items: center;">
               <span style="font-weight: 600; margin-right: 8px;">Final Deadline:</span>
-              April 30, 2025 (Partial scholarships still available)
+              April 30, 2025 (Partial scholarships and masterclass awards still available)
             </p>
             <p style="color: #1e40af; font-size: 14px; margin: 0; display: flex; align-items: center;">
               <span style="font-weight: 600; margin-right: 8px;">Award Notifications:</span>
@@ -262,7 +264,7 @@ export async function handlePopupSignup({ email, name, variant, source, page_pat
             </p>
             <p style="color: #166534; font-size: 14px; margin: 0; display: flex; align-items: center;">
               <span style="font-weight: 600; margin-right: 8px;">Full Program Fee:</span>
-              €1,900 (before any scholarship awards)
+              €749 (before any scholarship awards)
             </p>
             <p style="color: #166534; font-size: 14px; margin: 0; display: flex; align-items: center;">
               <span style="font-weight: 600; margin-right: 8px;">Includes:</span>
@@ -409,7 +411,7 @@ export async function handlePopupSignup({ email, name, variant, source, page_pat
         <div style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border: 1px solid #22c55e; border-radius: 12px; padding: 20px; margin-bottom: 25px;">
           <h3 style="color: #14532d; margin: 0 0 10px 0; font-size: 16px; font-weight: 600;">💰 Revenue Opportunity</h3>
           <p style="color: #166534; margin: 0; line-height: 1.6; font-size: 14px;">
-            <strong>Scholarship inquiries have a 40% higher conversion rate</strong> than general inquiries. This prospect has shown serious intent by specifically requesting scholarship information. Estimated value: €1,200 - €1,900 per conversion.
+            <strong>Scholarship inquiries have a 40% higher conversion rate</strong> than general inquiries. This prospect has shown serious intent by specifically requesting scholarship information. Estimated value: €375 - €749 per conversion.
           </p>
         </div>
         
