@@ -2,7 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Calendar } from 'lucide-react';
+import { Calendar, MapPin, Users } from 'lucide-react';
 
 const TuitionHero = React.memo(() => {
   // Optimized animation configuration
@@ -15,58 +15,73 @@ const TuitionHero = React.memo(() => {
   const isMobile = useIsMobile();
   
   return (
-    <section className={`${isMobile ? 'pt-20 pb-10' : 'pt-24 pb-20'} px-4 bg-white relative z-10`}>
-      <div className="max-w-4xl mx-auto text-center">
+    <section className={`${isMobile ? 'pt-20 pb-12' : 'pt-24 pb-20'} px-4 bg-white relative z-10`}>
+      <div className="max-w-5xl mx-auto text-center">
         <motion.div
           {...animationConfig}
-          className="space-y-4 md:space-y-5"
+          className="space-y-6 md:space-y-8"
         >
-          <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl font-light text-[#141414] tracking-tight leading-tight">
-            Summer 2025 Vocal Training Program
+          <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl font-light text-[#141414] tracking-tight leading-tight">
+            Vocal Excellence
           </h1>
           
-          <p className="text-base md:text-xl text-[#141414]/70 max-w-2xl mx-auto font-sans">
-            Full-Day Intensive Training | 14-18 July | Limassol, Cyprus
+          <p className="font-serif text-xl md:text-2xl text-[#4f6e72] font-light">
+            Summer 2025 Vocal Training Program
           </p>
           
-          {/* Program dates with location */}
-          <div className="inline-flex items-center gap-2 text-[#141414]/60 text-sm font-medium mx-auto">
-            <Calendar className="w-4 h-4 text-[#4f6e72]" />
-            <span>14-18 July | Limassol, Cyprus</span>
+          {/* Program details */}
+          <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 text-[#141414]/70 text-base font-medium">
+            <div className="flex items-center gap-2">
+              <Calendar className="w-5 h-5 text-[#4f6e72]" />
+              <span>July 14-18, 2025</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <MapPin className="w-5 h-5 text-[#4f6e72]" />
+              <span>Limassol, Cyprus</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Users className="w-5 h-5 text-[#4f6e72]" />
+              <span>Limited to 20 Students</span>
+            </div>
           </div>
+
+          <p className="text-lg md:text-xl text-[#141414]/80 max-w-3xl mx-auto font-sans leading-relaxed">
+            Transform your voice with five intensive days of world-class vocal training. Our comprehensive program combines technical excellence with practical performance skills, designed for serious vocalists ready to elevate their craft.
+          </p>
 
           {/* Value proposition highlight */}
           <motion.div 
             {...animationConfig}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="bg-gradient-to-br from-[#f7fafa] to-[#eef2f2] border border-[#4f6e72]/20 rounded-2xl p-6 md:p-8 mt-8 max-w-2xl mx-auto"
+            className="bg-gradient-to-br from-[#f7fafa] to-[#eef2f2] border border-[#4f6e72]/20 rounded-2xl p-8 md:p-10 mt-10 max-w-4xl mx-auto"
           >
-            <h2 className="font-serif text-2xl md:text-3xl font-light text-[#4f6e72] mb-3">
-              Tuition: €749 total (all-inclusive)
+            <h2 className="font-serif text-3xl md:text-4xl font-light text-[#4f6e72] mb-4">
+              Investment: €749 (All-Inclusive)
             </h2>
-            <p className="text-lg text-[#4f6e72]/90 font-medium mb-2">
-              This breaks down to approximately €149 per day
+            <p className="text-xl text-[#4f6e72]/90 font-medium mb-3">
+              Approximately €150 per day for comprehensive, full-day intensive training
             </p>
-            <p className="text-sm text-[#141414]/70 font-sans">
-              An exceptional value for an intensive, full-day training experience
+            <p className="text-[#141414]/70 font-sans max-w-2xl mx-auto">
+              This exceptional value includes all instruction, materials, professional video recordings, and daily lunch—representing significant savings compared to individual private lessons and workshops.
             </p>
           </motion.div>
 
-          {/* Early bird notice */}
+          {/* Urgency notice */}
           <motion.div 
             {...animationConfig}
             transition={{ delay: 0.4, duration: 0.5 }}
-            className="bg-[#4f6e72] text-white rounded-xl p-4 max-w-lg mx-auto"
+            className="bg-[#4f6e72] text-white rounded-xl p-6 max-w-2xl mx-auto"
           >
-            <p className="font-medium text-lg">Early Bird Special</p>
-            <p className="text-sm text-white/90">Pay only €699 when registering before May 20, 2025.</p>
+            <p className="font-medium text-xl mb-2">Application Deadline: June 7, 2025</p>
+            <p className="text-white/90 font-medium">Only 7 days remaining! Limited enrollment of 20 students only.</p>
+            <p className="text-sm text-white/80 mt-2">Don't wait—spots are filling quickly and applications close soon.</p>
           </motion.div>
           
-          <div className="pt-3 md:pt-3">
+          <div className="pt-4 md:pt-6">
             <motion.div 
-              className="h-1 w-16 bg-gradient-to-r from-[#4f6e72] to-[#6a8d91] rounded-full mx-auto"
+              className="h-1 w-20 bg-gradient-to-r from-[#4f6e72] to-[#6a8d91] rounded-full mx-auto"
               initial={{ width: 0 }}
-              animate={{ width: isMobile ? 64 : 64 }}
+              animate={{ width: isMobile ? 80 : 80 }}
               transition={{ delay: 0.3, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             />
           </div>
