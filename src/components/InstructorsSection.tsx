@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Instagram, Linkedin, ChevronDown, ChevronUp, Globe, FileText, Video, BookOpen } from 'lucide-react';
