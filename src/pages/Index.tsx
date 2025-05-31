@@ -1,4 +1,3 @@
-
 import React, { useEffect, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
@@ -52,18 +51,12 @@ const Index = () => {
     }
   }, []);
 
-  // Enhanced popup debugging and initialization
+  // Enhanced popup system initialization
   useEffect(() => {
-    console.log('[Index] Page loaded, checking popup system...');
+    console.log('[Index] Initializing popup system for scroll-based triggering...');
     
-    // Force debug mode for testing
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('debug') === 'popup') {
-      console.log('[Index] Debug mode enabled via URL parameter');
-    }
-    
-    // Check if popup script is loaded
-    const checkPopupScript = () => {
+    // Check if popup script is loaded and initialize scroll trigger
+    const initializePopup = () => {
       if (typeof window !== 'undefined' && (window as any).VX_DEBUG) {
         console.log('[Index] Popup script loaded successfully');
         const status = (window as any).VX_DEBUG.getStatus();
@@ -72,36 +65,30 @@ const Index = () => {
         // Check credentials
         if (!status.credentials.supabaseUrl || !status.credentials.supabaseKey) {
           console.error('[Index] Missing Supabase credentials for popup');
+          return;
         }
         
-        // Force show popup for testing (remove this in production)
+        console.log('[Index] Popup system ready for scroll triggering');
+        
+        // Force show popup for testing if URL parameter is present
+        const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('force_popup') === 'true') {
           console.log('[Index] Force showing popup for testing');
           (window as any).VX_DEBUG.forceShow();
         }
+        
       } else {
-        console.error('[Index] Popup script not loaded or VX_DEBUG not available');
-        // Try to reload popup script
-        const script = document.createElement('script');
-        script.src = '/popup.js';
-        script.onload = () => {
-          console.log('[Index] Popup script reloaded');
-          setTimeout(checkPopupScript, 100);
-        };
-        script.onerror = () => {
-          console.error('[Index] Failed to load popup script');
-        };
-        document.head.appendChild(script);
+        console.log('[Index] Popup script not yet loaded, retrying...');
+        setTimeout(initializePopup, 500);
       }
     };
 
-    // Check popup system after a delay
-    const initTimeout = setTimeout(checkPopupScript, 1000);
+    // Start initialization after a brief delay
+    const initTimeout = setTimeout(initializePopup, 1000);
     
-    // Add popup event listeners for debugging
+    // Add popup event listeners
     const handlePopupShown = (e: CustomEvent) => {
       console.log('[Index] Popup shown event received:', e.detail);
-      // Optional: Track with analytics
       if (typeof window !== 'undefined' && (window as any).gtag) {
         (window as any).gtag('event', 'popup_shown', {
           variant: e.detail.variant,
@@ -112,7 +99,6 @@ const Index = () => {
 
     const handlePopupSubmitted = (e: CustomEvent) => {
       console.log('[Index] Popup submission event received:', e.detail);
-      // Optional: Track with analytics
       if (typeof window !== 'undefined' && (window as any).gtag) {
         (window as any).gtag('event', 'email_signup', {
           method: 'popup',
@@ -120,7 +106,6 @@ const Index = () => {
         });
       }
       
-      // Show success toast
       toast({
         title: "Thank you for subscribing!",
         description: "Check your inbox for exclusive content.",

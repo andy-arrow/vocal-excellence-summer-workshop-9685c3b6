@@ -1,3 +1,4 @@
+
 /**
  * Vocal Excellence Merit Scholarship Popup
  * 
@@ -22,9 +23,10 @@
     VARIANT_KEY: 'vx_popup_variant',
     TTL_DAYS: 7, // Show again after 7 days
     VARIANT_TTL_DAYS: 30,
-    TIME_DELAY: 10000, // 10 seconds for faster testing
-    SCROLL_THRESHOLD: 0.3, // 30% scroll before triggering
+    TIME_DELAY: 30000, // 30 seconds
+    SCROLL_THRESHOLD: 0.25, // 25% scroll before triggering
     EXIT_INTENT_THRESHOLD: 15, // pixels from top
+    FORCE_SHOW_ON_SCROLL: true, // Force show for testing
   };
 
   // State
@@ -47,17 +49,20 @@
     }
   }
 
-  // Force debug mode if URL contains debug parameter
-  if (typeof window !== 'undefined' && window.location.search.includes('debug=popup')) {
-    isDebugMode = true;
-    debug('Debug mode enabled');
+  // Force debug mode if URL contains debug parameter or force_popup
+  if (typeof window !== 'undefined') {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('debug') === 'popup' || urlParams.get('force_popup') === 'true') {
+      isDebugMode = true;
+      debug('Debug mode enabled');
+    }
   }
 
-  // Check if popup should be shown
+  // Check if popup should be shown - modified for scroll testing
   function shouldShowPopup() {
-    // Debug mode always shows popup
-    if (isDebugMode) {
-      debug('Debug mode: forcing popup to show');
+    // Debug mode or force show always shows popup
+    if (isDebugMode || CONFIG.FORCE_SHOW_ON_SCROLL) {
+      debug('Force mode: popup should show');
       return true;
     }
 
@@ -609,10 +614,10 @@
     }
   }
 
-  // Mark popup as seen
+  // Mark popup as seen - modified for testing
   function markPopupSeen() {
-    if (isDebugMode) {
-      debug('Debug mode: not marking popup as seen');
+    if (isDebugMode || CONFIG.FORCE_SHOW_ON_SCROLL) {
+      debug('Debug/Force mode: not marking popup as seen for easier testing');
       return;
     }
     
@@ -629,11 +634,6 @@
   function showPopup() {
     if (popupShown) {
       debug('Popup already shown, skipping');
-      return;
-    }
-    
-    if (!shouldShowPopup()) {
-      debug('Popup should not show based on conditions');
       return;
     }
     
@@ -703,7 +703,7 @@
     debug('Popup shown successfully');
   }
 
-  // Time-based trigger - primary trigger
+  // Time-based trigger - secondary trigger
   function setupTimeTrigger() {
     debug('Setting up time trigger', `${CONFIG.TIME_DELAY}ms`);
     
@@ -719,7 +719,7 @@
     }, CONFIG.TIME_DELAY);
   }
 
-  // Scroll-based trigger - secondary trigger
+  // Scroll-based trigger - PRIMARY trigger for this request
   function setupScrollTrigger() {
     debug('Setting up scroll trigger', `${CONFIG.SCROLL_THRESHOLD * 100}%`);
     
@@ -737,9 +737,11 @@
           const total = document.documentElement.scrollHeight - window.innerHeight;
           const percentage = total > 0 ? scrolled / total : 0;
           
+          debug('Scroll progress', `${Math.round(percentage * 100)}% (threshold: ${CONFIG.SCROLL_THRESHOLD * 100}%)`);
+          
           if (percentage >= CONFIG.SCROLL_THRESHOLD) {
             scrollTriggered = true;
-            debug('Scroll trigger fired', `${Math.round(percentage * 100)}%`);
+            debug('Scroll trigger fired - showing popup', `${Math.round(percentage * 100)}%`);
             showPopup();
             window.removeEventListener('scroll', handleScroll);
           }
@@ -752,6 +754,7 @@
     }
     
     window.addEventListener('scroll', handleScroll, { passive: true });
+    debug('Scroll trigger active - popup will show at 25% scroll');
   }
 
   // Exit intent trigger (desktop only) - tertiary trigger
@@ -846,20 +849,16 @@
       shouldShow: shouldShowPopup(),
       variant: variant,
       config: CONFIG,
-      isDebugMode: isDebugMode
+      isDebugMode: isDebugMode,
+      forceShowOnScroll: CONFIG.FORCE_SHOW_ON_SCROLL
     });
     
-    if (!shouldShowPopup()) {
-      debug('Popup should not show, skipping trigger setup');
-      return;
-    }
-    
-    // Setup triggers - time first, then scroll and exit intent as backups
-    setupTimeTrigger();
+    // Setup triggers - SCROLL FIRST for immediate response
     setupScrollTrigger();
+    setupTimeTrigger();
     setupExitIntentTrigger();
     
-    debug('All triggers set up successfully');
+    debug('All triggers set up successfully - scroll trigger is ACTIVE');
   }
 
   // Start when DOM is ready
