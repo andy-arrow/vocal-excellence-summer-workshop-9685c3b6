@@ -15,13 +15,13 @@ const TuitionHero = React.memo(() => {
   const isMobile = useIsMobile();
   
   return (
-    <section className={`${isMobile ? 'pt-4 pb-16' : 'pt-8 pb-24'} px-4 bg-white relative z-10`}>
+    <section className={`${isMobile ? 'mt-16 pt-8 pb-16' : 'mt-20 pt-12 pb-24'} px-4 bg-white relative z-10`}>
       <div className="max-w-4xl mx-auto text-center">
         <motion.div
           {...animationConfig}
           className="space-y-8 md:space-y-12"
         >
-          <div className="space-y-6 pt-8">
+          <div className="space-y-6">
             <h1 className="font-serif text-5xl md:text-7xl font-light text-[#141414] tracking-tight leading-tight">
               Vocal Excellence
             </h1>
