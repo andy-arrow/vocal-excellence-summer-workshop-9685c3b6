@@ -234,15 +234,15 @@ export async function handlePopupSignup({ email, name, variant, source, page_pat
           <div style="display: grid; gap: 10px;">
             <p style="color: #1e40af; font-size: 14px; margin: 0; display: flex; align-items: center;">
               <span style="font-weight: 600; margin-right: 8px;">Priority Deadline:</span>
-              March 15, 2025 (Best chance for full scholarships)
+              May 20, 2025 (Best chance for full scholarships)
             </p>
             <p style="color: #1e40af; font-size: 14px; margin: 0; display: flex; align-items: center;">
               <span style="font-weight: 600; margin-right: 8px;">Final Deadline:</span>
-              April 30, 2025 (Partial scholarships and masterclass awards still available)
+              June 7, 2025 (Partial scholarships and masterclass awards still available)
             </p>
             <p style="color: #1e40af; font-size: 14px; margin: 0; display: flex; align-items: center;">
               <span style="font-weight: 600; margin-right: 8px;">Award Notifications:</span>
-              Rolling basis, within 2 weeks of application
+              June 16, 2025
             </p>
           </div>
         </div>
@@ -256,11 +256,11 @@ export async function handlePopupSignup({ email, name, variant, source, page_pat
           <div style="display: grid; gap: 10px;">
             <p style="color: #166534; font-size: 14px; margin: 0; display: flex; align-items: center;">
               <span style="font-weight: 600; margin-right: 8px;">Dates:</span>
-              July 14-25, 2025 (2 weeks intensive)
+              July 14-18, 2025 (5 days intensive)
             </p>
             <p style="color: #166534; font-size: 14px; margin: 0; display: flex; align-items: center;">
               <span style="font-weight: 600; margin-right: 8px;">Location:</span>
-              Cyprus - Beautiful Mediterranean setting
+              Limassol, Cyprus - Beautiful Mediterranean setting
             </p>
             <p style="color: #166534; font-size: 14px; margin: 0; display: flex; align-items: center;">
               <span style="font-weight: 600; margin-right: 8px;">Full Program Fee:</span>
@@ -473,14 +473,14 @@ export async function handlePopupSignup({ email, name, variant, source, page_pat
                 <span style="color: white; font-size: 12px; font-weight: bold;">3</span>
               </div>
               <p style="color: #92400e; margin: 0; font-size: 14px; line-height: 1.5;">
-                <strong>Send application deadline reminder</strong> - Priority deadline is March 15th for best scholarship opportunities
+                <strong>Send application deadline reminder</strong> - Final deadline is June 7, 2025 for scholarship applications
               </p>
             </div>
           </div>
         </div>
         
         <!-- Contact Information -->
-        <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+        <div style="text-center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
           <p style="color: #6b7280; font-size: 14px; margin: 0;">
             This scholarship inquiry was generated automatically by your Vocal Excellence website.<br>
             <a href="https://vocalexcellence.cy" style="color: #f59e0b; text-decoration: none;">Visit website</a> | 
