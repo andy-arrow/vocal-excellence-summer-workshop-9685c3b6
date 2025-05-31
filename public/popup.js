@@ -17,14 +17,14 @@
 
   console.log('[VX Popup] Script loading...');
 
-  // Configuration - Optimized for scroll-based triggering
+  // Configuration - Updated to 40% scroll threshold
   const CONFIG = {
     STORAGE_KEY: 'vx_popup_seen',
     VARIANT_KEY: 'vx_popup_variant',
     TTL_DAYS: 7,
     VARIANT_TTL_DAYS: 30,
     TIME_DELAY: 45000, // 45 seconds as backup
-    SCROLL_THRESHOLD: 0.25, // 25% scroll - PRIMARY TRIGGER
+    SCROLL_THRESHOLD: 0.4, // 40% scroll - PRIMARY TRIGGER
     EXIT_INTENT_THRESHOLD: 15,
     FORCE_SHOW_ON_SCROLL: true, // Always show for testing
   };
@@ -675,7 +675,7 @@
 
   // Setup scroll trigger - PRIMARY trigger
   function setupScrollTrigger() {
-    debug('Setting up scroll trigger at 25% scroll');
+    debug('Setting up scroll trigger at 40% scroll');
     
     let ticking = false;
     
@@ -693,7 +693,7 @@
           
           if (percentage >= CONFIG.SCROLL_THRESHOLD) {
             scrollTriggered = true;
-            debug('Scroll trigger fired - showing scholarship popup');
+            debug('Scroll trigger fired at 40% - showing scholarship popup');
             showPopup();
             window.removeEventListener('scroll', handleScroll);
           }
