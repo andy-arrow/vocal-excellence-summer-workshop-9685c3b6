@@ -106,7 +106,7 @@ export async function handlePopupSignup({ email, name, variant, source, page_pat
                   Flexible Award Levels
                 </h3>
                 <p style="color: #a16207; font-size: 14px; margin: 0; line-height: 1.4;">
-                  Partial tuition scholarships ($500-$1,500) and full program scholarships ($2,500) available
+                  Partial scholarships (€200-€700) and significant awards (up to €1,200) available based on demonstrated excellence
                 </p>
               </div>
             </div>
@@ -166,7 +166,7 @@ export async function handlePopupSignup({ email, name, variant, source, page_pat
                   Submit Your Application
                 </h3>
                 <p style="color: #475569; font-size: 14px; margin: 0; line-height: 1.5;">
-                  Complete our standard workshop application and check "Yes" for scholarship interest
+                  Complete our workshop application and indicate your scholarship interest
                 </p>
               </div>
             </div>
@@ -232,7 +232,7 @@ export async function handlePopupSignup({ email, name, variant, source, page_pat
           <div style="display: grid; gap: 10px;">
             <p style="color: #1e40af; font-size: 14px; margin: 0; display: flex; align-items: center;">
               <span style="font-weight: 600; margin-right: 8px;">Priority Deadline:</span>
-              March 15, 2025 (Best chance for full scholarships)
+              March 15, 2025 (Best chance for maximum awards)
             </p>
             <p style="color: #1e40af; font-size: 14px; margin: 0; display: flex; align-items: center;">
               <span style="font-weight: 600; margin-right: 8px;">Final Deadline:</span>
@@ -241,6 +241,32 @@ export async function handlePopupSignup({ email, name, variant, source, page_pat
             <p style="color: #1e40af; font-size: 14px; margin: 0; display: flex; align-items: center;">
               <span style="font-weight: 600; margin-right: 8px;">Award Notifications:</span>
               Rolling basis, within 2 weeks of application
+            </p>
+          </div>
+        </div>
+
+        <!-- Program Details -->
+        <div style="background-color: #f0fdf4; border: 1px solid #22c55e; border-radius: 12px; padding: 25px; margin: 30px 0;">
+          <h2 style="color: #166534; font-size: 18px; font-weight: 600; margin: 0 0 15px 0; display: flex; align-items: center;">
+            <span style="margin-right: 10px;">🎵</span>
+            2025 Summer Workshop Details
+          </h2>
+          <div style="display: grid; gap: 10px;">
+            <p style="color: #166534; font-size: 14px; margin: 0; display: flex; align-items: center;">
+              <span style="font-weight: 600; margin-right: 8px;">Dates:</span>
+              July 14-25, 2025 (2 weeks intensive)
+            </p>
+            <p style="color: #166534; font-size: 14px; margin: 0; display: flex; align-items: center;">
+              <span style="font-weight: 600; margin-right: 8px;">Location:</span>
+              Cyprus - Beautiful Mediterranean setting
+            </p>
+            <p style="color: #166534; font-size: 14px; margin: 0; display: flex; align-items: center;">
+              <span style="font-weight: 600; margin-right: 8px;">Full Program Fee:</span>
+              €1,900 (before any scholarship awards)
+            </p>
+            <p style="color: #166534; font-size: 14px; margin: 0; display: flex; align-items: center;">
+              <span style="font-weight: 600; margin-right: 8px;">Includes:</span>
+              Masterclasses, private lessons, ensemble work, and performance opportunities
             </p>
           </div>
         </div>
@@ -383,7 +409,7 @@ export async function handlePopupSignup({ email, name, variant, source, page_pat
         <div style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border: 1px solid #22c55e; border-radius: 12px; padding: 20px; margin-bottom: 25px;">
           <h3 style="color: #14532d; margin: 0 0 10px 0; font-size: 16px; font-weight: 600;">💰 Revenue Opportunity</h3>
           <p style="color: #166534; margin: 0; line-height: 1.6; font-size: 14px;">
-            <strong>Scholarship inquiries have a 40% higher conversion rate</strong> than general inquiries. This prospect has shown serious intent by specifically requesting scholarship information. Estimated value: €1,250 - €2,500 per conversion.
+            <strong>Scholarship inquiries have a 40% higher conversion rate</strong> than general inquiries. This prospect has shown serious intent by specifically requesting scholarship information. Estimated value: €1,200 - €1,900 per conversion.
           </p>
         </div>
         
