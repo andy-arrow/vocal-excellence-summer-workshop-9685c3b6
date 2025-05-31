@@ -48,41 +48,41 @@ const TuitionTiers = () => {
     window.scrollTo(0, 0);
   }, [navigate]);
 
-  // Enhanced Program Features with comprehensive training approach
+  // Program Features with casual language
   const PROGRAM_FEATURES = [
-    '360° Vocal Development - Technical skills, performance, and artistry',
-    'World-Class Faculty from prestigious universities and conservatories',
-    'Small Group Focus - Limited to 20 students for personalized attention',
-    'Daily Masterclasses with renowned instructors',
-    'Individual Private Lesson for each participant',
-    'Dedicated Accompanist Session per student',
-    'Acting Workshops for stage presence and character development',
-    'Alexander Technique Training for body awareness and tension release',
-    'Ensemble Workshops for collaborative musicianship',
-    'Professional Audition Preparation with expert guidance',
-    'Mock Auditions with professional 4K video recording',
-    'Final Performance with professional 4K video recording',
-    'Stage Anxiety Management workshops',
-    'Daily Lunch included in tuition'
+    'Complete vocal training - technique, performance, and artistry all covered',
+    'Amazing instructors from top universities and music schools',
+    'Small groups only - max 20 students so you get real attention',
+    'Daily masterclasses with incredible teachers',
+    'Your own private lesson included',
+    'Personal accompanist session just for you',
+    'Acting workshops to boost your stage presence',
+    'Alexander Technique training (helps with posture and nerves)',
+    'Group singing workshops for team skills',
+    'Audition prep with expert tips',
+    'Practice auditions filmed in 4K quality',
+    'Final performance filmed professionally in 4K',
+    'Workshops on handling stage nerves',
+    'Lunch included every day'
   ];
 
   // Enhanced value proposition points
   const VALUE_POINTS = [
     {
       icon: <Clock className="h-4 w-4 text-[#4f6e72]" />,
-      text: 'Full-day schedules from morning to evening, maximizing every moment of your training experience'
+      text: 'Full days packed with training from morning to evening - you\'ll get the most out of every moment'
     },
     {
       icon: <Award className="h-4 w-4 text-[#4f6e72]" />,
-      text: 'Professional facilities with premium amenities, including daily lunch and dedicated accompanist sessions'
+      text: 'Top-notch facilities with everything included - lunch and your own accompanist sessions'
     },
     {
       icon: <Users className="h-4 w-4 text-[#4f6e72]" />,
-      text: 'Personalized coaching within a supportive group environment for optimal learning'
+      text: 'Personal coaching in a fun group setting for the best learning experience'
     },
     {
       icon: <Star className="h-4 w-4 text-[#4f6e72]" />,
-      text: 'Professional documentation of your progress through 4K video recordings of performances and auditions'
+      text: 'Professional 4K videos of your performances and auditions to keep forever'
     }
   ];
 
@@ -96,19 +96,19 @@ const TuitionTiers = () => {
             className="text-center max-w-4xl mx-auto mb-20"
           >
             <h2 className="font-serif text-4xl md:text-5xl font-light text-[#141414] mb-8">
-              Why This is Incredible Value
+              Why This is Amazing Value
             </h2>
             
             <div className="bg-gradient-to-br from-[#f7fafa] to-[#eef2f2] border border-[#4f6e72]/20 rounded-3xl p-10 md:p-12 mb-10">
               <div className="text-center mb-10">
                 <p className="text-3xl md:text-4xl font-serif font-light text-[#4f6e72] mb-3">
-                  €749 (All-Inclusive)
+                  €749 (Everything Included)
                 </p>
                 <p className="text-xl text-[#4f6e72]/90 font-medium mb-3">
-                  Approximately €150 per day for comprehensive, full-day intensive training
+                  About €150 per day for full-day intensive training
                 </p>
                 <p className="text-[#141414]/70 font-sans text-lg">
-                  This exceptional value includes all instruction, materials, professional video recordings, and daily lunch
+                  This covers everything - all lessons, materials, professional video recordings, and daily lunch
                 </p>
               </div>
               
@@ -120,7 +120,7 @@ const TuitionTiers = () => {
             </div>
             
             <p className="text-xl text-[#141414]/70 font-sans max-w-3xl mx-auto leading-relaxed">
-              Join us for this unique opportunity to receive unparalleled training and support at an unbeatable daily rate. Our intensive format maximizes learning through practical application and professional documentation of your progress.
+              This is your chance to get incredible training and support at an unbeatable daily rate. Our intensive format means you'll learn tons through hands-on practice and get professional videos of your progress.
             </p>
           </motion.div>
           
@@ -138,12 +138,12 @@ const TuitionTiers = () => {
                       Summer 2025 Program
                     </h3>
                     <p className="font-sans text-lg text-[#141414]/70">
-                      Five transformative days of world-class vocal training
+                      Five amazing days of world-class vocal training
                     </p>
                   </div>
                   <div className="text-left md:text-right">
                     <p className="text-3xl md:text-4xl font-serif font-light text-[#4f6e72]">€749</p>
-                    <p className="font-sans text-base text-[#141414]/70 mt-1">All-inclusive investment</p>
+                    <p className="font-sans text-base text-[#141414]/70 mt-1">Everything included</p>
                   </div>
                 </div>
               </CardHeader>
@@ -154,7 +154,7 @@ const TuitionTiers = () => {
                   {/* Program Highlights */}
                   <div>
                     <h4 className="font-serif text-2xl font-light text-[#141414] mb-6">
-                      Comprehensive Training Approach
+                      What You'll Get
                     </h4>
                     <ul className="space-y-4 font-sans">
                       {PROGRAM_FEATURES.map((item, i) => (
@@ -166,22 +166,22 @@ const TuitionTiers = () => {
                   {/* Payment Information */}
                   <div>
                     <h4 className="font-serif text-2xl font-light text-[#141414] mb-6">
-                      Investment & Payment
+                      How Much & How to Pay
                     </h4>
                     <div className="space-y-6">
-                      {/* Investment Overview */}
+                      {/* Total Cost */}
                       <Card className="overflow-hidden border-[#4f6e72]/20 bg-gradient-to-br from-[#f7fafa] to-[#e9f1f2] hover:from-[#f2f7f7] hover:to-[#e4edef] transition-colors duration-300">
                         <CardContent className="p-8">
                           <h5 className="font-sans font-medium text-[#4f6e72] flex items-center gap-2 mb-4">
                             <Award className="h-5 w-5 text-[#4f6e72]" />
-                            Total Investment
+                            Total Cost
                           </h5>
                           <p className="text-3xl font-serif font-light text-[#4f6e72] mb-3">€749</p>
                           <p className="text-[#4f6e72]/90 font-sans mb-3">
-                            All-inclusive: instruction, materials, recordings, and daily lunch
+                            Everything included: lessons, materials, recordings, and daily lunch
                           </p>
                           <p className="text-sm text-[#4f6e72]/80 font-sans">
-                            Representing significant savings compared to individual private lessons and workshops
+                            Way cheaper than booking private lessons and workshops separately
                           </p>
                         </CardContent>
                       </Card>
@@ -191,14 +191,14 @@ const TuitionTiers = () => {
                         <CardContent className="p-8">
                           <h5 className="font-sans font-medium text-[#141414] flex items-center gap-2 mb-4">
                             <Tag className="h-5 w-5 text-[#4f6e72]" />
-                            Standard Payment Plan
+                            Payment Plan
                           </h5>
                           <ul className="space-y-3 text-[#141414]/70 font-sans">
-                            <li>• €100 registration fee (applied to total tuition)</li>
-                            <li>• Three equal installments of €216 each</li>
+                            <li>• €100 to register (counts toward your total)</li>
+                            <li>• Three payments of €216 each</li>
                             <li>• Final payment due: {tuitionDeadline}</li>
                             <li className="font-medium text-[#141414] pt-2 border-t border-[#f0f0f0]">
-                              Total investment: €749 (all-inclusive)
+                              Total: €749 (everything included)
                             </li>
                           </ul>
                         </CardContent>
@@ -212,13 +212,13 @@ const TuitionTiers = () => {
               <CardFooter className="px-10 py-10 border-t border-[#f0f0f0] flex flex-col items-center text-center bg-gradient-to-br from-[#fafafa] to-[#f5f5f5]">
                 <div className="mb-6 text-center">
                   <h5 className="font-serif text-2xl font-light text-[#141414] mb-2">
-                    Secure Your Spot Today
+                    Grab Your Spot Now
                   </h5>
                   <p className="font-sans text-lg text-[#141414]/70 mb-1">
-                    Limited enrollment of 20 students only
+                    Only 20 spots available
                   </p>
                   <p className="font-sans text-base text-red-600 font-medium">
-                    Application deadline: {format(APPLICATION_DATES.DEADLINE, 'MMMM d, yyyy')} - Only 7 days remaining!
+                    Application deadline: {format(APPLICATION_DATES.DEADLINE, 'MMMM d, yyyy')} - Only 7 days left!
                   </p>
                 </div>
                 
@@ -230,7 +230,7 @@ const TuitionTiers = () => {
                 </Button>
                 
                 <p className="font-sans text-sm text-[#141414]/60 mt-4 max-w-md">
-                  Don't wait—spots are filling quickly and applications close soon. The €100 registration fee is applied to your total tuition cost.
+                  Don't wait - spots are going fast and applications close soon. The €100 registration fee is part of your total cost.
                 </p>
               </CardFooter>
             </Card>
