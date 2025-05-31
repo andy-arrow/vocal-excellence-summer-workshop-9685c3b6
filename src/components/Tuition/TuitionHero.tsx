@@ -26,7 +26,7 @@ const TuitionHero = React.memo(() => {
           </h1>
           
           <p className="text-base md:text-xl text-[#141414]/70 max-w-2xl mx-auto font-sans">
-            Full-Day Intensive Training • World-Class Instruction • Unbeatable Value
+            Full-Day Intensive Training | 14-18 July | Limassol, Cyprus
           </p>
           
           {/* Program dates with location */}
@@ -42,13 +42,13 @@ const TuitionHero = React.memo(() => {
             className="bg-gradient-to-br from-[#f7fafa] to-[#eef2f2] border border-[#4f6e72]/20 rounded-2xl p-6 md:p-8 mt-8 max-w-2xl mx-auto"
           >
             <h2 className="font-serif text-2xl md:text-3xl font-light text-[#4f6e72] mb-3">
-              €749 Total (All-Inclusive)
+              Tuition: €749 total (all-inclusive)
             </h2>
             <p className="text-lg text-[#4f6e72]/90 font-medium mb-2">
-              Approximately €149 per day
+              This breaks down to approximately €149 per day
             </p>
             <p className="text-sm text-[#141414]/70 font-sans">
-              An exceptional value for intensive, full-day training with world-class instruction
+              An exceptional value for an intensive, full-day training experience
             </p>
           </motion.div>
 
@@ -58,8 +58,8 @@ const TuitionHero = React.memo(() => {
             transition={{ delay: 0.4, duration: 0.5 }}
             className="bg-[#4f6e72] text-white rounded-xl p-4 max-w-lg mx-auto"
           >
-            <p className="font-medium text-lg">Early Bird Special: €699</p>
-            <p className="text-sm text-white/90">Register before May 20, 2025</p>
+            <p className="font-medium text-lg">Early Bird Special</p>
+            <p className="text-sm text-white/90">Pay only €699 when registering before May 20, 2025.</p>
           </motion.div>
           
           <div className="pt-3 md:pt-3">

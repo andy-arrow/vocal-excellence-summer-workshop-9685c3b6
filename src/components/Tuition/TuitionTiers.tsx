@@ -38,30 +38,6 @@ const ValuePoint = React.memo(({ text }: { text: string }) => (
 ));
 ValuePoint.displayName = 'ValuePoint';
 
-// Memoized discount card component
-const DiscountCard = React.memo(({ title, description, highlighted = false }: { 
-  title: string; 
-  description: string; 
-  highlighted?: boolean;
-}) => (
-  <Card className={`overflow-hidden ${
-    highlighted 
-      ? "border-[#4f6e72]/20 bg-gradient-to-br from-[#f7fafa] to-[#e9f1f2] hover:from-[#f2f7f7] hover:to-[#e4edef]" 
-      : "border-[#e5eeef] bg-[#f2f7f7] hover:bg-white"
-    } transition-colors duration-300`}>
-    <CardContent className="p-6">
-      <h5 className={`font-sans font-medium ${highlighted ? "text-[#4f6e72]" : "text-[#141414]"} flex items-center gap-2`}>
-        <Tag className="h-4 w-4 text-[#4f6e72]" />
-        {title}
-      </h5>
-      <p className={`${highlighted ? "text-[#4f6e72]/90" : "text-[#141414]/70"} mt-2 pl-6 font-sans text-sm`}>
-        {description}
-      </p>
-    </CardContent>
-  </Card>
-));
-DiscountCard.displayName = 'DiscountCard';
-
 const TuitionTiers = () => {
   const navigate = useNavigate();
   const earlyBirdDate = format(new Date('2025-05-20'), 'MMMM d, yyyy');
@@ -90,7 +66,7 @@ const TuitionTiers = () => {
     'Lunch Included in Tuition'
   ];
 
-  // Value proposition points
+  // Value proposition points - updated with new copy
   const VALUE_POINTS = [
     'Comprehensive daily schedule, maximizing every day from morning to evening',
     'World-class instruction, personalized coaching, and extensive workshops included',
@@ -117,7 +93,7 @@ const TuitionTiers = () => {
                   €749 total (all-inclusive)
                 </p>
                 <p className="text-lg text-[#4f6e72]/90 font-medium mb-2">
-                  Approximately €149 per day
+                  This breaks down to approximately €149 per day
                 </p>
                 <p className="text-[#141414]/70 font-sans">
                   An exceptional value for an intensive, full-day training experience
@@ -178,7 +154,7 @@ const TuitionTiers = () => {
                   {/* Payment Options */}
                   <div>
                     <h4 className="font-serif text-xl font-light text-[#141414] mb-5">
-                      Ways to Save
+                      Early Bird Special
                     </h4>
                     <div className="space-y-4">
                       {/* Early Bird Special */}
@@ -190,7 +166,7 @@ const TuitionTiers = () => {
                           </h5>
                           <p className="text-2xl font-serif font-light text-[#4f6e72] mb-2">€699</p>
                           <p className="text-[#4f6e72]/90 font-sans text-sm">
-                            Register before {earlyBirdDate} and save €50
+                            Pay only €699 when registering before {earlyBirdDate}
                           </p>
                         </CardContent>
                       </Card>
@@ -224,7 +200,7 @@ const TuitionTiers = () => {
                   Secure Your Spot Today
                 </Button>
                 <p className="font-sans text-sm text-[#141414]/60 mt-4">
-                  Limited to 20 students. Applications close on {format(APPLICATION_DATES.DEADLINE, 'MMMM d, yyyy')}.
+                  Limited to just 20 students! Applications close on {format(APPLICATION_DATES.DEADLINE, 'MMMM d, yyyy')}.
                 </p>
                 <p className="font-sans text-xs text-[#141414]/50 mt-2">
                   €100 registration fee is part of the total tuition cost
