@@ -73,7 +73,7 @@ const TuitionTiers = () => {
     window.scrollTo(0, 0);
   }, [navigate]);
 
-  // Updated Program Features
+  // Updated Program Features with clarified recording information
   const PROGRAM_FEATURES = [
     'Comprehensive 360° Approach to Vocal Training',
     'World-class Teachers from Top Universities',
@@ -84,8 +84,8 @@ const TuitionTiers = () => {
     'One Private Lesson for Each Student',
     'One Dedicated Accompanist Session per Student',
     'Alexander Technique Workshops',
-    'Mock Auditions and Final Performance',
-    'Professional 4K Video Recording of Final Performance',
+    'Mock Auditions with Professional 4K Video Recording',
+    'Final Performance with Professional 4K Video Recording',
     'Stage Anxiety Management Workshops',
     'Lunch Included in Tuition'
   ];
