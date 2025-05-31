@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -14,13 +15,13 @@ const TuitionHero = React.memo(() => {
   const isMobile = useIsMobile();
   
   return (
-    <section className={`${isMobile ? 'pt-20 pb-16' : 'pt-24 pb-24'} px-4 bg-white relative z-10`}>
+    <section className={`${isMobile ? 'pt-4 pb-16' : 'pt-8 pb-24'} px-4 bg-white relative z-10`}>
       <div className="max-w-4xl mx-auto text-center">
         <motion.div
           {...animationConfig}
           className="space-y-8 md:space-y-12"
         >
-          <div className="space-y-6">
+          <div className="space-y-6 pt-8">
             <h1 className="font-serif text-5xl md:text-7xl font-light text-[#141414] tracking-tight leading-tight">
               Vocal Excellence
             </h1>
@@ -48,7 +49,7 @@ const TuitionHero = React.memo(() => {
 
           <div className="max-w-2xl mx-auto">
             <p className="text-xl md:text-2xl text-[#141414]/80 font-serif font-light leading-relaxed">
-              Five incredible days of vocal training that will transform your voice
+              Five incredible days that will transform your voice
             </p>
           </div>
 
@@ -75,8 +76,8 @@ const TuitionHero = React.memo(() => {
             transition={{ delay: 0.5, duration: 0.8 }}
             className="text-center max-w-xl mx-auto"
           >
-            <p className="font-light text-xl text-[#4f6e72] mb-2">Applications close June 7</p>
-            <p className="text-[#141414]/60 font-light">Only 7 days left to apply</p>
+            <p className="font-light text-xl text-[#4f6e72] mb-2">Apply by June 7</p>
+            <p className="text-[#141414]/60 font-light">Only 7 days left</p>
           </motion.div>
           
           <div className="pt-8">
