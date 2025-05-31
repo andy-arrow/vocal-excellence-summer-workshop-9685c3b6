@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { X, Send, Music, FileText, Video } from 'lucide-react';
+import { X, Send, Music, Award, GraduationCap } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -35,13 +35,13 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
     setIsSubmitting(true);
     
     try {
-      console.log('Starting popup signup process', { email, name });
+      console.log('Starting scholarship inquiry signup process', { email, name });
       
       // Step 1: Save to Supabase email_signups table
       const signupData = {
         email: email.trim().toLowerCase(),
-        source: 'popup',
-        variant: 'A', // You can make this dynamic based on A/B testing
+        source: 'scholarship_popup',
+        variant: 'scholarship_A',
         page_path: window.location.pathname,
       };
       
@@ -62,8 +62,8 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
         type: 'popup_signup',
         email: email.trim().toLowerCase(),
         name: name.trim(),
-        variant: 'A',
-        source: 'popup',
+        variant: 'scholarship_A',
+        source: 'scholarship_popup',
         page_path: window.location.pathname
       };
       
@@ -74,17 +74,16 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
       
       if (emailError) {
         console.error('Email sending error:', emailError);
-        // Don't throw error here - we want to show success even if email fails
         toast({
-          title: "Signup Successful!",
-          description: "You've been added to our list! Email delivery may be delayed.",
+          title: "Inquiry Received!",
+          description: "We've received your scholarship inquiry and will be in touch soon.",
           className: "bg-green-700 text-white border-green-800",
         });
       } else {
         console.log('Emails sent successfully:', emailResponse);
         toast({
-          title: "Success!",
-          description: "Your Vocal Upgrade Kit is on its way to your inbox!",
+          title: "Scholarship Information Sent!",
+          description: "Check your inbox for scholarship details and application guidance.",
           className: "bg-green-700 text-white border-green-800",
         });
       }
@@ -93,10 +92,10 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
       setIsSubmitted(true);
       
     } catch (error) {
-      console.error('Popup signup error:', error);
+      console.error('Scholarship inquiry error:', error);
       toast({
-        title: "Almost there!",
-        description: "Your signup was processed, but email delivery may be delayed. We'll be in touch soon!",
+        title: "Inquiry Received!",
+        description: "We've received your scholarship inquiry and will be in touch with details soon.",
         className: "bg-blue-700 text-white border-blue-800",
       });
       
@@ -143,32 +142,32 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
       return (
         <div className="text-center p-4">
           <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
-            <Send className="h-8 w-8 text-green-600" />
+            <Award className="h-8 w-8 text-green-600" />
           </div>
-          <h3 className="text-xl font-semibold mb-2">Thank You!</h3>
+          <h3 className="text-xl font-semibold mb-2">Scholarship Information Sent!</h3>
           <p className="text-gray-600 mb-6">
-            Your Vocal Upgrade Kit has been sent to your inbox. Please check your email!
+            Your scholarship inquiry has been received. Check your inbox for detailed information about our merit-based awards.
           </p>
           <div className="space-y-4">
             <div className="flex items-start gap-3 bg-slate-50 p-3 rounded-lg">
+              <Award className="h-5 w-5 text-violet-600 mt-0.5" />
+              <div className="text-left">
+                <h4 className="font-medium text-slate-900">Scholarship Guide</h4>
+                <p className="text-sm text-slate-600">Complete criteria and application process</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3 bg-slate-50 p-3 rounded-lg">
+              <GraduationCap className="h-5 w-5 text-violet-600 mt-0.5" />
+              <div className="text-left">
+                <h4 className="font-medium text-slate-900">Success Stories</h4>
+                <p className="text-sm text-slate-600">Previous scholarship recipients and their journeys</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3 bg-slate-50 p-3 rounded-lg">
               <Music className="h-5 w-5 text-violet-600 mt-0.5" />
               <div className="text-left">
-                <h4 className="font-medium text-slate-900">3 Professional Warm-ups</h4>
-                <p className="text-sm text-slate-600">30-second audio files selected for your voice type</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3 bg-slate-50 p-3 rounded-lg">
-              <FileText className="h-5 w-5 text-violet-600 mt-0.5" />
-              <div className="text-left">
-                <h4 className="font-medium text-slate-900">Pitch Perfect Cheat-sheet</h4>
-                <p className="text-sm text-slate-600">PDF guide to fix your top 3 pitch problems</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3 bg-slate-50 p-3 rounded-lg">
-              <Video className="h-5 w-5 text-violet-600 mt-0.5" />
-              <div className="text-left">
-                <h4 className="font-medium text-slate-900">Audition Confidence Video</h4>
-                <p className="text-sm text-slate-600">2-minute master class on beating nerves</p>
+                <h4 className="font-medium text-slate-900">Application Tips</h4>
+                <p className="text-sm text-slate-600">Expert guidance to strengthen your submission</p>
               </div>
             </div>
           </div>
@@ -188,7 +187,7 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
           <DialogHeader>
             <DialogTitle>What's Your Voice Type?</DialogTitle>
             <DialogDescription>
-              Select your voice type to receive tailored warm-ups.
+              This helps us send you the most relevant scholarship opportunities.
             </DialogDescription>
           </DialogHeader>
           <div className="grid grid-cols-2 gap-3 pt-4">
@@ -249,7 +248,7 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
           </div>
           {isSubmitting && (
             <div className="text-center mt-4">
-              <p className="text-sm text-gray-600">Sending your vocal toolkit...</p>
+              <p className="text-sm text-gray-600">Sending scholarship information...</p>
             </div>
           )}
         </>
@@ -259,12 +258,22 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
     return (
       <>
         <DialogHeader>
-          <DialogTitle>Get Your 1-Minute Vocal Upgrade Kit</DialogTitle>
+          <DialogTitle>Merit-Based Scholarships Available</DialogTitle>
           <DialogDescription>
-            Join over 500 singers who have improved their technique with our free vocal toolkit.
+            Don't let finances limit your vocal potential. We award scholarships to exceptional singers who demonstrate talent, dedication, and financial need.
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4 py-4">
+          <div className="bg-gradient-to-r from-violet-50 to-purple-50 p-4 rounded-lg border border-violet-100">
+            <h3 className="font-semibold text-violet-900 mb-2">🎵 What We Offer</h3>
+            <ul className="text-sm text-violet-800 space-y-1">
+              <li>• Partial and full workshop scholarships</li>
+              <li>• Based on vocal merit and financial need</li>
+              <li>• Rolling applications reviewed monthly</li>
+              <li>• No hidden fees or requirements</li>
+            </ul>
+          </div>
+          
           <div className="space-y-2">
             <label htmlFor="name" className="text-sm font-medium">
               Your Name
@@ -293,11 +302,14 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
         </div>
         <Button 
           onClick={handleNext} 
-          className="w-full"
+          className="w-full bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700"
           disabled={!email || !name || isSubmitting}
         >
-          {isSubmitting ? 'Processing...' : 'Get Free Vocal Toolkit'}
+          {isSubmitting ? 'Processing...' : 'Get Scholarship Information'}
         </Button>
+        <p className="text-xs text-gray-500 text-center mt-3">
+          Free scholarship guide • No spam • Unsubscribe anytime
+        </p>
       </>
     );
   };
