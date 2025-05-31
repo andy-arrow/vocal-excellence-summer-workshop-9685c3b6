@@ -9,80 +9,83 @@ const TuitionHero = React.memo(() => {
   const animationConfig = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
+    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
   };
 
   const isMobile = useIsMobile();
   
   return (
-    <section className={`${isMobile ? 'pt-20 pb-12' : 'pt-24 pb-20'} px-4 bg-white relative z-10`}>
-      <div className="max-w-5xl mx-auto text-center">
+    <section className={`${isMobile ? 'pt-24 pb-16' : 'pt-32 pb-24'} px-4 bg-white relative z-10`}>
+      <div className="max-w-4xl mx-auto text-center">
         <motion.div
           {...animationConfig}
-          className="space-y-6 md:space-y-8"
+          className="space-y-8 md:space-y-12"
         >
-          <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl font-light text-[#141414] tracking-tight leading-tight">
-            Vocal Excellence
-          </h1>
+          <div className="space-y-6">
+            <h1 className="font-serif text-5xl md:text-7xl font-light text-[#141414] tracking-tight leading-tight">
+              Vocal Excellence
+            </h1>
+            
+            <p className="font-serif text-xl md:text-2xl text-[#4f6e72] font-light">
+              Summer 2025 Program
+            </p>
+          </div>
           
-          <p className="font-serif text-xl md:text-2xl text-[#4f6e72] font-light">
-            Summer 2025 Vocal Training Program
-          </p>
-          
-          {/* Program details */}
-          <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 text-[#141414]/70 text-base font-medium">
-            <div className="flex items-center gap-2">
+          {/* Simple program details */}
+          <div className="space-y-4 text-[#141414]/70 text-lg font-light">
+            <div className="flex items-center justify-center gap-2">
               <Calendar className="w-5 h-5 text-[#4f6e72]" />
               <span>July 14-18, 2025</span>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center justify-center gap-2">
               <MapPin className="w-5 h-5 text-[#4f6e72]" />
               <span>Limassol, Cyprus</span>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center justify-center gap-2">
               <Users className="w-5 h-5 text-[#4f6e72]" />
-              <span>Only 20 Spots Available</span>
+              <span>Only 20 Spots</span>
             </div>
           </div>
 
-          <p className="text-lg md:text-xl text-[#141414]/80 max-w-3xl mx-auto font-sans leading-relaxed">
-            Level up your voice with five incredible days of vocal training. This program mixes serious technique with real performance skills - perfect for singers who want to take their voice to the next level.
-          </p>
+          <div className="max-w-2xl mx-auto">
+            <p className="text-xl md:text-2xl text-[#141414]/80 font-serif font-light leading-relaxed">
+              Five incredible days of vocal training that will transform your voice
+            </p>
+          </div>
 
-          {/* Value proposition highlight */}
+          {/* Simple cost highlight */}
           <motion.div 
             {...animationConfig}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="bg-gradient-to-br from-[#f7fafa] to-[#eef2f2] border border-[#4f6e72]/20 rounded-2xl p-8 md:p-10 mt-10 max-w-4xl mx-auto"
+            transition={{ delay: 0.3, duration: 0.8 }}
+            className="bg-[#fafafa] rounded-3xl p-12 max-w-3xl mx-auto mt-16"
           >
-            <h2 className="font-serif text-3xl md:text-4xl font-light text-[#4f6e72] mb-4">
-              Cost: €749 (Everything Included)
+            <h2 className="font-serif text-4xl md:text-5xl font-light text-[#4f6e72] mb-6">
+              €749
             </h2>
-            <p className="text-xl text-[#4f6e72]/90 font-medium mb-3">
-              That's about €150 per day for full-day intensive training
+            <p className="text-xl text-[#4f6e72]/90 font-light mb-4">
+              Everything included • About €150 per day
             </p>
-            <p className="text-[#141414]/70 font-sans max-w-2xl mx-auto">
-              This covers everything - all lessons, materials, professional video recordings, and daily lunch. Way better value than booking private lessons separately.
+            <p className="text-[#141414]/70 font-light text-lg max-w-lg mx-auto">
+              All lessons, materials, recordings, and daily lunch
             </p>
           </motion.div>
 
-          {/* Urgency notice */}
+          {/* Simple urgency */}
           <motion.div 
             {...animationConfig}
-            transition={{ delay: 0.4, duration: 0.5 }}
-            className="bg-[#4f6e72] text-white rounded-xl p-6 max-w-2xl mx-auto"
+            transition={{ delay: 0.5, duration: 0.8 }}
+            className="text-center max-w-xl mx-auto"
           >
-            <p className="font-medium text-xl mb-2">Application Deadline: June 7, 2025</p>
-            <p className="text-white/90 font-medium">Only 7 days left! Just 20 spots available.</p>
-            <p className="text-sm text-white/80 mt-2">Don't miss out - spots are going fast and applications close soon.</p>
+            <p className="font-light text-xl text-[#4f6e72] mb-2">Applications close June 7</p>
+            <p className="text-[#141414]/60 font-light">Only 7 days left to apply</p>
           </motion.div>
           
-          <div className="pt-4 md:pt-6">
+          <div className="pt-8">
             <motion.div 
-              className="h-1 w-20 bg-gradient-to-r from-[#4f6e72] to-[#6a8d91] rounded-full mx-auto"
+              className="h-px w-24 bg-[#4f6e72]/30 mx-auto"
               initial={{ width: 0 }}
-              animate={{ width: isMobile ? 80 : 80 }}
-              transition={{ delay: 0.3, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              animate={{ width: 96 }}
+              transition={{ delay: 0.6, duration: 1, ease: [0.22, 1, 0.36, 1] }}
             />
           </div>
         </motion.div>
