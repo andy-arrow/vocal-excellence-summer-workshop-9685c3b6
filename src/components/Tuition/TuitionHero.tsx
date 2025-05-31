@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -15,7 +14,7 @@ const TuitionHero = React.memo(() => {
   const isMobile = useIsMobile();
   
   return (
-    <section className={`${isMobile ? 'pt-24 pb-16' : 'pt-32 pb-24'} px-4 bg-white relative z-10`}>
+    <section className={`${isMobile ? 'pt-20 pb-16' : 'pt-24 pb-24'} px-4 bg-white relative z-10`}>
       <div className="max-w-4xl mx-auto text-center">
         <motion.div
           {...animationConfig}
