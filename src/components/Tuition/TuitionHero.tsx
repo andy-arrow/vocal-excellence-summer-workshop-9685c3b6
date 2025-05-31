@@ -15,25 +15,52 @@ const TuitionHero = React.memo(() => {
   const isMobile = useIsMobile();
   
   return (
-    <section className={`${isMobile ? 'pt-40 mt-24 pb-10' : 'pt-80 pb-20'} px-4 bg-gradient-to-b from-white to-[#fafafa] relative z-10`}>
+    <section className={`${isMobile ? 'pt-20 pb-10' : 'pt-24 pb-20'} px-4 bg-white relative z-10`}>
       <div className="max-w-4xl mx-auto text-center">
         <motion.div
           {...animationConfig}
           className="space-y-4 md:space-y-5"
         >
           <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl font-light text-[#141414] tracking-tight leading-tight">
-            Tuition & Financial Information
+            Summer 2025 Vocal Training Program
           </h1>
           
           <p className="text-base md:text-xl text-[#141414]/70 max-w-2xl mx-auto font-sans">
-            Join our transformative program with options designed to support your musical journey
+            Full-Day Intensive Training • World-Class Instruction • Unbeatable Value
           </p>
           
-          {/* Program dates with location - improved visibility for mobile */}
+          {/* Program dates with location */}
           <div className="inline-flex items-center gap-2 text-[#141414]/60 text-sm font-medium mx-auto">
             <Calendar className="w-4 h-4 text-[#4f6e72]" />
             <span>14-18 July | Limassol, Cyprus</span>
           </div>
+
+          {/* Value proposition highlight */}
+          <motion.div 
+            {...animationConfig}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="bg-gradient-to-br from-[#f7fafa] to-[#eef2f2] border border-[#4f6e72]/20 rounded-2xl p-6 md:p-8 mt-8 max-w-2xl mx-auto"
+          >
+            <h2 className="font-serif text-2xl md:text-3xl font-light text-[#4f6e72] mb-3">
+              €749 Total (All-Inclusive)
+            </h2>
+            <p className="text-lg text-[#4f6e72]/90 font-medium mb-2">
+              Approximately €149 per day
+            </p>
+            <p className="text-sm text-[#141414]/70 font-sans">
+              An exceptional value for intensive, full-day training with world-class instruction
+            </p>
+          </motion.div>
+
+          {/* Early bird notice */}
+          <motion.div 
+            {...animationConfig}
+            transition={{ delay: 0.4, duration: 0.5 }}
+            className="bg-[#4f6e72] text-white rounded-xl p-4 max-w-lg mx-auto"
+          >
+            <p className="font-medium text-lg">Early Bird Special: €699</p>
+            <p className="text-sm text-white/90">Register before May 20, 2025</p>
+          </motion.div>
           
           <div className="pt-3 md:pt-3">
             <motion.div 

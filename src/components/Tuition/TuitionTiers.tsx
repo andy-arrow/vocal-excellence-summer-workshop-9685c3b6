@@ -2,7 +2,7 @@
 import React, { useCallback } from 'react';
 import { motion, LazyMotion, domAnimation } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Check, Tag, ArrowDown } from 'lucide-react';
+import { Check, Tag, ArrowDown, Star } from 'lucide-react';
 import { format } from 'date-fns';
 import { APPLICATION_DATES } from '@/constants/applicationDates';
 import { Button } from '@/components/ui/button';
@@ -26,6 +26,17 @@ const FeatureItem = React.memo(({ text }: { text: string }) => (
   </li>
 ));
 FeatureItem.displayName = 'FeatureItem';
+
+// Memoized value point component
+const ValuePoint = React.memo(({ text }: { text: string }) => (
+  <li className="flex items-start group">
+    <span className="mr-3 mt-0.5 flex-shrink-0 rounded-full bg-[#4f6e72]/10 p-1 group-hover:bg-[#4f6e72]/20 transition-colors">
+      <Star className="h-4 w-4 text-[#4f6e72]" />
+    </span>
+    <span className="text-[#141414]/80">{text}</span>
+  </li>
+));
+ValuePoint.displayName = 'ValuePoint';
 
 // Memoized discount card component
 const DiscountCard = React.memo(({ title, description, highlighted = false }: { 
@@ -53,7 +64,7 @@ DiscountCard.displayName = 'DiscountCard';
 
 const TuitionTiers = () => {
   const navigate = useNavigate();
-  const earlyBirdDate = format(APPLICATION_DATES.EARLY_BIRD_DEADLINE, 'MMMM d, yyyy');
+  const earlyBirdDate = format(new Date('2025-05-20'), 'MMMM d, yyyy');
   const tuitionDeadline = format(APPLICATION_DATES.TUITION_DEADLINE, 'MMMM d, yyyy');
 
   // Use useCallback for event handler
@@ -62,7 +73,7 @@ const TuitionTiers = () => {
     window.scrollTo(0, 0);
   }, [navigate]);
 
-  // Updated Program Features with corrected list and removed duration mentions
+  // Updated Program Features
   const PROGRAM_FEATURES = [
     'Comprehensive 360° Approach to Vocal Training',
     'World-class Teachers from Top Universities',
@@ -79,19 +90,49 @@ const TuitionTiers = () => {
     'Lunch Included in Tuition'
   ];
 
+  // Value proposition points
+  const VALUE_POINTS = [
+    'Comprehensive daily schedule, maximizing every day from morning to evening',
+    'World-class instruction, personalized coaching, and extensive workshops included',
+    'Professional facilities and premium amenities, including lunch and dedicated accompanist sessions',
+    'Intensive masterclasses, acting workshops, and specialized Alexander Technique training, normally valued significantly higher individually'
+  ];
+
   return (
     <LazyMotion features={domAnimation}>
       <section className="py-12 pb-16 px-6 md:px-12 bg-white">
         <div className="max-w-6xl mx-auto">
+          {/* Value Proposition Section */}
           <motion.div
             {...fadeInAnimation}
-            className="text-center max-w-3xl mx-auto mb-10"
+            className="text-center max-w-4xl mx-auto mb-16"
           >
-            <h2 className="font-serif text-3xl md:text-4xl font-light text-[#141414] mb-4">
-              Program Details & Savings Options
+            <h2 className="font-serif text-3xl md:text-4xl font-light text-[#141414] mb-6">
+              Why This is Incredible Value
             </h2>
+            
+            <div className="bg-gradient-to-br from-[#f7fafa] to-[#eef2f2] border border-[#4f6e72]/20 rounded-2xl p-8 md:p-10 mb-8">
+              <div className="text-center mb-8">
+                <p className="text-2xl md:text-3xl font-serif font-light text-[#4f6e72] mb-2">
+                  €749 total (all-inclusive)
+                </p>
+                <p className="text-lg text-[#4f6e72]/90 font-medium mb-2">
+                  Approximately €149 per day
+                </p>
+                <p className="text-[#141414]/70 font-sans">
+                  An exceptional value for an intensive, full-day training experience
+                </p>
+              </div>
+              
+              <ul className="space-y-4 font-sans text-left max-w-3xl mx-auto">
+                {VALUE_POINTS.map((item, i) => (
+                  <ValuePoint key={i} text={item} />
+                ))}
+              </ul>
+            </div>
+            
             <p className="text-lg text-[#141414]/70 font-sans max-w-2xl mx-auto">
-              Everything you need to know about our Summer 2025 vocal training program
+              Join us for this unique opportunity to receive unparalleled training and support at an unbeatable daily rate.
             </p>
           </motion.div>
           
@@ -140,6 +181,20 @@ const TuitionTiers = () => {
                       Ways to Save
                     </h4>
                     <div className="space-y-4">
+                      {/* Early Bird Special */}
+                      <Card className="overflow-hidden border-[#4f6e72]/20 bg-gradient-to-br from-[#f7fafa] to-[#e9f1f2] hover:from-[#f2f7f7] hover:to-[#e4edef] transition-colors duration-300">
+                        <CardContent className="p-6">
+                          <h5 className="font-sans font-medium text-[#4f6e72] flex items-center gap-2 mb-3">
+                            <Tag className="h-4 w-4 text-[#4f6e72]" />
+                            Early Bird Special
+                          </h5>
+                          <p className="text-2xl font-serif font-light text-[#4f6e72] mb-2">€699</p>
+                          <p className="text-[#4f6e72]/90 font-sans text-sm">
+                            Register before {earlyBirdDate} and save €50
+                          </p>
+                        </CardContent>
+                      </Card>
+
                       {/* Standard Payment */}
                       <Card className="overflow-hidden border-[#f0f0f0] bg-[#fafafa] hover:bg-white transition-colors duration-300">
                         <CardContent className="p-6">
@@ -155,25 +210,6 @@ const TuitionTiers = () => {
                           </ul>
                         </CardContent>
                       </Card>
-
-                      {/* Early Bird */}
-                      <DiscountCard 
-                        title="Early Bird Discount"
-                        description={`Save €50 when you register before ${earlyBirdDate} and pay in full`}
-                        highlighted={true}
-                      />
-                      
-                      <Card className="overflow-hidden border-[#4f6e72]/20 bg-[#f7fafa] hover:bg-white transition-colors duration-300">
-                        <CardContent className="p-6">
-                          <h5 className="font-sans font-medium text-[#4f6e72] flex items-center gap-2">
-                            <Tag className="h-4 w-4 text-[#4f6e72]" />
-                            Early Bird Price
-                          </h5>
-                          <p className="text-[#4f6e72]/90 mt-2 pl-6 font-sans text-sm">
-                            Only €699 when you register before {earlyBirdDate} and pay in full (€100 registration fee included)
-                          </p>
-                        </CardContent>
-                      </Card>
                     </div>
                   </div>
                 </div>
@@ -185,7 +221,7 @@ const TuitionTiers = () => {
                   onClick={handleApplyClick}
                   className="w-full sm:w-auto px-12 py-6 text-base font-medium bg-[#4f6e72] hover:bg-[#41595c] text-white rounded-full transition-all duration-300"
                 >
-                  Start Your Application
+                  Secure Your Spot Today
                 </Button>
                 <p className="font-sans text-sm text-[#141414]/60 mt-4">
                   Limited to 20 students. Applications close on {format(APPLICATION_DATES.DEADLINE, 'MMMM d, yyyy')}.
