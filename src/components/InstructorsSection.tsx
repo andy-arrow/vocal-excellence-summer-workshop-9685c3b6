@@ -149,11 +149,11 @@ const InstructorsSection = () => {
           <div className="grid md:grid-cols-2 gap-4 max-w-2xl mx-auto text-left">
             <div className="flex items-center text-apple-grey">
               <span className="w-2 h-2 bg-apple-blue rounded-full mr-3"></span>
-              <span>45-minute private lesson with master teachers</span>
+              <span>Private lesson with master teachers</span>
             </div>
             <div className="flex items-center text-apple-grey">
               <span className="w-2 h-2 bg-apple-blue rounded-full mr-3"></span>
-              <span>30-minute dedicated accompanist sessions</span>
+              <span>Dedicated accompanist sessions</span>
             </div>
             <div className="flex items-center text-apple-grey">
               <span className="w-2 h-2 bg-apple-blue rounded-full mr-3"></span>
