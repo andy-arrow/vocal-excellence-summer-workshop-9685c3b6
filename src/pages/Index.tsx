@@ -1,3 +1,4 @@
+
 import React, { useEffect, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
@@ -5,7 +6,7 @@ import HeroSection from '@/components/HeroSection';
 import { toast } from '@/hooks/use-toast';
 import { useScrollPosition } from '@/hooks/use-scroll-position';
 
-// Optimized lazy loading with explicit chunk names
+// Optimized lazy loading
 const AboutSection = lazy(() => 
   import(/* webpackChunkName: "about" */ '@/components/AboutSection')
 );
@@ -25,7 +26,6 @@ const ScrollToTopButton = lazy(() =>
   import(/* webpackChunkName: "scroll-top" */ '@/components/ScrollToTopButton')
 );
 
-// Optimized loader component
 const SectionLoader = () => (
   <div className="py-8 flex justify-center">
     <div className="w-6 h-6 border-2 border-violet-500/30 border-t-violet-500 rounded-full animate-spin" />
@@ -51,70 +51,69 @@ const Index = () => {
     }
   }, []);
 
-  // Enhanced popup system initialization
+  // Scholarship popup system initialization
   useEffect(() => {
-    console.log('[Index] Initializing popup system for scroll-based triggering...');
+    console.log('[Index] Initializing scholarship popup system...');
     
-    // Check if popup script is loaded and initialize scroll trigger
     const initializePopup = () => {
       if (typeof window !== 'undefined' && (window as any).VX_DEBUG) {
-        console.log('[Index] Popup script loaded successfully');
+        console.log('[Index] Scholarship popup script loaded successfully');
         const status = (window as any).VX_DEBUG.getStatus();
-        console.log('[Index] Popup system status:', status);
+        console.log('[Index] Scholarship popup system status:', status);
         
-        // Check credentials
         if (!status.credentials.supabaseUrl || !status.credentials.supabaseKey) {
-          console.error('[Index] Missing Supabase credentials for popup');
+          console.error('[Index] Missing Supabase credentials for scholarship popup');
           return;
         }
         
-        console.log('[Index] Popup system ready for scroll triggering');
+        console.log('[Index] Scholarship popup system ready - will trigger on scroll (25%)');
         
-        // Force show popup for testing if URL parameter is present
+        // Force show for testing if URL parameter is present
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('force_popup') === 'true') {
-          console.log('[Index] Force showing popup for testing');
+          console.log('[Index] Force showing scholarship popup for testing');
           (window as any).VX_DEBUG.forceShow();
         }
         
       } else {
-        console.log('[Index] Popup script not yet loaded, retrying...');
+        console.log('[Index] Scholarship popup script not yet loaded, retrying...');
         setTimeout(initializePopup, 500);
       }
     };
 
-    // Start initialization after a brief delay
     const initTimeout = setTimeout(initializePopup, 1000);
     
-    // Add popup event listeners
+    // Scholarship popup event listeners
     const handlePopupShown = (e: CustomEvent) => {
-      console.log('[Index] Popup shown event received:', e.detail);
+      console.log('[Index] Scholarship popup shown:', e.detail);
       if (typeof window !== 'undefined' && (window as any).gtag) {
         (window as any).gtag('event', 'popup_shown', {
           variant: e.detail.variant,
-          page_path: window.location.pathname
+          page_path: window.location.pathname,
+          event_category: 'scholarship'
         });
       }
     };
 
     const handlePopupSubmitted = (e: CustomEvent) => {
-      console.log('[Index] Popup submission event received:', e.detail);
+      console.log('[Index] Scholarship popup submission:', e.detail);
       if (typeof window !== 'undefined' && (window as any).gtag) {
-        (window as any).gtag('event', 'email_signup', {
+        (window as any).gtag('event', 'scholarship_inquiry', {
           method: 'popup',
           variant: e.detail.variant
         });
       }
       
       toast({
-        title: "Thank you for subscribing!",
-        description: "Check your inbox for exclusive content.",
-        duration: 5000,
+        title: "Scholarship Information Sent!",
+        description: "Check your inbox for merit-based scholarship details and application guidance.",
+        className: "bg-amber-700 text-white border-amber-800",
+        duration: 7000,
       });
     };
 
     const handlePopupClosed = () => {
-      console.log('[Index] Popup closed event received');
+      console.log('[Index] Scholarship popup closed');
     };
 
     // Add event listeners
@@ -140,12 +139,10 @@ const Index = () => {
     >
       <Navbar />
       
-      {/* Hero Section - loads immediately */}
       <div className="relative z-10">
         <HeroSection />
       </div>
       
-      {/* Lazy loaded sections with optimized suspense boundaries */}
       <div className="relative z-10">
         <Suspense fallback={<SectionLoader />}>
           <AboutSection />

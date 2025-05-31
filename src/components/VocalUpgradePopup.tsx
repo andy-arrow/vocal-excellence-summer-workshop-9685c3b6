@@ -37,11 +37,11 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
     try {
       console.log('Starting scholarship inquiry process', { email, name });
       
-      // Step 1: Save to Supabase email_signups table
+      // Save to database
       const signupData = {
         email: email.trim().toLowerCase(),
         source: 'merit_scholarship_popup',
-        variant: 'merit_scholarship_v1',
+        variant: 'merit_scholarship_react',
         page_path: window.location.pathname,
       };
       
@@ -57,12 +57,12 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
       
       console.log('Successfully saved scholarship inquiry');
       
-      // Step 2: Send scholarship information via edge function
+      // Send scholarship information via edge function
       const emailPayload = {
         type: 'popup_signup',
         email: email.trim().toLowerCase(),
         name: name.trim(),
-        variant: 'merit_scholarship_v1',
+        variant: 'merit_scholarship_react',
         source: 'merit_scholarship_popup',
         page_path: window.location.pathname
       };
@@ -151,7 +151,7 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
               <Award className="h-6 w-6 text-amber-600 mt-1 flex-shrink-0" />
               <div>
                 <h4 className="font-semibold text-gray-900 mb-1">Merit-Based Awards</h4>
-                <p className="text-sm text-gray-600">Scholarships awarded based on vocal talent and academic merit</p>
+                <p className="text-sm text-gray-600">Scholarships awarded based on vocal talent and musical ability</p>
               </div>
             </div>
             
@@ -193,45 +193,23 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
           </DialogHeader>
           
           <div className="grid grid-cols-2 gap-3 pt-6">
-            <Button 
-              variant="outline" 
-              className="h-auto py-4 flex flex-col border-2 hover:border-amber-300 hover:bg-amber-50"
-              onClick={() => handleSelectVoiceType('Soprano')}
-              disabled={isSubmitting}
-            >
-              <span className="font-semibold text-gray-900">Soprano</span>
-              <span className="text-xs text-gray-500 mt-1">High female voice</span>
-            </Button>
-            
-            <Button 
-              variant="outline" 
-              className="h-auto py-4 flex flex-col border-2 hover:border-amber-300 hover:bg-amber-50"
-              onClick={() => handleSelectVoiceType('Alto')}
-              disabled={isSubmitting}
-            >
-              <span className="font-semibold text-gray-900">Alto</span>
-              <span className="text-xs text-gray-500 mt-1">Lower female voice</span>
-            </Button>
-            
-            <Button 
-              variant="outline" 
-              className="h-auto py-4 flex flex-col border-2 hover:border-amber-300 hover:bg-amber-50"
-              onClick={() => handleSelectVoiceType('Tenor')}
-              disabled={isSubmitting}
-            >
-              <span className="font-semibold text-gray-900">Tenor</span>
-              <span className="text-xs text-gray-500 mt-1">High male voice</span>
-            </Button>
-            
-            <Button 
-              variant="outline" 
-              className="h-auto py-4 flex flex-col border-2 hover:border-amber-300 hover:bg-amber-50"
-              onClick={() => handleSelectVoiceType('Baritone')}
-              disabled={isSubmitting}
-            >
-              <span className="font-semibold text-gray-900">Baritone</span>
-              <span className="text-xs text-gray-500 mt-1">Middle male voice</span>
-            </Button>
+            {(['Soprano', 'Alto', 'Tenor', 'Baritone'] as VoiceType[]).map((type) => (
+              <Button 
+                key={type}
+                variant="outline" 
+                className="h-auto py-4 flex flex-col border-2 hover:border-amber-300 hover:bg-amber-50"
+                onClick={() => handleSelectVoiceType(type)}
+                disabled={isSubmitting}
+              >
+                <span className="font-semibold text-gray-900">{type}</span>
+                <span className="text-xs text-gray-500 mt-1">
+                  {type === 'Soprano' && 'High female voice'}
+                  {type === 'Alto' && 'Lower female voice'}
+                  {type === 'Tenor' && 'High male voice'}
+                  {type === 'Baritone' && 'Middle male voice'}
+                </span>
+              </Button>
+            ))}
             
             <Button 
               variant="outline" 

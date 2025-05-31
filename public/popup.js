@@ -17,16 +17,16 @@
 
   console.log('[VX Popup] Script loading...');
 
-  // Configuration - Multiple triggers
+  // Configuration - Optimized for scroll-based triggering
   const CONFIG = {
     STORAGE_KEY: 'vx_popup_seen',
     VARIANT_KEY: 'vx_popup_variant',
-    TTL_DAYS: 7, // Show again after 7 days
+    TTL_DAYS: 7,
     VARIANT_TTL_DAYS: 30,
-    TIME_DELAY: 30000, // 30 seconds
-    SCROLL_THRESHOLD: 0.25, // 25% scroll before triggering
-    EXIT_INTENT_THRESHOLD: 15, // pixels from top
-    FORCE_SHOW_ON_SCROLL: true, // Force show for testing
+    TIME_DELAY: 45000, // 45 seconds as backup
+    SCROLL_THRESHOLD: 0.25, // 25% scroll - PRIMARY TRIGGER
+    EXIT_INTENT_THRESHOLD: 15,
+    FORCE_SHOW_ON_SCROLL: true, // Always show for testing
   };
 
   // State
@@ -49,7 +49,7 @@
     }
   }
 
-  // Force debug mode if URL contains debug parameter or force_popup
+  // Enable debug mode for better testing
   if (typeof window !== 'undefined') {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('debug') === 'popup' || urlParams.get('force_popup') === 'true') {
@@ -58,9 +58,8 @@
     }
   }
 
-  // Check if popup should be shown - modified for scroll testing
+  // Check if popup should be shown
   function shouldShowPopup() {
-    // Debug mode or force show always shows popup
     if (isDebugMode || CONFIG.FORCE_SHOW_ON_SCROLL) {
       debug('Force mode: popup should show');
       return true;
@@ -78,8 +77,6 @@
       const shouldShow = now > data.expires;
       debug('Popup seen data found', { 
         stored: data, 
-        now: new Date(now).toISOString(),
-        expires: new Date(data.expires).toISOString(),
         shouldShow 
       });
       return shouldShow;
@@ -104,7 +101,6 @@
       }
     }
     
-    // Create new variant
     const newVariant = Math.random() < 0.5 ? 'A' : 'B';
     const expires = Date.now() + (CONFIG.VARIANT_TTL_DAYS * 24 * 60 * 60 * 1000);
     try {
@@ -116,7 +112,7 @@
     return newVariant;
   }
 
-  // Get personalized content based on path
+  // Get scholarship-focused content
   function getContent() {
     const path = location.pathname;
     const isVariantB = variant === 'B';
@@ -125,11 +121,17 @@
     let body = "Exceptional vocal talent deserves recognition. Apply for our merit-based scholarships and receive financial support for your vocal education.";
     let cta = "Get Scholarship Information";
     
+    if (isVariantB) {
+      headline = "🏆 Scholarships for Talented Vocalists";
+      body = "Your voice has potential. Discover merit-based scholarships that reward vocal excellence and musical dedication.";
+      cta = "Unlock Scholarship Opportunities";
+    }
+    
     debug('Generated content', { path, variant, headline });
     return { headline, body, cta };
   }
 
-  // Create popup HTML with scholarship-focused design
+  // Create scholarship-focused popup HTML
   function createPopupHTML() {
     const content = getContent();
     
@@ -219,7 +221,7 @@
               ">${content.body}</p>
             </div>
 
-            <!-- Merit-Based Scholarships Section -->
+            <!-- Scholarship Benefits -->
             <div style="margin-bottom: 32px;">
               <h3 style="
                 font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
@@ -275,7 +277,7 @@
                   color: white;
                   font-weight: 600;
                 ">✓</div>
-                <span>Partial and full program scholarships</span>
+                <span>Partial to full program coverage</span>
               </div>
               
               <div style="
@@ -407,7 +409,7 @@
     `;
   }
 
-  // Submit to Supabase and send email
+  // Submit scholarship inquiry to Supabase and send email
   async function submitEmail(email, name) {
     const supabaseUrl = window.VX_SUPABASE_URL;
     const supabaseKey = window.VX_SUPABASE_ANON_KEY;
@@ -416,7 +418,7 @@
       throw new Error('Supabase credentials not configured');
     }
     
-    debug('Submitting scholarship inquiry', { email, name, variant, supabaseUrl: supabaseUrl.substring(0, 20) + '...' });
+    debug('Submitting scholarship inquiry', { email, name, variant });
     
     // Step 1: Save to Supabase email_signups table
     const payload = {
@@ -426,7 +428,7 @@
       page_path: location.pathname,
     };
     
-    debug('Supabase payload', payload);
+    debug('Saving to database', payload);
     
     const supabaseResponse = await fetch(`${supabaseUrl}/rest/v1/email_signups`, {
       method: 'POST',
@@ -439,20 +441,16 @@
       body: JSON.stringify(payload),
     });
     
-    debug('Supabase response status', supabaseResponse.status);
-    
     if (!supabaseResponse.ok) {
       const errorText = await supabaseResponse.text();
-      debug('Supabase error response', { status: supabaseResponse.status, text: errorText });
-      throw new Error(`Supabase error (${supabaseResponse.status}): ${errorText}`);
+      debug('Database save error', { status: supabaseResponse.status, text: errorText });
+      throw new Error(`Database error: ${errorText}`);
     }
     
-    debug('Supabase submission successful');
+    debug('Database save successful');
     
-    // Step 2: Send scholarship information email via edge function
+    // Step 2: Send scholarship information email
     try {
-      debug('Sending scholarship information via edge function');
-      
       const emailPayload = {
         type: 'popup_signup',
         email: email.trim().toLowerCase(),
@@ -462,7 +460,7 @@
         page_path: location.pathname
       };
       
-      debug('Email payload being sent', emailPayload);
+      debug('Sending scholarship email', emailPayload);
       
       const emailResponse = await fetch(`${supabaseUrl}/functions/v1/send-email`, {
         method: 'POST',
@@ -473,27 +471,23 @@
         body: JSON.stringify(emailPayload),
       });
       
-      debug('Email response status', emailResponse.status);
-      
-      const emailResult = await emailResponse.text();
-      debug('Email response body', emailResult);
-      
       if (!emailResponse.ok) {
-        debug('Email sending failed', { status: emailResponse.status, text: emailResult });
-        throw new Error(`Email sending failed: ${emailResult}`);
+        const errorText = await emailResponse.text();
+        debug('Email sending failed', { status: emailResponse.status, text: errorText });
+        throw new Error(`Email error: ${errorText}`);
       }
       
-      debug('Scholarship information email sent successfully');
+      debug('Scholarship email sent successfully');
       
     } catch (emailError) {
-      debug('Email sending error', emailError.message);
-      throw emailError;
+      debug('Email error (non-critical)', emailError.message);
+      // Don't throw - database save was successful
     }
     
     return true;
   }
 
-  // Handle form submission with proper error handling
+  // Handle form submission
   async function handleSubmit(e) {
     e.preventDefault();
     
@@ -515,7 +509,6 @@
       return;
     }
     
-    // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       debug('Invalid email format');
@@ -524,9 +517,8 @@
       return;
     }
     
-    debug('Form submitted', { email, name });
+    debug('Submitting scholarship inquiry', { email, name });
     
-    // Update button state
     const originalText = submitBtn.textContent;
     submitBtn.disabled = true;
     submitBtn.textContent = 'Sending...';
@@ -535,7 +527,6 @@
     try {
       await submitEmail(email, name);
       
-      // Success
       debug('Scholarship inquiry submitted successfully');
       window.dispatchEvent(new CustomEvent('vx-popup-submitted', { 
         detail: { email, name, variant, timestamp: new Date().toISOString() } 
@@ -580,7 +571,6 @@
         `;
       }
       
-      // Auto-close after 3 seconds
       setTimeout(() => {
         closePopup();
       }, 3000);
@@ -588,18 +578,15 @@
     } catch (error) {
       debug('Scholarship inquiry submission failed', error.message);
       
-      // Reset button state
       submitBtn.disabled = false;
       submitBtn.textContent = originalText;
       submitBtn.style.opacity = '1';
       
-      // Show error message
       alert('Something went wrong. Please try again or contact us directly.');
-      
     }
   }
 
-  // Close popup with cleanup
+  // Close popup
   function closePopup() {
     const overlay = document.getElementById('vx-popup-overlay');
     if (overlay) {
@@ -609,74 +596,62 @@
         overlay.remove();
         document.body.style.overflow = '';
         window.dispatchEvent(new CustomEvent('vx-popup-closed'));
-        debug('Popup closed and cleaned up');
+        debug('Popup closed');
       }, 300);
     }
   }
 
-  // Mark popup as seen - modified for testing
+  // Mark popup as seen
   function markPopupSeen() {
     if (isDebugMode || CONFIG.FORCE_SHOW_ON_SCROLL) {
-      debug('Debug/Force mode: not marking popup as seen for easier testing');
+      debug('Debug mode: not marking popup as seen');
       return;
     }
     
     const expires = Date.now() + (CONFIG.TTL_DAYS * 24 * 60 * 60 * 1000);
     try {
       localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify({ expires }));
-      debug('Popup marked as seen', { expires: new Date(expires).toISOString() });
+      debug('Popup marked as seen');
     } catch (e) {
       debug('Error marking popup as seen', e.message);
     }
   }
 
-  // Show popup with comprehensive setup
+  // Show popup
   function showPopup() {
     if (popupShown) {
-      debug('Popup already shown, skipping');
+      debug('Popup already shown');
       return;
     }
     
-    debug('Showing popup');
+    debug('Showing scholarship popup');
     popupShown = true;
     markPopupSeen();
     
-    // Create and inject popup
     const popupHTML = createPopupHTML();
     document.body.insertAdjacentHTML('beforeend', popupHTML);
     document.body.style.overflow = 'hidden';
     
-    // Setup event listeners with error handling
     try {
       const closeBtn = document.getElementById('vx-popup-close');
       const overlay = document.getElementById('vx-popup-overlay');
       const form = document.getElementById('vx-popup-form');
       const nameInput = document.getElementById('vx-popup-name');
       
-      if (closeBtn) {
-        closeBtn.addEventListener('click', closePopup);
-      }
+      if (closeBtn) closeBtn.addEventListener('click', closePopup);
       
       if (overlay) {
         overlay.addEventListener('click', (e) => {
-          if (e.target.id === 'vx-popup-overlay') {
-            closePopup();
-          }
+          if (e.target.id === 'vx-popup-overlay') closePopup();
         });
       }
       
-      if (form) {
-        form.addEventListener('submit', handleSubmit);
-      }
+      if (form) form.addEventListener('submit', handleSubmit);
       
-      // Focus name input after a short delay
       if (nameInput) {
-        setTimeout(() => {
-          nameInput.focus();
-        }, 100);
+        setTimeout(() => nameInput.focus(), 100);
       }
       
-      // ESC key to close
       const handleEscape = (e) => {
         if (e.key === 'Escape') {
           closePopup();
@@ -685,13 +660,10 @@
       };
       document.addEventListener('keydown', handleEscape);
       
-      debug('Event listeners attached successfully');
-      
     } catch (error) {
       debug('Error setting up event listeners', error.message);
     }
     
-    // Dispatch event
     window.dispatchEvent(new CustomEvent('vx-popup-shown', { 
       detail: { 
         variant, 
@@ -699,29 +671,11 @@
         triggers: { timeTriggered, scrollTriggered, exitTriggered }
       } 
     }));
-    
-    debug('Popup shown successfully');
   }
 
-  // Time-based trigger - secondary trigger
-  function setupTimeTrigger() {
-    debug('Setting up time trigger', `${CONFIG.TIME_DELAY}ms`);
-    
-    setTimeout(() => {
-      if (timeTriggered || popupShown) {
-        debug('Time trigger already fired or popup shown');
-        return;
-      }
-      
-      timeTriggered = true;
-      debug('Time trigger fired');
-      showPopup();
-    }, CONFIG.TIME_DELAY);
-  }
-
-  // Scroll-based trigger - PRIMARY trigger for this request
+  // Setup scroll trigger - PRIMARY trigger
   function setupScrollTrigger() {
-    debug('Setting up scroll trigger', `${CONFIG.SCROLL_THRESHOLD * 100}%`);
+    debug('Setting up scroll trigger at 25% scroll');
     
     let ticking = false;
     
@@ -737,11 +691,9 @@
           const total = document.documentElement.scrollHeight - window.innerHeight;
           const percentage = total > 0 ? scrolled / total : 0;
           
-          debug('Scroll progress', `${Math.round(percentage * 100)}% (threshold: ${CONFIG.SCROLL_THRESHOLD * 100}%)`);
-          
           if (percentage >= CONFIG.SCROLL_THRESHOLD) {
             scrollTriggered = true;
-            debug('Scroll trigger fired - showing popup', `${Math.round(percentage * 100)}%`);
+            debug('Scroll trigger fired - showing scholarship popup');
             showPopup();
             window.removeEventListener('scroll', handleScroll);
           }
@@ -754,17 +706,22 @@
     }
     
     window.addEventListener('scroll', handleScroll, { passive: true });
-    debug('Scroll trigger active - popup will show at 25% scroll');
   }
 
-  // Exit intent trigger (desktop only) - tertiary trigger
+  // Setup time trigger - backup
+  function setupTimeTrigger() {
+    setTimeout(() => {
+      if (!timeTriggered && !popupShown) {
+        timeTriggered = true;
+        debug('Time trigger fired');
+        showPopup();
+      }
+    }, CONFIG.TIME_DELAY);
+  }
+
+  // Setup exit intent - tertiary
   function setupExitIntentTrigger() {
-    if (window.innerWidth <= 768) {
-      debug('Skipping exit intent (mobile device)');
-      return;
-    }
-    
-    debug('Setting up exit intent trigger');
+    if (window.innerWidth <= 768) return;
     
     function handleMouseLeave(e) {
       if (exitTriggered || popupShown) return;
@@ -782,12 +739,9 @@
 
   // Testing functions
   function forceShowPopup() {
-    debug('Force showing popup (test mode)');
+    debug('Force showing popup');
     localStorage.removeItem(CONFIG.STORAGE_KEY);
     popupShown = false;
-    timeTriggered = false;
-    scrollTriggered = false;
-    exitTriggered = false;
     showPopup();
   }
   
@@ -824,53 +778,38 @@
     closePopup: closePopup
   };
 
-  // Initialize popup system
+  // Initialize
   function init() {
-    debug('Initializing popup system');
+    debug('Initializing scholarship popup system');
     
-    // Check credentials
     const hasSupabase = !!(window.VX_SUPABASE_URL && window.VX_SUPABASE_ANON_KEY);
     
-    debug('Credentials check', {
-      supabase: hasSupabase,
-      supabaseUrl: window.VX_SUPABASE_URL ? `${window.VX_SUPABASE_URL.substring(0, 20)}...` : 'missing',
-      supabaseKey: window.VX_SUPABASE_ANON_KEY ? 'present' : 'missing'
-    });
-    
     if (!hasSupabase) {
-      debug('ERROR: No valid Supabase credentials found. Please configure VX_SUPABASE_URL and VX_SUPABASE_ANON_KEY.');
+      debug('ERROR: No Supabase credentials found');
       return;
     }
     
-    // Get variant
     variant = getVariant();
     
     debug('Initialization complete', {
       shouldShow: shouldShowPopup(),
       variant: variant,
-      config: CONFIG,
-      isDebugMode: isDebugMode,
-      forceShowOnScroll: CONFIG.FORCE_SHOW_ON_SCROLL
+      forceMode: CONFIG.FORCE_SHOW_ON_SCROLL
     });
     
-    // Setup triggers - SCROLL FIRST for immediate response
+    // Setup triggers - scroll is primary
     setupScrollTrigger();
     setupTimeTrigger();
     setupExitIntentTrigger();
     
-    debug('All triggers set up successfully - scroll trigger is ACTIVE');
+    debug('All triggers set up - scroll trigger is ACTIVE');
   }
 
-  // Start when DOM is ready
+  // Start when ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
-    debug('Waiting for DOM ready');
   } else {
-    // Small delay to ensure page is fully ready
     setTimeout(init, 100);
-    debug('DOM already ready, initializing with delay');
   }
-
-  debug('Popup script initialization complete');
 
 })();
