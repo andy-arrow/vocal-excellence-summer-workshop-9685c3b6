@@ -142,9 +142,29 @@ const InstructorsSection = () => {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight text-apple-text mb-5">
             World-Class Faculty
           </h2>
-          <p className="text-lg md:text-xl text-apple-grey font-light max-w-2xl mx-auto leading-relaxed">
-            Learn from industry-leading vocal professionals with international performance careers
+          <p className="text-lg md:text-xl text-apple-grey font-light max-w-2xl mx-auto leading-relaxed mb-8">
+            Learn from internationally renowned teachers from top conservatories and universities
           </p>
+          
+          {/* Faculty highlights - updated to remove specific times */}
+          <div className="grid md:grid-cols-2 gap-4 max-w-2xl mx-auto text-left">
+            <div className="flex items-center text-apple-grey">
+              <span className="w-2 h-2 bg-apple-blue rounded-full mr-3"></span>
+              <span>Private lessons with master teachers</span>
+            </div>
+            <div className="flex items-center text-apple-grey">
+              <span className="w-2 h-2 bg-apple-blue rounded-full mr-3"></span>
+              <span>Dedicated accompanist sessions</span>
+            </div>
+            <div className="flex items-center text-apple-grey">
+              <span className="w-2 h-2 bg-apple-blue rounded-full mr-3"></span>
+              <span>Personalized feedback and mentoring</span>
+            </div>
+            <div className="flex items-center text-apple-grey">
+              <span className="w-2 h-2 bg-apple-blue rounded-full mr-3"></span>
+              <span>Active industry professionals as mentors</span>
+            </div>
+          </div>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 xl:gap-10">
