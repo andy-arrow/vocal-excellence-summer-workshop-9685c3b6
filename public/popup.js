@@ -116,372 +116,267 @@
     const path = location.pathname;
     const isVariantB = variant === 'B';
     
-    let headline = "Merit-Based Scholarships Available";
-    let body = "Exceptional vocal talent deserves recognition. Apply for our merit-based scholarships and receive financial support for your vocal education.";
-    let cta = "Get Scholarship Information";
+    let headline = "Merit Scholarships";
+    let body = "Exceptional vocal talent deserves recognition. Discover financial support for your musical journey.";
+    let cta = "Learn More";
     
     if (isVariantB) {
-      headline = "🏆 Scholarships for Talented Vocalists";
-      body = "Your voice has potential. Discover merit-based scholarships that reward vocal excellence and musical dedication.";
-      cta = "Unlock Scholarship Opportunities";
+      headline = "Vocal Excellence Awards";
+      body = "Your dedication to vocal excellence opens doors. Explore merit-based scholarship opportunities.";
+      cta = "Discover Awards";
     }
     
     debug('Generated content', { path, variant, headline });
     return { headline, body, cta };
   }
 
-  // Create scholarship-focused popup HTML with Jony Ive design
+  // Create zen-focused popup HTML with ultra-minimal Jony Ive design
   function createPopupHTML() {
     const content = getContent();
     
     return `
-      <div id="vx-popup-overlay" class="fixed inset-0 z-50 flex items-center justify-center p-4" 
-           style="z-index: 999999; background: rgba(0, 0, 0, 0.25); backdrop-filter: blur(80px);"
+      <div id="vx-popup-overlay" class="fixed inset-0 z-50 flex items-center justify-center p-6" 
+           style="z-index: 999999; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(120px);"
            role="dialog" aria-labelledby="vx-popup-title" aria-modal="true">
         
-        <div class="relative w-full max-w-sm transform transition-all duration-800 ease-out" 
-             style="animation: materialSlide 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;">
+        <div class="relative w-full max-w-xs transform transition-all duration-1000 ease-out" 
+             style="animation: zenFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;">
           
-          <!-- Main Card -->
+          <!-- Main Card - Pure Zen Aesthetic -->
           <div style="
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(250, 250, 250, 0.9) 100%);
-            backdrop-filter: blur(40px) saturate(150%);
-            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(60px) saturate(180%);
+            border-radius: 24px;
             box-shadow: 
-              0 25px 50px -12px rgba(0, 0, 0, 0.08),
-              0 8px 16px -8px rgba(0, 0, 0, 0.06),
-              inset 0 1px 0 0 rgba(255, 255, 255, 0.9),
-              inset 0 -1px 0 0 rgba(0, 0, 0, 0.02);
-            border: 0.5px solid rgba(255, 255, 255, 0.3);
+              0 32px 64px -12px rgba(0, 0, 0, 0.04),
+              0 1px 0 0 rgba(255, 255, 255, 0.5),
+              inset 0 1px 0 0 rgba(255, 255, 255, 0.7);
+            border: 0.5px solid rgba(0, 0, 0, 0.03);
             padding: 0;
             position: relative;
             overflow: hidden;
           ">
             
-            <!-- Close Button -->
+            <!-- Zen Close Button -->
             <button id="vx-popup-close" 
                     style="
                       position: absolute;
-                      top: 16px;
-                      right: 16px;
-                      width: 28px;
-                      height: 28px;
+                      top: 20px;
+                      right: 20px;
+                      width: 24px;
+                      height: 24px;
                       border: none;
-                      background: rgba(0, 0, 0, 0.04);
+                      background: transparent;
                       border-radius: 50%;
                       display: flex;
                       align-items: center;
                       justify-content: center;
                       cursor: pointer;
-                      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-                      font-size: 16px;
-                      color: rgba(0, 0, 0, 0.5);
+                      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                      font-size: 18px;
+                      color: rgba(0, 0, 0, 0.3);
                       z-index: 10;
+                      font-weight: 200;
                     "
-                    onmouseover="this.style.background='rgba(0, 0, 0, 0.08)'; this.style.transform='scale(1.05)'; this.style.color='rgba(0, 0, 0, 0.7)'"
-                    onmouseout="this.style.background='rgba(0, 0, 0, 0.04)'; this.style.transform='scale(1)'; this.style.color='rgba(0, 0, 0, 0.5)'"
-                    aria-label="Close popup">
+                    onmouseover="this.style.color='rgba(0, 0, 0, 0.6)'; this.style.transform='scale(1.1)'"
+                    onmouseout="this.style.color='rgba(0, 0, 0, 0.3)'; this.style.transform='scale(1)'"
+                    aria-label="Close">
               ×
             </button>
 
-            <!-- Header Section -->
+            <!-- Header Section - Extreme Minimalism -->
             <div style="
-              padding: 48px 32px 24px 32px;
+              padding: 56px 40px 32px 40px;
               text-align: center;
-              background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
-              border-bottom: 0.5px solid rgba(0, 0, 0, 0.06);
             ">
+              <!-- Zen Icon -->
               <div style="
-                width: 48px;
-                height: 48px;
-                margin: 0 auto 24px auto;
-                background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
-                border-radius: 12px;
+                width: 40px;
+                height: 40px;
+                margin: 0 auto 32px auto;
+                background: linear-gradient(135deg, rgba(139, 69, 19, 0.1) 0%, rgba(160, 82, 45, 0.05) 100%);
+                border-radius: 50%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                font-size: 22px;
-                box-shadow: 
-                  0 8px 20px rgba(255, 107, 53, 0.25),
-                  inset 0 1px 0 rgba(255, 255, 255, 0.3);
+                font-size: 18px;
                 position: relative;
-                overflow: hidden;
+                border: 1px solid rgba(139, 69, 19, 0.08);
               ">
                 <div style="
-                  position: absolute;
-                  top: 0;
-                  left: 0;
-                  right: 0;
-                  height: 50%;
-                  background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
+                  width: 6px;
+                  height: 6px;
+                  background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+                  border-radius: 50%;
+                  opacity: 0.7;
                 "></div>
-                🏆
               </div>
               
               <h2 id="vx-popup-title" style="
                 font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
-                font-size: 24px;
-                font-weight: 600;
-                line-height: 1.2;
-                color: #1d1d1f;
-                margin: 0 0 8px 0;
-                letter-spacing: -0.3px;
+                font-size: 22px;
+                font-weight: 300;
+                line-height: 1.3;
+                color: rgba(0, 0, 0, 0.85);
+                margin: 0 0 16px 0;
+                letter-spacing: -0.2px;
               ">${content.headline}</h2>
               
               <p style="
                 font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
                 font-size: 15px;
-                line-height: 1.4;
-                color: rgba(29, 29, 31, 0.68);
+                line-height: 1.5;
+                color: rgba(0, 0, 0, 0.5);
                 margin: 0;
-                font-weight: 400;
+                font-weight: 300;
+                letter-spacing: 0.1px;
               ">${content.body}</p>
             </div>
 
-            <!-- Benefits Section -->
-            <div style="padding: 24px 32px; background: rgba(255, 255, 255, 0.4);">
-              <div style="
-                background: linear-gradient(135deg, rgba(255, 107, 53, 0.06) 0%, rgba(247, 147, 30, 0.04) 100%);
-                border-radius: 12px;
-                padding: 20px;
-                border: 0.5px solid rgba(255, 107, 53, 0.1);
-              ">
-                <h3 style="
-                  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
-                  font-size: 16px;
-                  font-weight: 600;
-                  color: #1d1d1f;
-                  margin: 0 0 12px 0;
-                  letter-spacing: -0.2px;
-                ">Merit-Based Awards</h3>
-                
-                <div style="space-y: 8px;">
-                  <div style="
-                    display: flex;
-                    align-items: center;
-                    margin-bottom: 8px;
-                    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
-                    font-size: 13px;
-                    color: rgba(29, 29, 31, 0.8);
-                    line-height: 1.3;
-                  ">
-                    <div style="
-                      width: 16px;
-                      height: 16px;
-                      border-radius: 50%;
-                      background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
-                      display: flex;
-                      align-items: center;
-                      justify-content: center;
-                      margin-right: 10px;
-                      font-size: 9px;
-                      color: white;
-                      font-weight: 600;
-                      flex-shrink: 0;
-                      box-shadow: 0 2px 4px rgba(255, 107, 53, 0.3);
-                    ">✓</div>
-                    <span>Awarded based on vocal talent and merit</span>
-                  </div>
-                  
-                  <div style="
-                    display: flex;
-                    align-items: center;
-                    margin-bottom: 8px;
-                    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
-                    font-size: 13px;
-                    color: rgba(29, 29, 31, 0.8);
-                    line-height: 1.3;
-                  ">
-                    <div style="
-                      width: 16px;
-                      height: 16px;
-                      border-radius: 50%;
-                      background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
-                      display: flex;
-                      align-items: center;
-                      justify-content: center;
-                      margin-right: 10px;
-                      font-size: 9px;
-                      color: white;
-                      font-weight: 600;
-                      flex-shrink: 0;
-                      box-shadow: 0 2px 4px rgba(255, 107, 53, 0.3);
-                    ">✓</div>
-                    <span>Partial to full program coverage</span>
-                  </div>
-                  
-                  <div style="
-                    display: flex;
-                    align-items: center;
-                    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
-                    font-size: 13px;
-                    color: rgba(29, 29, 31, 0.8);
-                    line-height: 1.3;
-                  ">
-                    <div style="
-                      width: 16px;
-                      height: 16px;
-                      border-radius: 50%;
-                      background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
-                      display: flex;
-                      align-items: center;
-                      justify-content: center;
-                      margin-right: 10px;
-                      font-size: 9px;
-                      color: white;
-                      font-weight: 600;
-                      flex-shrink: 0;
-                      box-shadow: 0 2px 4px rgba(255, 107, 53, 0.3);
-                    ">✓</div>
-                    <span>No financial need requirements</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <!-- Zen Divider -->
+            <div style="
+              height: 1px;
+              background: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.05) 50%, transparent 100%);
+              margin: 0 40px;
+            "></div>
             
-            <!-- Form Section -->
-            <div style="padding: 24px 32px 32px 32px;">
-              <form id="vx-popup-form" style="display: flex; flex-direction: column; gap: 16px;">
+            <!-- Form Section - Pure Simplicity -->
+            <div style="padding: 40px;">
+              <form id="vx-popup-form" style="display: flex; flex-direction: column; gap: 24px;">
+                <!-- Name Input -->
                 <div style="position: relative;">
                   <input 
                     type="text" 
                     id="vx-popup-name" 
                     required 
-                    placeholder="Your name"
+                    placeholder="Name"
                     style="
                       width: 100%;
-                      padding: 16px 18px;
-                      border: 1px solid rgba(0, 0, 0, 0.08);
-                      border-radius: 10px;
+                      padding: 18px 0;
+                      border: none;
+                      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                      border-radius: 0;
                       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
                       font-size: 16px;
-                      background: rgba(255, 255, 255, 0.8);
-                      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                      font-weight: 300;
+                      background: transparent;
+                      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
                       outline: none;
                       box-sizing: border-box;
-                      color: #1d1d1f;
-                      backdrop-filter: blur(10px);
+                      color: rgba(0, 0, 0, 0.85);
+                      letter-spacing: 0.2px;
                     "
                     onfocus="
-                      this.style.borderColor='rgba(255, 107, 53, 0.4)'; 
-                      this.style.background='rgba(255, 255, 255, 0.95)'; 
-                      this.style.boxShadow='0 0 0 4px rgba(255, 107, 53, 0.08), 0 2px 8px rgba(0, 0, 0, 0.06)';
-                      this.style.transform='translateY(-1px)';
+                      this.style.borderBottomColor='rgba(139, 69, 19, 0.3)';
+                      this.style.color='rgba(0, 0, 0, 0.95)';
                     "
                     onblur="
-                      this.style.borderColor='rgba(0, 0, 0, 0.08)'; 
-                      this.style.background='rgba(255, 255, 255, 0.8)'; 
-                      this.style.boxShadow='none';
-                      this.style.transform='translateY(0)';
+                      this.style.borderBottomColor='rgba(0, 0, 0, 0.1)';
+                      this.style.color='rgba(0, 0, 0, 0.85)';
                     "
                     aria-label="Your name">
                 </div>
                 
+                <!-- Email Input -->
                 <div style="position: relative;">
                   <input 
                     type="email" 
                     id="vx-popup-email" 
                     required 
-                    placeholder="Your email address"
+                    placeholder="Email"
                     style="
                       width: 100%;
-                      padding: 16px 18px;
-                      border: 1px solid rgba(0, 0, 0, 0.08);
-                      border-radius: 10px;
+                      padding: 18px 0;
+                      border: none;
+                      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                      border-radius: 0;
                       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
                       font-size: 16px;
-                      background: rgba(255, 255, 255, 0.8);
-                      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                      font-weight: 300;
+                      background: transparent;
+                      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
                       outline: none;
                       box-sizing: border-box;
-                      color: #1d1d1f;
-                      backdrop-filter: blur(10px);
+                      color: rgba(0, 0, 0, 0.85);
+                      letter-spacing: 0.2px;
                     "
                     onfocus="
-                      this.style.borderColor='rgba(255, 107, 53, 0.4)'; 
-                      this.style.background='rgba(255, 255, 255, 0.95)'; 
-                      this.style.boxShadow='0 0 0 4px rgba(255, 107, 53, 0.08), 0 2px 8px rgba(0, 0, 0, 0.06)';
-                      this.style.transform='translateY(-1px)';
+                      this.style.borderBottomColor='rgba(139, 69, 19, 0.3)';
+                      this.style.color='rgba(0, 0, 0, 0.95)';
                     "
                     onblur="
-                      this.style.borderColor='rgba(0, 0, 0, 0.08)'; 
-                      this.style.background='rgba(255, 255, 255, 0.8)'; 
-                      this.style.boxShadow='none';
-                      this.style.transform='translateY(0)';
+                      this.style.borderBottomColor='rgba(0, 0, 0, 0.1)';
+                      this.style.color='rgba(0, 0, 0, 0.85)';
                     "
                     aria-label="Email address">
                 </div>
                 
+                <!-- Zen Submit Button -->
                 <button 
                   type="submit" 
                   id="vx-popup-submit"
                   style="
                     width: 100%;
-                    padding: 16px 24px;
-                    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
-                    color: white;
-                    border: none;
-                    border-radius: 10px;
+                    padding: 20px 0;
+                    background: rgba(139, 69, 19, 0.05);
+                    color: rgba(139, 69, 19, 0.8);
+                    border: 1px solid rgba(139, 69, 19, 0.15);
+                    border-radius: 12px;
                     font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
-                    font-size: 16px;
-                    font-weight: 600;
+                    font-size: 15px;
+                    font-weight: 400;
                     cursor: pointer;
-                    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-                    box-shadow: 
-                      0 6px 20px rgba(255, 107, 53, 0.25),
-                      inset 0 1px 0 rgba(255, 255, 255, 0.2);
-                    margin-top: 8px;
+                    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                    margin-top: 16px;
                     position: relative;
                     overflow: hidden;
+                    letter-spacing: 0.3px;
                   "
                   onmouseover="
-                    this.style.transform='translateY(-2px)'; 
-                    this.style.boxShadow='0 8px 25px rgba(255, 107, 53, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2)';
+                    this.style.background='rgba(139, 69, 19, 0.08)';
+                    this.style.borderColor='rgba(139, 69, 19, 0.2)';
+                    this.style.color='rgba(139, 69, 19, 0.9)';
+                    this.style.transform='translateY(-1px)';
                   "
                   onmouseout="
-                    this.style.transform='translateY(0)'; 
-                    this.style.boxShadow='0 6px 20px rgba(255, 107, 53, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2)';
+                    this.style.background='rgba(139, 69, 19, 0.05)';
+                    this.style.borderColor='rgba(139, 69, 19, 0.15)';
+                    this.style.color='rgba(139, 69, 19, 0.8)';
+                    this.style.transform='translateY(0)';
                   "
-                  onmousedown="this.style.transform='translateY(-1px)'"
-                  onmouseup="this.style.transform='translateY(-2px)'">
-                  <div style="
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    height: 50%;
-                    background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 100%);
-                    pointer-events: none;
-                  "></div>
+                  onmousedown="this.style.transform='translateY(0)'"
+                  onmouseup="this.style.transform='translateY(-1px)'">
                   ${content.cta}
                 </button>
               </form>
               
-              <!-- Privacy Note -->
+              <!-- Minimal Privacy Note -->
               <p style="
                 text-align: center;
                 font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
                 font-size: 11px;
-                color: rgba(29, 29, 31, 0.5);
-                margin: 16px 0 0 0;
-                line-height: 1.3;
-              ">Free scholarship information • No spam • Unsubscribe anytime</p>
+                color: rgba(0, 0, 0, 0.25);
+                margin: 24px 0 0 0;
+                line-height: 1.4;
+                font-weight: 300;
+                letter-spacing: 0.3px;
+              ">No spam. Unsubscribe anytime.</p>
             </div>
           </div>
         </div>
       </div>
 
       <style>
-        @keyframes materialSlide {
+        @keyframes zenFadeIn {
           0% {
             opacity: 0;
-            transform: translateY(40px) scale(0.96);
-            filter: blur(10px);
+            transform: translateY(20px) scale(0.98);
+            filter: blur(5px);
           }
-          60% {
-            opacity: 0.8;
-            transform: translateY(-2px) scale(0.99);
-            filter: blur(2px);
+          70% {
+            opacity: 0.7;
+            transform: translateY(-1px) scale(0.995);
+            filter: blur(1px);
           }
           100% {
             opacity: 1;
@@ -494,10 +389,26 @@
           box-sizing: border-box;
         }
 
+        /* Zen focus states */
+        #vx-popup-overlay input::placeholder {
+          color: rgba(0, 0, 0, 0.3);
+          font-weight: 300;
+          transition: all 0.3s ease;
+        }
+
+        #vx-popup-overlay input:focus::placeholder {
+          color: rgba(0, 0, 0, 0.2);
+          transform: translateY(-2px);
+        }
+
         @media (max-width: 480px) {
           #vx-popup-overlay > div {
-            max-width: calc(100vw - 32px);
-            margin: 0 16px;
+            max-width: calc(100vw - 48px);
+            margin: 0 24px;
+          }
+          
+          #vx-popup-overlay .main-card {
+            padding: 32px 24px;
           }
         }
       </style>
@@ -617,7 +528,7 @@
     const originalText = submitBtn.textContent;
     submitBtn.disabled = true;
     submitBtn.textContent = 'Sending...';
-    submitBtn.style.opacity = '0.7';
+    submitBtn.style.opacity = '0.6';
     
     try {
       await submitEmail(email, name);
@@ -627,48 +538,56 @@
         detail: { email, name, variant, timestamp: new Date().toISOString() } 
       }));
       
-      // Show success message
+      // Show zen success message
       const form = document.getElementById('vx-popup-form');
       if (form) {
         form.innerHTML = `
-          <div style="text-align: center; padding: 32px 0;">
+          <div style="text-align: center; padding: 40px 0;">
             <div style="
-              width: 64px;
-              height: 64px;
-              margin: 0 auto 20px auto;
-              background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+              width: 48px;
+              height: 48px;
+              margin: 0 auto 24px auto;
+              background: rgba(139, 69, 19, 0.1);
               border-radius: 50%;
               display: flex;
               align-items: center;
               justify-content: center;
-              font-size: 28px;
-              color: white;
-              box-shadow: 0 8px 24px rgba(245, 158, 11, 0.3);
-            ">✓</div>
+              border: 1px solid rgba(139, 69, 19, 0.15);
+            ">
+              <div style="
+                width: 8px;
+                height: 8px;
+                background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+                border-radius: 50%;
+                opacity: 0.8;
+              "></div>
+            </div>
             
             <h3 style="
               font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
-              font-size: 22px;
-              font-weight: 600;
-              color: #1d1d1f;
-              margin: 0 0 8px 0;
-              letter-spacing: -0.3px;
-            ">Scholarship Information Sent!</h3>
+              font-size: 18px;
+              font-weight: 300;
+              color: rgba(0, 0, 0, 0.8);
+              margin: 0 0 12px 0;
+              letter-spacing: -0.1px;
+            ">Sent</h3>
             
             <p style="
               font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
-              font-size: 16px;
-              line-height: 1.4;
-              color: rgba(29, 29, 31, 0.7);
+              font-size: 14px;
+              line-height: 1.5;
+              color: rgba(0, 0, 0, 0.5);
               margin: 0;
-            ">Check your inbox for merit-based scholarship details and application guidance.</p>
+              font-weight: 300;
+              letter-spacing: 0.1px;
+            ">Check your inbox for scholarship details.</p>
           </div>
         `;
       }
       
       setTimeout(() => {
         closePopup();
-      }, 3000);
+      }, 2500);
       
     } catch (error) {
       debug('Scholarship inquiry submission failed', error.message);
@@ -686,13 +605,13 @@
     const overlay = document.getElementById('vx-popup-overlay');
     if (overlay) {
       overlay.style.opacity = '0';
-      overlay.style.transform = 'scale(0.95)';
+      overlay.style.transform = 'scale(0.98)';
       setTimeout(() => {
         overlay.remove();
         document.body.style.overflow = '';
         window.dispatchEvent(new CustomEvent('vx-popup-closed'));
         debug('Popup closed');
-      }, 300);
+      }, 400);
     }
   }
 
@@ -744,7 +663,7 @@
       if (form) form.addEventListener('submit', handleSubmit);
       
       if (nameInput) {
-        setTimeout(() => nameInput.focus(), 100);
+        setTimeout(() => nameInput.focus(), 200);
       }
       
       const handleEscape = (e) => {
