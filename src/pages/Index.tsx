@@ -52,9 +52,51 @@ const Index = () => {
     }
   }, []);
 
-  // Enhanced popup debugging and integration
+  // Enhanced popup debugging and initialization
   useEffect(() => {
     console.log('[Index] Page loaded, checking popup system...');
+    
+    // Force debug mode for testing
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('debug') === 'popup') {
+      console.log('[Index] Debug mode enabled via URL parameter');
+    }
+    
+    // Check if popup script is loaded
+    const checkPopupScript = () => {
+      if (typeof window !== 'undefined' && (window as any).VX_DEBUG) {
+        console.log('[Index] Popup script loaded successfully');
+        const status = (window as any).VX_DEBUG.getStatus();
+        console.log('[Index] Popup system status:', status);
+        
+        // Check credentials
+        if (!status.credentials.supabaseUrl || !status.credentials.supabaseKey) {
+          console.error('[Index] Missing Supabase credentials for popup');
+        }
+        
+        // Force show popup for testing (remove this in production)
+        if (urlParams.get('force_popup') === 'true') {
+          console.log('[Index] Force showing popup for testing');
+          (window as any).VX_DEBUG.forceShow();
+        }
+      } else {
+        console.error('[Index] Popup script not loaded or VX_DEBUG not available');
+        // Try to reload popup script
+        const script = document.createElement('script');
+        script.src = '/popup.js';
+        script.onload = () => {
+          console.log('[Index] Popup script reloaded');
+          setTimeout(checkPopupScript, 100);
+        };
+        script.onerror = () => {
+          console.error('[Index] Failed to load popup script');
+        };
+        document.head.appendChild(script);
+      }
+    };
+
+    // Check popup system after a delay
+    const initTimeout = setTimeout(checkPopupScript, 1000);
     
     // Add popup event listeners for debugging
     const handlePopupShown = (e: CustomEvent) => {
@@ -95,27 +137,12 @@ const Index = () => {
     window.addEventListener('vx-popup-submitted', handlePopupSubmitted as EventListener);
     window.addEventListener('vx-popup-closed', handlePopupClosed as EventListener);
 
-    // Debug popup status after a short delay
-    const debugTimeout = setTimeout(() => {
-      if (typeof window !== 'undefined' && (window as any).VX_DEBUG) {
-        const status = (window as any).VX_DEBUG.getStatus();
-        console.log('[Index] Popup system status:', status);
-        
-        // Check if popup should show but hasn't
-        if (status.state.shouldShow && !status.state.popupShown) {
-          console.log('[Index] Popup should show but hasn\'t triggered yet');
-        }
-      } else {
-        console.log('[Index] VX_DEBUG not available - popup script may not be loaded');
-      }
-    }, 1000);
-
     // Cleanup
     return () => {
       window.removeEventListener('vx-popup-shown', handlePopupShown as EventListener);
       window.removeEventListener('vx-popup-submitted', handlePopupSubmitted as EventListener);
       window.removeEventListener('vx-popup-closed', handlePopupClosed as EventListener);
-      clearTimeout(debugTimeout);
+      clearTimeout(initTimeout);
     };
   }, []);
 

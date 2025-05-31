@@ -90,16 +90,23 @@
     
     <!-- Vocal Excellence Popup Configuration -->
     <script>
-      // Configure popup credentials - you'll need to set these
+      console.log('[HTML] Configuring popup credentials...');
+      
+      // Configure popup credentials
       window.VX_SUPABASE_URL = 'https://aualmslyjnapymacktzg.supabase.co';
       window.VX_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF1YWxtc2x5am5hcHltYWNrdHpnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5NjkxMTEsImV4cCI6MjA1OTU0NTExMX0.0rzWB0-lRtjKRtmziqJdg_RzfxfTsjd0ovwHpdkGcUs';
-      // Mailchimp credentials - replace with your actual values
-      // window.VX_MAILCHIMP_API_KEY = 'your-mailchimp-api-key';
-      // window.VX_MAILCHIMP_LIST_ID = 'your-mailchimp-list-id';
+      
+      console.log('[HTML] Popup credentials configured:', {
+        supabaseUrl: !!window.VX_SUPABASE_URL,
+        supabaseKey: !!window.VX_SUPABASE_ANON_KEY
+      });
     </script>
     
     <!-- Load the popup script -->
-    <script src="/popup.js"></script>
+    <script src="/popup.js" 
+            onload="console.log('[HTML] Popup script loaded successfully')" 
+            onerror="console.error('[HTML] Failed to load popup script')"></script>
+    
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
