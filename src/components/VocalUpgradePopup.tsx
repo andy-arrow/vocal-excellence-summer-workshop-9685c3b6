@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { X, Send, Music, Award, GraduationCap } from 'lucide-react';
+import { X, Award, GraduationCap, Music, Star } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -40,7 +40,7 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
       // Step 1: Save to Supabase email_signups table
       const signupData = {
         email: email.trim().toLowerCase(),
-        source: 'scholarship_popup',
+        source: 'merit_scholarship_popup',
         variant: 'merit_scholarship_v1',
         page_path: window.location.pathname,
       };
@@ -63,7 +63,7 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
         email: email.trim().toLowerCase(),
         name: name.trim(),
         variant: 'merit_scholarship_v1',
-        source: 'scholarship_popup',
+        source: 'merit_scholarship_popup',
         page_path: window.location.pathname
       };
       
@@ -138,36 +138,36 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
     if (isSubmitted) {
       return (
         <div className="text-center p-6">
-          <div className="w-20 h-20 rounded-full bg-gradient-to-br from-purple-100 to-violet-100 flex items-center justify-center mx-auto mb-6">
-            <Award className="h-10 w-10 text-purple-600" />
+          <div className="w-20 h-20 rounded-full bg-gradient-to-br from-amber-100 to-yellow-100 flex items-center justify-center mx-auto mb-6">
+            <Award className="h-10 w-10 text-amber-600" />
           </div>
           <h3 className="text-2xl font-semibold mb-3 text-gray-900">Scholarship Information Sent!</h3>
           <p className="text-gray-600 mb-8 leading-relaxed">
-            Your merit-based scholarship inquiry has been received. Check your inbox for detailed information about available awards and how to apply.
+            Thank you for your interest in our merit-based scholarships. Check your inbox for detailed information about available awards, eligibility criteria, and the application process.
           </p>
           
           <div className="space-y-4 mb-8">
-            <div className="flex items-start gap-4 bg-purple-50 p-4 rounded-lg text-left">
-              <Award className="h-6 w-6 text-purple-600 mt-1 flex-shrink-0" />
+            <div className="flex items-start gap-4 bg-amber-50 p-4 rounded-lg text-left">
+              <Award className="h-6 w-6 text-amber-600 mt-1 flex-shrink-0" />
               <div>
                 <h4 className="font-semibold text-gray-900 mb-1">Merit-Based Awards</h4>
-                <p className="text-sm text-gray-600">Scholarships based on vocal talent and potential</p>
+                <p className="text-sm text-gray-600">Scholarships awarded based on vocal talent and academic merit</p>
               </div>
             </div>
             
-            <div className="flex items-start gap-4 bg-purple-50 p-4 rounded-lg text-left">
-              <GraduationCap className="h-6 w-6 text-purple-600 mt-1 flex-shrink-0" />
+            <div className="flex items-start gap-4 bg-amber-50 p-4 rounded-lg text-left">
+              <GraduationCap className="h-6 w-6 text-amber-600 mt-1 flex-shrink-0" />
               <div>
                 <h4 className="font-semibold text-gray-900 mb-1">Application Process</h4>
-                <p className="text-sm text-gray-600">Step-by-step guidance for your submission</p>
+                <p className="text-sm text-gray-600">Simple application with submission requirements and deadlines</p>
               </div>
             </div>
             
-            <div className="flex items-start gap-4 bg-purple-50 p-4 rounded-lg text-left">
-              <Music className="h-6 w-6 text-purple-600 mt-1 flex-shrink-0" />
+            <div className="flex items-start gap-4 bg-amber-50 p-4 rounded-lg text-left">
+              <Music className="h-6 w-6 text-amber-600 mt-1 flex-shrink-0" />
               <div>
-                <h4 className="font-semibold text-gray-900 mb-1">Selection Criteria</h4>
-                <p className="text-sm text-gray-600">What our scholarship committee looks for</p>
+                <h4 className="font-semibold text-gray-900 mb-1">Award Amounts</h4>
+                <p className="text-sm text-gray-600">Partial and full tuition coverage available</p>
               </div>
             </div>
           </div>
@@ -188,14 +188,14 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
           <DialogHeader className="text-center">
             <DialogTitle className="text-xl">What's Your Voice Type?</DialogTitle>
             <DialogDescription className="text-gray-600">
-              This helps us match you with the most relevant scholarship opportunities for your voice type.
+              This helps us match you with the most relevant scholarship opportunities for your voice classification.
             </DialogDescription>
           </DialogHeader>
           
           <div className="grid grid-cols-2 gap-3 pt-6">
             <Button 
               variant="outline" 
-              className="h-auto py-4 flex flex-col border-2 hover:border-purple-300 hover:bg-purple-50"
+              className="h-auto py-4 flex flex-col border-2 hover:border-amber-300 hover:bg-amber-50"
               onClick={() => handleSelectVoiceType('Soprano')}
               disabled={isSubmitting}
             >
@@ -205,7 +205,7 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
             
             <Button 
               variant="outline" 
-              className="h-auto py-4 flex flex-col border-2 hover:border-purple-300 hover:bg-purple-50"
+              className="h-auto py-4 flex flex-col border-2 hover:border-amber-300 hover:bg-amber-50"
               onClick={() => handleSelectVoiceType('Alto')}
               disabled={isSubmitting}
             >
@@ -215,7 +215,7 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
             
             <Button 
               variant="outline" 
-              className="h-auto py-4 flex flex-col border-2 hover:border-purple-300 hover:bg-purple-50"
+              className="h-auto py-4 flex flex-col border-2 hover:border-amber-300 hover:bg-amber-50"
               onClick={() => handleSelectVoiceType('Tenor')}
               disabled={isSubmitting}
             >
@@ -225,7 +225,7 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
             
             <Button 
               variant="outline" 
-              className="h-auto py-4 flex flex-col border-2 hover:border-purple-300 hover:bg-purple-50"
+              className="h-auto py-4 flex flex-col border-2 hover:border-amber-300 hover:bg-amber-50"
               onClick={() => handleSelectVoiceType('Baritone')}
               disabled={isSubmitting}
             >
@@ -235,7 +235,7 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
             
             <Button 
               variant="outline" 
-              className="h-auto py-4 col-span-2 border-2 hover:border-purple-300 hover:bg-purple-50"
+              className="h-auto py-4 col-span-2 border-2 hover:border-amber-300 hover:bg-amber-50"
               onClick={() => handleSelectVoiceType('Bass')}
               disabled={isSubmitting}
             >
@@ -258,7 +258,7 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
           {isSubmitting && (
             <div className="text-center mt-6">
               <div className="flex items-center justify-center space-x-2">
-                <div className="w-4 h-4 border-2 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
+                <div className="w-4 h-4 border-2 border-amber-600 border-t-transparent rounded-full animate-spin"></div>
                 <p className="text-sm text-gray-600">Sending scholarship information...</p>
               </div>
             </div>
@@ -270,39 +270,39 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
     return (
       <>
         <DialogHeader className="text-center">
-          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-purple-100 to-violet-100 flex items-center justify-center mx-auto mb-4">
-            <Award className="h-8 w-8 text-purple-600" />
+          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-100 to-yellow-100 flex items-center justify-center mx-auto mb-4">
+            <Award className="h-8 w-8 text-amber-600" />
           </div>
           <DialogTitle className="text-2xl font-semibold text-gray-900">
             Merit-Based Scholarships Available
           </DialogTitle>
           <DialogDescription className="text-gray-600 text-base leading-relaxed mt-3">
-            Don't let finances limit your vocal potential. We award scholarships to exceptional singers who demonstrate outstanding talent, dedication, and passion for vocal excellence.
+            Exceptional vocal talent deserves recognition. We award merit-based scholarships to singers who demonstrate outstanding ability, dedication, and passion for vocal excellence.
           </DialogDescription>
         </DialogHeader>
         
         <div className="space-y-6 py-6">
-          <div className="bg-gradient-to-r from-purple-50 to-violet-50 p-6 rounded-xl border border-purple-100">
-            <h3 className="font-semibold text-purple-900 mb-4 flex items-center">
-              <Award className="h-5 w-5 mr-2" />
-              What We Offer
+          <div className="bg-gradient-to-r from-amber-50 to-yellow-50 p-6 rounded-xl border border-amber-100">
+            <h3 className="font-semibold text-amber-900 mb-4 flex items-center">
+              <Star className="h-5 w-5 mr-2" />
+              Merit-Based Scholarships
             </h3>
-            <ul className="text-sm text-purple-800 space-y-2">
+            <ul className="text-sm text-amber-800 space-y-2">
               <li className="flex items-center">
-                <span className="w-1.5 h-1.5 bg-purple-600 rounded-full mr-3"></span>
+                <span className="w-1.5 h-1.5 bg-amber-600 rounded-full mr-3"></span>
+                Awarded based on vocal talent and musical ability
+              </li>
+              <li className="flex items-center">
+                <span className="w-1.5 h-1.5 bg-amber-600 rounded-full mr-3"></span>
                 Partial and full program scholarships available
               </li>
               <li className="flex items-center">
-                <span className="w-1.5 h-1.5 bg-purple-600 rounded-full mr-3"></span>
-                Awards based purely on vocal merit and potential
+                <span className="w-1.5 h-1.5 bg-amber-600 rounded-full mr-3"></span>
+                No financial need requirements
               </li>
               <li className="flex items-center">
-                <span className="w-1.5 h-1.5 bg-purple-600 rounded-full mr-3"></span>
-                Rolling applications reviewed monthly
-              </li>
-              <li className="flex items-center">
-                <span className="w-1.5 h-1.5 bg-purple-600 rounded-full mr-3"></span>
-                No hidden fees or additional requirements
+                <span className="w-1.5 h-1.5 bg-amber-600 rounded-full mr-3"></span>
+                Open to all voice types and experience levels
               </li>
             </ul>
           </div>
@@ -341,7 +341,7 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
         
         <Button 
           onClick={handleNext} 
-          className="w-full h-12 bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white font-medium"
+          className="w-full h-12 bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-700 hover:to-yellow-700 text-white font-medium"
           disabled={!email || !name || isSubmitting}
         >
           {isSubmitting ? (
@@ -355,7 +355,7 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
         </Button>
         
         <p className="text-xs text-gray-500 text-center mt-4">
-          Free scholarship guide • No spam • Unsubscribe anytime
+          Free scholarship information • No spam • Unsubscribe anytime
         </p>
       </>
     );
