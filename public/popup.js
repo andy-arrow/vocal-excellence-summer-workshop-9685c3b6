@@ -26,6 +26,7 @@
     SCROLL_THRESHOLD: 0.4, // 40% scroll - PRIMARY TRIGGER
     EXIT_INTENT_THRESHOLD: 15,
     FORCE_SHOW_ON_SCROLL: false, // Normal behavior - only show at 40% scroll
+    ALLOWED_PATHS: ['/tuition'], // Only show on tuition page
   };
 
   // State
@@ -48,6 +49,14 @@
     }
   }
 
+  // Check if current page is allowed
+  function isAllowedPage() {
+    const currentPath = window.location.pathname;
+    const isAllowed = CONFIG.ALLOWED_PATHS.includes(currentPath);
+    debug(`Page check: ${currentPath} - ${isAllowed ? 'ALLOWED' : 'NOT ALLOWED'}`);
+    return isAllowed;
+  }
+
   // Enable debug mode for better testing
   if (typeof window !== 'undefined') {
     const urlParams = new URLSearchParams(window.location.search);
@@ -59,6 +68,12 @@
 
   // Check if popup should be shown
   function shouldShowPopup() {
+    // First check if we're on an allowed page
+    if (!isAllowedPage() && !isDebugMode) {
+      debug('Not on allowed page, popup should not show');
+      return false;
+    }
+
     if (isDebugMode || CONFIG.FORCE_SHOW_ON_SCROLL) {
       debug('Force mode: popup should show');
       return true;
@@ -637,6 +652,12 @@
       debug('Popup already shown');
       return;
     }
+
+    // Double-check page before showing
+    if (!isAllowedPage() && !isDebugMode) {
+      debug('Page check failed before showing popup');
+      return;
+    }
     
     debug('Showing scholarship popup');
     popupShown = true;
@@ -689,6 +710,11 @@
 
   // Setup scroll trigger - PRIMARY trigger
   function setupScrollTrigger() {
+    if (!shouldShowPopup()) {
+      debug('Should not show popup, skipping scroll trigger setup');
+      return;
+    }
+
     debug('Setting up scroll trigger at 40% scroll');
     
     let ticking = false;
@@ -724,6 +750,11 @@
 
   // Setup time trigger - backup
   function setupTimeTrigger() {
+    if (!shouldShowPopup()) {
+      debug('Should not show popup, skipping time trigger setup');
+      return;
+    }
+
     setTimeout(() => {
       if (!timeTriggered && !popupShown) {
         timeTriggered = true;
@@ -736,6 +767,10 @@
   // Setup exit intent - tertiary
   function setupExitIntentTrigger() {
     if (window.innerWidth <= 768) return;
+    if (!shouldShowPopup()) {
+      debug('Should not show popup, skipping exit intent trigger setup');
+      return;
+    }
     
     function handleMouseLeave(e) {
       if (exitTriggered || popupShown) return;
@@ -802,13 +837,21 @@
       debug('ERROR: No Supabase credentials found');
       return;
     }
+
+    // Check if we're on an allowed page
+    if (!isAllowedPage() && !isDebugMode) {
+      debug('Not on allowed page, skipping popup initialization');
+      return;
+    }
     
     variant = getVariant();
     
     debug('Initialization complete', {
       shouldShow: shouldShowPopup(),
       variant: variant,
-      forceMode: CONFIG.FORCE_SHOW_ON_SCROLL
+      forceMode: CONFIG.FORCE_SHOW_ON_SCROLL,
+      currentPath: window.location.pathname,
+      isAllowed: isAllowedPage()
     });
     
     // Setup triggers - scroll is primary
