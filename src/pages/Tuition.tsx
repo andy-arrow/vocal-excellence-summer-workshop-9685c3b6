@@ -46,6 +46,73 @@ const Tuition = () => {
     
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Add popup testing function
+  useEffect(() => {
+    // Add global function to test popup
+    window.testPopup = () => {
+      console.log('[Test] Clearing popup data and forcing show...');
+      localStorage.removeItem('vx_popup_seen');
+      localStorage.removeItem('vx_popup_variant');
+      if (window.VX_DEBUG) {
+        window.VX_DEBUG.forceShow();
+        console.log('[Test] Popup should now be visible');
+      } else {
+        console.log('[Test] VX_DEBUG not available, try refreshing the page');
+        window.location.reload();
+      }
+    };
+
+    window.clearPopupData = () => {
+      console.log('[Test] Clearing popup storage data...');
+      localStorage.removeItem('vx_popup_seen');
+      localStorage.removeItem('vx_popup_variant');
+      console.log('[Test] Popup data cleared. Refresh page to see popup.');
+    };
+
+    console.log('[VX Config] Setting up popup credentials...');
+    
+    // Configure the popup script with Supabase credentials
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+    const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+    
+    if (supabaseUrl && supabaseAnonKey) {
+      window.VX_SUPABASE_URL = supabaseUrl;
+      window.VX_SUPABASE_ANON_KEY = supabaseAnonKey;
+      
+      console.log('[VX Config] Popup configuration loaded:', {
+        hasSupabaseUrl: !!supabaseUrl,
+        hasSupabaseKey: !!supabaseAnonKey,
+        currentPath: window.location.pathname
+      });
+    } else {
+      console.warn('[VX Config] Missing Supabase credentials');
+    }
+
+    // Load the popup script
+    const script = document.createElement('script');
+    script.src = '/popup.js';
+    script.async = true;
+    script.onload = () => {
+      console.log('[VX Config] Popup script loaded successfully');
+    };
+    script.onerror = () => {
+      console.error('[VX Config] Failed to load popup script');
+    };
+    document.head.appendChild(script);
+
+    console.log('[VX Config] Configuration complete. Use testPopup() or clearPopupData() in console for testing.');
+
+    return () => {
+      // Cleanup
+      delete window.testPopup;
+      delete window.clearPopupData;
+      const existingScript = document.querySelector('script[src="/popup.js"]');
+      if (existingScript) {
+        existingScript.remove();
+      }
+    };
+  }, []);
   
   return (
     <>
