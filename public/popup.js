@@ -68,6 +68,12 @@
 
   // Check if popup should be shown
   function shouldShowPopup() {
+    debug('Checking if popup should show...', {
+      currentPath: window.location.pathname,
+      isAllowedPage: isAllowedPage(),
+      isDebugMode: isDebugMode
+    });
+
     // First check if we're on an allowed page
     if (!isAllowedPage() && !isDebugMode) {
       debug('Not on allowed page, popup should not show');
@@ -91,7 +97,9 @@
       const shouldShow = now > data.expires;
       debug('Popup seen data found', { 
         stored: data, 
-        shouldShow 
+        shouldShow,
+        now: now,
+        expires: data.expires
       });
       return shouldShow;
     } catch (e) {
@@ -640,7 +648,7 @@
     const expires = Date.now() + (CONFIG.TTL_DAYS * 24 * 60 * 60 * 1000);
     try {
       localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify({ expires }));
-      debug('Popup marked as seen');
+      debug('Popup marked as seen', { expires: new Date(expires) });
     } catch (e) {
       debug('Error marking popup as seen', e.message);
     }
@@ -648,6 +656,13 @@
 
   // Show popup
   function showPopup() {
+    debug('showPopup() called', {
+      popupShown: popupShown,
+      currentPath: window.location.pathname,
+      isAllowedPage: isAllowedPage(),
+      isDebugMode: isDebugMode
+    });
+
     if (popupShown) {
       debug('Popup already shown');
       return;
@@ -659,7 +674,7 @@
       return;
     }
     
-    debug('Showing scholarship popup');
+    debug('SHOWING SCHOLARSHIP POPUP NOW!');
     popupShown = true;
     markPopupSeen();
     
@@ -710,6 +725,8 @@
 
   // Setup scroll trigger - PRIMARY trigger
   function setupScrollTrigger() {
+    debug('setupScrollTrigger() called');
+    
     if (!shouldShowPopup()) {
       debug('Should not show popup, skipping scroll trigger setup');
       return;
@@ -731,6 +748,8 @@
           const total = document.documentElement.scrollHeight - window.innerHeight;
           const percentage = total > 0 ? scrolled / total : 0;
           
+          debug(`Scroll progress: ${(percentage * 100).toFixed(1)}% (threshold: ${(CONFIG.SCROLL_THRESHOLD * 100)}%)`);
+          
           if (percentage >= CONFIG.SCROLL_THRESHOLD) {
             scrollTriggered = true;
             debug('Scroll trigger fired at 40% - showing scholarship popup');
@@ -746,15 +765,20 @@
     }
     
     window.addEventListener('scroll', handleScroll, { passive: true });
+    debug('Scroll event listener added');
   }
 
   // Setup time trigger - backup
   function setupTimeTrigger() {
+    debug('setupTimeTrigger() called');
+    
     if (!shouldShowPopup()) {
       debug('Should not show popup, skipping time trigger setup');
       return;
     }
 
+    debug(`Setting up time trigger for ${CONFIG.TIME_DELAY}ms`);
+    
     setTimeout(() => {
       if (!timeTriggered && !popupShown) {
         timeTriggered = true;
@@ -830,6 +854,8 @@
   // Initialize
   function init() {
     debug('Initializing scholarship popup system');
+    debug('Current location:', window.location.href);
+    debug('Current pathname:', window.location.pathname);
     
     const hasSupabase = !!(window.VX_SUPABASE_URL && window.VX_SUPABASE_ANON_KEY);
     
@@ -846,26 +872,34 @@
     
     variant = getVariant();
     
+    const shouldShow = shouldShowPopup();
     debug('Initialization complete', {
-      shouldShow: shouldShowPopup(),
+      shouldShow: shouldShow,
       variant: variant,
       forceMode: CONFIG.FORCE_SHOW_ON_SCROLL,
       currentPath: window.location.pathname,
-      isAllowed: isAllowedPage()
+      isAllowed: isAllowedPage(),
+      hasSupabaseCredentials: hasSupabase
     });
     
-    // Setup triggers - scroll is primary
-    setupScrollTrigger();
-    setupTimeTrigger();
-    setupExitIntentTrigger();
-    
-    debug('All triggers set up - scroll trigger is ACTIVE');
+    if (shouldShow) {
+      debug('Popup should show - setting up triggers');
+      // Setup triggers - scroll is primary
+      setupScrollTrigger();
+      setupTimeTrigger();
+      setupExitIntentTrigger();
+      debug('All triggers set up - scroll trigger is ACTIVE');
+    } else {
+      debug('Popup should NOT show - skipping trigger setup');
+    }
   }
 
   // Start when ready
   if (document.readyState === 'loading') {
+    debug('Document still loading, waiting for DOMContentLoaded');
     document.addEventListener('DOMContentLoaded', init);
   } else {
+    debug('Document ready, initializing in 100ms');
     setTimeout(init, 100);
   }
 
