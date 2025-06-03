@@ -18,6 +18,7 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const TermsAndConditions = lazy(() => import("./pages/TermsAndConditions"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const Tuition = lazy(() => import("./pages/Tuition"));
+const EmailExtract = lazy(() => import("./pages/EmailExtract"));
 
 // Create query client with better error handling
 const queryClient = new QueryClient({
@@ -64,6 +65,7 @@ function App() {
                   <Route path="/tuition" element={<Tuition />} />
                   <Route path="/terms" element={<TermsAndConditions />} />
                   <Route path="/privacy" element={<PrivacyPolicy />} />
+                  <Route path="/email-extract" element={<EmailExtract />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>
