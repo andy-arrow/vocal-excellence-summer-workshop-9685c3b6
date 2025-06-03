@@ -23,6 +23,9 @@ interface Window {
     showPopup: () => void;
     closePopup: () => void;
   };
+  // Popup testing functions
+  testPopup?: () => void;
+  clearPopupData?: () => void;
   // Google Analytics gtag function
   gtag?: (...args: any[]) => void;
   // Popup test controls component (for console access)
