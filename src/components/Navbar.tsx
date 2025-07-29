@@ -65,7 +65,6 @@ const Navbar = ({ activeSection }: NavbarProps) => {
     { id: 'about', label: 'About' },
     { id: 'curriculum', label: 'Curriculum' },
     { id: 'instructors', label: 'Instructors' },
-    { href: '/tuition', label: 'Tuition' },
     { href: '/summer-programme', label: 'Summer Programme', adminOnly: true },
   ];
 
