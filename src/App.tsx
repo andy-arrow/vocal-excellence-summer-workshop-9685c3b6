@@ -62,7 +62,6 @@ function App() {
                   <Route path="/application" element={<ApplicationPage />} />
                   <Route path="/home" element={<HomePage />} />
                   <Route path="/auth" element={<Auth />} />
-                  <Route path="/tuition" element={<Tuition />} />
                   <Route path="/terms" element={<TermsAndConditions />} />
                   <Route path="/privacy" element={<PrivacyPolicy />} />
                   <Route path="/email-extract" element={<EmailExtract />} />
