@@ -20,14 +20,6 @@ const ApplicationFAQ = () => {
       answer: "No, formal training is not required. We welcome singers with a range of backgrounds, from self-taught vocalists to those with extensive classical training. What matters most is your enthusiasm and commitment to developing your vocal skills."
     },
     {
-      question: "What is the total cost of the workshop?",
-      answer: "The total tuition is €749, which includes everything: all training sessions, materials, lunch, and the €100 registration fee. There are no additional fees beyond this amount. We also offer an early bird discount of €50 if you register and pay in full before the deadline."
-    },
-    {
-      question: "How does the payment structure work?",
-      answer: "You can either pay the full €749 upfront or use our payment plan. The payment plan includes a €100 registration fee (which is part of the total tuition, not additional) followed by three equal installments of €216 each, for a total of €749. The registration fee secures your spot and goes directly toward your total tuition cost."
-    },
-    {
       question: "Is there any financial aid available for the workshop?",
       answer: "Yes, we offer a limited number of scholarships based on financial need and artistic merit. To be considered, check the scholarship interest box in the application form. If selected, we will contact you with further instructions."
     },
