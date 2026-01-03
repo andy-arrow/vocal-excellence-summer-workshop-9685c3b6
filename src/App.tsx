@@ -14,11 +14,14 @@ const Application = lazy(() => import("./pages/Application"));
 const HomePage = lazy(() => import("./pages/HomePage"));
 const ApplicationPage = lazy(() => import("./pages/ApplicationPage"));
 const Auth = lazy(() => import("./pages/Auth"));
+const Admin = lazy(() => import("./pages/Admin"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const TermsAndConditions = lazy(() => import("./pages/TermsAndConditions"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const Tuition = lazy(() => import("./pages/Tuition"));
 const EmailExtract = lazy(() => import("./pages/EmailExtract"));
+const SummerProgramme = lazy(() => import("./pages/SummerProgramme"));
+const TestPage = lazy(() => import("./pages/TestPage"));
 
 // Create query client with better error handling
 const queryClient = new QueryClient({
@@ -62,9 +65,13 @@ function App() {
                   <Route path="/application" element={<ApplicationPage />} />
                   <Route path="/home" element={<HomePage />} />
                   <Route path="/auth" element={<Auth />} />
+                  <Route path="/admin" element={<Admin />} />
                   <Route path="/terms" element={<TermsAndConditions />} />
                   <Route path="/privacy" element={<PrivacyPolicy />} />
+                  <Route path="/tuition" element={<Tuition />} />
+                  <Route path="/summer-programme" element={<SummerProgramme />} />
                   <Route path="/email-extract" element={<EmailExtract />} />
+                  <Route path="/test" element={<TestPage />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>
