@@ -1,4 +1,4 @@
-import { pgTable, text, serial, boolean, timestamp, jsonb } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, boolean, timestamp, jsonb, index } from "drizzle-orm/pg-core";
 
 export const applications = pgTable("applications", {
   id: serial("id").primaryKey(),
@@ -29,7 +29,10 @@ export const applications = pgTable("applications", {
   recommendationFilePath: text("recommendation_file_path"),
   createdAt: timestamp("created_at").defaultNow(),
   source: text("source"),
-});
+}, (table) => ({
+  emailIdx: index("applications_email_idx").on(table.email),
+  createdAtIdx: index("applications_created_at_idx").on(table.createdAt),
+}));
 
 export type InsertApplication = typeof applications.$inferInsert;
 export type Application = typeof applications.$inferSelect;
@@ -40,7 +43,10 @@ export const contactMessages = pgTable("contact_messages", {
   email: text("email").notNull(),
   message: text("message").notNull(),
   createdAt: timestamp("created_at").defaultNow(),
-});
+}, (table) => ({
+  emailIdx: index("contact_messages_email_idx").on(table.email),
+  createdAtIdx: index("contact_messages_created_at_idx").on(table.createdAt),
+}));
 
 export type InsertContactMessage = typeof contactMessages.$inferInsert;
 export type ContactMessage = typeof contactMessages.$inferSelect;
@@ -53,7 +59,10 @@ export const contactSubmissions = pgTable("contact_submissions", {
   message: text("message"),
   source: text("source"),
   createdAt: timestamp("created_at").defaultNow(),
-});
+}, (table) => ({
+  createdAtIdx: index("contact_submissions_created_at_idx").on(table.createdAt),
+  emailIdx: index("contact_submissions_email_idx").on(table.email),
+}));
 
 export type InsertContactSubmission = typeof contactSubmissions.$inferInsert;
 export type ContactSubmission = typeof contactSubmissions.$inferSelect;
@@ -65,7 +74,10 @@ export const emailSignups = pgTable("email_signups", {
   variant: text("variant"),
   pagePath: text("page_path"),
   createdAt: timestamp("created_at").defaultNow(),
-});
+}, (table) => ({
+  emailIdx: index("email_signups_email_idx").on(table.email),
+  createdAtIdx: index("email_signups_created_at_idx").on(table.createdAt),
+}));
 
 export type InsertEmailSignup = typeof emailSignups.$inferInsert;
 export type EmailSignup = typeof emailSignups.$inferSelect;

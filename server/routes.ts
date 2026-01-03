@@ -1,9 +1,57 @@
-import type { Express, Request, Response } from "express";
+import type { Express, Request, Response, NextFunction } from "express";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
+import { z, ZodError } from "zod";
 import { getStorage, getBackendInfo, logBackendSelection } from "./storage-factory";
 import { EmailService } from "./emailService";
+import { 
+  applicationSchema, 
+  contactMessageSchema, 
+  contactSubmissionSchema, 
+  emailSignupSchema,
+  adminVerifySchema 
+} from "@shared/validation";
+
+interface ApiErrorResponse {
+  success: false;
+  error: string;
+  details?: unknown;
+}
+
+interface ApiSuccessResponse<T = unknown> {
+  success: true;
+  data?: T;
+  message?: string;
+}
+
+function formatZodError(error: ZodError): string {
+  return error.errors.map(e => `${e.path.join('.')}: ${e.message}`).join(', ');
+}
+
+function handleApiError(res: Response, error: unknown, context: string): Response {
+  console.error(`Error in ${context}:`, error);
+  
+  if (error instanceof ZodError) {
+    return res.status(400).json({
+      success: false,
+      error: "Validation failed",
+      details: formatZodError(error),
+    } as ApiErrorResponse);
+  }
+  
+  if (error instanceof Error) {
+    return res.status(500).json({
+      success: false,
+      error: error.message,
+    } as ApiErrorResponse);
+  }
+  
+  return res.status(500).json({
+    success: false,
+    error: "An unexpected error occurred",
+  } as ApiErrorResponse);
+}
 
 logBackendSelection();
 const storage = getStorage();
@@ -64,22 +112,24 @@ export async function registerRoutes(app: Express): Promise<void> {
           return res.status(400).json({ success: false, error: "Missing application data" });
         }
 
-        let applicationData;
+        let rawData;
         try {
-          applicationData = JSON.parse(applicationDataJson);
+          rawData = JSON.parse(applicationDataJson);
         } catch (e) {
           return res.status(400).json({ success: false, error: "Invalid application data format" });
         }
 
+        const validationResult = applicationSchema.safeParse(rawData);
+        if (!validationResult.success) {
+          return res.status(400).json({
+            success: false,
+            error: "Validation failed",
+            details: formatZodError(validationResult.error),
+          });
+        }
+
+        const applicationData = validationResult.data;
         const files = req.files as { [fieldname: string]: Express.Multer.File[] } | undefined;
-
-        if (!applicationData.firstName || !applicationData.lastName || !applicationData.email || !applicationData.phone) {
-          return res.status(400).json({ success: false, error: "Missing required fields: firstName, lastName, email, phone" });
-        }
-
-        if (!applicationData.termsAgreed) {
-          return res.status(400).json({ success: false, error: "You must agree to the terms and conditions" });
-        }
 
         const insertData = {
           firstName: applicationData.firstName,
@@ -98,11 +148,11 @@ export async function registerRoutes(app: Express): Promise<void> {
           teacherEmail: applicationData.teacherEmail,
           reasonForApplying: applicationData.reasonForApplying,
           heardAboutUs: applicationData.heardAboutUs,
-          scholarshipInterest: !!applicationData.scholarshipInterest,
+          scholarshipInterest: applicationData.scholarshipInterest,
           dietaryRestrictions: applicationData.dietaryRestrictions,
           areasOfInterest: applicationData.areasOfInterest,
           specialNeeds: applicationData.specialNeeds,
-          termsAgreed: !!applicationData.termsAgreed,
+          termsAgreed: applicationData.termsAgreed,
           audioFile1Path: files?.audioFile1?.[0]?.path,
           audioFile2Path: files?.audioFile2?.[0]?.path,
           cvFilePath: files?.cvFile?.[0]?.path,
@@ -123,7 +173,7 @@ export async function registerRoutes(app: Express): Promise<void> {
               lastName: applicationData.lastName,
               email: applicationData.email,
               phone: applicationData.phone,
-              vocalRange: applicationData.vocalRange,
+              vocalRange: applicationData.vocalRange || undefined,
             });
             emailStatus = { success: result.success, error: result.error?.toString() || null };
           } catch (emailError: any) {
@@ -141,43 +191,34 @@ export async function registerRoutes(app: Express): Promise<void> {
           emailStatus,
           message: "Application received successfully",
         });
-      } catch (error: any) {
-        console.error("Error processing application:", error);
-        return res.status(500).json({
-          success: false,
-          error: error.message || "Failed to process application",
-        });
+      } catch (error) {
+        return handleApiError(res, error, "application submission");
       }
     }
   );
 
   app.post("/api/contact", async (req: Request, res: Response) => {
     try {
-      const { name, email, message: messageContent } = req.body;
-      
-      if (!name || !email || !messageContent) {
-        return res.status(400).json({ success: false, error: "Missing required fields" });
-      }
+      const validated = contactMessageSchema.parse(req.body);
 
       const contactMessage = await storage.createContactMessage({
-        name,
-        email,
-        message: messageContent,
+        name: validated.name,
+        email: validated.email,
+        message: validated.message,
       });
 
       const RESEND_API_KEY = process.env.RESEND_API_KEY;
       if (RESEND_API_KEY) {
         const emailService = new EmailService(RESEND_API_KEY);
         await emailService.sendNotificationToAdmin({
-          firstName: name,
-          email,
+          firstName: validated.name,
+          email: validated.email,
         });
       }
 
       return res.json({ success: true, messageId: contactMessage.id });
-    } catch (error: any) {
-      console.error("Error processing contact form:", error);
-      return res.status(400).json({ success: false, error: error.message });
+    } catch (error) {
+      return handleApiError(res, error, "contact form");
     }
   });
 
@@ -272,24 +313,19 @@ export async function registerRoutes(app: Express): Promise<void> {
 
   app.post("/api/contact-submissions", async (req: Request, res: Response) => {
     try {
-      const { name, email, vocalType, message, source } = req.body;
-
-      if (!name || !email) {
-        return res.status(400).json({ success: false, error: "Name and email are required" });
-      }
+      const validated = contactSubmissionSchema.parse(req.body);
 
       const submission = await storage.createContactSubmission({
-        name,
-        email,
-        vocalType,
-        message,
-        source: source || "website",
+        name: validated.name,
+        email: validated.email,
+        vocalType: validated.vocalType,
+        message: validated.message,
+        source: validated.source,
       });
 
       return res.json({ success: true, id: submission.id });
-    } catch (error: any) {
-      console.error("Error creating contact submission:", error);
-      return res.status(500).json({ success: false, error: error.message });
+    } catch (error) {
+      return handleApiError(res, error, "contact submission");
     }
   });
 
@@ -305,23 +341,18 @@ export async function registerRoutes(app: Express): Promise<void> {
 
   app.post("/api/email-signups", async (req: Request, res: Response) => {
     try {
-      const { email, source, variant, pagePath } = req.body;
-
-      if (!email) {
-        return res.status(400).json({ success: false, error: "Email is required" });
-      }
+      const validated = emailSignupSchema.parse(req.body);
 
       const signup = await storage.createEmailSignup({
-        email: email.toLowerCase().trim(),
-        source: source || "website",
-        variant,
-        pagePath,
+        email: validated.email.toLowerCase().trim(),
+        source: validated.source,
+        variant: validated.variant,
+        pagePath: validated.pagePath,
       });
 
       return res.json({ success: true, id: signup.id });
-    } catch (error: any) {
-      console.error("Error creating email signup:", error);
-      return res.status(500).json({ success: false, error: error.message });
+    } catch (error) {
+      return handleApiError(res, error, "email signup");
     }
   });
 
@@ -337,7 +368,7 @@ export async function registerRoutes(app: Express): Promise<void> {
 
   app.post("/api/admin/verify", async (req: Request, res: Response) => {
     try {
-      const { password } = req.body;
+      const validated = adminVerifySchema.parse(req.body);
       const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
       if (!ADMIN_PASSWORD) {
@@ -345,20 +376,15 @@ export async function registerRoutes(app: Express): Promise<void> {
         return res.status(500).json({ success: false, error: "Admin authentication not configured" });
       }
 
-      if (!password) {
-        return res.status(400).json({ success: false, error: "Password is required" });
-      }
-
-      const isValid = password === ADMIN_PASSWORD;
+      const isValid = validated.password === ADMIN_PASSWORD;
 
       if (isValid) {
         return res.json({ success: true, message: "Authentication successful" });
       } else {
         return res.status(401).json({ success: false, error: "Invalid password" });
       }
-    } catch (error: any) {
-      console.error("Error verifying admin:", error);
-      return res.status(500).json({ success: false, error: error.message });
+    } catch (error) {
+      return handleApiError(res, error, "admin verify");
     }
   });
 }

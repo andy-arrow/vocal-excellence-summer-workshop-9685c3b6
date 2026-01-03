@@ -79,3 +79,13 @@ shared/
 ### CDN Resources
 - **Google Fonts**: Playfair Display, Inter, Outfit font families
 - **GPT Engineer**: Component tagging for Lovable integration
+
+## Documentation
+
+### Operations & Maintenance
+- `docs/production-checklist.md` - Pre-deployment checklist and health monitoring
+- `docs/migration-guide.md` - Database migration discipline and procedures
+- `docs/rollback-plan.md` - Code and database rollback procedures
+
+### Migration Documentation (Historical)
+- `docs/migration/` - Supabase to Replit PostgreSQL migration notes
