@@ -70,6 +70,14 @@ export async function registerRoutes(app: Express): Promise<void> {
 
         const files = req.files as { [fieldname: string]: Express.Multer.File[] } | undefined;
 
+        if (!applicationData.firstName || !applicationData.lastName || !applicationData.email || !applicationData.phone) {
+          return res.status(400).json({ success: false, error: "Missing required fields: firstName, lastName, email, phone" });
+        }
+
+        if (!applicationData.termsAgreed) {
+          return res.status(400).json({ success: false, error: "You must agree to the terms and conditions" });
+        }
+
         const insertData = {
           firstName: applicationData.firstName,
           lastName: applicationData.lastName,
@@ -87,11 +95,11 @@ export async function registerRoutes(app: Express): Promise<void> {
           teacherEmail: applicationData.teacherEmail,
           reasonForApplying: applicationData.reasonForApplying,
           heardAboutUs: applicationData.heardAboutUs,
-          scholarshipInterest: applicationData.scholarshipInterest || false,
+          scholarshipInterest: !!applicationData.scholarshipInterest,
           dietaryRestrictions: applicationData.dietaryRestrictions,
           areasOfInterest: applicationData.areasOfInterest,
           specialNeeds: applicationData.specialNeeds,
-          termsAgreed: applicationData.termsAgreed || true,
+          termsAgreed: !!applicationData.termsAgreed,
           audioFile1Path: files?.audioFile1?.[0]?.path,
           audioFile2Path: files?.audioFile2?.[0]?.path,
           cvFilePath: files?.cvFile?.[0]?.path,
