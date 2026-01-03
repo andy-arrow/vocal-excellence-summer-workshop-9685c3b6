@@ -230,4 +230,100 @@ export async function registerRoutes(app: Express): Promise<void> {
       return res.status(500).json({ success: false, error: error.message });
     }
   });
+
+  app.get("/api/health", async (req: Request, res: Response) => {
+    try {
+      const result = await storage.healthCheck();
+      const status = result.healthy ? 200 : 503;
+      return res.status(status).json({
+        status: result.healthy ? "healthy" : "unhealthy",
+        database: result.healthy ? "connected" : "disconnected",
+        latencyMs: result.latencyMs,
+        timestamp: new Date().toISOString(),
+        ...(result.error && { error: result.error }),
+      });
+    } catch (error: any) {
+      return res.status(503).json({
+        status: "unhealthy",
+        database: "error",
+        error: error.message,
+        timestamp: new Date().toISOString(),
+      });
+    }
+  });
+
+  app.get("/api/contact-submissions", async (req: Request, res: Response) => {
+    try {
+      const submissions = await storage.getAllContactSubmissions();
+      return res.json(submissions);
+    } catch (error: any) {
+      console.error("Error fetching contact submissions:", error);
+      return res.status(500).json({ success: false, error: error.message });
+    }
+  });
+
+  app.post("/api/contact-submissions", async (req: Request, res: Response) => {
+    try {
+      const { name, email, vocalType, message, source } = req.body;
+
+      if (!name || !email) {
+        return res.status(400).json({ success: false, error: "Name and email are required" });
+      }
+
+      const submission = await storage.createContactSubmission({
+        name,
+        email,
+        vocalType,
+        message,
+        source: source || "website",
+      });
+
+      return res.json({ success: true, id: submission.id });
+    } catch (error: any) {
+      console.error("Error creating contact submission:", error);
+      return res.status(500).json({ success: false, error: error.message });
+    }
+  });
+
+  app.get("/api/email-signups", async (req: Request, res: Response) => {
+    try {
+      const signups = await storage.getAllEmailSignups();
+      return res.json(signups);
+    } catch (error: any) {
+      console.error("Error fetching email signups:", error);
+      return res.status(500).json({ success: false, error: error.message });
+    }
+  });
+
+  app.post("/api/email-signups", async (req: Request, res: Response) => {
+    try {
+      const { email, source, variant, pagePath } = req.body;
+
+      if (!email) {
+        return res.status(400).json({ success: false, error: "Email is required" });
+      }
+
+      const signup = await storage.createEmailSignup({
+        email: email.toLowerCase().trim(),
+        source: source || "website",
+        variant,
+        pagePath,
+      });
+
+      return res.json({ success: true, id: signup.id });
+    } catch (error: any) {
+      console.error("Error creating email signup:", error);
+      return res.status(500).json({ success: false, error: error.message });
+    }
+  });
+
+  app.get("/api/contact-messages", async (req: Request, res: Response) => {
+    try {
+      const messages = await storage.getAllContactMessages();
+      return res.json(messages);
+    } catch (error: any) {
+      console.error("Error fetching contact messages:", error);
+      return res.status(500).json({ success: false, error: error.message });
+    }
+  });
 }

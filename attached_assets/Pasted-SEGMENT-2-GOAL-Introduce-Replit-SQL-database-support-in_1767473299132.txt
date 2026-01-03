@@ -1,0 +1,50 @@
+SEGMENT 2 GOAL:
+Introduce Replit SQL database support in a non-breaking way. This segment sets up the schema + connection layer + migrations, but does NOT remove Supabase or redirect live reads/writes yet.
+
+RULES:
+- Keep the existing Supabase path intact.
+- Add a new “data access layer” (DAL) that can later be switched from Supabase → Replit DB.
+- Every change must be reversible via rollback/checkpoint.
+
+TASKS:
+1) Determine the app’s runtime (Node/TS? Python? etc.) and decide the safest DB access approach:
+   - Prefer an ORM/migration system if the app already uses one.
+   - If none exists, introduce the smallest reliable option (migrations + query wrapper), but avoid massive rewrites.
+
+2) Create database schema for Replit DB that matches what the app currently expects:
+   - Tables, columns, constraints, indexes
+   - Timestamps, soft delete columns if currently used
+   - Any uniqueness constraints the app relies on
+   - Minimal triggers only if unavoidable
+
+3) Implement migrations:
+   - Create an initial migration that creates schema from scratch.
+   - Ensure migrations are idempotent where possible and safe to run multiple times (or clearly guarded).
+
+4) Add a DAL interface:
+   - Create /src/db/index.(ts|js|py) and /src/db/types...
+   - Expose typed functions the app needs (e.g., getUserById, createListing, listListings, etc.)
+   - Implement a “ReplitPostgresRepository” (even if not used yet) with stubbed methods OR fully implemented methods returning correct shapes.
+
+5) Add a minimal DB connectivity healthcheck:
+   - A script or endpoint that can run a simple query and report success/failure.
+   - It must not expose secrets.
+
+6) Add automated verification:
+   - At minimum: a small test script that runs migrations then performs a basic CRUD cycle on one representative table in a transaction (and rolls it back).
+
+DELIVERABLES:
+- /docs/migration/replit-db-schema.md describing schema and migration strategy
+- Working migrations committed in repo
+- DAL skeleton + at least 2-3 implemented methods proven by tests
+
+SAFETY GATE (must pass):
+- App still builds and runs exactly as before (still using Supabase path).
+- DB healthcheck works.
+- Migration runs successfully on a fresh DB.
+- DAL tests pass.
+
+END OF SEGMENT 2:
+- Provide exact commands to run healthcheck + tests.
+- Create a Checkpoint named: "seg2_replit_db_foundation"
+- STOP and wait.

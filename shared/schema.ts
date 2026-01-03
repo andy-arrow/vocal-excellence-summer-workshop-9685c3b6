@@ -28,6 +28,7 @@ export const applications = pgTable("applications", {
   cvFilePath: text("cv_file_path"),
   recommendationFilePath: text("recommendation_file_path"),
   createdAt: timestamp("created_at").defaultNow(),
+  source: text("source"),
 });
 
 export type InsertApplication = typeof applications.$inferInsert;
@@ -43,3 +44,28 @@ export const contactMessages = pgTable("contact_messages", {
 
 export type InsertContactMessage = typeof contactMessages.$inferInsert;
 export type ContactMessage = typeof contactMessages.$inferSelect;
+
+export const contactSubmissions = pgTable("contact_submissions", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  vocalType: text("vocal_type"),
+  message: text("message"),
+  source: text("source"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export type InsertContactSubmission = typeof contactSubmissions.$inferInsert;
+export type ContactSubmission = typeof contactSubmissions.$inferSelect;
+
+export const emailSignups = pgTable("email_signups", {
+  id: serial("id").primaryKey(),
+  email: text("email").notNull(),
+  source: text("source"),
+  variant: text("variant"),
+  pagePath: text("page_path"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export type InsertEmailSignup = typeof emailSignups.$inferInsert;
+export type EmailSignup = typeof emailSignups.$inferSelect;

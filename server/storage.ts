@@ -1,12 +1,31 @@
-import { db } from "./db";
-import { applications, contactMessages, type InsertApplication, type Application, type InsertContactMessage, type ContactMessage } from "@shared/schema";
-import { eq } from "drizzle-orm";
+import { db, pool } from "./db";
+import { 
+  applications, 
+  contactMessages, 
+  contactSubmissions,
+  emailSignups,
+  type InsertApplication, 
+  type Application, 
+  type InsertContactMessage, 
+  type ContactMessage,
+  type InsertContactSubmission,
+  type ContactSubmission,
+  type InsertEmailSignup,
+  type EmailSignup
+} from "@shared/schema";
+import { eq, desc } from "drizzle-orm";
 
 export interface IStorage {
   createApplication(data: InsertApplication): Promise<Application>;
   getApplication(id: number): Promise<Application | undefined>;
   getAllApplications(): Promise<Application[]>;
   createContactMessage(data: InsertContactMessage): Promise<ContactMessage>;
+  getAllContactMessages(): Promise<ContactMessage[]>;
+  createContactSubmission(data: InsertContactSubmission): Promise<ContactSubmission>;
+  getAllContactSubmissions(): Promise<ContactSubmission[]>;
+  createEmailSignup(data: InsertEmailSignup): Promise<EmailSignup>;
+  getAllEmailSignups(): Promise<EmailSignup[]>;
+  healthCheck(): Promise<{ healthy: boolean; latencyMs: number; error?: string }>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -21,12 +40,46 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getAllApplications(): Promise<Application[]> {
-    return await db.select().from(applications);
+    return await db.select().from(applications).orderBy(desc(applications.createdAt));
   }
 
   async createContactMessage(data: InsertContactMessage): Promise<ContactMessage> {
     const [message] = await db.insert(contactMessages).values(data).returning();
     return message;
+  }
+
+  async getAllContactMessages(): Promise<ContactMessage[]> {
+    return await db.select().from(contactMessages).orderBy(desc(contactMessages.createdAt));
+  }
+
+  async createContactSubmission(data: InsertContactSubmission): Promise<ContactSubmission> {
+    const [submission] = await db.insert(contactSubmissions).values(data).returning();
+    return submission;
+  }
+
+  async getAllContactSubmissions(): Promise<ContactSubmission[]> {
+    return await db.select().from(contactSubmissions).orderBy(desc(contactSubmissions.createdAt));
+  }
+
+  async createEmailSignup(data: InsertEmailSignup): Promise<EmailSignup> {
+    const [signup] = await db.insert(emailSignups).values(data).returning();
+    return signup;
+  }
+
+  async getAllEmailSignups(): Promise<EmailSignup[]> {
+    return await db.select().from(emailSignups).orderBy(desc(emailSignups.createdAt));
+  }
+
+  async healthCheck(): Promise<{ healthy: boolean; latencyMs: number; error?: string }> {
+    const start = Date.now();
+    try {
+      await pool.query('SELECT 1');
+      const latencyMs = Date.now() - start;
+      return { healthy: true, latencyMs };
+    } catch (error: any) {
+      const latencyMs = Date.now() - start;
+      return { healthy: false, latencyMs, error: error.message };
+    }
   }
 }
 
