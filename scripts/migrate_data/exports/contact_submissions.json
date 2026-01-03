@@ -1,0 +1,11 @@
+[
+  {
+    "id": 1,
+    "name": "Contact Person",
+    "email": "contact@example.com",
+    "vocal_type": "Mezzo-Soprano",
+    "message": "Interested in tuition options",
+    "source": "tuition-page",
+    "created_at": "2025-05-15T09:00:00Z"
+  }
+]
