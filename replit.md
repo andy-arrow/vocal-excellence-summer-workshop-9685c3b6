@@ -89,3 +89,11 @@ shared/
 
 ### Migration Documentation (Historical)
 - `docs/migration/` - Supabase to Replit PostgreSQL migration notes
+
+## Recent Changes
+
+### January 3, 2026 - Fixed HTTP 426 "Upgrade Required" Error
+- **Root Cause**: Conflicting port mapping in `.replit` configuration (port 24678 mapped to external port 80) caused Replit proxy infrastructure to return HTTP 426 errors
+- **Solution**: Disabled Vite HMR in `vite.config.ts` to prevent the port 24678 websocket from interfering with Replit's proxy
+- **Trade-off**: Hot Module Replacement is disabled; page refresh required to see changes during development
+- **Note**: The `.replit` file cannot be edited directly by the agent; if HMR is needed, manually remove the `localPort = 24678, externalPort = 80` mapping from `.replit`
