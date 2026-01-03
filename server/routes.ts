@@ -334,4 +334,31 @@ export async function registerRoutes(app: Express): Promise<void> {
       return res.status(500).json({ success: false, error: error.message });
     }
   });
+
+  app.post("/api/admin/verify", async (req: Request, res: Response) => {
+    try {
+      const { password } = req.body;
+      const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+
+      if (!ADMIN_PASSWORD) {
+        console.error("ADMIN_PASSWORD not configured");
+        return res.status(500).json({ success: false, error: "Admin authentication not configured" });
+      }
+
+      if (!password) {
+        return res.status(400).json({ success: false, error: "Password is required" });
+      }
+
+      const isValid = password === ADMIN_PASSWORD;
+
+      if (isValid) {
+        return res.json({ success: true, message: "Authentication successful" });
+      } else {
+        return res.status(401).json({ success: false, error: "Invalid password" });
+      }
+    } catch (error: any) {
+      console.error("Error verifying admin:", error);
+      return res.status(500).json({ success: false, error: error.message });
+    }
+  });
 }

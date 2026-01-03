@@ -1,11 +1,10 @@
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { X, Award, GraduationCap, Music, Star } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
-import { supabase } from '@/integrations/supabase/client';
 
 type VoiceType = 'Soprano' | 'Alto' | 'Tenor' | 'Baritone' | 'Bass';
 
@@ -37,56 +36,33 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
     try {
       console.log('Starting scholarship inquiry process', { email, name });
       
-      // Save to database
       const signupData = {
         email: email.trim().toLowerCase(),
         source: 'merit_scholarship_popup',
         variant: 'merit_scholarship_react',
-        page_path: window.location.pathname,
+        pagePath: window.location.pathname,
       };
       
       console.log('Saving scholarship inquiry to database:', signupData);
-      const { error: dbError } = await supabase
-        .from('email_signups')
-        .insert(signupData);
+      const response = await fetch('/api/email-signups', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(signupData),
+      });
       
-      if (dbError) {
-        console.error('Database save error:', dbError);
-        throw new Error(`Failed to save inquiry: ${dbError.message}`);
+      if (!response.ok) {
+        const result = await response.json();
+        console.error('Database save error:', result);
+        throw new Error(`Failed to save inquiry: ${result.error}`);
       }
       
       console.log('Successfully saved scholarship inquiry');
       
-      // Send scholarship information via edge function
-      const emailPayload = {
-        type: 'popup_signup',
-        email: email.trim().toLowerCase(),
-        name: name.trim(),
-        variant: 'merit_scholarship_react',
-        source: 'merit_scholarship_popup',
-        page_path: window.location.pathname
-      };
-      
-      console.log('Sending scholarship information via email:', emailPayload);
-      const { data: emailResponse, error: emailError } = await supabase.functions.invoke('send-email', {
-        body: emailPayload,
+      toast({
+        title: "Scholarship Information Sent!",
+        description: "Check your inbox for merit-based scholarship details and application guidance.",
+        className: "bg-green-700 text-white border-green-800",
       });
-      
-      if (emailError) {
-        console.error('Email error:', emailError);
-        toast({
-          title: "Inquiry Received!",
-          description: "Your scholarship inquiry has been received. We'll be in touch with details soon.",
-          className: "bg-green-700 text-white border-green-800",
-        });
-      } else {
-        console.log('Scholarship information sent successfully:', emailResponse);
-        toast({
-          title: "Scholarship Information Sent!",
-          description: "Check your inbox for merit-based scholarship details and application guidance.",
-          className: "bg-green-700 text-white border-green-800",
-        });
-      }
       
       setIsSubmitted(true);
       

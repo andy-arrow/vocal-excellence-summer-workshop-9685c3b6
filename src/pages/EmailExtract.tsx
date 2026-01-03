@@ -1,35 +1,34 @@
-
-import React, { useEffect, useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Download, Mail, Users, MessageSquare, Gift } from 'lucide-react';
+import { Download, Mail, Users, MessageSquare, Gift, Loader2 } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
 
 interface ApplicationEmail {
   email: string;
-  source: string;
-  timestamp: string;
-  firstname: string;
-  lastname: string;
+  source?: string;
+  createdAt: string;
+  firstName: string;
+  lastName: string;
   phone: string;
   type: 'application';
 }
 
 interface ContactEmail {
   email: string;
-  source: string;
-  timestamp: string;
+  source?: string;
+  createdAt: string;
   name: string;
-  vocal_type: string;
+  vocalType: string;
   type: 'contact';
 }
 
 interface SignupEmail {
   email: string;
-  source: string;
-  created_at: string;
-  variant: string;
-  page_path: string;
+  source?: string;
+  createdAt: string;
+  variant?: string;
+  pagePath?: string;
   type: 'signup';
 }
 
@@ -37,85 +36,60 @@ type AllEmails = ApplicationEmail | ContactEmail | SignupEmail;
 
 const EmailExtract = () => {
   const [emails, setEmails] = useState<AllEmails[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+
+  const { data: applications = [], isLoading: appsLoading } = useQuery<any[]>({
+    queryKey: ['/api/applications'],
+  });
+
+  const { data: contacts = [], isLoading: contactsLoading } = useQuery<any[]>({
+    queryKey: ['/api/contact-submissions'],
+  });
+
+  const { data: signups = [], isLoading: signupsLoading } = useQuery<any[]>({
+    queryKey: ['/api/email-signups'],
+  });
+
+  const loading = appsLoading || contactsLoading || signupsLoading;
 
   useEffect(() => {
-    fetchAllEmails();
-  }, []);
-
-  const fetchAllEmails = async () => {
-    try {
-      setLoading(true);
-      console.log('Starting comprehensive email extraction...');
-
-      // Query applications table
-      const { data: applications, error: appError } = await supabase
-        .from('applications')
-        .select('email, source, timestamp, firstname, lastname, phone');
-
-      if (appError) {
-        console.error('Error fetching applications:', appError);
-        throw appError;
-      }
-
-      // Query contact_submissions table
-      const { data: contacts, error: contactError } = await supabase
-        .from('contact_submissions')
-        .select('email, source, timestamp, name, vocal_type');
-
-      if (contactError) {
-        console.error('Error fetching contacts:', contactError);
-        throw contactError;
-      }
-
-      // Query email_signups table
-      const { data: signups, error: signupError } = await supabase
-        .from('email_signups')
-        .select('email, source, created_at, variant, page_path');
-
-      if (signupError) {
-        console.error('Error fetching signups:', signupError);
-        throw signupError;
-      }
-
-      console.log('Applications found:', applications?.length || 0);
-      console.log('Contacts found:', contacts?.length || 0);
-      console.log('Signups found:', signups?.length || 0);
-
-      // Combine all emails with type identification
+    if (!loading) {
       const allEmails: AllEmails[] = [
-        ...(applications || []).map(app => ({
-          ...app,
+        ...(applications || []).map((app: any) => ({
+          email: app.email,
+          source: app.source,
+          createdAt: app.createdAt,
+          firstName: app.firstName,
+          lastName: app.lastName,
+          phone: app.phone,
           type: 'application' as const
         })),
-        ...(contacts || []).map(contact => ({
-          ...contact,
+        ...(contacts || []).map((contact: any) => ({
+          email: contact.email,
+          source: contact.source,
+          createdAt: contact.createdAt,
+          name: contact.name,
+          vocalType: contact.vocalType,
           type: 'contact' as const
         })),
-        ...(signups || []).map(signup => ({
-          ...signup,
+        ...(signups || []).map((signup: any) => ({
+          email: signup.email,
+          source: signup.source,
+          createdAt: signup.createdAt,
+          variant: signup.variant,
+          pagePath: signup.pagePath,
           type: 'signup' as const
         }))
       ];
 
-      // Sort by most recent first
       allEmails.sort((a, b) => {
-        const dateA = new Date(a.type === 'signup' ? a.created_at : a.timestamp);
-        const dateB = new Date(b.type === 'signup' ? b.created_at : b.timestamp);
+        const dateA = new Date(a.createdAt);
+        const dateB = new Date(b.createdAt);
         return dateB.getTime() - dateA.getTime();
       });
 
       setEmails(allEmails);
-      console.log('Total emails extracted:', allEmails.length);
-
-    } catch (error: any) {
-      console.error('Error fetching emails:', error);
-      setError(error.message);
-    } finally {
-      setLoading(false);
     }
-  };
+  }, [applications, contacts, signups, loading]);
 
   const exportToCSV = () => {
     const csvHeaders = [
@@ -132,19 +106,18 @@ const EmailExtract = () => {
     ];
 
     const csvRows = emails.map(email => {
-      const date = email.type === 'signup' ? email.created_at : email.timestamp;
       return [
         email.email,
         email.type,
-        new Date(date).toISOString(),
+        new Date(email.createdAt).toISOString(),
         email.source || '',
-        email.type === 'application' ? email.firstname : 
+        email.type === 'application' ? email.firstName : 
          email.type === 'contact' ? email.name : '',
-        email.type === 'application' ? email.lastname : '',
+        email.type === 'application' ? email.lastName : '',
         email.type === 'application' ? email.phone : '',
-        email.type === 'contact' ? email.vocal_type : '',
+        email.type === 'contact' ? email.vocalType : '',
         email.type === 'signup' ? email.variant || '' : '',
-        email.type === 'signup' ? email.page_path || '' : ''
+        email.type === 'signup' ? email.pagePath || '' : ''
       ];
     });
 
@@ -176,12 +149,11 @@ const EmailExtract = () => {
   };
 
   const getTypeStats = () => {
-    const stats = {
+    return {
       application: emails.filter(e => e.type === 'application').length,
       contact: emails.filter(e => e.type === 'contact').length,
       signup: emails.filter(e => e.type === 'signup').length
     };
-    return stats;
   };
 
   if (loading) {
@@ -189,29 +161,9 @@ const EmailExtract = () => {
       <div className="min-h-screen bg-gray-50 p-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center">
-            <div className="animate-spin h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+            <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-blue-500" />
             <p>Extracting all emails from database...</p>
           </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen bg-gray-50 p-6">
-        <div className="max-w-6xl mx-auto">
-          <Card className="border-red-200 bg-red-50">
-            <CardHeader>
-              <CardTitle className="text-red-800">Error</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-red-700">{error}</p>
-              <Button onClick={fetchAllEmails} className="mt-4">
-                Retry
-              </Button>
-            </CardContent>
-          </Card>
         </div>
       </div>
     );
@@ -228,7 +180,7 @@ const EmailExtract = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
             <Card>
               <CardContent className="p-4">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-2">
                   <div>
                     <p className="text-sm text-gray-600">Total Emails</p>
                     <p className="text-2xl font-bold">{emails.length}</p>
@@ -240,7 +192,7 @@ const EmailExtract = () => {
 
             <Card>
               <CardContent className="p-4">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-2">
                   <div>
                     <p className="text-sm text-gray-600">Unique Emails</p>
                     <p className="text-2xl font-bold">{getUniqueEmails()}</p>
@@ -252,7 +204,7 @@ const EmailExtract = () => {
 
             <Card>
               <CardContent className="p-4">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-2">
                   <div>
                     <p className="text-sm text-gray-600">Applications</p>
                     <p className="text-2xl font-bold">{stats.application}</p>
@@ -264,7 +216,7 @@ const EmailExtract = () => {
 
             <Card>
               <CardContent className="p-4">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-2">
                   <div>
                     <p className="text-sm text-gray-600">Contacts</p>
                     <p className="text-2xl font-bold">{stats.contact}</p>
@@ -275,11 +227,11 @@ const EmailExtract = () => {
             </Card>
           </div>
 
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center gap-4 flex-wrap">
             <p className="text-gray-600">
               Showing {emails.length} total email entries from all sources
             </p>
-            <Button onClick={exportToCSV} className="flex items-center gap-2">
+            <Button onClick={exportToCSV} className="flex items-center gap-2" data-testid="button-export-csv">
               <Download className="h-4 w-4" />
               Export CSV
             </Button>
@@ -305,7 +257,7 @@ const EmailExtract = () => {
                 </thead>
                 <tbody>
                   {emails.map((email, index) => (
-                    <tr key={index} className="border-b hover:bg-gray-50">
+                    <tr key={index} className="border-b hover:bg-gray-50" data-testid={`row-email-${index}`}>
                       <td className="p-2">
                         <div className="flex items-center gap-2">
                           {getTypeIcon(email.type)}
@@ -314,18 +266,18 @@ const EmailExtract = () => {
                       </td>
                       <td className="p-2 font-mono text-sm">{email.email}</td>
                       <td className="p-2">
-                        {email.type === 'application' ? `${email.firstname} ${email.lastname}` :
+                        {email.type === 'application' ? `${email.firstName} ${email.lastName}` :
                          email.type === 'contact' ? email.name : 
                          'N/A'}
                       </td>
                       <td className="p-2 text-sm">
-                        {new Date(email.type === 'signup' ? email.created_at : email.timestamp).toLocaleDateString()}
+                        {new Date(email.createdAt).toLocaleDateString()}
                       </td>
                       <td className="p-2 text-sm">{email.source || 'N/A'}</td>
                       <td className="p-2 text-sm">
                         {email.type === 'application' ? email.phone :
-                         email.type === 'contact' ? email.vocal_type :
-                         email.type === 'signup' ? `${email.variant || 'N/A'} | ${email.page_path || 'N/A'}` :
+                         email.type === 'contact' ? email.vocalType :
+                         email.type === 'signup' ? `${email.variant || 'N/A'} | ${email.pagePath || 'N/A'}` :
                          'N/A'}
                       </td>
                     </tr>

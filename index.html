@@ -12,12 +12,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Security-Policy" content="
       default-src 'self';
-      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.gpteng.co https://*.supabase.co https://openfpcdn.io https://www.googletagmanager.com https://cdn.tailwindcss.com;
+      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.gpteng.co https://openfpcdn.io https://www.googletagmanager.com https://cdn.tailwindcss.com;
       style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.tailwindcss.com;
       font-src 'self' https://fonts.gstatic.com;
-      img-src 'self' data: blob: https://*.supabase.co https://www.googletagmanager.com;
-      connect-src 'self' https://*.supabase.co wss://*.supabase.co https://openfpcdn.io https://www.googletagmanager.com https://www.google-analytics.com;
-      frame-src 'self' https://*.supabase.co;
+      img-src 'self' data: blob: https://www.googletagmanager.com;
+      connect-src 'self' https://openfpcdn.io https://www.googletagmanager.com https://www.google-analytics.com ws://127.0.0.1:* wss://127.0.0.1:*;
+      frame-src 'self';
       media-src 'self';
       object-src 'none';
       " />
@@ -136,60 +136,6 @@
         <div class="spinner"></div>
       </div>
     </div>
-    
-    <!-- Vocal Excellence Popup Configuration - CRITICAL: Must load before popup script -->
-    <script>
-      // Enhanced popup configuration with validation
-      console.log('[VX Config] Setting up popup credentials...');
-      
-      // Configure popup credentials
-      window.VX_SUPABASE_URL = 'https://aualmslyjnapymacktzg.supabase.co';
-      window.VX_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF1YWxtc2x5am5hcHltYWNrdHpnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5NjkxMTEsImV4cCI6MjA1OTU0NTExMX0.0rzWB0-lRtjKRtmziqJdg_RzfxfTsjd0ovwHpdkGcUs';
-      
-      // Optional Mailchimp credentials (uncomment and fill if needed)
-      // window.VX_MAILCHIMP_API_KEY = 'your-mailchimp-api-key';
-      // window.VX_MAILCHIMP_LIST_ID = 'your-mailchimp-list-id';
-      
-      // Debug logging for popup initialization
-      console.log('[VX Config] Popup configuration loaded:', {
-        supabaseUrl: !!window.VX_SUPABASE_URL,
-        supabaseKey: !!window.VX_SUPABASE_ANON_KEY,
-        mailchimpKey: !!window.VX_MAILCHIMP_API_KEY,
-        mailchimpList: !!window.VX_MAILCHIMP_LIST_ID
-      });
-      
-      // Add debug URL parameter detection
-      const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.get('debug') === 'popup') {
-        console.log('[VX Config] Debug mode enabled via URL parameter');
-      }
-      
-      // Test popup functionality (accessible via browser console)
-      window.testPopup = function() {
-        console.log('[VX Test] Manual popup test triggered');
-        if (window.VX_DEBUG) {
-          window.VX_DEBUG.forceShow();
-        } else {
-          console.log('[VX Test] Popup script not yet loaded');
-        }
-      };
-      
-      // Clear popup storage for testing (accessible via browser console)
-      window.clearPopupData = function() {
-        console.log('[VX Test] Clearing popup storage');
-        if (window.VX_DEBUG) {
-          window.VX_DEBUG.clearStorage();
-        }
-        localStorage.removeItem('vx_popup_seen');
-        localStorage.removeItem('vx_popup_variant');
-        console.log('[VX Test] Popup storage cleared');
-      };
-      
-      console.log('[VX Config] Configuration complete. Use testPopup() or clearPopupData() in console for testing.');
-    </script>
-    
-    <!-- Load the popup script -->
-    <script src="/popup.js"></script>
     
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>

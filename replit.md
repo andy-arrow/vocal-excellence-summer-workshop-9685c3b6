@@ -14,7 +14,7 @@ Preferred communication style: Simple, everyday language.
 - **Framework**: React 18 with TypeScript
 - **Build Tool**: Vite with SWC for fast compilation
 - **Routing**: React Router DOM for client-side navigation
-- **State Management**: TanStack React Query for server state, React Context for auth state
+- **State Management**: TanStack React Query for server state
 - **Styling**: Tailwind CSS with shadcn/ui component library (Radix UI primitives)
 - **Animations**: Framer Motion for page transitions and micro-interactions
 - **Form Handling**: React Hook Form with Zod validation
@@ -27,10 +27,10 @@ Preferred communication style: Simple, everyday language.
 - **Server Entry**: `server/index.ts` runs both API and serves Vite in development
 
 ### Data Storage
-- **Database**: PostgreSQL via Drizzle ORM
-- **Schema Location**: `shared/schema.ts` defines tables for applications and contact messages
+- **Database**: Replit PostgreSQL via Drizzle ORM
+- **Schema Location**: `shared/schema.ts` defines tables for applications, contact messages, and email signups
 - **File Storage**: Local filesystem uploads stored in `uploads/` directory
-- **Authentication**: Supabase Auth for user authentication
+- **Authentication**: Password-based admin authentication via ADMIN_PASSWORD environment variable
 
 ### Key Design Patterns
 - **Lazy Loading**: React.lazy() for route-level code splitting
@@ -44,18 +44,16 @@ src/
 ├── components/     # React components (UI, forms, sections)
 ├── pages/          # Route page components
 ├── hooks/          # Custom React hooks
-├── contexts/       # React context providers (Auth)
 ├── utils/          # Utility functions (analytics, security, file upload)
 ├── constants/      # Application constants (dates, config)
-├── stores/         # State stores (file uploads)
-└── integrations/   # Third-party integrations (Supabase)
+└── stores/         # State stores (file uploads)
 
 server/
 ├── index.ts        # Express server entry point
 ├── routes.ts       # API route definitions
-├── storage.ts      # Database operations
+├── storage.ts      # Database operations (Replit PostgreSQL via Drizzle ORM)
 ├── db.ts           # Database connection
-└── emailService.ts # Email notification service
+└── emailService.ts # Email notification service (Resend API)
 
 shared/
 └── schema.ts       # Drizzle database schema (shared between client/server)
@@ -64,9 +62,7 @@ shared/
 ## External Dependencies
 
 ### Database & Backend Services
-- **PostgreSQL**: Primary database (configured via DATABASE_URL environment variable)
-- **Supabase**: Authentication and additional data storage (email signups table)
-  - Environment variables: `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`
+- **PostgreSQL**: Primary database (configured via DATABASE_URL environment variable) using Replit PostgreSQL with Drizzle ORM
 
 ### Email Services
 - **Custom Email Service**: Server-side email notifications for application confirmations

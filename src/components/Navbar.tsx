@@ -1,25 +1,22 @@
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import AuthButtons from '@/components/AuthButtons';
 import AuthButtonsPlaceholder from './AuthButtonsPlaceholder';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useAuth } from '@/contexts/AuthContext';
-import { isAuthorizedAdmin } from '@/utils/accessControl';
 
 interface NavbarProps {
   activeSection?: string;
 }
 
-interface NavLink {
+interface NavLinkItem {
   id?: string;
   href?: string;
   label: string;
-  adminOnly?: boolean;
 }
 
 const Navbar = ({ activeSection }: NavbarProps) => {
@@ -27,8 +24,6 @@ const Navbar = ({ activeSection }: NavbarProps) => {
   const [scrolled, setScrolled] = useState(false);
   const isMobile = useIsMobile();
   const location = useLocation();
-  const { user } = useAuth();
-  const isAdmin = user ? isAuthorizedAdmin(user.email) : false;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,16 +55,14 @@ const Navbar = ({ activeSection }: NavbarProps) => {
     setIsMenuOpen(false);
   };
 
-  const navLinks: NavLink[] = [
+  const navLinks: NavLinkItem[] = [
     { id: 'home', label: 'Home' },
     { id: 'about', label: 'About' },
     { id: 'curriculum', label: 'Curriculum' },
     { id: 'instructors', label: 'Instructors' },
-    { href: '/summer-programme', label: 'Summer Programme', adminOnly: true },
   ];
 
-  // Filter links based on admin status
-  const visibleNavLinks = navLinks.filter(link => !link.adminOnly || (link.adminOnly && isAdmin));
+  const visibleNavLinks = navLinks;
 
   return (
     <header 
@@ -151,13 +144,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
             <ArrowUpRight size={14} className="opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </NavLink>
           
-          {isAdmin && (() => {
-            try {
-              return <AuthButtons />;
-            } catch (error) {
-              return <AuthButtonsPlaceholder />;
-            }
-          })()}
+          <AuthButtons />
         </div>
 
         <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
@@ -272,16 +259,14 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                   </NavLink>
                 </SheetClose>
                 
-                {isAdmin && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.4 }}
-                    className="flex justify-center"
-                  >
-                    <AuthButtonsPlaceholder />
-                  </motion.div>
-                )}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.4 }}
+                  className="flex justify-center"
+                >
+                  <AuthButtons />
+                </motion.div>
               </motion.div>
             </div>
           </SheetContent>

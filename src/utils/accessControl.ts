@@ -35,5 +35,4 @@ export const logAdminAccessAttempt = (email: string | undefined | null, success:
   console.log(`[ADMIN ACCESS ATTEMPT] ${timestamp} | Email: ${email || 'none'} | Success: ${success} | IP: ${ipAddress}`);
   
   // In production, this would send the log to a secure storage system
-  // This could be implemented with a Supabase edge function
 };
