@@ -1,0 +1,45 @@
+ROLE: You are a hostile Forensic Code Auditor and QA Engineer.
+
+MISSION:
+Your goal is to PROVE that the migration from Supabase to Replit DB failed or is incomplete. You will aggressively hunt for leftovers, broken paths, and security holes.
+If you cannot find any issues after running this gauntlet, then and only then will we declare the migration a success.
+
+PHASE 1: THE "GREP" TEST (Static Analysis)
+Search the entire codebase (src, server, public, config files) for any trace of Supabase.
+1. Run: `grep -r "supabase" .` (exclude migration/audit docs).
+2. Run: `grep -r "createClient" .` (verify none are from @supabase/js).
+3. Check `package.json` dependencies. Are `@supabase/supabase-js` or `supabase` still listed?
+4. Check `.replit` and `replit.nix` for any auth/storage sidecars.
+5. Check `process.env` usage: Are there any `SUPABASE_URL` or `SUPABASE_ANON_KEY` references left in code?
+
+PHASE 2: THE "DISCONNECT" TEST (Configuration)
+1. Verify that the project runs WITHOUT any Supabase environment variables.
+2. Inspect the current Secrets (using tool or asking me to check):
+   - FAIL if `SUPABASE_URL` exists.
+   - PASS if only `DATABASE_URL` (Replit DB) is present.
+
+PHASE 3: THE "CRUD" GAUNTLET (Functional Verification)
+Create and run a script named `scripts/forensic_audit.ts` (or .js) that performs the following "Smoke Test" against the live Replit Database:
+1. Connect using ONLY `process.env.DATABASE_URL`.
+2. INSERT a test record (e.g., a "Test Listing" or "Audit User") with a unique timestamp.
+3. READ that record back immediately.
+4. UPDATE a field in that record.
+5. DELETE the record.
+6. Report success/failure for each step.
+*Crucial*: If any step fails or hangs, the migration is rejected.
+
+PHASE 4: DATA INTEGRITY CHECK
+Run a SQL query against the Replit DB (using the same script or a SQL tool):
+1. `SELECT count(*) FROM [main_table];` -> Compare this number to what we expect (ask me if it looks low).
+2. Check for "Ghost Columns": Does the schema still have `supabase_id` or similar useless columns? (Flag them, but don't fail).
+
+PHASE 5: REPORTING
+Generate a file `docs/migration/FINAL_FORENSIC_REPORT.md` containing:
+- [ ] Dependencies Cleaned? (Yes/No)
+- [ ] Secrets Cleaned? (Yes/No)
+- [ ] Source Code Cleaned? (Yes/No)
+- [ ] DB Read/Write Verified? (Yes/No)
+- [ ] Data Count Verification (Count: ___)
+
+INSTRUCTION:
+Execute these steps now. Be extremely pedantic. If you find a single line of code importing Supabase, STOP and report it as a CRITICAL FAILURE. Do not fix it yet—just report it.
