@@ -1,0 +1,45 @@
+import { pgTable, text, serial, boolean, timestamp, jsonb } from "drizzle-orm/pg-core";
+
+export const applications = pgTable("applications", {
+  id: serial("id").primaryKey(),
+  firstName: text("first_name").notNull(),
+  lastName: text("last_name").notNull(),
+  email: text("email").notNull(),
+  phone: text("phone").notNull(),
+  whereFrom: text("where_from"),
+  age: text("age"),
+  socialMedia: text("social_media"),
+  dateOfBirth: text("date_of_birth"),
+  nationality: text("nationality"),
+  vocalRange: text("vocal_range"),
+  yearsOfSinging: text("years_of_singing"),
+  musicalBackground: text("musical_background"),
+  teacherName: text("teacher_name"),
+  teacherEmail: text("teacher_email"),
+  reasonForApplying: text("reason_for_applying"),
+  heardAboutUs: text("heard_about_us"),
+  scholarshipInterest: boolean("scholarship_interest").default(false),
+  dietaryRestrictions: jsonb("dietary_restrictions"),
+  areasOfInterest: text("areas_of_interest"),
+  specialNeeds: text("special_needs"),
+  termsAgreed: boolean("terms_agreed").default(false),
+  audioFile1Path: text("audio_file_1_path"),
+  audioFile2Path: text("audio_file_2_path"),
+  cvFilePath: text("cv_file_path"),
+  recommendationFilePath: text("recommendation_file_path"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export type InsertApplication = typeof applications.$inferInsert;
+export type Application = typeof applications.$inferSelect;
+
+export const contactMessages = pgTable("contact_messages", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  message: text("message").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export type InsertContactMessage = typeof contactMessages.$inferInsert;
+export type ContactMessage = typeof contactMessages.$inferSelect;
