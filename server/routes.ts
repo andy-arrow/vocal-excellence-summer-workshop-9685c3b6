@@ -2,8 +2,11 @@ import type { Express, Request, Response } from "express";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
-import { storage } from "./storage";
+import { getStorage, getBackendInfo, logBackendSelection } from "./storage-factory";
 import { EmailService } from "./emailService";
+
+logBackendSelection();
+const storage = getStorage();
 
 const uploadDir = path.join(process.cwd(), "uploads");
 if (!fs.existsSync(uploadDir)) {
@@ -233,19 +236,24 @@ export async function registerRoutes(app: Express): Promise<void> {
 
   app.get("/api/health", async (req: Request, res: Response) => {
     try {
+      const backendInfo = getBackendInfo();
       const result = await storage.healthCheck();
       const status = result.healthy ? 200 : 503;
       return res.status(status).json({
         status: result.healthy ? "healthy" : "unhealthy",
         database: result.healthy ? "connected" : "disconnected",
+        backend: backendInfo.backend,
+        backendDescription: backendInfo.description,
         latencyMs: result.latencyMs,
         timestamp: new Date().toISOString(),
         ...(result.error && { error: result.error }),
       });
     } catch (error: any) {
+      const backendInfo = getBackendInfo();
       return res.status(503).json({
         status: "unhealthy",
         database: "error",
+        backend: backendInfo.backend,
         error: error.message,
         timestamp: new Date().toISOString(),
       });
