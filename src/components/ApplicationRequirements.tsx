@@ -28,32 +28,30 @@ const ApplicationRequirements = () => {
   ];
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-      <div className="p-6 sm:p-8 md:p-10 border-b border-apple-border/10">
-        <h2 className="text-2xl md:text-3xl font-semibold text-apple-text mb-4">Application Checklist</h2>
-        <p className="text-apple-grey text-lg leading-relaxed">
+    <div className="bg-white rounded-xl md:rounded-2xl shadow-sm overflow-hidden">
+      <div className="p-5 md:p-8 border-b border-[#e5e5e5]">
+        <h2 className="text-xl md:text-2xl font-semibold text-[#1d1d1f] mb-2 md:mb-3">Application Checklist</h2>
+        <p className="text-[#666666] text-base md:text-lg leading-relaxed">
           Before you begin, please ensure you have the following ready:
         </p>
       </div>
       
-      <div className="grid sm:grid-cols-2 gap-4 sm:gap-6 p-6 sm:p-8 md:p-10">
+      <div className="grid sm:grid-cols-2 gap-3 md:gap-5 p-5 md:p-8">
         {requirements.map((req, index) => (
-          <motion.div 
+          <div 
             key={index}
-            className="bg-apple-light rounded-xl p-5 sm:p-6"
-            whileHover={{ scale: 1.02 }}
-            transition={{ type: "spring", stiffness: 300 }}
+            className="bg-[#f5f5f7] rounded-lg md:rounded-xl p-4 md:p-5"
           >
-            <div className="flex items-start gap-4">
-              <div className="bg-white rounded-full p-2.5 shadow-sm shrink-0">
+            <div className="flex items-start gap-3 md:gap-4">
+              <div className="bg-white rounded-full p-2 md:p-2.5 shadow-sm shrink-0">
                 {req.icon}
               </div>
               <div className="space-y-1">
-                <h3 className="text-lg font-semibold text-apple-text">{req.title}</h3>
-                <p className="text-apple-grey text-sm leading-relaxed">{req.description}</p>
+                <h3 className="text-base md:text-lg font-semibold text-[#1d1d1f]">{req.title}</h3>
+                <p className="text-[#666666] text-sm leading-relaxed">{req.description}</p>
               </div>
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
     </div>

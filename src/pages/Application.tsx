@@ -75,13 +75,12 @@ const Application = () => {
       <div className="min-h-screen flex flex-col relative z-10">
         <Navbar />
         
-        {/* Very significantly increased padding to ensure Hero Section is fully visible */}
-        <main className="flex-grow relative z-10 pt-[220px] sm:pt-[160px] md:pt-[170px]">
+        <main className="flex-grow relative z-10">
           <ApplicationPageHero />
           
-          <div className="py-4 sm:py-6 md:py-12 bg-[#f5f5f7]">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-              <div className="space-y-6 sm:space-y-8 md:space-y-12">
+          <div className="py-8 md:py-12 bg-[#f5f5f7]">
+            <div className="max-w-7xl mx-auto px-4 md:px-6">
+              <div className="space-y-6 md:space-y-10">
                 <motion.section 
                   key="form" 
                   initial="hidden" 

@@ -36,39 +36,34 @@ const ApplicationFAQ = () => {
   ];
 
   return (
-    <motion.div 
-      className="bg-white rounded-2xl shadow-sm overflow-hidden"
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
-    >
-      <div className="p-6 sm:p-8 md:p-10 border-b border-apple-border/10">
-        <h2 className="text-2xl md:text-3xl font-semibold text-apple-text mb-4">Frequently Asked Questions</h2>
-        <p className="text-apple-grey text-lg leading-relaxed">
+    <div className="bg-white rounded-xl md:rounded-2xl shadow-sm overflow-hidden">
+      <div className="p-5 md:p-8 border-b border-[#e5e5e5]">
+        <h2 className="text-xl md:text-2xl font-semibold text-[#1d1d1f] mb-2 md:mb-3">Frequently Asked Questions</h2>
+        <p className="text-[#666666] text-base md:text-lg leading-relaxed">
           Common questions about our application process and workshop.
         </p>
       </div>
       
-      <div className="p-6 sm:p-8 md:p-10">
-        <Accordion type="single" collapsible className="space-y-4">
+      <div className="p-5 md:p-8">
+        <Accordion type="single" collapsible className="space-y-3">
           {faqs.map((faq, index) => (
             <AccordionItem 
               key={index} 
               value={`item-${index}`}
-              className="border border-apple-border/30 rounded-xl overflow-hidden bg-apple-light shadow-sm"
+              className="border border-[#e5e5e5] rounded-lg md:rounded-xl overflow-hidden bg-[#f5f5f7]"
             >
-              <AccordionTrigger className="px-6 py-5 hover:no-underline hover:bg-apple-border/10 data-[state=open]:bg-apple-border/10 transition-colors">
-                <span className="text-left font-medium text-apple-text">{faq.question}</span>
+              <AccordionTrigger className="px-4 md:px-5 py-4 hover:no-underline hover:bg-[#ebebed] data-[state=open]:bg-[#ebebed] transition-colors text-left">
+                <span className="font-medium text-[#1d1d1f] text-sm md:text-base">{faq.question}</span>
               </AccordionTrigger>
-              <AccordionContent className="px-6 py-5 text-apple-grey">
-                <p className="leading-relaxed">{faq.answer}</p>
+              <AccordionContent className="px-4 md:px-5 pb-4 pt-0 text-[#666666]">
+                <p className="leading-relaxed text-sm md:text-base">{faq.answer}</p>
               </AccordionContent>
             </AccordionItem>
           ))}
         </Accordion>
         
-        <div className="mt-10 text-center">
-          <p className="text-apple-grey">
+        <div className="mt-8 text-center">
+          <p className="text-[#666666] text-sm md:text-base">
             Have more questions? Contact us at{' '}
             <a href="mailto:info@vocalexcellence.cy" className="text-apple-blue hover:underline">
               info@vocalexcellence.cy
@@ -76,7 +71,7 @@ const ApplicationFAQ = () => {
           </p>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
