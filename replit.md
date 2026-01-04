@@ -134,6 +134,15 @@ externalPort = 5000
 
 ## Recent Changes
 
+### January 4, 2026 - Updated Tuition Page with Professional Marketing Copy
+- **Hero**: Changed tagline to "7 Intensive Days to Unlock Your Full Vocal Potential"
+- **Pricing**: Updated to "All-Inclusive Tuition: €749" with clearer description
+- **Features**: Reorganized into logical categories (Core Training, Personalized Coaching, Career Preparation, Amenities)
+- **Section Title**: Changed "What You'll Get" to "An Immersive Artist Experience"
+- **Payment Section**: Renamed to "Investment in Your Art" with clearer payment plan breakdown
+- **FAQ**: Rewrote answers to be more professional and benefit-focused
+- **CTAs**: Updated to "Final call: Registration closes May 24, 2026"
+
 ### January 4, 2026 - Added Aggressive Cache Prevention Headers
 - **Problem**: Browser cached old broken HTML, requiring hard refresh to see fixes
 - **Solution**: Server now sends three cache-prevention headers for all HTML pages:

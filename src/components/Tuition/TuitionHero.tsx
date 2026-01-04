@@ -5,7 +5,6 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { Calendar, MapPin, Users } from 'lucide-react';
 
 const TuitionHero = React.memo(() => {
-  // Optimized animation configuration
   const animationConfig = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
@@ -31,7 +30,6 @@ const TuitionHero = React.memo(() => {
             </p>
           </div>
           
-          {/* Simple program details */}
           <div className="space-y-4 text-[#141414]/70 text-lg font-light">
             <div className="flex items-center justify-center gap-2">
               <Calendar className="w-5 h-5 text-[#4f6e72]" />
@@ -43,41 +41,42 @@ const TuitionHero = React.memo(() => {
             </div>
             <div className="flex items-center justify-center gap-2">
               <Users className="w-5 h-5 text-[#4f6e72]" />
-              <span>Only 20 Spots</span>
+              <span>Elite Small Group: 20 Students</span>
             </div>
           </div>
 
           <div className="max-w-2xl mx-auto">
             <p className="text-xl md:text-2xl text-[#141414]/80 font-serif font-light leading-relaxed">
-              Seven incredible days that will transform your voice
+              7 Intensive Days to Unlock Your Full Vocal Potential
             </p>
           </div>
 
-          {/* Simple cost highlight */}
           <motion.div 
             {...animationConfig}
             transition={{ delay: 0.3, duration: 0.8 }}
             className="bg-[#fafafa] rounded-3xl p-12 max-w-3xl mx-auto mt-16"
           >
+            <p className="text-lg text-[#4f6e72]/90 font-light mb-4 uppercase tracking-wide">
+              All-Inclusive Tuition
+            </p>
             <h2 className="font-serif text-4xl md:text-5xl font-light text-[#4f6e72] mb-6">
               €749
             </h2>
             <p className="text-xl text-[#4f6e72]/90 font-light mb-4">
-              Everything included • About €107 per day
+              (Approx. €107/day)
             </p>
             <p className="text-[#141414]/70 font-light text-lg max-w-lg mx-auto">
-              All lessons, materials, recordings, and daily lunch
+              Includes all masterclasses, private coaching, 4K portfolio materials, and daily catering
             </p>
           </motion.div>
 
-          {/* Simple urgency */}
           <motion.div 
             {...animationConfig}
             transition={{ delay: 0.5, duration: 0.8 }}
             className="text-center max-w-xl mx-auto"
           >
-            <p className="font-light text-xl text-[#4f6e72] mb-2">Apply by May 24</p>
-            <p className="text-[#141414]/60 font-light">Only 7 days left</p>
+            <p className="font-medium text-xl text-[#4f6e72] mb-2">Application Deadline: May 24</p>
+            <p className="text-[#141414]/60 font-light">Final call: Registration closes in 7 days</p>
           </motion.div>
           
           <div className="pt-8">

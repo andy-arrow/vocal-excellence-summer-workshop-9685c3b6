@@ -10,7 +10,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-// Extracted animation settings for reuse
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: { 
@@ -28,21 +27,21 @@ const itemVariants = {
 };
 
 const TuitionFAQ = () => {
-  const programYear = format(APPLICATION_DATES.PROGRAM_START, 'yyyy');
-  const programDates = `${format(APPLICATION_DATES.PROGRAM_START, 'MMMM d')}-${format(APPLICATION_DATES.PROGRAM_END, 'MMMM d, yyyy')}`;
   const paymentDeadline = format(APPLICATION_DATES.TUITION_DEADLINE, 'MMMM d, yyyy');
-  const programStartDate = format(APPLICATION_DATES.PROGRAM_START, 'MMMM d, yyyy');
   const earlyBirdDate = format(APPLICATION_DATES.EARLY_BIRD_DEADLINE, 'MMMM d, yyyy');
   
-  // Memoize FAQ items to prevent unnecessary re-renders
   const faqItems = useMemo(() => [
     {
-      question: "What's included in the tuition?",
-      answer: `Your €749 tuition covers everything you need for an incredible five-day experience: personalized vocal training, workshops, one-on-one sessions with expert instructors, professional accompaniment, and comprehensive study materials. The only additional costs you'll need to consider are your accommodation and travel to Limassol.`
+      question: "Tell me about the payment options.",
+      answer: `We have designed our payment structure to be as accessible as possible.\n\nStandard Plan: Secure your spot with a €100 deposit upon acceptance. The remaining balance is split into three manageable installments of €216.\n\nEarly Bird Advantage: Register and pay in full by ${earlyBirdDate} to receive a €50 discount (Total: €699).`
     },
     {
-      question: "Tell me about the payment options",
-      answer: `We offer flexible ways to manage your tuition that fit your needs: Start with a €100 registration fee to secure your spot once you're accepted. Then, either pay the remaining balance in three equal installments of €216 each (totaling €749), or take advantage of our Early Bird discount of €50 by registering and paying in full by ${earlyBirdDate}, bringing your total to just €699!`
+      question: "What is included in the tuition?",
+      answer: "Your tuition covers the complete educational experience: all private lessons, masterclasses, acting workshops, Alexander Technique sessions, accompanist fees, 4K video recordings of your performances, and daily lunch. Accommodation and travel to Cyprus are not included."
+    },
+    {
+      question: "Is there a refund policy?",
+      answer: "Yes. The €100 registration deposit is non-refundable. However, tuition installment payments are refundable if you withdraw at least 30 days prior to the start of the program."
     },
     {
       question: "How does the Early Bird discount work?",
@@ -53,18 +52,14 @@ const TuitionFAQ = () => {
       answer: "Absolutely! We believe talent deserves support. We offer merit-based scholarships to help exceptional students join our program. Simply check the scholarship box in your application, and we'll guide you through the process."
     },
     {
-      question: "What's your refund policy?",
-      answer: "We understand plans can change. You'll receive a full refund (minus the €100 deposit) if you need to withdraw at least 30 days before the program starts. For withdrawals closer to the start date, we'll work with you on a case-by-case basis. The deposit is non-refundable as it reserves your spot in our limited-size program."
-    },
-    {
       question: "What if I miss a payment deadline?",
       answer: "Life happens! If you're concerned about making a payment, just reach out to our team. We're here to help and can work with you to adjust the payment schedule so you can still participate in the program."
     },
     {
       question: "When do I need to complete all payments?",
-      answer: `To ensure everything's set for your arrival, all tuition payments need to be completed by ${paymentDeadline}, two weeks before we begin on ${programStartDate}.`
+      answer: `To ensure everything's set for your arrival, all tuition payments need to be completed by ${paymentDeadline}, two weeks before we begin.`
     }
-  ], [earlyBirdDate, paymentDeadline, programStartDate]);
+  ], [earlyBirdDate, paymentDeadline]);
 
   return (
     <LazyMotion features={domAnimation}>
@@ -106,11 +101,12 @@ const TuitionFAQ = () => {
                   <AccordionItem 
                     value={`item-${i}`} 
                     className="mb-4 border border-[#eaeaea] rounded-xl bg-white overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
+                    data-testid={`faq-item-${i}`}
                   >
                     <AccordionTrigger className="text-left font-serif text-lg px-6 py-5 hover:no-underline text-[#141414]">
                       {item.question}
                     </AccordionTrigger>
-                    <AccordionContent className="font-sans text-base text-[#141414]/70 px-6 pb-6 pt-0 leading-relaxed">
+                    <AccordionContent className="font-sans text-base text-[#141414]/70 px-6 pb-6 pt-0 leading-relaxed whitespace-pre-line">
                       {item.answer}
                     </AccordionContent>
                   </AccordionItem>

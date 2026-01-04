@@ -7,7 +7,6 @@ import { format } from 'date-fns';
 import { APPLICATION_DATES } from '@/constants/applicationDates';
 import { Button } from '@/components/ui/button';
 
-// Simple animation settings
 const fadeInAnimation = {
   initial: { opacity: 0, y: 30 },
   whileInView: { opacity: 1, y: 0 },
@@ -15,7 +14,6 @@ const fadeInAnimation = {
   transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
 };
 
-// Simple feature item
 const FeatureItem = React.memo(({ text }: { text: string }) => (
   <li className="flex items-start py-2">
     <span className="mr-4 mt-1 flex-shrink-0">
@@ -26,6 +24,18 @@ const FeatureItem = React.memo(({ text }: { text: string }) => (
 ));
 FeatureItem.displayName = 'FeatureItem';
 
+const FeatureCategory = React.memo(({ title, features }: { title: string; features: string[] }) => (
+  <div className="mb-8">
+    <h4 className="font-serif text-lg font-medium text-[#4f6e72] mb-4">{title}</h4>
+    <ul className="space-y-1">
+      {features.map((item, i) => (
+        <FeatureItem key={i} text={item} />
+      ))}
+    </ul>
+  </div>
+));
+FeatureCategory.displayName = 'FeatureCategory';
+
 const TuitionTiers = () => {
   const navigate = useNavigate();
   const tuitionDeadline = format(APPLICATION_DATES.TUITION_DEADLINE, 'MMMM d, yyyy');
@@ -35,22 +45,26 @@ const TuitionTiers = () => {
     window.scrollTo(0, 0);
   }, [navigate]);
 
-  // Simplified program features
-  const PROGRAM_FEATURES = [
-    'Complete vocal training - technique, performance, and artistry',
-    'Amazing teachers from top universities',
-    'Small groups - max 20 students for personal attention',
-    'Daily masterclasses with incredible instructors',
-    'Your own private lesson',
-    'Personal accompanist session',
-    'Acting workshops for stage presence',
-    'Alexander Technique training',
-    'Group singing workshops',
-    'Audition prep with expert tips',
-    'Practice auditions filmed in 4K',
-    'Final performance filmed in 4K',
-    'Stage confidence workshops',
-    'Lunch included every day'
+  const CORE_TRAINING = [
+    'Comprehensive Vocal Technique: Master the foundations of performance, breath control, and artistry',
+    'World-Class Faculty: Learn directly from distinguished instructors from top-tier universities',
+    'Elite Small Group Setting: Capped at 20 students to ensure personalized attention and feedback'
+  ];
+
+  const PERSONALIZED_COACHING = [
+    'Private Vocal Lessons: One-on-one instruction tailored to your specific voice type',
+    'Collaborative Piano Sessions: Work directly with a professional accompanist to refine your repertoire',
+    'Alexander Technique: Specialized body work to release tension and improve vocal stamina'
+  ];
+
+  const CAREER_PREPARATION = [
+    'Audition Mastery: Acting workshops and expert tips to dominate your next casting',
+    'Professional Portfolio Assets: Walk away with 4K video recordings of your practice auditions and final performance',
+    'Stage Presence Workshop: Conquer performance anxiety and command the stage'
+  ];
+
+  const AMENITIES = [
+    'Daily Catered Lunch: Nutritious meals provided every day so you can focus on singing'
   ];
 
   return (
@@ -58,52 +72,55 @@ const TuitionTiers = () => {
       <section className="py-20 px-6 bg-white">
         <div className="max-w-5xl mx-auto">
           
-          {/* Simple what you get section */}
           <motion.div
             {...fadeInAnimation}
             className="text-center mb-20"
           >
-            <h2 className="font-serif text-4xl md:text-5xl font-light text-[#141414] mb-16">
-              What You'll Get
+            <h2 className="font-serif text-4xl md:text-5xl font-light text-[#141414] mb-4">
+              An Immersive Artist Experience
             </h2>
+            <p className="text-lg text-[#141414]/70 font-light max-w-2xl mx-auto mb-16">
+              Over 40 hours of elite training designed to transform your vocal artistry
+            </p>
             
             <div className="bg-[#fafafa] rounded-3xl p-12 md:p-16">
               <div className="grid md:grid-cols-2 gap-12">
-                {/* Features list */}
-                <div>
-                  <h3 className="font-serif text-2xl font-light text-[#141414] mb-8">
-                    Everything Included
-                  </h3>
-                  <ul className="space-y-1 text-left">
-                    {PROGRAM_FEATURES.map((item, i) => (
-                      <FeatureItem key={i} text={item} />
-                    ))}
-                  </ul>
+                <div className="text-left">
+                  <FeatureCategory title="Core Training" features={CORE_TRAINING} />
+                  <FeatureCategory title="Personalized Coaching" features={PERSONALIZED_COACHING} />
+                  <FeatureCategory title="Career Preparation" features={CAREER_PREPARATION} />
+                  <FeatureCategory title="Amenities" features={AMENITIES} />
                 </div>
                 
-                {/* Simple cost breakdown */}
                 <div className="space-y-8">
                   <div>
                     <h3 className="font-serif text-2xl font-light text-[#141414] mb-8">
-                      Cost & Payment
+                      Investment in Your Art
                     </h3>
                     
                     <div className="bg-white rounded-2xl p-8 mb-6">
+                      <p className="text-sm text-[#4f6e72]/80 font-light uppercase tracking-wide mb-2">Total Tuition</p>
                       <p className="text-4xl font-serif font-light text-[#4f6e72] mb-3">€749</p>
-                      <p className="text-lg text-[#4f6e72]/90 font-light mb-3">
-                        Everything included
-                      </p>
                       <p className="text-[#141414]/70 font-light">
-                        About €107 per day for full training
+                        A comprehensive package covering over 40 hours of elite training
                       </p>
                     </div>
 
                     <div className="bg-white rounded-2xl p-8">
-                      <h4 className="font-light text-[#141414] mb-4">Payment Plan</h4>
-                      <ul className="space-y-2 text-[#141414]/70 font-light">
-                        <li>€100 to register (counts toward total)</li>
-                        <li>Three payments of €216 each</li>
-                        <li>Final payment due: {tuitionDeadline}</li>
+                      <h4 className="font-medium text-[#141414] mb-4">Flexible Payment Plan</h4>
+                      <ul className="space-y-3 text-[#141414]/70 font-light">
+                        <li className="flex items-start gap-2">
+                          <span className="text-[#4f6e72] mt-1"><Check className="h-4 w-4" /></span>
+                          <span><strong className="font-medium">Registration:</strong> €100 deposit to secure your seat (upon acceptance)</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-[#4f6e72] mt-1"><Check className="h-4 w-4" /></span>
+                          <span><strong className="font-medium">Installments:</strong> Three monthly payments of €216</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-[#4f6e72] mt-1"><Check className="h-4 w-4" /></span>
+                          <span><strong className="font-medium">Deadline:</strong> Final balance must be cleared by {tuitionDeadline}</span>
+                        </li>
                       </ul>
                     </div>
                   </div>
@@ -112,7 +129,6 @@ const TuitionTiers = () => {
             </div>
           </motion.div>
           
-          {/* Simple call to action */}
           <motion.div 
             {...fadeInAnimation}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -120,13 +136,13 @@ const TuitionTiers = () => {
           >
             <div className="bg-[#4f6e72] text-white rounded-3xl p-12 max-w-2xl mx-auto">
               <h3 className="font-serif text-3xl font-light mb-6">
-                Ready to Join?
+                Ready to Begin?
               </h3>
               
               <div className="flex items-center justify-center gap-6 mb-8 text-white/90">
                 <div className="flex items-center gap-2">
                   <Users className="w-5 h-5" />
-                  <span className="font-light">Only 20 spots</span>
+                  <span className="font-light">20 spots only</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Calendar className="w-5 h-5" />
@@ -137,12 +153,13 @@ const TuitionTiers = () => {
               <Button 
                 onClick={handleApplyClick}
                 className="w-full sm:w-auto px-12 py-4 text-lg font-light bg-white text-[#4f6e72] hover:bg-gray-50 rounded-full transition-all duration-300"
+                data-testid="button-apply-now"
               >
                 Apply Now
               </Button>
               
               <p className="font-light text-white/80 mt-6">
-                Applications close May 24, 2026
+                Final call: Registration closes May 24, 2026
               </p>
             </div>
           </motion.div>
