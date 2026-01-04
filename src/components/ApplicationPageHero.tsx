@@ -32,12 +32,10 @@ const ApplicationPageHero = () => {
             className="space-y-2"
           >
             <p className="text-lg md:text-xl text-apple-grey font-medium tracking-wider uppercase">
-              SUMMER WORKSHOP 2026
-            </p>
-            <p className="text-xl md:text-2xl text-apple-text">
-              Your Application to
+              SUMMER INTENSIVE 2026
             </p>
             <h1 className="font-serif text-3xl sm:text-3xl md:text-4xl lg:text-6xl font-light text-apple-text tracking-tight">
+              Apply for Your Place at{' '}
               <span className="text-apple-blue">Vocal Excellence</span>
             </h1>
           </motion.div>
@@ -48,10 +46,9 @@ const ApplicationPageHero = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.9 }}
           >
-            Join our exclusive 7-day Workshop where world-class mentors will transform your voice and elevate your technique to new heights.
+            Join a select cohort of artists for 7 transformative days in Limassol. World-class mentorship awaits.
           </motion.p>
 
-          {/* Program dates with location */}
           <motion.div 
             className="inline-flex items-center gap-2 text-apple-text/80 text-sm font-medium mx-auto"
             initial={{ opacity: 0 }}
@@ -59,10 +56,9 @@ const ApplicationPageHero = () => {
             transition={{ duration: 0.8, delay: 1.0 }}
           >
             <Calendar className="w-4 h-4 text-apple-blue" />
-            <span>29 June – 5 July | Limassol, Cyprus</span>
+            <span>June 29 – July 5 | Limassol, Cyprus</span>
           </motion.div>
           
-          {/* Features highlight */}
           <motion.div 
             className="flex flex-wrap justify-center gap-x-3 gap-y-2 text-xs md:text-xs font-medium text-apple-grey/80"
             initial={{ opacity: 0 }}
@@ -72,7 +68,7 @@ const ApplicationPageHero = () => {
             <span className="flex items-center"><span className="w-1.5 h-1.5 bg-apple-blue rounded-full mr-2"></span>Masterclasses</span>
             <span className="flex items-center"><span className="w-1.5 h-1.5 bg-apple-blue rounded-full mr-2"></span>Private Coaching</span>
             <span className="flex items-center"><span className="w-1.5 h-1.5 bg-apple-blue rounded-full mr-2"></span>Audition Prep</span>
-            <span className="flex items-center"><span className="w-1.5 h-1.5 bg-apple-blue rounded-full mr-2"></span>Stage Anxiety</span>
+            <span className="flex items-center"><span className="w-1.5 h-1.5 bg-apple-blue rounded-full mr-2"></span>4K Portfolio Material</span>
           </motion.div>
 
           <motion.div 

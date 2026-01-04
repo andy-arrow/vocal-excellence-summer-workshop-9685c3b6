@@ -5,43 +5,33 @@ import { APPLICATION_DATES } from '@/constants/applicationDates';
 import { format } from 'date-fns';
 
 const ApplicationFAQ = () => {
-  const deadlineDate = format(APPLICATION_DATES.DEADLINE, 'MMMM d, yyyy');
   const notificationDate = format(APPLICATION_DATES.NOTIFICATION_DATE, 'MMMM d, yyyy');
-  const tuitionDeadline = format(APPLICATION_DATES.TUITION_DEADLINE, 'MMMM d, yyyy');
-  const programYear = format(APPLICATION_DATES.PROGRAM_START, 'yyyy');
+  const earlyBirdDeadline = format(APPLICATION_DATES.EARLY_BIRD_DEADLINE, 'MMMM d, yyyy');
 
   const faqs = [
     {
-      question: "What are the eligibility requirements for the workshop?",
-      answer: "Applicants must be at least 16 years old. While we welcome singers of all experience levels, we look for a demonstrated passion for vocal development and a willingness to engage deeply with the workshop curriculum."
+      question: "Do I need formal conservatory training to apply?",
+      answer: "Not necessarily. While many of our students have formal backgrounds, we prioritize potential, passion, and a willingness to learn. If you are serious about improving your voice, we want to hear from you."
     },
     {
-      question: "Do I need to have formal vocal training to apply?",
-      answer: "No, formal training is not required. We welcome singers with a range of backgrounds, from self-taught vocalists to those with extensive classical training. What matters most is your enthusiasm and commitment to developing your vocal skills."
-    },
-    {
-      question: "Is there any financial aid available for the workshop?",
-      answer: "Yes, we offer a limited number of scholarships based on financial need and artistic merit. To be considered, check the scholarship interest box in the application form. If selected, we will contact you with further instructions."
-    },
-    {
-      question: "Do I need to include a recommendation letter with my application?",
-      answer: "A recommendation letter is optional but can strengthen your application. Consider including one from a vocal coach, music teacher, or other professional who can speak to your musical abilities and commitment."
+      question: "Is accommodation included?",
+      answer: "Tuition covers all training and daily lunch, but accommodation is not included. We can provide a list of recommended hotels and Airbnbs near the venue in Limassol upon acceptance."
     },
     {
       question: "What happens after I submit my application?",
-      answer: `After the application deadline (${deadlineDate}), our faculty will review all submissions. Acceptance notifications will be sent out by ${notificationDate}. If accepted, you'll need to confirm your participation and arrange payment by ${tuitionDeadline}.`
+      answer: `You will receive a confirmation email immediately. Our faculty reviews applications on a rolling basis, with final decisions released by ${notificationDate}.`
     },
     {
-      question: "Is accommodation provided during the workshop?",
-      answer: "Accommodation is not included in the tuition fee. However, we can provide recommendations for local accommodations at various price points, including special rates negotiated with nearby hotels and homestay options."
+      question: "Do I need to submit a recommendation letter?",
+      answer: "No, recommendation letters are not required for this workshop."
     },
     {
-      question: "What dietary options will be available during the workshop?",
-      answer: "We cater to various dietary requirements including vegetarian, vegan, gluten-free, and lactose-free options. Please specify your dietary needs in the application form so we can make appropriate arrangements."
+      question: "Is there financial aid available?",
+      answer: `We offer a flexible payment plan (pay in 3 installments) and an Early Bird discount if you register before ${earlyBirdDeadline}.`
     },
     {
       question: "Can I attend only part of the workshop?",
-      answer: "The workshop is designed as an immersive experience, and we strongly encourage attendance for the full duration. Partial attendance may be considered in exceptional circumstances, but the full tuition fee still applies."
+      answer: "Because the curriculum is designed as a cumulative, intensive process leading to a final performance, full attendance is required to get the most out of the experience."
     }
   ];
 
@@ -52,15 +42,15 @@ const ApplicationFAQ = () => {
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
     >
-      <div className="p-8 md:p-10 border-b border-apple-border/10">
+      <div className="p-6 sm:p-8 md:p-10 border-b border-apple-border/10">
         <h2 className="text-2xl md:text-3xl font-semibold text-apple-text mb-4">Frequently Asked Questions</h2>
         <p className="text-apple-grey text-lg leading-relaxed">
-          Find answers to common questions about our application process and workshop.
+          Common questions about our application process and workshop.
         </p>
       </div>
       
-      <div className="p-8 md:p-10">
-        <Accordion type="single" collapsible className="space-y-5">
+      <div className="p-6 sm:p-8 md:p-10">
+        <Accordion type="single" collapsible className="space-y-4">
           {faqs.map((faq, index) => (
             <AccordionItem 
               key={index} 

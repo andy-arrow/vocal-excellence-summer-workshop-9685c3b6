@@ -134,6 +134,14 @@ externalPort = 5000
 
 ## Recent Changes
 
+### January 4, 2026 - Updated Application Page with Professional Marketing Copy
+- **Hero Section**: Changed to "Summer Intensive 2026 - Apply for Your Place at Vocal Excellence"
+- **Subheadline**: "Join a select cohort of artists for 7 transformative days in Limassol. World-class mentorship awaits."
+- **Features Bar**: Updated to "Masterclasses | Private Coaching | Audition Prep | 4K Portfolio Material"
+- **Requirements Section**: Renamed to "Application Checklist" with clearer items (Contact Details, Experience, Statement of Purpose, Dietary Needs)
+- **Timeline Section**: Renamed to "Your Road to Limassol" with 5 clear steps (Submit Application, Faculty Review, Decision Notification, Secure Your Seat, The Workshop Begins)
+- **FAQ Section**: Rewrote all answers to be more professional and benefit-focused, removed unnecessary questions
+
 ### January 4, 2026 - Updated Landing Page with Professional Marketing Copy
 - **Hero Section**: Changed to "Train Like a Professional. 7 Days of Elite Vocal Coaching in Cyprus."
 - **Subheadline**: "Direct mentorship from West End performers, Netflix actors, and Juilliard alumni"
