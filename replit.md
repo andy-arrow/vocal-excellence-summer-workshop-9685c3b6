@@ -134,6 +134,12 @@ externalPort = 5000
 
 ## Recent Changes
 
+### January 4, 2026 - Updated Workshop to 2026
+- **New Dates**: June 29 – July 5, 2026 (7 days, up from 5 days)
+- **Central Constants**: Updated `src/constants/applicationDates.ts` as single source of truth
+- **Files Updated**: All date/year references across 14+ files including HeroSection, SummerProgramme, ApplicationForm, email templates, tuition pages
+- **Pricing**: €749 total (€107/day), application deadline May 24, 2026, early bird ends March 1, 2026
+
 ### January 4, 2026 - Eliminated Vite Middleware Mode (Final Fix for HTTP 426)
 - **Root Cause Identified**: Vite middleware mode injects HMR client that tries to connect to port 24678
 - **Solution**: Server now serves pre-built static files from `dist/` instead of using Vite middleware
