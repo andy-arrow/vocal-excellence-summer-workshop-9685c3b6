@@ -92,7 +92,20 @@ shared/
 
 ## Server Stability Safeguards (IRONCLAD)
 
-The following safeguards are implemented to prevent HTTP 426 errors and server instability:
+The following safeguards prevent HTTP 426 errors and server instability:
+
+### Critical Architecture Decision: No Vite Middleware Mode
+
+**Root Cause of HTTP 426**: Even with `hmr: false` and `ws: false`, Vite middleware mode:
+1. Still injects `/@vite/client` script into HTML
+2. Still serves the HMR client at `/@vite/client` endpoint
+3. The HMR client tries to connect to WebSocket on port 24678
+4. Replit's proxy infrastructure returns HTTP 426 when it encounters WebSocket upgrade requests
+
+**Solution**: Server always serves pre-built static files from `dist/`:
+- Workflow runs `npm run build && npm run dev`
+- Server checks for `dist/index.html` and serves static files
+- Falls back to Vite middleware only if `dist/` doesn't exist
 
 ### .replit Configuration
 ```toml
@@ -108,28 +121,27 @@ externalPort = 5000
 2. **Health Check Endpoint** - `/health` returns "OK" (sync, no DB dependency)
 3. **Graceful Shutdown Handlers** - SIGTERM and SIGINT handlers for clean shutdown
 4. **Error Boundaries** - uncaughtException and unhandledRejection handlers
-5. **Vite HMR Disabled** - `hmr: false` in both vite.config.ts AND createViteServer()
+5. **Static File Serving** - Prefers `dist/` over Vite middleware to avoid WebSocket issues
 6. **Environment Detection** - `isDev = process.env.NODE_ENV !== 'production'`
 
 ### Pre-Deploy Checklist
 - [ ] Port 24678 NOT in .replit
-- [ ] hmr: false in Vite middleware config
+- [ ] Workflow runs `npm run build && npm run dev`
+- [ ] dist/ folder contains built frontend
 - [ ] Health endpoint exists at /health
 - [ ] NODE_ENV=production set for production
 - [ ] Graceful shutdown handlers present
-- [ ] Secrets in Replit Secrets manager (not hardcoded)
 
 ## Recent Changes
 
-### January 4, 2026 - Implemented Ironclad Server Stability Safeguards
+### January 4, 2026 - Eliminated Vite Middleware Mode (Final Fix for HTTP 426)
+- **Root Cause Identified**: Vite middleware mode injects HMR client that tries to connect to port 24678
+- **Solution**: Server now serves pre-built static files from `dist/` instead of using Vite middleware
+- **Workflow Updated**: Now runs `npm run build && npm run dev` to ensure frontend is built
+- **Trade-off**: Frontend changes require rebuild (no hot reload); this is acceptable for stability
+
+### January 4, 2026 - Implemented Server Stability Safeguards
 - Added immediate port binding before async operations
 - Added `/health` endpoint for deployment health checks
 - Added graceful shutdown handlers (SIGTERM, SIGINT)
 - Added error boundaries (uncaughtException, unhandledRejection)
-- HMR disabled in both vite.config.ts and server/index.ts createViteServer()
-- Removed problematic port 24678→80 mapping from .replit
-
-### January 4, 2026 - Fixed HTTP 426 "Upgrade Required" Error
-- **Root Cause**: Port 24678 (Vite HMR WebSocket) was mapped to external port 80
-- **Solution**: Disabled HMR in all contexts and removed port mapping
-- **Trade-off**: HMR disabled; page refresh required for changes in development

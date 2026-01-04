@@ -4,8 +4,6 @@ import path from "path";
 import fs from "fs";
 
 const app = express();
-
-const isDev = process.env.NODE_ENV !== "production";
 const port = parseInt(process.env.PORT || "5000", 10);
 
 app.use(express.json());
@@ -81,39 +79,28 @@ process.on("unhandledRejection", (reason, promise) => {
   console.error("Unhandled Rejection at:", promise, "reason:", reason);
 });
 
-if (isDev) {
-  (async () => {
-    await registerRoutes(app);
-    
-    const { createServer: createViteServer } = await import("vite");
-    const vite = await createViteServer({
-      server: { 
-        middlewareMode: true,
-        hmr: false
-      },
-      appType: "spa",
-      root: process.cwd(),
-    });
-    app.use(vite.middlewares);
-    
-    console.log(`Development server ready on port ${port}`);
-  })();
-} else {
-  const distPath = path.resolve(process.cwd(), "dist");
-  if (fs.existsSync(distPath)) {
+const distPath = path.resolve(process.cwd(), "dist");
+const distIndexPath = path.join(distPath, "index.html");
+
+if (!fs.existsSync(distIndexPath)) {
+  console.error("=".repeat(60));
+  console.error("FATAL ERROR: dist/index.html not found!");
+  console.error("Run 'npm run build' before starting the server.");
+  console.error("This is required to prevent HTTP 426 WebSocket errors.");
+  console.error("=".repeat(60));
+  process.exit(1);
+}
+
+registerRoutes(app)
+  .then(() => {
     app.use(express.static(distPath));
     app.get("/{*splat}", (_req, res) => {
-      res.sendFile(path.join(distPath, "index.html"));
+      res.sendFile(distIndexPath);
     });
-  }
-  
-  registerRoutes(app)
-    .then(() => {
-      console.log(`Production server ready on port ${port}`);
-    })
-    .catch((err) => {
-      console.error("Failed to register routes:", err);
-      server.close();
-      process.exit(1);
-    });
-}
+    console.log(`Server ready on port ${port} (serving from dist/)`);
+  })
+  .catch((err) => {
+    console.error("Failed to register routes:", err);
+    server.close();
+    process.exit(1);
+  });
