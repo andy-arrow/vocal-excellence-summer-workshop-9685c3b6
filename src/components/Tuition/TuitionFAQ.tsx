@@ -63,23 +63,23 @@ const TuitionFAQ = () => {
 
   return (
     <LazyMotion features={domAnimation}>
-      <section className="py-16 md:py-20 px-6 md:px-12 bg-[#fafafa]">
+      <section className="py-12 md:py-20 px-4 md:px-6 lg:px-12 bg-[#fafafa]">
         <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="text-center mb-10"
+            className="text-center mb-8 md:mb-10"
           >
-            <h2 className="font-serif text-3xl md:text-4xl font-light text-[#141414] mb-4">
+            <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl font-light text-[#141414] mb-3 md:mb-4">
               Common Questions
             </h2>
-            <p className="font-sans text-lg text-[#666666] max-w-2xl mx-auto">
+            <p className="font-sans text-base md:text-lg text-[#666666] max-w-2xl mx-auto">
               Everything you need to know about joining our program
             </p>
-            <div className="pt-5">
-              <div className="h-px w-16 bg-[#4f6e72] mx-auto" />
+            <div className="pt-4 md:pt-5">
+              <div className="h-px w-12 md:w-16 bg-[#4f6e72] mx-auto" />
             </div>
           </motion.div>
           
@@ -88,20 +88,20 @@ const TuitionFAQ = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
-            className="space-y-3"
+            className="space-y-2 md:space-y-3"
           >
             <Accordion type="single" collapsible className="w-full">
               {faqItems.map((item, i) => (
                 <motion.div key={i} variants={itemVariants} custom={i}>
                   <AccordionItem 
                     value={`item-${i}`} 
-                    className="mb-4 border border-[#eaeaea] rounded-xl bg-white overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
+                    className="mb-3 md:mb-4 border border-[#eaeaea] rounded-lg md:rounded-xl bg-white overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
                     data-testid={`faq-item-${i}`}
                   >
-                    <AccordionTrigger className="text-left font-serif text-lg px-6 py-5 hover:no-underline text-[#141414]">
+                    <AccordionTrigger className="text-left font-serif text-base md:text-lg px-4 md:px-6 py-4 md:py-5 hover:no-underline text-[#141414]">
                       {item.question}
                     </AccordionTrigger>
-                    <AccordionContent className="font-sans text-base text-[#555555] px-6 pb-6 pt-0 leading-relaxed whitespace-pre-line">
+                    <AccordionContent className="font-sans text-sm md:text-base text-[#555555] px-4 md:px-6 pb-4 md:pb-6 pt-0 leading-relaxed whitespace-pre-line">
                       {item.answer}
                     </AccordionContent>
                   </AccordionItem>
@@ -115,9 +115,9 @@ const TuitionFAQ = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-12 text-center"
+            className="mt-10 md:mt-12 text-center"
           >
-            <p className="font-sans text-[#666666]">
+            <p className="font-sans text-sm md:text-base text-[#666666]">
               Have more questions about the program?{" "}
               <a href="mailto:info@vocalexcellence.cy" className="text-[#4f6e72] hover:text-[#41595c] hover:underline transition-all">
                 Get in touch with our team
