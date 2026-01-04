@@ -63,7 +63,7 @@ const TuitionFAQ = () => {
 
   return (
     <LazyMotion features={domAnimation}>
-      <section className="py-12 md:py-20 px-6 md:px-12 bg-gradient-to-b from-[#fafafa] to-white">
+      <section className="py-16 md:py-20 px-6 md:px-12 bg-[#fafafa]">
         <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -75,16 +75,11 @@ const TuitionFAQ = () => {
             <h2 className="font-serif text-3xl md:text-4xl font-light text-[#141414] mb-4">
               Common Questions
             </h2>
-            <p className="font-sans text-lg text-[#141414]/70 max-w-2xl mx-auto">
+            <p className="font-sans text-lg text-[#666666] max-w-2xl mx-auto">
               Everything you need to know about joining our program
             </p>
             <div className="pt-5">
-              <motion.div 
-                className="h-1 w-16 bg-gradient-to-r from-[#4f6e72] to-[#6a8d91] rounded-full mx-auto"
-                initial={{ width: 0 }}
-                animate={{ width: 64 }}
-                transition={{ delay: 0.3, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              />
+              <div className="h-px w-16 bg-[#4f6e72] mx-auto" />
             </div>
           </motion.div>
           
@@ -106,7 +101,7 @@ const TuitionFAQ = () => {
                     <AccordionTrigger className="text-left font-serif text-lg px-6 py-5 hover:no-underline text-[#141414]">
                       {item.question}
                     </AccordionTrigger>
-                    <AccordionContent className="font-sans text-base text-[#141414]/70 px-6 pb-6 pt-0 leading-relaxed whitespace-pre-line">
+                    <AccordionContent className="font-sans text-base text-[#555555] px-6 pb-6 pt-0 leading-relaxed whitespace-pre-line">
                       {item.answer}
                     </AccordionContent>
                   </AccordionItem>
@@ -120,9 +115,9 @@ const TuitionFAQ = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-14 text-center"
+            className="mt-12 text-center"
           >
-            <p className="font-sans text-[#141414]/70">
+            <p className="font-sans text-[#666666]">
               Have more questions about the program?{" "}
               <a href="mailto:info@vocalexcellence.cy" className="text-[#4f6e72] hover:text-[#41595c] hover:underline transition-all">
                 Get in touch with our team

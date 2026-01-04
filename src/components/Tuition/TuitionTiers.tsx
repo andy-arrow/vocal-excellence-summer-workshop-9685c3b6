@@ -19,7 +19,7 @@ const FeatureItem = React.memo(({ text }: { text: string }) => (
     <span className="mr-4 mt-1 flex-shrink-0">
       <Check className="h-4 w-4 text-[#4f6e72]" />
     </span>
-    <span className="text-[#141414]/80 font-light">{text}</span>
+    <span className="text-[#444444] font-light">{text}</span>
   </li>
 ));
 FeatureItem.displayName = 'FeatureItem';
@@ -69,22 +69,22 @@ const TuitionTiers = () => {
 
   return (
     <LazyMotion features={domAnimation}>
-      <section className="py-20 px-6 bg-white">
+      <section className="py-16 md:py-20 px-6 bg-white">
         <div className="max-w-5xl mx-auto">
           
           <motion.div
             {...fadeInAnimation}
-            className="text-center mb-20"
+            className="text-center mb-12 md:mb-16"
           >
-            <h2 className="font-serif text-4xl md:text-5xl font-light text-[#141414] mb-4">
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-light text-[#141414] mb-4">
               An Immersive Artist Experience
             </h2>
-            <p className="text-lg text-[#141414]/70 font-light max-w-2xl mx-auto mb-16">
+            <p className="text-lg text-[#666666] font-light max-w-2xl mx-auto mb-10 md:mb-12">
               Over 40 hours of elite training designed to transform your vocal artistry
             </p>
             
-            <div className="bg-[#fafafa] rounded-3xl p-12 md:p-16">
-              <div className="grid md:grid-cols-2 gap-12">
+            <div className="bg-[#f8f9fa] rounded-2xl p-8 md:p-12">
+              <div className="grid md:grid-cols-2 gap-10 md:gap-12">
                 <div className="text-left">
                   <FeatureCategory title="Core Training" features={CORE_TRAINING} />
                   <FeatureCategory title="Personalized Coaching" features={PERSONALIZED_COACHING} />
@@ -92,34 +92,34 @@ const TuitionTiers = () => {
                   <FeatureCategory title="Amenities" features={AMENITIES} />
                 </div>
                 
-                <div className="space-y-8">
+                <div className="space-y-6">
                   <div>
-                    <h3 className="font-serif text-2xl font-light text-[#141414] mb-8">
+                    <h3 className="font-serif text-2xl font-light text-[#141414] mb-6">
                       Investment in Your Art
                     </h3>
                     
-                    <div className="bg-white rounded-2xl p-8 mb-6">
-                      <p className="text-sm text-[#4f6e72]/80 font-light uppercase tracking-wide mb-2">Total Tuition</p>
-                      <p className="text-4xl font-serif font-light text-[#4f6e72] mb-3">€749</p>
-                      <p className="text-[#141414]/70 font-light">
+                    <div className="bg-white rounded-xl p-6 mb-5 border border-[#e8e8e8]">
+                      <p className="text-sm text-[#4f6e72] font-light uppercase tracking-wide mb-2">Total Tuition</p>
+                      <p className="text-4xl font-serif font-light text-[#4f6e72] mb-2">€749</p>
+                      <p className="text-[#666666] font-light">
                         A comprehensive package covering over 40 hours of elite training
                       </p>
                     </div>
 
-                    <div className="bg-white rounded-2xl p-8">
+                    <div className="bg-white rounded-xl p-6 border border-[#e8e8e8]">
                       <h4 className="font-medium text-[#141414] mb-4">Flexible Payment Plan</h4>
-                      <ul className="space-y-3 text-[#141414]/70 font-light">
+                      <ul className="space-y-3 text-[#555555] font-light">
                         <li className="flex items-start gap-2">
                           <span className="text-[#4f6e72] mt-1"><Check className="h-4 w-4" /></span>
-                          <span><strong className="font-medium">Registration:</strong> €100 deposit to secure your seat (upon acceptance)</span>
+                          <span><strong className="font-medium text-[#333333]">Registration:</strong> €100 deposit to secure your seat (upon acceptance)</span>
                         </li>
                         <li className="flex items-start gap-2">
                           <span className="text-[#4f6e72] mt-1"><Check className="h-4 w-4" /></span>
-                          <span><strong className="font-medium">Installments:</strong> Three monthly payments of €216</span>
+                          <span><strong className="font-medium text-[#333333]">Installments:</strong> Three monthly payments of €216</span>
                         </li>
                         <li className="flex items-start gap-2">
                           <span className="text-[#4f6e72] mt-1"><Check className="h-4 w-4" /></span>
-                          <span><strong className="font-medium">Deadline:</strong> Final balance must be cleared by {tuitionDeadline}</span>
+                          <span><strong className="font-medium text-[#333333]">Deadline:</strong> Final balance must be cleared by {tuitionDeadline}</span>
                         </li>
                       </ul>
                     </div>
@@ -132,14 +132,14 @@ const TuitionTiers = () => {
           <motion.div 
             {...fadeInAnimation}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-center"
+            className="text-center mt-12"
           >
-            <div className="bg-[#4f6e72] text-white rounded-3xl p-12 max-w-2xl mx-auto">
-              <h3 className="font-serif text-3xl font-light mb-6">
+            <div className="bg-[#4f6e72] text-white rounded-2xl p-10 md:p-12 max-w-2xl mx-auto">
+              <h3 className="font-serif text-2xl md:text-3xl font-light mb-5">
                 Ready to Begin?
               </h3>
               
-              <div className="flex items-center justify-center gap-6 mb-8 text-white/90">
+              <div className="flex items-center justify-center gap-6 mb-6 text-white">
                 <div className="flex items-center gap-2">
                   <Users className="w-5 h-5" />
                   <span className="font-light">20 spots only</span>
@@ -152,13 +152,13 @@ const TuitionTiers = () => {
               
               <Button 
                 onClick={handleApplyClick}
-                className="w-full sm:w-auto px-12 py-4 text-lg font-light bg-white text-[#4f6e72] hover:bg-gray-50 rounded-full transition-all duration-300"
+                className="w-full sm:w-auto px-10 py-3 text-base font-light bg-white text-[#4f6e72] hover:bg-gray-50 rounded-full transition-all duration-300"
                 data-testid="button-apply-now"
               >
                 Apply Now
               </Button>
               
-              <p className="font-light text-white/80 mt-6">
+              <p className="font-light text-[#d0e0e3] mt-5 text-sm">
                 Final call: Registration closes May 24, 2026
               </p>
             </div>
