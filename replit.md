@@ -134,6 +134,12 @@ externalPort = 5000
 
 ## Recent Changes
 
+### January 4, 2026 - Fixed Express Middleware Ordering and API Error Handling
+- **Error Middleware**: Moved error-handling middleware AFTER routes registration (was incorrectly placed before, causing errors to not propagate)
+- **API 404 Handler**: Added middleware that returns JSON `{"error":"API endpoint not found"}` for unknown `/api/*` routes
+- **Express 5 Compatibility**: Used `req.path.startsWith("/api/")` pattern instead of `/api/*` wildcard (path-to-regexp changed syntax)
+- Both fixes ensure proper error handling and prevent HTML responses for API calls
+
 ### January 4, 2026 - Forensic Fix: Missing Image and Dialog Accessibility
 - **SummerProgramme.tsx**: Replaced broken `/lovable-uploads/masterclass-singers.jpg` reference with CSS gradient background
 - **VocalUpgradePopup.tsx**: Added hidden DialogTitle/DialogDescription for accessibility when isSubmitted is true (sr-only)
