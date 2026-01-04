@@ -42,7 +42,7 @@ const ApplicationTimeline = () => {
     {
       icon: <Users className="w-5 h-5 text-rose-500" />,
       title: "Workshop Week",
-      description: "Participate in our intensive 5-day vocal excellence workshop.",
+      description: "Participate in our intensive 7-day vocal excellence workshop.",
       date: workshopPeriod,
     },
     {

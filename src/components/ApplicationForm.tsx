@@ -361,7 +361,7 @@ const ApplicationForm = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            Summer Workshop 2025
+            Summer Workshop 2026
           </motion.span>
           
           <h2 className="text-4xl md:text-5xl font-semibold tracking-tight text-apple-text">

@@ -32,7 +32,7 @@ const ApplicationPageHero = () => {
             className="space-y-2"
           >
             <p className="text-lg md:text-xl text-apple-grey font-medium tracking-wider uppercase">
-              SUMMER WORKSHOP 2025
+              SUMMER WORKSHOP 2026
             </p>
             <p className="text-xl md:text-2xl text-apple-text">
               Your Application to
@@ -48,7 +48,7 @@ const ApplicationPageHero = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.9 }}
           >
-            Join our exclusive 5-day Workshop where world-class mentors will transform your voice and elevate your technique to new heights.
+            Join our exclusive 7-day Workshop where world-class mentors will transform your voice and elevate your technique to new heights.
           </motion.p>
 
           {/* Program dates with location */}
@@ -59,7 +59,7 @@ const ApplicationPageHero = () => {
             transition={{ duration: 0.8, delay: 1.0 }}
           >
             <Calendar className="w-4 h-4 text-apple-blue" />
-            <span>14-18 July | Limassol, Cyprus</span>
+            <span>29 June – 5 July | Limassol, Cyprus</span>
           </motion.div>
           
           {/* Features highlight */}

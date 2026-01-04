@@ -37,7 +37,7 @@ const SubmissionSuccessMessage = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
         >
-          Thank you for applying to the Vocal Excellence Summer Workshop 2025. Your application has been received and is now being reviewed by our team.
+          Thank you for applying to the Vocal Excellence Summer Workshop 2026. Your application has been received and is now being reviewed by our team.
         </motion.p>
         
         <motion.div 

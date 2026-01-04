@@ -27,7 +27,7 @@ const TuitionHero = React.memo(() => {
             </h1>
             
             <p className="font-serif text-xl md:text-2xl text-[#4f6e72] font-light">
-              Summer 2025 Program
+              Summer 2026 Program
             </p>
           </div>
           
@@ -49,7 +49,7 @@ const TuitionHero = React.memo(() => {
 
           <div className="max-w-2xl mx-auto">
             <p className="text-xl md:text-2xl text-[#141414]/80 font-serif font-light leading-relaxed">
-              Five incredible days that will transform your voice
+              Seven incredible days that will transform your voice
             </p>
           </div>
 
@@ -63,7 +63,7 @@ const TuitionHero = React.memo(() => {
               €749
             </h2>
             <p className="text-xl text-[#4f6e72]/90 font-light mb-4">
-              Everything included • About €150 per day
+              Everything included • About €107 per day
             </p>
             <p className="text-[#141414]/70 font-light text-lg max-w-lg mx-auto">
               All lessons, materials, recordings, and daily lunch
@@ -76,7 +76,7 @@ const TuitionHero = React.memo(() => {
             transition={{ delay: 0.5, duration: 0.8 }}
             className="text-center max-w-xl mx-auto"
           >
-            <p className="font-light text-xl text-[#4f6e72] mb-2">Apply by June 7</p>
+            <p className="font-light text-xl text-[#4f6e72] mb-2">Apply by May 24</p>
             <p className="text-[#141414]/60 font-light">Only 7 days left</p>
           </motion.div>
           

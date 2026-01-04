@@ -94,7 +94,7 @@ const TuitionTiers = () => {
                         Everything included
                       </p>
                       <p className="text-[#141414]/70 font-light">
-                        About €150 per day for full training
+                        About €107 per day for full training
                       </p>
                     </div>
 
@@ -142,7 +142,7 @@ const TuitionTiers = () => {
               </Button>
               
               <p className="font-light text-white/80 mt-6">
-                Applications close June 7, 2025
+                Applications close May 24, 2026
               </p>
             </div>
           </motion.div>

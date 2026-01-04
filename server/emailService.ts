@@ -46,7 +46,7 @@ export class EmailService {
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <h1 style="color: #333; border-bottom: 1px solid #eee; padding-bottom: 10px;">Application Received</h1>
           <p style="font-size: 16px; line-height: 1.5; color: #444;">Dear ${name},</p>
-          <p style="font-size: 16px; line-height: 1.5; color: #444;">Thank you for your application to the Vocal Excellence Summer Workshop 2025!</p>
+          <p style="font-size: 16px; line-height: 1.5; color: #444;">Thank you for your application to the Vocal Excellence Summer Workshop 2026!</p>
           <p style="font-size: 16px; line-height: 1.5; color: #444;">We have received your application and are currently reviewing it. We'll be in touch with you in the next 2 weeks regarding the next steps.</p>
           <p style="font-size: 16px; line-height: 1.5; color: #444;">If you have any questions, please don't hesitate to contact us at info@vocalexcellence.cy.</p>
           <p style="font-size: 16px; line-height: 1.5; color: #444;">Best regards,</p>
@@ -76,7 +76,7 @@ export class EmailService {
       const htmlContent = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <h1 style="color: #333; border-bottom: 1px solid #eee; padding-bottom: 10px;">New Application Received</h1>
-          <p style="font-size: 16px; line-height: 1.5; color: #444;">A new application has been submitted to the Vocal Excellence Summer Workshop 2025.</p>
+          <p style="font-size: 16px; line-height: 1.5; color: #444;">A new application has been submitted to the Vocal Excellence Summer Workshop 2026.</p>
           
           <div style="background-color: #f7f9fc; border-left: 4px solid #0066cc; padding: 15px; margin: 20px 0;">
             <h2 style="color: #0066cc; margin-top: 0;">Applicant Details</h2>

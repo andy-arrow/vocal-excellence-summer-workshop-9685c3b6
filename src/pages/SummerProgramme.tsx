@@ -31,7 +31,7 @@ const SummerProgramme = () => {
             <div className="w-24 h-px bg-white/30 mx-auto"></div>
             
             <p className="text-xl md:text-2xl font-light max-w-2xl mx-auto leading-relaxed text-white/90">
-              5 full days of exclusive vocal training with coaches from London's West End, Netflix & the world's top universities
+              7 full days of exclusive vocal training with coaches from London's West End, Netflix & the world's top universities
             </p>
             
             <div className="pt-8">
@@ -67,7 +67,7 @@ const SummerProgramme = () => {
             {[
               {
                 icon: <Calendar className="w-6 h-6 text-apple-blue" />,
-                title: "Five Days",
+                title: "Seven Days",
                 description: "Intensive daily training from 9am to 5pm with evening showcases"
               },
               {
@@ -177,7 +177,7 @@ const SummerProgramme = () => {
                 variant="outline" 
                 className="border-apple-blue text-apple-blue hover:bg-apple-blue/5"
               >
-                View Full 5-Day Schedule
+                View Full 7-Day Schedule
               </Button>
             </div>
           </div>
@@ -469,11 +469,11 @@ const SummerProgramme = () => {
             to="/apply" 
             className="inline-flex items-center gap-2 bg-apple-blue text-white px-10 py-5 rounded-full text-lg font-medium transition-all duration-300 hover:bg-apple-blue-hover"
           >
-            Apply for Summer 2025
+            Apply for Summer 2026
             <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
           </Link>
           <p className="text-sm text-apple-grey mt-4">
-            Early bird pricing ends May 1, 2025 • Total tuition €749 (includes €100 registration fee)
+            Early bird pricing ends March 1, 2026 • Total tuition €749 (includes €100 registration fee)
           </p>
         </div>
       </section>

@@ -48,7 +48,7 @@ const ApplicationHero = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.7 }}
           >
-            Join our exclusive 5-day Workshop where world-class mentors will transform your voice and elevate your technique to new heights.
+            Join our exclusive 7-day Workshop where world-class mentors will transform your voice and elevate your technique to new heights.
           </motion.p>
           
           <motion.div 

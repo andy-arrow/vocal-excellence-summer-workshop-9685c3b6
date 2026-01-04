@@ -77,7 +77,7 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
           >
-            <span className="block mb-1 md:mb-2">5 Full Days of</span>
+            <span className="block mb-1 md:mb-2">7 Full Days of</span>
             <span className="text-apple-blue">Exclusive Vocal Training</span>
           </motion.h1>
           
