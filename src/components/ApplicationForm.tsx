@@ -343,92 +343,65 @@ const ApplicationForm = () => {
   ];
 
   return (
-    <section className="py-16 md:py-24" id="application-form">
-      <motion.div 
-        className="max-w-3xl mx-auto px-6"
-        variants={formVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-      >
-        <motion.div 
-          className="text-center mb-16 space-y-6"
-          variants={sectionVariants}
-        >
-          <motion.span 
-            className="inline-block text-apple-grey text-sm tracking-wide uppercase mb-2 font-medium"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-          >
+    <section className="py-8 md:py-16" id="application-form">
+      <div className="max-w-3xl mx-auto px-4 md:px-6">
+        <div className="text-center mb-8 md:mb-12 space-y-4 md:space-y-5">
+          <span className="inline-block text-[#666666] text-xs md:text-sm tracking-wide uppercase font-medium">
             Summer Workshop 2026
-          </motion.span>
+          </span>
           
-          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight text-apple-text">
+          <h2 className="text-2xl md:text-4xl font-semibold tracking-tight text-[#1d1d1f]">
             Apply Now
           </h2>
           
-          <motion.p 
-            className="text-lg md:text-xl text-apple-grey max-w-2xl mx-auto leading-relaxed"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-          >
+          <p className="text-base md:text-lg text-[#666666] max-w-2xl mx-auto leading-relaxed">
             Begin your journey in vocal artistry. Complete one section at a time.
-          </motion.p>
+          </p>
 
           <ApplicationProgressIndicator 
             steps={sections.map(s => s.title)} 
             currentStep={activeSection} 
             onStepClick={setActiveSection}
           />
-        </motion.div>
+        </div>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <input type="hidden" name="csrfToken" value={csrfToken} />
             
             {validationErrors.length > 0 && (
-              <motion.div 
-                className="bg-red-50 border border-red-200 rounded-xl p-4 mb-4 text-red-800"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-              >
+              <div className="bg-red-50 border border-red-200 rounded-lg p-3 md:p-4 mb-4 text-red-800">
                 <div className="flex items-start gap-2">
-                  <AlertCircle className="w-5 h-5 text-red-500 mt-0.5" />
+                  <AlertCircle className="w-4 h-4 md:w-5 md:h-5 text-red-500 mt-0.5 flex-shrink-0" />
                   <div>
-                    <h4 className="font-medium">Please fix the following issues:</h4>
-                    <ul className="mt-2 text-sm space-y-1 list-disc list-inside">
+                    <h4 className="font-medium text-sm md:text-base">Please fix the following issues:</h4>
+                    <ul className="mt-2 text-xs md:text-sm space-y-1 list-disc list-inside">
                       {validationErrors.map((error, index) => (
                         <li key={index}>{error}</li>
                       ))}
                     </ul>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             )}
             
-            <motion.div
+            <div
               key={`section-${activeSection}`}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="bg-white rounded-2xl p-6 md:p-8 border border-apple-border/40 hover:border-apple-border/60 transition-colors shadow-sm"
+              className="bg-white rounded-xl md:rounded-2xl p-4 md:p-6 border border-[#e5e5e5] shadow-sm"
             >
-              <div className="flex items-center gap-4 mb-6">
+              <div className="flex items-center gap-3 mb-4 md:mb-6">
                 {sections[activeSection].icon}
-                <h3 className="text-xl font-semibold text-apple-text">{sections[activeSection].title}</h3>
+                <h3 className="text-lg md:text-xl font-semibold text-[#1d1d1f]">{sections[activeSection].title}</h3>
               </div>
               
               {sections[activeSection].component}
               
-              <div className="flex justify-between mt-8 pt-4 border-t border-apple-border/20">
+              <div className="flex justify-between mt-6 md:mt-8 pt-4 border-t border-[#e5e5e5]">
                 <button
                   type="button"
                   onClick={handlePrevSection}
                   disabled={activeSection === 0}
-                  className={`px-5 py-2 rounded-lg ${activeSection === 0 ? 'text-apple-grey cursor-not-allowed' : 'text-apple-text hover:bg-apple-light-hover'}`}
+                  className={`px-4 md:px-5 py-2 rounded-lg text-sm md:text-base ${activeSection === 0 ? 'text-[#999999] cursor-not-allowed' : 'text-[#1d1d1f] hover:bg-[#f5f5f7]'}`}
                 >
                   Back
                 </button>
@@ -437,29 +410,24 @@ const ApplicationForm = () => {
                   <button
                     type="button"
                     onClick={handleNextSection}
-                    className="px-5 py-2 bg-apple-blue text-white rounded-lg hover:bg-apple-blue-hover"
+                    className="px-4 md:px-5 py-2 bg-apple-blue text-white rounded-lg hover:bg-apple-blue-hover text-sm md:text-base"
                   >
                     Continue
                   </button>
                 ) : (
-                  <Suspense fallback={<div>Loading...</div>}>
+                  <Suspense fallback={<div className="text-sm">Loading...</div>}>
                     <SubmitButton isSubmitting={isSubmitting} />
                   </Suspense>
                 )}
               </div>
-            </motion.div>
+            </div>
           </form>
         </Form>
 
-        <motion.div 
-          className="text-center mt-8 text-sm text-apple-grey"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
-        >
+        <div className="text-center mt-6 md:mt-8 text-xs md:text-sm text-[#666666]">
           <p>Need help? Email us at <a href="mailto:info@vocalexcellence.cy" className="text-apple-blue hover:underline">info@vocalexcellence.cy</a></p>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </section>
   );
 };

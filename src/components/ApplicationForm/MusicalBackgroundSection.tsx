@@ -25,29 +25,28 @@ const MusicalBackgroundSection = () => {
   const form = useFormContext<ApplicationFormValues>();
 
   return (
-    <div className="space-y-8">
-      <div className="flex items-center gap-3">
-        <Music className="h-5 w-5 text-apple-blue" />
-        <h3 className="text-xl font-bold text-apple-text">Vocal Information</h3>
+    <div className="space-y-5 md:space-y-6">
+      <div className="flex items-center gap-2 md:gap-3">
+        <Music className="h-4 w-4 md:h-5 md:w-5 text-apple-blue flex-shrink-0" />
+        <h3 className="text-base md:text-lg font-bold text-[#1d1d1f]">Vocal Information</h3>
       </div>
       
-      <div className="space-y-8 bg-slate-50 p-6 rounded-xl border border-slate-200 shadow-sm">
-        {/* Vocal Range Selection */}
+      <div className="space-y-5 md:space-y-6 bg-[#f9f9f9] p-4 md:p-5 rounded-lg md:rounded-xl border border-[#e5e5e5]">
         <FormField
           control={form.control}
           name="vocalRange"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-apple-text font-medium text-base">
+              <FormLabel className="text-[#1d1d1f] font-medium text-sm md:text-base">
                 Vocal Range
-                <span className="text-red-700 ml-1">*</span>
+                <span className="text-red-600 ml-1">*</span>
               </FormLabel>
-              <FormDescription className="text-apple-grey mt-0.5 mb-1.5">
+              <FormDescription className="text-[#666666] mt-0.5 mb-1.5 text-xs md:text-sm">
                 Select the vocal range that best describes your voice
               </FormDescription>
               <FormControl>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <SelectTrigger className="bg-white border-apple-border text-apple-text">
+                  <SelectTrigger className="bg-white border-[#e5e5e5] text-[#1d1d1f] text-sm md:text-base">
                     <SelectValue placeholder="Select your vocal range" />
                   </SelectTrigger>
                   <SelectContent>
@@ -61,59 +60,57 @@ const MusicalBackgroundSection = () => {
                   </SelectContent>
                 </Select>
               </FormControl>
-              <FormMessage className="text-red-700 font-medium" />
+              <FormMessage className="text-red-600 font-medium text-xs md:text-sm" />
             </FormItem>
           )}
         />
 
-        {/* Years of Singing */}
         <FormField
           control={form.control}
           name="yearsOfSinging"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-apple-text font-medium text-base">
+              <FormLabel className="text-[#1d1d1f] font-medium text-sm md:text-base">
                 Years of Singing
-                <span className="text-red-700 ml-1">*</span>
+                <span className="text-red-600 ml-1">*</span>
               </FormLabel>
-              <FormDescription className="text-apple-grey mt-0.5 mb-1.5">
-                How many years have you been singing? (Enter 0 if you're just starting)
+              <FormDescription className="text-[#666666] mt-0.5 mb-1.5 text-xs md:text-sm">
+                How many years have you been singing?
               </FormDescription>
               <FormControl>
                 <Input 
                   {...field}
                   type="number"
                   min="0"
-                  className="bg-white border-apple-border text-apple-text placeholder:text-apple-grey"
+                  className="bg-white border-[#e5e5e5] text-[#1d1d1f] placeholder:text-[#999999] text-sm md:text-base"
                   placeholder="Enter number of years"
                 />
               </FormControl>
-              <FormMessage className="text-red-700 font-medium" />
+              <FormMessage className="text-red-600 font-medium text-xs md:text-sm" />
             </FormItem>
           )}
         />
 
-        {/* Vocal Background */}
         <FormField
           control={form.control}
           name="musicalBackground"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-apple-text font-medium text-base">
+              <FormLabel className="text-[#1d1d1f] font-medium text-sm md:text-base">
                 Your Singing Journey
-                <span className="text-red-700 ml-1">*</span>
+                <span className="text-red-600 ml-1">*</span>
               </FormLabel>
-              <FormDescription className="text-apple-grey mt-0.5 mb-1.5">
-                Tell us about your singing journey so far (formal or informal). Have you ever had formal voice lessons or coaching? If yes, for how long and with what methodology (e.g., MVT, SLS, classical)?
+              <FormDescription className="text-[#666666] mt-0.5 mb-1.5 text-xs md:text-sm">
+                Tell us about your singing journey. Have you had formal lessons?
               </FormDescription>
               <FormControl>
                 <Textarea 
                   {...field}
-                  className="bg-white border-apple-border text-apple-text placeholder:text-apple-grey min-h-[120px] resize-y"
-                  placeholder="Share your vocal background, training experience, and methodology if applicable..."
+                  className="bg-white border-[#e5e5e5] text-[#1d1d1f] placeholder:text-[#999999] min-h-[100px] md:min-h-[120px] resize-y text-sm md:text-base"
+                  placeholder="Share your vocal background..."
                 />
               </FormControl>
-              <FormMessage className="text-red-700 font-medium" />
+              <FormMessage className="text-red-600 font-medium text-xs md:text-sm" />
             </FormItem>
           )}
         />
