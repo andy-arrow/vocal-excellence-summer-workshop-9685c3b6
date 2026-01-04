@@ -50,7 +50,7 @@ const ApplicationPageHero = () => {
           </motion.p>
 
           <motion.div 
-            className="inline-flex items-center gap-2 text-apple-text/80 text-sm font-medium mx-auto"
+            className="inline-flex items-center gap-2 text-apple-text text-sm font-medium mx-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 1.0 }}
@@ -60,7 +60,7 @@ const ApplicationPageHero = () => {
           </motion.div>
           
           <motion.div 
-            className="flex flex-wrap justify-center gap-x-3 gap-y-2 text-xs md:text-xs font-medium text-apple-grey/80"
+            className="flex flex-wrap justify-center gap-x-3 gap-y-2 text-xs md:text-xs font-medium text-apple-grey"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 1.1 }}

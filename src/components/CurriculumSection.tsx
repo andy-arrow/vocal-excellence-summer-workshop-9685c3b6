@@ -230,7 +230,7 @@ function ModulesContent() {
                     className="flex items-start group/item"
                   >
                     <span className="text-apple-blue mr-3 mt-1.5 flex-shrink-0 text-sm">•</span>
-                    <span className="text-apple-text/90 group-hover/item:text-apple-text transition-colors duration-300">
+                    <span className="text-apple-text group-hover/item:text-apple-blue transition-colors duration-300">
                       {highlight}
                     </span>
                   </motion.li>
@@ -314,7 +314,7 @@ function ScheduleContent() {
                           className="flex items-start group"
                         >
                           <span className="text-apple-blue mr-3 mt-1.5 flex-shrink-0 text-sm">•</span>
-                          <span className="text-apple-text/90 group-hover:text-apple-text transition-colors duration-300 font-light">
+                          <span className="text-apple-text group-hover:text-apple-blue transition-colors duration-300 font-light">
                             {activity}
                           </span>
                         </motion.li>

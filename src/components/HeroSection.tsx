@@ -90,7 +90,7 @@ const HeroSection = () => {
           </motion.p>
 
           <motion.p 
-            className="font-sans text-xs sm:text-sm md:text-base text-apple-text/70 max-w-xl mx-auto italic"
+            className="font-sans text-xs sm:text-sm md:text-base text-apple-grey max-w-xl mx-auto italic"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.95 }}
@@ -99,7 +99,7 @@ const HeroSection = () => {
           </motion.p>
 
           <motion.div 
-            className="inline-flex items-center gap-2 text-apple-text/80 text-sm font-medium mx-auto"
+            className="inline-flex items-center gap-2 text-apple-text text-sm font-medium mx-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 1.0 }}
@@ -109,7 +109,7 @@ const HeroSection = () => {
           </motion.div>
           
           <motion.div 
-            className="flex flex-wrap justify-center gap-x-3 gap-y-2 text-xs md:text-xs font-medium text-apple-grey/80"
+            className="flex flex-wrap justify-center gap-x-3 gap-y-2 text-xs md:text-xs font-medium text-apple-grey"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 1.1 }}
