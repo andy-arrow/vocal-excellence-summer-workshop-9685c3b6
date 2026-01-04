@@ -1,0 +1,82 @@
+2026-01-04T10:18:48Z info: Deployment: 9d17652d-3ed0-4d74-85a1-b7735f771099
+2026-01-04T10:18:48Z info: Running Security Scan
+2026-01-04T10:18:53Z info: Security Scan Complete
+2026-01-04T10:18:53Z info: Connecting to builder
+2026-01-04T10:18:53Z info: Builder connected
+2026-01-04T10:18:53Z info: Installing packages
+2026-01-04T10:18:54Z info: Starting Build
+
+> vite_react_shadcn_ts@0.0.0 build
+> vite build && npm run build:server
+
+
+vite v5.4.10 building for production...
+
+transforming...
+
+Browserslist: browsers data (caniuse-lite) is 15 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+
+warn - The class `ease-[cubic-bezier(0.25,0.1,0.25,1)]` is ambiguous and matches multiple utilities.
+warn - If this is content and not a class, replace it with `ease-&lsqb;cubic-bezier(0.25,0.1,0.25,1)&rsqb;` to silence this warning.
+
+
+/lovable-uploads/masterclass-singers.jpg referenced in /lovable-uploads/masterclass-singers.jpg didn't resolve at build time, it will remain unchanged to be resolved at runtime
+
+✓ 2552 modules transformed.
+
+rendering chunks...
+
+[plugin:vite:reporter] [plugin vite:reporter] 
+(!) /home/runner/workspace/src/utils/monitoring.ts is dynamically imported by /home/runner/workspace/src/main.tsx but also statically imported by /home/runner/workspace/src/utils/ErrorBoundary.tsx, dynamic import will not move module into another chunk.
+
+
+computing gzip size...
+
+dist/assets/calendar-P2fsNIv9.js                       0.43 kB │ gzip:  0.30 kB
+dist/assets/award-DCkQMPsA.js                          0.44 kB │ gzip:  0.33 kB
+dist/assets/ApplicationPage-ndt-CqBJ.js                0.45 kB │ gzip:  0.27 kB
+dist/assets/book-open-bGWQ5jM3.js                      0.45 kB │ gzip:  0.31 kB
+dist/assets/instagram-i9Y84pNM.js                      0.47 kB │ gzip:  0.33 kB
+dist/assets/users-xxDEY3EZ.js                          0.47 kB │ gzip:  0.33 kB
+
+dist/assets/graduation-cap-C_t4jXRO.js                 0.50 kB │ gzip:  0.35 kB
+
+dist/assets/card-RrUa4r33.js                           1.07 kB │ gzip:  0.42 kB
+
+dist/assets/Footer-JL8CjiMa.js                         5.38 kB │ gzip:  1.88 kB
+
+✓ built in 15.15s
+
+
+> vite_react_shadcn_ts@0.0.0 build:server
+> npx esbuild server/index.ts --platform=node --packages=external --bundle --format=cjs --outfile=dist/index.cjs
+
+
+
+  dist/index.cjs  31.1kb
+
+⚡ Done in 93ms
+
+npm notice
+npm notice New major version of npm available! 10.8.2 -> 11.7.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.7.0
+npm notice To update run: npm install -g npm@11.7.0
+npm notice
+
+2026-01-04T10:19:16Z info: Pushing pid1 binary layer...
+2026-01-04T10:19:17Z info: Pushing Repl layer...
+2026-01-04T10:19:17Z info: Pushing hosting layer...
+2026-01-04T10:19:18Z info: Created hosting layer
+2026-01-04T10:19:18Z info: Created pid1 binary layer
+2026-01-04T10:19:36Z info: Created Repl layer
+2026-01-04T10:19:38Z info: Pushed image manifest
+2026-01-04T10:19:40Z info: Pushed soci index manifest
+2026-01-04T10:19:43Z info: Creating Autoscale service
+> vite_react_shadcn_ts@0.0.0 start
+metasidecar: loaded enterprise status from environment is_enterprise=false
+[StorageFactory] Using Replit PostgreSQL backend
+Server running on port 5000
+a port configuration was specified but the required port was never opened
+2026-01-04T10:21:53Z error: The deployment failed because the application failed to open a port in time. This can happen because the application takes to long to open a server, or doesn't open one at all on the expected port. Note that this doesn't mean that the application is crashing, only that it's not opening a port in time. The application must serve traffic on the first port specified as 'localPort' in the port configuration specified in the .replit file. Make sure that the application opens a port quickly and that there are no operations taking too long on startup. Check the logs for more information.
