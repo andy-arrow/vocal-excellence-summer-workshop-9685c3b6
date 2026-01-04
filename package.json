@@ -4,7 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "tsx server/index.ts",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:client": "vite",
+    "dev:server": "tsx watch server/index.ts",
     "build": "vite build && npm run build:server",
     "build:server": "npx esbuild server/index.ts --platform=node --packages=external --bundle --format=cjs --outfile=dist/index.cjs",
     "build:dev": "vite build --mode development",
@@ -52,6 +54,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
+    "concurrently": "^9.2.1",
     "date-fns": "^3.6.0",
     "drizzle-kit": "^0.31.8",
     "drizzle-orm": "^0.45.1",

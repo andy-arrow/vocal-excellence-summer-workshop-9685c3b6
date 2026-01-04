@@ -4,7 +4,8 @@ import path from "path";
 import fs from "fs";
 
 const app = express();
-const port = parseInt(process.env.PORT || "5000", 10);
+const isDev = process.env.NODE_ENV !== "production";
+const port = parseInt(process.env.PORT || (isDev ? "3001" : "5000"), 10);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
