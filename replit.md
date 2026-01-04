@@ -134,6 +134,11 @@ externalPort = 5000
 
 ## Recent Changes
 
+### January 4, 2026 - Forensic Fix: Missing Image and Dialog Accessibility
+- **SummerProgramme.tsx**: Replaced broken `/lovable-uploads/masterclass-singers.jpg` reference with CSS gradient background
+- **VocalUpgradePopup.tsx**: Added hidden DialogTitle/DialogDescription for accessibility when isSubmitted is true (sr-only)
+- Both issues were causing build warnings and console errors
+
 ### January 4, 2026 - Fixed Navbar and Hero Alignment + Logo Visibility
 - **Logo Size**: Increased from `h-12` (48px) to `h-16 md:h-20` (64px mobile, 80px desktop)
 - **Container Alignment**: Both Navbar and HeroSection now use consistent `max-w-5xl mx-auto px-4 md:px-6`
