@@ -114,6 +114,10 @@ export function VocalUpgradePopup({ open, onOpenChange }: VocalUpgradePopupProps
     if (isSubmitted) {
       return (
         <div className="text-center p-6">
+          <DialogHeader className="sr-only">
+            <DialogTitle>Scholarship Information Sent</DialogTitle>
+            <DialogDescription>Your scholarship inquiry has been received</DialogDescription>
+          </DialogHeader>
           <div className="w-20 h-20 rounded-full bg-gradient-to-br from-amber-100 to-yellow-100 flex items-center justify-center mx-auto mb-6">
             <Award className="h-10 w-10 text-amber-600" />
           </div>

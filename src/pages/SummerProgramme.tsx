@@ -12,8 +12,8 @@ const SummerProgramme = () => {
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center text-white overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/lovable-uploads/masterclass-singers.jpg')] bg-cover bg-center"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-apple-text/60 to-apple-text/40"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black/40"></div>
         <div className="relative z-10 container mx-auto px-6 py-20 text-center max-w-[1100px]">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
