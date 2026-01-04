@@ -53,7 +53,10 @@ if (isDev) {
     
     const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({
-      server: { middlewareMode: true },
+      server: { 
+        middlewareMode: true,
+        hmr: false  // Disable HMR to prevent port 24678 WebSocket conflicts with Replit proxy
+      },
       appType: "spa",
       root: process.cwd(),
     });
