@@ -32,9 +32,9 @@ outputType = "webview"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "npm run build && npm run dev"
+args = "[ -f dist/index.html ] && echo \"Using existing build\" || npm run build; npm run dev"
 waitForPort = 5000
 
 [[ports]]
 localPort = 5000
-externalPort = 5000
+externalPort = 80
