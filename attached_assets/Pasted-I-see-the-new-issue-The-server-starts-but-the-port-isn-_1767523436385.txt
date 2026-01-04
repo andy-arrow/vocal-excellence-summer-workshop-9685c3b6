@@ -1,0 +1,72 @@
+I see the new issue. The server starts but the port isn't detected in time by the deployment. The logs show:
+
+Server running on port 5000
+a port configuration was specified but the required port was never opened
+This is a timing issue - the database initialization is blocking the port from being opened quickly enough. Let me fix the server startup sequence:
+
+The issues are:
+
+Vite is imported at top-level (loads even in production)
+Database initialization blocks server startup
+Server listens AFTER all async operations complete
+Let me fix this by restructuring the startup sequence:
+
+Now let me rebuild and test the production startup:
+
+The server starts successfully. Let me restart the workflow to verify development mode works too:
+
+Checked system logs
+Forensic Diagnostic Report - Port Binding Issue
+Root Cause Identified
+Error: The deployment failed because the application failed to open a port in time
+
+Cause: The server was initializing database routes BEFORE starting to listen on port 5000. The deployment health check timed out waiting for the port.
+
+Technical Analysis
+Issue	Impact
+await registerRoutes(app) before app.listen()	Blocked port binding during DB init
+Top-level Vite import	Loaded unnecessary Vite code in production
+Sequential startup	All async ops completed before port opened
+Fix Applied
+Before (blocking startup):
+
+(async () => {
+  await registerRoutes(app);  // Blocks here during DB init
+  // ... more async ops ...
+  app.listen(port);  // Port opens AFTER all async ops
+})();
+After (non-blocking startup):
+
+if (isDev) {
+  // Development: sequential startup (OK, no timeout)
+} else {
+  // Production: Start listening IMMEDIATELY
+  const server = app.listen(port, "0.0.0.0", () => {
+    console.log(`Server running on port ${port}`);
+  });
+  
+  // Register routes in background (non-blocking)
+  registerRoutes(app).catch((err) => { ... });
+}
+Key Changes
+Production mode - Server listens FIRST, routes register async
+Dynamic Vite import - Only loads in development
+Immediate port binding - Satisfies deployment health check
+Verification
+$ npm run start
+> NODE_ENV=production node dist/index.cjs
+[DataBackend] Active backend: replit (Replit PostgreSQL)
+[StorageFactory] Using Replit PostgreSQL backend
+Server running on port 5000
+Server starts and binds to port 5000 immediately.
+
+Status
+Ready for Republish - The deployment should now pass the port binding health check.
+
+Checkpoint made
+Optimize server startup for faster deployment detection
+Worked for 1 minute
+
+Scroll to latest
+
+Make, test, iterate…

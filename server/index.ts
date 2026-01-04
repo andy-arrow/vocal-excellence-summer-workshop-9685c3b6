@@ -45,7 +45,7 @@ app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
 });
 
 const isDev = process.env.NODE_ENV !== "production";
-const port = 5000;
+const port = parseInt(process.env.PORT || "5000", 10);
 
 if (isDev) {
   (async () => {
