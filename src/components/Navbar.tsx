@@ -88,7 +88,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
             <img 
               src="/lovable-uploads/9994f82c-80e4-477a-b629-3bef5ef8f2c1.png" 
               alt="Vocal Excellence Logo" 
-              className="w-48 h-48 mr-3" 
+              className="h-12 w-auto" 
             />
           </motion.div>
         </Link>
@@ -178,7 +178,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                     <img 
                       src="/lovable-uploads/9994f82c-80e4-477a-b629-3bef5ef8f2c1.png" 
                       alt="Vocal Excellence Logo" 
-                      className="w-32 h-32" 
+                      className="h-8 w-auto" 
                     />
                   </div>
                 </Link>

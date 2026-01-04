@@ -7,7 +7,7 @@ const AuthButtons = memo(() => {
     <div className="flex items-center gap-4">
       <Link 
         to="/admin" 
-        className="text-white/90 hover:text-white transition-colors flex items-center gap-1"
+        className="text-apple-text/70 hover:text-apple-text transition-colors flex items-center gap-1"
         data-testid="link-admin"
       >
         <Settings size={16} />
