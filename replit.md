@@ -90,19 +90,46 @@ shared/
 ### Migration Documentation (Historical)
 - `docs/migration/` - Supabase to Replit PostgreSQL migration notes
 
+## Server Stability Safeguards (IRONCLAD)
+
+The following safeguards are implemented to prevent HTTP 426 errors and server instability:
+
+### .replit Configuration
+```toml
+[[ports]]
+localPort = 5000
+externalPort = 5000
+# NEVER add port 24678 mapping - causes HTTP 426 errors
+```
+
+### Code-Level Safeguards (server/index.ts)
+
+1. **Immediate Port Binding** - Server binds to port FIRST, before async operations
+2. **Health Check Endpoint** - `/health` returns "OK" (sync, no DB dependency)
+3. **Graceful Shutdown Handlers** - SIGTERM and SIGINT handlers for clean shutdown
+4. **Error Boundaries** - uncaughtException and unhandledRejection handlers
+5. **Vite HMR Disabled** - `hmr: false` in both vite.config.ts AND createViteServer()
+6. **Environment Detection** - `isDev = process.env.NODE_ENV !== 'production'`
+
+### Pre-Deploy Checklist
+- [ ] Port 24678 NOT in .replit
+- [ ] hmr: false in Vite middleware config
+- [ ] Health endpoint exists at /health
+- [ ] NODE_ENV=production set for production
+- [ ] Graceful shutdown handlers present
+- [ ] Secrets in Replit Secrets manager (not hardcoded)
+
 ## Recent Changes
 
-### January 4, 2026 - Fixed Recurring HTTP 426 "Upgrade Required" Error (Comprehensive Fix)
-- **Root Cause**: Conflicting port mapping in `.replit` configuration (port 24678 mapped to external port 80) caused Replit proxy infrastructure to return HTTP 426 errors
-- **Why Previous Fix Was Incomplete**: Setting `hmr: false` in `vite.config.ts` was not enough because `server/index.ts` creates a separate Vite instance via `createViteServer()` that didn't inherit this setting
-- **Complete Solution Applied**:
-  1. `vite.config.ts`: `hmr: false` in server config
-  2. `server/index.ts`: Added `hmr: false` to the `createViteServer()` call in middleware mode
-- **Trade-off**: Hot Module Replacement is disabled; page refresh required to see changes during development
-- **Permanent Fix (User Action Required)**: Remove the problematic port mapping from `.replit` by deleting these lines:
-  ```toml
-  [[ports]]
-  localPort = 24678
-  externalPort = 80
-  ```
-- **Technical Details**: Port 24678 is Vite's default HMR WebSocket port. When mapped to external port 80, normal HTTP requests hit the WebSocket server, which returns HTTP 426 "Upgrade Required" because it expects a WebSocket handshake.
+### January 4, 2026 - Implemented Ironclad Server Stability Safeguards
+- Added immediate port binding before async operations
+- Added `/health` endpoint for deployment health checks
+- Added graceful shutdown handlers (SIGTERM, SIGINT)
+- Added error boundaries (uncaughtException, unhandledRejection)
+- HMR disabled in both vite.config.ts and server/index.ts createViteServer()
+- Removed problematic port 24678→80 mapping from .replit
+
+### January 4, 2026 - Fixed HTTP 426 "Upgrade Required" Error
+- **Root Cause**: Port 24678 (Vite HMR WebSocket) was mapped to external port 80
+- **Solution**: Disabled HMR in all contexts and removed port mapping
+- **Trade-off**: HMR disabled; page refresh required for changes in development

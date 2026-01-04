@@ -4,8 +4,16 @@ import path from "path";
 import fs from "fs";
 
 const app = express();
+
+const isDev = process.env.NODE_ENV !== "production";
+const port = parseInt(process.env.PORT || "5000", 10);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.get("/health", (_req, res) => {
+  res.status(200).send("OK");
+});
 
 app.use((req, res, next) => {
   const start = Date.now();
@@ -44,8 +52,34 @@ app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
   console.error(err);
 });
 
-const isDev = process.env.NODE_ENV !== "production";
-const port = parseInt(process.env.PORT || "5000", 10);
+const server = app.listen(port, "0.0.0.0", () => {
+  console.log(`Server bound to port ${port}`);
+});
+
+process.on("SIGTERM", () => {
+  console.log("SIGTERM received, shutting down gracefully...");
+  server.close(() => {
+    console.log("Server closed");
+    process.exit(0);
+  });
+});
+
+process.on("SIGINT", () => {
+  console.log("SIGINT received, shutting down gracefully...");
+  server.close(() => {
+    console.log("Server closed");
+    process.exit(0);
+  });
+});
+
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught Exception:", err);
+  server.close(() => process.exit(1));
+});
+
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("Unhandled Rejection at:", promise, "reason:", reason);
+});
 
 if (isDev) {
   (async () => {
@@ -55,16 +89,14 @@ if (isDev) {
     const vite = await createViteServer({
       server: { 
         middlewareMode: true,
-        hmr: false  // Disable HMR to prevent port 24678 WebSocket conflicts with Replit proxy
+        hmr: false
       },
       appType: "spa",
       root: process.cwd(),
     });
     app.use(vite.middlewares);
     
-    app.listen(port, "0.0.0.0", () => {
-      console.log(`Server running on port ${port}`);
-    });
+    console.log(`Development server ready on port ${port}`);
   })();
 } else {
   const distPath = path.resolve(process.cwd(), "dist");
@@ -75,13 +107,13 @@ if (isDev) {
     });
   }
   
-  const server = app.listen(port, "0.0.0.0", () => {
-    console.log(`Server running on port ${port}`);
-  });
-
-  registerRoutes(app).catch((err) => {
-    console.error("Failed to register routes:", err);
-    server.close();
-    process.exit(1);
-  });
+  registerRoutes(app)
+    .then(() => {
+      console.log(`Production server ready on port ${port}`);
+    })
+    .catch((err) => {
+      console.error("Failed to register routes:", err);
+      server.close();
+      process.exit(1);
+    });
 }
