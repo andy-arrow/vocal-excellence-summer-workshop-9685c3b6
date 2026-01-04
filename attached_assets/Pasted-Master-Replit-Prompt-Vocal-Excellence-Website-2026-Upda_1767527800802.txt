@@ -1,0 +1,102 @@
+Master Replit Prompt: Vocal Excellence Website 2026 Update
+Role: Expert Full-Stack Developer & Content Strategist.
+Objective: Update the entire Vocal Excellence web application from the 2025 cycle to the 2026 cycle.
+Context: The current codebase reflects the previous year's event. We need to update all copy, dates, logic, and scheduling variables across the frontend (HTML/Templates) and backend (Routes/Logic).
+
+1. Global Constants & Date Logic
+First, establish the following "Source of Truth" variables. Use these to calculate any dynamic dates or text replacements found in the code.
+
+Workshop Year: 2026
+
+Workshop Duration: 7 Days (Previously 5)
+
+Start Date: Monday, June 29, 2026
+
+End Date: Sunday, July 5, 2026
+
+Display String: "29 June - 5 July | Limassol, Cyprus"
+
+Early Bird Deadline: March 1, 2026
+
+Application Deadline: May 24, 2026
+
+Acceptance Notification: June 1, 2026
+
+Final Payment Deadline: June 15, 2026
+
+Price: €749 (Note: Daily average calculation must update: €749 / 7 days ≈ €107/day).
+
+2. Frontend Content Implementation
+Scan all template files (likely index.html, apply.html, tuition.html, layout.html or similar in the templates/ or public/ directory) and apply these specific text updates.
+
+A. General/Global Updates (Header/Footer)
+Footer: Update Copyright year to 2026.
+
+Navigation: Ensure "Apply Now" links are active and not labeled "Closed."
+
+Status: Change any "Applications Closed" banners/badges to "Applications Open".
+
+Taglines: Replace all instances of "5 Full Days" or "5-day Workshop" with "7 Full Days" or "7-day Workshop".
+
+B. Homepage (#home to #instructors)
+Hero Section: Update dates to 29 June - 5 July. Change subheader to "7 Full Days of Exclusive Vocal Training".
+
+Call to Action: Add/Update text near the CTA button: "Early Bird Deadline: March 1".
+
+Intro Text: Change "Applications for 2025 are now closed" to "Applications for 2026 are now open".
+
+C. Application Page (/apply)
+Header: Update "SUMMER WORKSHOP 2025" to 2026.
+
+Timeline Component: Update the visible timeline steps to the new logic:
+
+Submit Application: By May 24, 2026
+
+Application Review: May 25 - May 31, 2026
+
+Acceptance Notifications: June 1, 2026
+
+Confirm Participation: By June 15, 2026
+
+Workshop Week: June 29 - July 5, 2026
+
+Final Performance: July 5, 2026
+
+Form Logic: If the form has a hidden field for "Year" or "Cohort," update value to 2026.
+
+D. Tuition Page (/tuition)
+Header: Update dates to June 29 - July 5, 2026.
+
+Duration: Update text to "Seven incredible days".
+
+Cost Breakdown: Keep total price €749. Update the daily breakdown text to "Approx €107 per day" (was €150).
+
+Urgency Text: Update "Apply by June 7" to "Apply by May 24".
+
+Payment Plan: Update final payment due date text to "June 15, 2026".
+
+3. Backend & Logic Fixes
+Scan main.py, app.py, routes.py, or similar backend files.
+
+A. Route Logic
+Countdown Timers: If there is a countdown logic function, target the Early Bird Deadline (March 1, 2026).
+
+Application State: If there is a boolean flag (e.g., APPLICATIONS_OPEN = False), set it to True.
+
+B. Email Notifications
+If the backend sends automated confirmation emails (using SMTP or SendGrid):
+
+Update the email subject lines to include "2026".
+
+Update the body text of confirmation emails to reflect the new Start Date (June 29) and Payment Deadline (June 15).
+
+4. Execution Plan
+Search & Replace: Perform a global search for "2025" and replace with "2026" in all .html, .js, and .py files.
+
+Date Patching: Perform a global search for "July 14" and replace with "June 29". Search for "July 18" and replace with "July 5".
+
+Content Refinement: Manually verify the "Timeline" and "Tuition" sections match the specific dates listed in Section 1 of this prompt.
+
+Validation: Ensure the server restarts successfully and the /apply route renders the correct 2026 dates.
+
+GO. Implement these changes immediately.

@@ -10,7 +10,7 @@ const DefSection = () => {
       </h2>
       <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-md mb-6 space-y-4">
         <p className="text-gray-700 font-medium">
-          <strong className="text-gray-900">"Programme"</strong> refers to the Vocal Excellence Summer Programme, a 5-day vocal workshop scheduled for July 14-18, 2025, in Limassol, Cyprus.
+          <strong className="text-gray-900">"Programme"</strong> refers to the Vocal Excellence Summer Programme, a 7-day vocal workshop scheduled for June 29 – July 5, 2026, in Limassol, Cyprus.
         </p>
         <p className="text-gray-700 font-medium">
           <strong className="text-gray-900">"Organizer"</strong> refers to Vocal Excellence Summer Programme and its staff, instructors, and representatives.

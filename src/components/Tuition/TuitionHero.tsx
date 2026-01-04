@@ -35,7 +35,7 @@ const TuitionHero = React.memo(() => {
           <div className="space-y-4 text-[#141414]/70 text-lg font-light">
             <div className="flex items-center justify-center gap-2">
               <Calendar className="w-5 h-5 text-[#4f6e72]" />
-              <span>July 14-18, 2025</span>
+              <span>June 29 – July 5, 2026</span>
             </div>
             <div className="flex items-center justify-center gap-2">
               <MapPin className="w-5 h-5 text-[#4f6e72]" />

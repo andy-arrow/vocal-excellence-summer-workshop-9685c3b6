@@ -12,7 +12,7 @@ const CancellationPolicy = () => {
         
         <div className="prose prose-rose max-w-none">
           <p className="text-gray-700 mb-6">
-            This Cancellation Policy sets forth the terms and conditions applicable to cancellations of registrations for the Vocal Excellence Summer Workshop ("Workshop"), scheduled for July 14–18, 2025, in Limassol, Cyprus. This Policy is an integral part of the Workshop's Terms and Conditions. Before enrolling in the Workshop, please read these provisions carefully. Should you have any questions or require further clarification, you are encouraged to seek independent legal advice.
+            This Cancellation Policy sets forth the terms and conditions applicable to cancellations of registrations for the Vocal Excellence Summer Workshop ("Workshop"), scheduled for June 29 – July 5, 2026, in Limassol, Cyprus. This Policy is an integral part of the Workshop's Terms and Conditions. Before enrolling in the Workshop, please read these provisions carefully. Should you have any questions or require further clarification, you are encouraged to seek independent legal advice.
           </p>
 
           <h2 className="font-serif text-xl font-medium text-gray-900 mt-8 mb-4">1. Cancellation Rights Under the EU Consumer Rights Directive</h2>

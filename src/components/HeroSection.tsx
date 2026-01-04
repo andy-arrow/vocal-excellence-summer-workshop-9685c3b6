@@ -98,7 +98,7 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 1.0 }}
           >
             <Calendar className="w-4 h-4 text-apple-blue" />
-            <span>14-18 July | Limassol, Cyprus</span>
+            <span>29 June – 5 July | Limassol, Cyprus</span>
           </motion.div>
           
           {/* Features highlight - improved visibility on mobile */}

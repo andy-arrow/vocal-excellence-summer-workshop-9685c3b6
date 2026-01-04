@@ -1,13 +1,13 @@
 
-// Important application dates for the Vocal Excellence Workshop
+// Important application dates for the Vocal Excellence Workshop 2026
 export const APPLICATION_DATES = {
-  DEADLINE: new Date("2025-06-07"),
-  EARLY_BIRD_DEADLINE: new Date("2025-05-20"),
-  REVIEW_PERIOD_START: new Date("2025-06-08"),
-  REVIEW_PERIOD_END: new Date("2025-06-15"),
-  NOTIFICATION_DATE: new Date("2025-06-16"),
-  TUITION_DEADLINE: new Date("2025-07-05"),
-  PROGRAM_START: new Date("2025-07-14"),
-  PROGRAM_END: new Date("2025-07-18"),
-  FINAL_PERFORMANCE: new Date("2025-07-18")
+  EARLY_BIRD_DEADLINE: new Date("2026-03-01"),
+  DEADLINE: new Date("2026-05-24"),
+  REVIEW_PERIOD_START: new Date("2026-05-25"),
+  REVIEW_PERIOD_END: new Date("2026-05-31"),
+  NOTIFICATION_DATE: new Date("2026-06-01"),
+  TUITION_DEADLINE: new Date("2026-06-15"),
+  PROGRAM_START: new Date("2026-06-29"),
+  PROGRAM_END: new Date("2026-07-05"),
+  FINAL_PERFORMANCE: new Date("2026-07-05")
 };

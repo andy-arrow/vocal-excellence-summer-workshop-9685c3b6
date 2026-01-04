@@ -24,7 +24,7 @@ const SummerProgramme = () => {
             <h1 className="text-5xl md:text-7xl font-serif font-light leading-tight tracking-tight">
               Vocal Excellence
               <span className="block text-xl md:text-2xl font-sans font-light tracking-wide mt-4">
-                July 14-18, 2025 • Limassol, Cyprus
+                29 June – 5 July, 2026 • Limassol, Cyprus
               </span>
             </h1>
             
