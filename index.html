@@ -105,22 +105,7 @@
     <meta property="og:title" content="Vocal Excellence Summer Programme | Summer 2025">
     <meta property="og:description" content="Transform your vocal abilities with our intensive summer programme led by world-class instructors. Unleash your vocal brilliance at the Vocal Excellence Summer Programme.">
     
-    <!-- Add preload for critical resources -->
-    <script>
-      // Inline script to start preloading critical resources
-      const resources = [
-        { href: '/src/index.css', as: 'style' },
-        { href: '/src/styles/animations.css', as: 'style' }
-      ];
-      
-      resources.forEach(({href, as}) => {
-        const link = document.createElement('link');
-        link.rel = 'preload';
-        link.href = href;
-        link.as = as;
-        document.head.appendChild(link);
-      });
-    </script>
+    <!-- Vite handles CSS bundling automatically -->
   </head>
 
   <body>

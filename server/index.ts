@@ -85,8 +85,16 @@ const distIndexPath = path.join(distPath, "index.html");
 registerRoutes(app)
   .then(() => {
     if (fs.existsSync(distIndexPath)) {
-      app.use(express.static(distPath));
+      app.use(express.static(distPath, {
+        maxAge: '1d',
+        setHeaders: (res, filePath) => {
+          if (filePath.endsWith('.html')) {
+            res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+          }
+        }
+      }));
       app.use((_req, res) => {
+        res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
         res.sendFile(distIndexPath);
       });
       console.log(`Server ready on port ${port} (serving from dist/)`);
