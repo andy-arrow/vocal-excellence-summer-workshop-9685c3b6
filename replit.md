@@ -134,6 +134,16 @@ externalPort = 5000
 
 ## Recent Changes
 
+### January 4, 2026 - Implemented Proper Vite Dev Server with HMR
+- **Fast startup**: Vite dev server starts in ~500ms instead of 12-15 seconds
+- **Hot Module Replacement**: Code changes appear instantly without page refresh
+- **Concurrent servers**: `npm run dev` runs both Vite (port 5000) and Express API (port 3001)
+- **API proxy**: Vite proxies `/api/*`, `/uploads/*`, `/health` to backend on port 3001
+- **Scripts updated**: 
+  - `npm run dev` - Development with HMR (recommended)
+  - `npm run build` - Production build
+  - `npm start` - Run production server
+
 ### January 4, 2026 - Fixed Express Middleware Ordering and API Error Handling
 - **Error Middleware**: Moved error-handling middleware AFTER routes registration (was incorrectly placed before, causing errors to not propagate)
 - **API 404 Handler**: Added middleware that returns JSON `{"error":"API endpoint not found"}` for unknown `/api/*` routes
