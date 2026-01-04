@@ -134,6 +134,11 @@ externalPort = 5000
 
 ## Recent Changes
 
+### January 4, 2026 - Fixed Blank Page CSP Issue
+- **Root Cause**: Preload hints for `/src/main.tsx` and `/src/App.tsx` were being inlined as base64 data URLs during Vite build, blocked by CSP
+- **Solution**: Removed manual preload hints from index.html - Vite handles module preloading automatically
+- **Also Fixed**: Removed fail-fast `process.exit(1)` causing restart loops; changed catch-all to middleware instead of Express 5 wildcard route
+
 ### January 4, 2026 - Updated Workshop to 2026
 - **New Dates**: June 29 – July 5, 2026 (7 days, up from 5 days)
 - **Central Constants**: Updated `src/constants/applicationDates.ts` as single source of truth
