@@ -5,6 +5,7 @@ import fs from "fs";
 import { z, ZodError } from "zod";
 import { getStorage, getBackendInfo, logBackendSelection } from "./storage-factory";
 import { EmailService } from "./emailService";
+import { ebayService } from "./services/ebay";
 import { 
   applicationSchema, 
   contactMessageSchema, 
