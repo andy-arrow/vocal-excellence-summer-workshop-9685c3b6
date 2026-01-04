@@ -41,6 +41,16 @@ const instructors = [
     }
   },
   {
+    name: "Ksenia Belolipetskaya",
+    role: "Soprano & Vocal Coach",
+    bio: "Ksenia Belolipetskaya is an award-winning lyric coloratura soprano and vocal coach praised for her radiant tone and expressive depth. She has performed leading roles in operas by Mozart and Puccini on prestigious stages across Europe, including the Grand Hall of the Moscow Conservatory and Kammeroper Schloss Rheinsberg. Now a vital figure in the Cyprus cultural scene, her recent highlights include the role of Lakmé in Cyberness and concerts with the PSI Foundation. With over a decade of teaching experience preparing competition laureates, Ksenia is also the founder of LYRA Music & Arts, a creative education network in Limassol and Paphos.",
+    image: "/attached_assets/Ksenia_-_Headshot_1767558316441.jpg",
+    socials: {
+      instagram: "#",
+      linkedin: "#"
+    }
+  },
+  {
     name: "Aris Antoniades",
     role: "Composer",
     bio: "Aris Antoniades is a Cypriot composer, arranger, and music director whose acclaimed work bridges the worlds of symphonic, jazz, theatrical, and film music. Praised for its emotional depth and structural clarity, his music has been performed by symphony orchestras, big bands, and celebrated soloists around the world. He has collaborated with iconic artists such as nine-time Grammy nominee Bobby Sanabria, legendary Greek musicians Alkistis Protopsalti and George Hatzinassios, and Broadway and West End stars in major productions. As artistic director and principal conductor of the TrakArt Pops Orchestra, he has led high-profile national concerts in Cyprus, while his compositions have been featured at international festivals, on commercial albums, and on global streaming platforms. A Fulbright Scholar with degrees from the Manhattan School of Music, Aris continues to craft imaginative, storytelling-driven music that resonates across genres and cultures.",
