@@ -31,7 +31,7 @@ const Footer = () => {
       <div className="max-w-[980px] mx-auto px-6 md:px-8">
         <div className="py-4 border-b border-[#d2d2d7]">
           <p className="text-[12px] leading-[1.33337] font-normal text-[#6e6e73]">
-            Vocal Excellence brings transformative musical education to passionate singers through expert-led training in Limassol, Cyprus.
+            <strong>Vocal Excellence</strong> — Cyprus's premier destination for elite musical education, connecting passionate vocalists with world-class training in the heart of Limassol.
           </p>
         </div>
 

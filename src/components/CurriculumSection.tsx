@@ -21,49 +21,44 @@ import { motion, AnimatePresence } from 'framer-motion';
 const modules = [
   {
     title: "World-Class Faculty",
-    description: "Learn from internationally renowned teachers from top conservatories and universities.",
+    description: "Private mentorship and expert feedback from active industry professionals.",
     icon: <GraduationCap className="w-8 h-8 text-apple-blue" />,
     highlights: [
-      "45-minute private lesson with master teachers",
-      "30-minute dedicated accompanist sessions",
-      "Personalized feedback and mentoring",
-      "Active industry professionals as mentors"
+      "Private Mentorship: 45-minute 1-on-1 lessons with master teachers",
+      "Collaborative Coaching: Dedicated sessions with professional accompanists",
+      "Expert Feedback: Real-time critique from active industry professionals"
     ],
     iconBg: "bg-apple-light"
   },
   {
     title: "Performance Mastery",
-    description: "Comprehensive approach to performance excellence and stage presence.",
+    description: "Physical freedom, mental toughness, and spotlight-ready performance skills.",
     icon: <Award className="w-8 h-8 text-apple-blue" />,
     highlights: [
-      "Alexander Technique workshops",
-      "Stage anxiety management training",
-      "Mock audition experience",
-      "Professional performance recordings"
+      "Physical Freedom: Alexander Technique workshops to release tension",
+      "Mental Toughness: Proven anxiety management training for high-pressure auditions",
+      "The Spotlight: Live mock auditions and a final showcase performance"
     ],
     iconBg: "bg-apple-light"
   },
   {
-    title: "Professional Development",
-    description: "Build your career with industry-standard preparation and connections.",
+    title: "Career Toolkit",
+    description: "Audition strategy, portfolio building, and professional career planning.",
     icon: <Mic className="w-8 h-8 text-apple-blue" />,
     highlights: [
-      "Audition preparation masterclasses",
-      "Industry networking opportunities",
-      "Professional recording portfolio",
-      "Career strategy sessions"
+      "Audition Strategy: Masterclasses on how to book the room",
+      "Portfolio Building: Professional 4K recording sessions",
+      "Strategic Planning: Career sessions to map your next professional steps"
     ],
     iconBg: "bg-apple-light"
   },
   {
-    title: "Holistic Artist Care",
-    description: "360° approach to vocal health and artistic development.",
+    title: "Holistic Health",
+    description: "Vocal hygiene and artist wellness for long-term career sustainability.",
     icon: <Headphones className="w-8 h-8 text-apple-blue" />,
     highlights: [
-      "Vocal health seminar with medical professionals",
-      "Physical wellness workshops",
-      "Performance psychology coaching",
-      "Long-term sustainability strategies"
+      "Vocal Hygiene: Seminars with medical professionals on vocal health",
+      "Artist Wellness: Workshops on physical maintenance and performance psychology"
     ],
     iconBg: "bg-apple-light"
   }
@@ -355,10 +350,10 @@ const CurriculumSection = () => {
           transition={{ duration: 0.5 }}
         >
           <h2 className="text-3xl md:text-4xl xl:text-5xl font-medium text-apple-text mb-4">
-            Your Summer Crescendo
+            An Intensive Artist Curriculum
           </h2>
           <p className="text-lg md:text-xl text-apple-grey font-light max-w-2xl mx-auto">
-            A daily rhythm designed to elevate your vocal artistry
+            A 360° approach to performance, technique, and career strategy
           </p>
         </motion.div>
 

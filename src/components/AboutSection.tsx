@@ -10,28 +10,28 @@ const AboutSection = () => {
   
   const features = [
     {
-      title: 'Tailored Coaching',
-      description: 'Personal lessons focused on your goals, featuring skilled accompanists to support your music.',
+      title: 'Precision Coaching',
+      description: "Don't just sing—refine. Receive 1-on-1 private lessons tailored to your unique voice type, with professional accompanists dedicated to polishing your specific repertoire.",
       icon: <CheckCircle2 className="h-5 w-5 text-apple-blue" />
     },
     {
-      title: 'Professional Recordings',
-      description: "Your mock auditions and final performance will be professionally recorded, giving you high-quality footage that's perfect for audition submissions, social-media sharing, and building your portfolio.",
+      title: 'Industry-Standard Assets',
+      description: "Walk away with professional 4K video recordings of your mock auditions and final performance—essential assets for your showreel and casting submissions.",
       icon: <CheckCircle2 className="h-5 w-5 text-apple-blue" />
     },
     {
-      title: 'Performance Confidence',
-      description: 'Enhance your stage presence and overcome nerves with practical workshops using Alexander Technique.',
+      title: 'Unshakeable Confidence',
+      description: 'Overcome performance anxiety for good. Our specialized Alexander Technique workshops give you the physical and mental tools to command any stage with presence and ease.',
       icon: <CheckCircle2 className="h-5 w-5 text-apple-blue" />
     },
     {
-      title: 'Vocal Health Essentials',
-      description: 'Keep your voice strong and healthy with guidance from an expert vocal health specialist.',
+      title: 'Vocal Longevity',
+      description: 'Protect your instrument. Learn sustainability strategies from a vocal health specialist to ensure your career lasts a lifetime.',
       icon: <CheckCircle2 className="h-5 w-5 text-apple-blue" />
     },
     {
-      title: 'Make Real Connections',
-      description: "Meet and network with industry professionals already working in the areas you're passionate about.",
+      title: 'High-Level Networking',
+      description: "Build relationships that matter. Connect directly with successful professionals who are currently working in the industries you want to enter.",
       icon: <CheckCircle2 className="h-5 w-5 text-apple-blue" />
     }
   ];
@@ -51,11 +51,11 @@ const AboutSection = () => {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-light tracking-tight text-apple-text">
-              Your Voice, Your Future
+              Elevate Your Artistry
             </h2>
             
             <p className="text-lg text-apple-grey leading-relaxed">
-              Work closely with experienced teachers who get your artistic path—from technique and confidence to navigating your career.
+              Transform your potential into professional excellence with targeted coaching designed for serious vocalists.
             </p>
             
             <div className="pt-4 flex justify-center">
@@ -100,8 +100,6 @@ const AboutSection = () => {
                 </div>
               </motion.div>
             ))}
-            
-            {/* Removed the "Ready to level up your voice?" text */}
           </motion.div>
         </div>
       </div>

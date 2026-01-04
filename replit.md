@@ -134,6 +134,16 @@ externalPort = 5000
 
 ## Recent Changes
 
+### January 4, 2026 - Updated Landing Page with Professional Marketing Copy
+- **Hero Section**: Changed to "Train Like a Professional. 7 Days of Elite Vocal Coaching in Cyprus."
+- **Subheadline**: "Direct mentorship from West End performers, Netflix actors, and Juilliard alumni"
+- **Tagline**: Added "Master your technique. Conquer stage fright. Build your portfolio."
+- **CTA Button**: Changed "Register Now" to "Secure Your Spot"
+- **About Section**: Renamed to "Elevate Your Artistry" with benefit-focused features (Precision Coaching, Industry-Standard Assets, Unshakeable Confidence, Vocal Longevity, High-Level Networking)
+- **Curriculum Section**: Renamed to "An Intensive Artist Curriculum" with reorganized modules (World-Class Faculty, Performance Mastery, Career Toolkit, Holistic Health)
+- **CTA Section**: Added "Application takes 5 minutes" messaging
+- **Footer**: Updated tagline to "Cyprus's premier destination for elite musical education"
+
 ### January 4, 2026 - Updated Tuition Page with Professional Marketing Copy
 - **Hero**: Changed tagline to "7 Intensive Days to Unlock Your Full Vocal Potential"
 - **Pricing**: Updated to "All-Inclusive Tuition: €749" with clearer description

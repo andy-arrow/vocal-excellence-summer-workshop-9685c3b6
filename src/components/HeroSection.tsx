@@ -25,13 +25,12 @@ const HeroSection = () => {
       setHasReducedMotion(true);
     }
     
-    // Simplified parallax effect for better performance
     const handleScroll = () => {
       if (!heroRef.current || hasReducedMotion) return;
       
       const scrollPosition = window.scrollY;
-      const opacity = 1 - Math.min(scrollPosition / 700, 0.8);  // Limit opacity reduction
-      const translateY = scrollPosition * 0.2;  // Reduced parallax effect
+      const opacity = 1 - Math.min(scrollPosition / 700, 0.8);
+      const translateY = scrollPosition * 0.2;
       
       const heroContent = heroRef.current.querySelector('.hero-content') as HTMLElement;
       if (heroContent) {
@@ -58,8 +57,8 @@ const HeroSection = () => {
       className={cn(
         "relative overflow-visible",
         isMobile 
-          ? "pt-56 mt-24 pb-12" // Dramatically increased top padding for mobile (was pt-40)
-          : "pt-96 pb-20 min-h-[80vh]", // Dramatically increased desktop padding (was pt-72)
+          ? "pt-56 mt-24 pb-12"
+          : "pt-96 pb-20 min-h-[80vh]",
         "bg-apple-light border-b border-apple-border",
         hasReducedMotion ? "reduced-motion" : ""
       )}
@@ -77,8 +76,8 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
           >
-            <span className="block mb-1 md:mb-2">7 Full Days of</span>
-            <span className="text-apple-blue">Exclusive Vocal Training</span>
+            <span className="block mb-1 md:mb-2">Train Like a Professional.</span>
+            <span className="text-apple-blue">7 Days of Elite Vocal Coaching in Cyprus.</span>
           </motion.h1>
           
           <motion.p 
@@ -87,10 +86,18 @@ const HeroSection = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.9 }}
           >
-            With coaches from London's West End, Netflix & the world's top universities
+            Direct mentorship from West End performers, Netflix actors, and Juilliard alumni.
           </motion.p>
 
-          {/* Program dates with location - adjusted for better mobile visibility */}
+          <motion.p 
+            className="font-sans text-xs sm:text-sm md:text-base text-apple-text/70 max-w-xl mx-auto italic"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.95 }}
+          >
+            Master your technique. Conquer stage fright. Build your portfolio.
+          </motion.p>
+
           <motion.div 
             className="inline-flex items-center gap-2 text-apple-text/80 text-sm font-medium mx-auto"
             initial={{ opacity: 0 }}
@@ -101,17 +108,16 @@ const HeroSection = () => {
             <span>29 June – 5 July | Limassol, Cyprus</span>
           </motion.div>
           
-          {/* Features highlight - improved visibility on mobile */}
           <motion.div 
             className="flex flex-wrap justify-center gap-x-3 gap-y-2 text-xs md:text-xs font-medium text-apple-grey/80"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 1.1 }}
           >
-            <span className="flex items-center"><span className="w-1.5 h-1.5 bg-apple-blue rounded-full mr-2"></span>Masterclasses</span>
             <span className="flex items-center"><span className="w-1.5 h-1.5 bg-apple-blue rounded-full mr-2"></span>Private Coaching</span>
-            <span className="flex items-center"><span className="w-1.5 h-1.5 bg-apple-blue rounded-full mr-2"></span>Audition Prep</span>
-            <span className="flex items-center"><span className="w-1.5 h-1.5 bg-apple-blue rounded-full mr-2"></span>Stage Anxiety</span>
+            <span className="flex items-center"><span className="w-1.5 h-1.5 bg-apple-blue rounded-full mr-2"></span>4K Portfolio</span>
+            <span className="flex items-center"><span className="w-1.5 h-1.5 bg-apple-blue rounded-full mr-2"></span>Audition Mastery</span>
+            <span className="flex items-center"><span className="w-1.5 h-1.5 bg-apple-blue rounded-full mr-2"></span>Stage Confidence</span>
           </motion.div>
 
           <motion.div 
@@ -128,8 +134,9 @@ const HeroSection = () => {
                     ? 'bg-gray-400 cursor-not-allowed' 
                     : 'bg-apple-blue hover:bg-apple-blue-hover'
                 } text-white rounded-full text-base font-medium transition-all duration-300 text-center`}
+                data-testid="link-apply-hero"
               >
-                {applicationsClosed ? 'Applications Closed' : 'Register Now'}
+                {applicationsClosed ? 'Applications Closed' : 'Secure Your Spot'}
                 {!applicationsClosed && (
                   <ArrowUpRight className="inline-block ml-2 w-4 h-4 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 )}
@@ -138,6 +145,7 @@ const HeroSection = () => {
               <button 
                 onClick={scrollToDiscoverSection} 
                 className="text-apple-text hover:text-apple-grey px-5 py-3 rounded-full border border-apple-border backdrop-blur-sm transition-all hover:bg-apple-light-hover text-base font-light w-full sm:w-auto"
+                data-testid="button-learn-more"
               >
                 Learn More
               </button>
@@ -154,7 +162,7 @@ const HeroSection = () => {
                 {applicationsClosed ? (
                   <span>Applications for {format(APPLICATION_DATES.PROGRAM_START, 'yyyy')} are now closed</span>
                 ) : (
-                  <>Limited Places Available</>
+                  <>Only 7 places remaining</>
                 )}
               </p>
               <div className="w-1.5 h-1.5 rounded-full bg-apple-blue animate-pulse-slow"></div>
@@ -163,7 +171,6 @@ const HeroSection = () => {
         </motion.div>
       </div>
       
-      {/* Hide the scroll button on mobile to save space */}
       {!isMobile && (
         <motion.button 
           onClick={scrollToDiscoverSection} 

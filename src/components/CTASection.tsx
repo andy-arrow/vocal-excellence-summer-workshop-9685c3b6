@@ -55,8 +55,9 @@ const CTASection = () => {
                 onClick={handleApplyClick} 
                 size="lg" 
                 className="bg-apple-blue hover:bg-apple-blue-hover text-white text-lg px-8 rounded-full group"
+                data-testid="button-apply-cta"
               >
-                Register Now
+                Apply Now
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             ) : (
@@ -74,6 +75,7 @@ const CTASection = () => {
               variant="outline" 
               size="lg" 
               className="border-apple-border text-apple-text hover:bg-apple-light-hover text-lg px-8 rounded-full"
+              data-testid="button-tuition-cta"
             >
               Tuition
             </Button>
@@ -90,7 +92,7 @@ const CTASection = () => {
               <SpotsRemainingIndicator className="mb-2" />
               <div className="bg-white rounded-full px-4 py-2 border border-apple-border/40 shadow-sm">
                 <p className="text-apple-text text-sm font-medium">
-                  Applications close on {new Intl.DateTimeFormat('en-US', {
+                  Application takes 5 minutes — Deadline: {new Intl.DateTimeFormat('en-US', {
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric'
