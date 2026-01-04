@@ -134,6 +134,14 @@ externalPort = 5000
 
 ## Recent Changes
 
+### January 4, 2026 - Added Aggressive Cache Prevention Headers
+- **Problem**: Browser cached old broken HTML, requiring hard refresh to see fixes
+- **Solution**: Server now sends three cache-prevention headers for all HTML pages:
+  - `Cache-Control: no-cache, no-store, must-revalidate`
+  - `Pragma: no-cache` (HTTP/1.0 compatibility)
+  - `Expires: 0` (legacy browser compatibility)
+- **Assets**: JS/CSS still cached for 1 day (performance) but use content hashes so new versions auto-refresh
+
 ### January 4, 2026 - Fixed Blank Page CSP Issue
 - **Root Cause**: Preload hints for `/src/main.tsx` and `/src/App.tsx` were being inlined as base64 data URLs during Vite build, blocked by CSP
 - **Solution**: Removed manual preload hints from index.html - Vite handles module preloading automatically

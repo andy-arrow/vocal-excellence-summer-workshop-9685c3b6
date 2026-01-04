@@ -90,11 +90,15 @@ registerRoutes(app)
         setHeaders: (res, filePath) => {
           if (filePath.endsWith('.html')) {
             res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+            res.setHeader('Pragma', 'no-cache');
+            res.setHeader('Expires', '0');
           }
         }
       }));
       app.use((_req, res) => {
         res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+        res.setHeader('Pragma', 'no-cache');
+        res.setHeader('Expires', '0');
         res.sendFile(distIndexPath);
       });
       console.log(`Server ready on port ${port} (serving from dist/)`);
