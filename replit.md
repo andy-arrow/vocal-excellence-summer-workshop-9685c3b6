@@ -134,6 +134,18 @@ externalPort = 5000
 
 ## Recent Changes
 
+### January 4, 2026 - Fixed Navbar and Hero Alignment + Logo Visibility
+- **Logo Size**: Increased from `h-12` (48px) to `h-16 md:h-20` (64px mobile, 80px desktop)
+- **Container Alignment**: Both Navbar and HeroSection now use consistent `max-w-5xl mx-auto px-4 md:px-6`
+- **Mobile Menu Logo**: Increased from `h-8` to `h-12`
+- **ApplicationPageHero**: Added consistent `md:px-6` padding to match other sections
+
+### January 4, 2026 - Fixed Text Readability Across Frontend
+- **Removed opacity modifiers**: Changed all `/70`, `/80`, `/90` opacity suffixes to full opacity
+- **Components fixed**: HeroSection, ApplicationPageHero, CurriculumSection
+- **Global styles fixed**: paragraph, subtitle, section-subtitle classes in index.css
+- **Rule**: Never use opacity modifiers on already-grey text colors (causes poor contrast)
+
 ### January 4, 2026 - Updated Application Page with Professional Marketing Copy
 - **Hero Section**: Changed to "Summer Intensive 2026 - Apply for Your Place at Vocal Excellence"
 - **Subheadline**: "Join a select cohort of artists for 7 transformative days in Limassol. World-class mentorship awaits."

@@ -73,7 +73,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
           : "bg-apple-light/90 backdrop-blur-md"
       )}
     >
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 flex items-center justify-between">
+      <div className="max-w-5xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between gap-4">
         <Link 
           to="/" 
           className="font-sans text-apple-text tracking-tight transition-all hover:opacity-80 flex-shrink-0"
@@ -88,7 +88,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
             <img 
               src="/lovable-uploads/9994f82c-80e4-477a-b629-3bef5ef8f2c1.png" 
               alt="Vocal Excellence Logo" 
-              className="h-12 w-auto" 
+              className="h-16 md:h-20 w-auto" 
             />
           </motion.div>
         </Link>
@@ -178,7 +178,7 @@ const Navbar = ({ activeSection }: NavbarProps) => {
                     <img 
                       src="/lovable-uploads/9994f82c-80e4-477a-b629-3bef5ef8f2c1.png" 
                       alt="Vocal Excellence Logo" 
-                      className="h-8 w-auto" 
+                      className="h-12 w-auto" 
                     />
                   </div>
                 </Link>

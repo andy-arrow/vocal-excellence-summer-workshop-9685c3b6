@@ -63,7 +63,7 @@ const HeroSection = () => {
         hasReducedMotion ? "reduced-motion" : ""
       )}
     >
-      <div className="hero-content relative z-20 text-center px-4 transition-all duration-500 ease-out max-w-5xl mx-auto">
+      <div className="hero-content relative z-20 text-center px-4 md:px-6 transition-all duration-500 ease-out max-w-5xl mx-auto">
         <motion.div 
           className="space-y-4 md:space-y-6" 
           initial={{ opacity: 0, y: 30 }}
