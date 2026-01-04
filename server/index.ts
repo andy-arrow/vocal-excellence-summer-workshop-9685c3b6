@@ -82,22 +82,42 @@ process.on("unhandledRejection", (reason, promise) => {
 const distPath = path.resolve(process.cwd(), "dist");
 const distIndexPath = path.join(distPath, "index.html");
 
-if (!fs.existsSync(distIndexPath)) {
-  console.error("=".repeat(60));
-  console.error("FATAL ERROR: dist/index.html not found!");
-  console.error("Run 'npm run build' before starting the server.");
-  console.error("This is required to prevent HTTP 426 WebSocket errors.");
-  console.error("=".repeat(60));
-  process.exit(1);
-}
-
 registerRoutes(app)
   .then(() => {
-    app.use(express.static(distPath));
-    app.get("/{*splat}", (_req, res) => {
-      res.sendFile(distIndexPath);
-    });
-    console.log(`Server ready on port ${port} (serving from dist/)`);
+    if (fs.existsSync(distIndexPath)) {
+      app.use(express.static(distPath));
+      app.use((_req, res) => {
+        res.sendFile(distIndexPath);
+      });
+      console.log(`Server ready on port ${port} (serving from dist/)`);
+    } else {
+      console.warn("WARNING: dist/index.html not found. Serving placeholder page.");
+      console.warn("Run 'npm run build' to build the frontend.");
+      app.use((_req, res) => {
+        res.status(503).send(`
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <title>Building...</title>
+            <meta http-equiv="refresh" content="10">
+            <style>
+              body { font-family: system-ui, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #f5f5f5; }
+              .container { text-align: center; padding: 2rem; }
+              h1 { color: #333; }
+              p { color: #666; }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <h1>Building Application...</h1>
+              <p>The frontend is being built. This page will refresh automatically in 10 seconds.</p>
+              <p>If this persists, run: <code>npm run build</code></p>
+            </div>
+          </body>
+          </html>
+        `);
+      });
+    }
   })
   .catch((err) => {
     console.error("Failed to register routes:", err);
