@@ -21,11 +21,14 @@ const ContactInfoFields = () => {
         control={form.control}
         name="email"
         render={({ field }) => (
-          <FormItem>
+          <FormItem className="flex flex-col">
             <FormLabel className="text-gray-900 font-medium" htmlFor="email">
               Email Address
               <span className="text-red-700 ml-1">*</span>
             </FormLabel>
+            <FormDescription className="text-sm text-apple-grey mt-0.5 mb-1.5">
+              We'll use this to send you updates about your application
+            </FormDescription>
             <FormControl>
               <Input 
                 {...field}
@@ -46,7 +49,7 @@ const ContactInfoFields = () => {
         control={form.control}
         name="phone"
         render={({ field }) => (
-          <FormItem>
+          <FormItem className="flex flex-col">
             <FormLabel className="text-gray-900 font-medium" htmlFor="phone">
               Phone Number
               <span className="text-red-700 ml-1">*</span>
