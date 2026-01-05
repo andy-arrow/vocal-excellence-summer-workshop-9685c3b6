@@ -1,9 +1,9 @@
 
-import React, { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { motion } from 'framer-motion';
-import { LucideIcon, Check, X, Upload, Loader2, FileTextIcon, FileIcon } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { LucideIcon, Check, X, FileText, Music, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface FileUploadSectionProps {
@@ -20,6 +20,20 @@ interface FileUploadSectionProps {
 
 type FileStatus = 'idle' | 'ready' | 'error';
 
+const formatFileSize = (bytes: number): string => {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+};
+
+const truncateFilename = (name: string, maxLength: number = 35): string => {
+  if (name.length <= maxLength) return name;
+  const extension = name.split('.').pop() || '';
+  const baseName = name.slice(0, name.length - extension.length - 1);
+  const truncatedBase = baseName.slice(0, maxLength - extension.length - 4);
+  return `${truncatedBase}...${extension}`;
+};
+
 export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
   label,
   description,
@@ -35,45 +49,57 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
   const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    if (currentFile && status !== 'ready') {
+      setStatus('ready');
+      setError(null);
+    } else if (!currentFile && status === 'ready') {
+      setStatus('idle');
+    }
+  }, [currentFile, status]);
+
+  const isAudioFile = acceptedFormats.includes('mp3') || acceptedFormats.includes('wav');
+  const FileTypeIcon = isAudioFile ? Music : FileText;
+
+  const validateAndUploadFile = (file: File) => {
+    try {
+      const formatPatterns = acceptedFormats.split(',').map(format => format.trim().replace('.', ''));
+      const fileExtension = file.name.split('.').pop()?.toLowerCase() || '';
+      
+      if (!formatPatterns.some(format => fileExtension === format)) {
+        setError(`Please upload a ${acceptedFormats} file`);
+        setStatus('error');
+        return;
+      }
+      
+      if (file.size > 15 * 1024 * 1024) {
+        setError('File size must be under 15 MB');
+        setStatus('error');
+        return;
+      }
+      
+      updateFile(file);
+      setStatus('ready');
+      setError(null);
+      
+    } catch (err) {
+      console.error(`Error processing file ${file.name}:`, err);
+      setError('Something went wrong. Please try again.');
+      setStatus('error');
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     
     if (!file) {
       return;
     }
     
-    try {
-      // Validate file
-      const formatPatterns = acceptedFormats.split(',').map(format => format.trim().replace('.', ''));
-      const fileExtension = file.name.split('.').pop()?.toLowerCase() || '';
-      
-      if (!formatPatterns.some(format => fileExtension === format)) {
-        setError(`File must be in ${acceptedFormats} format`);
-        setStatus('error');
-        return;
-      }
-      
-      // Check file size (max 15MB)
-      if (file.size > 15 * 1024 * 1024) {
-        setError('File must be smaller than 15MB');
-        setStatus('error');
-        return;
-      }
-      
-      // File is valid
-      updateFile(file);
-      setStatus('ready');
-      setError(null);
-      
-    } catch (error) {
-      console.error(`Error processing file ${file.name}:`, error);
-      setError('Error processing file');
-      setStatus('error');
-    } finally {
-      // Reset input to allow selecting the same file again
-      if (inputRef.current) {
-        inputRef.current.value = '';
-      }
+    validateAndUploadFile(file);
+    
+    if (inputRef.current) {
+      inputRef.current.value = '';
     }
   };
 
@@ -87,86 +113,170 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
     }
   };
 
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const file = e.dataTransfer.files?.[0];
+    if (file) {
+      validateAndUploadFile(file);
+    }
+  };
+
   return (
-    <div>
-      <div className="flex items-center justify-between mb-3">
+    <div className="mb-6 last:mb-0">
+      <div className="flex items-center justify-between mb-2">
         <FormLabel className="text-[#1d1d1f] text-base flex items-center gap-2 font-medium">
           <Icon className={`${iconColor} w-5 h-5`} />
           <span>{label}</span>
           {required && <span className="text-[#bf4800] ml-1">*</span>}
         </FormLabel>
-        <span className="text-xs text-[#86868b] font-medium">
+        <span className="text-xs text-[#86868b] font-medium bg-[#f5f5f7] px-2 py-0.5 rounded">
           {acceptedFormats}
         </span>
       </div>
       
-      <p className="text-sm text-[#86868b] mb-4 leading-relaxed">
+      <p className="text-sm text-[#86868b] mb-3 leading-relaxed">
         {description}
       </p>
       
-      {status === 'idle' ? (
-        <motion.div 
-          className="relative group"
-          whileHover={{ scale: 1.005 }}
-          whileTap={{ scale: 0.995 }}
-        >
-          <Input 
-            ref={inputRef}
-            type="file" 
-            accept={acceptedFormats}
-            onChange={handleFileChange}
-            className={`
-              file:mr-5 file:py-2 file:px-4 
-              file:border-0 file:text-sm file:font-medium
-              file:bg-[#f5f5f7] file:text-[#1d1d1f] 
-              hover:file:bg-[#e6e6e7] file:rounded-lg
-              border-[#e6e6e6] hover:border-[#d2d2d7] 
-              focus:border-[#0066cc] focus:ring-1 focus:ring-[#0066cc]
-              rounded-xl transition-colors text-sm
-            `}
-            aria-label={`Upload ${label}`}
-          />
-        </motion.div>
-      ) : status === 'ready' && currentFile ? (
-        <div className="bg-[#f2f7f2] border border-[#d1e7dd] p-4 rounded-xl flex items-center gap-3">
-          <div className="bg-[#d1e7dd] p-1.5 rounded-full">
-            <Check className="w-4 h-4 text-[#0f5132]" />
-          </div>
-          <div className="flex-grow">
-            <p className="text-sm font-medium text-[#0f5132]">File ready for submission</p>
-            <p className="text-xs text-[#486958] mt-1 flex items-center gap-1.5">
-              <FileTextIcon className="w-3.5 h-3.5" />
-              {currentFile.name} ({Math.round(currentFile.size / 1024)} KB)
-            </p>
-          </div>
-          <Button 
-            onClick={handleRemoveFile}
-            variant="ghost" 
-            size="sm"
-            className="text-[#0f5132] hover:text-[#0a3622] hover:bg-[#d1e7dd]/50"
+      <AnimatePresence mode="wait">
+        {status === 'idle' ? (
+          <motion.div 
+            key="idle"
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -5 }}
+            transition={{ duration: 0.2 }}
+            className="relative"
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
           >
-            Remove
-          </Button>
-        </div>
-      ) : status === 'error' ? (
-        <div className="bg-[#fff5f5] border border-[#f8d7da] p-4 rounded-xl flex items-center gap-3">
-          <div className="bg-[#f8d7da] p-1.5 rounded-full">
-            <X className="w-4 h-4 text-[#842029]" />
-          </div>
-          <div className="flex-grow">
-            <p className="text-sm font-medium text-[#842029]">Upload failed</p>
-            <p className="text-xs text-[#842029]/80 mt-1">{error || 'Error uploading file'}</p>
-          </div>
-          <Button 
-            onClick={handleRemoveFile}
-            variant="ghost" 
-            size="sm"
-            className="text-[#842029] hover:text-[#5c1620] hover:bg-[#f8d7da]/50"
+            <label 
+              htmlFor={`file-${label.replace(/\s+/g, '-').toLowerCase()}`}
+              className="
+                flex flex-col items-center justify-center
+                border-2 border-dashed border-[#d2d2d7] 
+                rounded-xl p-6 cursor-pointer
+                hover:border-[#0066cc] hover:bg-[#f5f5f7]/50
+                transition-all duration-200 ease-out
+                group
+              "
+              data-testid={`upload-area-${label.replace(/\s+/g, '-').toLowerCase()}`}
+            >
+              <div className="flex items-center gap-3">
+                <div className="
+                  w-10 h-10 rounded-full bg-[#f5f5f7] 
+                  flex items-center justify-center
+                  group-hover:bg-[#e8f0fe] group-hover:text-[#0066cc]
+                  transition-colors duration-200
+                ">
+                  <FileTypeIcon className="w-5 h-5 text-[#86868b] group-hover:text-[#0066cc]" />
+                </div>
+                <div className="text-left">
+                  <p className="text-sm font-medium text-[#1d1d1f]">
+                    Choose file or drag here
+                  </p>
+                  <p className="text-xs text-[#86868b] mt-0.5">
+                    Max size: 15 MB
+                  </p>
+                </div>
+              </div>
+              <Input 
+                id={`file-${label.replace(/\s+/g, '-').toLowerCase()}`}
+                ref={inputRef}
+                type="file" 
+                accept={acceptedFormats}
+                onChange={handleFileChange}
+                className="sr-only"
+                aria-label={`Upload ${label}`}
+                data-testid={`input-file-${label.replace(/\s+/g, '-').toLowerCase()}`}
+              />
+            </label>
+          </motion.div>
+        ) : status === 'ready' && currentFile ? (
+          <motion.div 
+            key="ready"
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.98 }}
+            transition={{ duration: 0.2, type: "spring", stiffness: 300, damping: 25 }}
+            className="
+              bg-gradient-to-r from-[#f0fdf4] to-[#ecfdf5]
+              border border-[#86efac] 
+              p-4 rounded-xl 
+              flex items-center gap-3
+              shadow-sm
+            "
+            data-testid={`file-ready-${label.replace(/\s+/g, '-').toLowerCase()}`}
           >
-            Try Again
-          </Button>
-        </div>
-      ) : null}
+            <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[#22c55e] flex items-center justify-center shadow-sm">
+              <Check className="w-5 h-5 text-white" strokeWidth={2.5} />
+            </div>
+            <div className="flex-grow min-w-0">
+              <p className="text-sm font-semibold text-[#166534] truncate" title={currentFile.name}>
+                {truncateFilename(currentFile.name)}
+              </p>
+              <div className="flex items-center gap-2 mt-0.5">
+                <span className="text-xs text-[#16a34a] font-medium">
+                  {formatFileSize(currentFile.size)}
+                </span>
+                <span className="text-[#86efac]">|</span>
+                <span className="text-xs text-[#16a34a] flex items-center gap-1">
+                  <Check className="w-3 h-3" />
+                  Ready to submit
+                </span>
+              </div>
+            </div>
+            <Button 
+              onClick={handleRemoveFile}
+              variant="ghost" 
+              size="sm"
+              className="flex-shrink-0 text-[#166534] hover:text-[#14532d] hover:bg-[#dcfce7] font-medium"
+              data-testid={`button-remove-${label.replace(/\s+/g, '-').toLowerCase()}`}
+            >
+              Remove
+            </Button>
+          </motion.div>
+        ) : status === 'error' ? (
+          <motion.div 
+            key="error"
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.98 }}
+            transition={{ duration: 0.2 }}
+            className="
+              bg-gradient-to-r from-[#fef2f2] to-[#fff1f2]
+              border border-[#fca5a5] 
+              p-4 rounded-xl 
+              flex items-center gap-3
+            "
+            data-testid={`file-error-${label.replace(/\s+/g, '-').toLowerCase()}`}
+          >
+            <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[#ef4444] flex items-center justify-center">
+              <AlertCircle className="w-5 h-5 text-white" />
+            </div>
+            <div className="flex-grow">
+              <p className="text-sm font-semibold text-[#991b1b]">Upload failed</p>
+              <p className="text-xs text-[#b91c1c] mt-0.5">{error || 'Something went wrong'}</p>
+            </div>
+            <Button 
+              onClick={handleRemoveFile}
+              variant="ghost" 
+              size="sm"
+              className="flex-shrink-0 text-[#991b1b] hover:text-[#7f1d1d] hover:bg-[#fee2e2] font-medium"
+              data-testid={`button-retry-${label.replace(/\s+/g, '-').toLowerCase()}`}
+            >
+              Try Again
+            </Button>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </div>
   );
 };

@@ -76,3 +76,4 @@ Preferred communication style: Simple, everyday language.
 -   **Terms Page Rewrite**: Updated to Version 4.1 (Comprehensive) with 11 legal sections, interactive table of contents, refund schedule table, and GDPR/Cyprus law compliance.
 -   **Apple-Style Legal Acknowledgment**: Replaced standard checkbox with premium iOS-style toggle switch featuring translucent card design, icon-based key points, and disabled submit button until agreement.
 -   **Fixed Legal Links**: All links now point to correct routes (/terms and /privacy) throughout the application form and footer.
+-   **Enhanced File Upload UX**: Redesigned file upload component with drag-and-drop support, clear visual feedback showing filename/size, "Ready to submit" status with green success state, and improved error handling.
