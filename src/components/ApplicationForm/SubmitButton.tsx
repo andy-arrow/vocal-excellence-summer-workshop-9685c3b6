@@ -1,46 +1,90 @@
-
-import React from 'react';
+import { useRef, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import Spinner from '@/components/ui/spinner';
-import { Button } from '@/components/ui/button';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { useFormContext } from 'react-hook-form';
+import { ApplicationFormValues } from './schema';
 
 interface SubmitButtonProps {
   isSubmitting: boolean;
 }
 
 const SubmitButton = ({ isSubmitting }: SubmitButtonProps) => {
-  const isMobile = useIsMobile();
-  
+  const form = useFormContext<ApplicationFormValues>();
+  const termsAgreed = form.watch('termsAgreed');
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [shake, setShake] = useState(false);
+
+  const isDisabled = !termsAgreed || isSubmitting;
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (!termsAgreed && !isSubmitting) {
+      e.preventDefault();
+      setShake(true);
+      setTimeout(() => setShake(false), 500);
+    }
+  };
+
   return (
-    <Button 
-      type="submit" 
-      disabled={isSubmitting}
-      className="px-4 sm:px-6 py-2 sm:py-3 bg-apple-blue hover:bg-apple-blue-hover text-white font-medium rounded-full
-                relative overflow-hidden transition-all duration-300 disabled:opacity-70 
-                disabled:cursor-not-allowed disabled:hover:bg-apple-blue shadow-sm 
-                min-w-[160px] w-full sm:w-auto min-h-[44px] sm:min-h-[48px] focus:ring-2 focus:ring-offset-2 focus:ring-apple-blue"
-      aria-label={isSubmitting ? "Submitting application" : "Submit application"}
-      data-testid="submit-application-button"
-    >
-      <span className="flex items-center justify-center gap-2 sm:gap-3">
-        {isSubmitting ? (
-          <>
-            <Spinner size="sm" color="white" speed={1} />
-            <span className="text-white font-medium text-sm sm:text-base">
-              {isMobile ? "Sending..." : "Submitting Application..."}
-            </span>
-          </>
-        ) : (
-          <>
-            <span className="text-white font-medium text-sm sm:text-base">
-              {isMobile ? "Submit" : "Submit Your Application"}
-            </span>
-            <ArrowRight className="w-4 sm:w-5 h-4 sm:h-5 text-white" />
-          </>
-        )}
-      </span>
-    </Button>
+    <>
+      <button
+        ref={buttonRef}
+        type="submit"
+        disabled={isDisabled}
+        onClick={handleClick}
+        className={`
+          px-6 py-3 font-medium rounded-full
+          relative overflow-hidden
+          min-w-[180px] min-h-[48px]
+          focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500
+          ${shake ? 'animate-shake' : ''}
+        `}
+        style={{
+          backgroundColor: '#0066CC',
+          color: '#FFFFFF',
+          opacity: isDisabled ? 0.3 : 1,
+          cursor: isDisabled ? 'not-allowed' : 'pointer',
+          filter: isDisabled ? 'grayscale(100%)' : 'none',
+          transition: 'all 0.4s ease',
+          transform: !isDisabled ? 'scale(1)' : 'scale(1)',
+          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+          fontFeatureSettings: '"kern" 1',
+          WebkitFontSmoothing: 'antialiased',
+        }}
+        aria-label={isSubmitting ? "Submitting application" : "Submit application"}
+        data-testid="submit-application-button"
+      >
+        <span className="flex items-center justify-center gap-2">
+          {isSubmitting ? (
+            <>
+              <Spinner size="sm" color="white" speed={1} />
+              <span style={{ fontSize: '15px', fontWeight: 500 }}>
+                Submitting...
+              </span>
+            </>
+          ) : (
+            <>
+              <span style={{ fontSize: '15px', fontWeight: 500 }}>
+                Submit Your Application
+              </span>
+              <ArrowRight style={{ width: '18px', height: '18px' }} />
+            </>
+          )}
+        </span>
+      </button>
+
+      <style>{`
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          20% { transform: translateX(-5px); }
+          40% { transform: translateX(5px); }
+          60% { transform: translateX(-5px); }
+          80% { transform: translateX(5px); }
+        }
+        .animate-shake {
+          animation: shake 0.5s ease-in-out;
+        }
+      `}</style>
+    </>
   );
 };
 

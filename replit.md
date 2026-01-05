@@ -73,3 +73,6 @@ Preferred communication style: Simple, everyday language.
 -   **Form Validation Improvements**: Added step-by-step validation that prevents users from advancing without completing required fields in the current section. The progress indicator now restricts navigation to only visited steps.
 -   **Dietary Restrictions Fix**: Aligned frontend and backend handling of dietary restrictions using object structure `{type, details}`. Email service now properly formats all dietary restriction variants for admin notifications.
 -   **Admin Email Notifications**: Using Resend API with ADMIN_NOTIFICATION_EMAIL secret (aroditis.andreas@gmail.com) for secure delivery.
+-   **Terms Page Rewrite**: Updated to Version 4.1 (Comprehensive) with 11 legal sections, interactive table of contents, refund schedule table, and GDPR/Cyprus law compliance.
+-   **Apple-Style Legal Acknowledgment**: Replaced standard checkbox with premium iOS-style toggle switch featuring translucent card design, icon-based key points, and disabled submit button until agreement.
+-   **Fixed Legal Links**: All links now point to correct routes (/terms and /privacy) throughout the application form and footer.

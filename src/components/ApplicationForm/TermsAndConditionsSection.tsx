@@ -1,110 +1,202 @@
-
-import React, { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import {
   FormField,
   FormItem,
   FormControl,
-  FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { Checkbox } from '@/components/ui/checkbox';
 import { useFormContext } from 'react-hook-form';
 import { ApplicationFormValues } from './schema';
-import { Info, ChevronRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Lock, ShieldCheck, Video } from 'lucide-react';
 
 const TermsAndConditionsSection = () => {
   const form = useFormContext<ApplicationFormValues>();
-  const [showTips, setShowTips] = useState(false);
+  const [shakeToggle, setShakeToggle] = useState(false);
+  const toggleRef = useRef<HTMLDivElement>(null);
+
+  const triggerShake = () => {
+    setShakeToggle(true);
+    setTimeout(() => setShakeToggle(false), 500);
+  };
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between mb-4">
-        <Button 
-          variant="ghost" 
-          size="sm" 
-          onClick={() => setShowTips(!showTips)}
-          className="text-xs font-medium text-apple-blue hover:text-apple-blue-hover hover:bg-apple-light"
+      <div 
+        className="relative rounded-[18px] p-6 md:p-6 border border-black/5 dark:border-white/10"
+        style={{
+          background: 'rgba(245, 245, 247, 0.8)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
+          boxShadow: '0 4px 24px rgba(0, 0, 0, 0.04)',
+          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+          fontFeatureSettings: '"kern" 1',
+          WebkitFontSmoothing: 'antialiased',
+        }}
+      >
+        <h3 
+          className="mb-2"
+          style={{
+            fontSize: '17px',
+            fontWeight: 600,
+            color: '#1D1D1F',
+            letterSpacing: '-0.01em',
+          }}
         >
-          {showTips ? 'Hide Tips' : 'Show Tips'} 
-          <Info className="ml-1 w-3 h-3" />
-        </Button>
-      </div>
-      
-      {showTips && (
-        <Alert className="mb-6 bg-blue-50 border border-blue-200 text-apple-text">
-          <AlertTitle className="text-apple-blue font-medium flex items-center">
-            Quick Tip
-          </AlertTitle>
-          <AlertDescription className="text-apple-text">
-            Be sure to review the Terms and Privacy Policy so you know your rights. We've made them 
-            easy to read with highlighted key points to help you focus on what matters.
-          </AlertDescription>
-        </Alert>
-      )}
-
-      <div className="mb-6 space-y-4">
-        <div className="bg-apple-light rounded-lg p-5 border border-apple-border mb-4">
-          <h4 className="font-medium mb-3 text-apple-text">
-            Terms and Conditions Key Points:
-          </h4>
-          <ul className="space-y-2 text-apple-text pl-8 list-disc">
-            <li>You can cancel up to 30 days before the program for a full refund</li>
-            <li>Photos and recordings from the program may be used for promotional purposes</li>
-            <li>We have a strict anti-harassment policy to keep everyone safe</li>
-          </ul>
-        </div>
+          Finalizing Your Registration
+        </h3>
         
-        <div className="bg-apple-light rounded-lg p-5 border border-apple-border">
-          <h4 className="font-medium mb-3 text-apple-text">
-            Privacy Policy Key Points:
-          </h4>
-          <ul className="space-y-2 text-apple-text pl-8 list-disc">
-            <li>Your contact info will only be used for program communications</li>
-            <li>We'll never sell your personal data to third parties</li>
-            <li>You can request deletion of your information after the program ends</li>
-          </ul>
+        <p 
+          className="mb-6"
+          style={{
+            fontSize: '14px',
+            lineHeight: 1.5,
+            color: '#86868B',
+          }}
+        >
+          Thank you for choosing Vocal Excellence. By proceeding, you acknowledge our{' '}
+          <Link 
+            to="/terms" 
+            target="_blank"
+            className="no-underline hover:underline"
+            style={{ color: '#0066CC' }}
+            data-testid="link-terms-inline"
+          >
+            Terms of Use
+          </Link>
+          , which help us maintain the high standard of our intensive.
+        </p>
+
+        <div className="space-y-4">
+          <div className="flex items-start gap-3">
+            <Lock 
+              className="flex-shrink-0 mt-0.5" 
+              style={{ width: '18px', height: '18px', color: '#0066CC' }} 
+            />
+            <p style={{ fontSize: '13px', color: '#424245', lineHeight: 1.5 }}>
+              <strong>Your Commitment:</strong> Your deposit is non-refundable to secure your seat.
+            </p>
+          </div>
+          
+          <div className="flex items-start gap-3">
+            <ShieldCheck 
+              className="flex-shrink-0 mt-0.5" 
+              style={{ width: '18px', height: '18px', color: '#0066CC' }} 
+            />
+            <p style={{ fontSize: '13px', color: '#424245', lineHeight: 1.5 }}>
+              <strong>Peace of Mind:</strong> Tuition becomes non-refundable after June 15, 2026. We warmly recommend travel insurance.
+            </p>
+          </div>
+          
+          <div className="flex items-start gap-3">
+            <Video 
+              className="flex-shrink-0 mt-0.5" 
+              style={{ width: '18px', height: '18px', color: '#0066CC' }} 
+            />
+            <p style={{ fontSize: '13px', color: '#424245', lineHeight: 1.5 }}>
+              <strong>Captured Moments:</strong> We film performances! By joining, you agree Vocal Excellence retains rights to share these moments for promotion.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-6 pt-6 border-t border-black/5">
+          <FormField
+            control={form.control}
+            name="termsAgreed"
+            render={({ field }) => (
+              <FormItem>
+                <div 
+                  ref={toggleRef}
+                  className={`flex items-center gap-3 ${shakeToggle ? 'animate-shake' : ''}`}
+                  style={{ minHeight: '44px' }}
+                >
+                  <FormControl>
+                    <button
+                      type="button"
+                      role="switch"
+                      aria-checked={field.value}
+                      onClick={() => field.onChange(!field.value)}
+                      className="relative flex-shrink-0 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 rounded-full"
+                      style={{
+                        width: '50px',
+                        height: '30px',
+                        backgroundColor: field.value ? '#34C759' : '#E5E5EA',
+                        borderRadius: '30px',
+                        transition: 'background-color 0.3s cubic-bezier(0.25, 1, 0.5, 1)',
+                        padding: '2px',
+                      }}
+                      data-testid="toggle-terms-agreement"
+                    >
+                      <span
+                        style={{
+                          display: 'block',
+                          width: '26px',
+                          height: '26px',
+                          backgroundColor: '#FFFFFF',
+                          borderRadius: '50%',
+                          boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                          transform: field.value ? 'translateX(20px)' : 'translateX(0)',
+                          transition: 'transform 0.3s cubic-bezier(0.25, 1, 0.5, 1)',
+                        }}
+                      />
+                    </button>
+                  </FormControl>
+                  <label 
+                    onClick={() => field.onChange(!field.value)}
+                    className="cursor-pointer select-none"
+                    style={{
+                      fontSize: '14px',
+                      fontWeight: 500,
+                      color: '#1D1D1F',
+                    }}
+                  >
+                    I agree to the terms and am ready to join the program.
+                  </label>
+                </div>
+                <FormMessage className="text-red-600 text-sm mt-2" />
+              </FormItem>
+            )}
+          />
         </div>
       </div>
 
-      <FormField
-        control={form.control}
-        name="termsAgreed"
-        render={({ field }) => (
-          <FormItem className="space-y-3">
-            <div className="bg-white rounded-lg p-5 border border-apple-border relative overflow-hidden">
-              {field.value && (
-                <div className="absolute top-0 left-0 w-full h-1 bg-apple-blue"></div>
-              )}
-              <div className="flex flex-row items-start space-x-3">
-                <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                    className={`${field.value ? 'border-apple-blue bg-apple-blue text-white' : 'border-apple-grey bg-white'} h-5 w-5 rounded`}
-                  />
-                </FormControl>
-                <div className="space-y-1 leading-none">
-                  <FormLabel className="text-apple-text font-medium">
-                    I agree to the <Link to="/terms-and-conditions" className="text-apple-blue hover:underline font-medium">Terms and Conditions</Link> and <Link to="/privacy-policy" className="text-apple-blue hover:underline font-medium">Privacy Policy</Link>. 
-                    <span className="block mt-2 text-sm text-apple-grey">I confirm that all information I've provided is accurate and complete.</span>
-                  </FormLabel>
-                  <FormMessage className="text-red-700 font-medium" />
-                </div>
-              </div>
-            </div>
-            
-            {field.value && (
-              <div className="text-sm text-apple-blue font-medium flex items-center animate-fade-in">
-                Great! You're ready to submit your application
-                <ChevronRight className="ml-2 w-3 h-3" />
-              </div>
-            )}
-          </FormItem>
-        )}
-      />
+      <div className="text-center space-y-2">
+        <p style={{ fontSize: '13px', color: '#86868B' }}>
+          Read the full{' '}
+          <Link 
+            to="/terms" 
+            target="_blank"
+            className="no-underline hover:underline"
+            style={{ color: '#0066CC' }}
+            data-testid="link-terms-full"
+          >
+            Terms of Use
+          </Link>
+          {' '}and{' '}
+          <Link 
+            to="/privacy" 
+            target="_blank"
+            className="no-underline hover:underline"
+            style={{ color: '#0066CC' }}
+            data-testid="link-privacy-full"
+          >
+            Privacy Policy
+          </Link>
+        </p>
+      </div>
+
+      <style>{`
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          20% { transform: translateX(-5px); }
+          40% { transform: translateX(5px); }
+          60% { transform: translateX(-5px); }
+          80% { transform: translateX(5px); }
+        }
+        .animate-shake {
+          animation: shake 0.5s ease-in-out;
+        }
+      `}</style>
     </div>
   );
 };

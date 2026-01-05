@@ -1,0 +1,102 @@
+"I need to implement a highly polished, 'Apple-style' legal acknowledgment card at the final step of the registration flow, replacing the standard terms checkbox. It must feel native, premium, and seamless.
+
+1. Visual Architecture (The 'Cupertino' Card)
+Container Style: Create a div that acts as a summary card.
+
+Background: Use a translucent, off-white background: background: rgba(255, 255, 255, 0.8) with a backdrop blur: backdrop-filter: blur(20px). If that’s too complex, fallback to a solid #F5F5F7 (Apple's standard light gray).
+
+Border: 1px solid rgba(0, 0, 0, 0.05) (extremely subtle).
+
+Radius: border-radius: 18px (matches modern iOS squircle curvature).
+
+Padding: 24px on all sides.
+
+Shadow: A very soft, diffuse shadow: box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04).
+
+Typography (System Stack): Use the precise Apple system font stack: font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif.
+
+Kerning: Enable font-feature-settings: "kern" 1, -webkit-font-smoothing: antialiased.
+
+2. Content Structure (Hierarchy & Layout)
+Inside this card, use the following hierarchy:
+
+Header:
+
+Text: Finalizing Your Registration
+
+Style: font-size: 17px, font-weight: 600 (SemiBold), color: #1D1D1F (Apple's almost-black), margin-bottom: 8px.
+
+Intro Text:
+
+Text: Thank you for choosing Vocal Excellence. By proceeding, you acknowledge our [Terms of Use], which help us maintain the high standard of our intensive.
+
+Style: font-size: 14px, line-height: 1.5, color: #86868B (Apple's secondary text gray).
+
+Link Styling: The [Terms of Use] should be a link (<a href="..." target="_blank">). Color: #0066CC (Apple Link Blue). No underline by default; underline on hover.
+
+Key Points List (The 'Concierge' Reminders):
+
+Create a vertical list with 16px vertical spacing between items.
+
+Icon Style: Use Lucide/SVG icons. Size: 18px. Color: #0066CC (primary blue).
+
+Text Style: font-size: 13px, color: #424245.
+
+Layout: Flexbox row (Icon left, Text right, gap 12px).
+
+Content:
+
+(Icon: Lock) <strong>Your Commitment:</strong> Your deposit is non-refundable to secure your seat.
+
+(Icon: ShieldCheck) <strong>Peace of Mind:</strong> Tuition becomes non-refundable after June 15, 2026. We warmly recommend travel insurance.
+
+(Icon: Video) <strong>Captured Moments:</strong> We film performances! By joining, you agree Vocal Excellence retains rights to share these moments for promotion.
+
+3. The 'Agree' Interaction (Custom Toggle)
+Place this below the card (or inside a footer section of the card):
+
+Layout: Flexbox row, vertically centered, margin-top: 24px.
+
+The Input: Do NOT use a default browser checkbox. Create a custom iOS-style Toggle Switch.
+
+Track: width: 50px, height: 30px, background: #E5E5EA (off) / #34C759 (on - Apple Green). border-radius: 30px.
+
+Thumb: White circle, 26px diameter, box-shadow: 0 2px 4px rgba(0,0,0,0.2). Transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1) (spring-like physics).
+
+The Label:
+
+Text: I agree to the terms and am ready to join the program.
+
+Style: font-size: 14px, font-weight: 500, color: #1D1D1F, margin-left: 12px.
+
+Cursor: pointer (clicking the text should toggle the switch).
+
+4. Submit Button Logic (The 'Gatekeeper')
+State: The 'Submit Application' / 'Pay Deposit' button must be Disabled by default.
+
+Disabled Style: opacity: 0.3, cursor: not-allowed, filter: grayscale(100%).
+
+Action: When the toggle is switched ON:
+
+Button becomes Enabled.
+
+Enabled Style: opacity: 1, cursor: pointer, transform: scale(1.0) (maybe a tiny pulse animation to signal readiness).
+
+Transition: all 0.4s ease.
+
+Feedback: If a user clicks the button while it is disabled:
+
+Trigger a shake animation on the Toggle Switch row (CSS keyframes: translateX -5px to 5px).
+
+Do NOT show an alert box. Visual feedback only.
+
+5. Mobile Responsiveness
+On screens smaller than 480px:
+
+Reduce card padding to 20px.
+
+Stack the Toggle and Label if necessary (though side-by-side usually fits).
+
+Ensure the Toggle touch target is at least 44px high (invisible padding) for accessibility.
+
+Implementation Note: Please ensure all CSS is scoped or using Tailwind classes (if available) to prevent conflicts. The result should look like a native system component from macOS or iOS."</blockquote>
