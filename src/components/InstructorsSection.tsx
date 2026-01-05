@@ -79,7 +79,7 @@ const instructors = [
     image: "/lovable-uploads/5f2b13ba-7279-45da-86e2-af6b9c336634.png",
     socials: {
       instagram: "https://www.instagram.com/that_carolynmichelle/",
-      linkedin: "https://www.linkedin.com/in/carolyn-michelle-smith-1243545115",
+      linkedin: "https://www.linkedin.com/in/carolyn-michelle-smith-12435451/",
       facultyPage: "https://pma.cornell.edu/carolyn-michelle-smith",
       imdb: "https://www.imdb.com/name/nm1829271/",
       wikipedia: "https://en.wikipedia.org/wiki/Carolyn_Michelle_Smith"
