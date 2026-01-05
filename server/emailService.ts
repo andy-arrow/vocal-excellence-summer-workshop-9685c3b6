@@ -32,6 +32,11 @@ interface ApplicationEmailData {
   hasCvFile?: boolean;
   hasRecommendationFile?: boolean;
   applicationId?: number;
+  baseUrl?: string;
+  audioFile1Path?: string | null;
+  audioFile2Path?: string | null;
+  cvFilePath?: string | null;
+  recommendationFilePath?: string | null;
 }
 
 interface ContactEmailData {
@@ -283,6 +288,38 @@ export class EmailService {
         return '<span style="color: #86868b;">None specified</span>';
       };
 
+      const getFileDownloadUrl = (filePath: string | null | undefined): string | null => {
+        if (!filePath) return null;
+        const uploadsIndex = filePath.indexOf('uploads/');
+        if (uploadsIndex === -1) return null;
+        const relativePath = filePath.substring(uploadsIndex + 'uploads/'.length);
+        return `${data.baseUrl}/admin-files/${relativePath}`;
+      };
+
+      const renderFileRow = (hasFile: boolean, filePath: string | null | undefined, label: string, isOptional: boolean = false): string => {
+        const downloadUrl = getFileDownloadUrl(filePath);
+        if (hasFile && downloadUrl) {
+          return `
+            <tr>
+              <td style="padding: 6px 0;">
+                <span style="display: inline-block; background-color: #34c759; color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px; margin-right: 8px;">Uploaded</span>
+                <span style="color: #424245; font-size: 14px;">${label}</span>
+                <a href="${downloadUrl}" style="margin-left: 12px; color: #0066cc; font-size: 13px; text-decoration: none; font-weight: 500;">Download</a>
+              </td>
+            </tr>`;
+        } else {
+          const badgeColor = isOptional ? '#86868b' : '#ff3b30';
+          const badgeText = isOptional ? 'Optional' : 'Missing';
+          return `
+            <tr>
+              <td style="padding: 6px 0;">
+                <span style="display: inline-block; background-color: ${badgeColor}; color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px; margin-right: 8px;">${badgeText}</span>
+                <span style="color: #424245; font-size: 14px;">${label}</span>
+              </td>
+            </tr>`;
+        }
+      };
+
       const submissionDate = new Date().toLocaleDateString('en-US', {
         weekday: 'long',
         year: 'numeric',
@@ -486,43 +523,14 @@ export class EmailService {
               <h3 style="margin: 0 0 16px; color: #1d1d1f; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
                 Uploaded Files
               </h3>
+              <p style="margin: 0 0 12px; color: #86868b; font-size: 12px;">
+                Click "Download" to access files (requires admin login)
+              </p>
               <table width="100%" cellpadding="0" cellspacing="0">
-                <tr>
-                  <td style="padding: 6px 0;">
-                    ${data.hasAudioFile1 ? 
-                      '<span style="display: inline-block; background-color: #34c759; color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px; margin-right: 8px;">Uploaded</span>' : 
-                      '<span style="display: inline-block; background-color: #ff3b30; color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px; margin-right: 8px;">Missing</span>'
-                    }
-                    <span style="color: #424245; font-size: 14px;">Audio Recording 1</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding: 6px 0;">
-                    ${data.hasAudioFile2 ? 
-                      '<span style="display: inline-block; background-color: #34c759; color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px; margin-right: 8px;">Uploaded</span>' : 
-                      '<span style="display: inline-block; background-color: #86868b; color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px; margin-right: 8px;">Optional</span>'
-                    }
-                    <span style="color: #424245; font-size: 14px;">Audio Recording 2</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding: 6px 0;">
-                    ${data.hasCvFile ? 
-                      '<span style="display: inline-block; background-color: #34c759; color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px; margin-right: 8px;">Uploaded</span>' : 
-                      '<span style="display: inline-block; background-color: #86868b; color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px; margin-right: 8px;">Optional</span>'
-                    }
-                    <span style="color: #424245; font-size: 14px;">CV / Resume</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding: 6px 0;">
-                    ${data.hasRecommendationFile ? 
-                      '<span style="display: inline-block; background-color: #34c759; color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px; margin-right: 8px;">Uploaded</span>' : 
-                      '<span style="display: inline-block; background-color: #86868b; color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px; margin-right: 8px;">Optional</span>'
-                    }
-                    <span style="color: #424245; font-size: 14px;">Recommendation Letter</span>
-                  </td>
-                </tr>
+                ${renderFileRow(!!data.hasAudioFile1, data.audioFile1Path, 'Audio Recording 1', false)}
+                ${renderFileRow(!!data.hasAudioFile2, data.audioFile2Path, 'Audio Recording 2', true)}
+                ${renderFileRow(!!data.hasCvFile, data.cvFilePath, 'CV / Resume', true)}
+                ${renderFileRow(!!data.hasRecommendationFile, data.recommendationFilePath, 'Recommendation Letter', true)}
               </table>
             </td>
           </tr>
@@ -531,7 +539,7 @@ export class EmailService {
           <tr>
             <td style="background-color: #f5f5f7; padding: 20px 32px; text-align: center;">
               <p style="margin: 0; color: #86868b; font-size: 13px;">
-                View full application details and uploaded files in the admin dashboard
+                Files require admin authentication to download
               </p>
             </td>
           </tr>

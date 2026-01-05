@@ -482,6 +482,7 @@ export async function registerRoutes(app: Express): Promise<void> {
         const RESEND_API_KEY = process.env.RESEND_API_KEY;
         if (RESEND_API_KEY && application) {
           try {
+            const baseUrl = `${req.protocol}://${req.get('host')}`;
             const emailService = new EmailService(RESEND_API_KEY);
             await emailService.sendApplicationNotifications({
               firstName: application.firstName,
@@ -509,6 +510,11 @@ export async function registerRoutes(app: Express): Promise<void> {
               hasCvFile: !!application.cvFilePath,
               hasRecommendationFile: !!application.recommendationFilePath,
               applicationId: application.id,
+              baseUrl: baseUrl,
+              audioFile1Path: application.audioFile1Path,
+              audioFile2Path: application.audioFile2Path,
+              cvFilePath: application.cvFilePath,
+              recommendationFilePath: application.recommendationFilePath,
             });
             
             await storage.updateApplicationPayment(applicationId, {
@@ -619,6 +625,7 @@ export async function registerRoutes(app: Express): Promise<void> {
         return res.status(500).json({ success: false, error: "RESEND_API_KEY not configured" });
       }
       
+      const baseUrl = `${req.protocol}://${req.get('host')}`;
       const emailService = new EmailService(RESEND_API_KEY);
       
       const result = await emailService.sendApplicationNotifications({
@@ -647,6 +654,11 @@ export async function registerRoutes(app: Express): Promise<void> {
         hasCvFile: !!application.cvFilePath,
         hasRecommendationFile: !!application.recommendationFilePath,
         applicationId: application.id,
+        baseUrl: baseUrl,
+        audioFile1Path: application.audioFile1Path,
+        audioFile2Path: application.audioFile2Path,
+        cvFilePath: application.cvFilePath,
+        recommendationFilePath: application.recommendationFilePath,
       });
       
       if (result.success) {
