@@ -111,7 +111,7 @@ const instructors = [
     name: "Polina Panagiotou",
     role: "Choreographer",
     bio: "Polina Panagiotou is a director, choreographer, and performer whose career spans New York stages and major Cypriot productions. A graduate of Marymount Manhattan College, she has performed at prestigious venues including New York's Lincoln Center and the historic Curium Ancient Amphitheater. Now a leading figure in Limassol's arts scene, she is the founder of City Stage Centre and co-founder of Diversity Dance Company. Polina has written, produced, and directed original musicals such as Welcome to Lollywood and the futuristic A New World at Pattihio Theatre, while mentoring the next generation of musical theatre talent.",
-    image: "/attached_assets/Polina_-_HQ_-_Headshot_1767619360376.png",
+    image: "/attached_assets/Polina_headshot_optimized.jpg",
     socials: {
       instagram: "#",
       linkedin: "#"
