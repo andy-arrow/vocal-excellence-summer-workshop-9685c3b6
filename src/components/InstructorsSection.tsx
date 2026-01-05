@@ -1,8 +1,52 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Instagram, Linkedin, ChevronDown, ChevronUp, Globe, FileText, Video, BookOpen } from 'lucide-react';
+import { Instagram, Linkedin, ChevronDown, ChevronUp, Globe, FileText, Video, BookOpen, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
+
+const ImageWithFallback = ({ 
+  src, 
+  alt, 
+  className 
+}: { 
+  src: string; 
+  alt: string; 
+  className?: string;
+}) => {
+  const [imgSrc, setImgSrc] = useState(src);
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
+
+  return (
+    <div className="relative w-full h-full">
+      {isLoading && !hasError && (
+        <div className="absolute inset-0 bg-gray-100 animate-pulse flex items-center justify-center">
+          <User className="w-16 h-16 text-gray-300" />
+        </div>
+      )}
+      {hasError ? (
+        <div className="absolute inset-0 bg-gray-100 flex items-center justify-center">
+          <User className="w-16 h-16 text-gray-300" />
+        </div>
+      ) : (
+        <img 
+          src={imgSrc}
+          alt={alt}
+          loading="lazy"
+          onLoad={() => setIsLoading(false)}
+          onError={() => {
+            setHasError(true);
+            setIsLoading(false);
+          }}
+          className={cn(
+            className,
+            isLoading ? 'opacity-0' : 'opacity-100 transition-opacity duration-300'
+          )}
+        />
+      )}
+    </div>
+  );
+};
 
 const instructors = [
   {
@@ -204,7 +248,7 @@ const InstructorsSection = () => {
                     hoveredInstructor === index ? "opacity-60" : "opacity-0"
                   )} />
                   
-                  <img 
+                  <ImageWithFallback 
                     src={instructor.image} 
                     alt={instructor.name}
                     className={cn(
