@@ -128,12 +128,6 @@ const CustomInstructorsSection = () => {
               
               <div className="p-5">
                 <p className="text-sm text-apple-grey">{instructor.bio}</p>
-                <div className="mt-4 flex justify-end">
-                  <a href="#" className="inline-flex items-center text-xs font-medium text-apple-blue group-hover:underline">
-                    Full Biography
-                    <ArrowUpRight className="ml-1 w-3 h-3" />
-                  </a>
-                </div>
               </div>
             </motion.div>
           ))}

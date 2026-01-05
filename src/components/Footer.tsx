@@ -5,18 +5,11 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const Footer = () => {
-  const scrollToSection = (sectionId: string) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
-
   const footerLinks = React.useMemo(() => [
-    { name: "Home", action: () => scrollToSection('home') },
-    { name: "About the Workshop", action: () => scrollToSection('about') },
-    { name: "Curriculum & Schedule", action: () => scrollToSection('curriculum') },
-    { name: "Instructors", action: () => scrollToSection('instructors') },
+    { name: "Home", href: "/#home" },
+    { name: "About the Workshop", href: "/#about" },
+    { name: "Curriculum & Schedule", href: "/#curriculum" },
+    { name: "Instructors", href: "/#instructors" },
     { name: "Apply Now", href: "/apply" }
   ], []);
 
@@ -42,21 +35,12 @@ const Footer = () => {
               <ul className="space-y-2">
                 {footerLinks.map((link, i) => (
                   <li key={i}>
-                    {link.href ? (
-                      <Link 
-                        to={link.href}
-                        className="text-[12px] leading-[1.33337] text-[#424245] hover:text-[#1d1d1f] transition-colors duration-300"
-                      >
-                        {link.name}
-                      </Link>
-                    ) : (
-                      <button 
-                        onClick={link.action} 
-                        className="text-[12px] leading-[1.33337] text-[#424245] hover:text-[#1d1d1f] transition-colors duration-300 text-left"
-                      >
-                        {link.name}
-                      </button>
-                    )}
+                    <Link 
+                      to={link.href}
+                      className="text-[12px] leading-[1.33337] text-[#424245] hover:text-[#1d1d1f] transition-colors duration-300"
+                    >
+                      {link.name}
+                    </Link>
                   </li>
                 ))}
               </ul>

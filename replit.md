@@ -81,3 +81,5 @@ Preferred communication style: Simple, everyday language.
 -   **Payment Pages**: Created /payment-success and /payment-cancelled pages with Apple-style design, confetti animation on success, and clear next steps messaging.
 -   **Admin File Access**: Implemented secure admin-only file downloads at `/admin-files/` route using express-basic-auth. Files stored at `uploads/` are accessible via this protected endpoint (username: admin, password: ADMIN_PASSWORD env var).
 -   **Instructor Images Fix**: Fixed missing instructor images (Andreas Aroditis, Polina Panagiotou, Ksenia Belolipetskaya) by copying source assets to `public/attached_assets/`. Optimized large 25MB PNG to 95KB JPG for faster loading.
+-   **Footer Navigation Fix**: Fixed footer quick links (Home, About, Curriculum, Instructors) to use router navigation (`/#section`) instead of scrollToSection which only worked on the landing page. Now works from any page.
+-   **Removed Dead Links**: Removed "Full Biography" placeholder link (`href="#"`) from CustomInstructorsSection. All links now point to valid destinations.
