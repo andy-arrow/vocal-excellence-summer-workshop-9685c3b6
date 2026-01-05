@@ -482,7 +482,8 @@ export async function registerRoutes(app: Express): Promise<void> {
         const RESEND_API_KEY = process.env.RESEND_API_KEY;
         if (RESEND_API_KEY && application) {
           try {
-            const baseUrl = `${req.protocol}://${req.get('host')}`;
+            const publicDomain = process.env.REPLIT_DEV_DOMAIN || req.get('x-forwarded-host') || req.get('host');
+            const baseUrl = `https://${publicDomain}`;
             const emailService = new EmailService(RESEND_API_KEY);
             await emailService.sendApplicationNotifications({
               firstName: application.firstName,
@@ -625,7 +626,8 @@ export async function registerRoutes(app: Express): Promise<void> {
         return res.status(500).json({ success: false, error: "RESEND_API_KEY not configured" });
       }
       
-      const baseUrl = `${req.protocol}://${req.get('host')}`;
+      const publicDomain = process.env.REPLIT_DEV_DOMAIN || req.get('x-forwarded-host') || req.get('host');
+      const baseUrl = `https://${publicDomain}`;
       const emailService = new EmailService(RESEND_API_KEY);
       
       const result = await emailService.sendApplicationNotifications({
