@@ -78,10 +78,10 @@ const instructors = [
     bio: "Carolyn Michelle Smith is an actress, producer, and educator known for her roles in House of Cards, Luke Cage, Russian Doll, and The Chi. A Juilliard graduate, she has performed on Broadway (Romeo and Juliet) and with renowned theater companies. She is also a Visiting Lecturer at Cornell University and Co-Director of Lena Waithe's Hillman Grad Mentorship Lab, empowering BIPOC creatives. Carolyn develops original content inspired by her heritage and operates AspireHigher Coaching Services to mentor actors. Her entrepreneurial artistry focuses on elevating diverse voices in Hollywood through acting, producing, and education.",
     image: "/lovable-uploads/5f2b13ba-7279-45da-86e2-af6b9c336634.png",
     socials: {
-      instagram: "https://www.instagram.com/that_carolynmichelle11",
+      instagram: "https://www.instagram.com/that_carolynmichelle/",
       linkedin: "https://www.linkedin.com/in/carolyn-michelle-smith-1243545115",
-      facultyPage: "https://pma.cornell.edu/carolyn-michelle-smith4",
-      imdb: "https://www.imdb.com/name/nm18292715",
+      facultyPage: "https://pma.cornell.edu/carolyn-michelle-smith",
+      imdb: "https://www.imdb.com/name/nm1829271/",
       wikipedia: "https://en.wikipedia.org/wiki/Carolyn_Michelle_Smith"
     }
   },
