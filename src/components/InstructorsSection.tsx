@@ -54,6 +54,7 @@ const instructors = [
     role: "Founder & Director",
     bio: "Andreas Aroditis has earned recognition from The New York Times and Opera Today for his versatile performances at prestigious international venues. A Juilliard graduate with numerous lead roles in opera and musical theater, he has collaborated with respected artists and orchestras. Locally, he has premiered works with the Cyprus Symphony Orchestra and the TrakArt Pops Orchestra. Mentored by legends such as Plácido Domingo and Sherill Millnes, he now shapes future performers as an Instructor at the University of Nicosia and the European University while maintaining a private studio in Limassol.",
     image: "/attached_assets/1767612704566-dmm8bak1s39_1767613038067.png",
+    imagePosition: "object-[35%_center]",
     socials: {
       instagram: "https://www.instagram.com/andreasaroditis/",
       linkedin: "https://www.linkedin.com/in/andreasaroditis/",
@@ -252,7 +253,8 @@ const InstructorsSection = () => {
                     src={instructor.image} 
                     alt={instructor.name}
                     className={cn(
-                      "w-full h-full object-cover object-center",
+                      "w-full h-full object-cover",
+                      instructor.imagePosition || "object-center",
                       "transform transition-transform duration-700 ease-[cubic-bezier(0.25,0.1,0.25,1)]",
                       hoveredInstructor === index ? "scale-105" : "scale-100"
                     )}
