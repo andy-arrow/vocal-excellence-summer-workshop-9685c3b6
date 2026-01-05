@@ -59,12 +59,18 @@ const TuitionHero = React.memo(() => {
             <p className="text-sm md:text-base text-[#4f6e72] font-light mb-2 md:mb-3 uppercase tracking-wide">
               All-Inclusive Tuition
             </p>
-            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-light text-[#4f6e72] mb-2 md:mb-4">
-              €749
-            </h2>
-            <p className="text-base md:text-lg text-[#4f6e72] font-light mb-2 md:mb-3">
-              (Approx. €107/day)
+            <p className="text-base md:text-lg text-[#999999] font-light line-through mb-1">
+              Standard Rate: €1,499
             </p>
+            <div className="flex items-baseline justify-center gap-2 mb-2">
+              <span className="text-sm md:text-base text-[#4f6e72] font-medium">Early Bird:</span>
+              <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-light text-[#4f6e72]">
+                €749
+              </h2>
+            </div>
+            <div className="bg-[#e8f5e9] text-[#2e7d32] rounded-md px-3 py-1.5 inline-block mb-3">
+              <p className="text-sm font-medium">Save €750 (50% off)</p>
+            </div>
             <p className="text-[#666666] font-light text-sm md:text-base max-w-lg mx-auto leading-relaxed">
               Includes all masterclasses, private coaching, 4K portfolio materials, and daily catering
             </p>

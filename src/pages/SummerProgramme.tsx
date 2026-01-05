@@ -375,24 +375,24 @@ const SummerProgramme = () => {
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
-                  <span className="text-slate-700">Total Tuition: €749 (all inclusive)</span>
+                  <span className="text-slate-700"><span className="line-through text-slate-400">Standard Rate: €1,499</span></span>
                 </li>
                 <li className="flex items-start">
                   <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
-                  <span className="text-slate-700">Early Bird: €699 (until May 1, 2025)</span>
+                  <span className="text-slate-700 font-medium">Early Bird: €749 (until May 24, 2026) - Save €750!</span>
                 </li>
                 <li className="flex items-start">
                   <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
-                  <span className="text-slate-700">Payment Plan: €100 registration fee + 3 installments</span>
+                  <span className="text-slate-700">Payment Plan: €100 deposit + 3 installments of €216</span>
                 </li>
                 <li className="flex items-start">
                   <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
                   <span className="text-slate-700">Limited scholarships available</span>
                 </li>
               </ul>
-              <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
-                <p className="text-sm text-blue-800 font-medium">
-                  Note: The €100 registration fee is included in the total €749 tuition fee
+              <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200">
+                <p className="text-sm text-green-800 font-medium">
+                  Early Bird Special: 50% off standard rate when you register before May 24, 2026
                 </p>
               </div>
             </div>
@@ -473,7 +473,7 @@ const SummerProgramme = () => {
             <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
           </Link>
           <p className="text-sm text-apple-grey mt-4">
-            Early bird pricing ends March 1, 2026 • Total tuition €749 (includes €100 registration fee)
+            Early Bird: €749 (50% off €1,499) until May 24, 2026
           </p>
         </div>
       </section>

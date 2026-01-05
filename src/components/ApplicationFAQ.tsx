@@ -27,7 +27,7 @@ const ApplicationFAQ = () => {
     },
     {
       question: "Is there financial aid available?",
-      answer: `We offer a flexible payment plan (pay in 3 installments) and an Early Bird discount if you register before ${earlyBirdDeadline}.`
+      answer: `Yes! Our Early Bird rate is €749 (50% off the standard €1,499) if you register before ${earlyBirdDeadline}. We also offer a flexible payment plan with a €100 deposit and 3 installments of €216. Merit-based scholarships are available for exceptional students.`
     },
     {
       question: "Can I attend only part of the workshop?",

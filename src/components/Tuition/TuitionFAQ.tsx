@@ -33,7 +33,7 @@ const TuitionFAQ = () => {
   const faqItems = useMemo(() => [
     {
       question: "Tell me about the payment options.",
-      answer: `We have designed our payment structure to be as accessible as possible.\n\nStandard Plan: Secure your spot with a €100 deposit upon acceptance. The remaining balance is split into three manageable installments of €216.\n\nEarly Bird Advantage: Register and pay in full by ${earlyBirdDate} to receive a €50 discount (Total: €699).`
+      answer: `We have designed our payment structure to be as accessible as possible.\n\nEarly Bird Rate (€749): Register before ${earlyBirdDate} to lock in our special 50% discount off the standard €1,499 rate.\n\nFlexible Payment Plan: Secure your spot with a €100 deposit upon acceptance. The remaining €649 is split into three manageable installments of €216.`
     },
     {
       question: "What is included in the tuition?",
@@ -45,7 +45,7 @@ const TuitionFAQ = () => {
     },
     {
       question: "How does the Early Bird discount work?",
-      answer: `Register and pay your full tuition by ${earlyBirdDate} to receive our Early Bird discount of €50, reducing your total program cost from €749 to €699. This discount is only available for those who register before the deadline and pay the full amount upfront.`
+      answer: `Register before ${earlyBirdDate} to lock in our Early Bird rate of €749 - that's a €750 savings (50% off the standard €1,499 rate). This special pricing is reserved for committed artists who apply before the deadline. After May 24, 2026, the price returns to €1,499.`
     },
     {
       question: "Are scholarships available?",

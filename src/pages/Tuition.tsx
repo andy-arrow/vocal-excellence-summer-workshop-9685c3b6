@@ -54,7 +54,7 @@ const Tuition = () => {
         <title>Tuition & Financial Options – Vocal Excellence</title>
         <meta 
           name="description" 
-          content="Total tuition €749 includes everything. Flexible payment plans available with €100 registration fee included in total cost. Early bird discount available." 
+          content="Early Bird tuition €749 (50% off standard €1,499) until May 24, 2026. Includes all masterclasses, private coaching, 4K portfolio materials, and daily catering. Flexible payment plans available." 
         />
         <meta name="keywords" content="vocal training tuition, music program costs, singing scholarship, vocal education financing" />
         <link rel="preload" as="image" href="/og-image.png" />

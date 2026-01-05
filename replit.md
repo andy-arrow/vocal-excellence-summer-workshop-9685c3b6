@@ -56,9 +56,20 @@ Preferred communication style: Simple, everyday language.
 ### Third-Party Libraries
 -   **Canvas Confetti**: For celebration animations.
 
+## Pricing Information
+
+**Universal Pricing (applied consistently across all pages):**
+- Standard Rate: €1,499
+- Early Bird Rate: €749 (50% off, saves €750)
+- Early Bird Deadline: May 24, 2026
+- Payment Plan: €100 deposit + 3 installments of €216
+- After deadline: Price returns to €1,499
+
 ## Recent Changes
 
 ### January 5, 2026
+-   **Universal Pricing Standardization**: All pages now show consistent Early Bird pricing (€749, 50% off €1,499). Updated: TuitionHero, TuitionTiers, TuitionFAQ, ApplicationFAQ, SummerProgramme, and meta descriptions.
+-   **Hero Section Spacing**: Increased top padding to pt-48 (mobile) and pt-56 (desktop) across HeroSection, ApplicationPageHero, and TuitionHero to accommodate the larger logo.
 -   **Form Validation Improvements**: Added step-by-step validation that prevents users from advancing without completing required fields in the current section. The progress indicator now restricts navigation to only visited steps.
 -   **Dietary Restrictions Fix**: Aligned frontend and backend handling of dietary restrictions using object structure `{type, details}`. Email service now properly formats all dietary restriction variants for admin notifications.
 -   **Admin Email Notifications**: Using Resend API with ADMIN_NOTIFICATION_EMAIL secret (aroditis.andreas@gmail.com) for secure delivery.
