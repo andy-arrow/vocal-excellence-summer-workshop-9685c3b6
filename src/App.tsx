@@ -16,7 +16,7 @@ const ApplicationPage = lazy(() => import("./pages/ApplicationPage"));
 const Auth = lazy(() => import("./pages/Auth"));
 const Admin = lazy(() => import("./pages/Admin"));
 const NotFound = lazy(() => import("./pages/NotFound"));
-const TermsAndConditions = lazy(() => import("./pages/TermsAndConditions"));
+const Terms = lazy(() => import("./pages/Terms"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const Tuition = lazy(() => import("./pages/Tuition"));
 const EmailExtract = lazy(() => import("./pages/EmailExtract"));
@@ -66,7 +66,7 @@ function App() {
                   <Route path="/home" element={<HomePage />} />
                   <Route path="/auth" element={<Auth />} />
                   <Route path="/admin" element={<Admin />} />
-                  <Route path="/terms" element={<TermsAndConditions />} />
+                  <Route path="/terms" element={<Terms />} />
                   <Route path="/privacy" element={<PrivacyPolicy />} />
                   <Route path="/tuition" element={<Tuition />} />
                   <Route path="/summer-programme" element={<SummerProgramme />} />
