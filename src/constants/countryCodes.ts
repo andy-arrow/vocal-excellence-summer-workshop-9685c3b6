@@ -250,4 +250,3 @@ export const COUNTRY_CODES: CountryCode[] = [
   { code: "ZW", name: "Zimbabwe", dial: "+263" },
 ];
 
-export const POPULAR_COUNTRIES = ["CY", "GB", "US", "GR", "DE", "FR", "IT", "ES", "AU", "CA"];
