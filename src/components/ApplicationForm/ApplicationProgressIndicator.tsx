@@ -8,14 +8,22 @@ interface ApplicationProgressIndicatorProps {
   steps: string[];
   currentStep: number;
   onStepClick: (step: number) => void;
+  maxVisitedStep?: number;
 }
 
 const ApplicationProgressIndicator: React.FC<ApplicationProgressIndicatorProps> = ({ 
   steps, 
   currentStep,
-  onStepClick
+  onStepClick,
+  maxVisitedStep = 0
 }) => {
   const isMobile = useIsMobile();
+  
+  const handleStepClick = (index: number) => {
+    if (index <= maxVisitedStep) {
+      onStepClick(index);
+    }
+  };
   
   return (
     <div className="flex justify-center w-full">
@@ -32,14 +40,15 @@ const ApplicationProgressIndicator: React.FC<ApplicationProgressIndicatorProps> 
           {steps.map((step, index) => {
             const isActive = index <= currentStep;
             const isCompleted = index < currentStep;
+            const isClickable = index <= maxVisitedStep;
             
             return (
               <div 
                 key={step}
                 className="relative z-10"
-                onClick={() => onStepClick(index)} 
+                onClick={() => handleStepClick(index)} 
               >
-                <div className="flex flex-col items-center cursor-pointer">
+                <div className={`flex flex-col items-center ${isClickable ? 'cursor-pointer' : 'cursor-not-allowed opacity-70'}`}>
                   <div className={`rounded-full transition-colors duration-300 flex items-center justify-center w-8 h-8 text-sm font-medium ${
                     isCompleted 
                       ? 'bg-apple-blue text-white' 

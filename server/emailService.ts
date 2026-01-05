@@ -25,7 +25,7 @@ interface ApplicationEmailData {
   reasonForApplying?: string | null;
   heardAboutUs?: string | null;
   scholarshipInterest?: boolean | null;
-  dietaryRestrictions?: string[] | string | null;
+  dietaryRestrictions?: { type?: string | null; details?: string | null } | string[] | string | null;
   specialNeeds?: string | null;
   hasAudioFile1?: boolean;
   hasAudioFile2?: boolean;
@@ -264,6 +264,20 @@ export class EmailService {
 
       const formatDietaryRestrictions = (restrictions: any): string => {
         if (!restrictions) return '<span style="color: #86868b;">None specified</span>';
+        
+        if (typeof restrictions === 'object' && !Array.isArray(restrictions)) {
+          const type = restrictions.type;
+          const details = restrictions.details;
+          
+          if (!type || type === 'none') return '<span style="color: #86868b;">None</span>';
+          
+          const typeLabel = type.charAt(0).toUpperCase() + type.slice(1).replace('-', ' ');
+          if (type === 'other' && details) {
+            return `${typeLabel}: ${details}`;
+          }
+          return typeLabel;
+        }
+        
         if (Array.isArray(restrictions) && restrictions.length > 0) return restrictions.join(", ");
         if (typeof restrictions === "string" && restrictions.length > 0) return restrictions;
         return '<span style="color: #86868b;">None specified</span>';

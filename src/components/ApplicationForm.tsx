@@ -53,6 +53,7 @@ const ApplicationForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [activeSection, setActiveSection] = useState(0);
+  const [maxVisitedStep, setMaxVisitedStep] = useState(0);
   const [csrfToken, setCsrfToken] = useState('');
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
   const [submissionAttempts, setSubmissionAttempts] = useState(0);
@@ -243,13 +244,55 @@ const ApplicationForm = () => {
     }
   }, [validateFiles, validationErrors, submissionAttempts, trackForm, trackAppError]);
 
-  const handleNextSection = () => {
-    if (activeSection < sections.length - 1) {
-      clearValidationErrors();
-      setActiveSection(activeSection + 1);
+  const validateCurrentSection = async (): Promise<boolean> => {
+    const sectionFields: Record<number, (keyof ApplicationFormValues)[]> = {
+      0: ['firstName', 'lastName', 'email', 'phone'],
+      1: [],
+      2: [],
+      3: [],
+      4: ['termsAgreed'],
+    };
+
+    const fieldsToValidate = sectionFields[activeSection] || [];
+    
+    if (fieldsToValidate.length === 0) {
+      return true;
+    }
+
+    const result = await form.trigger(fieldsToValidate);
+    
+    if (!result) {
+      const errors = fieldsToValidate
+        .map(field => form.formState.errors[field]?.message)
+        .filter(Boolean) as string[];
       
-      // Keep the analytics tracking
-      trackForm('application', `section_${activeSection + 2}`, true);
+      if (errors.length > 0) {
+        setValidationErrors(errors);
+      }
+    }
+    
+    return result;
+  };
+
+  const handleNextSection = async () => {
+    if (activeSection < sections.length - 1) {
+      const isValid = await validateCurrentSection();
+      
+      if (!isValid) {
+        toast({
+          title: "Please complete required fields",
+          description: "Some fields need your attention before continuing.",
+          variant: "destructive",
+        });
+        return;
+      }
+      
+      clearValidationErrors();
+      const newSection = activeSection + 1;
+      setActiveSection(newSection);
+      setMaxVisitedStep(prev => Math.max(prev, newSection));
+      
+      trackForm('application', `section_${newSection + 1}`, true);
     }
   };
 
@@ -353,6 +396,7 @@ const ApplicationForm = () => {
             steps={sections.map(s => s.title)} 
             currentStep={activeSection} 
             onStepClick={setActiveSection}
+            maxVisitedStep={maxVisitedStep}
           />
         </div>
 
