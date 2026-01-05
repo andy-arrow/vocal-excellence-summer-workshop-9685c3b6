@@ -20,6 +20,7 @@ export interface PaymentUpdateData {
   stripePaymentIntentId?: string;
   paymentStatus?: string;
   paidAt?: Date;
+  emailsSentAt?: Date;
 }
 
 export interface IStorage {
@@ -59,6 +60,7 @@ export class DatabaseStorage implements IStorage {
         ...(data.stripePaymentIntentId && { stripePaymentIntentId: data.stripePaymentIntentId }),
         ...(data.paymentStatus && { paymentStatus: data.paymentStatus }),
         ...(data.paidAt && { paidAt: data.paidAt }),
+        ...(data.emailsSentAt && { emailsSentAt: data.emailsSentAt }),
       })
       .where(eq(applications.id, id))
       .returning();

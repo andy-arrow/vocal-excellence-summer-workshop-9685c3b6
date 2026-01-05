@@ -119,19 +119,13 @@ const ApplicationForm = () => {
     clearValidationErrors();
     setIsSubmitting(true);
     
-    // Track form submission attempt
     setSubmissionAttempts(prev => prev + 1);
     trackForm('application', 'submit', true);
     
     try {
-      // Schema validation now handles required fields (firstName, lastName, email, phone, termsAgreed)
-      // No need for manual checks since Zod schema enforces these
-      
-      // Collect files from our store
       const files = applicationFilesStore.getFiles();
       const filesToSubmit: {[key: string]: File} = {};
       
-      // Add all non-null files to the submission
       Object.entries(files).forEach(([key, file]) => {
         if (file !== null) {
           filesToSubmit[key] = file;
@@ -142,68 +136,81 @@ const ApplicationForm = () => {
       const hasFiles = Object.keys(filesToSubmit).length > 0;
       console.log(`Submitting form with ${hasFiles ? Object.keys(filesToSubmit).length : 'no'} files`);
       
-      // Attempt submission with retry logic
       let attempts = 0;
-      const maxAttempts = 2; // Initial attempt + 2 retries
-      let lastError = null;
+      const maxAttempts = 2;
       
       while (attempts <= maxAttempts) {
         try {
           console.log(`Submission attempt ${attempts + 1} of ${maxAttempts + 1}`);
           
-          // Submit the application with files
           const response = await submitApplicationWithFiles(values, filesToSubmit);
           
           if (!response.success) {
             throw new Error(response.error?.message || 'Submission failed');
           }
           
-          if (response.fileError) {
-            console.warn('Application submitted but had file processing error:', response.fileError);
-            toast({
-              title: "Application Submitted with Warning",
-              description: `Your application data was saved, but we had trouble processing your files. Our team will contact you for the files if needed.`,
-              className: "bg-amber-600 text-white border-amber-700",
-              duration: 8000,
-            });
-          } else {
-            toast({
-              title: "Application Submitted Successfully! 🎉",
-              description: "Your application has been received. You'll receive a confirmation email shortly.",
-              className: "bg-gradient-to-r from-green-600 to-emerald-600 text-white border-green-700",
-            });
+          const applicationId = response.data?.applicationId;
+          
+          if (!applicationId) {
+            throw new Error('Application saved but no ID returned');
           }
           
-          // Track successful form submission
-          trackForm('application', 'success', true);
+          console.log('Application saved with ID:', applicationId);
           
-          setIsSubmitted(true);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          toast({
+            title: "Application Saved",
+            description: "Redirecting to secure payment...",
+            className: "bg-blue-600 text-white border-blue-700",
+            duration: 3000,
+          });
           
-          // Clear applicationFiles after successful submission
-          applicationFilesStore.clearFiles();
+          trackForm('application', 'saved', true);
           
-          // Success! Break out of retry loop
+          try {
+            const checkoutResponse = await fetch('/api/create-checkout-session', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ applicationId }),
+            });
+            
+            const checkoutData = await checkoutResponse.json();
+            
+            if (!checkoutData.success || !checkoutData.url) {
+              throw new Error(checkoutData.error || 'Failed to create payment session');
+            }
+            
+            applicationFilesStore.clearFiles();
+            
+            window.location.href = checkoutData.url;
+            return;
+            
+          } catch (paymentError: any) {
+            console.error('Payment session creation failed:', paymentError);
+            toast({
+              title: "Payment Setup Failed",
+              description: "Your application was saved. Please contact support to complete payment.",
+              variant: "destructive",
+              duration: 10000,
+            });
+            trackAppError('payment_session_error', paymentError.message || 'Unknown error');
+          }
+          
           break;
           
         } catch (error: any) {
           console.error(`Submission attempt ${attempts + 1} failed:`, error);
-          lastError = error;
           
-          // Track the error
           trackAppError('form_submission_error', error.message || 'Unknown error', {
             attempt: attempts + 1,
             totalAttempts: submissionAttempts
           });
           
           if (attempts < maxAttempts) {
-            // Wait before retrying with exponential backoff
             const backoffTime = Math.pow(2, attempts) * 1000;
             console.log(`Retrying in ${backoffTime}ms...`);
             await new Promise(resolve => setTimeout(resolve, backoffTime));
             attempts++;
           } else {
-            // All attempts failed
             const errorDetails = [];
             if (error.message) errorDetails.push(`Error: ${error.message}`);
             if (error.details) errorDetails.push(`Details: ${error.details}`);
@@ -219,8 +226,8 @@ const ApplicationForm = () => {
                   ))}
                   <p className="text-sm mt-4">
                     Please try again or contact our support team at{' '}
-                    <a href="mailto:support@vocalexcellence.com" className="underline">
-                      support@vocalexcellence.com
+                    <a href="mailto:support@vocalexcellence.cy" className="underline">
+                      support@vocalexcellence.cy
                     </a>
                   </p>
                 </div>

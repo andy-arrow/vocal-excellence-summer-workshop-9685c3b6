@@ -22,6 +22,8 @@ const Tuition = lazy(() => import("./pages/Tuition"));
 const EmailExtract = lazy(() => import("./pages/EmailExtract"));
 const SummerProgramme = lazy(() => import("./pages/SummerProgramme"));
 const TestPage = lazy(() => import("./pages/TestPage"));
+const PaymentSuccess = lazy(() => import("./pages/PaymentSuccess"));
+const PaymentCancelled = lazy(() => import("./pages/PaymentCancelled"));
 
 // Create query client with better error handling
 const queryClient = new QueryClient({
@@ -72,6 +74,8 @@ function App() {
                   <Route path="/summer-programme" element={<SummerProgramme />} />
                   <Route path="/email-extract" element={<EmailExtract />} />
                   <Route path="/test" element={<TestPage />} />
+                  <Route path="/payment-success" element={<PaymentSuccess />} />
+                  <Route path="/payment-cancelled" element={<PaymentCancelled />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>

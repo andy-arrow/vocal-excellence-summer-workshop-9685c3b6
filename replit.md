@@ -77,3 +77,5 @@ Preferred communication style: Simple, everyday language.
 -   **Apple-Style Legal Acknowledgment**: Replaced standard checkbox with premium iOS-style toggle switch featuring translucent card design, icon-based key points, and disabled submit button until agreement.
 -   **Fixed Legal Links**: All links now point to correct routes (/terms and /privacy) throughout the application form and footer.
 -   **Enhanced File Upload UX**: Redesigned file upload component with drag-and-drop support, clear visual feedback showing filename/size, "Ready to submit" status with green success state, and improved error handling.
+-   **Stripe Payment Integration**: Integrated Stripe Checkout for €100 registration fee payment. Flow: Application saved -> Stripe checkout -> Payment success page. Emails are sent only after payment verification for security. Database schema extended with paymentStatus, stripeSessionId, stripePaymentIntentId, and paidAt fields.
+-   **Payment Pages**: Created /payment-success and /payment-cancelled pages with Apple-style design, confetti animation on success, and clear next steps messaging.

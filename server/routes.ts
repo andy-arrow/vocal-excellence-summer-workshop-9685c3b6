@@ -164,56 +164,12 @@ export async function registerRoutes(app: Express): Promise<void> {
         };
 
         const application = await storage.createApplication(insertData);
-        console.log("Application saved:", application.id);
-
-        let emailStatus = { success: false, error: null as string | null };
-        const RESEND_API_KEY = process.env.RESEND_API_KEY;
-
-        if (RESEND_API_KEY) {
-          try {
-            const emailService = new EmailService(RESEND_API_KEY);
-            const result = await emailService.sendApplicationNotifications({
-              firstName: applicationData.firstName,
-              lastName: applicationData.lastName,
-              email: applicationData.email,
-              phone: applicationData.phone,
-              age: applicationData.age?.toString(),
-              socialMedia: applicationData.socialMedia,
-              dateOfBirth: applicationData.dateOfBirth,
-              nationality: applicationData.nationality,
-              whereFrom: applicationData.whereFrom,
-              vocalRange: applicationData.vocalRange || undefined,
-              yearsOfSinging: applicationData.yearsOfSinging,
-              musicalBackground: applicationData.musicalBackground,
-              teacherName: applicationData.teacherName,
-              teacherEmail: applicationData.teacherEmail,
-              areasOfInterest: applicationData.areasOfInterest,
-              reasonForApplying: applicationData.reasonForApplying,
-              heardAboutUs: applicationData.heardAboutUs,
-              scholarshipInterest: applicationData.scholarshipInterest,
-              dietaryRestrictions: applicationData.dietaryRestrictions,
-              specialNeeds: applicationData.specialNeeds,
-              hasAudioFile1: !!files?.audioFile1?.[0],
-              hasAudioFile2: !!files?.audioFile2?.[0],
-              hasCvFile: !!files?.cvFile?.[0],
-              hasRecommendationFile: !!files?.recommendationFile?.[0],
-              applicationId: application.id,
-            });
-            emailStatus = { success: result.success, error: result.error?.toString() || null };
-          } catch (emailError: any) {
-            console.error("Email sending error:", emailError);
-            emailStatus = { success: false, error: emailError.message };
-          }
-        } else {
-          console.warn("RESEND_API_KEY not configured - emails will not be sent");
-          emailStatus = { success: false, error: "Email service not configured" };
-        }
+        console.log("Application saved:", application.id, "- Payment pending, emails will be sent after payment verification");
 
         return res.json({
           success: true,
           applicationId: application.id,
-          emailStatus,
-          message: "Application received successfully",
+          message: "Application saved successfully. Awaiting payment.",
         });
       } catch (error) {
         return handleApiError(res, error, "application submission");
@@ -498,13 +454,30 @@ export async function registerRoutes(app: Express): Promise<void> {
       if (session.payment_status === "paid") {
         const applicationId = parseInt(application_id as string);
         
-        await storage.updateApplicationPayment(applicationId, {
-          paymentStatus: "paid",
-          stripePaymentIntentId: session.payment_intent as string,
-          paidAt: new Date(),
-        });
+        const existingApplication = await storage.getApplication(applicationId);
+        const emailsAlreadySent = !!existingApplication?.emailsSentAt;
+        
+        if (existingApplication?.paymentStatus !== "paid") {
+          await storage.updateApplicationPayment(applicationId, {
+            paymentStatus: "paid",
+            stripePaymentIntentId: session.payment_intent as string,
+            paidAt: new Date(),
+          });
+        }
 
         const application = await storage.getApplication(applicationId);
+        
+        if (emailsAlreadySent) {
+          console.log(`Emails already sent for application ${applicationId}, skipping`);
+          return res.json({ 
+            success: true, 
+            paymentStatus: "paid",
+            applicationId,
+            applicantName: application ? `${application.firstName} ${application.lastName}` : undefined,
+            email: application?.email,
+            message: "Payment verified, emails previously sent"
+          });
+        }
         
         const RESEND_API_KEY = process.env.RESEND_API_KEY;
         if (RESEND_API_KEY && application) {
@@ -537,6 +510,11 @@ export async function registerRoutes(app: Express): Promise<void> {
               hasRecommendationFile: !!application.recommendationFilePath,
               applicationId: application.id,
             });
+            
+            await storage.updateApplicationPayment(applicationId, {
+              emailsSentAt: new Date(),
+            });
+            
             console.log(`Confirmation emails sent for application ${applicationId}`);
           } catch (emailError) {
             console.error("Error sending confirmation emails:", emailError);
