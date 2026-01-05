@@ -14,7 +14,7 @@ const TuitionHero = React.memo(() => {
   const isMobile = useIsMobile();
   
   return (
-    <section className={`${isMobile ? 'pt-28 pb-12' : 'pt-40 pb-24'} px-4 bg-white relative z-10`}>
+    <section className={`${isMobile ? 'pt-48 pb-12' : 'pt-56 pb-24'} px-4 bg-white relative z-10`}>
       <div className="max-w-4xl mx-auto text-center">
         <motion.div
           {...animationConfig}

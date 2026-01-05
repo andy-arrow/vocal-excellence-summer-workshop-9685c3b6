@@ -57,8 +57,8 @@ const HeroSection = () => {
       className={cn(
         "relative overflow-visible",
         isMobile 
-          ? "pt-28 pb-12"
-          : "pt-32 pb-20 min-h-[70vh]",
+          ? "pt-48 pb-12"
+          : "pt-56 pb-20 min-h-[70vh]",
         "bg-apple-light border-b border-apple-border",
         hasReducedMotion ? "reduced-motion" : ""
       )}

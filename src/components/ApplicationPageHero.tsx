@@ -13,8 +13,8 @@ const ApplicationPageHero = () => {
       className={cn(
         "relative overflow-visible",
         isMobile 
-          ? "pt-28 pb-10" 
-          : "pt-36 pb-16", 
+          ? "pt-48 pb-10" 
+          : "pt-56 pb-16", 
         "bg-white"
       )}
     >
