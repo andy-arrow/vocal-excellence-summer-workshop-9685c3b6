@@ -1,0 +1,323 @@
+Here is the completely rewritten, ironclad Privacy Policy, fully updated for 2026 compliance standards, incorporating all structural and legal improvements.
+
+PRIVACY POLICY
+Effective Date: January 5, 2026
+Last Reviewed: January 5, 2026
+Next Review Date: January 5, 2027
+Version: 2.0.0
+
+TABLE OF CONTENTS
+Introduction
+
+Definitions
+
+Data Controller Information
+
+Information We Collect
+
+Legal Basis for Processing
+
+How We Use Your Information
+
+Data Retention & Minimization
+
+Data Protection & Security Measures
+
+Your Rights Under GDPR
+
+International Data Transfers
+
+Cookies & Tracking Technologies
+
+Children's Privacy
+
+Third-Party Sharing
+
+Changes to This Policy
+
+Contact Information
+
+Complaints Procedure
+
+Governing Law
+
+Continuous Improvement
+
+1. INTRODUCTION
+This Privacy Policy ("Policy") is provided by Vocal Excellence Summer Programme, operating at Nafpliou 12, Pentadromos, 3025, Limassol, Cyprus ("we," "us," "our," or the "Controller").
+
+This Policy details how we collect, use, store, protect, and share your personal data when you visit our website at vocalexcellence.cy ("Website"), apply to our programme, or interact with our services.
+
+We are committed to protecting your personal data in strict accordance with:
+
+General Data Protection Regulation (EU) 2016/679 ("GDPR")
+
+The Protection of Natural Persons with Regard to the Processing of Personal Data and for the Free Movement of Such Data Law of 2018 (Law 125(I)/2018) of the Republic of Cyprus
+
+ePrivacy Directive 2002/58/EC (as transposed into Cyprus law)
+
+Records of Processing Activities (ROPA): In compliance with GDPR Article 30, we maintain a comprehensive Record of Processing Activities (ROPA), which is available to supervisory authorities upon request.
+
+2. DEFINITIONS
+"Personal Data": Any information relating to an identified or identifiable natural person ("Data Subject").
+
+"Processing": Any operation performed on personal data, such as collection, recording, organization, structuring, storage, adaptation, retrieval, use, disclosure, or destruction.
+
+"Controller": The entity that determines the purposes and means of the processing of personal data (Vocal Excellence).
+
+"Processor": An entity that processes personal data on behalf of the Controller.
+
+"Consent": A freely given, specific, informed, and unambiguous indication of the data subject's wishes.
+
+"Special Categories of Data": Personal data revealing racial or ethnic origin, political opinions, religious beliefs, trade union membership, genetic data, biometric data, or health data.
+
+3. DATA CONTROLLER INFORMATION
+Controller Name: Vocal Excellence Summer Programme
+Registered Address: Nafpliou 12, Pentadromos, 3025, Limassol, Cyprus
+
+Data Protection Officer (DPO):
+Name: Andreas Aroditis
+Email: privacy@vocalexcellence.cy
+Phone: +357 25 775 885
+Hours: Monday–Friday, 9:00 AM – 5:00 PM EET
+
+4. INFORMATION WE COLLECT
+We are committed to Data Minimization. We collect only personal data that is adequate, relevant, and limited to what is necessary for the purposes specified below.
+
+4.1 Personal Data Categories
+Category	Data Types Collected
+Identity & Contact	Full name, email address, postal address, telephone number, date of birth, nationality, gender, passport/ID details (for verification/visa).
+Application Data	Vocal type/range, educational background, performance experience, audio/video recordings, personal statements, CV/résumé, references.
+Account Data	Username, encrypted password, login records, account preferences, audit logs.
+Financial Data	Billing address, transaction history, payment records. Note: We do not store full credit card numbers; these are handled directly by our PCI-DSS compliant payment processors.
+Technical Data	IP address, browser type/version, time zone, OS, device info, cookie identifiers.
+Marketing Data	Preferences for receiving communications, subscription status, open/click rates.
+Special Categories	(Only with Explicit Consent): Health/dietary requirements (allergies), accessibility needs, photos/videos of performances.
+4.2 Accuracy of Data
+You are responsible for ensuring your information remains accurate. We encourage you to review and update your information regularly through your account settings or by contacting us.
+
+5. LEGAL BASIS FOR PROCESSING
+We process your data only when we have a valid legal basis. The following table maps our processing activities to their specific GDPR legal bases:
+
+Processing Activity	Legal Basis	GDPR Article
+Application Assessment	Contractual Necessity (Steps prior to contract)	Art. 6(1)(b)
+Programme Delivery	Contractual Necessity	Art. 6(1)(b)
+Tuition Payment	Contractual Necessity	Art. 6(1)(b)
+Tax & Financial Records	Legal Obligation (Cyprus Tax Law)	Art. 6(1)(c)
+Security & Fraud Prevention	Legitimate Interests	Art. 6(1)(f)
+Marketing Communications	Consent	Art. 6(1)(a)
+Performance Photos/Video	Explicit Consent	Art. 9(2)(a)
+Health/Dietary Info	Explicit Consent	Art. 9(2)(a)
+Legitimate Interests Assessment (LIA): Where we rely on legitimate interests (e.g., security, service improvement), we maintain documented LIAs ensuring your fundamental rights and freedoms do not override our interests.
+
+6. HOW WE USE YOUR INFORMATION
+We use your personal data for the following specific purposes:
+
+Application Processing: Evaluating eligibility, vocal assessment, and faculty review.
+
+Programme Administration: Scheduling, instructor matching, attendance, and certification.
+
+Account Management: Authentication, security monitoring, and password management.
+
+Financial Operations: Invoicing, refund processing, and scholarship disbursement.
+
+Communications: Sending pre-arrival guides, schedules, and support responses.
+
+Website Operations: Ensuring functionality, load balancing, and technical troubleshooting.
+
+Marketing: Promoting future programmes (only with your opt-in).
+
+Legal Compliance: Satisfying tax, accounting, and educational regulations.
+
+7. DATA RETENTION & MINIMIZATION
+7.1 Retention Schedule
+We retain data only as long as necessary.
+
+Data Category	Retention Period	Reason
+Successful Applicants	7 years post-completion	Tax/Legal claims limitation
+Unsuccessful Applicants	2 years from decision	Defense of legal claims
+Financial Records	7 years from transaction	Cyprus Tax Law requirements
+Account Info	Duration of active account + 2 years	Service continuity
+Marketing Data	Until consent withdrawal	User preference
+Server Logs	90 days	Security auditing
+Session Cookies	Upon browser close	Technical necessity
+7.2 Data Deletion
+At the end of the retention period, data is securely deleted (using industry-standard overwriting methods) or anonymized so it can no longer be associated with you.
+
+7.3 Privacy by Design and Default
+We implement privacy by design principles, ensuring:
+
+Data protection is embedded in system architecture.
+
+Default settings provide maximum privacy (e.g., marketing boxes are pre-unchecked).
+
+Regular privacy reviews are conducted during development.
+
+8. DATA PROTECTION & SECURITY MEASURES
+We employ a Zero Trust security model and robust technical measures to protect your data.
+
+8.1 Technical Security
+Encryption: Data at rest is encrypted using AES-256. Data in transit is encrypted via TLS 1.3.
+
+Access Control: Strict Role-Based Access Control (RBAC) with Multi-Factor Authentication (MFA) for all administrative access.
+
+Monitoring: Automated intrusion detection systems (IDS) and immutable audit logs.
+
+Vulnerability Management: Regular automated scanning and annual penetration testing.
+
+8.2 Organizational Measures
+Mandatory data protection training for all staff.
+
+Confidentiality non-disclosure agreements (NDAs) for all employees and contractors.
+
+Vendor risk management program for all third-party processors.
+
+8.3 Data Protection Impact Assessments (DPIA)
+We conduct DPIAs for high-risk processing activities, including the processing of special category data (health/biometrics) and new technology implementation. These are reviewed annually.
+
+8.4 Data Breach Procedures
+We maintain a Data Breach Register. In the event of a high-risk breach, we will:
+
+Notify the Office of the Commissioner for Personal Data Protection within 72 hours.
+
+Notify affected Data Subjects without undue delay if there is a high risk to their rights.
+
+Provide a clear explanation of the breach, likely consequences, and remedial measures.
+
+9. YOUR RIGHTS UNDER GDPR
+You have the following rights. We will respond to all requests within 30 days.
+
+Right to Access (Art. 15): Request a copy of your personal data.
+
+Right to Rectification (Art. 16): Correct inaccurate or incomplete data.
+
+Right to Erasure ("Right to be Forgotten") (Art. 17): Request deletion of data where legal grounds exist.
+
+Right to Restriction (Art. 18): Suspend processing while specific issues are resolved.
+
+Right to Data Portability (Art. 20): Receive your data in a CSV/JSON format.
+
+Right to Object (Art. 21): Object to processing based on legitimate interests or direct marketing.
+
+Automated Decision-Making (Art. 22): We do not make decisions with legal or similarly significant effects based solely on automated processing. You have the right to human intervention.
+
+9.1 How to Exercise Your Rights
+Contact our DPO at privacy@vocalexcellence.cy.
+
+Verification: We may request proof of identity (e.g., passport copy) to prevent unauthorized access.
+
+Fees: Requests are free of charge unless manifestly unfounded or excessive, in which case a reasonable administrative fee may apply.
+
+9.2 Consent Withdrawal
+You may withdraw consent at any time by:
+
+Clicking "Unsubscribe" in emails.
+
+Adjusting settings in your User Dashboard.
+
+Emailing privacy@vocalexcellence.cy.
+
+Withdrawal does not affect the lawfulness of processing based on consent before its withdrawal.
+
+10. INTERNATIONAL DATA TRANSFERS
+We primarily store data within the European Economic Area (EEA).
+
+10.1 Transfers to Third Countries
+Where we transfer data to service providers outside the EEA (e.g., USA, UK), we ensure protection via:
+
+Adequacy Decisions: (e.g., for the UK).
+
+Standard Contractual Clauses (SCCs): We utilize the EU's 2021 SCCs for transfers to countries without adequacy decisions (e.g., USA).
+
+Transfer Impact Assessments (TIAs): We evaluate the legal framework of the destination country to ensure your data rights are protected.
+
+10.2 Data Processing Locations
+Web Hosting/Database: Germany (EEA)
+
+Email Services: USA (Protected via SCCs & Data Privacy Framework participation)
+
+Payment Processing: Global (PCI-DSS Level 1 Compliant)
+
+11. COOKIES & TRACKING TECHNOLOGIES
+We use a Consent Management Platform (CMP) to manage cookies. No non-essential cookies are placed on your device until you explicitly accept them.
+
+11.1 Cookie Categories
+Type	Purpose	Consent Required?
+Strictly Necessary	Security, login state, load balancing.	No
+Functional	Language preferences, video player settings.	Yes
+Analytics	Aggregated usage data (Google Analytics 4).	Yes
+Marketing	Retargeting and ad performance measurement.	Yes
+11.2 Managing Preferences
+You can modify your preferences at any time via the "Cookie Settings" link in our website footer.
+
+12. CHILDREN'S PRIVACY
+12.1 Digital Age of Consent (Cyprus)
+Under Law 125(I)/2018, the digital age of consent in Cyprus is 14 years. We do not knowingly collect data online from individuals under 14 without verifiable parental consent.
+
+12.2 Programme Participation (Minors)
+For applicants aged 14–17:
+
+Applications must be submitted with the explicit consent of a parent or legal guardian.
+
+We require a signed Parental Consent Form verifying the guardian's identity and approval.
+
+If we discover data collected from a minor without this consent, it will be immediately deleted.
+
+13. THIRD-PARTY SHARING
+We do not sell your data. We share data only with the following distinct categories of recipients strictly for the purposes outlined in this Policy:
+
+Service Providers (Processors):
+
+Cloud Infrastructure: (e.g., Google Cloud/AWS) – Hosting & Storage.
+
+Payment Processors: (e.g., Stripe, PayPal) – Secure transaction handling.
+
+Communication Tools: (e.g., SendGrid, Mailchimp) – Email delivery.
+
+Educational Partners: Faculty members (for application review) and venue partners (for security/access lists).
+
+Legal Authorities: When required by valid legal process (e.g., court order) or to protect our rights.
+
+14. CHANGES TO THIS POLICY
+We may update this Policy to reflect changes in law or our processing.
+
+Notification: Material changes will be notified via email to registered users 30 days prior to taking effect.
+
+Log: A history of policy versions is available upon request.
+
+15. CONTACT INFORMATION
+For any privacy-related inquiries, please contact our Data Protection Officer:
+
+Email: privacy@vocalexcellence.cy
+Phone: +357 25 775 885
+Address:
+Vocal Excellence Summer Programme
+Attn: Data Protection Officer
+Nafpliou 12, Pentadromos, 3025
+Limassol, Cyprus
+
+16. COMPLAINTS PROCEDURE
+16.1 Internal Resolution
+Please contact us first. We aim to resolve all privacy complaints within 30 days.
+
+16.2 Supervisory Authority
+If you remain dissatisfied, you have the right to lodge a complaint with the Cyprus Supervisory Authority:
+
+Office of the Commissioner for Personal Data Protection
+Address: Iasonos 1, 1082 Nicosia, Cyprus
+Postal: P.O. Box 23378, 1682 Nicosia, Cyprus
+Tel: +357 22 818 456
+Email: commissioner@dataprotection.gov.cy
+Website: www.dataprotection.gov.cy
+
+16.3 Accessibility
+This Policy is available in accessible formats (e.g., large print) upon request.
+
+17. GOVERNING LAW
+This Privacy Policy shall be governed by the laws of the Republic of Cyprus. Any disputes shall be subject to the exclusive jurisdiction of the courts of Limassol, Cyprus.
+
+18. CONTINUOUS IMPROVEMENT
+We review this Privacy Policy annually or whenever significant changes occur in our processing activities or the regulatory landscape.
+
+Internal Compliance Officer: Andreas Aroditis
+Date of Last Audit: January 5, 2026
