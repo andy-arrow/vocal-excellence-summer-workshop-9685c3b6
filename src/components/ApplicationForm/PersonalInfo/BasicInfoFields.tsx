@@ -89,7 +89,6 @@ const BasicInfoFields = () => {
                 type="number"
                 min="16"
                 max="100"
-                onChange={e => field.onChange(parseInt(e.target.value))}
                 placeholder="Enter your age"
                 aria-required="true"
                 className="text-apple-text bg-white"
