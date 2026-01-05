@@ -15,10 +15,18 @@ import {
 } from "@shared/schema";
 import { eq, desc } from "drizzle-orm";
 
+export interface PaymentUpdateData {
+  stripeSessionId?: string;
+  stripePaymentIntentId?: string;
+  paymentStatus?: string;
+  paidAt?: Date;
+}
+
 export interface IStorage {
   createApplication(data: InsertApplication): Promise<Application>;
   getApplication(id: number): Promise<Application | undefined>;
   getAllApplications(): Promise<Application[]>;
+  updateApplicationPayment(id: number, data: PaymentUpdateData): Promise<Application | undefined>;
   createContactMessage(data: InsertContactMessage): Promise<ContactMessage>;
   getAllContactMessages(): Promise<ContactMessage[]>;
   createContactSubmission(data: InsertContactSubmission): Promise<ContactSubmission>;
@@ -41,6 +49,20 @@ export class DatabaseStorage implements IStorage {
 
   async getAllApplications(): Promise<Application[]> {
     return await db.select().from(applications).orderBy(desc(applications.createdAt));
+  }
+
+  async updateApplicationPayment(id: number, data: PaymentUpdateData): Promise<Application | undefined> {
+    const [application] = await db
+      .update(applications)
+      .set({
+        ...(data.stripeSessionId && { stripeSessionId: data.stripeSessionId }),
+        ...(data.stripePaymentIntentId && { stripePaymentIntentId: data.stripePaymentIntentId }),
+        ...(data.paymentStatus && { paymentStatus: data.paymentStatus }),
+        ...(data.paidAt && { paidAt: data.paidAt }),
+      })
+      .where(eq(applications.id, id))
+      .returning();
+    return application;
   }
 
   async createContactMessage(data: InsertContactMessage): Promise<ContactMessage> {

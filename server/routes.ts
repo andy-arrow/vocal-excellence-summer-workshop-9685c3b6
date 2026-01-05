@@ -3,6 +3,7 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 import { z, ZodError } from "zod";
+import Stripe from "stripe";
 import { getStorage, getBackendInfo, logBackendSelection } from "./storage-factory";
 import { EmailService } from "./emailService";
 import { 
@@ -12,6 +13,9 @@ import {
   emailSignupSchema,
   adminVerifySchema 
 } from "@shared/validation";
+
+const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
+const stripe = STRIPE_SECRET_KEY ? new Stripe(STRIPE_SECRET_KEY) : null;
 
 interface ApiErrorResponse {
   success: false;
@@ -406,6 +410,199 @@ export async function registerRoutes(app: Express): Promise<void> {
       }
     } catch (error) {
       return handleApiError(res, error, "admin verify");
+    }
+  });
+
+  app.post("/api/create-checkout-session", async (req: Request, res: Response) => {
+    try {
+      if (!stripe) {
+        return res.status(500).json({ 
+          success: false, 
+          error: "Payment service not configured. Please contact support." 
+        });
+      }
+
+      const { applicationId } = req.body;
+      
+      if (!applicationId) {
+        return res.status(400).json({ success: false, error: "Application ID is required" });
+      }
+
+      const application = await storage.getApplication(applicationId);
+      if (!application) {
+        return res.status(404).json({ success: false, error: "Application not found" });
+      }
+
+      const baseUrl = process.env.REPLIT_DEPLOYMENT_URL 
+        ? `https://${process.env.REPLIT_DEPLOYMENT_URL}`
+        : process.env.REPLIT_DEV_DOMAIN
+          ? `https://${process.env.REPLIT_DEV_DOMAIN}`
+          : "http://localhost:5000";
+
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ["card"],
+        line_items: [
+          {
+            price_data: {
+              currency: "eur",
+              product_data: {
+                name: "Vocal Excellence Summer Workshop - Registration Fee",
+                description: "Non-refundable deposit to secure your place (€100 of €749 Early Bird total)",
+              },
+              unit_amount: 10000,
+            },
+            quantity: 1,
+          },
+        ],
+        mode: "payment",
+        success_url: `${baseUrl}/payment-success?session_id={CHECKOUT_SESSION_ID}&application_id=${applicationId}`,
+        cancel_url: `${baseUrl}/payment-cancelled?application_id=${applicationId}`,
+        customer_email: application.email,
+        metadata: {
+          applicationId: applicationId.toString(),
+          applicantName: `${application.firstName} ${application.lastName}`,
+        },
+      });
+
+      await storage.updateApplicationPayment(applicationId, {
+        stripeSessionId: session.id,
+        paymentStatus: "pending",
+      });
+
+      console.log(`Stripe checkout session created for application ${applicationId}: ${session.id}`);
+
+      return res.json({ 
+        success: true, 
+        sessionId: session.id,
+        url: session.url 
+      });
+    } catch (error) {
+      return handleApiError(res, error, "create checkout session");
+    }
+  });
+
+  app.get("/api/verify-payment", async (req: Request, res: Response) => {
+    try {
+      if (!stripe) {
+        return res.status(500).json({ success: false, error: "Payment service not configured" });
+      }
+
+      const { session_id, application_id } = req.query;
+      
+      if (!session_id || !application_id) {
+        return res.status(400).json({ success: false, error: "Missing session_id or application_id" });
+      }
+
+      const session = await stripe.checkout.sessions.retrieve(session_id as string);
+      
+      if (session.payment_status === "paid") {
+        const applicationId = parseInt(application_id as string);
+        
+        await storage.updateApplicationPayment(applicationId, {
+          paymentStatus: "paid",
+          stripePaymentIntentId: session.payment_intent as string,
+          paidAt: new Date(),
+        });
+
+        const application = await storage.getApplication(applicationId);
+        
+        const RESEND_API_KEY = process.env.RESEND_API_KEY;
+        if (RESEND_API_KEY && application) {
+          try {
+            const emailService = new EmailService(RESEND_API_KEY);
+            await emailService.sendApplicationNotifications({
+              firstName: application.firstName,
+              lastName: application.lastName,
+              email: application.email,
+              phone: application.phone,
+              age: application.age || undefined,
+              socialMedia: application.socialMedia || undefined,
+              dateOfBirth: application.dateOfBirth || undefined,
+              nationality: application.nationality || undefined,
+              whereFrom: application.whereFrom || undefined,
+              vocalRange: application.vocalRange || undefined,
+              yearsOfSinging: application.yearsOfSinging || undefined,
+              musicalBackground: application.musicalBackground || undefined,
+              teacherName: application.teacherName || undefined,
+              teacherEmail: application.teacherEmail || undefined,
+              areasOfInterest: application.areasOfInterest || undefined,
+              reasonForApplying: application.reasonForApplying || undefined,
+              heardAboutUs: application.heardAboutUs || undefined,
+              scholarshipInterest: application.scholarshipInterest || false,
+              dietaryRestrictions: application.dietaryRestrictions as { type?: string | null; details?: string | null } | undefined,
+              specialNeeds: application.specialNeeds || undefined,
+              hasAudioFile1: !!application.audioFile1Path,
+              hasAudioFile2: !!application.audioFile2Path,
+              hasCvFile: !!application.cvFilePath,
+              hasRecommendationFile: !!application.recommendationFilePath,
+              applicationId: application.id,
+            });
+            console.log(`Confirmation emails sent for application ${applicationId}`);
+          } catch (emailError) {
+            console.error("Error sending confirmation emails:", emailError);
+          }
+        }
+
+        console.log(`Payment verified for application ${applicationId}`);
+
+        return res.json({ 
+          success: true, 
+          paymentStatus: "paid",
+          applicationId,
+          applicantName: application ? `${application.firstName} ${application.lastName}` : undefined,
+          email: application?.email,
+        });
+      } else {
+        return res.json({ 
+          success: true, 
+          paymentStatus: session.payment_status,
+          message: "Payment not yet completed" 
+        });
+      }
+    } catch (error) {
+      return handleApiError(res, error, "verify payment");
+    }
+  });
+
+  app.post("/api/webhook/stripe", async (req: Request, res: Response) => {
+    try {
+      if (!stripe) {
+        return res.status(500).json({ success: false, error: "Payment service not configured" });
+      }
+
+      const sig = req.headers["stripe-signature"];
+      const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+      if (!endpointSecret) {
+        console.warn("Stripe webhook secret not configured");
+        return res.status(200).json({ received: true });
+      }
+
+      let event: Stripe.Event;
+      try {
+        event = stripe.webhooks.constructEvent(req.body, sig as string, endpointSecret);
+      } catch (err: any) {
+        console.error("Webhook signature verification failed:", err.message);
+        return res.status(400).send(`Webhook Error: ${err.message}`);
+      }
+
+      if (event.type === "checkout.session.completed") {
+        const session = event.data.object as Stripe.Checkout.Session;
+        const applicationId = session.metadata?.applicationId;
+        
+        if (applicationId) {
+          await storage.updateApplicationPayment(parseInt(applicationId), {
+            paymentStatus: "paid",
+            stripePaymentIntentId: session.payment_intent as string,
+            paidAt: new Date(),
+          });
+          console.log(`Webhook: Payment confirmed for application ${applicationId}`);
+        }
+      }
+
+      return res.json({ received: true });
+    } catch (error) {
+      return handleApiError(res, error, "stripe webhook");
     }
   });
 }

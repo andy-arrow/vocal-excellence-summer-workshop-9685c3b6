@@ -29,6 +29,10 @@ export const applications = pgTable("applications", {
   recommendationFilePath: text("recommendation_file_path"),
   createdAt: timestamp("created_at").defaultNow(),
   source: text("source"),
+  paymentStatus: text("payment_status").default("pending"),
+  stripeSessionId: text("stripe_session_id"),
+  stripePaymentIntentId: text("stripe_payment_intent_id"),
+  paidAt: timestamp("paid_at"),
 }, (table) => ({
   emailIdx: index("applications_email_idx").on(table.email),
   createdAtIdx: index("applications_created_at_idx").on(table.createdAt),
