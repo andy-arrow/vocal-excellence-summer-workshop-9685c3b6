@@ -87,7 +87,7 @@ const Application = () => {
                   whileInView="visible" 
                   viewport={{ once: true, margin: "-50px" }} 
                   id="application-form"
-                  className="bg-white rounded-xl sm:rounded-2xl shadow-sm overflow-hidden"
+                  className="bg-white rounded-xl sm:rounded-2xl shadow-sm"
                   aria-label="Application Form Section"
                   variants={fadeIn}
                 >
