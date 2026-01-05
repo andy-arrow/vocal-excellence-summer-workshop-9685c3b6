@@ -18,6 +18,10 @@ export default defineConfig(({ mode }) => ({
         target: "http://localhost:3001",
         changeOrigin: true,
       },
+      "/admin-files": {
+        target: "http://localhost:3001",
+        changeOrigin: true,
+      },
       "/health": {
         target: "http://localhost:3001",
         changeOrigin: true,

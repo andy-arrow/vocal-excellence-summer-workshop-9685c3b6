@@ -2,6 +2,7 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import path from "path";
 import fs from "fs";
+import { adminAuth } from "./utils/adminAuth";
 
 const app = express();
 const isDev = process.env.NODE_ENV !== "production";
@@ -13,6 +14,10 @@ app.use(express.urlencoded({ extended: false }));
 app.get("/health", (_req, res) => {
   res.status(200).send("OK");
 });
+
+const uploadsPath = path.join(process.cwd(), "uploads");
+app.use('/admin-files', adminAuth, express.static(uploadsPath));
+console.log(`Admin file access configured at /admin-files -> ${uploadsPath}`);
 
 app.use((req, res, next) => {
   const start = Date.now();
