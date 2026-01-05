@@ -8,7 +8,7 @@ const PrivacyPolicy = () => {
     <div className="min-h-screen bg-white">
       <Navbar />
       <motion.div 
-        className="max-w-[980px] mx-auto px-6 py-16 md:py-24"
+        className="max-w-[980px] mx-auto px-6 pt-48 md:pt-56 pb-16 md:pb-24"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
