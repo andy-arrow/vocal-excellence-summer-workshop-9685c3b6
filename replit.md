@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a web application for the Vocal Excellence Summer Workshop, a vocal training program in Limassol, Cyprus. The application allows prospective students to learn about the program, view instructor information, and submit applications with supporting materials (audio files, CVs, recommendation letters). It features a marketing website with program information, an application form with file uploads, and an admin dashboard for managing submissions.
+This project is a web application for the Vocal Excellence Summer Workshop, a vocal training program in Limassol, Cyprus. Its primary purpose is to attract prospective students, provide comprehensive program and instructor information, and facilitate the application process, including secure submission of audio files, CVs, and recommendation letters. The application features a public-facing marketing website, an intuitive application form with file upload capabilities, and an administrative dashboard for managing student submissions. The business vision is to establish a premier online presence for the workshop, streamlining operations and expanding reach to a global audience interested in elite vocal training.
 
 ## User Preferences
 
@@ -10,217 +10,48 @@ Preferred communication style: Simple, everyday language.
 
 ## System Architecture
 
-### Frontend Architecture
-- **Framework**: React 18 with TypeScript
-- **Build Tool**: Vite with SWC for fast compilation
-- **Routing**: React Router DOM for client-side navigation
-- **State Management**: TanStack React Query for server state
-- **Styling**: Tailwind CSS with shadcn/ui component library (Radix UI primitives)
-- **Animations**: Framer Motion for page transitions and micro-interactions
-- **Form Handling**: React Hook Form with Zod validation
+### Frontend
+-   **Framework**: React 18 with TypeScript
+-   **Build Tool**: Vite with SWC
+-   **Routing**: React Router DOM
+-   **State Management**: TanStack React Query
+-   **Styling**: Tailwind CSS with shadcn/ui (Radix UI primitives)
+-   **Animations**: Framer Motion
+-   **Form Handling**: React Hook Form with Zod validation
+-   **Design Patterns**: Lazy Loading (React.lazy()), Error Boundaries, Mobile-First responsiveness, Google Tag Manager for analytics.
 
-### Backend Architecture
-- **Runtime**: Node.js with Express server
-- **API Pattern**: REST API endpoints under `/api/*`
-- **File Uploads**: Multer for handling multipart form data (audio files, documents)
-- **Database ORM**: Drizzle ORM with PostgreSQL dialect
-- **Server Entry**: `server/index.ts` runs both API and serves Vite in development
+### Backend
+-   **Runtime**: Node.js with Express
+-   **API Pattern**: REST API (`/api/*` endpoints)
+-   **File Uploads**: Multer for multipart form data
+-   **Database ORM**: Drizzle ORM with PostgreSQL dialect
+-   **Server Entry**: `server/index.ts` (serves API and static frontend files)
 
 ### Data Storage
-- **Database**: Replit PostgreSQL via Drizzle ORM
-- **Schema Location**: `shared/schema.ts` defines tables for applications, contact messages, and email signups
-- **File Storage**: Local filesystem uploads stored in `uploads/` directory
-- **Authentication**: Password-based admin authentication via ADMIN_PASSWORD environment variable
+-   **Database**: Replit PostgreSQL via Drizzle ORM (schema in `shared/schema.ts`)
+-   **File Storage**: Local filesystem (`uploads/` directory)
+-   **Authentication**: Password-based admin authentication (`ADMIN_PASSWORD` env variable)
 
-### Key Design Patterns
-- **Lazy Loading**: React.lazy() for route-level code splitting
-- **Error Boundaries**: Centralized error handling for graceful failures
-- **Analytics Integration**: Google Tag Manager with custom event tracking
-- **Mobile-First**: Responsive design with `useIsMobile` hook for conditional rendering
-
-### Project Structure
-```
-src/
-├── components/     # React components (UI, forms, sections)
-├── pages/          # Route page components
-├── hooks/          # Custom React hooks
-├── utils/          # Utility functions (analytics, security, file upload)
-├── constants/      # Application constants (dates, config)
-└── stores/         # State stores (file uploads)
-
-server/
-├── index.ts        # Express server entry point
-├── routes.ts       # API route definitions
-├── storage.ts      # Database operations (Replit PostgreSQL via Drizzle ORM)
-├── db.ts           # Database connection
-└── emailService.ts # Email notification service (Resend API)
-
-shared/
-└── schema.ts       # Drizzle database schema (shared between client/server)
-```
+### Key Architectural Decisions
+-   **No Vite Middleware in Production**: To prevent HTTP 426 errors and ensure stability, the server always serves pre-built static files from the `dist/` directory. The workflow runs `npm run build && npm run dev`.
+-   **Server Stability Safeguards**: Includes immediate port binding, a `/health` endpoint, graceful shutdown handlers, error boundaries for uncaught exceptions, and explicit static file serving preference.
+-   **Cache Prevention**: Aggressive cache-prevention headers are used for HTML pages to ensure users always receive the latest content.
 
 ## External Dependencies
 
 ### Database & Backend Services
-- **PostgreSQL**: Primary database (configured via DATABASE_URL environment variable) using Replit PostgreSQL with Drizzle ORM
+-   **PostgreSQL**: Primary database (Replit PostgreSQL via Drizzle ORM).
 
 ### Email Services
-- **Custom Email Service**: Server-side email notifications for application confirmations
-- **Mailchimp**: Optional integration for email popup signups
+-   **Custom Email Service**: Server-side notifications for application confirmations.
+-   **Mailchimp**: Optional integration for email signups.
 
 ### Analytics & Tracking
-- **Google Tag Manager**: Container ID `GTM-WRPV2R2P` for analytics and event tracking
-- **Custom Analytics**: Event tracking utilities in `src/utils/analytics.ts`
-
-### Third-Party Libraries
-- **FingerprintJS**: Browser fingerprinting for visitor identification (via CDN)
-- **Canvas Confetti**: Celebration animations for form submissions
+-   **Google Tag Manager**: For analytics and event tracking (Container ID `GTM-WRPV2R2P`).
+-   **FingerprintJS**: For browser fingerprinting (via CDN).
 
 ### CDN Resources
-- **Google Fonts**: Playfair Display, Inter, Outfit font families
-- **GPT Engineer**: Component tagging for Lovable integration
+-   **Google Fonts**: Playfair Display, Inter, Outfit.
 
-## Documentation
-
-### Operations & Maintenance
-- `docs/production-checklist.md` - Pre-deployment checklist and health monitoring
-- `docs/migration-guide.md` - Database migration discipline and procedures
-- `docs/rollback-plan.md` - Code and database rollback procedures
-
-### Migration Documentation (Historical)
-- `docs/migration/` - Supabase to Replit PostgreSQL migration notes
-
-## Server Stability Safeguards (IRONCLAD)
-
-The following safeguards prevent HTTP 426 errors and server instability:
-
-### Critical Architecture Decision: No Vite Middleware Mode
-
-**Root Cause of HTTP 426**: Even with `hmr: false` and `ws: false`, Vite middleware mode:
-1. Still injects `/@vite/client` script into HTML
-2. Still serves the HMR client at `/@vite/client` endpoint
-3. The HMR client tries to connect to WebSocket on port 24678
-4. Replit's proxy infrastructure returns HTTP 426 when it encounters WebSocket upgrade requests
-
-**Solution**: Server always serves pre-built static files from `dist/`:
-- Workflow runs `npm run build && npm run dev`
-- Server checks for `dist/index.html` and serves static files
-- Falls back to Vite middleware only if `dist/` doesn't exist
-
-### .replit Configuration
-```toml
-[[ports]]
-localPort = 5000
-externalPort = 5000
-# NEVER add port 24678 mapping - causes HTTP 426 errors
-```
-
-### Code-Level Safeguards (server/index.ts)
-
-1. **Immediate Port Binding** - Server binds to port FIRST, before async operations
-2. **Health Check Endpoint** - `/health` returns "OK" (sync, no DB dependency)
-3. **Graceful Shutdown Handlers** - SIGTERM and SIGINT handlers for clean shutdown
-4. **Error Boundaries** - uncaughtException and unhandledRejection handlers
-5. **Static File Serving** - Prefers `dist/` over Vite middleware to avoid WebSocket issues
-6. **Environment Detection** - `isDev = process.env.NODE_ENV !== 'production'`
-
-### Pre-Deploy Checklist
-- [ ] Port 24678 NOT in .replit
-- [ ] Workflow runs `npm run build && npm run dev`
-- [ ] dist/ folder contains built frontend
-- [ ] Health endpoint exists at /health
-- [ ] NODE_ENV=production set for production
-- [ ] Graceful shutdown handlers present
-
-## Recent Changes
-
-### January 4, 2026 - Implemented Proper Vite Dev Server with HMR
-- **Fast startup**: Vite dev server starts in ~500ms instead of 12-15 seconds
-- **Hot Module Replacement**: Code changes appear instantly without page refresh
-- **Concurrent servers**: `npm run dev` runs both Vite (port 5000) and Express API (port 3001)
-- **API proxy**: Vite proxies `/api/*`, `/uploads/*`, `/health` to backend on port 3001
-- **Scripts updated**: 
-  - `npm run dev` - Development with HMR (recommended)
-  - `npm run build` - Production build
-  - `npm start` - Run production server
-
-### January 4, 2026 - Fixed Express Middleware Ordering and API Error Handling
-- **Error Middleware**: Moved error-handling middleware AFTER routes registration (was incorrectly placed before, causing errors to not propagate)
-- **API 404 Handler**: Added middleware that returns JSON `{"error":"API endpoint not found"}` for unknown `/api/*` routes
-- **Express 5 Compatibility**: Used `req.path.startsWith("/api/")` pattern instead of `/api/*` wildcard (path-to-regexp changed syntax)
-- Both fixes ensure proper error handling and prevent HTML responses for API calls
-
-### January 4, 2026 - Forensic Fix: Missing Image and Dialog Accessibility
-- **SummerProgramme.tsx**: Replaced broken `/lovable-uploads/masterclass-singers.jpg` reference with CSS gradient background
-- **VocalUpgradePopup.tsx**: Added hidden DialogTitle/DialogDescription for accessibility when isSubmitted is true (sr-only)
-- Both issues were causing build warnings and console errors
-
-### January 4, 2026 - Fixed Navbar and Hero Alignment + Logo Visibility
-- **Logo Size**: Increased from `h-12` (48px) to `h-16 md:h-20` (64px mobile, 80px desktop)
-- **Container Alignment**: Both Navbar and HeroSection now use consistent `max-w-5xl mx-auto px-4 md:px-6`
-- **Mobile Menu Logo**: Increased from `h-8` to `h-12`
-- **ApplicationPageHero**: Added consistent `md:px-6` padding to match other sections
-
-### January 4, 2026 - Fixed Text Readability Across Frontend
-- **Removed opacity modifiers**: Changed all `/70`, `/80`, `/90` opacity suffixes to full opacity
-- **Components fixed**: HeroSection, ApplicationPageHero, CurriculumSection
-- **Global styles fixed**: paragraph, subtitle, section-subtitle classes in index.css
-- **Rule**: Never use opacity modifiers on already-grey text colors (causes poor contrast)
-
-### January 4, 2026 - Updated Application Page with Professional Marketing Copy
-- **Hero Section**: Changed to "Summer Intensive 2026 - Apply for Your Place at Vocal Excellence"
-- **Subheadline**: "Join a select cohort of artists for 7 transformative days in Limassol. World-class mentorship awaits."
-- **Features Bar**: Updated to "Masterclasses | Private Coaching | Audition Prep | 4K Portfolio Material"
-- **Requirements Section**: Renamed to "Application Checklist" with clearer items (Contact Details, Experience, Statement of Purpose, Dietary Needs)
-- **Timeline Section**: Renamed to "Your Road to Limassol" with 5 clear steps (Submit Application, Faculty Review, Decision Notification, Secure Your Seat, The Workshop Begins)
-- **FAQ Section**: Rewrote all answers to be more professional and benefit-focused, removed unnecessary questions
-
-### January 4, 2026 - Updated Landing Page with Professional Marketing Copy
-- **Hero Section**: Changed to "Train Like a Professional. 7 Days of Elite Vocal Coaching in Cyprus."
-- **Subheadline**: "Direct mentorship from West End performers, Netflix actors, and Juilliard alumni"
-- **Tagline**: Added "Master your technique. Conquer stage fright. Build your portfolio."
-- **CTA Button**: Changed "Register Now" to "Secure Your Spot"
-- **About Section**: Renamed to "Elevate Your Artistry" with benefit-focused features (Precision Coaching, Industry-Standard Assets, Unshakeable Confidence, Vocal Longevity, High-Level Networking)
-- **Curriculum Section**: Renamed to "An Intensive Artist Curriculum" with reorganized modules (World-Class Faculty, Performance Mastery, Career Toolkit, Holistic Health)
-- **CTA Section**: Added "Application takes 5 minutes" messaging
-- **Footer**: Updated tagline to "Cyprus's premier destination for elite musical education"
-
-### January 4, 2026 - Updated Tuition Page with Professional Marketing Copy
-- **Hero**: Changed tagline to "7 Intensive Days to Unlock Your Full Vocal Potential"
-- **Pricing**: Updated to "All-Inclusive Tuition: €749" with clearer description
-- **Features**: Reorganized into logical categories (Core Training, Personalized Coaching, Career Preparation, Amenities)
-- **Section Title**: Changed "What You'll Get" to "An Immersive Artist Experience"
-- **Payment Section**: Renamed to "Investment in Your Art" with clearer payment plan breakdown
-- **FAQ**: Rewrote answers to be more professional and benefit-focused
-- **CTAs**: Updated to "Final call: Registration closes May 24, 2026"
-
-### January 4, 2026 - Added Aggressive Cache Prevention Headers
-- **Problem**: Browser cached old broken HTML, requiring hard refresh to see fixes
-- **Solution**: Server now sends three cache-prevention headers for all HTML pages:
-  - `Cache-Control: no-cache, no-store, must-revalidate`
-  - `Pragma: no-cache` (HTTP/1.0 compatibility)
-  - `Expires: 0` (legacy browser compatibility)
-- **Assets**: JS/CSS still cached for 1 day (performance) but use content hashes so new versions auto-refresh
-
-### January 4, 2026 - Fixed Blank Page CSP Issue
-- **Root Cause**: Preload hints for `/src/main.tsx` and `/src/App.tsx` were being inlined as base64 data URLs during Vite build, blocked by CSP
-- **Solution**: Removed manual preload hints from index.html - Vite handles module preloading automatically
-- **Also Fixed**: Removed fail-fast `process.exit(1)` causing restart loops; changed catch-all to middleware instead of Express 5 wildcard route
-
-### January 4, 2026 - Updated Workshop to 2026
-- **New Dates**: June 29 – July 5, 2026 (7 days, up from 5 days)
-- **Central Constants**: Updated `src/constants/applicationDates.ts` as single source of truth
-- **Files Updated**: All date/year references across 14+ files including HeroSection, SummerProgramme, ApplicationForm, email templates, tuition pages
-- **Pricing**: €749 total (€107/day), application deadline May 24, 2026, early bird ends March 1, 2026
-
-### January 4, 2026 - Eliminated Vite Middleware Mode (Final Fix for HTTP 426)
-- **Root Cause Identified**: Vite middleware mode injects HMR client that tries to connect to port 24678
-- **Solution**: Server now serves pre-built static files from `dist/` instead of using Vite middleware
-- **Workflow Updated**: Now runs `npm run build && npm run dev` to ensure frontend is built
-- **Trade-off**: Frontend changes require rebuild (no hot reload); this is acceptable for stability
-
-### January 4, 2026 - Implemented Server Stability Safeguards
-- Added immediate port binding before async operations
-- Added `/health` endpoint for deployment health checks
-- Added graceful shutdown handlers (SIGTERM, SIGINT)
-- Added error boundaries (uncaughtException, unhandledRejection)
+### Third-Party Libraries
+-   **Canvas Confetti**: For celebration animations.
