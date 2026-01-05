@@ -99,10 +99,41 @@ const TuitionTiers = () => {
                     </h3>
                     
                     <div className="bg-white rounded-lg md:rounded-xl p-5 md:p-6 mb-4 md:mb-5 border border-[#e8e8e8]">
-                      <p className="text-xs md:text-sm text-[#4f6e72] font-light uppercase tracking-wide mb-1 md:mb-2">Total Tuition</p>
-                      <p className="text-3xl md:text-4xl font-serif font-light text-[#4f6e72] mb-1 md:mb-2">€749</p>
-                      <p className="text-[#666666] font-light text-sm md:text-base">
-                        A comprehensive package covering over 40 hours of elite training
+                      <p className="text-xs md:text-sm text-[#4f6e72] font-light uppercase tracking-wide mb-2 md:mb-3">All-Inclusive Tuition</p>
+                      
+                      <div className="mb-3">
+                        <p className="text-base md:text-lg text-[#999999] font-light line-through">Standard Rate: €1,499</p>
+                        <div className="flex items-baseline gap-2">
+                          <span className="text-xs md:text-sm text-[#4f6e72] font-medium">Early Bird:</span>
+                          <span className="text-3xl md:text-4xl font-serif font-light text-[#4f6e72]">€749</span>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center gap-2 text-[#e67e22] mb-3">
+                        <Calendar className="w-4 h-4 flex-shrink-0" />
+                        <span className="text-sm font-medium">Deadline: May 24, 2026</span>
+                      </div>
+                      
+                      <div className="bg-[#e8f5e9] text-[#2e7d32] rounded-md px-3 py-2 mb-4">
+                        <p className="text-sm md:text-base font-medium text-center">Save €750 Today</p>
+                      </div>
+                      
+                      <Button 
+                        onClick={handleApplyClick}
+                        className="w-full px-6 py-2.5 text-sm md:text-base font-medium bg-[#4f6e72] text-white hover:bg-[#3d5a5e] rounded-full transition-all duration-300 mb-3"
+                        data-testid="button-apply-lock-price"
+                      >
+                        Apply Now - Lock In €749
+                      </Button>
+                      
+                      <p className="text-xs text-[#888888] text-center font-light">
+                        After May 24: Price returns to €1,499 or program closes
+                      </p>
+                    </div>
+                    
+                    <div className="bg-[#fafafa] rounded-lg md:rounded-xl p-4 md:p-5 border border-[#e8e8e8] text-left">
+                      <p className="text-xs md:text-sm text-[#555555] font-light leading-relaxed">
+                        Our €749 early bird rate (50% off the standard €1,499) is reserved for committed artists who register before May 24th. We keep the group intentionally small (20 students max) and offer this special pricing only during early registration. After the deadline, pricing returns to €1,499. For context: a single week of private lessons with faculty at this caliber typically costs €700-1,000, and you're receiving that plus 10+ hours of masterclasses, mock auditions, a final performance/showcase, professional recordings, and more.
                       </p>
                     </div>
 
@@ -135,9 +166,14 @@ const TuitionTiers = () => {
             className="text-center mt-8 md:mt-12"
           >
             <div className="bg-[#4f6e72] text-white rounded-xl md:rounded-2xl p-6 md:p-10 lg:p-12 max-w-2xl mx-auto">
-              <h3 className="font-serif text-xl md:text-2xl lg:text-3xl font-light mb-4 md:mb-5">
+              <h3 className="font-serif text-xl md:text-2xl lg:text-3xl font-light mb-3 md:mb-4">
                 Ready to Begin?
               </h3>
+              
+              <div className="mb-4 md:mb-5">
+                <p className="text-sm md:text-base text-white/70 line-through mb-1">Standard Rate: €1,499</p>
+                <p className="text-2xl md:text-3xl font-serif font-light">Early Bird: €749</p>
+              </div>
               
               <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 mb-5 md:mb-6 text-white text-sm md:text-base">
                 <div className="flex items-center gap-2">
@@ -146,20 +182,20 @@ const TuitionTiers = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4 md:w-5 md:h-5" />
-                  <span className="font-light">7 days left</span>
+                  <span className="font-light">Deadline: May 24, 2026</span>
                 </div>
               </div>
               
               <Button 
                 onClick={handleApplyClick}
-                className="w-full sm:w-auto px-8 md:px-10 py-2.5 md:py-3 text-sm md:text-base font-light bg-white text-[#4f6e72] hover:bg-gray-50 rounded-full transition-all duration-300"
+                className="w-full sm:w-auto px-8 md:px-10 py-2.5 md:py-3 text-sm md:text-base font-medium bg-white text-[#4f6e72] hover:bg-gray-50 rounded-full transition-all duration-300"
                 data-testid="button-apply-now"
               >
-                Apply Now
+                Apply Now - Lock In €749
               </Button>
               
               <p className="font-light text-[#d0e0e3] mt-4 md:mt-5 text-xs md:text-sm">
-                Final call: Registration closes May 24, 2026
+                After May 24: Price returns to €1,499 or program closes
               </p>
             </div>
           </motion.div>
