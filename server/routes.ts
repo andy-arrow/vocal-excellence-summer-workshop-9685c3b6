@@ -168,12 +168,32 @@ export async function registerRoutes(app: Express): Promise<void> {
         if (RESEND_API_KEY) {
           try {
             const emailService = new EmailService(RESEND_API_KEY);
-            const result = await emailService.sendNotifications({
+            const result = await emailService.sendApplicationNotifications({
               firstName: applicationData.firstName,
               lastName: applicationData.lastName,
               email: applicationData.email,
               phone: applicationData.phone,
+              age: applicationData.age?.toString(),
+              socialMedia: applicationData.socialMedia,
+              dateOfBirth: applicationData.dateOfBirth,
+              nationality: applicationData.nationality,
+              whereFrom: applicationData.whereFrom,
               vocalRange: applicationData.vocalRange || undefined,
+              yearsOfSinging: applicationData.yearsOfSinging,
+              musicalBackground: applicationData.musicalBackground,
+              teacherName: applicationData.teacherName,
+              teacherEmail: applicationData.teacherEmail,
+              areasOfInterest: applicationData.areasOfInterest,
+              reasonForApplying: applicationData.reasonForApplying,
+              heardAboutUs: applicationData.heardAboutUs,
+              scholarshipInterest: applicationData.scholarshipInterest,
+              dietaryRestrictions: applicationData.dietaryRestrictions,
+              specialNeeds: applicationData.specialNeeds,
+              hasAudioFile1: !!files?.audioFile1?.[0],
+              hasAudioFile2: !!files?.audioFile2?.[0],
+              hasCvFile: !!files?.cvFile?.[0],
+              hasRecommendationFile: !!files?.recommendationFile?.[0],
+              applicationId: application.id,
             });
             emailStatus = { success: result.success, error: result.error?.toString() || null };
           } catch (emailError: any) {
@@ -210,9 +230,10 @@ export async function registerRoutes(app: Express): Promise<void> {
       const RESEND_API_KEY = process.env.RESEND_API_KEY;
       if (RESEND_API_KEY) {
         const emailService = new EmailService(RESEND_API_KEY);
-        await emailService.sendNotificationToAdmin({
-          firstName: validated.name,
+        await emailService.sendContactNotification({
+          name: validated.name,
           email: validated.email,
+          message: validated.message,
         });
       }
 
