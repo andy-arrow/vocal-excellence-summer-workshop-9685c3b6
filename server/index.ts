@@ -8,6 +8,12 @@ const app = express();
 const isDev = process.env.NODE_ENV !== "production";
 const port = parseInt(process.env.PORT || (isDev ? "3001" : "5000"), 10);
 
+if (process.env.ADMIN_PASSWORD) {
+  console.log("Admin password configured");
+} else {
+  console.warn("WARNING: Admin password missing - admin routes will be inaccessible");
+}
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
