@@ -59,17 +59,17 @@ const ContactInfoFields = () => {
   };
 
   return (
-    <div className="grid sm:grid-cols-2 gap-6">
+    <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
       <FormField
         control={form.control}
         name="email"
         render={({ field }) => (
           <FormItem className="flex flex-col">
-            <FormLabel className="text-gray-900 dark:text-gray-100 font-medium" htmlFor="email">
+            <FormLabel className="text-gray-900 dark:text-gray-100 font-medium text-sm sm:text-base" htmlFor="email">
               Email Address
               <span className="text-red-700 ml-1">*</span>
             </FormLabel>
-            <FormDescription className="text-sm text-muted-foreground mt-0.5 mb-1.5 min-h-[40px]">
+            <FormDescription className="text-xs sm:text-sm text-muted-foreground mt-0.5 mb-1.5 min-h-[36px] sm:min-h-[40px]">
               We'll use this to send you updates about your application
             </FormDescription>
             <FormControl>
@@ -80,10 +80,10 @@ const ContactInfoFields = () => {
                 placeholder="your.email@example.com"
                 autoComplete="email"
                 aria-required="true"
-                className="h-10 text-foreground placeholder:text-muted-foreground"
+                className="h-10 sm:h-11 text-sm sm:text-base text-foreground placeholder:text-muted-foreground"
               />
             </FormControl>
-            <FormMessage className="text-red-700" />
+            <FormMessage className="text-red-700 text-xs sm:text-sm" />
           </FormItem>
         )}
       />
@@ -93,11 +93,11 @@ const ContactInfoFields = () => {
         name="phone"
         render={({ field }) => (
           <FormItem className="flex flex-col">
-            <FormLabel className="text-gray-900 dark:text-gray-100 font-medium" htmlFor="phone">
+            <FormLabel className="text-gray-900 dark:text-gray-100 font-medium text-sm sm:text-base" htmlFor="phone">
               Phone Number
               <span className="text-red-700 ml-1">*</span>
             </FormLabel>
-            <FormDescription className="text-sm text-muted-foreground mt-0.5 mb-1.5 min-h-[40px]">
+            <FormDescription className="text-xs sm:text-sm text-muted-foreground mt-0.5 mb-1.5 min-h-[36px] sm:min-h-[40px]">
               Select country code, then enter your number
             </FormDescription>
             <div className="flex gap-2 items-center">
@@ -108,17 +108,17 @@ const ContactInfoFields = () => {
                     role="combobox"
                     aria-expanded={open}
                     aria-label="Select country code"
-                    className="w-[100px] h-10 justify-between px-3 font-normal bg-background border-input"
+                    className="w-[90px] sm:w-[100px] h-10 sm:h-11 justify-between px-2 sm:px-3 font-normal bg-background border-input"
                     data-testid="select-country-code"
                   >
-                    <span className="text-sm text-foreground">
+                    <span className="text-xs sm:text-sm text-foreground">
                       {selectedCountry.dial}
                     </span>
-                    <ChevronDown className="ml-1 h-4 w-4 shrink-0 opacity-50" />
+                    <ChevronDown className="ml-1 h-3 w-3 sm:h-4 sm:w-4 shrink-0 opacity-50" />
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent 
-                  className="w-[300px] p-0 bg-background border shadow-lg"
+                  className="w-[280px] sm:w-[300px] p-0 bg-background border shadow-lg"
                   align="start"
                   side="bottom"
                   sideOffset={4}
@@ -128,9 +128,9 @@ const ContactInfoFields = () => {
                   <Command className="bg-background">
                     <CommandInput 
                       placeholder="Search country..." 
-                      className="h-10"
+                      className="h-10 text-sm"
                     />
-                    <CommandList className="max-h-[280px] overflow-y-auto">
+                    <CommandList className="max-h-[240px] sm:max-h-[280px] overflow-y-auto">
                       <CommandEmpty>No country found.</CommandEmpty>
                       <CommandGroup>
                         {sortedCountries.map((country) => (
@@ -138,7 +138,7 @@ const ContactInfoFields = () => {
                             key={country.code}
                             value={`${country.name} ${country.dial}`}
                             onSelect={() => handleCountrySelect(country.code)}
-                            className="flex items-center gap-2 py-2 px-2 cursor-pointer"
+                            className="flex items-center gap-2 py-2.5 sm:py-2 px-2 cursor-pointer"
                           >
                             <Check
                               className={cn(
@@ -148,10 +148,10 @@ const ContactInfoFields = () => {
                                   : "opacity-0"
                               )}
                             />
-                            <span className="font-medium w-14 text-muted-foreground text-sm">
+                            <span className="font-medium w-12 sm:w-14 text-muted-foreground text-xs sm:text-sm">
                               {country.dial}
                             </span>
-                            <span className="truncate text-sm text-foreground">
+                            <span className="truncate text-xs sm:text-sm text-foreground">
                               {country.name}
                             </span>
                           </CommandItem>
@@ -171,13 +171,13 @@ const ContactInfoFields = () => {
                   placeholder="123 456 7890"
                   autoComplete="tel-national"
                   aria-required="true"
-                  className="flex-1 h-10 text-foreground placeholder:text-muted-foreground"
+                  className="flex-1 h-10 sm:h-11 text-sm sm:text-base text-foreground placeholder:text-muted-foreground"
                   data-testid="input-phone-number"
                 />
               </FormControl>
             </div>
             <input type="hidden" {...field} />
-            <FormMessage className="text-red-700" />
+            <FormMessage className="text-red-700 text-xs sm:text-sm" />
           </FormItem>
         )}
       />
@@ -187,7 +187,7 @@ const ContactInfoFields = () => {
         name="socialMedia"
         render={({ field }) => (
           <FormItem className="sm:col-span-2">
-            <FormLabel className="text-gray-900 dark:text-gray-100 font-medium" htmlFor="socialMedia">
+            <FormLabel className="text-gray-900 dark:text-gray-100 font-medium text-sm sm:text-base" htmlFor="socialMedia">
               Social Media or Website (Optional)
             </FormLabel>
             <FormControl>
@@ -196,10 +196,10 @@ const ContactInfoFields = () => {
                 type="text"
                 id="socialMedia"
                 placeholder="Instagram, Facebook, personal website, etc."
-                className="h-10 text-foreground placeholder:text-muted-foreground"
+                className="h-10 sm:h-11 text-sm sm:text-base text-foreground placeholder:text-muted-foreground"
               />
             </FormControl>
-            <FormMessage className="text-red-700" />
+            <FormMessage className="text-red-700 text-xs sm:text-sm" />
           </FormItem>
         )}
       />

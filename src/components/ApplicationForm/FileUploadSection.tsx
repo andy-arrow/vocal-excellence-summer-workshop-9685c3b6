@@ -129,19 +129,19 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
   };
 
   return (
-    <div className="mb-6 last:mb-0">
-      <div className="flex items-center justify-between mb-2">
-        <FormLabel className="text-[#1d1d1f] text-base flex items-center gap-2 font-medium">
-          <Icon className={`${iconColor} w-5 h-5`} />
+    <div className="mb-5 sm:mb-6 last:mb-0">
+      <div className="flex items-center justify-between mb-2 gap-2 flex-wrap">
+        <FormLabel className="text-[#1d1d1f] text-sm sm:text-base flex items-center gap-1.5 sm:gap-2 font-medium">
+          <Icon className={`${iconColor} w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0`} />
           <span>{label}</span>
           {required && <span className="text-[#bf4800] ml-1">*</span>}
         </FormLabel>
-        <span className="text-xs text-[#86868b] font-medium bg-[#f5f5f7] px-2 py-0.5 rounded">
+        <span className="text-[10px] sm:text-xs text-[#86868b] font-medium bg-[#f5f5f7] px-1.5 sm:px-2 py-0.5 rounded">
           {acceptedFormats}
         </span>
       </div>
       
-      <p className="text-sm text-[#86868b] mb-3 leading-relaxed">
+      <p className="text-xs sm:text-sm text-[#86868b] mb-2.5 sm:mb-3 leading-relaxed">
         {description}
       </p>
       
@@ -162,27 +162,27 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
               className="
                 flex flex-col items-center justify-center
                 border-2 border-dashed border-[#d2d2d7] 
-                rounded-xl p-6 cursor-pointer
+                rounded-lg sm:rounded-xl p-4 sm:p-6 cursor-pointer
                 hover:border-[#0066cc] hover:bg-[#f5f5f7]/50
                 transition-all duration-200 ease-out
                 group
               "
               data-testid={`upload-area-${label.replace(/\s+/g, '-').toLowerCase()}`}
             >
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2.5 sm:gap-3">
                 <div className="
-                  w-10 h-10 rounded-full bg-[#f5f5f7] 
-                  flex items-center justify-center
+                  w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#f5f5f7] 
+                  flex items-center justify-center flex-shrink-0
                   group-hover:bg-[#e8f0fe] group-hover:text-[#0066cc]
                   transition-colors duration-200
                 ">
-                  <FileTypeIcon className="w-5 h-5 text-[#86868b] group-hover:text-[#0066cc]" />
+                  <FileTypeIcon className="w-4 h-4 sm:w-5 sm:h-5 text-[#86868b] group-hover:text-[#0066cc]" />
                 </div>
                 <div className="text-left">
-                  <p className="text-sm font-medium text-[#1d1d1f]">
+                  <p className="text-xs sm:text-sm font-medium text-[#1d1d1f]">
                     Choose file or drag here
                   </p>
-                  <p className="text-xs text-[#86868b] mt-0.5">
+                  <p className="text-[10px] sm:text-xs text-[#86868b] mt-0.5">
                     Max size: 15 MB
                   </p>
                 </div>
@@ -209,27 +209,27 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
             className="
               bg-gradient-to-r from-[#f0fdf4] to-[#ecfdf5]
               border border-[#86efac] 
-              p-4 rounded-xl 
-              flex items-center gap-3
+              p-3 sm:p-4 rounded-lg sm:rounded-xl 
+              flex items-center gap-2.5 sm:gap-3
               shadow-sm
             "
             data-testid={`file-ready-${label.replace(/\s+/g, '-').toLowerCase()}`}
           >
-            <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[#22c55e] flex items-center justify-center shadow-sm">
-              <Check className="w-5 h-5 text-white" strokeWidth={2.5} />
+            <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#22c55e] flex items-center justify-center shadow-sm">
+              <Check className="w-4 h-4 sm:w-5 sm:h-5 text-white" strokeWidth={2.5} />
             </div>
             <div className="flex-grow min-w-0">
-              <p className="text-sm font-semibold text-[#166534] truncate" title={currentFile.name}>
-                {truncateFilename(currentFile.name)}
+              <p className="text-xs sm:text-sm font-semibold text-[#166534] truncate" title={currentFile.name}>
+                {truncateFilename(currentFile.name, 25)}
               </p>
-              <div className="flex items-center gap-2 mt-0.5">
-                <span className="text-xs text-[#16a34a] font-medium">
+              <div className="flex items-center gap-1.5 sm:gap-2 mt-0.5 flex-wrap">
+                <span className="text-[10px] sm:text-xs text-[#16a34a] font-medium">
                   {formatFileSize(currentFile.size)}
                 </span>
-                <span className="text-[#86efac]">|</span>
-                <span className="text-xs text-[#16a34a] flex items-center gap-1">
-                  <Check className="w-3 h-3" />
-                  Ready to submit
+                <span className="text-[#86efac] hidden sm:inline">|</span>
+                <span className="text-[10px] sm:text-xs text-[#16a34a] flex items-center gap-1">
+                  <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                  Ready
                 </span>
               </div>
             </div>
@@ -237,7 +237,7 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
               onClick={handleRemoveFile}
               variant="ghost" 
               size="sm"
-              className="flex-shrink-0 text-[#166534] hover:text-[#14532d] hover:bg-[#dcfce7] font-medium"
+              className="flex-shrink-0 text-[#166534] hover:text-[#14532d] hover:bg-[#dcfce7] font-medium text-xs sm:text-sm px-2 sm:px-3"
               data-testid={`button-remove-${label.replace(/\s+/g, '-').toLowerCase()}`}
             >
               Remove
@@ -253,26 +253,26 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
             className="
               bg-gradient-to-r from-[#fef2f2] to-[#fff1f2]
               border border-[#fca5a5] 
-              p-4 rounded-xl 
-              flex items-center gap-3
+              p-3 sm:p-4 rounded-lg sm:rounded-xl 
+              flex items-center gap-2.5 sm:gap-3
             "
             data-testid={`file-error-${label.replace(/\s+/g, '-').toLowerCase()}`}
           >
-            <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[#ef4444] flex items-center justify-center">
-              <AlertCircle className="w-5 h-5 text-white" />
+            <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#ef4444] flex items-center justify-center">
+              <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
             </div>
-            <div className="flex-grow">
-              <p className="text-sm font-semibold text-[#991b1b]">Upload failed</p>
-              <p className="text-xs text-[#b91c1c] mt-0.5">{error || 'Something went wrong'}</p>
+            <div className="flex-grow min-w-0">
+              <p className="text-xs sm:text-sm font-semibold text-[#991b1b]">Upload failed</p>
+              <p className="text-[10px] sm:text-xs text-[#b91c1c] mt-0.5 truncate">{error || 'Something went wrong'}</p>
             </div>
             <Button 
               onClick={handleRemoveFile}
               variant="ghost" 
               size="sm"
-              className="flex-shrink-0 text-[#991b1b] hover:text-[#7f1d1d] hover:bg-[#fee2e2] font-medium"
+              className="flex-shrink-0 text-[#991b1b] hover:text-[#7f1d1d] hover:bg-[#fee2e2] font-medium text-xs sm:text-sm px-2 sm:px-3"
               data-testid={`button-retry-${label.replace(/\s+/g, '-').toLowerCase()}`}
             >
-              Try Again
+              Retry
             </Button>
           </motion.div>
         ) : null}

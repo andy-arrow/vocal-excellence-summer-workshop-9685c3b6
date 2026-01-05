@@ -21,9 +21,9 @@ const TermsAndConditionsSection = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div 
-        className="relative rounded-[18px] p-6 md:p-6 border border-black/5 dark:border-white/10"
+        className="relative rounded-xl sm:rounded-[18px] p-4 sm:p-6 border border-black/5 dark:border-white/10"
         style={{
           background: 'rgba(245, 245, 247, 0.8)',
           backdropFilter: 'blur(20px)',
@@ -35,9 +35,8 @@ const TermsAndConditionsSection = () => {
         }}
       >
         <h3 
-          className="mb-2"
+          className="mb-2 text-[15px] sm:text-[17px]"
           style={{
-            fontSize: '17px',
             fontWeight: 600,
             color: '#1D1D1F',
             letterSpacing: '-0.01em',
@@ -47,9 +46,8 @@ const TermsAndConditionsSection = () => {
         </h3>
         
         <p 
-          className="mb-6"
+          className="mb-4 sm:mb-6 text-[13px] sm:text-[14px]"
           style={{
-            fontSize: '14px',
             lineHeight: 1.5,
             color: '#86868B',
           }}
@@ -67,39 +65,39 @@ const TermsAndConditionsSection = () => {
           , which help us maintain the high standard of our intensive.
         </p>
 
-        <div className="space-y-4">
-          <div className="flex items-start gap-3">
+        <div className="space-y-3 sm:space-y-4">
+          <div className="flex items-start gap-2.5 sm:gap-3">
             <Lock 
-              className="flex-shrink-0 mt-0.5" 
-              style={{ width: '18px', height: '18px', color: '#0066CC' }} 
+              className="flex-shrink-0 mt-0.5 w-4 h-4 sm:w-[18px] sm:h-[18px]" 
+              style={{ color: '#0066CC' }} 
             />
-            <p style={{ fontSize: '13px', color: '#424245', lineHeight: 1.5 }}>
+            <p className="text-[12px] sm:text-[13px]" style={{ color: '#424245', lineHeight: 1.5 }}>
               <strong>Your Commitment:</strong> Your deposit is non-refundable to secure your seat.
             </p>
           </div>
           
-          <div className="flex items-start gap-3">
+          <div className="flex items-start gap-2.5 sm:gap-3">
             <ShieldCheck 
-              className="flex-shrink-0 mt-0.5" 
-              style={{ width: '18px', height: '18px', color: '#0066CC' }} 
+              className="flex-shrink-0 mt-0.5 w-4 h-4 sm:w-[18px] sm:h-[18px]" 
+              style={{ color: '#0066CC' }} 
             />
-            <p style={{ fontSize: '13px', color: '#424245', lineHeight: 1.5 }}>
+            <p className="text-[12px] sm:text-[13px]" style={{ color: '#424245', lineHeight: 1.5 }}>
               <strong>Peace of Mind:</strong> Tuition becomes non-refundable after June 15, 2026. We warmly recommend travel insurance.
             </p>
           </div>
           
-          <div className="flex items-start gap-3">
+          <div className="flex items-start gap-2.5 sm:gap-3">
             <Video 
-              className="flex-shrink-0 mt-0.5" 
-              style={{ width: '18px', height: '18px', color: '#0066CC' }} 
+              className="flex-shrink-0 mt-0.5 w-4 h-4 sm:w-[18px] sm:h-[18px]" 
+              style={{ color: '#0066CC' }} 
             />
-            <p style={{ fontSize: '13px', color: '#424245', lineHeight: 1.5 }}>
+            <p className="text-[12px] sm:text-[13px]" style={{ color: '#424245', lineHeight: 1.5 }}>
               <strong>Captured Moments:</strong> We film performances! By joining, you agree Vocal Excellence retains rights to share these moments for promotion.
             </p>
           </div>
         </div>
 
-        <div className="mt-6 pt-6 border-t border-black/5">
+        <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-black/5">
           <FormField
             control={form.control}
             name="termsAgreed"
@@ -107,7 +105,7 @@ const TermsAndConditionsSection = () => {
               <FormItem>
                 <div 
                   ref={toggleRef}
-                  className={`flex items-center gap-3 ${shakeToggle ? 'animate-shake' : ''}`}
+                  className={`flex items-center gap-2.5 sm:gap-3 ${shakeToggle ? 'animate-shake' : ''}`}
                   style={{ minHeight: '44px' }}
                 >
                   <FormControl>
@@ -118,10 +116,10 @@ const TermsAndConditionsSection = () => {
                       onClick={() => field.onChange(!field.value)}
                       className="relative flex-shrink-0 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 rounded-full"
                       style={{
-                        width: '50px',
-                        height: '30px',
+                        width: '46px',
+                        height: '28px',
                         backgroundColor: field.value ? '#34C759' : '#E5E5EA',
-                        borderRadius: '30px',
+                        borderRadius: '28px',
                         transition: 'background-color 0.3s cubic-bezier(0.25, 1, 0.5, 1)',
                         padding: '2px',
                       }}
@@ -130,12 +128,12 @@ const TermsAndConditionsSection = () => {
                       <span
                         style={{
                           display: 'block',
-                          width: '26px',
-                          height: '26px',
+                          width: '24px',
+                          height: '24px',
                           backgroundColor: '#FFFFFF',
                           borderRadius: '50%',
                           boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
-                          transform: field.value ? 'translateX(20px)' : 'translateX(0)',
+                          transform: field.value ? 'translateX(18px)' : 'translateX(0)',
                           transition: 'transform 0.3s cubic-bezier(0.25, 1, 0.5, 1)',
                         }}
                       />
@@ -143,9 +141,8 @@ const TermsAndConditionsSection = () => {
                   </FormControl>
                   <label 
                     onClick={() => field.onChange(!field.value)}
-                    className="cursor-pointer select-none"
+                    className="cursor-pointer select-none text-[13px] sm:text-[14px]"
                     style={{
-                      fontSize: '14px',
                       fontWeight: 500,
                       color: '#1D1D1F',
                     }}
@@ -153,7 +150,7 @@ const TermsAndConditionsSection = () => {
                     I agree to the terms and am ready to join the program.
                   </label>
                 </div>
-                <FormMessage className="text-red-600 text-sm mt-2" />
+                <FormMessage className="text-red-600 text-xs sm:text-sm mt-2" />
               </FormItem>
             )}
           />
@@ -161,7 +158,7 @@ const TermsAndConditionsSection = () => {
       </div>
 
       <div className="text-center space-y-2">
-        <p style={{ fontSize: '13px', color: '#86868B' }}>
+        <p className="text-[12px] sm:text-[13px]" style={{ color: '#86868B' }}>
           Read the full{' '}
           <Link 
             to="/terms" 

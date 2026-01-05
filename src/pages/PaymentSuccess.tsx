@@ -101,7 +101,7 @@ const PaymentSuccess = () => {
       <Navbar />
       
       <motion.div 
-        className="max-w-2xl mx-auto px-4 py-20 text-center"
+        className="max-w-2xl mx-auto px-4 py-12 sm:py-20 text-center"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -110,36 +110,36 @@ const PaymentSuccess = () => {
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-          className="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-8"
+          className="w-16 h-16 sm:w-20 sm:h-20 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6 sm:mb-8"
         >
-          <CheckCircle className="w-12 h-12 text-white" />
+          <CheckCircle className="w-10 h-10 sm:w-12 sm:h-12 text-white" />
         </motion.div>
 
         <h1 
-          className="font-serif text-4xl md:text-5xl text-apple-text mb-4"
+          className="font-serif text-3xl sm:text-4xl md:text-5xl text-apple-text mb-3 sm:mb-4"
           data-testid="text-success-title"
         >
           Application Submitted!
         </h1>
         
-        <p className="text-apple-grey text-lg mb-10 max-w-lg mx-auto">
+        <p className="text-apple-grey text-base sm:text-lg mb-8 sm:mb-10 max-w-lg mx-auto">
           Thank you{applicantName ? `, ${applicantName.split(' ')[0]}` : ''} for applying to the Vocal Excellence Summer Workshop 2026. Your application has been received and your registration fee has been processed.
         </p>
 
-        <div className="space-y-4 mb-10">
+        <div className="space-y-3 sm:space-y-4 mb-8 sm:mb-10">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4 }}
-            className="bg-white rounded-xl p-6 border border-apple-border text-left"
+            className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 border border-apple-border text-left"
           >
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
-                <Mail className="w-5 h-5 text-emerald-600" />
+            <div className="flex items-start gap-3 sm:gap-4">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600" />
               </div>
               <div>
-                <h3 className="font-semibold text-apple-text mb-1">Confirmation Email</h3>
-                <p className="text-apple-grey text-sm">
+                <h3 className="font-semibold text-apple-text text-sm sm:text-base mb-1">Confirmation Email</h3>
+                <p className="text-apple-grey text-xs sm:text-sm">
                   We've sent a confirmation to {email || 'your email address'} with a copy of your application details.
                 </p>
               </div>
@@ -150,15 +150,15 @@ const PaymentSuccess = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5 }}
-            className="bg-white rounded-xl p-6 border border-apple-border text-left"
+            className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 border border-apple-border text-left"
           >
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 bg-violet-100 rounded-full flex items-center justify-center flex-shrink-0">
-                <Calendar className="w-5 h-5 text-violet-600" />
+            <div className="flex items-start gap-3 sm:gap-4">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 bg-violet-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-violet-600" />
               </div>
               <div>
-                <h3 className="font-semibold text-apple-text mb-1">What's Next?</h3>
-                <p className="text-apple-grey text-sm">
+                <h3 className="font-semibold text-apple-text text-sm sm:text-base mb-1">What's Next?</h3>
+                <p className="text-apple-grey text-xs sm:text-sm">
                   We'll review your application and contact you within 2 weeks regarding the next steps and selection results.
                 </p>
               </div>

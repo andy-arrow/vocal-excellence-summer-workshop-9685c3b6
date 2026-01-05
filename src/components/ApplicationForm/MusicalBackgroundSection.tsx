@@ -46,17 +46,17 @@ const MusicalBackgroundSection = () => {
               </FormDescription>
               <FormControl>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <SelectTrigger className="bg-white border-[#e5e5e5] text-[#1d1d1f] text-sm md:text-base">
+                  <SelectTrigger className="h-10 sm:h-11 bg-white border-[#e5e5e5] text-[#1d1d1f] text-sm md:text-base">
                     <SelectValue placeholder="Select your vocal range" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="soprano">Soprano</SelectItem>
-                    <SelectItem value="mezzo-soprano">Mezzo-soprano</SelectItem>
-                    <SelectItem value="contralto">Contralto</SelectItem>
-                    <SelectItem value="countertenor">Countertenor</SelectItem>
-                    <SelectItem value="tenor">Tenor</SelectItem>
-                    <SelectItem value="baritone">Baritone</SelectItem>
-                    <SelectItem value="bass">Bass</SelectItem>
+                    <SelectItem value="soprano" className="text-sm sm:text-base">Soprano</SelectItem>
+                    <SelectItem value="mezzo-soprano" className="text-sm sm:text-base">Mezzo-soprano</SelectItem>
+                    <SelectItem value="contralto" className="text-sm sm:text-base">Contralto</SelectItem>
+                    <SelectItem value="countertenor" className="text-sm sm:text-base">Countertenor</SelectItem>
+                    <SelectItem value="tenor" className="text-sm sm:text-base">Tenor</SelectItem>
+                    <SelectItem value="baritone" className="text-sm sm:text-base">Baritone</SelectItem>
+                    <SelectItem value="bass" className="text-sm sm:text-base">Bass</SelectItem>
                   </SelectContent>
                 </Select>
               </FormControl>
@@ -81,8 +81,9 @@ const MusicalBackgroundSection = () => {
                 <Input 
                   {...field}
                   type="number"
+                  inputMode="numeric"
                   min="0"
-                  className="bg-white border-[#e5e5e5] text-[#1d1d1f] placeholder:text-[#999999] text-sm md:text-base"
+                  className="h-10 sm:h-11 bg-white border-[#e5e5e5] text-[#1d1d1f] placeholder:text-[#999999] text-sm md:text-base"
                   placeholder="Enter number of years"
                 />
               </FormControl>

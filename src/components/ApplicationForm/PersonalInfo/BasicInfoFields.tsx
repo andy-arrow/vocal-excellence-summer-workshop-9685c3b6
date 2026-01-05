@@ -24,13 +24,13 @@ const BasicInfoFields = () => {
   const form = useFormContext<ApplicationFormValues>();
 
   return (
-    <div className="grid sm:grid-cols-2 gap-6">
+    <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
       <FormField
         control={form.control}
         name="firstName"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-apple-text font-medium text-base" htmlFor="firstName">
+            <FormLabel className="text-apple-text font-medium text-sm sm:text-base" htmlFor="firstName">
               First Name
               <span className="text-red-700 ml-1">*</span>
             </FormLabel>
@@ -41,10 +41,10 @@ const BasicInfoFields = () => {
                 placeholder="First name"
                 autoComplete="given-name"
                 aria-required="true"
-                className="text-apple-text placeholder:text-apple-grey"
+                className="h-10 sm:h-11 text-sm sm:text-base text-apple-text placeholder:text-apple-grey"
               />
             </FormControl>
-            <FormMessage className="text-red-700" />
+            <FormMessage className="text-red-700 text-xs sm:text-sm" />
           </FormItem>
         )}
       />
@@ -54,7 +54,7 @@ const BasicInfoFields = () => {
         name="lastName"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-apple-text font-medium text-base" htmlFor="lastName">
+            <FormLabel className="text-apple-text font-medium text-sm sm:text-base" htmlFor="lastName">
               Last Name
               <span className="text-red-700 ml-1">*</span>
             </FormLabel>
@@ -65,10 +65,10 @@ const BasicInfoFields = () => {
                 placeholder="Last name"
                 autoComplete="family-name"
                 aria-required="true"
-                className="text-apple-text placeholder:text-apple-grey"
+                className="h-10 sm:h-11 text-sm sm:text-base text-apple-text placeholder:text-apple-grey"
               />
             </FormControl>
-            <FormMessage className="text-red-700" />
+            <FormMessage className="text-red-700 text-xs sm:text-sm" />
           </FormItem>
         )}
       />
@@ -78,7 +78,7 @@ const BasicInfoFields = () => {
         name="age"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-apple-text font-medium text-base" htmlFor="age">
+            <FormLabel className="text-apple-text font-medium text-sm sm:text-base" htmlFor="age">
               How old are you?
               <span className="text-red-700 ml-1">*</span>
             </FormLabel>
@@ -87,14 +87,15 @@ const BasicInfoFields = () => {
                 {...field}
                 id="age"
                 type="number"
+                inputMode="numeric"
                 min="16"
                 max="100"
                 placeholder="Enter your age"
                 aria-required="true"
-                className="text-apple-text bg-white"
+                className="h-10 sm:h-11 text-sm sm:text-base text-apple-text bg-white"
               />
             </FormControl>
-            <FormMessage className="text-red-700" />
+            <FormMessage className="text-red-700 text-xs sm:text-sm" />
           </FormItem>
         )}
       />
@@ -104,13 +105,13 @@ const BasicInfoFields = () => {
         name="nationality"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-apple-text font-medium text-base">
+            <FormLabel className="text-apple-text font-medium text-sm sm:text-base">
               Nationality
               <span className="text-red-700 ml-1">*</span>
             </FormLabel>
             <FormControl>
               <Select onValueChange={field.onChange} value={field.value || ""}>
-                <SelectTrigger className="bg-white text-apple-text">
+                <SelectTrigger className="h-10 sm:h-11 text-sm sm:text-base bg-white text-apple-text">
                   <SelectValue placeholder="Select your nationality" />
                 </SelectTrigger>
                 <SelectContent className="max-h-[280px]">
@@ -118,6 +119,7 @@ const BasicInfoFields = () => {
                     <SelectItem 
                       key={nationality.value} 
                       value={nationality.value}
+                      className="text-sm sm:text-base"
                     >
                       {nationality.label}
                     </SelectItem>
@@ -125,7 +127,7 @@ const BasicInfoFields = () => {
                 </SelectContent>
               </Select>
             </FormControl>
-            <FormMessage className="text-red-700" />
+            <FormMessage className="text-red-700 text-xs sm:text-sm" />
           </FormItem>
         )}
       />
@@ -135,7 +137,7 @@ const BasicInfoFields = () => {
         name="whereFrom"
         render={({ field }) => (
           <FormItem className="sm:col-span-2">
-            <FormLabel className="text-apple-text font-medium text-base" htmlFor="whereFrom">
+            <FormLabel className="text-apple-text font-medium text-sm sm:text-base" htmlFor="whereFrom">
               Where are you from?
               <span className="text-red-700 ml-1">*</span>
             </FormLabel>
@@ -145,10 +147,10 @@ const BasicInfoFields = () => {
                 id="whereFrom"
                 placeholder="City, Country or Region"
                 aria-required="true" 
-                className="text-apple-text placeholder:text-apple-grey"
+                className="h-10 sm:h-11 text-sm sm:text-base text-apple-text placeholder:text-apple-grey"
               />
             </FormControl>
-            <FormMessage className="text-red-700" />
+            <FormMessage className="text-red-700 text-xs sm:text-sm" />
           </FormItem>
         )}
       />

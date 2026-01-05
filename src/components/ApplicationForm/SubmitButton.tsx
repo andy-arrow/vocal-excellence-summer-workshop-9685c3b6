@@ -32,9 +32,9 @@ const SubmitButton = ({ isSubmitting }: SubmitButtonProps) => {
         disabled={isDisabled}
         onClick={handleClick}
         className={`
-          px-6 py-3 font-medium rounded-full
+          px-4 sm:px-6 py-2.5 sm:py-3 font-medium rounded-full
           relative overflow-hidden
-          min-w-[180px] min-h-[48px]
+          min-w-[140px] sm:min-w-[180px] min-h-[44px] sm:min-h-[48px]
           focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500
           ${shake ? 'animate-shake' : ''}
         `}
@@ -53,20 +53,20 @@ const SubmitButton = ({ isSubmitting }: SubmitButtonProps) => {
         aria-label={isSubmitting ? "Submitting application" : "Submit application"}
         data-testid="submit-application-button"
       >
-        <span className="flex items-center justify-center gap-2">
+        <span className="flex items-center justify-center gap-1.5 sm:gap-2">
           {isSubmitting ? (
             <>
               <Spinner size="sm" color="white" speed={1} />
-              <span style={{ fontSize: '15px', fontWeight: 500 }}>
+              <span className="text-[13px] sm:text-[15px] font-medium">
                 Submitting...
               </span>
             </>
           ) : (
             <>
-              <span style={{ fontSize: '15px', fontWeight: 500 }}>
-                Submit Your Application
+              <span className="text-[13px] sm:text-[15px] font-medium">
+                Submit Application
               </span>
-              <ArrowRight style={{ width: '18px', height: '18px' }} />
+              <ArrowRight className="w-4 h-4 sm:w-[18px] sm:h-[18px]" />
             </>
           )}
         </span>
