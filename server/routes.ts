@@ -583,4 +583,184 @@ export async function registerRoutes(app: Express): Promise<void> {
       return handleApiError(res, error, "stripe webhook");
     }
   });
+
+  // Manual email trigger for existing application (for testing)
+  app.post("/api/admin/trigger-emails", async (req: Request, res: Response) => {
+    try {
+      const { applicationId, adminPassword } = req.body;
+      
+      // Basic security check
+      const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+      if (!ADMIN_PASSWORD || adminPassword !== ADMIN_PASSWORD) {
+        return res.status(401).json({ success: false, error: "Unauthorized" });
+      }
+      
+      if (!applicationId) {
+        return res.status(400).json({ success: false, error: "applicationId is required" });
+      }
+      
+      const application = await storage.getApplication(parseInt(applicationId));
+      if (!application) {
+        return res.status(404).json({ success: false, error: "Application not found" });
+      }
+      
+      // Check if emails were already sent (idempotency)
+      if (application.emailsSentAt) {
+        return res.json({
+          success: true,
+          message: `Emails already sent for ${application.firstName} ${application.lastName} at ${application.emailsSentAt}`,
+          applicant: application.email,
+          alreadySent: true,
+        });
+      }
+      
+      const RESEND_API_KEY = process.env.RESEND_API_KEY;
+      if (!RESEND_API_KEY) {
+        return res.status(500).json({ success: false, error: "RESEND_API_KEY not configured" });
+      }
+      
+      const emailService = new EmailService(RESEND_API_KEY);
+      
+      const result = await emailService.sendApplicationNotifications({
+        firstName: application.firstName,
+        lastName: application.lastName,
+        email: application.email,
+        phone: application.phone,
+        age: application.age || undefined,
+        socialMedia: application.socialMedia || undefined,
+        dateOfBirth: application.dateOfBirth || undefined,
+        nationality: application.nationality || undefined,
+        whereFrom: application.whereFrom || undefined,
+        vocalRange: application.vocalRange || undefined,
+        yearsOfSinging: application.yearsOfSinging || undefined,
+        musicalBackground: application.musicalBackground || undefined,
+        teacherName: application.teacherName || undefined,
+        teacherEmail: application.teacherEmail || undefined,
+        areasOfInterest: application.areasOfInterest || undefined,
+        reasonForApplying: application.reasonForApplying || undefined,
+        heardAboutUs: application.heardAboutUs || undefined,
+        scholarshipInterest: application.scholarshipInterest || false,
+        dietaryRestrictions: application.dietaryRestrictions as { type?: string | null; details?: string | null } | undefined,
+        specialNeeds: application.specialNeeds || undefined,
+        hasAudioFile1: !!application.audioFile1Path,
+        hasAudioFile2: !!application.audioFile2Path,
+        hasCvFile: !!application.cvFilePath,
+        hasRecommendationFile: !!application.recommendationFilePath,
+        applicationId: application.id,
+      });
+      
+      if (result.success) {
+        await storage.updateApplicationPayment(application.id, {
+          emailsSentAt: new Date(),
+        });
+      }
+      
+      return res.json({
+        success: result.success,
+        message: result.success 
+          ? `Emails sent for ${application.firstName} ${application.lastName}` 
+          : "Email sending failed",
+        applicant: application.email,
+        error: result.error,
+      });
+    } catch (error) {
+      return handleApiError(res, error, "trigger emails");
+    }
+  });
+
+  // Test email endpoint for diagnostics
+  app.post("/api/test-email", async (req: Request, res: Response) => {
+    try {
+      const { email, testType } = req.body;
+      
+      if (!email) {
+        return res.status(400).json({ 
+          success: false, 
+          error: "Email address is required" 
+        });
+      }
+
+      const RESEND_API_KEY = process.env.RESEND_API_KEY;
+      const ADMIN_NOTIFICATION_EMAIL = process.env.ADMIN_NOTIFICATION_EMAIL;
+
+      // Diagnostic information
+      const diagnostics = {
+        resendApiKeyPresent: !!RESEND_API_KEY,
+        resendApiKeyPrefix: RESEND_API_KEY ? RESEND_API_KEY.substring(0, 10) + '...' : 'NOT SET',
+        adminEmailConfigured: !!ADMIN_NOTIFICATION_EMAIL,
+        adminEmail: ADMIN_NOTIFICATION_EMAIL || 'NOT SET (using fallback: info@vocalexcellence.cy)',
+        testEmail: email,
+        testType: testType || 'full',
+      };
+
+      console.log("Email Test Diagnostics:", diagnostics);
+
+      if (!RESEND_API_KEY) {
+        return res.status(500).json({ 
+          success: false, 
+          error: "RESEND_API_KEY is not configured", 
+          diagnostics 
+        });
+      }
+
+      const emailService = new EmailService(RESEND_API_KEY);
+
+      // Test sending based on testType
+      if (testType === 'applicant' || testType === 'full') {
+        console.log(`Testing applicant email to: ${email}`);
+        const applicantResult = await emailService.sendApplicationNotifications({
+          firstName: "Test",
+          lastName: "User",
+          email: email,
+          phone: "+1234567890",
+          age: "25",
+          nationality: "Test Country",
+          vocalRange: "Soprano",
+          yearsOfSinging: "5",
+          musicalBackground: "Test musical background for email verification",
+          reasonForApplying: "This is a test application to verify email functionality",
+          hasAudioFile1: true,
+          hasAudioFile2: false,
+          hasCvFile: true,
+          hasRecommendationFile: false,
+          applicationId: 9999,
+        });
+        
+        console.log("Applicant email result:", applicantResult);
+        
+        return res.json({
+          success: applicantResult.success,
+          message: applicantResult.success 
+            ? `Test emails sent successfully to ${email} and admin (${ADMIN_NOTIFICATION_EMAIL || 'info@vocalexcellence.cy'})`
+            : "Email sending failed",
+          diagnostics,
+          result: applicantResult,
+        });
+      }
+
+      if (testType === 'contact') {
+        const contactResult = await emailService.sendContactNotification({
+          name: "Test Contact",
+          email: email,
+          message: "This is a test contact form message",
+          vocalType: "Soprano",
+        });
+        
+        return res.json({
+          success: contactResult.success,
+          message: contactResult.success ? "Contact test email sent successfully" : "Contact email failed",
+          diagnostics,
+          result: contactResult,
+        });
+      }
+
+      return res.status(400).json({ 
+        success: false, 
+        error: "Invalid testType. Use 'full', 'applicant', or 'contact'" 
+      });
+    } catch (error) {
+      console.error("Test email error:", error);
+      return handleApiError(res, error, "test email");
+    }
+  });
 }

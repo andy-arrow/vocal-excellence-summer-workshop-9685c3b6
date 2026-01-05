@@ -47,3 +47,8 @@ externalPort = 80
 [[ports]]
 localPort = 5001
 externalPort = 3002
+
+[userenv]
+
+[userenv.shared]
+ADMIN_NOTIFICATION_EMAIL = "aroditis.andreas@gmail.com"
