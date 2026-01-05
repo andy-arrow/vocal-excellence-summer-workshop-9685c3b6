@@ -265,7 +265,7 @@ const InstructorsSection = () => {
                     className={cn(
                       "w-full h-full object-cover",
                       instructor.imagePosition || "object-center",
-                      "transform transition-transform duration-700 ease-[cubic-bezier(0.25,0.1,0.25,1)]",
+                      "transform transition-transform duration-700 ease-out",
                       hoveredInstructor === index ? "scale-105" : "scale-100"
                     )}
                   />
