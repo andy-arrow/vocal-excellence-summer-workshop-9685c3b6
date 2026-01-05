@@ -79,7 +79,7 @@ const ApplicationForm = () => {
       email: '',
       phone: '',
       whereFrom: '',
-      age: undefined,
+      age: '',
       socialMedia: '',
       dateOfBirth: '',
       nationality: '',
@@ -123,17 +123,8 @@ const ApplicationForm = () => {
     trackForm('application', 'submit', true);
     
     try {
-      // Validate form data
-      if (!values.firstName || !values.lastName || !values.email) {
-        throw new Error('Please complete all required fields before submitting');
-      }
-      
-      // Explicitly check terms agreement
-      if (!values.termsAgreed) {
-        throw new Error('You must agree to the terms and conditions to continue');
-      }
-      
-      // No file validation needed as all files are optional now
+      // Schema validation now handles required fields (firstName, lastName, email, phone, termsAgreed)
+      // No need for manual checks since Zod schema enforces these
       
       // Collect files from our store
       const files = applicationFilesStore.getFiles();

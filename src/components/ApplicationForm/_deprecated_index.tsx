@@ -35,7 +35,7 @@ const ApplicationForm: React.FC = () => {
     recommendationFile: null
   });
 
-  // Initialize form with super permissive validation
+  // Initialize form with proper validation
   const form = useForm<ApplicationFormValues>({
     resolver: zodResolver(applicationSchema),
     defaultValues: {
@@ -46,14 +46,14 @@ const ApplicationForm: React.FC = () => {
       dateOfBirth: '',
       nationality: '',
       whereFrom: '',
-      vocalRange: 'soprano' as any,
+      vocalRange: 'soprano',
       yearsOfSinging: '',
       musicalBackground: '',
       reasonForApplying: '',
       heardAboutUs: '',
       scholarshipInterest: false,
       dietaryRestrictions: { type: 'none', details: '' },
-      termsAgreed: true
+      termsAgreed: false,
     },
     mode: 'onSubmit'
   });
@@ -104,12 +104,6 @@ const ApplicationForm: React.FC = () => {
       console.log('Submitting application with data:', data);
       console.log('Files to be submitted:', files);
       
-      // Ensure terms are agreed (but don't block submission)
-      const finalData = {
-        ...data,
-        termsAgreed: true
-      };
-      
       // Submit with retry logic
       let result;
       const maxRetries = 3;
@@ -119,7 +113,7 @@ const ApplicationForm: React.FC = () => {
       while (attempt < maxRetries) {
         try {
           console.log(`Submission attempt ${attempt + 1} of ${maxRetries}`);
-          result = await submitApplication(finalData, files);
+          result = await submitApplication(data, files);
           
           if (result.success) {
             break;
@@ -213,9 +207,12 @@ const ApplicationForm: React.FC = () => {
       
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, (errors) => {
-          // Log errors but proceed anyway - extremely permissive
           console.log("Form validation errors:", errors);
-          onSubmit(form.getValues());
+          toast({
+            title: 'Please fix the errors',
+            description: 'Please complete all required fields before submitting.',
+            variant: 'destructive',
+          });
         })} className="space-y-8">
           <AnimatePresence mode="wait">
             <motion.div
