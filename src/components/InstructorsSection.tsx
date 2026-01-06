@@ -55,6 +55,8 @@ const instructors = [
     bio: "Andreas Aroditis has earned recognition from The New York Times and Opera Today for his versatile performances at prestigious international venues. A Juilliard graduate with numerous lead roles in opera and musical theater, he has collaborated with respected artists and orchestras. Locally, he has premiered works with the Cyprus Symphony Orchestra and the TrakArt Pops Orchestra. Mentored by legends such as Plácido Domingo and Sherill Millnes, he now shapes future performers as an Instructor at the University of Nicosia and the European University while maintaining a private studio in Limassol.",
     image: "/attached_assets/andreas_aroditis_headshot.jpg",
     imagePosition: "object-center",
+    imageFit: "contain",
+    imageBg: "bg-black",
     socials: {
       instagram: "https://www.instagram.com/andreasaroditis/",
       linkedin: "https://www.linkedin.com/in/andreasaroditis/",
@@ -252,7 +254,7 @@ const InstructorsSection = () => {
                 "hover:shadow-xl hover:shadow-black/[0.03]",
                 "h-full flex flex-col"
               )}>
-                <div className="relative aspect-[3/4] overflow-hidden">
+                <div className={cn("relative aspect-[3/4] overflow-hidden", instructor.imageBg)}>
                   <div className={cn(
                     "absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent z-10",
                     "transition-opacity duration-300",
@@ -263,10 +265,11 @@ const InstructorsSection = () => {
                     src={instructor.image} 
                     alt={instructor.name}
                     className={cn(
-                      "w-full h-full object-cover",
+                      "w-full h-full",
+                      instructor.imageFit === "contain" ? "object-contain" : "object-cover",
                       instructor.imagePosition || "object-center",
                       "transform transition-transform duration-700 ease-out",
-                      hoveredInstructor === index ? "scale-105" : "scale-100"
+                      instructor.imageFit !== "contain" && (hoveredInstructor === index ? "scale-105" : "scale-100")
                     )}
                   />
                   
