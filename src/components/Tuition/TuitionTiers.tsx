@@ -102,7 +102,7 @@ const TuitionTiers = () => {
                       <p className="text-xs md:text-sm text-[#4f6e72] font-light uppercase tracking-wide mb-2 md:mb-3">All-Inclusive Tuition</p>
                       
                       <div className="mb-3">
-                        <p className="text-base md:text-lg text-[#999999] font-light line-through">Standard Rate: €1,499</p>
+                        <p className="text-base md:text-lg text-[#777777] font-light line-through">Standard Rate: €1,499</p>
                         <div className="flex items-baseline gap-2">
                           <span className="text-xs md:text-sm text-[#4f6e72] font-medium">Early Bird:</span>
                           <span className="text-3xl md:text-4xl font-serif font-light text-[#4f6e72]">€749</span>
@@ -126,7 +126,7 @@ const TuitionTiers = () => {
                         Apply Now - Lock In €749
                       </Button>
                       
-                      <p className="text-xs text-[#888888] text-center font-light">
+                      <p className="text-xs text-[#666666] text-center font-light">
                         After May 24: Price returns to €1,499 or program closes
                       </p>
                     </div>
@@ -171,7 +171,7 @@ const TuitionTiers = () => {
               </h3>
               
               <div className="mb-4 md:mb-5">
-                <p className="text-sm md:text-base text-white/70 line-through mb-1">Standard Rate: €1,499</p>
+                <p className="text-sm md:text-base text-white/80 line-through mb-1">Standard Rate: €1,499</p>
                 <p className="text-2xl md:text-3xl font-serif font-light">Early Bird: €749</p>
               </div>
               
@@ -194,7 +194,7 @@ const TuitionTiers = () => {
                 Apply Now - Lock In €749
               </Button>
               
-              <p className="font-light text-[#d0e0e3] mt-4 md:mt-5 text-xs md:text-sm">
+              <p className="font-light text-white/80 mt-4 md:mt-5 text-xs md:text-sm">
                 After May 24: Price returns to €1,499 or program closes
               </p>
             </div>

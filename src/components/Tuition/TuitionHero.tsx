@@ -59,7 +59,7 @@ const TuitionHero = React.memo(() => {
             <p className="text-sm md:text-base text-[#4f6e72] font-light mb-2 md:mb-3 uppercase tracking-wide">
               All-Inclusive Tuition
             </p>
-            <p className="text-base md:text-lg text-[#999999] font-light line-through mb-1">
+            <p className="text-base md:text-lg text-[#777777] font-light line-through mb-1">
               Standard Rate: €1,499
             </p>
             <div className="flex items-baseline justify-center gap-2 mb-2">
@@ -82,7 +82,7 @@ const TuitionHero = React.memo(() => {
             className="text-center max-w-xl mx-auto pt-2 md:pt-4"
           >
             <p className="font-medium text-base md:text-lg text-[#4f6e72] mb-1">Application Deadline: May 24</p>
-            <p className="text-[#888888] font-light text-sm md:text-base">Final call: Registration closes in 7 days</p>
+            <p className="text-[#666666] font-light text-sm md:text-base">Final call: Registration closes in 7 days</p>
           </motion.div>
           
           <div className="pt-4 md:pt-6">
