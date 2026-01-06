@@ -269,7 +269,7 @@ const InstructorsSection = () => {
                       instructor.imageFit === "contain" ? "object-contain" : "object-cover",
                       instructor.imagePosition || "object-center",
                       "transform transition-transform duration-700 ease-out",
-                      instructor.imageFit !== "contain" && (hoveredInstructor === index ? "scale-105" : "scale-100")
+                      hoveredInstructor === index ? "scale-105" : "scale-100"
                     )}
                   />
                   
