@@ -41,7 +41,7 @@ const Index = () => {
       const timeoutId = setTimeout(() => {
         toast({
           title: "Welcome to Vocal Excellence Summer Workshop",
-          description: "Applications for our 2025 program are now open!",
+          description: "Applications for our 2026 program are now open!",
           duration: 5000,
         });
         localStorage.setItem('visitedBefore', 'true');

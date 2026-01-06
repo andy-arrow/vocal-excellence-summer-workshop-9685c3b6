@@ -75,7 +75,7 @@ const ApplicationTimeline = () => {
             Application Timeline
           </h2>
           <p className="text-lg text-apple-grey max-w-2xl mx-auto">
-            Important dates for the 2025 Summer Workshop application process
+            Important dates for the 2026 Summer Workshop application process
           </p>
           
           {applicationsOpen ? (
