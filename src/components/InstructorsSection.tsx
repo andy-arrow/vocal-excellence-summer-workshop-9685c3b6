@@ -69,7 +69,7 @@ const instructors = [
     bio: "Kate Batter is a highly experienced vocal coach, performer, and founder of Sing Wimbledon. With over 20 years of teaching experience, she specializes in vocal technique, musicality, and acting through song, working with beginners and professionals alike. A graduate of the Royal Birmingham Conservatoire and Royal Academy of Music, Kate has performed in West End productions (The Sound of Music, The Phantom of the Opera) and TV shows (Top Boy, Call the Midwife). Based in Cambridge, she offers private lessons, masterclasses, and drama school audition prep. As Musical Director of Sing Space Choir, she champions vocal excellence and confidence-building.",
     image: "/lovable-uploads/e26c0944-dc77-4d19-8059-c61e7800b8d1.png",
     socials: {
-      instagram: "https://www.instagram.com/weebatter",
+      instagram: "https://www.instagram.com/kate_batter_vocalcoach/",
       linkedin: "https://www.linkedin.com/in/kate-batter-6b114118b/?originalSubdomain=uk",
       website: "https://www.singwimbledon.co.uk/"
     }
