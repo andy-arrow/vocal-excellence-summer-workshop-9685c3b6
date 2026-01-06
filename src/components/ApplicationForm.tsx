@@ -57,7 +57,15 @@ const ApplicationForm = () => {
   const [csrfToken, setCsrfToken] = useState('');
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
   const [submissionAttempts, setSubmissionAttempts] = useState(0);
+  const [files, setFiles] = useState(() => applicationFilesStore.getFiles());
   const { trackForm, trackAppError } = useAnalytics();
+  
+  useEffect(() => {
+    const unsubscribe = applicationFilesStore.subscribe(() => {
+      setFiles(applicationFilesStore.getFiles());
+    });
+    return unsubscribe;
+  }, []);
   
   // Generate CSRF token for form security
   useEffect(() => {
@@ -321,9 +329,6 @@ const ApplicationForm = () => {
     );
   }
 
-  // Get files from store for passing to SupportingMaterialsSection
-  const files = applicationFilesStore.getFiles();
-  
   // Create updateFile function for SupportingMaterialsSection
   const updateFile = (fileType: string, file: File | null) => {
     if (fileType === 'audioFile1' || fileType === 'audioFile2' || 
