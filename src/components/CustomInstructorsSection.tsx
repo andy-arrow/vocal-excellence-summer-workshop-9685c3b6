@@ -53,28 +53,28 @@ const INSTRUCTORS = [
     name: "Dr. Maria Fernandez",
     title: "Vocal Technique Specialist",
     institution: "Royal Academy of Music",
-    image: "/lovable-uploads/5a4b7bc3-bc7e-42cc-b5bf-fd69555887e3.png",
+    image: "/images/instructors/maria-fernandez.png",
     bio: "Dr. Fernandez has trained some of the world's leading classical vocalists and brings 25 years of experience to our workshop."
   },
   {
     name: "Professor Thomas Chen",
     title: "Masterclass Leader",
     institution: "Juilliard School of Music",
-    image: "/lovable-uploads/29cad38e-a84c-40f7-9ddb-3c11c159ea6d.png",
+    image: "/images/instructors/thomas-chen.png",
     bio: "An internationally acclaimed baritone who has performed at the Metropolitan Opera, La Scala, and Royal Opera House."
   },
   {
     name: "Carolyn Michelle Smith",
     title: "Performance Coach",
     institution: "London School of Performing Arts",
-    image: "/lovable-uploads/ac92b4d5-5fab-4149-b45b-6f3e43b3ec2d.png", 
+    image: "/images/instructors/carolyn-smith-alt.png", 
     bio: "Broadway performer turned educator, specializing in stage presence and dramatic interpretation for singers."
   },
   {
     name: "Aris Antoniades",
     title: "Vocal Health Specialist",
     institution: "University College Hospital",
-    image: "/lovable-uploads/e980c9b0-8cdc-423d-a726-2f677be33737.png",
+    image: "/images/instructors/aris-antoniades-alt.png",
     bio: "Aris Antoniades is a Cypriot composer, arranger, and music director whose acclaimed work bridges the worlds of symphonic, jazz, theatrical, and film music. Praised for its emotional depth and structural clarity, his music has been performed by symphony orchestras, big bands, and celebrated soloists around the world. He has collaborated with iconic artists such as nine-time Grammy nominee Bobby Sanabria, legendary Greek musicians Alkistis Protopsalti and George Hatzinassios, and Broadway and West End stars in major productions. As artistic director and principal conductor of the TrakArt Pops Orchestra, he has led high-profile national concerts in Cyprus, while his compositions have been featured at international festivals, on commercial albums, and on global streaming platforms. A Fulbright Scholar with degrees from the Manhattan School of Music, Aris continues to craft imaginative, storytelling-driven music that resonates across genres and cultures."
   }
 ];

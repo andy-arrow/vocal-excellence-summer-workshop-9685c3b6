@@ -113,7 +113,7 @@ const Footer = () => {
               className="hidden md:block"
             >
               <img 
-                src="/lovable-uploads/9994f82c-80e4-477a-b629-3bef5ef8f2c1.png" 
+                src="/images/branding/logo.png" 
                 alt="Vocal Excellence Logo" 
                 className="w-40 h-40"
                 loading="lazy"

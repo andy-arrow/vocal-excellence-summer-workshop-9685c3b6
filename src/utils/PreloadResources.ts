@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 export const preloadResources = () => {
   // Preload critical resources
   const criticalImages = [
-    '/lovable-uploads/9994f82c-80e4-477a-b629-3bef5ef8f2c1.png', // Logo
+    '/images/branding/logo.png', // Logo
   ];
 
   criticalImages.forEach(src => {

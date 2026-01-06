@@ -202,17 +202,17 @@ const SummerProgramme = () => {
               {
                 name: "Andreas Aroditis",
                 role: "Founder & Director",
-                image: "/lovable-uploads/a10cf0f4-c46f-4599-b410-6e1c715c92d5.png"
+                image: "/images/curriculum-workshop.png"
               },
               {
                 name: "Kate Batter",
                 role: "Vocal Coach",
-                image: "/lovable-uploads/e26c0944-dc77-4d19-8059-c61e7800b8d1.png"
+                image: "/images/instructors/kate-batter.png"
               },
               {
                 name: "Carolyn Michelle Smith",
                 role: "Acting Coach",
-                image: "/lovable-uploads/5f2b13ba-7279-45da-86e2-af6b9c336634.png"
+                image: "/images/instructors/carolyn-michelle-smith.png"
               }
             ].map((faculty, index) => (
               <motion.div

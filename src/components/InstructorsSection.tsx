@@ -67,7 +67,7 @@ const instructors = [
     name: "Kate Batter",
     role: "Vocal Coach",
     bio: "Kate Batter is a highly experienced vocal coach, performer, and founder of Sing Wimbledon. With over 20 years of teaching experience, she specializes in vocal technique, musicality, and acting through song, working with beginners and professionals alike. A graduate of the Royal Birmingham Conservatoire and Royal Academy of Music, Kate has performed in West End productions (The Sound of Music, The Phantom of the Opera) and TV shows (Top Boy, Call the Midwife). Based in Cambridge, she offers private lessons, masterclasses, and drama school audition prep. As Musical Director of Sing Space Choir, she champions vocal excellence and confidence-building.",
-    image: "/lovable-uploads/e26c0944-dc77-4d19-8059-c61e7800b8d1.png",
+    image: "/images/instructors/kate-batter.png",
     socials: {
       instagram: "https://www.instagram.com/kate_batter_vocalcoach/",
       linkedin: "https://www.linkedin.com/in/kate-batter-6b114118b/?originalSubdomain=uk",
@@ -78,7 +78,7 @@ const instructors = [
     name: "Carolyn Michelle Smith",
     role: "Acting Coach",
     bio: "Carolyn Michelle Smith is an actress, producer, and educator known for her roles in House of Cards, Luke Cage, Russian Doll, and The Chi. A Juilliard graduate, she has performed on Broadway (Romeo and Juliet) and with renowned theater companies. She is also a Visiting Lecturer at Cornell University and Co-Director of Lena Waithe's Hillman Grad Mentorship Lab, empowering BIPOC creatives. Carolyn develops original content inspired by her heritage and operates AspireHigher Coaching Services to mentor actors. Her entrepreneurial artistry focuses on elevating diverse voices in Hollywood through acting, producing, and education.",
-    image: "/lovable-uploads/5f2b13ba-7279-45da-86e2-af6b9c336634.png",
+    image: "/images/instructors/carolyn-michelle-smith.png",
     socials: {
       instagram: "https://www.instagram.com/that_carolynmichelle/",
       linkedin: "https://www.linkedin.com/in/carolyn-michelle-smith-12435451/",
@@ -101,7 +101,7 @@ const instructors = [
     name: "Aris Antoniades",
     role: "Composer",
     bio: "Aris Antoniades is a Cypriot composer, arranger, and music director whose acclaimed work bridges the worlds of symphonic, jazz, theatrical, and film music. Praised for its emotional depth and structural clarity, his music has been performed by symphony orchestras, big bands, and celebrated soloists around the world. He has collaborated with iconic artists such as nine-time Grammy nominee Bobby Sanabria, legendary Greek musicians Alkistis Protopsalti and George Hatzinassios, and Broadway and West End stars in major productions. As artistic director and principal conductor of the TrakArt Pops Orchestra, he has led high-profile national concerts in Cyprus, while his compositions have been featured at international festivals, on commercial albums, and on global streaming platforms. A Fulbright Scholar with degrees from the Manhattan School of Music, Aris continues to craft imaginative, storytelling-driven music that resonates across genres and cultures.",
-    image: "/lovable-uploads/23077377-fca0-46d4-b7c8-83c2a2edcb19.png",
+    image: "/images/instructors/aris-antoniades.png",
     socials: {
       instagram: "https://www.instagram.com/aris.antoniades",
       linkedin: "https://cy.linkedin.com/in/arisantoniadescomposer",
@@ -123,7 +123,7 @@ const instructors = [
     name: "Emmeleia Pericleous",
     role: "Choir Director",
     bio: "Choir Director and Musicologist who graduated at the top of her master's class from the prestigious Sorbonne University, France. She directs choirs at 3 Paris Conservatoires, combining classical and contemporary approaches while bridging Cypriot and French musical traditions.",
-    image: "/lovable-uploads/c503aee8-1c6f-4045-bcd9-46e1da3dc853.png",
+    image: "/images/instructors/emmeleia-pericleous.png",
     socials: {
       instagram: "https://www.instagram.com/itsbritneybitch394?igsh=NTk1cGY2aXUxOHBp",
       linkedin: "https://www.linkedin.com/in/emmeleia-perikleous/?originalSubdomain=fr",
