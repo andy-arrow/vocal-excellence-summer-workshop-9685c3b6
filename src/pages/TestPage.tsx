@@ -194,9 +194,9 @@ const TestPage = () => {
                     </div>
                     
                     <div>
-                      <Button variant="outline" size="sm" onClick={() => window.open('https://docs.lovable.dev', '_blank')}>
+                      <Button variant="outline" size="sm" onClick={() => window.open('mailto:info@vocalexcellence.cy', '_blank')}>
                         <BookOpen className="mr-1 h-4 w-4" />
-                        <span className="mr-1">View Documentation</span>
+                        <span className="mr-1">Contact Us</span>
                         <ExternalLink className="h-3 w-3" />
                       </Button>
                     </div>
