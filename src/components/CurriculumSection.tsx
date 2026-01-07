@@ -188,7 +188,7 @@ const facultyMembers = [
     name: "Emmelia Pericleous",
     role: "Choir Director",
     bio: "Choir Conductor and Musicologist who graduated at the top of her master's class from the prestigious Sorbonne University. She directs choirs at three Paris conservatoires, combining classical and contemporary approaches while bridging Cypriot and French musical traditions.",
-    image: "/images/instructors/emmeleia-pericleous.png",
+    image: "/images/instructors/emmeleia-pericleous.jpg",
     socials: {
       instagram: "#",
       linkedin: "#"
