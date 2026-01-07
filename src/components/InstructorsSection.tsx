@@ -122,7 +122,7 @@ const instructors = [
   {
     name: "Emmeleia Pericleous",
     role: "Choir Director",
-    bio: "Choir Director and Musicologist who graduated at the top of her master's class from the prestigious Sorbonne University, France. She directs choirs at 3 Paris Conservatoires, combining classical and contemporary approaches while bridging Cypriot and French musical traditions.",
+    bio: "Emmelia Pericleous is a choral conductor and musicologist who graduated at the top of her master's class at the prestigious Sorbonne University, attended by special faculty invitation. Her career in Paris saw her directing choirs at three conservatories—Étampes, Savigny-sur-Orge, and Erik Satie—where she developed a signature practice seamlessly blending classical and contemporary approaches. Since returning to Cyprus to empower the local musical community, she has been nominated for the Madame Figaro Woman of the Year Award in Music. Currently, she is the founder of the choir Harmonile and an instructor at ΣymphoΠedia, the Cyprus Symphony Orchestra's educational program, where she continues to bridge French and Cypriot musical traditions through international collaboration.",
     image: "/images/instructors/emmeleia-pericleous.jpg",
     socials: {
       instagram: "https://www.instagram.com/itsbritneybitch394?igsh=NTk1cGY2aXUxOHBp",
