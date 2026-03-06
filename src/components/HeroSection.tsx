@@ -1,194 +1,181 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowDown, ArrowUpRight, Calendar } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';
-import { format } from 'date-fns';
 import { APPLICATION_DATES } from '@/constants/applicationDates';
-import { useIsMobile } from '@/hooks/use-mobile';
-import AlertBanner from './AlertBanner';
+import {
+  REMARKABLE_LINE,
+  POSTER_LINE,
+  NEWS_LINE,
+  CTA_PRIMARY,
+} from '@/constants/copy';
 
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const [hasReducedMotion, setHasReducedMotion] = useState(false);
   const today = new Date();
   const applicationsClosed = today > APPLICATION_DATES.DEADLINE;
-  const isMobile = useIsMobile();
-  
+
   useEffect(() => {
-    const savedPreference = localStorage.getItem('reduced-motion') === 'true';
-    setHasReducedMotion(savedPreference);
-    
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (mediaQuery.matches && !localStorage.getItem('reduced-motion')) {
-      setHasReducedMotion(true);
-    }
-    
+    const saved = localStorage.getItem('reduced-motion') === 'true';
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setHasReducedMotion(saved || (mq.matches && !localStorage.getItem('reduced-motion')));
+
     const handleScroll = () => {
       if (!heroRef.current || hasReducedMotion) return;
-      
-      const scrollPosition = window.scrollY;
-      const opacity = 1 - Math.min(scrollPosition / 700, 0.8);
-      const translateY = scrollPosition * 0.2;
-      
+      const scrollY = window.scrollY;
       const heroContent = heroRef.current.querySelector('.hero-content') as HTMLElement;
       if (heroContent) {
-        heroContent.style.opacity = Math.max(0.2, opacity).toString();
-        heroContent.style.transform = `translateY(${translateY}px)`;
+        heroContent.style.opacity = Math.max(0.2, 1 - Math.min(scrollY / 700, 0.8)).toString();
+        heroContent.style.transform = `translateY(${scrollY * 0.2}px)`;
       }
     };
-    
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [hasReducedMotion]);
-  
-  const scrollToDiscoverSection = () => {
-    const aboutSection = document.getElementById('about');
-    if (aboutSection) {
-      aboutSection.scrollIntoView({ behavior: 'smooth' });
-    }
+
+  const scrollToAbout = () => {
+    document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
   };
-  
+
   return (
-    <section 
-      id="home" 
-      ref={heroRef} 
+    <section
+      id="home"
+      ref={heroRef}
       className={cn(
-        "relative overflow-visible",
-        isMobile 
-          ? "pt-48 pb-12"
-          : "pt-56 pb-20 min-h-[70vh]",
-        "bg-apple-light border-b border-apple-border",
-        hasReducedMotion ? "reduced-motion" : ""
+        'relative overflow-visible',
+        // Navbar: h-40 logo (160px) + py-2 (16px) = 176px total.
+        // pt-48 (192px) gives a 16px gap below the navbar on all screen sizes.
+        // min-h removed on mobile: let content + padding set the height naturally.
+        // min-h-[85vh] on md+ keeps the hero feeling expansive on larger screens.
+        'pt-48',
+        'pb-16 md:pb-20',
+        'md:min-h-[85vh]',
+        'bg-apple-light border-b border-apple-border',
+        hasReducedMotion ? 'reduced-motion' : ''
       )}
     >
-      <div className="hero-content relative z-20 text-center px-4 md:px-6 transition-all duration-500 ease-out max-w-5xl mx-auto">
-        <motion.div 
-          className="space-y-4 md:space-y-6" 
+      <div className="hero-content relative z-20 text-center px-5 sm:px-6 transition-all duration-500 ease-out max-w-5xl mx-auto">
+        <motion.div
+          className="space-y-4 sm:space-y-5 md:space-y-7"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          <motion.h1 
-            className="font-serif text-3xl sm:text-3xl md:text-4xl lg:text-6xl font-light text-apple-text tracking-tight"
+
+          {/* Eyebrow — location + year */}
+          <motion.p
+            className="text-xs font-semibold text-apple-text/65 uppercase tracking-[0.28em]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            {NEWS_LINE}
+          </motion.p>
+
+          {/*
+           * Headline — each sentence gets its own line at EVERY breakpoint.
+           * Mobile  (< sm, 375–639px): text-3xl (30px), shorter last line so it
+           *   never wraps. "Juilliard & West End." = ~334px; content = ~325px. ✓
+           * Desktop (sm+, 640px+):   text-4xl → 6xl, full last line.
+           *   At sm text-4xl "Juilliard & West End Faculty." = ~554px < 608px. ✓
+           *   At lg text-6xl same phrase = ~667px < 992px (max-w-5xl). ✓
+           */}
+          <motion.h1
+            className="font-serif font-light text-apple-blue tracking-tight leading-[1.1]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
+            transition={{ duration: 0.9, delay: 0.55 }}
           >
-            <span className="block mb-1 md:mb-2">Train Like a Professional.</span>
-            <span className="text-apple-blue">7 Days of Elite Vocal Coaching in Cyprus.</span>
+            {/* Mobile version */}
+            <span className="block text-[1.85rem] sm:hidden">
+              Seven Days.<br />
+              A Filmed Audition.<br />
+              Juilliard &amp; West End.
+            </span>
+            {/* Tablet / desktop version */}
+            <span className="hidden sm:block text-[2.5rem] md:text-5xl lg:text-6xl">
+              Seven Days.<br />
+              A Filmed Audition.<br />
+              Juilliard &amp; West End Faculty.
+            </span>
           </motion.h1>
-          
-          <motion.p 
-            className="font-sans text-sm sm:text-base md:text-lg lg:text-xl text-apple-grey max-w-2xl mx-auto leading-relaxed"
+
+          {/* Aspiration line — no demographic qualifier; reader self-selects */}
+          <motion.p
+            className="font-sans text-[0.95rem] sm:text-base md:text-lg text-charcoal max-w-xs sm:max-w-sm md:max-w-lg mx-auto leading-relaxed"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
           >
-            Direct mentorship from West End performers, Netflix actors, and Juilliard alumni.
+            {POSTER_LINE}
           </motion.p>
 
-          <motion.p 
-            className="font-sans text-xs sm:text-sm md:text-base text-apple-grey max-w-xl mx-auto italic"
+          {/* Date */}
+          <motion.div
+            className="inline-flex items-center justify-center gap-2 text-apple-text/85 text-[0.8rem] sm:text-sm font-medium mx-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.95 }}
+            transition={{ duration: 0.6, delay: 0.95 }}
           >
-            Master your technique. Conquer stage fright. Build your portfolio.
-          </motion.p>
-
-          <motion.div 
-            className="inline-flex items-center gap-2 text-apple-text text-sm font-medium mx-auto"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1.0 }}
-          >
-            <Calendar className="w-4 h-4 text-apple-blue" />
-            <span>29 June – 5 July | Limassol, Cyprus</span>
-          </motion.div>
-          
-          <motion.div 
-            className="flex flex-wrap justify-center gap-x-3 gap-y-2 text-xs md:text-xs font-medium text-apple-grey"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1.1 }}
-          >
-            <span className="flex items-center"><span className="w-1.5 h-1.5 bg-apple-blue rounded-full mr-2"></span>Private Coaching</span>
-            <span className="flex items-center"><span className="w-1.5 h-1.5 bg-apple-blue rounded-full mr-2"></span>4K Portfolio</span>
-            <span className="flex items-center"><span className="w-1.5 h-1.5 bg-apple-blue rounded-full mr-2"></span>Audition Mastery</span>
-            <span className="flex items-center"><span className="w-1.5 h-1.5 bg-apple-blue rounded-full mr-2"></span>Stage Confidence</span>
+            <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-apple-blue flex-shrink-0" />
+            <span>June 29 – July 5, 2026 · Limassol, Cyprus</span>
           </motion.div>
 
-          <motion.div 
-            className="pt-4 md:pt-6"
-            initial={{ opacity: 0, y: 20 }}
+          {/* CTA */}
+          <motion.div
+            className="pt-1 md:pt-3"
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.1 }}
+            transition={{ duration: 0.7, delay: 1.1 }}
           >
-            <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              <Link 
-                to="/apply" 
-                className={`group px-5 py-3 w-full sm:w-auto ${
-                  applicationsClosed 
-                    ? 'bg-gray-400 cursor-not-allowed' 
-                    : 'bg-apple-blue hover:bg-apple-blue-hover'
-                } text-white rounded-full text-base font-medium transition-all duration-300 text-center`}
-                data-testid="link-apply-hero"
-              >
-                {applicationsClosed ? 'Applications Closed' : 'Secure Your Spot'}
-                {!applicationsClosed && (
-                  <ArrowUpRight className="inline-block ml-2 w-4 h-4 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                )}
-              </Link>
-              
-              <button 
-                onClick={scrollToDiscoverSection} 
-                className="text-apple-text hover:text-apple-grey px-5 py-3 rounded-full border border-apple-border backdrop-blur-sm transition-all hover:bg-apple-light-hover text-base font-light w-full sm:w-auto"
-                data-testid="button-learn-more"
-              >
-                Learn More
-              </button>
-            </motion.div>
-            
-            <motion.div 
-              className="flex items-center justify-center mt-4 sm:mt-6 md:mt-8 space-x-1"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.3, duration: 0.5 }}
+            <Link
+              to="/apply"
+              className={cn(
+                'group inline-flex items-center justify-center',
+                'px-8 py-3.5 sm:py-4',
+                'w-full sm:w-auto',
+                'rounded-full text-[0.8rem] sm:text-sm font-semibold uppercase tracking-widest',
+                'text-white transition-all duration-300',
+                applicationsClosed
+                  ? 'bg-gray-400 cursor-not-allowed pointer-events-none'
+                  : 'bg-apple-blue hover:bg-apple-blue-hover active:scale-[0.98]'
+              )}
+              data-testid="link-apply-hero"
             >
-              <div className="w-1.5 h-1.5 rounded-full bg-apple-blue animate-pulse-slow"></div>
-              <p className="text-apple-grey text-xs font-light">
-                {applicationsClosed ? (
-                  <span>Applications for {format(APPLICATION_DATES.PROGRAM_START, 'yyyy')} are now closed</span>
-                ) : (
-                  <>Only 7 places remaining</>
-                )}
-              </p>
-              <div className="w-1.5 h-1.5 rounded-full bg-apple-blue animate-pulse-slow"></div>
-            </motion.div>
+              {applicationsClosed ? 'Applications Closed' : CTA_PRIMARY}
+              {!applicationsClosed && (
+                <ArrowUpRight className="ml-2 w-3.5 h-3.5 sm:w-4 sm:h-4 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              )}
+            </Link>
+
+            <p className="mt-4 sm:mt-5 text-charcoal text-xs font-medium tracking-wide">
+              {REMARKABLE_LINE}
+            </p>
           </motion.div>
+
         </motion.div>
       </div>
-      
-      {!isMobile && (
-        <motion.button 
-          onClick={scrollToDiscoverSection} 
-          className="absolute bottom-4 md:bottom-8 left-0 right-0 mx-auto w-8 h-8 md:w-12 md:h-12 cursor-pointer z-20 flex items-center justify-center"
-          aria-label="Scroll down"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.5, duration: 0.8 }}
+
+      {/* Scroll cue — CSS-only visibility, no JS isMobile needed */}
+      <motion.button
+        onClick={scrollToAbout}
+        className="hidden md:flex absolute bottom-8 left-0 right-0 mx-auto w-12 h-12 cursor-pointer z-20 items-center justify-center"
+        aria-label="Scroll to learn more"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.6, duration: 0.8 }}
+      >
+        <motion.div
+          className="rounded-full bg-apple-border/20 backdrop-blur-sm border border-apple-border p-3 hover:bg-apple-border/40 transition-all"
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity, repeatType: 'loop' }}
         >
-          <motion.div 
-            className="rounded-full bg-apple-border/20 backdrop-blur-sm border border-apple-border p-2 md:p-3 hover:bg-apple-border/40 transition-all"
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, repeatType: "loop" }}
-          >
-            <ArrowDown className="text-apple-text w-3 h-3 md:w-5 md:h-5" />
-          </motion.div>
-        </motion.button>
-      )}
+          <ArrowDown className="text-apple-text w-5 h-5" />
+        </motion.div>
+      </motion.button>
     </section>
   );
 };

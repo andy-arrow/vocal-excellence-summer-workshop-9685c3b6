@@ -6,9 +6,7 @@
 // List of authorized administrator email addresses
 export const AUTHORIZED_ADMIN_EMAILS = [
   'info@vocalexcellence.cy',
-  'info@vocalexcellence.com.cy',
   'andreas@vocalexcellence.cy',
-  'andreas@vocalexcellence.com.cy',
   'aroditis.andreas@gmail.com'
 ];
 

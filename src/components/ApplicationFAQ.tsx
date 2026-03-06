@@ -1,46 +1,48 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { APPLICATION_DATES } from '@/constants/applicationDates';
 import { format } from 'date-fns';
 
 const ApplicationFAQ = () => {
   const notificationDate = format(APPLICATION_DATES.NOTIFICATION_DATE, 'MMMM d, yyyy');
-  const earlyBirdDeadline = format(APPLICATION_DATES.EARLY_BIRD_DEADLINE, 'MMMM d, yyyy');
 
   const faqs = [
     {
-      question: "Do I need formal conservatory training to apply?",
-      answer: "Not necessarily. While many of our students have formal backgrounds, we prioritize potential, passion, and a willingness to learn. If you are serious about improving your voice, we want to hear from you."
+      question: "Who is Vocal Excellence for?",
+      answer: "Students aged 12–21 who are serious about classical or musical theatre singing and are working toward university or conservatory applications. You don't need to have applied yet — many students come one or two years before their application year to build preparation early."
+    },
+    {
+      question: "Do I need formal training to apply?",
+      answer: "Not necessarily. While many students have formal backgrounds, we look for genuine commitment and a willingness to work hard. If you are preparing for a top programme and want serious coaching, we want to hear from you."
+    },
+    {
+      question: "Which universities do your students go on to?",
+      answer: "Our faculty have trained at and worked with programmes including Juilliard, RADA, RNCM, RAM, Guildhall, Trinity Laban, and leading European conservatories. Details of alumni outcomes will be shared with accepted applicants."
     },
     {
       question: "Is accommodation included?",
-      answer: "Tuition covers all training and daily lunch, but accommodation is not included. We can provide a list of recommended hotels and Airbnbs near the venue in Limassol upon acceptance."
+      answer: "Training and daily lunch are included. Accommodation is not, but we provide a list of recommended hotels and Airbnbs near the venue in Limassol to all accepted students."
     },
     {
       question: "What happens after I submit my application?",
-      answer: `You will receive a confirmation email immediately. Our faculty reviews applications on a rolling basis, with final decisions released by ${notificationDate}.`
+      answer: `You will receive a confirmation email immediately. Faculty reviews all applications personally, with final decisions released by ${notificationDate}.`
     },
     {
-      question: "Do I need to submit a recommendation letter?",
-      answer: "No, recommendation letters are not required for this workshop."
+      question: "Can I attend if I'm under 16?",
+      answer: "Yes. Students from age 12 are welcome to apply. All students under 18 will need written consent from a parent or guardian as part of the registration process."
     },
     {
-      question: "Is there financial aid available?",
-      answer: `Yes! Our Early Bird rate is €749 (50% off the standard €1,499) if you register before ${earlyBirdDeadline}. We also offer a flexible payment plan with a €100 deposit and 3 installments of €216. Merit-based scholarships are available for exceptional students.`
-    },
-    {
-      question: "Can I attend only part of the workshop?",
-      answer: "Because the curriculum is designed as a cumulative, intensive process leading to a final performance, full attendance is required to get the most out of the experience."
+      question: "Can I attend only part of the week?",
+      answer: "The programme is cumulative and leads to a filmed final performance. Full attendance is required to receive your filmed audition and complete the week."
     }
   ];
 
   return (
     <div className="bg-white rounded-xl md:rounded-2xl shadow-sm overflow-hidden">
       <div className="p-5 md:p-8 border-b border-[#e5e5e5]">
-        <h2 className="text-xl md:text-2xl font-semibold text-[#1d1d1f] mb-2 md:mb-3">Frequently Asked Questions</h2>
+        <h2 className="text-xl md:text-2xl font-semibold text-[#1d1d1f] mb-2 md:mb-3">Frequently asked questions</h2>
         <p className="text-[#666666] text-base md:text-lg leading-relaxed">
-          Common questions about our application process and workshop.
+          Application process and what to expect.
         </p>
       </div>
       
@@ -64,7 +66,7 @@ const ApplicationFAQ = () => {
         
         <div className="mt-8 text-center">
           <p className="text-[#666666] text-sm md:text-base">
-            Have more questions? Contact us at{' '}
+            Have a question not answered here?{' '}
             <a href="mailto:info@vocalexcellence.cy" className="text-apple-blue hover:underline">
               info@vocalexcellence.cy
             </a>

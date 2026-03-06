@@ -8,7 +8,7 @@ export { default as Auth } from './Auth';
 export { default as Admin } from './Admin';
 export { default as NotFound } from './NotFound';
 export { default as TestPage } from './TestPage';
-export { default as TermsAndConditions } from './TermsAndConditions';
+export { default as TermsAndConditions } from './Terms';
 export { default as PrivacyPolicy } from './PrivacyPolicy';
 export { default as CancellationPolicy } from './CancellationPolicy';
 export { default as EmailExtract } from './EmailExtract';

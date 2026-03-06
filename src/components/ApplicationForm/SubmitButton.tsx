@@ -50,7 +50,7 @@ const SubmitButton = ({ isSubmitting }: SubmitButtonProps) => {
           fontFeatureSettings: '"kern" 1',
           WebkitFontSmoothing: 'antialiased',
         }}
-        aria-label={isSubmitting ? "Submitting application" : "Submit application"}
+        aria-label={isSubmitting ? "Submitting application" : "Request your place"}
         data-testid="submit-application-button"
       >
         <span className="flex items-center justify-center gap-1.5 sm:gap-2">
@@ -64,7 +64,7 @@ const SubmitButton = ({ isSubmitting }: SubmitButtonProps) => {
           ) : (
             <>
               <span className="text-[13px] sm:text-[15px] font-medium">
-                Submit Application
+                Request Your Place
               </span>
               <ArrowRight className="w-4 h-4 sm:w-[18px] sm:h-[18px]" />
             </>

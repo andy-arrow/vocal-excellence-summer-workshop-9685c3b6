@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import { toast } from '@/hooks/use-toast';
+import { HOME_WELCOME_TITLE, HOME_WELCOME_DESCRIPTION } from '@/constants/copy';
 import { useScrollPosition } from '@/hooks/use-scroll-position';
 
 // Optimized lazy loading
@@ -16,6 +17,7 @@ const CurriculumSection = lazy(() =>
 const InstructorsSection = lazy(() => 
   import(/* webpackChunkName: "instructors" */ '@/components/InstructorsSection')
 );
+const TrustBar = lazy(() => import('@/components/TrustBar'));
 const CTASection = lazy(() => 
   import(/* webpackChunkName: "cta" */ '@/components/CTASection')
 );
@@ -40,8 +42,8 @@ const Index = () => {
     if (!hasVisited) {
       const timeoutId = setTimeout(() => {
         toast({
-          title: "Welcome to Vocal Excellence Summer Workshop",
-          description: "Applications for our 2026 program are now open!",
+          title: HOME_WELCOME_TITLE,
+          description: HOME_WELCOME_DESCRIPTION,
           duration: 5000,
         });
         localStorage.setItem('visitedBefore', 'true');
@@ -64,6 +66,10 @@ const Index = () => {
       <div className="relative z-10">
         <HeroSection />
       </div>
+      
+      <Suspense fallback={null}>
+        <TrustBar />
+      </Suspense>
       
       <div className="relative z-10">
         <Suspense fallback={<SectionLoader />}>

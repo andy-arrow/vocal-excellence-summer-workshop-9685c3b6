@@ -3,36 +3,38 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2, Mail, Music, FileText, Utensils } from 'lucide-react';
 
+import { APPLY_CHECKLIST_INTRO } from '@/constants/copy';
+
 const ApplicationRequirements = () => {
   const requirements = [
     {
       icon: <Mail className="w-5 h-5 text-apple-blue" />,
-      title: "Contact Details",
-      description: "A valid email address you check regularly."
+      title: "Contact details",
+      description: "A valid email you check regularly."
     },
     {
       icon: <Music className="w-5 h-5 text-apple-blue" />,
-      title: "Experience",
-      description: "A brief summary of your vocal range and background."
+      title: "Vocal background",
+      description: "Your range and a brief summary of your singing journey."
     },
     {
       icon: <FileText className="w-5 h-5 text-apple-blue" />,
-      title: "Statement of Purpose",
-      description: "A short paragraph (100+ characters) explaining your artistic goals."
+      title: "Your goals (a few sentences)",
+      description: "What you hope to achieve and why you're applying. 100+ characters—no long essay."
     },
     {
       icon: <Utensils className="w-5 h-5 text-apple-blue" />,
-      title: "Dietary Needs",
-      description: "Any restrictions we should know for the daily catered lunch."
+      title: "Dietary needs",
+      description: "Any restrictions for the daily catered lunch."
     }
   ];
 
   return (
     <div className="bg-white rounded-xl md:rounded-2xl shadow-sm overflow-hidden">
       <div className="p-5 md:p-8 border-b border-[#e5e5e5]">
-        <h2 className="text-xl md:text-2xl font-semibold text-[#1d1d1f] mb-2 md:mb-3">Application Checklist</h2>
+        <h2 className="text-xl md:text-2xl font-semibold text-[#1d1d1f] mb-2 md:mb-3">Application checklist</h2>
         <p className="text-[#666666] text-base md:text-lg leading-relaxed">
-          Before you begin, please ensure you have the following ready:
+          {APPLY_CHECKLIST_INTRO}
         </p>
       </div>
       

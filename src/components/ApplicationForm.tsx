@@ -10,6 +10,7 @@ import { applicationFilesStore } from '@/stores/applicationFilesStore';
 import { useAnalytics } from '@/hooks/use-analytics';
 
 import { applicationSchema, ApplicationFormValues } from '@/components/ApplicationForm/schema';
+import { APPLY_FORM_INTRO } from '@/constants/copy';
 import { submitApplicationWithFiles } from '@/utils/fileUpload';
 import ApplicationProgressIndicator from './ApplicationForm/ApplicationProgressIndicator';
 
@@ -19,7 +20,6 @@ const ProgrammeApplicationSection = lazy(() => import('@/components/ApplicationF
 const SupportingMaterialsSection = lazy(() => import('@/components/ApplicationForm/SupportingMaterialsSection'));
 const TermsAndConditionsSection = lazy(() => import('@/components/ApplicationForm/TermsAndConditionsSection'));
 const SubmitButton = lazy(() => import('@/components/ApplicationForm/SubmitButton'));
-const SubmissionSuccessMessage = lazy(() => import('@/components/ApplicationForm/SubmissionSuccessMessage'));
 
 const SectionLoader = () => (
   <div className="py-8 flex justify-center">
@@ -51,7 +51,6 @@ const sectionVariants = {
 
 const ApplicationForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [activeSection, setActiveSection] = useState(0);
   const [maxVisitedStep, setMaxVisitedStep] = useState(0);
   const [csrfToken, setCsrfToken] = useState('');
@@ -73,11 +72,7 @@ const ApplicationForm = () => {
     setCsrfToken(token);
     sessionStorage.setItem('formCsrfToken', token);
     
-    console.log('ApplicationForm: Component mounted, CSRF token generated');
-    
-    return () => {
-      console.log('ApplicationForm: Component unmounted');
-    };
+    return () => {};
   }, []);
   
   const form = useForm<ApplicationFormValues>({
@@ -111,11 +106,6 @@ const ApplicationForm = () => {
     mode: 'onChange'
   });
 
-  const validateFiles = useCallback((): boolean => {
-    // All files are now optional, so no validation errors
-    return true;
-  }, []);
-  
   const clearValidationErrors = () => {
     if (validationErrors.length > 0) {
       setValidationErrors([]);
@@ -123,7 +113,6 @@ const ApplicationForm = () => {
   };
 
   const onSubmit = useCallback(async (values: ApplicationFormValues) => {
-    console.log('Form submission started with values:', values);
     clearValidationErrors();
     setIsSubmitting(true);
     
@@ -137,20 +126,15 @@ const ApplicationForm = () => {
       Object.entries(files).forEach(([key, file]) => {
         if (file !== null) {
           filesToSubmit[key] = file;
-          console.log(`Added ${key} for submission: ${file.name}, ${file.size} bytes`);
         }
       });
       
-      const hasFiles = Object.keys(filesToSubmit).length > 0;
-      console.log(`Submitting form with ${hasFiles ? Object.keys(filesToSubmit).length : 'no'} files`);
       
       let attempts = 0;
       const maxAttempts = 2;
       
       while (attempts <= maxAttempts) {
         try {
-          console.log(`Submission attempt ${attempts + 1} of ${maxAttempts + 1}`);
-          
           const response = await submitApplicationWithFiles(values, filesToSubmit);
           
           if (!response.success) {
@@ -163,7 +147,6 @@ const ApplicationForm = () => {
             throw new Error('Application saved but no ID returned');
           }
           
-          console.log('Application saved with ID:', applicationId);
           
           toast({
             title: "Application Saved",
@@ -215,7 +198,6 @@ const ApplicationForm = () => {
           
           if (attempts < maxAttempts) {
             const backoffTime = Math.pow(2, attempts) * 1000;
-            console.log(`Retrying in ${backoffTime}ms...`);
             await new Promise(resolve => setTimeout(resolve, backoffTime));
             attempts++;
           } else {
@@ -234,8 +216,8 @@ const ApplicationForm = () => {
                   ))}
                   <p className="text-sm mt-4">
                     Please try again or contact our support team at{' '}
-                    <a href="mailto:support@vocalexcellence.cy" className="underline">
-                      support@vocalexcellence.cy
+                    <a href="mailto:info@vocalexcellence.cy" className="underline">
+                      info@vocalexcellence.cy
                     </a>
                   </p>
                 </div>
@@ -257,7 +239,7 @@ const ApplicationForm = () => {
     } finally {
       setIsSubmitting(false);
     }
-  }, [validateFiles, validationErrors, submissionAttempts, trackForm, trackAppError]);
+  }, [validationErrors, submissionAttempts, trackForm, trackAppError]);
 
   const validateCurrentSection = async (): Promise<boolean> => {
     const sectionFields: Record<number, (keyof ApplicationFormValues)[]> = {
@@ -320,14 +302,6 @@ const ApplicationForm = () => {
       trackForm('application', `section_${activeSection}`, true);
     }
   };
-
-  if (isSubmitted) {
-    return (
-      <Suspense fallback={<SectionLoader />}>
-        <SubmissionSuccessMessage />
-      </Suspense>
-    );
-  }
 
   // Create updateFile function for SupportingMaterialsSection
   const updateFile = (fileType: string, file: File | null) => {
@@ -393,15 +367,15 @@ const ApplicationForm = () => {
       <div className="max-w-3xl mx-auto px-4 md:px-6">
         <div className="text-center mb-8 md:mb-12 space-y-4 md:space-y-5">
           <span className="inline-block text-[#666666] text-xs md:text-sm tracking-wide uppercase font-medium">
-            Summer Workshop 2026
+            Summer Intensive 2026
           </span>
           
           <h2 className="text-2xl md:text-4xl font-semibold tracking-tight text-[#1d1d1f]">
-            Apply Now
+            Request Your Place
           </h2>
           
           <p className="text-base md:text-lg text-[#666666] max-w-2xl mx-auto leading-relaxed">
-            Begin your journey in vocal artistry. Complete one section at a time.
+            {APPLY_FORM_INTRO}
           </p>
 
           <ApplicationProgressIndicator 

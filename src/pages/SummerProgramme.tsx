@@ -24,14 +24,14 @@ const SummerProgramme = () => {
             <h1 className="text-5xl md:text-7xl font-serif font-light leading-tight tracking-tight">
               Vocal Excellence
               <span className="block text-xl md:text-2xl font-sans font-light tracking-wide mt-4">
-                29 June – 5 July, 2026 • Limassol, Cyprus
+                29 June – 5 July, 2026 · Limassol, Cyprus
               </span>
             </h1>
             
             <div className="w-24 h-px bg-white/30 mx-auto"></div>
             
             <p className="text-xl md:text-2xl font-light max-w-2xl mx-auto leading-relaxed text-white/90">
-              7 full days of exclusive vocal training with coaches from London's West End, Netflix & the world's top universities
+              Seven days of vocal training for 12–21 year olds, coached by faculty from Juilliard and the West End — and a filmed audition to take with you.
             </p>
             
             <div className="pt-8">
@@ -39,7 +39,7 @@ const SummerProgramme = () => {
                 to="/apply" 
                 className="inline-flex items-center gap-2 bg-apple-blue text-white px-8 py-4 rounded-full text-lg font-medium transition-all duration-300 hover:bg-apple-blue-hover"
               >
-                Register Now
+                Request Your Place
                 <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-0.5" />
               </Link>
             </div>
@@ -60,7 +60,7 @@ const SummerProgramme = () => {
           </div>
           
           <p className="text-lg text-apple-grey leading-relaxed mb-8 max-w-3xl mx-auto">
-            The Vocal Excellence Workshop is a comprehensive programme designed for serious vocalists looking to refine their technique, expand their repertoire, and connect with industry professionals. Over five transformative days, participants will engage in personalized coaching, masterclasses, and performance opportunities.
+            The Vocal Excellence Workshop is a seven-day intensive designed for serious young singers aged 12–21 who are preparing for top university and conservatory auditions. Participants work with faculty from Juilliard and the West End, complete a filmed audition, and leave knowing exactly what top programmes are looking for.
           </p>
           
           <div className="grid md:grid-cols-3 gap-8 mt-12">
@@ -68,17 +68,17 @@ const SummerProgramme = () => {
               {
                 icon: <Calendar className="w-6 h-6 text-apple-blue" />,
                 title: "Seven Days",
-                description: "Intensive daily training from 9am to 5pm with evening showcases"
+                description: "Training from 08:00–19:00 daily, with an evening showcase and final recording on the last day."
               },
               {
                 icon: <Users className="w-6 h-6 text-apple-blue" />,
-                title: "Limited Places",
-                description: "Only 20 participants to ensure personalized attention"
+                title: "Thirty Places",
+                description: "A small class to ensure every student receives direct coaching and individual attention."
               },
               {
                 icon: <Star className="w-6 h-6 text-apple-blue" />,
-                title: "Expert Faculty",
-                description: "Learn from internationally recognized vocal coaches"
+                title: "Juilliard & West End Faculty",
+                description: "Coaches who know exactly what top admissions panels are looking for."
               }
             ].map((item, index) => (
               <motion.div
@@ -118,38 +118,38 @@ const SummerProgramme = () => {
             {[
               {
                 day: "DAY 1",
-                title: "Technique Foundations",
+                title: "Foundations",
                 schedule: [
-                  "9:00 AM - Welcome & Orientation",
-                  "10:00 AM - Vocal Assessment",
-                  "12:00 PM - Lunch Break",
-                  "1:30 PM - Breath Control Masterclass",
-                  "3:30 PM - Repertoire Selection",
-                  "5:00 PM - Day Review & Practice Assignment"
+                  "9:00 — Welcome & Orientation",
+                  "10:00 — Vocal Assessment",
+                  "12:00 — Lunch",
+                  "13:30 — Breath Control Masterclass",
+                  "15:30 — Repertoire Selection",
+                  "17:00 — Day Review & Practice Assignment"
                 ]
               },
               {
                 day: "DAY 2",
                 title: "Performance Development",
                 schedule: [
-                  "9:00 AM - Morning Warm-up",
-                  "10:00 AM - Individual Coaching",
-                  "12:00 PM - Lunch Break",
-                  "1:30 PM - Performance Techniques Workshop",
-                  "3:30 PM - Group Rehearsal",
-                  "5:00 PM - Faculty Performance"
+                  "9:00 — Morning Warm-up",
+                  "10:00 — Individual Coaching Sessions",
+                  "12:00 — Lunch",
+                  "13:30 — Performance Techniques Workshop",
+                  "15:30 — Group Rehearsal",
+                  "17:00 — Faculty Masterclass"
                 ]
               },
               {
                 day: "DAY 3",
                 title: "Musical Interpretation",
                 schedule: [
-                  "9:00 AM - Morning Warm-up",
-                  "10:00 AM - Emotional Connection Workshop",
-                  "12:00 PM - Lunch Break",
-                  "1:30 PM - Individual Coaching",
-                  "3:30 PM - Style & Genre Exploration",
-                  "5:00 PM - Group Critique Session"
+                  "9:00 — Morning Warm-up",
+                  "10:00 — Emotional Connection Workshop",
+                  "12:00 — Lunch",
+                  "13:30 — Individual Coaching Sessions",
+                  "15:30 — Style & Genre Exploration",
+                  "17:00 — Group Critique Session"
                 ]
               }
             ].map((day, index) => (
@@ -173,12 +173,14 @@ const SummerProgramme = () => {
             ))}
             
             <div className="text-center mt-8">
-              <Button 
-                variant="outline" 
-                className="border-apple-blue text-apple-blue hover:bg-apple-blue/5"
-              >
-                View Full 7-Day Schedule
-              </Button>
+              <Link to="/apply">
+                <Button 
+                  variant="outline" 
+                  className="border-apple-blue text-apple-blue hover:bg-apple-blue/5"
+                >
+                  Request the Full 7-Day Schedule
+                </Button>
+              </Link>
             </div>
           </div>
         </section>
@@ -189,11 +191,11 @@ const SummerProgramme = () => {
         <section className="mb-20">
           <div className="flex flex-col items-center text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-serif font-light text-apple-text mb-4">
-              Meet Your Instructors
+              Your Faculty
             </h2>
             <div className="w-16 h-px bg-apple-border mx-auto"></div>
             <p className="text-lg text-apple-grey max-w-2xl mt-6">
-              Learn from our internationally acclaimed faculty of performers, directors, and educators
+              Coaches who are active performers and teachers — and who understand what top programmes look for in a student.
             </p>
           </div>
           
@@ -242,19 +244,21 @@ const SummerProgramme = () => {
           </div>
           
           <div className="text-center mt-10">
-            <Button variant="outline" className="border-apple-blue text-apple-blue hover:bg-apple-blue/5">
-              View All Faculty
-            </Button>
+            <Link to="/#instructors">
+              <Button variant="outline" className="border-apple-blue text-apple-blue hover:bg-apple-blue/5">
+                View Full Faculty Profiles
+              </Button>
+            </Link>
           </div>
         </section>
         
         <Separator className="my-16 bg-apple-border" />
         
-        {/* Why Join Us */}
+        {/* Why Join */}
         <section className="mb-20">
           <div className="flex flex-col items-center text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-serif font-light text-apple-text mb-4">
-              Why Join Us?
+              Why Vocal Excellence?
             </h2>
             <div className="w-16 h-px bg-apple-border mx-auto"></div>
           </div>
@@ -269,7 +273,7 @@ const SummerProgramme = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-apple-text mb-2">Individual Attention</h3>
-                  <p className="text-apple-grey">Our small class size ensures you receive personalized coaching tailored to your unique voice and performance style.</p>
+                  <p className="text-apple-grey">Thirty places. Every student receives direct coaching, individual feedback, and a 45-minute private session with faculty.</p>
                 </div>
               </div>
               
@@ -280,8 +284,8 @@ const SummerProgramme = () => {
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-apple-text mb-2">Professional Network</h3>
-                  <p className="text-apple-grey">Connect with industry professionals and like-minded performers, building relationships that can last throughout your career.</p>
+                  <h3 className="text-lg font-bold text-apple-text mb-2">Faculty Who Know Admissions</h3>
+                  <p className="text-apple-grey">Study alongside thirty serious young singers — and learn directly from Juilliard graduates and West End performers who understand what top programmes look for.</p>
                 </div>
               </div>
               
@@ -292,8 +296,8 @@ const SummerProgramme = () => {
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-apple-text mb-2">Performance Opportunities</h3>
-                  <p className="text-apple-grey">Showcase your progress in our final concert, with potential opportunities for outstanding participants.</p>
+                  <h3 className="text-lg font-bold text-apple-text mb-2">A Filmed Audition</h3>
+                  <p className="text-apple-grey">Leave with a broadcast-quality recording of your mock audition and final performance — for university video applications and portfolio submissions.</p>
                 </div>
               </div>
             </div>
@@ -306,8 +310,8 @@ const SummerProgramme = () => {
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-apple-text mb-2">Intensive Format</h3>
-                  <p className="text-apple-grey">Our immersive five-day format allows for rapid skill development and immediate application of techniques.</p>
+                  <h3 className="text-lg font-bold text-apple-text mb-2">Seven Intensive Days</h3>
+                  <p className="text-apple-grey">A structured seven-day format built for rapid development — from foundations to a filmed final performance.</p>
                 </div>
               </div>
               
@@ -318,8 +322,8 @@ const SummerProgramme = () => {
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-apple-text mb-2">Inspiring Location</h3>
-                  <p className="text-apple-grey">Our Limassol, Cyprus venue provides a beautiful and inspiring setting for your artistic development.</p>
+                  <h3 className="text-lg font-bold text-apple-text mb-2">Limassol, Cyprus</h3>
+                  <p className="text-apple-grey">A dedicated venue in Limassol — away from daily routine and designed for deep focus on your singing.</p>
                 </div>
               </div>
               
@@ -330,8 +334,8 @@ const SummerProgramme = () => {
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-apple-text mb-2">Comprehensive Curriculum</h3>
-                  <p className="text-apple-grey">From technical fundamentals to advanced performance techniques, our curriculum covers all aspects of vocal excellence.</p>
+                  <h3 className="text-lg font-bold text-apple-text mb-2">University Preparation Built In</h3>
+                  <p className="text-apple-grey">Dedicated sessions on audition strategy, personal statement guidance, and exactly what top conservatories want to see.</p>
                 </div>
               </div>
             </div>
@@ -342,59 +346,54 @@ const SummerProgramme = () => {
         <section className="mb-20 bg-slate-50 p-10 rounded-lg">
           <div className="flex flex-col items-center text-center mb-8">
             <h2 className="text-3xl md:text-4xl font-serif font-light text-slate-900 mb-4">
-              APPLICATION INFORMATION
+              How to Apply
             </h2>
             <div className="w-16 h-px bg-apple-border mx-auto"></div>
           </div>
           
           <div className="grid md:grid-cols-2 gap-10">
             <div>
-              <h3 className="text-xl font-bold text-slate-900 mb-4">ELIGIBILITY</h3>
+              <h3 className="text-xl font-bold text-slate-900 mb-4">Who can apply</h3>
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
-                  <span className="text-slate-700">Vocalists aged 16 and above</span>
+                  <span className="text-slate-700">Singers aged 12–21</span>
                 </li>
                 <li className="flex items-start">
                   <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
-                  <span className="text-slate-700">All levels of experience welcome</span>
+                  <span className="text-slate-700">Classical and musical theatre voices</span>
                 </li>
                 <li className="flex items-start">
                   <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
-                  <span className="text-slate-700">All voice types and genres welcome</span>
+                  <span className="text-slate-700">Preparing for university or conservatory auditions</span>
                 </li>
                 <li className="flex items-start">
                   <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
-                  <span className="text-slate-700">International applicants encouraged</span>
+                  <span className="text-slate-700">International applicants welcome</span>
                 </li>
               </ul>
             </div>
             
             <div>
-              <h3 className="text-xl font-bold text-slate-900 mb-4">FEES & DEADLINES</h3>
+              <h3 className="text-xl font-bold text-slate-900 mb-4">The process</h3>
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
-                  <span className="text-slate-700"><span className="line-through text-slate-400">Standard Rate: €1,499</span></span>
+                  <span className="text-slate-700">Five short questions — no essay required</span>
                 </li>
                 <li className="flex items-start">
                   <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
-                  <span className="text-slate-700 font-medium">Early Bird: €749 (until May 24, 2026) - Save €750!</span>
+                  <span className="text-slate-700">Optional audio upload</span>
                 </li>
                 <li className="flex items-start">
                   <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
-                  <span className="text-slate-700">Payment Plan: €100 deposit + 3 installments of €216</span>
+                  <span className="text-slate-700">Faculty reviews every application personally</span>
                 </li>
                 <li className="flex items-start">
                   <ChevronRight className="w-4 h-4 text-apple-blue mt-1 mr-2 flex-shrink-0" />
-                  <span className="text-slate-700">Limited scholarships available</span>
+                  <span className="text-slate-700">Pricing and availability shared with accepted students</span>
                 </li>
               </ul>
-              <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200">
-                <p className="text-sm text-green-800 font-medium">
-                  Early Bird Special: 50% off standard rate when you register before May 24, 2026
-                </p>
-              </div>
             </div>
           </div>
           
@@ -403,78 +402,30 @@ const SummerProgramme = () => {
               to="/apply" 
               className="inline-flex items-center gap-2 bg-apple-blue text-white px-8 py-4 rounded-full text-lg font-medium transition-all duration-300 hover:bg-apple-blue-hover"
             >
-              APPLY NOW
+              Request Your Place
               <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-0.5" />
             </Link>
           </div>
         </section>
       </div>
       
-      {/* Testimonials */}
-      <section className="bg-slate-900 py-20 text-white">
-        <div className="container mx-auto max-w-[1000px] px-6">
-          <div className="flex flex-col items-center text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif font-light text-white mb-4">
-              WHAT PARTICIPANTS SAY
-            </h2>
-            <div className="w-16 h-px bg-apple-border mx-auto"></div>
-          </div>
-          
-          <div className="grid md:grid-cols-2 gap-8">
-            {[
-              {
-                quote: "The Summer Workshop transformed my approach to performance. The individual coaching sessions were invaluable, and I left with renewed confidence and technique.",
-                name: "SOPHIA MARTINEZ",
-                role: "Soprano, 2024 Participant"
-              },
-              {
-                quote: "I've attended many vocal workshops, but none as comprehensive and personalized as this one. The faculty's attention to detail and commitment to each student was exceptional.",
-                name: "MICHAEL JOHNSON",
-                role: "Tenor, 2024 Participant"
-              }
-            ].map((testimonial, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-slate-800/50 p-8 rounded-lg"
-              >
-                <div className="text-2xl text-slate-200 mb-6">❝</div>
-                <p className="text-slate-300 italic mb-6 leading-relaxed">
-                  {testimonial.quote}
-                </p>
-                <div className="flex flex-col">
-                  <span className="font-bold text-white">{testimonial.name}</span>
-                  <span className="text-sm text-slate-400">{testimonial.role}</span>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-      
       {/* Call to Action */}
-      <section className="bg-apple-light py-20 px-6 rounded-3xl">
+      <section className="bg-apple-light py-20 px-6">
         <div className="container mx-auto text-center max-w-3xl">
           <h2 className="text-3xl md:text-4xl font-serif font-light text-apple-text mb-6">
-            Secure Your Place
+            The students who get in prepare differently.
           </h2>
           <div className="w-16 h-px bg-apple-border mx-auto mb-6"></div>
           <p className="text-lg md:text-xl mb-8 text-apple-grey leading-relaxed">
-            Join us this summer for an unforgettable experience that will take your vocal abilities to the next level. With only 20 places available, early application is recommended.
+            Seven days in Limassol with Juilliard and West End faculty. A filmed audition. A class of thirty. Applications open for Summer 2026.
           </p>
           <Link 
             to="/apply" 
             className="inline-flex items-center gap-2 bg-apple-blue text-white px-10 py-5 rounded-full text-lg font-medium transition-all duration-300 hover:bg-apple-blue-hover"
           >
-            Apply for Summer 2026
+            Request Your Place
             <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
           </Link>
-          <p className="text-sm text-apple-grey mt-4">
-            Early Bird: €749 (50% off €1,499) until May 24, 2026
-          </p>
         </div>
       </section>
     </div>

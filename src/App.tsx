@@ -1,5 +1,6 @@
 
 import { Suspense, lazy } from "react";
+import { HelmetProvider } from "react-helmet-async";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -8,22 +9,21 @@ import { PopupCredentialsLoader } from "./components/PopupCredentialsLoader";
 import { PreloadResources } from "./utils/PreloadResources";
 import ErrorBoundary from "./utils/ErrorBoundary";
 
-// Lazy load components
-const Index = lazy(() => import("./pages/Index"));
-const Application = lazy(() => import("./pages/Application"));
-const HomePage = lazy(() => import("./pages/HomePage"));
-const ApplicationPage = lazy(() => import("./pages/ApplicationPage"));
-const Auth = lazy(() => import("./pages/Auth"));
-const Admin = lazy(() => import("./pages/Admin"));
-const NotFound = lazy(() => import("./pages/NotFound"));
-const Terms = lazy(() => import("./pages/Terms"));
-const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
-const Tuition = lazy(() => import("./pages/Tuition"));
-const EmailExtract = lazy(() => import("./pages/EmailExtract"));
-const SummerProgramme = lazy(() => import("./pages/SummerProgramme"));
-const TestPage = lazy(() => import("./pages/TestPage"));
-const PaymentSuccess = lazy(() => import("./pages/PaymentSuccess"));
-const PaymentCancelled = lazy(() => import("./pages/PaymentCancelled"));
+// Lazy load components (use .tsx extension so resolution never picks pages/index.ts barrel)
+const Index = lazy(() => import("./pages/Index.tsx"));
+const Application = lazy(() => import("./pages/Application.tsx"));
+const HomePage = lazy(() => import("./pages/HomePage.tsx"));
+const ApplicationPage = lazy(() => import("./pages/ApplicationPage.tsx"));
+const Auth = lazy(() => import("./pages/Auth.tsx"));
+const Admin = lazy(() => import("./pages/Admin.tsx"));
+const NotFound = lazy(() => import("./pages/NotFound.tsx"));
+const Terms = lazy(() => import("./pages/Terms/index.tsx"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy.tsx"));
+const Tuition = lazy(() => import("./pages/Tuition.tsx"));
+const EmailExtract = lazy(() => import("./pages/EmailExtract.tsx"));
+const SummerProgramme = lazy(() => import("./pages/SummerProgramme.tsx"));
+const PaymentSuccess = lazy(() => import("./pages/PaymentSuccess.tsx"));
+const PaymentCancelled = lazy(() => import("./pages/PaymentCancelled.tsx"));
 
 // Create query client with better error handling
 const queryClient = new QueryClient({
@@ -55,6 +55,7 @@ function App() {
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider delayDuration={300}>
+          <HelmetProvider>
           <BrowserRouter>
             <div className="min-h-screen bg-white">
               <PreloadResources />
@@ -73,7 +74,7 @@ function App() {
                   <Route path="/tuition" element={<Tuition />} />
                   <Route path="/summer-programme" element={<SummerProgramme />} />
                   <Route path="/email-extract" element={<EmailExtract />} />
-                  <Route path="/test" element={<TestPage />} />
+
                   <Route path="/payment-success" element={<PaymentSuccess />} />
                   <Route path="/payment-cancelled" element={<PaymentCancelled />} />
                   <Route path="*" element={<NotFound />} />
@@ -83,6 +84,7 @@ function App() {
               <Toaster />
             </div>
           </BrowserRouter>
+          </HelmetProvider>
         </TooltipProvider>
       </QueryClientProvider>
     </ErrorBoundary>

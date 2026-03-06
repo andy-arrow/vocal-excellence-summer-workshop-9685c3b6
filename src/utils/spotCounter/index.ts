@@ -13,7 +13,8 @@ import { syncWithServer } from './server-sync';
 import { 
   STORAGE_KEY, 
   MIN_SPOTS_SHOWN,
-  SESSION_SYNC_FLAG
+  SESSION_SYNC_FLAG,
+  FINGERPRINT_CACHE_KEY
 } from './constants';
 
 /**
@@ -110,10 +111,11 @@ export const resetVisitorData = (): void => {
   try {
     localStorage.removeItem(STORAGE_KEY);
     localStorage.removeItem('visitorId');
+    localStorage.removeItem(FINGERPRINT_CACHE_KEY);
     sessionStorage.removeItem(SESSION_SYNC_FLAG);
   } catch (e) {
-    // If localStorage fails, also try to clear the cookies
     document.cookie = `${STORAGE_KEY}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
     document.cookie = `visitorId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    document.cookie = `${FINGERPRINT_CACHE_KEY}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
   }
 };

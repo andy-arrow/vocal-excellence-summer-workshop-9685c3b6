@@ -69,46 +69,21 @@ export const getEnhancedVisitorId = async (): Promise<string> => {
 };
 
 /**
- * Generate fingerprint using FingerprintJS library with script injection
+ * Generate fingerprint using FingerprintJS v4 (ESM from CDN).
+ * Uses dynamic import() so the module is loaded as ESM; script injection caused
+ * "Unexpected token 'export'" because the CDN script is module code.
  */
 const generateFingerprint = async (): Promise<string> => {
   try {
-    // Use a script injection approach to load FingerprintJS
-    const fingerprintPromise = new Promise<string>((resolve, reject) => {
-      if (typeof window === 'undefined') {
-        return reject(new Error('Cannot generate fingerprint in non-browser environment'));
-      }
-
-      // Check if FingerprintJS is already loaded
-      if (window.FingerprintJS) {
-        window.FingerprintJS.load()
-          .then(fp => fp.get())
-          .then(result => resolve(result.visitorId))
-          .catch(reject);
-        return;
-      }
-
-      // Create script element to load FingerprintJS
-      const script = document.createElement('script');
-      script.src = 'https://openfpcdn.io/fingerprintjs/v4';
-      script.async = true;
-      script.onload = () => {
-        if (window.FingerprintJS) {
-          window.FingerprintJS.load()
-            .then(fp => fp.get())
-            .then(result => resolve(result.visitorId))
-            .catch(reject);
-        } else {
-          reject(new Error('FingerprintJS failed to load properly'));
-        }
-      };
-      script.onerror = () => reject(new Error('Failed to load FingerprintJS'));
-      document.head.appendChild(script);
-    });
-
-    return await fingerprintPromise;
+    if (typeof window === 'undefined') {
+      return generateSimpleFingerprint();
+    }
+    const fpModule = await import('https://openfpcdn.io/fingerprintjs/v4');
+    const load = (fpModule.default ?? (fpModule as { load: () => Promise<{ get: () => Promise<{ visitorId: string }> }> }).load) as () => Promise<{ get: () => Promise<{ visitorId: string }> }>;
+    const fp = await load();
+    const result = await fp.get();
+    return result.visitorId || generateSimpleFingerprint();
   } catch (e) {
-    // Fallback to our simpler method
     return generateSimpleFingerprint();
   }
 };

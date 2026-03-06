@@ -15,6 +15,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { ApplicationFormValues } from './schema';
 import { Info } from 'lucide-react';
 import DietaryRestrictions from './DietaryRestrictions';
+import { APPLY_GOALS_LABEL, APPLY_GOALS_DESCRIPTION, SEGMENT_LINE } from '@/constants/copy';
 
 const ProgrammeApplicationSection = () => {
   const form = useFormContext<ApplicationFormValues>();
@@ -22,12 +23,12 @@ const ProgrammeApplicationSection = () => {
   return (
     <div className="space-y-4 md:space-y-5">
       <div className="mb-4 md:mb-5">
-        <h4 className="text-base md:text-lg text-[#1d1d1f] font-medium mb-1 md:mb-2">Why Join Our Programme?</h4>
+        <h4 className="text-base md:text-lg text-[#1d1d1f] font-medium mb-1 md:mb-2">Your programme</h4>
         <p className="text-[#666666] text-sm md:text-base">
-          Tell us about your aspirations and what you hope to achieve.
+          {SEGMENT_LINE} Tell us your goals in a few sentences.
         </p>
       </div>
-      
+
       <div className="space-y-4 md:space-y-5">
         <div className="bg-[#f9f9f9] rounded-lg md:rounded-xl p-3 md:p-4 border border-[#e5e5e5]">
           <FormField
@@ -36,15 +37,15 @@ const ProgrammeApplicationSection = () => {
             render={({ field }) => (
               <FormItem className="space-y-1.5 md:space-y-2">
                 <FormLabel className="flex items-center gap-2 text-[#1d1d1f] font-medium text-sm md:text-base">
-                  Why do you want to join this programme?
+                  {APPLY_GOALS_LABEL}
                   <span className="text-red-600">*</span>
                 </FormLabel>
                 <FormDescription className="text-xs md:text-sm text-[#666666]">
-                  Share your vocal goals and what attracts you to our workshop.
+                  {APPLY_GOALS_DESCRIPTION}
                 </FormDescription>
                 <FormControl>
-                  <Textarea 
-                    placeholder="I want to join this programme because..."
+                  <Textarea
+                    placeholder="e.g. I'm preparing for RNCM auditions next year and want coaching on what panels are looking for..."
                     className="min-h-[120px] md:min-h-[150px] rounded-lg md:rounded-xl border-[#e5e5e5] focus:border-apple-blue focus:ring-0 text-[#1d1d1f] placeholder:text-[#999999] text-sm md:text-base"
                     {...field}
                   />

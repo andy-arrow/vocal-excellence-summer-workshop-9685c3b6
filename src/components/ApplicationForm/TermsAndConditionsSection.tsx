@@ -42,7 +42,7 @@ const TermsAndConditionsSection = () => {
             letterSpacing: '-0.01em',
           }}
         >
-          Finalizing Your Registration
+          Before You Submit
         </h3>
         
         <p 
@@ -72,7 +72,7 @@ const TermsAndConditionsSection = () => {
               style={{ color: '#0066CC' }} 
             />
             <p className="text-[12px] sm:text-[13px]" style={{ color: '#424245', lineHeight: 1.5 }}>
-              <strong>Your Commitment:</strong> Your deposit is non-refundable to secure your seat.
+              <strong>Your Commitment:</strong> Your registration deposit secures your place. Cancellation terms apply — see our full Terms of Use.
             </p>
           </div>
           
@@ -82,7 +82,7 @@ const TermsAndConditionsSection = () => {
               style={{ color: '#0066CC' }} 
             />
             <p className="text-[12px] sm:text-[13px]" style={{ color: '#424245', lineHeight: 1.5 }}>
-              <strong>Peace of Mind:</strong> Tuition becomes non-refundable after June 15, 2026. We warmly recommend travel insurance.
+              <strong>Peace of Mind:</strong> Your registration becomes non-refundable after June 15, 2026. We warmly recommend travel insurance.
             </p>
           </div>
           
@@ -147,7 +147,7 @@ const TermsAndConditionsSection = () => {
                       color: '#1D1D1F',
                     }}
                   >
-                    I agree to the terms and am ready to join the program.
+                    I agree to the terms and conditions.
                   </label>
                 </div>
                 <FormMessage className="text-red-600 text-xs sm:text-sm mt-2" />

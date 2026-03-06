@@ -4,7 +4,7 @@
  */
 
 // Spot configuration
-export const TOTAL_SPOTS = 20; // Total spots in the program
+export const TOTAL_SPOTS = 30; // Total places in the class
 export const MIN_SPOTS_SHOWN = 3; // Minimum spots we'll show to maintain urgency
 export const SPOTS_DECREASE_INTERVAL_DAYS = 1; // How often spots decrease (in days)
 

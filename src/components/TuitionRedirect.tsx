@@ -6,7 +6,7 @@ const TuitionRedirect = () => {
   const navigate = useNavigate();
   
   useEffect(() => {
-    navigate('/tuition', { replace: true });
+    navigate('/apply', { replace: true });
   }, [navigate]);
   
   return null;

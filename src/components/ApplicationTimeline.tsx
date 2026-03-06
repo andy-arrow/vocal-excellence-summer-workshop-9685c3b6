@@ -3,6 +3,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Send, Users, Bell, CreditCard, Sparkles } from 'lucide-react';
 import { APPLICATION_DATES } from '@/constants/applicationDates';
+import { APPLY_TIMELINE_INTRO } from '@/constants/copy';
 import { format } from 'date-fns';
 
 const ApplicationTimeline = () => {
@@ -22,7 +23,7 @@ const ApplicationTimeline = () => {
     {
       icon: <Users className="w-5 h-5 text-blue-500" />,
       title: "Faculty Review",
-      description: "Our directors review all applications to select the final cohort.",
+      description: "Faculty personally reviews every application to select the final class.",
       date: reviewPeriod,
     },
     {
@@ -33,8 +34,8 @@ const ApplicationTimeline = () => {
     },
     {
       icon: <CreditCard className="w-5 h-5 text-green-500" />,
-      title: "Secure Your Seat",
-      description: "Confirm your attendance by placing your deposit.",
+      title: "Confirm Your Place",
+      description: "Complete registration and confirm your attendance to the programme.",
       date: `By ${tuitionDeadline}`,
     },
     {
@@ -48,9 +49,9 @@ const ApplicationTimeline = () => {
   return (
     <div className="bg-white rounded-xl md:rounded-2xl shadow-sm overflow-hidden">
       <div className="p-5 md:p-8 border-b border-[#e5e5e5]">
-        <h2 className="text-xl md:text-2xl font-semibold text-[#1d1d1f] mb-2 md:mb-3">Your Road to Limassol</h2>
+        <h2 className="text-xl md:text-2xl font-semibold text-[#1d1d1f] mb-2 md:mb-3">Your road to Limassol</h2>
         <p className="text-[#666666] text-base md:text-lg leading-relaxed">
-          From application to the stage in five simple steps.
+          {APPLY_TIMELINE_INTRO}
         </p>
       </div>
       

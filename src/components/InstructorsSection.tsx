@@ -51,7 +51,8 @@ const ImageWithFallback = ({
 const instructors = [
   {
     name: "Andreas Aroditis",
-    role: "Founder & Director",
+    role: "Director",
+    authority: "Juilliard graduate. Mentored by Plácido Domingo. Recognized by The New York Times and Opera Today.",
     bio: "Andreas Aroditis has earned recognition from The New York Times and Opera Today for his versatile performances at prestigious international venues. A Juilliard graduate with numerous lead roles in opera and musical theater, he has collaborated with respected artists and orchestras. Locally, he has premiered works with the Cyprus Symphony Orchestra and the TrakArt Pops Orchestra. Mentored by legends such as Plácido Domingo and Sherill Millnes, he now shapes future performers as an Instructor at the University of Nicosia and the European University while maintaining a private studio in Limassol.",
     image: "/attached_assets/andreas_aroditis_headshot.jpg",
     imagePosition: "object-center",
@@ -66,6 +67,7 @@ const instructors = [
   {
     name: "Kate Batter",
     role: "Vocal Coach",
+    authority: "West End performer (Phantom of the Opera, Sound of Music). Royal Academy of Music alum.",
     bio: "Kate Batter is a highly experienced vocal coach, performer, and founder of Sing Wimbledon. With over 20 years of teaching experience, she specializes in vocal technique, musicality, and acting through song, working with beginners and professionals alike. A graduate of the Royal Birmingham Conservatoire and Royal Academy of Music, Kate has performed in West End productions (The Sound of Music, The Phantom of the Opera) and TV shows (Top Boy, Call the Midwife). Based in Cambridge, she offers private lessons, masterclasses, and drama school audition prep. As Musical Director of Sing Space Choir, she champions vocal excellence and confidence-building.",
     image: "/images/instructors/kate-batter.png",
     socials: {
@@ -77,6 +79,7 @@ const instructors = [
   {
     name: "Carolyn Michelle Smith",
     role: "Acting Coach",
+    authority: "Juilliard graduate. House of Cards, Russian Doll, Broadway's Romeo and Juliet.",
     bio: "Carolyn Michelle Smith is an actress, producer, and educator known for her roles in House of Cards, Luke Cage, Russian Doll, and The Chi. A Juilliard graduate, she has performed on Broadway (Romeo and Juliet) and with renowned theater companies. She is also a Visiting Lecturer at Cornell University and Co-Director of Lena Waithe's Hillman Grad Mentorship Lab, empowering BIPOC creatives. Carolyn develops original content inspired by her heritage and operates AspireHigher Coaching Services to mentor actors. Her entrepreneurial artistry focuses on elevating diverse voices in Hollywood through acting, producing, and education.",
     image: "/images/instructors/carolyn-michelle-smith.png",
     socials: {
@@ -90,6 +93,7 @@ const instructors = [
   {
     name: "Ksenia Belolipetskaya",
     role: "Soprano & Vocal Coach",
+    authority: "Award-winning coloratura soprano. Expert in bringing soloists to competition-winning standards.",
     bio: "Ksenia Belolipetskaya is an award-winning operatic lyric coloratura soprano and vocal coach praised for her radiant tone and expressive depth. Internationally active, she has performed leading roles in masterpieces by Mozart, Puccini, and Bizet on prestigious stages including the Grand Hall of the Moscow Conservatory and Germany's Kammeroper Schloss Rheinsberg. Since establishing herself in Cyprus in 2022, she has become a vital figure in the local cultural scene, with recent highlights including the role of Lakmé in the interdisciplinary project Cyberness and performances with the PSI Foundation. With over a decade of pedagogical experience—ranging from Head of Vocal Department roles to theatre coaching—she mentors students who frequently become competition laureates. Ksenia is also the founder of LYRA Music & Arts, a network of schools in Limassol and Paphos dedicated to professional artistic education.",
     image: "/attached_assets/Ksenia_-_Headshot_1767558316441.jpg",
     socials: {
@@ -99,7 +103,8 @@ const instructors = [
   },
   {
     name: "Aris Antoniades",
-    role: "Composer",
+    role: "Music Director",
+    authority: "Fulbright Scholar & Manhattan School of Music grad. Collaborator with Grammy nominees.",
     bio: "Aris Antoniades is a Cypriot composer, arranger, and music director whose acclaimed work bridges the worlds of symphonic, jazz, theatrical, and film music. Praised for its emotional depth and structural clarity, his music has been performed by symphony orchestras, big bands, and celebrated soloists around the world. He has collaborated with iconic artists such as nine-time Grammy nominee Bobby Sanabria, legendary Greek musicians Alkistis Protopsalti and George Hatzinassios, and Broadway and West End stars in major productions. As artistic director and principal conductor of the TrakArt Pops Orchestra, he has led high-profile national concerts in Cyprus, while his compositions have been featured at international festivals, on commercial albums, and on global streaming platforms. A Fulbright Scholar with degrees from the Manhattan School of Music, Aris continues to craft imaginative, storytelling-driven music that resonates across genres and cultures.",
     image: "/images/instructors/aris-antoniades.png",
     socials: {
@@ -112,6 +117,7 @@ const instructors = [
   {
     name: "Polina Panagiotou",
     role: "Choreographer",
+    authority: "Lincoln Center, Curium Ancient Amphitheater. Founder of City Stage Centre.",
     bio: "Polina Panagiotou is a director, choreographer, and performer whose career spans New York stages and major Cypriot productions. A graduate of Marymount Manhattan College, she has performed at prestigious venues including New York's Lincoln Center and the historic Curium Ancient Amphitheater. Now a leading figure in Limassol's arts scene, she is the founder of City Stage Centre and co-founder of Diversity Dance Company. Polina has written, produced, and directed original musicals such as Welcome to Lollywood and the futuristic A New World at Pattihio Theatre, while mentoring the next generation of musical theatre talent.",
     image: "/attached_assets/Polina_headshot_optimized.jpg",
     socials: {
@@ -122,6 +128,7 @@ const instructors = [
   {
     name: "Emmeleia Pericleous",
     role: "Choir Director",
+    authority: "Sorbonne University (top of class). Madame Figaro Woman of the Year nominee. Cyprus Symphony Orchestra.",
     bio: "Emmelia Pericleous is a choral conductor and musicologist who graduated at the top of her master's class at the prestigious Sorbonne University, attended by special faculty invitation. Her career in Paris saw her directing choirs at three conservatories—Étampes, Savigny-sur-Orge, and Erik Satie—where she developed a signature practice seamlessly blending classical and contemporary approaches. Since returning to Cyprus to empower the local musical community, she has been nominated for the Madame Figaro Woman of the Year Award in Music. Currently, she is the founder of the choir Harmonile and an instructor at ΣymphoΠedia, the Cyprus Symphony Orchestra's educational program, where she continues to bridge French and Cypriot musical traditions through international collaboration.",
     image: "/images/instructors/emmeleia-pericleous.jpg",
     socials: {
@@ -199,35 +206,35 @@ const InstructorsSection = () => {
   };
 
   return (
-    <section id="faculty" className="py-24 md:py-32 bg-white overflow-hidden">
+    <section id="instructors" className="py-24 md:py-32 bg-white overflow-hidden">
       <div className="max-w-[1100px] mx-auto px-6 md:px-10">
         <div 
           ref={intersectionRef}
           className="text-center mb-16 md:mb-20 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight text-apple-text mb-5">
-            World-Class Faculty
+            Train With The Best
           </h2>
-          <p className="text-lg md:text-xl text-apple-grey font-light max-w-2xl mx-auto leading-relaxed mb-8">
-            Learn from internationally renowned teachers from top conservatories and universities
+          <p className="text-lg md:text-xl text-charcoal font-normal max-w-2xl mx-auto leading-relaxed mb-8">
+            Direct access to active professionals—no assistants, no fillers.
           </p>
           
           <div className="grid md:grid-cols-2 gap-4 max-w-2xl mx-auto text-left">
-            <div className="flex items-center text-apple-grey">
+            <div className="flex items-center text-charcoal">
               <span className="w-2 h-2 bg-apple-blue rounded-full mr-3"></span>
               <span>Private lesson with master teachers</span>
             </div>
-            <div className="flex items-center text-apple-grey">
+            <div className="flex items-center text-charcoal">
               <span className="w-2 h-2 bg-apple-blue rounded-full mr-3"></span>
               <span>Dedicated accompanist sessions</span>
             </div>
-            <div className="flex items-center text-apple-grey">
+            <div className="flex items-center text-charcoal">
               <span className="w-2 h-2 bg-apple-blue rounded-full mr-3"></span>
               <span>Personalized feedback and mentoring</span>
             </div>
-            <div className="flex items-center text-apple-grey">
+            <div className="flex items-center text-charcoal">
               <span className="w-2 h-2 bg-apple-blue rounded-full mr-3"></span>
-              <span>Active industry professionals as mentors</span>
+              <span>Faculty who are actively performing and teaching at the highest level</span>
             </div>
           </div>
         </div>
@@ -300,9 +307,11 @@ const InstructorsSection = () => {
                 
                 <div className="p-6 flex flex-col flex-grow">
                   <h3 className="text-xl font-medium text-apple-text">{instructor.name}</h3>
-                  <p className="text-apple-blue text-sm font-medium mb-4">{instructor.role}</p>
-                  
-                  <div className="text-apple-grey text-sm flex-grow">
+                  <p className="text-apple-blue text-sm font-medium mt-1">{instructor.role}</p>
+                  {'authority' in instructor && instructor.authority && (
+                    <p className="text-charcoal text-xs font-medium mb-3 mt-1 leading-snug">{instructor.authority}</p>
+                  )}
+                  <div className="text-charcoal text-sm flex-grow">
                     <AnimatePresence mode="wait">
                       {activeBio === index ? (
                         <motion.div

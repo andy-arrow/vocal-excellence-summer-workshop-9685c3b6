@@ -1,83 +1,109 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle2 } from 'lucide-react';
+import { Video, Users, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
+import {
+  POSTER_LINE,
+  CULTURAL_SHIFT,
+  SEGMENT_LINE,
+  TRIBE_LINE,
+  EMOTIONAL_LINE,
+  HOME_WE_BELIEVE,
+} from '@/constants/copy';
+
+const transformations = [
+  {
+    title: 'Technical freedom',
+    description: 'Alexander Technique sessions that release physical tension and help your voice perform at the level you have been training for.',
+    icon: <Zap className="h-5 w-5 text-apple-blue" />,
+  },
+  {
+    title: 'A filmed audition',
+    description: 'A broadcast-quality video recording of your mock audition — for university video applications, portfolio submissions, and scholarship shortlists.',
+    icon: <Video className="h-5 w-5 text-apple-blue" />,
+  },
+  {
+    title: 'Faculty who know what panels want',
+    description: 'Direct coaching from Juilliard graduates and West End performers who understand exactly what top university admissions panels are looking for.',
+    icon: <Users className="h-5 w-5 text-apple-blue" />,
+  },
+];
 
 const AboutSection = () => {
   const isMobile = useIsMobile();
-  
-  const features = [
-    {
-      title: 'Precision Coaching',
-      description: "Don't just sing—refine. Receive 1-on-1 private lessons tailored to your unique voice type, with professional accompanists dedicated to polishing your specific repertoire.",
-      icon: <CheckCircle2 className="h-5 w-5 text-apple-blue" />
-    },
-    {
-      title: 'Industry-Standard Assets',
-      description: "Walk away with professional 4K video recordings of your mock auditions and final performance—essential assets for your showreel and casting submissions.",
-      icon: <CheckCircle2 className="h-5 w-5 text-apple-blue" />
-    },
-    {
-      title: 'Unshakeable Confidence',
-      description: 'Overcome performance anxiety for good. Our specialized Alexander Technique workshops give you the physical and mental tools to command any stage with presence and ease.',
-      icon: <CheckCircle2 className="h-5 w-5 text-apple-blue" />
-    },
-    {
-      title: 'Vocal Longevity',
-      description: 'Protect your instrument. Learn sustainability strategies from a vocal health specialist to ensure your career lasts a lifetime.',
-      icon: <CheckCircle2 className="h-5 w-5 text-apple-blue" />
-    },
-    {
-      title: 'High-Level Networking',
-      description: "Build relationships that matter. Connect directly with successful professionals who are currently working in the industries you want to enter.",
-      icon: <CheckCircle2 className="h-5 w-5 text-apple-blue" />
-    }
-  ];
 
   return (
     <section id="about" className="py-16 md:py-24 lg:py-32 bg-white">
       <div className="container mx-auto px-4 lg:px-8">
-        <div className={cn(
-          "grid gap-10 md:gap-16",
-          isMobile ? "" : "grid-cols-1 lg:grid-cols-2"
-        )}>
-          <motion.div 
-            className="space-y-4 text-center"
+        <div className={cn('grid gap-10 md:gap-16', isMobile ? '' : 'grid-cols-1 lg:grid-cols-2')}>
+          <motion.div
+            className="space-y-6"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
+            {/* Poster line (Bernbach) — repeat from strategy */}
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-light tracking-tight text-apple-text">
-              Elevate Your Artistry
+              {POSTER_LINE}
             </h2>
-            
-            <p className="text-lg text-apple-grey leading-relaxed">
-              Transform your potential into professional excellence with targeted coaching designed for serious vocalists.
+
+            {/*
+              Emotional line — Van Edwards: make them feel seen.
+              Carnegie: acknowledge what they want, not what you want to sell.
+            */}
+            <p className="text-lg text-apple-text font-medium italic">
+              {EMOTIONAL_LINE}
             </p>
-            
-            <div className="pt-4 flex justify-center">
-              <motion.div 
-                className="h-1 w-12 bg-apple-blue rounded-full"
-                initial={{ width: 0 }}
-                whileInView={{ width: 48 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3, duration: 0.6 }}
-              />
-            </div>
+
+            {/*
+              Specific, comparative — no fear, no "struggles".
+              Hopkins: concrete claim. Ogilvy: treat the reader as an intelligent adult.
+              Audience: student, not working professional.
+            */}
+            <p className="text-lg text-charcoal leading-relaxed">
+              Most summer workshops send you home a better singer. Vocal Excellence sends you home a better singer who knows exactly what their target programme is looking for — and has a filmed audition to show for it.
+            </p>
+
+            {/* Cultural context (Bernays: create the frame, not the pitch) */}
+            <p className="text-charcoal leading-relaxed">
+              {CULTURAL_SHIFT}
+            </p>
+
+            <p className="text-charcoal leading-relaxed">
+              You won&apos;t just study with Juilliard graduates and West End performers — you will rehearse, record, and perform in the same conditions they trained in.
+            </p>
+
+            {/*
+              We believe — manifesto (Godin: tribe rally. Musk: mission.
+              Bernbach: truth over salesmanship. Ford: build what they need.)
+            */}
+            <p className="text-apple-text font-medium leading-relaxed border-l-2 border-apple-blue/50 pl-4 italic">
+              {HOME_WE_BELIEVE}
+            </p>
+
+            {/* Segment (Kotler, Ritson: know who it's not for) */}
+            <p className="text-sm md:text-base font-medium text-apple-text">
+              {SEGMENT_LINE}
+            </p>
+
+            {/* Tribe (Godin) */}
+            <p className="text-sm text-charcoal italic">
+              {TRIBE_LINE}
+            </p>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             className="space-y-6"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            {features.map((feature, index) => (
-              <motion.div 
+            <h3 className="text-xl font-semibold text-apple-text">What you leave with</h3>
+            {transformations.map((item, index) => (
+              <motion.div
                 key={index}
                 className="flex gap-4"
                 initial={{ opacity: 0, y: 10 }}
@@ -85,18 +111,14 @@ const AboutSection = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.3, delay: 0.1 * (index + 1) }}
               >
-                <div className="flex-shrink-0 mt-1.5">
-                  <div className="flex items-center justify-center w-6 h-6 rounded-full">
-                    {feature.icon}
+                <div className="flex-shrink-0 mt-1">
+                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-apple-light">
+                    {item.icon}
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-lg font-medium text-apple-text mb-2">
-                    {feature.title}
-                  </h3>
-                  <p className="text-apple-grey">
-                    {feature.description}
-                  </p>
+                  <h4 className="text-base font-medium text-apple-text mb-1">{item.title}</h4>
+                  <p className="text-charcoal text-sm md:text-base">{item.description}</p>
                 </div>
               </motion.div>
             ))}

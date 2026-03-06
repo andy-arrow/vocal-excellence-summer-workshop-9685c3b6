@@ -9,13 +9,6 @@ const ApplicationTimeline = () => {
   
   const timelineItems = [
     {
-      date: APPLICATION_DATES.EARLY_BIRD_DEADLINE,
-      title: "Early Bird Deadline",
-      description: "Submit by this date for priority consideration",
-      icon: <Clock className="w-5 h-5" />,
-      type: 'early-bird' as const
-    },
-    {
       date: APPLICATION_DATES.DEADLINE,
       title: "Application Deadline", 
       description: "Final deadline for all applications",
@@ -38,8 +31,8 @@ const ApplicationTimeline = () => {
     },
     {
       date: APPLICATION_DATES.TUITION_DEADLINE,
-      title: "Tuition Payment Due",
-      description: "Final payment deadline for accepted applicants",
+      title: "Registration Confirmation Due",
+      description: "Deadline to confirm your place for accepted applicants.",
       icon: <Calendar className="w-5 h-5" />,
       type: 'payment' as const
     }
@@ -75,24 +68,26 @@ const ApplicationTimeline = () => {
             Application Timeline
           </h2>
           <p className="text-lg text-apple-grey max-w-2xl mx-auto">
-            Important dates for the 2026 Summer Workshop application process
+            Important dates for the Summer 2026 application process
           </p>
           
           {applicationsOpen ? (
-            <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+            <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3">
+              <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0" />
               <p className="text-green-800 font-medium">
-                ✅ Applications are currently open! Submit your application before {APPLICATION_DATES.DEADLINE.toLocaleDateString('en-US', { 
+                Applications are currently open. Submit before {APPLICATION_DATES.DEADLINE.toLocaleDateString('en-US', { 
                   weekday: 'long', 
                   year: 'numeric', 
                   month: 'long', 
                   day: 'numeric' 
-                })}
+                })}.
               </p>
             </div>
           ) : (
-            <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-red-800 font-medium">
-                ❌ The application deadline has passed. Please check back for future opportunities.
+            <div className="mt-6 p-4 bg-amber-50 border border-amber-200 rounded-lg flex items-center gap-3">
+              <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0" />
+              <p className="text-amber-800 font-medium">
+                The application deadline has passed. Please check back for future opportunities.
               </p>
             </div>
           )}

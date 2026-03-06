@@ -1,12 +1,13 @@
 
 import React, { useEffect, lazy, Suspense } from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Toaster } from '@/components/ui/toaster';
 import { useIsMobile } from '@/hooks/use-mobile';
 import ApplicationPageHero from '@/components/ApplicationPageHero';
+import { APPLY_PAGE_TITLE, APPLY_META_DESCRIPTION } from '@/constants/copy';
 
 // Lazily load less critical components
 const ApplicationForm = lazy(() => import('@/components/ApplicationForm'));
@@ -66,8 +67,8 @@ const Application = () => {
   return (
     <div className="bg-[#f5f5f7] text-apple-text min-h-screen font-sans antialiased">
       <Helmet>
-        <title>Apply Now | Vocal Excellence Workshop</title>
-        <meta name="description" content="Apply now for the Vocal Excellence Summer Workshop and discover your true potential with world-class vocal coaching. Limited spots available." />
+        <title>{APPLY_PAGE_TITLE}</title>
+        <meta name="description" content={APPLY_META_DESCRIPTION} />
         <meta name="theme-color" content="#ffffff" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
       </Helmet>

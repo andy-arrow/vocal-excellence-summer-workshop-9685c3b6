@@ -139,8 +139,8 @@ const sections = [
             <td class="border border-gray-300 px-4 py-2">Vocal type/range, educational background, performance experience, audio/video recordings, personal statements, CV/résumé, references.</td>
           </tr>
           <tr>
-            <td class="border border-gray-300 px-4 py-2"><strong>Account Data</strong></td>
-            <td class="border border-gray-300 px-4 py-2">Username, encrypted password, login records, account preferences, audit logs.</td>
+            <td class="border border-gray-300 px-4 py-2"><strong>Administrative Account Data</strong></td>
+            <td class="border border-gray-300 px-4 py-2">Username, encrypted password, login records, and audit logs for authorised administrative staff only. Applicants do not hold user accounts on this platform.</td>
           </tr>
           <tr>
             <td class="border border-gray-300 px-4 py-2"><strong>Financial Data</strong></td>
@@ -234,7 +234,7 @@ const sections = [
       <ul>
         <li><strong>Application Processing:</strong> Evaluating eligibility, vocal assessment, and faculty review.</li>
         <li><strong>Programme Administration:</strong> Scheduling, instructor matching, attendance, and certification.</li>
-        <li><strong>Account Management:</strong> Authentication, security monitoring, and password management.</li>
+        <li><strong>Platform Security:</strong> Authentication and access control for authorised administrative staff; security monitoring and audit logging.</li>
         <li><strong>Financial Operations:</strong> Invoicing, refund processing, and scholarship disbursement.</li>
         <li><strong>Communications:</strong> Sending pre-arrival guides, schedules, and support responses.</li>
         <li><strong>Website Operations:</strong> Ensuring functionality, load balancing, and technical troubleshooting.</li>
@@ -275,9 +275,9 @@ const sections = [
             <td class="border border-gray-300 px-4 py-2">Cyprus Tax Law requirements</td>
           </tr>
           <tr>
-            <td class="border border-gray-300 px-4 py-2">Account Info</td>
-            <td class="border border-gray-300 px-4 py-2">Duration of active account + 2 years</td>
-            <td class="border border-gray-300 px-4 py-2">Service continuity</td>
+            <td class="border border-gray-300 px-4 py-2">Administrative Account Data</td>
+            <td class="border border-gray-300 px-4 py-2">Duration of active staff role + 2 years</td>
+            <td class="border border-gray-300 px-4 py-2">Security audit trail and access control</td>
           </tr>
           <tr>
             <td class="border border-gray-300 px-4 py-2">Marketing Data</td>
@@ -367,9 +367,8 @@ const sections = [
       <h4>9.2 Consent Withdrawal</h4>
       <p>You may withdraw consent at any time by:</p>
       <ul>
-        <li>Clicking "Unsubscribe" in emails.</li>
-        <li>Adjusting settings in your User Dashboard.</li>
-        <li>Emailing <a href="mailto:privacy@vocalexcellence.cy">privacy@vocalexcellence.cy</a>.</li>
+        <li>Clicking "Unsubscribe" in any marketing email.</li>
+        <li>Emailing <a href="mailto:privacy@vocalexcellence.cy">privacy@vocalexcellence.cy</a> with your withdrawal request.</li>
       </ul>
       <p>Withdrawal does not affect the lawfulness of processing based on consent before its withdrawal.</p>
     `
@@ -419,7 +418,7 @@ const sections = [
           </tr>
           <tr>
             <td class="border border-gray-300 px-4 py-2">Functional</td>
-            <td class="border border-gray-300 px-4 py-2">Language preferences, video player settings.</td>
+            <td class="border border-gray-300 px-4 py-2">Form state persistence, UI preferences (e.g., reduced-motion setting).</td>
             <td class="border border-gray-300 px-4 py-2">Yes</td>
           </tr>
           <tr>
@@ -444,14 +443,15 @@ const sections = [
     title: "12. Children's Privacy",
     content: `
       <h4>12.1 Digital Age of Consent (Cyprus)</h4>
-      <p>Under Law 125(I)/2018, the digital age of consent in Cyprus is 14 years. We do not knowingly collect data online from individuals under 14 without verifiable parental consent.</p>
+      <p>Under Law 125(I)/2018, the digital age of consent in Cyprus is 14 years. We do not knowingly collect data online from individuals under 14 without verifiable parental consent. Note: whilst the digital consent age is 14, our programme accepts participants from age 12 — all data collection for applicants under 14 is processed exclusively through their parent or legal guardian.</p>
       
       <h4>12.2 Programme Participation (Minors)</h4>
-      <p>For applicants aged 14–17:</p>
+      <p>For applicants aged 12–17:</p>
       <ul>
         <li>Applications must be submitted with the explicit consent of a parent or legal guardian.</li>
         <li>We require a signed Parental Consent Form verifying the guardian's identity and approval.</li>
-        <li>If we discover data collected from a minor without this consent, it will be immediately deleted.</li>
+        <li>For applicants aged 12–13, all online data submission is completed by the parent or guardian on the applicant's behalf.</li>
+        <li>If we discover data collected from a minor without the required consent, it will be immediately deleted.</li>
       </ul>
     `
   },

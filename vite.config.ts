@@ -56,7 +56,7 @@ export default defineConfig(({ mode }) => ({
     chunkSizeWarningLimit: 1000,
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom'],
+    include: ['react', 'react-dom', 'react-router-dom', 'react-helmet-async'],
   },
   // Set publicDir to correctly handle static assets
   publicDir: 'public',

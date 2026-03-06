@@ -17,48 +17,49 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { motion, AnimatePresence } from 'framer-motion';
+import { OUTCOME_LINE } from '@/constants/copy';
 
 const modules = [
   {
-    title: "World-Class Faculty",
-    description: "Private mentorship and expert feedback from active industry professionals.",
+    title: "Faculty Who Know What Panels Want",
+    description: "Private coaching from Juilliard graduates and West End performers who understand top university auditions from the inside.",
     icon: <GraduationCap className="w-8 h-8 text-apple-blue" />,
     highlights: [
-      "Private Mentorship: 45-minute 1-on-1 lessons with master teachers",
-      "Collaborative Coaching: Dedicated sessions with professional accompanists",
-      "Expert Feedback: Real-time critique from active industry professionals"
+      "Private Coaching: 45-minute 1-on-1 sessions with master teachers",
+      "Accompanist Sessions: Dedicated rehearsals with professional pianists",
+      "Panel Feedback: Real-time critique from faculty who have sat on university admissions panels"
     ],
     iconBg: "bg-apple-light"
   },
   {
-    title: "Performance Mastery",
-    description: "Physical freedom, mental toughness, and spotlight-ready performance skills.",
+    title: "Audition Confidence",
+    description: "Physical freedom, mental toughness, and the poise to walk into any audition room ready.",
     icon: <Award className="w-8 h-8 text-apple-blue" />,
     highlights: [
-      "Physical Freedom: Alexander Technique workshops to release tension",
-      "Mental Toughness: Proven anxiety management training for high-pressure auditions",
-      "The Spotlight: Live mock auditions and a final showcase performance"
+      "Physical Freedom: Alexander Technique to release tension before you sing",
+      "Mental Preparation: Anxiety management training specific to high-stakes auditions",
+      "Mock Auditions: Live practice in front of faculty with full feedback"
     ],
     iconBg: "bg-apple-light"
   },
   {
-    title: "Career Toolkit",
-    description: "Audition strategy, portfolio building, and professional career planning.",
+    title: "University Preparation",
+    description: "Exactly what top programmes look for, how to present yourself, and a filmed audition to take with you.",
     icon: <Mic className="w-8 h-8 text-apple-blue" />,
     highlights: [
-      "Audition Strategy: Masterclasses on how to book the room",
-      "Portfolio Building: Professional 4K recording sessions",
-      "Strategic Planning: Career sessions to map your next professional steps"
+      "Audition Preparation: Masterclasses on what Juilliard, RADA, and top conservatories look for",
+      "Filmed Audition: Broadcast-quality video of your mock audition and final performance",
+      "Application Guidance: Sessions on personal statements, repertoire selection, and what panels expect"
     ],
     iconBg: "bg-apple-light"
   },
   {
-    title: "Holistic Health",
-    description: "Vocal hygiene and artist wellness for long-term career sustainability.",
+    title: "Voice & Wellbeing",
+    description: "Vocal health and performer wellbeing — so your instrument is protected now and throughout your training.",
     icon: <Headphones className="w-8 h-8 text-apple-blue" />,
     highlights: [
-      "Vocal Hygiene: Seminars with medical professionals on vocal health",
-      "Artist Wellness: Workshops on physical maintenance and performance psychology"
+      "Vocal Health: Seminars with medical professionals on protecting your voice",
+      "Performer Wellbeing: Workshops on physical maintenance and performance psychology"
     ],
     iconBg: "bg-apple-light"
   }
@@ -109,15 +110,15 @@ const scheduleData = [
   },
   { 
     day: "Thursday", 
-    theme: "Vocal Health & Industry (08:00–19:00)",
+    theme: "Vocal Health & Audition Preparation (08:00–19:00)",
     activities: [
       "08:00–09:00: Group Warm-Up",
       "09:00–10:30: Vocal Health Seminar (Medical Professional)",
-      "10:45–12:15: Industry Panel Discussion",
-      "12:15–13:45: Networking Lunch",
-      "13:45–15:45: Career Strategy Workshop",
+      "10:45–12:15: University & Conservatory Admissions Panel",
+      "12:15–13:45: Lunch with Faculty",
+      "13:45–15:45: Audition Strategy Workshop",
       "16:00–18:00: Professional Recording Session",
-      "18:00–19:00: Q&A with Industry Professionals"
+      "18:00–19:00: Q&A with Faculty and Alumni"
     ] 
   },
   { 
@@ -130,7 +131,7 @@ const scheduleData = [
       "12:45–14:15: Light Lunch & Rest Period",
       "14:15–16:15: Final Preparations",
       "16:30–18:30: Professional Showcase Performance",
-      "19:00–21:00: Closing Reception & Networking"
+      "19:00–21:00: Closing Celebration"
     ] 
   }
 ];
@@ -155,9 +156,9 @@ const facultyMembers = [
     }
   },
   {
-    name: "Carolyn Michelle-Smith",
+    name: "Carolyn Michelle Smith",
     role: "Acting Coach",
-    bio: "Carolyn Michelle-Smith is an actress, producer, and educator known for her roles in House of Cards, Luke Cage, Russian Doll, and The Chi. A Juilliard graduate, she has performed on Broadway and with renowned theater companies.",
+    bio: "Carolyn Michelle Smith is an actress, producer, and educator known for her roles in House of Cards, Luke Cage, Russian Doll, and The Chi. A Juilliard graduate, she has performed on Broadway and with renowned theater companies.",
     image: "/images/instructors/carolyn-michelle-smith.png",
     socials: {
       instagram: "https://www.instagram.com/that_carolynmichelle?igsh=MWluZGpwb2pqMm4yeQ==",
@@ -185,9 +186,9 @@ const facultyMembers = [
     }
   },
   {
-    name: "Emmelia Pericleous",
+    name: "Emmeleia Pericleous",
     role: "Choir Director",
-    bio: "Emmelia Pericleous is a choral conductor and musicologist who graduated at the top of her master's class at the prestigious Sorbonne University, attended by special faculty invitation. Her career in Paris saw her directing choirs at three conservatories—Étampes, Savigny-sur-Orge, and Erik Satie—where she developed a signature practice seamlessly blending classical and contemporary approaches. Since returning to Cyprus to empower the local musical community, she has been nominated for the Madame Figaro Woman of the Year Award in Music. Currently, she is the founder of the choir Harmonile and an instructor at ΣymphoΠedia, the Cyprus Symphony Orchestra's educational program, where she continues to bridge French and Cypriot musical traditions through international collaboration.",
+    bio: "Emmeleia Pericleous is a choral conductor and musicologist who graduated at the top of her master's class at the prestigious Sorbonne University, attended by special faculty invitation. Her career in Paris saw her directing choirs at three conservatories—Étampes, Savigny-sur-Orge, and Erik Satie—where she developed a signature practice seamlessly blending classical and contemporary approaches. Since returning to Cyprus to empower the local musical community, she has been nominated for the Madame Figaro Woman of the Year Award in Music. Currently, she is the founder of the choir Harmonile and an instructor at ΣymphoΠedia, the Cyprus Symphony Orchestra's educational program, where she continues to bridge French and Cypriot musical traditions through international collaboration.",
     image: "/images/instructors/emmeleia-pericleous.jpg",
     socials: {
       instagram: "#",
@@ -261,7 +262,7 @@ function ScheduleContent() {
         </CardHeader>
         <CardContent className="pt-0 pb-6">
           <p className="text-apple-grey text-base font-light">
-            Each day is carefully structured to maximize your learning and development, with a balance of technical training, performance practice, and industry insight.
+            Each day is carefully structured with a balance of technical training, performance practice, and audition preparation.
           </p>
         </CardContent>
       </Card>
@@ -339,9 +340,50 @@ const CurriculumSection = () => {
     setActiveTab(value);
   };
 
+  const deliverables = [
+    { title: 'Private Mentorship', desc: '45-minute 1-on-1 lessons tailored to your voice type with Master Teachers (Andreas Aroditis, Ksenia Belolipetskaya).' },
+    { title: 'A broadcast-quality filmed audition', desc: 'A professional video recording of your mock audition and final performance — for university video applications, portfolio submissions, and scholarship shortlists. Yours will be ready before you leave.' },
+    { title: 'Collaborative Coaching', desc: 'Dedicated sessions with professional accompanists to polish your repertoire.' },
+    { title: 'Audition preparation', desc: 'Masterclasses on what Juilliard, RADA, and top conservatories look for — and how to walk into any audition room ready.' },
+    { title: 'Vocal Health Training', desc: 'Seminars with medical specialists on protecting your voice — so your instrument is ready for the demands of conservatory training.' },
+  ];
+
   return (
     <section id="curriculum" className="py-20 md:py-24 px-6 md:px-8 bg-gradient-to-b from-white to-apple-light/50">
       <div className="max-w-[980px] mx-auto">
+        <motion.div
+          className="mb-12 md:mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <h2 className="text-3xl md:text-4xl xl:text-5xl font-medium text-apple-text mb-2">
+            What you walk away with
+          </h2>
+          <p className="text-sm text-apple-grey font-light mb-8 italic">
+            {OUTCOME_LINE}
+          </p>
+          <ul className="space-y-4">
+            {deliverables.map((item, i) => (
+              <motion.li
+                key={i}
+                className="flex gap-3"
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: i * 0.05 }}
+              >
+                <span className="flex-shrink-0 w-6 h-6 rounded-full bg-apple-blue/20 text-apple-blue flex items-center justify-center text-sm font-semibold">{i + 1}</span>
+                <div>
+                  <span className="font-medium text-apple-text">{item.title}:</span>{' '}
+                  <span className="text-apple-grey">{item.desc}</span>
+                </div>
+              </motion.li>
+            ))}
+          </ul>
+        </motion.div>
+
         <motion.div 
           className="text-center mb-12 md:mb-16"
           initial={{ opacity: 0, y: 20 }}
@@ -350,10 +392,10 @@ const CurriculumSection = () => {
           transition={{ duration: 0.5 }}
         >
           <h2 className="text-3xl md:text-4xl xl:text-5xl font-medium text-apple-text mb-4">
-            An Intensive Artist Curriculum
+            Seven days of intensive training
           </h2>
           <p className="text-lg md:text-xl text-apple-grey font-light max-w-2xl mx-auto">
-            A 360° approach to performance, technique, and career strategy
+            Vocal technique, audition confidence, university preparation, and a filmed audition to take with you.
           </p>
         </motion.div>
 

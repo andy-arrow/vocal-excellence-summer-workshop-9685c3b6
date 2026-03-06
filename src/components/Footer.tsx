@@ -1,125 +1,51 @@
-
 import React from 'react';
-import { Mail, Phone, MapPin, Instagram, Twitter, Youtube } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { BRAND_STORY, CATEGORY_PHRASE } from '@/constants/copy';
 
 const Footer = () => {
-  const footerLinks = React.useMemo(() => [
-    { name: "Home", href: "/#home" },
-    { name: "About the Workshop", href: "/#about" },
-    { name: "Curriculum & Schedule", href: "/#curriculum" },
-    { name: "Instructors", href: "/#instructors" },
-    { name: "Apply Now", href: "/apply" }
-  ], []);
-
-  const socials = React.useMemo(() => [
-    { icon: <Instagram size={18} />, url: "https://instagram.com/vocalexcellence", label: "Instagram" },
-    { icon: <Twitter size={18} />, url: "https://twitter.com/vocalexcellence", label: "Twitter" },
-    { icon: <Youtube size={18} />, url: "https://youtube.com/vocalexcellence", label: "YouTube" }
-  ], []);
-
   return (
     <footer className="relative bg-[#fbfbfd] overflow-hidden">
       <div className="max-w-[980px] mx-auto px-6 md:px-8">
-        <div className="py-4 border-b border-[#d2d2d7]">
-          <p className="text-[12px] leading-[1.33337] font-normal text-[#6e6e73]">
-            <strong>Vocal Excellence</strong> — Cyprus's premier destination for elite musical education, connecting passionate vocalists with world-class training in the heart of Limassol.
+        <div className="py-8 md:py-10 border-b border-[#d2d2d7]">
+          <p className="text-base font-medium text-[#1d1d1f] mb-2">
+            Vocal Excellence.
           </p>
-        </div>
-
-        <div className="grid md:grid-cols-5 gap-8 py-12">
-          <div className="md:col-span-2">
-            <nav>
-              <h3 className="text-[12px] leading-[1.33337] font-semibold mb-3 text-[#1d1d1f]">Quick Links</h3>
-              <ul className="space-y-2">
-                {footerLinks.map((link, i) => (
-                  <li key={i}>
-                    <Link 
-                      to={link.href}
-                      className="text-[12px] leading-[1.33337] text-[#424245] hover:text-[#1d1d1f] transition-colors duration-300"
-                    >
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          </div>
-
-          <div className="md:col-span-1">
-            <h3 className="text-[12px] leading-[1.33337] font-semibold mb-3 text-[#1d1d1f]">Legal</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link to="/privacy" className="text-[12px] leading-[1.33337] text-[#424245] hover:text-[#1d1d1f] transition-colors duration-300">
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link to="/terms" className="text-[12px] leading-[1.33337] text-[#424245] hover:text-[#1d1d1f] transition-colors duration-300">
-                  Terms of Use
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div className="md:col-span-2">
-            <h3 className="text-[12px] leading-[1.33337] font-semibold mb-3 text-[#1d1d1f]">Contact</h3>
-            <ul className="space-y-3">
-              <li className="flex items-center">
-                <Mail className="w-4 h-4 text-[#424245] mr-2" />
-                <a href="mailto:info@vocalexcellence.cy" className="text-[12px] leading-[1.33337] text-[#424245] hover:text-[#1d1d1f] transition-colors duration-300">
-                  info@vocalexcellence.cy
-                </a>
-              </li>
-              <li className="flex items-center">
-                <Phone className="w-4 h-4 text-[#424245] mr-2" />
-                <a href="tel:+35725775885" className="text-[12px] leading-[1.33337] text-[#424245] hover:text-[#1d1d1f] transition-colors duration-300">
-                  +357 25 775 885
-                </a>
-              </li>
-              <li className="flex items-center">
-                <MapPin className="w-4 h-4 text-[#424245] mr-2" />
-                <span className="text-[12px] leading-[1.33337] text-[#424245]">
-                  Limassol, Cyprus
-                </span>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="flex flex-col md:flex-row justify-between items-center py-4 border-t border-[#d2d2d7]">
-          <div className="flex items-center space-x-4 mb-4 md:mb-0">
-            {socials.map((social, i) => (
-              <a
-                key={i}
-                href={social.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#424245] hover:text-[#1d1d1f] transition-colors duration-300"
-                aria-label={social.label}
-              >
-                {social.icon}
-              </a>
-            ))}
-          </div>
-
-          <div className="flex items-center space-x-6">
-            <p className="text-[12px] leading-[1.33337] text-[#6e6e73]">
-              Copyright © {new Date().getFullYear()} Vocal Excellence. All rights reserved.
-            </p>
-            <Link 
-              to="/"
-              className="hidden md:block"
-            >
-              <img 
-                src="/images/branding/logo.png" 
-                alt="Vocal Excellence Logo" 
-                className="w-40 h-40"
-                loading="lazy"
-              />
+          <p className="text-sm text-[#6e6e73] mb-2 italic max-w-xl">
+            {BRAND_STORY}
+          </p>
+          <p className="text-xs text-[#6e6e73] mb-4">
+            {CATEGORY_PHRASE}
+          </p>
+          <p className="text-sm text-[#6e6e73] mb-4">
+            Limassol, Cyprus.
+          </p>
+          <p className="text-sm text-[#6e6e73] mb-4">
+            Questions?{' '}
+            <a href="mailto:info@vocalexcellence.cy" className="text-apple-blue hover:underline">
+              info@vocalexcellence.cy
+            </a>
+            {' '}|{' '}
+            <a href="tel:+35725775885" className="text-apple-blue hover:underline">
+              +357 25 775 885
+            </a>
+          </p>
+          <div className="flex flex-wrap gap-4 text-sm">
+            <Link to="/privacy" className="text-[#424245] hover:text-[#1d1d1f] transition-colors">
+              Privacy Policy
+            </Link>
+            <Link to="/terms" className="text-[#424245] hover:text-[#1d1d1f] transition-colors">
+              Terms of Use
+            </Link>
+            <Link to="/apply" className="text-apple-blue font-medium hover:underline">
+              Request Your Place
             </Link>
           </div>
+        </div>
+
+        <div className="py-4">
+          <p className="text-[12px] text-[#6e6e73]">
+            Copyright © {new Date().getFullYear()} Vocal Excellence.
+          </p>
         </div>
       </div>
     </footer>

@@ -49,7 +49,7 @@ const TestPage = () => {
             <div className="inline-block bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium mb-3">
               Feature Testing Page
             </div>
-            <h1 className="text-3xl font-bold text-slate-900">Vocal Academy Feature Testing</h1>
+            <h1 className="text-3xl font-bold text-slate-900">Vocal Excellence Feature Testing</h1>
             <p className="text-slate-500 mt-2">
               Welcome to our testing environment where you can explore and experiment with our platform features.
             </p>
@@ -122,7 +122,7 @@ const TestPage = () => {
             
             {/* Content Strategy Section */}
             <div className="mb-8">
-              <h2 className="text-2xl font-semibold text-slate-800 mb-4">Vocal Academy Content Strategy</h2>
+              <h2 className="text-2xl font-semibold text-slate-800 mb-4">Vocal Excellence Content Strategy</h2>
               <p className="text-slate-600 mb-4">
                 Our lead magnet is part of a comprehensive content funnel designed to attract, engage, and convert aspiring vocal performers.
               </p>

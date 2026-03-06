@@ -48,10 +48,10 @@ const PaymentCancelled = () => {
               <p className="text-apple-grey text-xs sm:text-sm">
                 If you experienced any issues with the payment process, please contact us at{' '}
                 <a 
-                  href="mailto:support@vocalexcellence.cy" 
+                  href="mailto:info@vocalexcellence.cy" 
                   className="text-apple-blue hover:underline"
                 >
-                  support@vocalexcellence.cy
+                  info@vocalexcellence.cy
                 </a>
               </p>
             </div>

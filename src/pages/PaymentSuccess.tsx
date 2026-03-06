@@ -123,7 +123,7 @@ const PaymentSuccess = () => {
         </h1>
         
         <p className="text-apple-grey text-base sm:text-lg mb-8 sm:mb-10 max-w-lg mx-auto">
-          Thank you{applicantName ? `, ${applicantName.split(' ')[0]}` : ''} for applying to the Vocal Excellence Summer Workshop 2026. Your application has been received and your registration fee has been processed.
+          Thank you{applicantName ? `, ${applicantName.split(' ')[0]}` : ''} for applying to Vocal Excellence 2026. Your application has been received and your registration fee has been processed.
         </p>
 
         <div className="space-y-3 sm:space-y-4 mb-8 sm:mb-10">

@@ -31,7 +31,7 @@ const Terms = () => {
           <h2 className="text-lg font-semibold mb-4">Table of Contents</h2>
           <ol className="list-decimal list-inside space-y-2 text-gray-700">
             <li><a href="#preamble" className="hover:text-blue-600">Preamble and Binding Effect</a></li>
-            <li><a href="#eligibility" className="hover:text-blue-600">Eligibility, Admission, and Cohort</a></li>
+            <li><a href="#eligibility" className="hover:text-blue-600">Eligibility, Admission, and Class Size</a></li>
             <li><a href="#tuition" className="hover:text-blue-600">Tuition, Fees, and Payment Terms</a></li>
             <li><a href="#inclusions" className="hover:text-blue-600">Inclusions and Exclusions</a></li>
             <li><a href="#cancellation" className="hover:text-blue-600">Cancellation, Withdrawal, and Refunds</a></li>
@@ -91,16 +91,16 @@ const sections = [
       
       <p><strong>1.2. Minors.</strong> If the Participant is under the age of 18 at the start of the Programme, these Terms must be agreed to by a parent or legal guardian ("Guardian"), who agrees to be bound by them and assumes full financial and legal responsibility for the Participant.</p>
       
-      <p><strong>1.3. Acceptance.</strong> By submitting an application, paying any deposit or fee, accessing the Student Portal, or participating in any Programme activity, you unconditionally acknowledge that you have read, understood, and agree to be bound by these Terms.</p>
+      <p><strong>1.3. Acceptance.</strong> By submitting an application, paying any deposit or fee, or participating in any Programme activity, you unconditionally acknowledge that you have read, understood, and agree to be bound by these Terms.</p>
       
       <p><strong>1.4. Entire Agreement.</strong> These Terms, together with your formal Letter of Acceptance and Invoice, constitute the entire agreement between the parties and supersede all prior marketing materials, website descriptions, or verbal representations.</p>
     `
   },
   {
     id: "eligibility",
-    title: "2. Eligibility, Admission, and Cohort",
+    title: "2. Eligibility, Admission, and Class Size",
     content: `
-      <p><strong>2.1. Competitive Admission.</strong> The Programme is strictly limited to a maximum cohort of 20 participants. Admission is competitive. Submission of an application constitutes an offer to participate, not a guarantee of acceptance.</p>
+      <p><strong>2.1. Competitive Admission.</strong> The Programme is strictly limited to a maximum class of 30 participants. Admission is competitive. Submission of an application constitutes an offer to participate, not a guarantee of acceptance.</p>
       
       <p><strong>2.2. Contract Formation.</strong> A binding contract is formed only upon the satisfaction of both of the following conditions:</p>
       <ul>
@@ -110,7 +110,7 @@ const sections = [
       
       <p><strong>2.3. Eligibility Criteria.</strong> You warrant that:</p>
       <ul>
-        <li>You are at least 18 years of age by June 29, 2026 (or 14–17 with the mandatory Parental Consent Form on file).</li>
+        <li>You are at least 18 years of age by June 29, 2026 (or 12–17 with the mandatory Parental Consent Form on file).</li>
         <li>All information, recordings, and documentation submitted in your application are true, accurate, and current.</li>
         <li>You are in good vocal and physical health sufficient to participate in an intensive 7-day training regimen.</li>
       </ul>
@@ -134,7 +134,7 @@ const sections = [
       <ul>
         <li><strong>Booking Deposit:</strong> A non-refundable deposit of €100.00 is due immediately upon acceptance to secure your placement. This amount is credited toward your Total Tuition.</li>
         <li><strong>Balance Deadline:</strong> The remaining balance of the Tuition is strictly due by June 15, 2026.</li>
-        <li><strong>Installment Plan (Early Bird Only):</strong> Participants securing the Early Bird Rate may elect to pay in three (3) monthly installments of €216.00.</li>
+        <li><strong>Installment Plan (Early Bird Only):</strong> Participants securing the Early Bird Rate may elect to pay the outstanding balance (€649.00 after the Booking Deposit) in three (3) monthly installments of approximately €216.34 each. Exact installment amounts and due dates are confirmed in the acceptance documentation.</li>
         <li><strong>Default:</strong> Failure to pay any installment within five (5) calendar days of its due date constitutes a material breach, allowing the Organizer to cancel your registration and retain all monies paid to date.</li>
       </ul>
       
@@ -169,7 +169,7 @@ const sections = [
     id: "cancellation",
     title: "5. Cancellation, Withdrawal, and Refunds",
     content: `
-      <p><strong>5.1. Strict Cancellation Policy.</strong> To withdraw, you must submit a written Notice of Cancellation to <a href="mailto:info@vocalexcellence.cy">info@vocalexcellence.cy</a>. Refund eligibility is calculated strictly based on the date and time we receive this email (Cyprus Time, EET).</p>
+      <p><strong>5.1. Strict Cancellation Policy.</strong> To withdraw, you must submit a written Notice of Cancellation to <a href="mailto:info@vocalexcellence.cy">info@vocalexcellence.cy</a>. Refund eligibility is calculated strictly based on the date and time we receive this email (Cyprus Time, EEST — UTC+3).</p>
       
       <table class="w-full border-collapse border border-gray-300 my-4">
         <thead>
@@ -198,13 +198,15 @@ const sections = [
         </tbody>
       </table>
       
-      <p><strong>5.2. Administrative Fee.</strong> A deduction of €50.00 applies to all refunds to cover administrative overhead, banking transaction reversals, and re-booking costs.</p>
+      <p><strong>5.2. Non-Refundable Deposit.</strong> For the avoidance of doubt, the Booking Deposit of €100.00 (as defined in Section 3.3) is non-refundable under all circumstances and is excluded from the refund calculation in the table above. The percentages in the table apply only to sums paid beyond the Booking Deposit.</p>
       
-      <p><strong>5.3. No Exceptions.</strong> The cancellation policy applies regardless of the reason for withdrawal, including but not limited to: illness, injury, family emergency, work conflicts, or travel delays. We strongly recommend purchasing "Cancel for Any Reason" (CFAR) travel insurance.</p>
+      <p><strong>5.3. Administrative Fee.</strong> A further deduction of €50.00 applies to all refunds to cover administrative overhead, banking transaction reversals, and re-booking costs.</p>
       
-      <p><strong>5.4. Visa Denial.</strong> Inability to obtain a visa does not exempt you from the standard Cancellation Policy. It is your responsibility to apply for visas immediately upon acceptance.</p>
+      <p><strong>5.4. No Exceptions.</strong> The cancellation policy applies regardless of the reason for withdrawal, including but not limited to: illness, injury, family emergency, work conflicts, or travel delays. We strongly recommend purchasing "Cancel for Any Reason" (CFAR) travel insurance.</p>
       
-      <p><strong>5.5. EU Right of Withdrawal Exemption.</strong> Pursuant to the Consumer Rights Law of 2013 (133(I)/2013) of Cyprus and EU Directive 2011/83/EU, the statutory 14-day "Right of Withdrawal" does not apply to contracts for the provision of leisure activities or services related to leisure activities if the contract provides for a specific date or period of performance. Therefore, your booking is final upon payment.</p>
+      <p><strong>5.5. Visa Denial.</strong> Inability to obtain a visa does not exempt you from the standard Cancellation Policy. It is your responsibility to apply for visas immediately upon acceptance.</p>
+      
+      <p><strong>5.6. EU Right of Withdrawal Exemption.</strong> Pursuant to the Consumer Rights Law of 2013 (133(I)/2013) of Cyprus and EU Directive 2011/83/EU, the statutory 14-day "Right of Withdrawal" does not apply to contracts for the provision of leisure activities or services related to leisure activities if the contract provides for a specific date or period of performance. Therefore, your booking is final upon payment.</p>
     `
   },
   {
@@ -234,7 +236,7 @@ const sections = [
     id: "conduct",
     title: "7. Code of Conduct and Disciplinary Action",
     content: `
-      <p><strong>7.1. Professionalism.</strong> Participants are expected to behave as professional artists. This includes punctuality, preparation, and respectful conduct toward faculty, staff, venue personnel, and peers.</p>
+      <p><strong>7.1. Professionalism.</strong> Participants are expected to conduct themselves as aspiring professional artists. This includes punctuality, preparation, and respectful conduct toward faculty, staff, venue personnel, and peers.</p>
       
       <p><strong>7.2. Prohibited Conduct.</strong> The Organizer reserves the right to dismiss any Participant immediately, without refund, for:</p>
       <ul>
@@ -265,6 +267,7 @@ const sections = [
         <li>Educational archives and curriculum development.</li>
         <li>Showcasing student success.</li>
       </ul>
+      <p>For Participants under the age of 18, this Media Release is granted by the parent or legal guardian on the Participant's behalf as part of the Guardian's acceptance of these Terms under Section 1.2. Where explicit consent is required for the processing of a minor's image or likeness under GDPR Article 8, such consent is provided by the Guardian at the time of application.</p>
       
       <p><strong>8.3. Opt-Out.</strong> If you have specific privacy or safety concerns, you must submit a Media Opt-Out Request in writing prior to June 29, 2026. While we will make reasonable efforts to exclude you from featured content, we cannot guarantee exclusion from crowd shots or background footage.</p>
       
@@ -285,7 +288,7 @@ const sections = [
         <li>Loss, theft, or damage to personal property (including instruments, electronics, cash, or passports).</li>
       </ul>
       
-      <p><strong>9.4. Medical Emergency.</strong> In the event of a medical emergency where you are incapacitated, you authorize the Organizer to secure medical treatment on your behalf. You agree to pay all costs associated with such medical care, transport, or hospitalization.</p>
+      <p><strong>9.4. Medical Emergency.</strong> In the event of a medical emergency where you are incapacitated, you authorize the Organizer to secure medical treatment on your behalf. You agree to pay all costs associated with such medical care, transport, or hospitalization. For Participants under the age of 18, the Organizer will make every reasonable effort to contact the designated Parent/Guardian immediately and will seek their authorisation before consenting to non-emergency procedures; in a life-threatening emergency, the Organizer may authorise immediate treatment without prior parental contact.</p>
     `
   },
   {
