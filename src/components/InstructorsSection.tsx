@@ -51,7 +51,7 @@ const ImageWithFallback = ({
 const instructors = [
   {
     name: "Andreas Aroditis",
-    role: "Director",
+    role: "Founder & Director",
     authority: "Juilliard graduate. Mentored by Plácido Domingo. Recognized by The New York Times and Opera Today.",
     bio: "Andreas Aroditis has earned recognition from The New York Times and Opera Today for his versatile performances at prestigious international venues. A Juilliard graduate with numerous lead roles in opera and musical theater, he has collaborated with respected artists and orchestras. Locally, he has premiered works with the Cyprus Symphony Orchestra and the TrakArt Pops Orchestra. Mentored by legends such as Plácido Domingo and Sherill Millnes, he now shapes future performers as an Instructor at the University of Nicosia and the European University while maintaining a private studio in Limassol.",
     image: "/attached_assets/andreas_aroditis_headshot.jpg",
