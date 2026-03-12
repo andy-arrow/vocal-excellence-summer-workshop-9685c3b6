@@ -25,7 +25,7 @@ const ApplicationFAQ = () => {
     },
     {
       question: "What happens after I submit my application?",
-      answer: `You will receive a confirmation email immediately. Faculty reviews all applications personally, with final decisions released by ${notificationDate}.`
+      answer: `Once your application and registration deposit are submitted, you will receive a confirmation email. Faculty personally reviews every application, with final decisions released by ${notificationDate}.`
     },
     {
       question: "Can I attend if I'm under 16?",

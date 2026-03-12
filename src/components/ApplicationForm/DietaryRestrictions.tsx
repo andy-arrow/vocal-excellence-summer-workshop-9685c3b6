@@ -34,8 +34,7 @@ const DietaryRestrictions = () => {
         render={({ field }) => (
           <FormItem>
             <FormLabel className="text-apple-text font-medium text-sm sm:text-base">
-              Dietary Restrictions
-              <span className="text-red-700 ml-1">*</span>
+              Dietary Restrictions <span className="text-apple-grey font-normal text-xs">(Optional)</span>
             </FormLabel>
             <FormDescription className="text-apple-grey mt-0.5 mb-1.5 text-xs sm:text-sm">
               Please select any dietary restrictions you have
@@ -43,7 +42,7 @@ const DietaryRestrictions = () => {
             <FormControl>
               <RadioGroup 
                 onValueChange={(value) => handleDietaryChange(value as DietaryRestrictionType)} 
-                defaultValue={field.value} 
+                value={field.value ?? 'none'}
                 className="space-y-2 sm:space-y-3"
               >
                 <div className="flex items-center space-x-2 rounded-md border border-slate-200 p-2.5 sm:p-3 hover:bg-slate-100">

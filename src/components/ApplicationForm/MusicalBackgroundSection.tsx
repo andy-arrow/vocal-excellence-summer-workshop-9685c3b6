@@ -52,11 +52,11 @@ const MusicalBackgroundSection = () => {
                   <SelectContent>
                     <SelectItem value="soprano" className="text-sm sm:text-base">Soprano</SelectItem>
                     <SelectItem value="mezzo-soprano" className="text-sm sm:text-base">Mezzo-soprano</SelectItem>
-                    <SelectItem value="contralto" className="text-sm sm:text-base">Contralto</SelectItem>
-                    <SelectItem value="countertenor" className="text-sm sm:text-base">Countertenor</SelectItem>
+                    <SelectItem value="alto" className="text-sm sm:text-base">Alto / Contralto</SelectItem>
                     <SelectItem value="tenor" className="text-sm sm:text-base">Tenor</SelectItem>
                     <SelectItem value="baritone" className="text-sm sm:text-base">Baritone</SelectItem>
                     <SelectItem value="bass" className="text-sm sm:text-base">Bass</SelectItem>
+                    <SelectItem value="other" className="text-sm sm:text-base">Other / Countertenor</SelectItem>
                   </SelectContent>
                 </Select>
               </FormControl>

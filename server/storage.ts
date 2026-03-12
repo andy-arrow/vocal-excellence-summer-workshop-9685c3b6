@@ -107,4 +107,5 @@ export class DatabaseStorage implements IStorage {
   }
 }
 
-export const storage = new DatabaseStorage();
+// Note: the canonical singleton is exported via storage-factory.ts (getStorage()).
+// Do not instantiate DatabaseStorage here as it creates an extra DB pool connection.

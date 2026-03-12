@@ -1,5 +1,4 @@
-
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { motion, AnimatePresence } from 'framer-motion';

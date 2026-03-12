@@ -15,11 +15,21 @@ if (process.env.ADMIN_PASSWORD) {
   console.warn("WARNING: Admin password missing - admin routes will be inaccessible");
 }
 
+// Stripe requires the raw request body for webhook signature verification.
+// This MUST be registered before express.json() so the webhook route receives
+// the raw Buffer; all other routes use the normal JSON parser.
+app.use('/api/webhook/stripe', express.raw({ type: 'application/json' }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.get("/health", (_req, res) => {
   res.status(200).send("OK");
+});
+
+app.use("/sponsors", (_req, res, next) => {
+  res.setHeader("X-Robots-Tag", "noindex, nofollow, noarchive, nosnippet, noimageindex");
+  next();
 });
 
 const uploadsPath = path.join(process.cwd(), "uploads");
@@ -56,29 +66,9 @@ app.use((req, res, next) => {
   next();
 });
 
-const server = app.listen(port, "0.0.0.0", () => {
-  console.log(`Server bound to port ${port}`);
-});
-
-process.on("SIGTERM", () => {
-  console.log("SIGTERM received, shutting down gracefully...");
-  server.close(() => {
-    console.log("Server closed");
-    process.exit(0);
-  });
-});
-
-process.on("SIGINT", () => {
-  console.log("SIGINT received, shutting down gracefully...");
-  server.close(() => {
-    console.log("Server closed");
-    process.exit(0);
-  });
-});
-
 process.on("uncaughtException", (err) => {
   console.error("Uncaught Exception:", err);
-  server.close(() => process.exit(1));
+  process.exit(1);
 });
 
 process.on("unhandledRejection", (reason, promise) => {
@@ -88,6 +78,8 @@ process.on("unhandledRejection", (reason, promise) => {
 const distPath = path.resolve(process.cwd(), "dist");
 const distIndexPath = path.join(distPath, "index.html");
 
+// Register all routes FIRST, then bind the port so no request arrives before
+// any route handler is in place.
 registerRoutes(app)
   .then(() => {
     app.use((req, res, next) => {
@@ -122,38 +114,27 @@ registerRoutes(app)
         res.setHeader('Expires', '0');
         res.sendFile(distIndexPath);
       });
-      console.log(`Server ready on port ${port} (serving from dist/)`);
     } else {
-      console.warn("WARNING: dist/index.html not found. Serving placeholder page.");
-      console.warn("Run 'npm run build' to build the frontend.");
+      console.warn("WARNING: dist/index.html not found. Run 'npm run build'.");
       app.use((_req, res) => {
-        res.status(503).send(`
-          <!DOCTYPE html>
-          <html>
-          <head>
-            <title>Building...</title>
-            <meta http-equiv="refresh" content="10">
-            <style>
-              body { font-family: system-ui, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #f5f5f5; }
-              .container { text-align: center; padding: 2rem; }
-              h1 { color: #333; }
-              p { color: #666; }
-            </style>
-          </head>
-          <body>
-            <div class="container">
-              <h1>Building Application...</h1>
-              <p>The frontend is being built. This page will refresh automatically in 10 seconds.</p>
-              <p>If this persists, run: <code>npm run build</code></p>
-            </div>
-          </body>
-          </html>
-        `);
+        res.status(503).send(`<!DOCTYPE html><html><head><title>Building...</title><meta http-equiv="refresh" content="10"></head><body><p>Building frontend — please wait.</p></body></html>`);
       });
     }
+
+    const server = app.listen(port, "0.0.0.0", () => {
+      console.log(`Server ready on port ${port}${fs.existsSync(distIndexPath) ? ' (serving from dist/)' : ' (no dist/)'}`);
+    });
+
+    process.on("SIGTERM", () => {
+      console.log("SIGTERM received, shutting down gracefully...");
+      server.close(() => { console.log("Server closed"); process.exit(0); });
+    });
+    process.on("SIGINT", () => {
+      console.log("SIGINT received, shutting down gracefully...");
+      server.close(() => { console.log("Server closed"); process.exit(0); });
+    });
   })
   .catch((err) => {
     console.error("Failed to register routes:", err);
-    server.close();
     process.exit(1);
   });

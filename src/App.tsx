@@ -24,6 +24,7 @@ const EmailExtract = lazy(() => import("./pages/EmailExtract.tsx"));
 const SummerProgramme = lazy(() => import("./pages/SummerProgramme.tsx"));
 const PaymentSuccess = lazy(() => import("./pages/PaymentSuccess.tsx"));
 const PaymentCancelled = lazy(() => import("./pages/PaymentCancelled.tsx"));
+const Sponsors = lazy(() => import("./pages/Sponsors.tsx"));
 
 // Create query client with better error handling
 const queryClient = new QueryClient({
@@ -77,6 +78,7 @@ function App() {
 
                   <Route path="/payment-success" element={<PaymentSuccess />} />
                   <Route path="/payment-cancelled" element={<PaymentCancelled />} />
+                  <Route path="/sponsors" element={<Sponsors />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>

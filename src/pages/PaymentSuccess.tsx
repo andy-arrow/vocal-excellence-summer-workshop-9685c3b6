@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { CheckCircle, Mail, Calendar, ArrowRight, Loader2 } from 'lucide-react';
+import { CheckCircle, Mail, Calendar, ArrowRight, Loader2, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import confetti from 'canvas-confetti';
 
 interface PaymentVerificationResult {
@@ -21,6 +22,7 @@ const PaymentSuccess = () => {
   const [applicantName, setApplicantName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [error, setError] = useState<string>('');
+  const [resuming, setResuming] = useState(false);
 
   const sessionId = searchParams.get('session_id');
   const applicationId = searchParams.get('application_id');
@@ -64,6 +66,28 @@ const PaymentSuccess = () => {
     verifyPayment();
   }, [sessionId, applicationId]);
 
+  const handleResumePayment = async () => {
+    if (!applicationId) return;
+    setResuming(true);
+    try {
+      const response = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ applicationId: parseInt(applicationId, 10) }),
+      });
+      const data = await response.json();
+      if (data.success && data.url) {
+        window.location.href = data.url;
+      } else {
+        setError(data.error || 'Unable to resume payment. Please contact us.');
+      }
+    } catch {
+      setError('Unable to reach the server. Please try again or contact us.');
+    } finally {
+      setResuming(false);
+    }
+  };
+
   if (verifying) {
     return (
       <div className="min-h-screen bg-apple-light">
@@ -78,30 +102,48 @@ const PaymentSuccess = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-apple-light">
+      <div className="min-h-screen bg-apple-light flex flex-col">
         <Navbar />
-        <div className="flex flex-col items-center justify-center min-h-[70vh] px-4 text-center">
+        <div className="flex flex-col items-center justify-center flex-1 px-4 text-center">
           <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-6">
             <span className="text-3xl text-red-500">!</span>
           </div>
           <h1 className="font-serif text-3xl text-apple-text mb-4">Payment Verification Issue</h1>
-          <p className="text-apple-grey max-w-md mb-8">{error}</p>
-          <Button asChild>
-            <Link to="/apply" data-testid="link-try-again">
-              Try Again <ArrowRight className="ml-2 w-4 h-4" />
-            </Link>
-          </Button>
+          <p className="text-apple-grey max-w-md mb-3">{error}</p>
+          {applicationId && (
+            <p className="text-apple-grey text-sm max-w-md mb-8">
+              Your application has been saved. You can retry the payment below, or contact{' '}
+              <a href="mailto:info@vocalexcellence.cy" className="text-apple-blue hover:underline">
+                info@vocalexcellence.cy
+              </a>{' '}
+              with your application ID: <strong>{applicationId}</strong>.
+            </p>
+          )}
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            {applicationId && (
+              <Button onClick={handleResumePayment} disabled={resuming}>
+                {resuming ? <Loader2 className="mr-2 w-4 h-4 animate-spin" /> : <RefreshCw className="mr-2 w-4 h-4" />}
+                Retry Payment
+              </Button>
+            )}
+            <Button asChild variant="outline">
+              <Link to="/" data-testid="link-try-again">
+                Go to Home <ArrowRight className="ml-2 w-4 h-4" />
+              </Link>
+            </Button>
+          </div>
         </div>
+        <Footer />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-apple-light">
+    <div className="min-h-screen bg-apple-light flex flex-col">
       <Navbar />
       
       <motion.div 
-        className="max-w-2xl mx-auto px-4 py-12 sm:py-20 text-center"
+        className="flex-1 max-w-2xl mx-auto px-4 py-12 sm:py-20 text-center w-full"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -140,7 +182,7 @@ const PaymentSuccess = () => {
               <div>
                 <h3 className="font-semibold text-apple-text text-sm sm:text-base mb-1">Confirmation Email</h3>
                 <p className="text-apple-grey text-xs sm:text-sm">
-                  We've sent a confirmation to {email || 'your email address'} with a copy of your application details.
+                  A confirmation has been sent to {email || 'your email address'} with next steps and your application reference.
                 </p>
               </div>
             </div>
@@ -159,7 +201,7 @@ const PaymentSuccess = () => {
               <div>
                 <h3 className="font-semibold text-apple-text text-sm sm:text-base mb-1">What's Next?</h3>
                 <p className="text-apple-grey text-xs sm:text-sm">
-                  We'll review your application and contact you within 2 weeks regarding the next steps and selection results.
+                  Faculty personally reviews every application. Decisions are released by June 1, 2026.
                 </p>
               </div>
             </div>
@@ -176,6 +218,7 @@ const PaymentSuccess = () => {
           </Link>
         </Button>
       </motion.div>
+      <Footer />
     </div>
   );
 };

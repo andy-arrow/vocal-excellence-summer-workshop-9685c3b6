@@ -34,7 +34,7 @@ const ApplicationProgressIndicator: React.FC<ApplicationProgressIndicatorProps> 
           
           <div 
             className="absolute h-1 bg-apple-blue rounded-full transition-all duration-300"
-            style={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
+            style={{ width: steps.length > 1 ? `${(currentStep / (steps.length - 1)) * 100}%` : '0%' }}
           ></div>
           
           {steps.map((step, index) => {
@@ -75,14 +75,14 @@ const ApplicationProgressIndicator: React.FC<ApplicationProgressIndicatorProps> 
             Step {currentStep + 1} of {steps.length}
           </span>
           <span className="text-xs text-[#666666]">
-            {Math.round((currentStep / (steps.length - 1)) * 100)}% Complete
+            {steps.length > 1 ? Math.round((currentStep / (steps.length - 1)) * 100) : 0}% Complete
           </span>
         </div>
         
         <div className="w-full h-1.5 bg-[#e6e6e6] rounded-full md:hidden overflow-hidden">
           <div
             className="h-full bg-apple-blue rounded-full transition-all duration-300"
-            style={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
+            style={{ width: steps.length > 1 ? `${(currentStep / (steps.length - 1)) * 100}%` : '0%' }}
           />
         </div>
         

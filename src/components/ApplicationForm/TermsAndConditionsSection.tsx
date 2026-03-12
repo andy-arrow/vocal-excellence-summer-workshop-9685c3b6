@@ -9,6 +9,8 @@ import {
 import { useFormContext } from 'react-hook-form';
 import { ApplicationFormValues } from './schema';
 import { Lock, ShieldCheck, Video } from 'lucide-react';
+import { APPLICATION_DATES } from '@/constants/applicationDates';
+import { format } from 'date-fns';
 
 const TermsAndConditionsSection = () => {
   const form = useFormContext<ApplicationFormValues>();
@@ -82,7 +84,7 @@ const TermsAndConditionsSection = () => {
               style={{ color: '#0066CC' }} 
             />
             <p className="text-[12px] sm:text-[13px]" style={{ color: '#424245', lineHeight: 1.5 }}>
-              <strong>Peace of Mind:</strong> Your registration becomes non-refundable after June 15, 2026. We warmly recommend travel insurance.
+              <strong>Peace of Mind:</strong> Your registration becomes non-refundable after {format(APPLICATION_DATES.TUITION_DEADLINE, 'MMMM d, yyyy')}. We warmly recommend travel insurance.
             </p>
           </div>
           

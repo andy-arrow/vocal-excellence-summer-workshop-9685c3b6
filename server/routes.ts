@@ -2,10 +2,12 @@ import type { Express, Request, Response, NextFunction } from "express";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
+import crypto from "crypto";
 import { z, ZodError } from "zod";
 import Stripe from "stripe";
 import { getStorage, getBackendInfo, logBackendSelection } from "./storage-factory";
 import { EmailService } from "./emailService";
+import adminAuth from "./utils/adminAuth";
 import { 
   applicationSchema, 
   contactMessageSchema, 
@@ -81,16 +83,19 @@ const fileStorage = multer.diskStorage({
 
 const upload = multer({
   storage: fileStorage,
-  limits: { fileSize: 50 * 1024 * 1024 },
+  limits: { fileSize: 15 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
     const allowedAudioTypes = ["audio/mpeg", "audio/mp3", "audio/wav", "audio/ogg", "audio/m4a", "audio/x-m4a"];
     const allowedDocTypes = ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
 
-    if (file.fieldname.includes("audio") && !allowedAudioTypes.includes(file.mimetype)) {
+    const audioFields = ["audioFile1", "audioFile2"];
+    const docFields = ["cvFile", "recommendationFile"];
+
+    if (audioFields.includes(file.fieldname) && !allowedAudioTypes.includes(file.mimetype)) {
       cb(new Error("Invalid audio file type"));
       return;
     }
-    if ((file.fieldname === "cvFile" || file.fieldname === "recommendationFile") && !allowedDocTypes.includes(file.mimetype)) {
+    if (docFields.includes(file.fieldname) && !allowedDocTypes.includes(file.mimetype)) {
       cb(new Error("Invalid document file type"));
       return;
     }
@@ -203,7 +208,7 @@ export async function registerRoutes(app: Express): Promise<void> {
     }
   });
 
-  app.get("/api/applications", async (req: Request, res: Response) => {
+  app.get("/api/applications", adminAuth, async (req: Request, res: Response) => {
     try {
       const applications = await storage.getAllApplications();
       return res.json(applications);
@@ -213,7 +218,7 @@ export async function registerRoutes(app: Express): Promise<void> {
     }
   });
 
-  app.get("/api/applications/:id", async (req: Request, res: Response) => {
+  app.get("/api/applications/:id", adminAuth, async (req: Request, res: Response) => {
     try {
       const id = parseInt(req.params.id);
       const application = await storage.getApplication(id);
@@ -227,7 +232,7 @@ export async function registerRoutes(app: Express): Promise<void> {
     }
   });
 
-  app.post("/api/send-email", async (req: Request, res: Response) => {
+  app.post("/api/send-email", adminAuth, async (req: Request, res: Response) => {
     try {
       const { type, name, email, applicantData, applicationId } = req.body;
       const RESEND_API_KEY = process.env.RESEND_API_KEY;
@@ -282,7 +287,7 @@ export async function registerRoutes(app: Express): Promise<void> {
     }
   });
 
-  app.get("/api/contact-submissions", async (req: Request, res: Response) => {
+  app.get("/api/contact-submissions", adminAuth, async (req: Request, res: Response) => {
     try {
       const submissions = await storage.getAllContactSubmissions();
       return res.json(submissions);
@@ -310,7 +315,7 @@ export async function registerRoutes(app: Express): Promise<void> {
     }
   });
 
-  app.get("/api/email-signups", async (req: Request, res: Response) => {
+  app.get("/api/email-signups", adminAuth, async (req: Request, res: Response) => {
     try {
       const signups = await storage.getAllEmailSignups();
       return res.json(signups);
@@ -337,7 +342,7 @@ export async function registerRoutes(app: Express): Promise<void> {
     }
   });
 
-  app.get("/api/contact-messages", async (req: Request, res: Response) => {
+  app.get("/api/contact-messages", adminAuth, async (req: Request, res: Response) => {
     try {
       const messages = await storage.getAllContactMessages();
       return res.json(messages);
@@ -357,7 +362,9 @@ export async function registerRoutes(app: Express): Promise<void> {
         return res.status(500).json({ success: false, error: "Admin authentication not configured" });
       }
 
-      const isValid = validated.password === ADMIN_PASSWORD;
+      const a = Buffer.from(validated.password);
+      const b = Buffer.from(ADMIN_PASSWORD);
+      const isValid = a.length === b.length && crypto.timingSafeEqual(a, b);
 
       if (isValid) {
         return res.json({ success: true, message: "Authentication successful" });
@@ -389,11 +396,10 @@ export async function registerRoutes(app: Express): Promise<void> {
         return res.status(404).json({ success: false, error: "Application not found" });
       }
 
-      const baseUrl = process.env.REPLIT_DEPLOYMENT_URL 
-        ? `https://${process.env.REPLIT_DEPLOYMENT_URL}`
-        : process.env.REPLIT_DEV_DOMAIN
-          ? `https://${process.env.REPLIT_DEV_DOMAIN}`
-          : "http://localhost:5000";
+      const baseUrl = process.env.BASE_URL
+        || (process.env.REPLIT_DEPLOYMENT_URL ? `https://${process.env.REPLIT_DEPLOYMENT_URL}` : null)
+        || (process.env.REPLIT_DEV_DOMAIN ? `https://${process.env.REPLIT_DEV_DOMAIN}` : null)
+        || "http://localhost:5000";
 
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
@@ -452,7 +458,10 @@ export async function registerRoutes(app: Express): Promise<void> {
       const session = await stripe.checkout.sessions.retrieve(session_id as string);
       
       if (session.payment_status === "paid") {
-        const applicationId = parseInt(application_id as string);
+        const applicationId = parseInt(application_id as string, 10);
+        if (isNaN(applicationId)) {
+          return res.status(400).json({ success: false, error: "Invalid application_id" });
+        }
         
         const existingApplication = await storage.getApplication(applicationId);
         const emailsAlreadySent = !!existingApplication?.emailsSentAt;
@@ -482,10 +491,12 @@ export async function registerRoutes(app: Express): Promise<void> {
         const RESEND_API_KEY = process.env.RESEND_API_KEY;
         if (RESEND_API_KEY && application) {
           try {
-            const publicDomain = process.env.REPLIT_DEV_DOMAIN || req.get('x-forwarded-host') || req.get('host');
-            const baseUrl = `https://${publicDomain}`;
+            const emailBaseUrl = process.env.BASE_URL
+              || (process.env.REPLIT_DEPLOYMENT_URL ? `https://${process.env.REPLIT_DEPLOYMENT_URL}` : null)
+              || (process.env.REPLIT_DEV_DOMAIN ? `https://${process.env.REPLIT_DEV_DOMAIN}` : null)
+              || `https://${req.get('x-forwarded-host') || req.get('host')}`;
             const emailService = new EmailService(RESEND_API_KEY);
-            await emailService.sendApplicationNotifications({
+            const emailResult = await emailService.sendApplicationNotifications({
               firstName: application.firstName,
               lastName: application.lastName,
               email: application.email,
@@ -511,18 +522,23 @@ export async function registerRoutes(app: Express): Promise<void> {
               hasCvFile: !!application.cvFilePath,
               hasRecommendationFile: !!application.recommendationFilePath,
               applicationId: application.id,
-              baseUrl: baseUrl,
+              baseUrl: emailBaseUrl,
               audioFile1Path: application.audioFile1Path,
               audioFile2Path: application.audioFile2Path,
               cvFilePath: application.cvFilePath,
               recommendationFilePath: application.recommendationFilePath,
             });
-            
-            await storage.updateApplicationPayment(applicationId, {
-              emailsSentAt: new Date(),
-            });
-            
-            console.log(`Confirmation emails sent for application ${applicationId}`);
+
+            // Only stamp emailsSentAt when BOTH emails actually succeeded.
+            // If stamped on failure the idempotency guard blocks all future retries.
+            if (emailResult.success) {
+              await storage.updateApplicationPayment(applicationId, {
+                emailsSentAt: new Date(),
+              });
+              console.log(`Confirmation emails sent for application ${applicationId}`);
+            } else {
+              console.error(`Email sending failed for application ${applicationId} — will retry on next verification:`, emailResult.error);
+            }
           } catch (emailError) {
             console.error("Error sending confirmation emails:", emailError);
           }
@@ -682,8 +698,8 @@ export async function registerRoutes(app: Express): Promise<void> {
     }
   });
 
-  // Test email endpoint for diagnostics
-  app.post("/api/test-email", async (req: Request, res: Response) => {
+  // Test email endpoint for diagnostics — admin only
+  app.post("/api/test-email", adminAuth, async (req: Request, res: Response) => {
     try {
       const { email, testType } = req.body;
       

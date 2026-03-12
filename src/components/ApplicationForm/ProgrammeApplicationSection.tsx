@@ -64,7 +64,7 @@ const ProgrammeApplicationSection = () => {
               <FormItem className="space-y-1.5 md:space-y-2">
                 <FormLabel className="flex items-center gap-2 text-[#1d1d1f] font-medium text-sm md:text-base">
                   How did you hear about us?
-                  <span className="text-red-600">*</span>
+                  <span className="text-[#999999] font-normal text-xs">(Optional)</span>
                 </FormLabel>
                 <FormControl>
                   <Input 

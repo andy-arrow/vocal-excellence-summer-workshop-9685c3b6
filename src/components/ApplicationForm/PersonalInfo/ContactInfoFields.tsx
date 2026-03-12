@@ -32,10 +32,25 @@ import { COUNTRY_CODES } from '@/constants/countryCodes';
 const ContactInfoFields = () => {
   const form = useFormContext<ApplicationFormValues>();
   const [open, setOpen] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState(
-    COUNTRY_CODES.find(c => c.code === "CY") || COUNTRY_CODES[0]
-  );
-  const [phoneNumber, setPhoneNumber] = useState("");
+
+  // Initialise from the form store so back-navigation restores the displayed value.
+  const [selectedCountry, setSelectedCountry] = useState(() => {
+    const stored = form.getValues('phone');
+    if (stored) {
+      const match = COUNTRY_CODES.find(c => stored.startsWith(c.dial));
+      if (match) return match;
+    }
+    return COUNTRY_CODES.find(c => c.code === "CY") || COUNTRY_CODES[0];
+  });
+
+  const [phoneNumber, setPhoneNumber] = useState(() => {
+    const stored = form.getValues('phone');
+    if (stored) {
+      const match = COUNTRY_CODES.find(c => stored.startsWith(c.dial));
+      if (match) return stored.slice(match.dial.length).trim();
+    }
+    return "";
+  });
 
   const sortedCountries = useMemo(() => {
     return [...COUNTRY_CODES].sort((a, b) => a.name.localeCompare(b.name));

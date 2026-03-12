@@ -79,8 +79,7 @@ const BasicInfoFields = () => {
         render={({ field }) => (
           <FormItem>
             <FormLabel className="text-apple-text font-medium text-sm sm:text-base" htmlFor="age">
-              How old are you?
-              <span className="text-red-700 ml-1">*</span>
+              How old are you? <span className="text-apple-grey font-normal text-xs">(Optional)</span>
             </FormLabel>
             <FormControl>
               <Input 
@@ -106,8 +105,7 @@ const BasicInfoFields = () => {
         render={({ field }) => (
           <FormItem>
             <FormLabel className="text-apple-text font-medium text-sm sm:text-base">
-              Nationality
-              <span className="text-red-700 ml-1">*</span>
+              Nationality <span className="text-apple-grey font-normal text-xs">(Optional)</span>
             </FormLabel>
             <FormControl>
               <Select onValueChange={field.onChange} value={field.value || ""}>
@@ -138,8 +136,7 @@ const BasicInfoFields = () => {
         render={({ field }) => (
           <FormItem className="sm:col-span-2">
             <FormLabel className="text-apple-text font-medium text-sm sm:text-base" htmlFor="whereFrom">
-              Where are you from?
-              <span className="text-red-700 ml-1">*</span>
+              Where are you from? <span className="text-apple-grey font-normal text-xs">(Optional)</span>
             </FormLabel>
             <FormControl>
               <Input 

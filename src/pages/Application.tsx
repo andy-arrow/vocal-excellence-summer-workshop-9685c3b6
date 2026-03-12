@@ -4,7 +4,6 @@ import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { Toaster } from '@/components/ui/toaster';
 import { useIsMobile } from '@/hooks/use-mobile';
 import ApplicationPageHero from '@/components/ApplicationPageHero';
 import { APPLY_PAGE_TITLE, APPLY_META_DESCRIPTION } from '@/constants/copy';
@@ -142,7 +141,6 @@ const Application = () => {
         </Suspense>
         
         <Footer />
-        <Toaster />
       </div>
     </div>
   );

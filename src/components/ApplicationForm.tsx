@@ -5,7 +5,6 @@ import { Form } from '@/components/ui/form';
 import { toast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
 import { Sparkles, CheckCircle2, Hourglass, AlertCircle } from 'lucide-react';
-import { generateCsrfToken } from '@/utils/security';
 import { applicationFilesStore } from '@/stores/applicationFilesStore';
 import { useAnalytics } from '@/hooks/use-analytics';
 
@@ -53,7 +52,6 @@ const ApplicationForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeSection, setActiveSection] = useState(0);
   const [maxVisitedStep, setMaxVisitedStep] = useState(0);
-  const [csrfToken, setCsrfToken] = useState('');
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
   const [submissionAttempts, setSubmissionAttempts] = useState(0);
   const [files, setFiles] = useState(() => applicationFilesStore.getFiles());
@@ -64,15 +62,6 @@ const ApplicationForm = () => {
       setFiles(applicationFilesStore.getFiles());
     });
     return unsubscribe;
-  }, []);
-  
-  // Generate CSRF token for form security
-  useEffect(() => {
-    const token = generateCsrfToken();
-    setCsrfToken(token);
-    sessionStorage.setItem('formCsrfToken', token);
-    
-    return () => {};
   }, []);
   
   const form = useForm<ApplicationFormValues>({
@@ -132,16 +121,21 @@ const ApplicationForm = () => {
       
       let attempts = 0;
       const maxAttempts = 2;
+      // Track a saved applicationId so payment retries don't create a second DB record.
+      let savedApplicationId: number | null = null;
       
       while (attempts <= maxAttempts) {
         try {
-          const response = await submitApplicationWithFiles(values, filesToSubmit);
-          
-          if (!response.success) {
-            throw new Error(response.error?.message || 'Submission failed');
+          let applicationId = savedApplicationId;
+
+          if (applicationId === null) {
+            const response = await submitApplicationWithFiles(values, filesToSubmit);
+            if (!response.success) {
+              throw new Error(response.error?.message || 'Submission failed');
+            }
+            applicationId = response.data?.applicationId;
+            savedApplicationId = applicationId ?? null;
           }
-          
-          const applicationId = response.data?.applicationId;
           
           if (!applicationId) {
             throw new Error('Application saved but no ID returned');
@@ -244,8 +238,8 @@ const ApplicationForm = () => {
   const validateCurrentSection = async (): Promise<boolean> => {
     const sectionFields: Record<number, (keyof ApplicationFormValues)[]> = {
       0: ['firstName', 'lastName', 'email', 'phone'],
-      1: [],
-      2: [],
+      1: ['yearsOfSinging', 'musicalBackground'],
+      2: ['reasonForApplying'],
       3: [],
       4: ['termsAgreed'],
     };
@@ -388,7 +382,6 @@ const ApplicationForm = () => {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <input type="hidden" name="csrfToken" value={csrfToken} />
             
             {validationErrors.length > 0 && (
               <div className="bg-red-50 border border-red-200 rounded-lg p-3 md:p-4 mb-4 text-red-800">

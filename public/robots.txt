@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+Disallow: /sponsors
+Disallow: /admin
+Disallow: /email-extract
+
+User-agent: GPTBot
+Disallow: /sponsors
+
+User-agent: ChatGPT-User
+Disallow: /sponsors
+
+User-agent: Google-Extended
+Disallow: /sponsors
+
+User-agent: CCBot
+Disallow: /sponsors
+
+User-agent: anthropic-ai
+Disallow: /sponsors
+
+User-agent: ClaudeBot
+Disallow: /sponsors

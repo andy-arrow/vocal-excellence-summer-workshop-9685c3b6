@@ -1,19 +1,46 @@
+import { useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { XCircle, ArrowLeft, HelpCircle } from 'lucide-react';
+import { XCircle, ArrowLeft, HelpCircle, Loader2, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
 const PaymentCancelled = () => {
   const [searchParams] = useSearchParams();
   const applicationId = searchParams.get('application_id');
+  const [resuming, setResuming] = useState(false);
+  const [resumeError, setResumeError] = useState<string | null>(null);
+
+  const handleResumePayment = async () => {
+    if (!applicationId) return;
+    setResuming(true);
+    setResumeError(null);
+    try {
+      const response = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ applicationId: parseInt(applicationId, 10) }),
+      });
+      const data = await response.json();
+      if (data.success && data.url) {
+        window.location.href = data.url;
+      } else {
+        setResumeError(data.error || 'Unable to resume payment. Please contact us.');
+      }
+    } catch {
+      setResumeError('Unable to reach the server. Please try again or contact us.');
+    } finally {
+      setResuming(false);
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-apple-light">
+    <div className="min-h-screen bg-apple-light flex flex-col">
       <Navbar />
-      
-      <motion.div 
-        className="max-w-2xl mx-auto px-4 py-12 sm:py-20 text-center"
+
+      <motion.div
+        className="flex-1 max-w-2xl mx-auto px-4 py-12 sm:py-20 text-center w-full"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -27,15 +54,17 @@ const PaymentCancelled = () => {
           <XCircle className="w-10 h-10 sm:w-12 sm:h-12 text-amber-600" />
         </motion.div>
 
-        <h1 
+        <h1
           className="font-serif text-3xl sm:text-4xl md:text-5xl text-apple-text mb-3 sm:mb-4"
           data-testid="text-cancelled-title"
         >
           Payment Cancelled
         </h1>
-        
+
         <p className="text-apple-grey text-base sm:text-lg mb-5 sm:mb-6 max-w-lg mx-auto">
-          Your payment was not completed. Don't worry - your application data has been saved. You can complete the payment when you're ready.
+          {applicationId
+            ? "Your payment was not completed. Your application has been saved — you can complete payment now without re-filling the form."
+            : "Your payment was not completed. Please return to the application to try again."}
         </p>
 
         <div className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 border border-apple-border text-left mb-8 sm:mb-10 max-w-md mx-auto">
@@ -46,9 +75,9 @@ const PaymentCancelled = () => {
             <div>
               <h3 className="font-semibold text-apple-text text-sm sm:text-base mb-1">Need Help?</h3>
               <p className="text-apple-grey text-xs sm:text-sm">
-                If you experienced any issues with the payment process, please contact us at{' '}
-                <a 
-                  href="mailto:info@vocalexcellence.cy" 
+                If you experienced any issues with the payment process, contact us at{' '}
+                <a
+                  href="mailto:info@vocalexcellence.cy"
                   className="text-apple-blue hover:underline"
                 >
                   info@vocalexcellence.cy
@@ -58,20 +87,46 @@ const PaymentCancelled = () => {
           </div>
         </div>
 
+        {resumeError && (
+          <p className="text-red-600 text-sm mb-4">{resumeError}</p>
+        )}
+
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button 
-            asChild 
-            size="lg"
-            className="bg-apple-blue text-white rounded-full px-8"
-          >
-            <Link to="/apply" data-testid="link-try-again">
-              <ArrowLeft className="mr-2 w-4 h-4" />
-              Return to Application
-            </Link>
-          </Button>
-          
-          <Button 
-            asChild 
+          {applicationId ? (
+            <Button
+              onClick={handleResumePayment}
+              disabled={resuming}
+              size="lg"
+              className="bg-apple-blue text-white rounded-full px-8"
+              data-testid="btn-resume-payment"
+            >
+              {resuming ? (
+                <>
+                  <Loader2 className="mr-2 w-4 h-4 animate-spin" />
+                  Resuming…
+                </>
+              ) : (
+                <>
+                  <RefreshCw className="mr-2 w-4 h-4" />
+                  Complete Payment
+                </>
+              )}
+            </Button>
+          ) : (
+            <Button
+              asChild
+              size="lg"
+              className="bg-apple-blue text-white rounded-full px-8"
+            >
+              <Link to="/apply" data-testid="link-try-again">
+                <ArrowLeft className="mr-2 w-4 h-4" />
+                Return to Application
+              </Link>
+            </Button>
+          )}
+
+          <Button
+            asChild
             variant="outline"
             size="lg"
             className="rounded-full px-8"
@@ -82,6 +137,8 @@ const PaymentCancelled = () => {
           </Button>
         </div>
       </motion.div>
+
+      <Footer />
     </div>
   );
 };

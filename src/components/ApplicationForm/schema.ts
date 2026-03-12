@@ -1,7 +1,7 @@
 import * as z from 'zod';
 
 const dietaryValues = ['none', 'vegetarian', 'vegan', 'gluten-free', 'lactose-free', 'other'] as const;
-const vocalRangeValues = ['soprano', 'mezzo-soprano', 'alto', 'tenor', 'baritone', 'bass', 'other'] as const;
+export const vocalRangeValues = ['soprano', 'mezzo-soprano', 'alto', 'tenor', 'baritone', 'bass', 'other'] as const;
 
 export const applicationSchema = z.object({
   firstName: z.string().min(1, "First name is required").max(100, "First name too long"),
@@ -27,17 +27,23 @@ export const applicationSchema = z.object({
   
   nationality: z.string().max(100).optional().nullable().default(''),
 
-  vocalRange: z.string().max(50).optional().nullable().default('soprano'),
+  vocalRange: z.enum(vocalRangeValues).default('soprano'),
   
-  yearsOfSinging: z.string().max(50).optional().nullable().default(''),
+  yearsOfSinging: z.string()
+    .min(1, "Please enter how many years you have been singing")
+    .max(50),
   
-  musicalBackground: z.string().max(2000).optional().nullable().default(''),
+  musicalBackground: z.string()
+    .min(1, "Please tell us about your singing journey")
+    .max(2000, "Please keep this under 2000 characters"),
   
   teacherName: z.string().max(100).optional().nullable().default(''),
   
   teacherEmail: z.string().email().optional().nullable().or(z.literal('')).default(''),
   
-  reasonForApplying: z.string().max(5000).optional().nullable().default(''),
+  reasonForApplying: z.string()
+    .min(1, "Please tell us why you are applying")
+    .max(5000, "Please keep this under 5000 characters"),
   
   heardAboutUs: z.string().max(255).optional().nullable().default(''),
   

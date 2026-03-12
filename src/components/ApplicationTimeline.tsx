@@ -16,8 +16,8 @@ const ApplicationTimeline = () => {
   const timelineSteps = [
     {
       icon: <Send className="w-5 h-5 text-purple-500" />,
-      title: "Submit Application",
-      description: "Complete your online profile and statement of interest.",
+      title: "Submit & Pay Deposit",
+      description: "Complete your application and pay the €100 registration deposit to secure your place in the review process.",
       date: `Deadline: ${deadlineDate}`,
     },
     {
@@ -29,13 +29,13 @@ const ApplicationTimeline = () => {
     {
       icon: <Bell className="w-5 h-5 text-amber-500" />,
       title: "Decision Notification",
-      description: "Check your email for your acceptance letter and registration details.",
+      description: "Check your email for your acceptance letter and next steps.",
       date: notificationDate,
     },
     {
       icon: <CreditCard className="w-5 h-5 text-green-500" />,
-      title: "Confirm Your Place",
-      description: "Complete registration and confirm your attendance to the programme.",
+      title: "Complete Registration",
+      description: "Accepted students confirm attendance and complete the remaining tuition balance.",
       date: `By ${tuitionDeadline}`,
     },
     {

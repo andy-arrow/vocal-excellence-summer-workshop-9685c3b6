@@ -84,7 +84,7 @@ export class EmailService {
       console.log("Admin notification result:", results.admin.success);
 
       return { 
-        success: results.applicant.success || results.admin.success,
+        success: results.applicant.success && results.admin.success,
         error: results.applicant.error || results.admin.error
       };
     } catch (error) {
@@ -166,7 +166,7 @@ export class EmailService {
                     <td style="padding-bottom: 16px;">
                       <p style="margin: 0; color: #424245; font-size: 15px; line-height: 1.5;">
                         <strong style="color: #1d1d1f;">Review Period</strong><br>
-                        Our artistic team will carefully review your application, audio recordings, and materials over the next 2 weeks.
+                        Faculty personally reviews every application. Decisions are released by 1 June 2026.
                       </p>
                     </td>
                   </tr>
@@ -201,7 +201,7 @@ export class EmailService {
                   Workshop Details
                 </p>
                 <p style="margin: 0; color: #1d1d1f; font-size: 16px; font-weight: 500;">
-                  June 29 - July 5, 2026
+                  29 June – 5 July 2026
                 </p>
                 <p style="margin: 4px 0 0; color: #424245; font-size: 15px;">
                   Limassol, Cyprus

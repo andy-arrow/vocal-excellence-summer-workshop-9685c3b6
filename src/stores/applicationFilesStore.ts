@@ -33,43 +33,24 @@ class ApplicationFiles {
   private subscribers: Array<() => void> = [];
 
   private constructor() {
-    // Initialize from window.applicationFiles if it exists
     if (typeof window !== 'undefined') {
       if (!window.applicationFiles) {
         window.applicationFiles = { ...initialStore };
-        console.log('ApplicationFilesStore: Initialized window.applicationFiles with default structure');
       } else {
-        console.log('ApplicationFilesStore: Found existing window.applicationFiles');
-        
-        // Make sure all required keys exist
         const requiredKeys = ['audioFile1', 'audioFile2', 'cvFile', 'recommendationFile'];
-        let updated = false;
-        
         requiredKeys.forEach(key => {
           if (!(key in window.applicationFiles)) {
             window.applicationFiles[key] = null;
-            updated = true;
           }
         });
-        
-        // Copy from window object to our store
+
         Object.entries(window.applicationFiles).forEach(([key, file]) => {
           if (this.isValidFileType(key) && file instanceof File) {
             this.files[key as ApplicationFileType] = file;
           }
         });
-        
-        if (updated) {
-          console.log('ApplicationFilesStore: Updated window.applicationFiles with missing keys');
-        }
       }
     }
-    
-    console.log('ApplicationFilesStore: Initialized store with', 
-      Object.keys(this.files).map(key => 
-        `${key}: ${this.files[key as keyof ApplicationFilesStore] ? `${this.files[key as keyof ApplicationFilesStore]?.name} (${this.files[key as keyof ApplicationFilesStore]?.size} bytes)` : 'null'}`
-      )
-    );
   }
 
   public static getInstance(): ApplicationFiles {
@@ -109,8 +90,6 @@ class ApplicationFiles {
     this.files[type] = file;
     this.syncWithWindowObject();
     this.notifySubscribers();
-    
-    console.log(`ApplicationFilesStore: Updated ${type} to ${file ? `${file.name} (${file.size} bytes)` : 'null'}`);
   }
 
   /**
@@ -124,7 +103,6 @@ class ApplicationFiles {
     });
     this.syncWithWindowObject();
     this.notifySubscribers();
-    console.log('ApplicationFilesStore: Cleared all files');
   }
 
   /**
