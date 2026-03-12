@@ -20,18 +20,49 @@ const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
 const stripe = STRIPE_SECRET_KEY ? new Stripe(STRIPE_SECRET_KEY) : null;
 
 function ensureProtocol(raw: string): string {
-  return raw.startsWith("http://") || raw.startsWith("https://") ? raw : `https://${raw}`;
+  const trimmed = raw.trim();
+  if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) return trimmed;
+  return `https://${trimmed}`;
 }
 
 function resolveBaseUrl(req?: Request): string {
-  if (process.env.BASE_URL) return ensureProtocol(process.env.BASE_URL);
-  if (process.env.REPLIT_DEPLOYMENT_URL) return ensureProtocol(process.env.REPLIT_DEPLOYMENT_URL);
-  if (process.env.REPLIT_DEV_DOMAIN) return ensureProtocol(process.env.REPLIT_DEV_DOMAIN);
+  // Priority 1: explicit BASE_URL env var (preferred for custom domains)
+  if (process.env.BASE_URL) {
+    const url = ensureProtocol(process.env.BASE_URL);
+    console.log(`[baseUrl] Using BASE_URL: ${url}`);
+    return url;
+  }
+  // Priority 2: Replit deployment URL (may or may not include protocol)
+  if (process.env.REPLIT_DEPLOYMENT_URL) {
+    const url = ensureProtocol(process.env.REPLIT_DEPLOYMENT_URL);
+    console.log(`[baseUrl] Using REPLIT_DEPLOYMENT_URL: ${url}`);
+    return url;
+  }
+  // Priority 3: Replit dev domain
+  if (process.env.REPLIT_DEV_DOMAIN) {
+    const url = ensureProtocol(process.env.REPLIT_DEV_DOMAIN);
+    console.log(`[baseUrl] Using REPLIT_DEV_DOMAIN: ${url}`);
+    return url;
+  }
+  // Priority 4: derive from incoming request Host header
   if (req) {
     const host = req.get('x-forwarded-host') || req.get('host');
-    if (host) return `https://${host}`;
+    if (host) {
+      const url = ensureProtocol(host);
+      console.log(`[baseUrl] Derived from request Host header: ${url}`);
+      return url;
+    }
   }
+  console.warn('[baseUrl] No BASE_URL configured — falling back to localhost');
   return "http://localhost:5000";
+}
+
+function assertValidUrl(url: string, label: string): void {
+  try {
+    new URL(url);
+  } catch {
+    throw new Error(`[baseUrl] ${label} is not a valid URL: "${url}". Set the BASE_URL environment variable.`);
+  }
 }
 
 interface ApiErrorResponse {
@@ -412,7 +443,10 @@ export async function registerRoutes(app: Express): Promise<void> {
       }
 
       const baseUrl = resolveBaseUrl(req);
-      console.log(`[checkout] baseUrl resolved to: ${baseUrl}`);
+      const successUrl = `${baseUrl}/payment-success?session_id={CHECKOUT_SESSION_ID}&application_id=${applicationId}`;
+      const cancelUrl = `${baseUrl}/payment-cancelled?application_id=${applicationId}`;
+      assertValidUrl(successUrl, 'success_url');
+      assertValidUrl(cancelUrl, 'cancel_url');
 
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
@@ -430,8 +464,8 @@ export async function registerRoutes(app: Express): Promise<void> {
           },
         ],
         mode: "payment",
-        success_url: `${baseUrl}/payment-success?session_id={CHECKOUT_SESSION_ID}&application_id=${applicationId}`,
-        cancel_url: `${baseUrl}/payment-cancelled?application_id=${applicationId}`,
+        success_url: successUrl,
+        cancel_url: cancelUrl,
         customer_email: application.email,
         metadata: {
           applicationId: applicationId.toString(),
