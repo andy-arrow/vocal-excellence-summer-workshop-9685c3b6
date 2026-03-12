@@ -32,7 +32,7 @@ const ApplicationRequirements = () => {
   return (
     <div className="bg-white rounded-xl md:rounded-2xl shadow-sm overflow-hidden">
       <div className="p-5 md:p-8 border-b border-[#e5e5e5]">
-        <h2 className="text-xl md:text-2xl font-semibold text-[#1d1d1f] mb-2 md:mb-3">Application checklist</h2>
+        <h2 className="text-xl md:text-2xl font-semibold text-[#1d1d1f] mb-2 md:mb-3">What You'll Need</h2>
         <p className="text-[#666666] text-base md:text-lg leading-relaxed">
           {APPLY_CHECKLIST_INTRO}
         </p>

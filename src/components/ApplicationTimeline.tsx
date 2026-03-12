@@ -41,7 +41,7 @@ const ApplicationTimeline = () => {
     {
       icon: <Sparkles className="w-5 h-5 text-rose-500" />,
       title: "The Workshop Begins",
-      description: "We welcome you to Limassol for Day 1 of training.",
+      description: "Your journey begins. Day 1 in Limassol.",
       date: workshopStart,
     }
   ];
@@ -49,7 +49,7 @@ const ApplicationTimeline = () => {
   return (
     <div className="bg-white rounded-xl md:rounded-2xl shadow-sm overflow-hidden">
       <div className="p-5 md:p-8 border-b border-[#e5e5e5]">
-        <h2 className="text-xl md:text-2xl font-semibold text-[#1d1d1f] mb-2 md:mb-3">Your road to Limassol</h2>
+        <h2 className="text-xl md:text-2xl font-semibold text-[#1d1d1f] mb-2 md:mb-3">From Application to the Stage</h2>
         <p className="text-[#666666] text-base md:text-lg leading-relaxed">
           {APPLY_TIMELINE_INTRO}
         </p>

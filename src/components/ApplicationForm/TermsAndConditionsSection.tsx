@@ -44,7 +44,7 @@ const TermsAndConditionsSection = () => {
             letterSpacing: '-0.01em',
           }}
         >
-          Before You Submit
+          Your Commitment to Excellence
         </h3>
         
         <p 
@@ -54,17 +54,7 @@ const TermsAndConditionsSection = () => {
             color: '#86868B',
           }}
         >
-          Thank you for choosing Vocal Excellence. By proceeding, you acknowledge our{' '}
-          <Link 
-            to="/terms" 
-            target="_blank"
-            className="no-underline hover:underline"
-            style={{ color: '#0066CC' }}
-            data-testid="link-terms-inline"
-          >
-            Terms of Use
-          </Link>
-          , which help us maintain the high standard of our intensive.
+          By submitting, you are joining a community that holds itself to the highest standard. Please read carefully before proceeding.
         </p>
 
         <div className="space-y-3 sm:space-y-4">
@@ -74,7 +64,8 @@ const TermsAndConditionsSection = () => {
               style={{ color: '#0066CC' }} 
             />
             <p className="text-[12px] sm:text-[13px]" style={{ color: '#424245', lineHeight: 1.5 }}>
-              <strong>Your Commitment:</strong> Your registration deposit secures your place. Cancellation terms apply — see our full Terms of Use.
+              <strong>Your Deposit, Your Place:</strong> The €100 registration deposit reserves your seat in faculty review. Cancellation terms apply — full details in our{' '}
+              <Link to="/terms" target="_blank" className="no-underline hover:underline" style={{ color: '#0066CC' }} data-testid="link-terms-inline">Terms of Use</Link>.
             </p>
           </div>
           
@@ -84,7 +75,7 @@ const TermsAndConditionsSection = () => {
               style={{ color: '#0066CC' }} 
             />
             <p className="text-[12px] sm:text-[13px]" style={{ color: '#424245', lineHeight: 1.5 }}>
-              <strong>Peace of Mind:</strong> Your registration becomes non-refundable after {format(APPLICATION_DATES.TUITION_DEADLINE, 'MMMM d, yyyy')}. We warmly recommend travel insurance.
+              <strong>Confirmed After {format(APPLICATION_DATES.TUITION_DEADLINE, 'MMMM d')}:</strong> Your place is locked in after {format(APPLICATION_DATES.TUITION_DEADLINE, 'MMMM d, yyyy')}. We strongly recommend travel insurance to protect your investment and give you complete peace of mind.
             </p>
           </div>
           
@@ -94,7 +85,7 @@ const TermsAndConditionsSection = () => {
               style={{ color: '#0066CC' }} 
             />
             <p className="text-[12px] sm:text-[13px]" style={{ color: '#424245', lineHeight: 1.5 }}>
-              <strong>Captured Moments:</strong> We film performances! By joining, you agree Vocal Excellence retains rights to share these moments for promotion.
+              <strong>Your Performance, Preserved:</strong> We professionally film every session — because every breakthrough deserves to be seen. By joining, you consent to Vocal Excellence sharing these recordings for promotional purposes.
             </p>
           </div>
         </div>

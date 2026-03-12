@@ -32,13 +32,13 @@ export const CATEGORY_PHRASE = "The Mediterranean's only pre-university vocal in
 
 /** Brand story — one sentence (McElroy, Aaker) */
 export const BRAND_STORY =
-  "Vocal Excellence: seven days in Cyprus where serious young singers prepare for their top university auditions — coached by faculty from Juilliard and the West End.";
+  "Vocal Excellence is seven days in Cyprus where serious young singers transform their voices and prepare for their top university auditions — coached by Juilliard-trained faculty and West End performers.";
 
 /** The memorable line — specific, repeatable (Godin, Sharp, Reeves) */
 export const REMARKABLE_LINE = "One week. One filmed audition. Thirty places.";
 
 /** Scarcity — factual, not a pressure tactic (Cialdini: genuine scarcity) */
-export const SCARCITY_STATIC = "Thirty places per class.";
+export const SCARCITY_STATIC = "Thirty places. No exceptions.";
 
 /** Segment — who this is for, stated plainly (Kotler, Ritson) */
 export const SEGMENT_LINE =
@@ -148,11 +148,11 @@ export const APPLY_META_DESCRIPTION =
  * Apply hero headline.
  * (Ogilvy: confident. Voss: the invitation is already extended.)
  */
-export const APPLY_HERO_HEADLINE = "A Place at Vocal Excellence";
+export const APPLY_HERO_HEADLINE = "Seven Days. A Voice Ready for the World's Top Conservatoires.";
 
 /** Apply hero sub — specifics, no pressure (Hopkins, Ive) */
 export const APPLY_HERO_SUB =
-  "Seven days in Limassol coached by Juilliard alumni and West End performers — and a broadcast-quality filmed audition. One week. Thirty places.";
+  "The Mediterranean's only pre-university vocal intensive — coached by Juilliard-trained faculty and West End performers, with a broadcast-quality filmed audition to anchor your university applications.";
 
 /** Form intro — honest, low friction (Hopkins) */
 export const APPLY_FORM_INTRO =
@@ -160,7 +160,7 @@ export const APPLY_FORM_INTRO =
 
 /** Checklist intro (Hopkins: concrete) */
 export const APPLY_CHECKLIST_INTRO =
-  "Have these ready and you can complete the form in a few minutes:";
+  "Have these ready and you'll complete the form in minutes:";
 
 /** Goals field label and description (Carnegie: about them, not us) */
 export const APPLY_GOALS_LABEL = "Your goals (a few sentences)";
@@ -175,7 +175,7 @@ export const APPLY_SUCCESS_NEXT =
   "We'll notify you of the outcome by the date in your confirmation email.";
 
 /** Timeline section intro (Cialdini: commitment once the steps are visible) */
-export const APPLY_TIMELINE_INTRO = "From application to the audition room — five steps. Thirty places.";
+export const APPLY_TIMELINE_INTRO = "Five steps. Thirty places. One week that changes everything.";
 
 // ─── Reason why (internal use only — not shown publicly) ─────────────────
 /**

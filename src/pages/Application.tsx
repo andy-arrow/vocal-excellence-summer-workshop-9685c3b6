@@ -10,6 +10,7 @@ import { APPLY_PAGE_TITLE, APPLY_META_DESCRIPTION } from '@/constants/copy';
 
 // Lazily load less critical components
 const ApplicationForm = lazy(() => import('@/components/ApplicationForm'));
+const ApplicationSocialProof = lazy(() => import('@/components/ApplicationSocialProof'));
 const ApplicationRequirements = lazy(() => import('@/components/ApplicationRequirements'));
 const ApplicationTimeline = lazy(() => import('@/components/ApplicationTimeline'));
 const ApplicationFAQ = lazy(() => import('@/components/ApplicationFAQ'));
@@ -96,6 +97,18 @@ const Application = () => {
                   </Suspense>
                 </motion.section>
                 
+                <motion.section
+                  key="social-proof"
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-50px" }}
+                  variants={fadeIn}
+                >
+                  <Suspense fallback={<SectionLoader />}>
+                    <ApplicationSocialProof />
+                  </Suspense>
+                </motion.section>
+
                 <motion.section 
                   key="requirements" 
                   initial="hidden" 
