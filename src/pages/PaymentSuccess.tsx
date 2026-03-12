@@ -51,6 +51,8 @@ const PaymentSuccess = () => {
             spread: 70,
             origin: { y: 0.6 },
             colors: ['#10B981', '#3B82F6', '#8B5CF6'],
+            disableForReducedMotion: true,
+            useWorker: false,
           });
         } else {
           setError(result.error || 'Payment verification failed');
