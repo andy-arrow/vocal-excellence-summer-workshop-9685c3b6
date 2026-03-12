@@ -19,6 +19,21 @@ import {
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
 const stripe = STRIPE_SECRET_KEY ? new Stripe(STRIPE_SECRET_KEY) : null;
 
+function ensureProtocol(raw: string): string {
+  return raw.startsWith("http://") || raw.startsWith("https://") ? raw : `https://${raw}`;
+}
+
+function resolveBaseUrl(req?: Request): string {
+  if (process.env.BASE_URL) return ensureProtocol(process.env.BASE_URL);
+  if (process.env.REPLIT_DEPLOYMENT_URL) return ensureProtocol(process.env.REPLIT_DEPLOYMENT_URL);
+  if (process.env.REPLIT_DEV_DOMAIN) return ensureProtocol(process.env.REPLIT_DEV_DOMAIN);
+  if (req) {
+    const host = req.get('x-forwarded-host') || req.get('host');
+    if (host) return `https://${host}`;
+  }
+  return "http://localhost:5000";
+}
+
 interface ApiErrorResponse {
   success: false;
   error: string;
@@ -396,10 +411,8 @@ export async function registerRoutes(app: Express): Promise<void> {
         return res.status(404).json({ success: false, error: "Application not found" });
       }
 
-      const baseUrl = process.env.BASE_URL
-        || (process.env.REPLIT_DEPLOYMENT_URL ? `https://${process.env.REPLIT_DEPLOYMENT_URL}` : null)
-        || (process.env.REPLIT_DEV_DOMAIN ? `https://${process.env.REPLIT_DEV_DOMAIN}` : null)
-        || "http://localhost:5000";
+      const baseUrl = resolveBaseUrl(req);
+      console.log(`[checkout] baseUrl resolved to: ${baseUrl}`);
 
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
@@ -491,10 +504,7 @@ export async function registerRoutes(app: Express): Promise<void> {
         const RESEND_API_KEY = process.env.RESEND_API_KEY;
         if (RESEND_API_KEY && application) {
           try {
-            const emailBaseUrl = process.env.BASE_URL
-              || (process.env.REPLIT_DEPLOYMENT_URL ? `https://${process.env.REPLIT_DEPLOYMENT_URL}` : null)
-              || (process.env.REPLIT_DEV_DOMAIN ? `https://${process.env.REPLIT_DEV_DOMAIN}` : null)
-              || `https://${req.get('x-forwarded-host') || req.get('host')}`;
+            const emailBaseUrl = resolveBaseUrl(req);
             const emailService = new EmailService(RESEND_API_KEY);
             const emailResult = await emailService.sendApplicationNotifications({
               firstName: application.firstName,
