@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { ArrowRight, Calendar, MapPin, Users, Clock, Star, ChevronRight, Music } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -10,6 +11,14 @@ import { Separator } from '@/components/ui/separator';
 const SummerProgramme = () => {
   return (
     <div className="min-h-screen bg-white">
+      <Helmet>
+        <title>Summer Programme 2026 — Faculty, Curriculum & Schedule | Vocal Excellence</title>
+        <meta name="description" content="Seven days of vocal training for 12–21 year olds in Limassol, Cyprus. Coached by faculty from Juilliard and the West End, with a filmed audition to take with you." />
+        <link rel="canonical" href="https://vocalexcellence.cy/summer-programme" />
+        <meta property="og:title" content="Summer Programme 2026 — Faculty, Curriculum & Schedule | Vocal Excellence" />
+        <meta property="og:description" content="Seven days of vocal training for 12–21 year olds in Limassol, Cyprus. Coached by faculty from Juilliard and the West End." />
+        <meta property="og:url" content="https://vocalexcellence.cy/summer-programme" />
+      </Helmet>
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center text-white overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"></div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -6,6 +7,14 @@ import Footer from '@/components/Footer';
 const Terms = () => {
   return (
     <div className="min-h-screen bg-white">
+      <Helmet>
+        <title>Terms of Use & Participation Agreement | Vocal Excellence</title>
+        <meta name="description" content="Terms of use and participation agreement for the Vocal Excellence Summer Programme 2026. June 29 – July 5, Limassol, Cyprus." />
+        <link rel="canonical" href="https://vocalexcellence.cy/terms" />
+        <meta property="og:title" content="Terms of Use & Participation Agreement | Vocal Excellence" />
+        <meta property="og:description" content="Terms of use and participation agreement for the Vocal Excellence Summer Programme 2026." />
+        <meta property="og:url" content="https://vocalexcellence.cy/terms" />
+      </Helmet>
       <Navbar />
       <motion.div 
         className="max-w-[980px] mx-auto px-6 pt-48 md:pt-56 pb-16 md:pb-24"

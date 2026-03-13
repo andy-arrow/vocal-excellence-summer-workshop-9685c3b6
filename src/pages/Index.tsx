@@ -1,5 +1,6 @@
 
 import React, { useEffect, lazy, Suspense } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
@@ -61,6 +62,14 @@ const Index = () => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
+      <Helmet>
+        <title>Vocal Excellence — Seven Days, Filmed Audition, Class of 30 | Summer 2026</title>
+        <meta name="description" content="The Mediterranean's only pre-university vocal intensive. Seven days in Cyprus with Juilliard and West End faculty. Audition preparation and a filmed audition for university applications." />
+        <link rel="canonical" href="https://vocalexcellence.cy/" />
+        <meta property="og:title" content="Vocal Excellence — Seven Days, Filmed Audition, Class of 30 | Summer 2026" />
+        <meta property="og:description" content="The Mediterranean's only pre-university vocal intensive. Juilliard & West End faculty. Filmed audition. Thirty places." />
+        <meta property="og:url" content="https://vocalexcellence.cy/" />
+      </Helmet>
       <Navbar />
       
       <div className="relative z-10">

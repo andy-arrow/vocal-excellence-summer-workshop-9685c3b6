@@ -97,6 +97,12 @@ registerRoutes(app)
       console.error("Error:", err);
     });
 
+    const knownSPARoutes = new Set([
+      '/', '/apply', '/application', '/home', '/auth', '/admin',
+      '/terms', '/privacy', '/tuition', '/summer-programme',
+      '/email-extract', '/payment-success', '/payment-cancelled', '/sponsors',
+    ]);
+
     if (fs.existsSync(distIndexPath)) {
       app.use(express.static(distPath, {
         maxAge: '1d',
@@ -108,11 +114,19 @@ registerRoutes(app)
           }
         }
       }));
-      app.use((_req, res) => {
-        res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-        res.setHeader('Pragma', 'no-cache');
-        res.setHeader('Expires', '0');
-        res.sendFile(distIndexPath);
+      app.use((req, res) => {
+        const noCache = () => {
+          res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+          res.setHeader('Pragma', 'no-cache');
+          res.setHeader('Expires', '0');
+        };
+        if (knownSPARoutes.has(req.path)) {
+          noCache();
+          res.sendFile(distIndexPath);
+        } else {
+          noCache();
+          res.status(404).sendFile(distIndexPath);
+        }
       });
     } else {
       console.warn("WARNING: dist/index.html not found. Run 'npm run build'.");

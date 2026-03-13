@@ -1,8 +1,12 @@
+Sitemap: https://vocalexcellence.cy/sitemap.xml
+
 User-agent: *
 Allow: /
 Disallow: /sponsors
 Disallow: /admin
 Disallow: /email-extract
+Disallow: /payment-success
+Disallow: /payment-cancelled
 
 User-agent: GPTBot
 Disallow: /sponsors

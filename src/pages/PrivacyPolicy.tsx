@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -6,6 +7,14 @@ import Footer from '@/components/Footer';
 const PrivacyPolicy = () => {
   return (
     <div className="min-h-screen bg-white">
+      <Helmet>
+        <title>Privacy Policy | Vocal Excellence</title>
+        <meta name="description" content="Privacy policy for Vocal Excellence. How we collect, use, and protect your personal data in compliance with GDPR." />
+        <link rel="canonical" href="https://vocalexcellence.cy/privacy" />
+        <meta property="og:title" content="Privacy Policy | Vocal Excellence" />
+        <meta property="og:description" content="Privacy policy for Vocal Excellence. How we collect, use, and protect your personal data." />
+        <meta property="og:url" content="https://vocalexcellence.cy/privacy" />
+      </Helmet>
       <Navbar />
       <motion.div 
         className="max-w-[980px] mx-auto px-6 pt-48 md:pt-56 pb-16 md:pb-24"

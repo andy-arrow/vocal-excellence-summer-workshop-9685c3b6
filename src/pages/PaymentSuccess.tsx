@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useSearchParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { CheckCircle, Mail, Calendar, ArrowRight, Loader2, RefreshCw } from 'lucide-react';
@@ -93,6 +94,9 @@ const PaymentSuccess = () => {
   if (verifying) {
     return (
       <div className="min-h-screen bg-apple-light">
+        <Helmet>
+          <meta name="robots" content="noindex, nofollow" />
+        </Helmet>
         <Navbar />
         <div className="flex flex-col items-center justify-center min-h-[70vh] px-4">
           <Loader2 className="w-12 h-12 text-apple-blue animate-spin mb-4" />
@@ -105,6 +109,9 @@ const PaymentSuccess = () => {
   if (error) {
     return (
       <div className="min-h-screen bg-apple-light flex flex-col">
+        <Helmet>
+          <meta name="robots" content="noindex, nofollow" />
+        </Helmet>
         <Navbar />
         <div className="flex flex-col items-center justify-center flex-1 px-4 text-center">
           <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-6">
@@ -142,6 +149,9 @@ const PaymentSuccess = () => {
 
   return (
     <div className="min-h-screen bg-apple-light flex flex-col">
+      <Helmet>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <Navbar />
       
       <motion.div 

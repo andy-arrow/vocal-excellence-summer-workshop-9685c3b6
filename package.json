@@ -7,7 +7,7 @@
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "dev:client": "vite",
     "dev:server": "tsx watch server/index.ts",
-    "build": "vite build && npm run build:server",
+    "build": "vite build && node scripts/inject-seo-html.js && npm run build:server",
     "build:server": "npx esbuild server/index.ts --platform=node --packages=external --bundle --format=cjs --outfile=dist/index.cjs",
     "build:dev": "vite build --mode development",
     "start": "NODE_ENV=production node dist/index.cjs",

@@ -69,6 +69,10 @@ const Application = () => {
       <Helmet>
         <title>{APPLY_PAGE_TITLE}</title>
         <meta name="description" content={APPLY_META_DESCRIPTION} />
+        <link rel="canonical" href="https://vocalexcellence.cy/apply" />
+        <meta property="og:title" content={APPLY_PAGE_TITLE} />
+        <meta property="og:description" content={APPLY_META_DESCRIPTION} />
+        <meta property="og:url" content="https://vocalexcellence.cy/apply" />
         <meta name="theme-color" content="#ffffff" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
       </Helmet>

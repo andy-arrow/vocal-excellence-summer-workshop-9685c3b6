@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useSearchParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { XCircle, ArrowLeft, HelpCircle, Loader2, RefreshCw } from 'lucide-react';
@@ -37,6 +38,9 @@ const PaymentCancelled = () => {
 
   return (
     <div className="min-h-screen bg-apple-light flex flex-col">
+      <Helmet>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <Navbar />
 
       <motion.div
